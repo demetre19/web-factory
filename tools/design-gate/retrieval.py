@@ -584,9 +584,66 @@ def _meta_terms(row):
     return terms
 
 
-def _meta_score(genes, row):
-    """Sum of matched gene→term projections — deterministic, so a
-    tie keeps bank order (stable rotation input)."""
+# Gene allele → the bank's own structural tags (style_tags.composition
+# / media_role / height_band / text_role) — the vibe's layout signal,
+# so presets that share mood words still part on structure.
+_VIBE_SHAPE = {
+    'columns': ('composition', {
+        '1': ('centered', 'stacked', 'full-bleed'),
+        '2': ('split-left-media', 'split-right-media', 'column-2',
+              'asymmetric'),
+        '3': ('grid-uniform', 'column-3', 'overlapping'),
+        '4': ('column-4+', 'grid-uniform', 'z-layout')}),
+    'image-style': ('media_role', {
+        'minimal': ('none',),
+        'editorial': ('hero-image', 'photo-collage'),
+        'luxury': ('background-photo', 'background-video'),
+        'bold-graphic': ('background-photo', 'illustration'),
+        'playful': ('illustration', 'avatar-group', 'hero-image'),
+        'technical': ('device-mockup', 'product-shot', 'none')}),
+    'density-tier': ('height_band', {
+        'compact': ('short-under-300', 'standard-300-700'),
+        'regular': ('standard-300-700',),
+        'spacious': ('tall-700-1400', 'extra-tall-1400+',
+                     'full-viewport')}),
+    'heading-form': ('text_role', {
+        'claim': ('headline-only', 'headline-subhead'),
+        'query': ('headline-subhead-cta', 'form-led'),
+        'label': ('eyebrow-headline-body-cta', 'list-led',
+                  'data-led')}),
+    'surface-rhythm': ('media_role', {
+        'media-interleaved': ('background-photo', 'hero-image',
+                              'photo-collage'),
+        'dark-dominant': ('background-photo', 'background-video')}),
+}
+
+
+def vibe_topology(genes, section_type='hero'):
+    """The topology a gene bundle's structure asks for — its columns
+    gene picks the composition (one column: heading-form picks the
+    split side or a stack), image-style/surface-rhythm the media role — mapped through row_topology
+    so it names the same topo-map vocabulary the bank rows carry."""
+    g = genes or {}
+    media = _VIBE_SHAPE['image-style'][1].get(g.get('image-style'),
+                                              ('none',))[0]
+    if g.get('surface-rhythm') == 'media-interleaved' and \
+            media == 'none':
+        media = 'hero-image'
+    comp = {'2': 'column-2', '3': 'grid-uniform',
+            '4': 'column-4+'}.get(str(g.get('columns')))
+    if comp is None:
+        comp = {'claim': 'split-left-media',
+                'query': 'split-right-media'}.get(g.get('heading-form'),
+                                                  'stacked')
+    return row_topology({'style_tags': {'composition': comp,
+                                        'media_role': media}},
+                        section_type)
+
+
+def _meta_score(genes, row, want=None, section_type=None):
+    """Sum of matched gene→term projections plus the structural tag
+    matches (_VIBE_SHAPE) — deterministic; a tie breaks on a hash of
+    the genes and the row so each gene bundle rotates its own order."""
     terms = _meta_terms(row)
     score = 0.0
     for ax, m in _VIBE_META.items():
@@ -594,7 +651,46 @@ def _meta_score(genes, row):
         if allele and allele in m:
             if terms & set(m[allele]):
                 score += 1.0
-    return score
+    st = row.get('style_tags') or {}
+    for ax, (field, m) in _VIBE_SHAPE.items():
+        if st.get(field) in m.get(genes.get(ax), ()):
+            score += 1.5
+    if want and row_topology(row, section_type) == want:
+        score += 3.0
+    key = json.dumps(genes, sort_keys=True) + str(row.get('render_path'))
+    return score + int(hashlib.sha1(key.encode()).hexdigest()[:6],
+                       16) / 0xffffff * 0.5
+
+
+def row_topology(row, section_type=None):
+    """A bank row's topology_id — the topo sidecar's when classified,
+    else derived from the row's own style_tags (composition +
+    media_role) onto the topo-map vocabulary."""
+    t = (row.get('topo') or {}).get('topology_id')
+    if t:
+        return t
+    st = row.get('style_tags') or {}
+    comp, media = st.get('composition'), st.get('media_role')
+    if comp in ('grid-uniform', 'column-3'):
+        return 'grid-3col-uniform'
+    if comp == 'column-4+':
+        return 'grid-4col-uniform'
+    if section_type != 'hero':
+        return None
+    pic = media not in (None, 'none', 'icon-row', 'logo-field',
+                        'other')
+    if media in ('background-photo', 'background-video') or \
+            comp == 'full-bleed':
+        return 'hero-media-bg'
+    if comp == 'split-left-media':
+        return 'hero-media-left' if pic else 'hero-no-media'
+    if comp == 'split-right-media':
+        return 'hero-media-right' if pic else 'hero-no-media'
+    if comp in ('column-2', 'asymmetric', 'overlapping', 'z-layout'):
+        return 'split-50-50' if pic else 'grid-2col-uniform'
+    if comp == 'stacked' and pic:
+        return 'hero-media-top'
+    return 'hero-no-media'
 
 
 def vibe_fit(genes, section_type, k=8, styles=None, bank=None):
@@ -621,6 +717,12 @@ def vibe_fit(genes, section_type, k=8, styles=None, bank=None):
     t0 = time.time()
     bank = bank or SectionBank()
     rows = bank.filter_rows(section_type, styles)
+    # a row whose own topology names another family (a nav-top-bar
+    # filed under hero) never ranks inside this one
+    _fam = {'nav': 'nav', 'hero': 'hero', 'footer': 'footer'}
+    rows = [r for r in rows if _fam.get(str(
+        (r.get('topo') or {}).get('topology_id') or '').split('-')[0],
+        section_type) == section_type] or rows
     out = {'mode': 'empty', 'section_type': section_type,
            'topology_id': None, 'composition': None,
            'ranked': [], 'ranked_rows': []}
@@ -628,6 +730,7 @@ def vibe_fit(genes, section_type, k=8, styles=None, bank=None):
         out['latency_ms'] = round((time.time() - t0) * 1000, 1)
         return out
     g = dict(genes or {})
+    want = vibe_topology(g, section_type)
     words = ' '.join(w for ax in _VIBE_AXES
                      for w in [str((_WORD.get(ax) or
                                     _VIBE_WORD.get(ax) or
@@ -646,16 +749,16 @@ def vibe_fit(genes, section_type, k=8, styles=None, bank=None):
             # no encoder on this box — degrade to the meta scorer
             vec = None
     ranked = bank.rank(vec, rows, k=k) if vec is not None else \
-        sorted(((_meta_score(g, r), r) for r in rows),
+        sorted(((_meta_score(g, r, want, section_type), r)
+                for r in rows),
                key=lambda t: -t[0])[:k]
-    top = ranked[0][1] if ranked else None
-    topo = (top.get('topo') or {}).get('topology_id') if top else None
+    topos = [row_topology(r, section_type) for _s, r in ranked]
+    topo = next((t for t in topos if t), None)
     out.update({'mode': 'clip' if vec is not None else 'meta',
                 'topology_id': topo,
                 'composition': _topo_map().get(topo) if topo else None,
-                'ranked': [(s, r.get('render_path'),
-                            (r.get('topo') or {}).get('topology_id'))
-                           for s, r in ranked],
+                'ranked': [(s, r.get('render_path'), t)
+                           for (s, r), t in zip(ranked, topos)],
                 'ranked_rows': ranked,
                 'query': words,
                 'latency_ms': round((time.time() - t0) * 1000, 1)})

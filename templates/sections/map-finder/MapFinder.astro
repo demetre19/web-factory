@@ -10,7 +10,7 @@ interface Props {
   body?: string;
   cta?: { label: string; href: string };
   items?: { title?: string; text?: string; value?: string;
-             label?: string; href?: string; quote?: string }[];
+             label?: string; term?: string; href?: string; quote?: string }[];
   image?: { src: string; alt: string };
   h1?: boolean;
 }
@@ -18,6 +18,9 @@ const {
   heading = 'Section heading', fs = '',
   body = '', cta, items = [], image, h1,
 } = Astro.props;
+// the map is the section: it centres on the first area the items list
+const area = [items.map((it) => it.label || it.title || it.term).find(Boolean),
+              'Victoria, Australia'].filter(Boolean).join(', ');
 ---
 
 <div class="grid gap-fluid-l md:grid-cols-2">
@@ -26,9 +29,9 @@ const {
     {fs && <p class="mt-stack text-fluid-0">{fs}</p>}
     <ul class="mt-stack grid-auto list-plain text-fluid-0">
       {items.map((it) => (
-        <li><a class="underline" href={it.href ?? '#'}>{it.label}</a></li>
+        <li><a class="underline" href={it.href ?? '#'}>{it.label || it.title || it.term}</a></li>
       ))}
     </ul>
   </div>
-  <div class="aspect-square rounded-card border border-muted"></div>
+  <iframe class="aspect-square w-full rounded-card border border-muted" title={`Map of ${area}`} src={`https://maps.google.com/maps?q=${encodeURIComponent(area)}&z=11&output=embed`} loading="lazy"></iframe>
 </div>

@@ -91,6 +91,11 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
       <div class="bm-contact-27-container-sub">
         <div>
           <form novalidate>
+            <label class="field flow"><span class="text-fluid--1">Name</span><input type="text" name="name" autocomplete="name" required /></label>
+            <label class="field flow"><span class="text-fluid--1">Email</span><input type="email" name="email" autocomplete="email" required /></label>
+            <label class="field flow"><span class="text-fluid--1">Subject</span><input type="text" name="subject" required /></label>
+            <label class="field flow"><span class="text-fluid--1">Message</span><textarea name="message" rows="4" required></textarea></label>
+            <button type="submit" class="wf-cta-button">Submit Form</button>
           </form>
         </div>
         {image &&         <div>

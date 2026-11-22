@@ -118,8 +118,9 @@ PROGRAM = {
         ('hero', 'promise', ['header-page-sections', 'hero'],
          list(_HERO_CATALOG_TOPO)),
         ('coverage', 'detail', ['category-section', 'grids-and-cards'],
-         ['link-grid', 'map-finder']),
-        ('proof', 'proof', ['testimonials'], ['proof-band']),
+         ['link-grid']),
+        ('map', 'detail', [], ['map-finder']),
+        ('proof', 'proof', ['testimonials'], []),
         ('services', 'how', ['feature'], ['cards-n']),
         ('faq', 'objection', [], ['faq']),
         ('contact', 'act', ['contact'], ['contact-panel']),
@@ -129,9 +130,9 @@ PROGRAM = {
         ('header', 'chrome', ['headers'], _NAV_CATALOG),
         # a contact page opens on a page header or a form-led band
         ('hero', 'promise', ['header-page-sections', 'contact'], []),
-        ('form', 'act', ['contact'], ['contact-panel', 'form-panel']),
-        ('map', 'detail', [], ['map-finder', 'link-grid']),
-        ('hours', 'detail', ['counter'], ['stat-band', 'text-index']),
+        ('form', 'act', ['contact'], []),
+        ('map', 'detail', [], ['map-finder']),
+        ('hours', 'detail', ['counter'], ['text-index']),
         ('faq', 'objection', [], ['faq']),
         ('footer', 'chrome', ['footer'], ['footer-bar']),
     ],
@@ -144,7 +145,8 @@ PROGRAM = {
         ('hero', 'promise', ['header-page-sections', 'blog-archive'],
          ['hero-act-merge']),
         ('featured', 'detail', ['blog-section'], ['split-media']),
-        ('listing', 'how', ['blog-archive', 'blog-section'], ['cards-n']),
+        # a post index pages: only listings whose query loop paginates
+        ('listing', 'how', ['blog-archive', 'blog-section'], []),
         ('categories', 'detail', ['category-section'], ['link-grid']),
         ('newsletter', 'act', ['newsletter'], ['newsletter-band']),
         ('footer', 'chrome', ['footer'], ['footer-bar']),
@@ -182,6 +184,7 @@ _PH_HEAD = {
     ('service', 'cta'): 'Book a site walk-through',
     ('location', 'hero'): '{brand} across {area}',
     ('location', 'coverage'): 'Suburbs we cover',
+    ('location', 'map'): 'Our service area',
     ('location', 'proof'): 'Trusted by local building managers',
     ('location', 'services'): 'Services in {area}',
     ('location', 'faq'): 'Questions from {area} buildings',
@@ -257,11 +260,11 @@ _PH_ITEMS = {
                  'high areas.', 'Quarterly or yearly'),
                 ('One-off clean', 'Move-ins, events and inspections.',
                  'Fixed price')],
-    'proof': [('Building manager', '"Complaints stopped within the '
+    'proof': [('Building manager · {suburb0}', '"Complaints stopped within the '
                'first month."', '{suburb0}'),
-              ('Strata committee chair', '"The visit reports make our '
+              ('Strata committee chair · {suburb1}', '"The visit reports make our '
                'meetings shorter."', '{suburb1}'),
-              ('Facility manager', '"Same crew every week — they know '
+              ('Facility manager · {suburb2}', '"Same crew every week — they know '
                'the building."', '{suburb2}')],
     'stats': [('Weekly', 'scheduled visits'),
               ('1 report', 'after every visit'),
@@ -297,8 +300,12 @@ def _ph_vars(facts, _copy=None):
     subs = [s['term'] for s in facts.get('plan.suburbs') or []]
     area = facts.get('plan.area') or (' & '.join(subs[:2]) if subs
                                        else 'your area')
+    ph = facts.get('plan.phone') or {}
     return {'brand': brand, 'topic': topic, 'topic_l': topic.lower(),
-            'area': area, 'suburbs': subs}
+            'area': area, 'suburbs': subs,
+            'email': facts.get('plan.email') or 'hello@' + (
+                facts.get('plan.site.domain') or 'example.com'),
+            'phone': ph.get('label') or '(03) 0000 0000'}
 
 
 def _ph(tpl, v, i=0):
@@ -336,6 +343,9 @@ def _ph_items(board, role, v, facts):
     if role == 'services':
         return [{'term': t, 'text': x} for t, x in _PH_ITEMS['scope']]
     rows = _PH_ITEMS.get(role) or _PH_ITEMS['benefits']
+    if role == 'hours':
+        # the contact board's details: hours + how to reach the office
+        rows = rows + [('Email', v['email']), ('Phone', v['phone'])]
     out = []
     for r in rows:
         it = {'term': _ph(r[0], v), 'text': _ph(r[1], v)}
@@ -412,39 +422,75 @@ _SECTION_TYPE = {'headers': 'nav', 'hero': 'hero',
                  'feature': 'feature', 'grids-and-cards': 'grids-and-cards',
                  'gallery': 'gallery', 'teams': 'teams',
                  'logo-sections': 'logo-sections'}
-_TOPO_FIT = {}
+_TAG_COMP = {
+    'grid-1col-uniform': 'stacked', 'grid-2col-uniform': 'column-2',
+    'grid-3col-uniform': 'column-3', 'grid-4col-uniform': 'column-4+',
+    'grid-5col-uniform': 'column-4+', 'grid-6col-uniform': 'column-4+',
+    'split-50-50': 'column-2', 'band-media': 'full-bleed',
+    'band-strip': 'centered', 'list-vertical-rows': 'stacked',
+    'list-cards': 'grid-uniform', 'hero-media-right': 'split-right-media',
+    'hero-media-left': 'split-left-media', 'hero-media-bg': 'full-bleed',
+    'hero-media-top': 'stacked', 'hero-no-media': 'centered'}
 
 
-def topo_fit(genes, section_type):
-    """{topology_id: fit 0..1} — retrieval.vibe_fit ranks the section
-    bank for the resolved genes; each topology scores its best ranked
-    row, normalised to the family's top score."""
-    key = (section_type, json.dumps(genes, sort_keys=True))
-    if key not in _TOPO_FIT:
-        import retrieval
-        out = retrieval.vibe_fit(genes, section_type, k=400)
-        best = {}
-        for score, _rp, topo in out.get('ranked') or []:
-            if topo and topo not in best:
-                best[topo] = float(score)
-        top = max(best.values(), default=0.0)
-        _TOPO_FIT[key] = {t: round(v / top, 4) if top > 0 else 0.0
-                          for t, v in best.items()}
-    return _TOPO_FIT[key]
+def _cand_tags(topology_id, sig):
+    """A bank skeleton's style_tags, read off its own topo sidecar
+    (topology_id + element signature) in the vector bank's tag
+    vocabulary — so retrieval scores it on the same axes it scores
+    bank rows."""
+    img, btn = sig.get('img', 0), sig.get('btn', 0)
+    comp = _TAG_COMP.get(topology_id, 'centered')
+    n = sum(v for v in sig.values() if isinstance(v, int))
+    return {
+        'composition': comp,
+        'media_role': ('background-photo' if img and comp == 'full-bleed'
+                       else 'photo-collage' if img >= 3
+                       else 'hero-image' if img else 'none'),
+        'height_band': ('short-under-300' if n <= 4 else
+                        'standard-300-700' if n <= 12 else
+                        'tall-700-1400'),
+        'text_role': ('headline-subhead-cta' if btn and sig.get('p')
+                      else 'list-led' if sig.get('h', 0) >= 4
+                      else 'headline-only' if not sig.get('p')
+                      else 'headline-subhead'),
+    }
 
 
-def _fit(cats, topology_id, genes):
+def _fit(cats, topology_id, genes, rec=''):
+    """retrieval's vibe meta score of one candidate — its own tags
+    (_cand_tags) against the genes and the topology they ask for."""
     if not genes:
         return 0.0
+    import retrieval
     st = next((_SECTION_TYPE[c] for c in cats if c in _SECTION_TYPE),
               'content')
-    return topo_fit(genes, st).get(topology_id, 0.0)
+    sig = {}
+    if rec.startswith('bricksmaven/'):
+        _p, cat, stem = rec.split('/')
+        sig = (_json(os.path.join(BANK, cat, stem + '.topo.json')) or {}) \
+            .get('element_sig') or {}
+    row = {'render_path': rec or topology_id,
+           'topo': {'topology_id': topology_id},
+           'style_tags': _cand_tags(topology_id, sig)}
+    return round(retrieval._meta_score(
+        genes, row, retrieval.vibe_topology(genes, st), st), 4)
 
 
 def _topo(recipe):
     _p, cat, stem = recipe.split('/')
     return (_json(os.path.join(BANK, cat, stem + '.topo.json')) or {}) \
         .get('topology_id') or 'unknown'
+
+
+# the controls a role's skeleton must already carry (gate BRR.1 checks
+# the same in the build): a post index pages and its cards read
+# author · date · read time + tag, a contact form asks
+# phone + message and submits
+# Bricks builder scaffolding ("remove this div") is not a section
+_SCAFFOLD = re.compile(r'remove-this|take-out|remove-contents')
+_ROLE_NEEDS = {'listing': ('aria-label="Pagination"', '.meta', '.tag'),
+               'form': ('type="email"', 'type="tel"', '<textarea',
+                        'type="submit"')}
 
 
 def _candidates(role, cats, catalog, genes, exclude=()):
@@ -463,10 +509,18 @@ def _candidates(role, cats, catalog, genes, exclude=()):
             rec = f'bricksmaven/{cat}/{stem}'
             if f'bm-{cat}-{stem}' in exclude:
                 continue
+            if _SCAFFOLD.search(stem):
+                continue
+            src = open(os.path.join(d, fn), encoding='utf-8').read()
+            if '<form' in src and not re.search(r'<input|<textarea', src):
+                continue   # a form with no controls asks nothing
+            need = _ROLE_NEEDS.get(role)
+            if need and not all(n in src for n in need):
+                continue
             topo = _topo(rec)
             out.append({'comp': f'bm-{cat}-{stem}', 'recipe': rec,
                         'topology_id': topo,
-                        'fit': _fit([cat], topo, genes)})
+                        'fit': _fit([cat], topo, genes, rec)})
     for comp in catalog:
         if comp in exclude:
             continue
@@ -477,9 +531,71 @@ def _candidates(role, cats, catalog, genes, exclude=()):
         topo = _HERO_CATALOG_TOPO.get(comp) or (
             _topo(rec) if rec.startswith('bricksmaven/') else comp)
         out.append({'comp': comp, 'recipe': rec, 'topology_id': topo,
-                    'fit': _fit(cats, topo, genes)})
+                    'fit': _fit(cats, topo, genes, rec)})
     out.sort(key=lambda c: (-c['fit'], c['comp']))
     return out
+
+
+# what makes a hero belong to a page type, read off the skeleton's own
+# element signature: home promises + acts (buttons, no list); service
+# lists its scope (ul/icons); location links its area (links / a
+# quote form); contact asks (contact category / a form); blog opens
+# an index (archive / page header). Catalog heroes are home's.
+_HERO_CUE = {
+    'home': lambda s, cat: not cat or (bool(s.get('btn'))
+                                       and not s.get('ul')),
+    'service': lambda s, cat: bool(s.get('ul') or s.get('icn')),
+    'location': lambda s, cat: bool(s.get('a') or s.get('form')),
+    'contact': lambda s, cat: cat == 'contact' or bool(s.get('form')),
+    'blog': lambda s, cat: cat in ('blog-archive',
+                                   'header-page-sections'),
+}
+_POOLS = {}
+
+
+def _sig(rec):
+    if not rec.startswith('bricksmaven/'):
+        return {}, ''
+    _p, cat, stem = rec.split('/')
+    return ((_json(os.path.join(BANK, cat, stem + '.topo.json')) or {})
+            .get('element_sig') or {}), cat
+
+
+def hero_pools(genes, exclude=()):
+    """{board: [hero candidate]} — disjoint per page type. Every board
+    drafts in turn from its own hero candidates (its program's hero
+    categories): role-cue match first, then the topology it has least
+    of, then vibe fit. A skeleton one board drafted is gone for the
+    rest, so no two boards open on the same pool or rotation."""
+    key = (json.dumps(genes or {}, sort_keys=True), tuple(sorted(exclude)))
+    if key in _POOLS:
+        return _POOLS[key]
+    cands = {}
+    for b in PROGRAM:
+        role, _a, cats, catalog = next(r for r in _program(b)
+                                       if r[0] == 'hero')
+        cands[b] = _candidates(role, cats, catalog, genes, exclude)
+    pools, taken = {b: [] for b in PROGRAM}, set()
+    for _round in range(N_OPTIONS):
+        for b in PROGRAM:
+            left = [c for c in cands[b] if (c['recipe'] or c['comp'])
+                    not in taken]
+            if not left:
+                continue
+            topo = {}
+            for c in pools[b]:
+                topo[c['topology_id']] = topo.get(c['topology_id'], 0) + 1
+
+            def _rank(c, b=b, topo=topo):
+                sg, cat = _sig(c['recipe'])
+                return (not _HERO_CUE[b](sg, cat),
+                        topo.get(c['topology_id'], 0), -c['fit'],
+                        c['comp'])
+            best = min(left, key=_rank)
+            pools[b].append(best)
+            taken.add(best['recipe'] or best['comp'])
+    _POOLS[key] = pools
+    return pools
 
 
 def _hero_order(cands, key=lambda c: c['topology_id'], shift=0):
@@ -509,15 +625,38 @@ def _overlap(a, b, roles):
     return sum(1 for r in roles if a.get(r) == b.get(r)) / len(roles)
 
 
-def generate(board, genes, n=N_OPTIONS, exclude=()):
+def signed_chrome(pd):
+    """{role: comp} — the header / footer the operator signed in
+    ELEMENT-PICKS.json (the emitted page's BaseLayout chrome). Page
+    boards wear it on every option; header variety is its own board."""
+    picks = (_json(os.path.join(pd, 'ELEMENT-PICKS.json')) or {}) \
+        .get('picks') or []
+    out = {}
+    for p in picks:
+        role = p.get('element')
+        if role in CHROME and p.get('variant') and os.path.isfile(
+                os.path.join(CATALOG, p['variant'],
+                             gate.camel(p['variant']) + '.astro')):
+            out[role] = p['variant']
+    return out
+
+
+def generate(board, genes, n=N_OPTIONS, exclude=(), chrome=None):
     prog = _program(board)
     pools = {}
     for role, _act, cats, catalog in prog:
+        if role in (chrome or {}):
+            comp = chrome[role]
+            pools[role] = [{'comp': comp,
+                            'recipe': gate.RECIPE_FOR_COMP.get(comp) or '',
+                            'topology_id': comp, 'fit': 0.0}]
+            continue
         c = _candidates(role, cats, catalog, genes, exclude)
         pools[role] = c if role in ('hero', 'header', 'footer') \
             else c[:TOP_K]
+    pools['hero'] = hero_pools(genes, exclude)[board]
     shift = list(PROGRAM).index(board)
-    heroes = _hero_order(pools['hero'], shift=shift * 3)
+    heroes = _hero_order(pools['hero'])
     pools['header'] = _hero_order(pools['header'], _nav_family,
                                   shift=shift)
     n = max(1, min(n, len(heroes)))
@@ -615,9 +754,10 @@ def _facts(ctx, copy):
         if m and m.group(1) not in colls:
             colls.append(m.group(1))
     try:
-        media = list((gate._brief(ctx).get('media') or []))
+        brief = gate._brief(ctx) or {}
     except Exception:
-        media = []
+        brief = {}
+    media = list(brief.get('media') or [])
     return {
         'plan.site.brand': site.get('brand') or site.get('name'),
         # the site's service topic (its primary query) names what every
@@ -643,6 +783,10 @@ def _facts(ctx, copy):
                          for it in cov.get('items') or []
                          if it.get('term')],
         'brief.media': media,
+        'plan.email': (brief.get('brand') or {}).get('email')
+        if isinstance(brief.get('brand'), dict) else None,
+        'plan.site.domain': re.sub(r'^https?://(www\.)?', '', str(
+            (brief.get('site') or {}).get('url') or '')).strip('/'),
     }
 
 
@@ -655,6 +799,7 @@ FACT_SLOTS = {
     ('service', 'cta'): {'cta': 'plan.cta'},
     ('location', 'hero'): {'cta': 'plan.cta'},
     ('location', 'coverage'): {'items': 'plan.suburbs'},
+    ('location', 'map'): {'items': 'plan.suburbs'},
     ('location', 'services'): {'items': 'plan.services'},
     ('location', 'contact'): {'cta': 'plan.phone'},
     ('contact', 'hero'): {'cta': 'plan.phone'},
@@ -851,10 +996,12 @@ def build(pd, excluded=None):
     ctx = gate.Ctx(pd)
     copy = _json(os.path.join(ctx.dir, 'COPY.json'))
     genes = resolved_genes(ctx.dir)
+    chrome = signed_chrome(ctx.dir)
     doc = {'generated_by': TOOL, 'inputs_sha': _inputs_sha(ctx),
            'genes': genes, 'excluded': excluded, 'boards': {}}
     for board in PROGRAM:
-        prog, pools, opts = generate(board, genes, exclude=excluded)
+        prog, pools, opts = generate(board, genes, exclude=excluded,
+                                     chrome=chrome)
         bound, real = bind(ctx, board, prog, copy)
         ph_n = sum(1 for b in bound.values()
                    for s in b['sources'].values() if s == 'placeholder')

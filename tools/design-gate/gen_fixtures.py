@@ -2004,6 +2004,13 @@ def main():
         'boards/site/dist/preview/lo-blog-01/index.html',
         '<!doctype html><html><body><section data-sec="hero" '
         'data-comp="hero-x"><h1>Guides</h1></section></body></html>'))
+    # check_board_pools — fail: two boards opening on the same hero
+    # recipes (one pool at two rotations)
+    _hs = [{'hero': {'recipe': f'bricksmaven/hero/hero-{i}'}}
+           for i in range(1, 6)]
+    MUT['check_board_pools'] = mut(('SET', 'PAGE-BOARDS.json',
+        json.dumps({'boards': {'home': {'options': _hs},
+                               'service': {'options': _hs[2:] + _hs[:2]}}})))
     for name, fn in MUT.items():
         for want, sub in ((BASE, 'fail'),):
             files = dict(BASE)

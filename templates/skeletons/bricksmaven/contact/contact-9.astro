@@ -86,6 +86,12 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
         {image && image.src && <figure class="ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
         <div>
           <form novalidate>
+            <label class="field flow"><span class="text-fluid--1">Name</span><input type="text" name="name" autocomplete="name" required /></label>
+            <label class="field flow"><span class="text-fluid--1">Email</span><input type="email" name="email" autocomplete="email" required /></label>
+            <label class="field flow"><span class="text-fluid--1">Subject</span><input type="text" name="subject" required /></label>
+            <label class="field flow"><span class="text-fluid--1">Phone</span><input type="tel" name="phone" autocomplete="tel" required /></label>
+            <label class="field flow"><span class="text-fluid--1">Your Message</span><textarea name="message" rows="4" required></textarea></label>
+            <button type="submit" class="wf-cta-button">Submit Form</button>
           </form>
         </div>
       </div>
