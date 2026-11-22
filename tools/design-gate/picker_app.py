@@ -6216,7 +6216,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
     ['lead','text-l'],['body','text-m'],['small','text-s']];
 
   var TS_VPS=[[320,'M'],[768,'T'],[1280,'D']],_tsVp=1280,_tsPx=null,
-    _tsVars=null;
+    _tsVars=null,_tsVpManual=false;
 
   function tsEditor(){
     // seed from the signed custom ladder when one exists — reopening
@@ -6409,7 +6409,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
   function wireTsEd(el){
     var ed=el.querySelector('#tsed');
     if(!ed)return;
-    _tsVp=window.innerWidth<=480?320:1280;
+    _tsVp=window.innerWidth<=480?320:1280;_tsVpManual=false;
     ed.querySelectorAll('#ts-vpbar .tsvpb').forEach(function(b){
       b.classList.toggle('on',+b.dataset.v===_tsVp)});
     ed.querySelectorAll('input,select').forEach(function(i){
@@ -6431,7 +6431,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
         clearTimeout(_tsT);_tsT=setTimeout(tsRefresh,220)})});
     ed.querySelectorAll('#ts-vpbar .tsvpb:not(#ts-th)').forEach(
       function(b){b.onclick=function(){
-        _tsVp=+b.dataset.v;
+        _tsVp=+b.dataset.v;_tsVpManual=true;
         ed.querySelectorAll('#ts-vpbar .tsvpb').forEach(function(x){
           x.classList.toggle('on',x===b)});
         tsRenderSpecimen();tsFitFrame()}});
@@ -6451,7 +6451,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
         wireTsEd._rz=1;
         window.addEventListener('resize',function(){
           var n=window.innerWidth<=480?320:1280;
-          if(n!==_tsVp){_tsVp=n;
+          if(!_tsVpManual&&n!==_tsVp){_tsVp=n;
             ed.querySelectorAll('#ts-vpbar .tsvpb').forEach(function(x){
               x.classList.toggle('on',+x.dataset.v===_tsVp)});
             tsRenderSpecimen()}
