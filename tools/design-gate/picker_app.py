@@ -1073,6 +1073,17 @@ def _current_vibe_bundle(pd):
     return {}
 
 
+def _pairs(css):
+    """'--k:v;--k:v' → {k: v}."""
+    d = {}
+    for decl in (css or '').split(';'):
+        if ':' in decl:
+            k, v = decl.split(':', 1)
+            if k.strip():
+                d[k.strip()] = v.strip()
+    return d
+
+
 def _css_merge(base, over):
     """two '--k:v;--k:v' decl strings → merged, `over` wins ties."""
     d = {}
@@ -1103,6 +1114,17 @@ def _type_sign_bundle(pd, variant):
     merged.update(overrides)
     r = vibe_atlas.resolve(merged)
     vb = _current_vibe_bundle(pd)
+    # vars the overrides OWN (e.g. a display-face delta emits only
+    # light css) must not be re-overridden by the vibe's dark decls —
+    # drop them from the base dark before overlaying
+    if overrides:
+        ro = vibe_atlas.resolve(overrides)
+        own = {k for d in (ro.get('css'), ro.get('css_dark'))
+               for k in _pairs(d)}
+        vd = {k: v for k, v in _pairs(vb.get('css_dark')).items()
+              if k not in own}
+        vb = dict(vb, css_dark=';'.join(f'{k}:{v}'
+                                        for k, v in vd.items()))
     fl = card.get('fluid') or {}
     tok = _json_at(pd, 'TOKENS.json') or {}
     fluid = tok.get('fluid') or {}
