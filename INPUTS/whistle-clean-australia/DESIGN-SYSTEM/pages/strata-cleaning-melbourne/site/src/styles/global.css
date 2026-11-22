@@ -695,6 +695,65 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
   /* 4 full-length labels can't fit under ~60rem — the burger takes
      over below that instead of overflowing the page */
   @media (min-width: 60rem) { .nav-links { display: flex; } }
+  /* a flyout nav splits the two .nav-links roles: .nav-desk is the
+     desktop link row (hidden under the burger breakpoint); the
+     .nav-flyout panel is the ONLY nav-links — hidden at every width
+     until .open, so it never doubles as a second desktop row
+     (N.flyout) */
+  .nav-desk { display: none; gap: var(--space-s);
+              align-items: center; flex: 0 1 auto; min-width: 0; }
+  .nav-desk ul { flex-wrap: nowrap; gap: var(--space-s); }
+  .nav-links.nav-flyout { display: none; }
+  .nav-links.open.nav-flyout { display: flex; }
+  @media (min-width: 60rem) { .nav-desk { display: flex; } }
+  /* grouped link sections inside the open panel: a titled stack of
+     rows separated by hairlines, reading as sections not a bare
+     list (N.flyout) */
+  .nav-links.open .nav-group { display: flex; flex-direction: column;
+              align-items: flex-start; gap: var(--space-xs); }
+  .nav-links.open .nav-group + .nav-group,
+  .nav-links.open .nav-group + * { padding-block-start: var(--space-s);
+              border-block-start: 1px solid var(--border-default); }
+  .nav-links.open .nav-group a { font-size: var(--fs-1);
+              white-space: normal; color: var(--text-primary);
+              text-decoration: none; display: inline-flex;
+              align-items: center; gap: var(--space-s); }
+  /* the generic overlay family — modals, popups, form dialogs
+     (N.flyout): a centred .flyout panel over the same scrim, a
+     .flyout-open trigger in flow, a .flyout-close affordance */
+  .flyout { display: none; }
+  .flyout.open { display: flex; flex-direction: column;
+              gap: var(--space-m); position: fixed;
+              inset-block-start: 50%; inset-inline-start: 50%;
+              transform: translate(-50%, -50%);
+              width: min(28rem, calc(100vw - 2 * var(--gutter)));
+              max-height: 85vh; overflow-y: auto;
+              z-index: calc(var(--primitive-z-sticky) + 1);
+              background: var(--bg-canvas); color: var(--text-primary);
+              padding: var(--space-m);
+              border: 1px solid var(--border-default);
+              border-radius: var(--r-card);
+              box-shadow: var(--shadow-pop); }
+  .flyout-open { display: inline-flex; min-height: var(--tap);
+              min-width: var(--tap); align-items: center;
+              justify-content: center;
+              background: var(--bg-surface); color: var(--text-primary);
+              border: 1px solid var(--border-default);
+              border-radius: var(--r-card); font-size: var(--fs-1);
+              font-weight: 600; cursor: pointer; }
+  .flyout-open.wf-cta-button { border: 0;
+              background: var(--action-primary);
+              color: var(--action-primary-ink); }
+  .flyout-close { display: inline-flex; align-self: flex-end;
+              min-height: var(--tap); min-width: var(--tap);
+              align-items: center; justify-content: center;
+              background: none; border: 0;
+              color: var(--text-secondary); font-size: var(--fs-2);
+              line-height: 1; cursor: pointer; }
+  body:has(.flyout.open)::after { content: ""; position: fixed;
+              inset: 0; background: color-mix(in oklch,
+                  var(--text-primary) 45%, transparent);
+              z-index: var(--primitive-z-sticky); }
   .wf-cta-button { font-size: var(--fs--1); }
   /* the mobile call action is a compact floating button, not a bar
      that slices across mid-scroll content: a brand pill bottom-right
@@ -975,6 +1034,88 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
     .wf-comparison-1 .cta-combo { flex-direction: column; }
   }
 
+/* bricksmaven/content/content-1 */
+  .wf-content-1 .content-1-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
+    gap: var(--space-xl);
+  }
+
+  .wf-content-1 .content-1__box {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-m);
+  }
+
+  .wf-content-1 .cta-combo {
+    display: flex;
+    column-gap: var(--space-xs);
+  }
+
+  @media (max-width: 44rem) {
+    .wf-content-1 .cta-combo { flex-direction: column; }
+  }
+
+/* bricksmaven/headers/header-21 */
+  .wf-header-21 .header-21__container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: var(--space-s);
+  }
+
+  .wf-header-21 .header-21__cta {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    column-gap: calc(var(--flow-spacing) / 4);
+  }
+
+  .wf-header-21 .bm-off-canvas-6__content {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-s);
+  }
+
+  .wf-header-21 .bm-off-canvas-nav-ul {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: column;
+    row-gap: calc(var(--flow-spacing) * 2);
+  }
+
+  .wf-header-21 .bm-off-canvas-6__contact-footer {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--flow-spacing);
+  }
+
+  .wf-header-21 .bm-off-canvas-contact {
+    row-gap: calc(var(--flow-spacing) / 1.8);
+  }
+
+  .wf-header-21 .bm-off-canvas-contact-item {
+    display: flex;
+    flex-direction: row;
+    column-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .wf-header-21 .bm-off-canvas-6__socials {
+    row-gap: var(--flow-spacing);
+  }
+
+  .wf-header-21 .bm-social-share {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    column-gap: var(--flow-spacing);
+  }
+
+  .wf-header-21 .bm-social-share--column {
+    flex-direction: column;
+    row-gap: var(--flow-spacing);
+  }
+
 /* bricksmaven/footer/footer-1 */
   .wf-footer-1 .footer-1 {
     row-gap: var(--space-s);
@@ -1106,17 +1247,20 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
     row-gap: var(--space-xs);
   }
 
-/* bricksmaven/headers/header-1 */
-  .wf-header-1 .bm-header-1__container {
+/* bricksmaven/testimonials/testimonial-1 */
+  .wf-testimonial-1 .testimonial-1-content {
     display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
     gap: var(--space-s);
   }
 
-  .wf-header-1 .bm-header-1__cta {
+  .wf-testimonial-1 .testimonial-1-slides-item {
     display: flex;
-    gap: var(--space-s);
+    flex-direction: column;
+    row-gap: var(--space-m);
+  }
+
+  @media (max-width: 44rem) {
+    .wf-testimonial-1 .testimonial-1-content { flex-direction: column; }
   }
 
 /* bricksmaven/how-it-works/how-it-works-1 */

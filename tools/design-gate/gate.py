@@ -85,8 +85,10 @@ COMP_FOR_ACT = {
     'map-finder': {'detail'}, 'capture-form': {'act'},
     'text-index': {'detail'}, 'app-band': {'detail'},
     'hero-act-merge': {'promise', 'act'}, 'link-grid': {'detail'},
+    'modal-form': {'act'},
     # chrome structural rows (declared, not in §2)
     'nav-bar': {'chrome'}, 'footer-bar': {'chrome'},
+    'flyout-nav': {'chrome'},
 }
 SURFACES = {'base', 'muted', 'inverse', 'brand', 'media'}
 DENSITIES = {'compact', 'regular', 'spacious'}
@@ -321,6 +323,43 @@ def parse_html(text):
     p.first_paras = {k: ' '.join(''.join(v).split())
                      for k, v in p._first_p.items()}
     return p
+
+
+def _css_rules(txt):
+    """Yield (selector_text, body) per {…} rule, linearly. A regex
+    like `([^{}]+)\\{([^}]*)(?:min-height|height)` backtracks
+    quadratically across a built stylesheet (~10s on 80KB of CSS)."""
+    prev_end = 0
+    for m in re.finditer(r'\{([^{}]*)\}', txt):
+        yield txt[prev_end:m.start()], m.group(1)
+        prev_end = m.end()
+
+
+def _media_blocks(txt):
+    """Yield (prelude, body) per @media rule; body keeps inner braces
+    (depth-matched scan, not a nested-quantifier regex)."""
+    for m in re.finditer(r'@media[^{]+\{', txt):
+        depth, i = 1, m.end()
+        while i < len(txt) and depth:
+            if txt[i] == '{':
+                depth += 1
+            elif txt[i] == '}':
+                depth -= 1
+            i += 1
+        yield m.group(0)[len('@media'):-1], txt[m.end():i - 1]
+
+
+def _rule_min_heights(txt, sel_rx, under):
+    """[(sel, px)] rules whose selector matches sel_rx and declares
+    min-height < under px."""
+    out = []
+    for sel, body in _css_rules(txt):
+        if not sel_rx.search(sel):
+            continue
+        mh = re.search(r'min-height\s*:\s*(\d+)px', body)
+        if mh and int(mh.group(1)) < under:
+            out.append((sel.strip(), int(mh.group(1))))
+    return out
 
 def first_sentence(text):
     m = re.search(r'[.!?](\s|$)', text)
@@ -833,6 +872,11 @@ def check_astro_build(ctx):
         tail = '\n'.join((r.stdout + r.stderr).split('\n')[-8:])
         return [f'P.1 astro build failed (exit {r.returncode}): {tail}']
     return []
+
+# a check that rewrites the artifacts its siblings read cannot join
+# the concurrent pool — astro build empties+rewrites dist/ mid-wave,
+# so it runs serially BEFORE the readers (_check_pool)
+check_astro_build._mutates = True
 
 def check_design_mode(ctx):
     dm = ctx.site_block().get('design_mode')
@@ -1804,7 +1848,7 @@ def check_measurable(ctx):
                 t, re.S):
             comp, body = m.group(1), m.group(2)
             if comp in ('nav-bar', 'footer-bar', 'logo-wall',
-                        'quote-grid'):
+                        'quote-grid', 'flyout-nav'):
                 continue
             if '<img' in body and '<picture' not in body and \
                     'srcset' not in body:
@@ -1983,6 +2027,33 @@ def check_mobile_budget(ctx):
                              r'aria-label="[^"]*[Mm]enu', txt):
                 f.append(f'P.13 {name}: nav has no burger/collapse '
                          'control for mobile')
+    # N.flyout — the mobile menu is always a flyout surface, never a
+    # plain dropdown: burger trigger, fixed panel, scrim, close
+    # control and a docked CTA must all be present in the built
+    # markup + dist CSS
+    htmls = ctx.page_htmls()
+    nav_pages = [(p, t) for p, t in htmls if 'nav-links' in t]
+    if nav_pages:
+        css_all = '\n'.join(t for _, t in dist_csss(ctx))
+        if not re.search(r'\.nav-links\.open\s*\{[^}]*'
+                         r'position\s*:\s*fixed', css_all):
+            f.append('P.13 nav flyout: .nav-links.open is not a '
+                     'fixed panel — the mobile menu must be an '
+                     'overlay sheet, never a dropdown')
+        if not re.search(r'has\(\s*\.nav-links\.open\s*\)', css_all):
+            f.append('P.13 nav flyout: the open nav carries no scrim '
+                     'rule (body:has(.nav-links.open)::after)')
+        for p, t in nav_pages:
+            name = os.path.basename(p)
+            if 'nav-close' not in t:
+                f.append(f'P.13 {name}: the nav panel has no '
+                         '.nav-close — a flyout needs a close control')
+            if not re.search(r'class="[^"]*burger', t):
+                f.append(f'P.13 {name}: the nav has no .burger '
+                         'trigger')
+            if not re.search(r'nav-cta|call-bar', t):
+                f.append(f'P.13 {name}: the nav carries no CTA — '
+                         'the flyout docks one at the panel foot')
     return f
 
 # ------------------------------------------------- new absolute rules end
@@ -2456,11 +2527,12 @@ def check_tile_is_system(ctx):
             if re.search(r'<[a-zA-Z]|\S', inner.strip()):
                 rendered.add(m.group(2))
         rendered |= set(re.findall(r'data-cell="([^"]+)"', tile))
-        if not _wave_ge(ctx, 'w6'):
-            # pre-build the contract set IS the component set — disk
-            # files may still hold last emit's comps (pruned at w6)
-            comp_names = {str(c.get('composition'))
-                          for c in build_contracts(ctx)}
+        # the contract set IS the component set — disk files may hold
+        # last emit's comps or picker-only comps kept alive by option
+        # preview pages (w6 can't prune those: w3/w4 gates still need
+        # the built option pages in dist)
+        comp_names = {str(c.get('composition'))
+                      for c in build_contracts(ctx)}
         for c in sorted(comp_names):
             if c not in rendered:
                 f.append(f'P.6 component {c} has no specimen on the '
@@ -3084,7 +3156,8 @@ def _endorsed_exemplars():
 EXEMPLAR_COMP = {
     'hero': {'split-media', 'stacked-hero', 'full-bleed',
              'hero-act-merge'},
-    'navigation': {'nav-bar'}, 'nav': {'nav-bar'},
+    'navigation': {'nav-bar', 'flyout-nav'},
+    'nav': {'nav-bar', 'flyout-nav'},
     'footer': {'footer-bar'}, 'cards': {'cards-n'},
     'features': {'cards-n', 'sequence'}, 'faq': {'faq'},
     'form': {'form-panel', 'capture-form'},
@@ -3903,9 +3976,31 @@ MEDIA_CLASS_RX = {
 
 def _recipe_element_sig(recipe_id):
     """Canonical media classes in a bank recipe's elements[] —
-    the element-variant signature. [] means text-only."""
+    the element-variant signature. [] means text-only. Bank records
+    carry the element list in three shapes: a flat `elements` list
+    (.topo sidecars), a bricks `content` tree of named nodes, and a
+    `tree` of topo nodes — all three are scanned."""
     v = _recipe_topo_map().get(recipe_id) or {}
     els = ' '.join(str(e) for e in (v.get('elements') or [])).lower()
+    if not els:
+        parts = []
+        for node in (v.get('content') or []):
+            if isinstance(node, dict):
+                parts += [node.get('name'), node.get('label')]
+        for node in (v.get('tree') or []):
+            if isinstance(node, dict):
+                parts += [node.get('name'), node.get('tag'),
+                          node.get('label')]
+        # element_sig counts: {img: n, icn: n, vid: n, ...} — a
+        # present count means the recipe carries that media class
+        sig = v.get('element_sig') or {}
+        if sig.get('img'):
+            parts.append('image')
+        if sig.get('icn'):
+            parts.append('icon')
+        if sig.get('vid'):
+            parts.append('video')
+        els = ' '.join(str(p) for p in parts if p).lower()
     return sorted(k for k, rx in MEDIA_CLASS_RX.items()
                   if re.search(rx, els))
 
@@ -4960,7 +5055,7 @@ def check_intent_sections(ctx):
             # nav/footer/chrome rows are not idea-sections: they never
             # count against the one-idea-one-section heading budget
             if 'chrome' in acts or str(r.get('composition') or '') in \
-                    ('nav-bar', 'footer-bar'):
+                    ('nav-bar', 'footer-bar', 'flyout-nav'):
                 continue
             intent = str(r.get('intent') or '')
             if not intent:
@@ -5620,6 +5715,11 @@ def check_fine_round(ctx):
     knobs on the LOOK winner, so rendered structure must evolve."""
     fp = ctx.find('preview/fine.html')
     if not fp:
+        if os.environ.get('WF_GATE_STAGE') != 'post-pick':
+            # the fine round nudges the pick — it is emitted after the
+            # pick exists, so pre-pick the file legitimately is not
+            # there yet
+            return []
         return ['P.18 preview/fine.html missing — the fine knob-nudge '
                 'round is produced after the look round, never skipped']
     stub = None
@@ -6046,17 +6146,14 @@ def check_mobile_cta(ctx):
         css = re.sub(r'<!--.*?-->', '', txt, flags=re.S)
         parsed = parse_html(txt)
         has_cta = re.search(r'class="[^"]*(?:cta|btn|button)', txt, re.I)
-        for m in re.finditer(
-                r'([^{}]+)\{([^}]*)(?:min-height|height)\s*:\s*(\d+)px',
-                css):
-            sel = m.group(1)
-            if re.search(r'\b(btn|cta|button)\b', sel, re.I) \
-                    and int(m.group(3)) < 48 and 'min-height' in m.group(0):
-                f.append(f'R.9 {name}: CTA {sel.strip()[:40]} '
-                         f'min-height {m.group(3)}px < 48px')
-        mobile = ' '.join(m.group(1) for m in re.finditer(
-            r'@media[^{]*max-width:\s*(?:768|767|640|480|375)px[^{]*\{'
-            r'((?:[^{}]|\{[^}]*\})*)\}', css))
+        cta_sel = re.compile(r'\b(btn|cta|button)\b', re.I)
+        for sel, px in _rule_min_heights(css, cta_sel, 48):
+            f.append(f'R.9 {name}: CTA {sel[:40]} '
+                     f'min-height {px}px < 48px')
+        mobile = ' '.join(body for prelude, body in _media_blocks(css)
+                          if re.search(
+                              r'max-width:\s*(?:768|767|640|480|375)px',
+                              prelude))
         if has_cta and 'cta' in css.lower() and mobile and not re.search(
                 r'(?:cta|btn|button)[^,{}]*\{[^}]*'
                 r'(?:display:\s*flex|width:\s*100%|inline-size:\s*100%)',
@@ -6769,15 +6866,13 @@ def check_tap_size(ctx):
     f = []
     for p, txt in ctx.page_htmls() + dist_csss(ctx):
         # best-effort: interactive selectors with declared height < 44
-        for m in re.finditer(
-                r'([^{}]+)\{([^}]*)(?:min-height|height)\s*:\s*(\d+)px',
-                txt):
-            sel, px = m.group(1), int(m.group(3))
-            if re.search(r'\b(a|button|input|select|summary)\b', sel) \
-                    and px < 44 and 'min-height' in m.group(0):
-                f.append(f'R.6 {os.path.basename(p)}: {sel.strip()[:40]} '
-                         f'min-height {px}px < 44px')
+        ia_sel = re.compile(r'\b(a|button|input|select|summary)\b')
+        for sel, px in _rule_min_heights(txt, ia_sel, 44):
+            f.append(f'R.6 {os.path.basename(p)}: {sel[:40]} '
+                     f'min-height {px}px < 44px')
     return f
+
+
 
 def _segmented(ctx):
     """Per page: parsed html + block list (sections/nav with data-sec)."""
@@ -6811,7 +6906,8 @@ CHROME_SECS = {'nav', 'header', 'footer', 'legal', 'cookie'}
 def _is_chrome(s):
     sec = str(s.get('data-sec') or '')
     comp = str(s.get('data-comp') or '')
-    return sec in CHROME_SECS or comp in ('nav-bar', 'footer-bar')
+    return sec in CHROME_SECS or comp in ('nav-bar', 'footer-bar',
+                                          'flyout-nav')
 
 def check_segment_region(ctx):
     f = []
@@ -7075,7 +7171,8 @@ COMP_ARCHETYPE = {
     'badge-center': 'stacked-center', 'capture-form': 'split-form',
     'map-finder': 'split-media', 'app-band': 'split-media',
     'hero-act-merge': 'split-form', 'nav-bar': 'horizontal-band',
-    'footer-bar': 'horizontal-band',
+    'footer-bar': 'horizontal-band', 'flyout-nav': 'horizontal-band',
+    'modal-form': 'split-form',
 }
 CONTRACT_SCHEMA = 'section-contract/v1'
 # Anchored with the trailing dash so prose/place-*/pointer-events-*/
@@ -7115,6 +7212,7 @@ def _stub_for(ctx, name, index):
 # banks fill the gaps its catalog lacks)
 RECIPE_FOR_COMP = {
     'nav-bar': 'bricksmaven/headers/header-1',
+    'flyout-nav': 'bricksmaven/headers/header-21',
     'stacked-hero': 'bricksmaven/hero/hero-1',
     'full-bleed': 'bricksmaven/hero/hero-99',
     'hero-act-merge': 'bricksmaven/hero/hero-99',
@@ -7151,7 +7249,8 @@ def build_contracts(ctx):
             break
     _chrome = lambda r: (
         'chrome' in (r.get('speech_act') or []) or
-        str(r.get('composition') or '') in ('nav-bar', 'footer-bar'))
+        str(r.get('composition') or '') in ('nav-bar', 'footer-bar',
+                                            'flyout-nav'))
     h1_owner = next((i for i, (_, r) in enumerate(rows)
                      if str(r.get('intent') or '') == 'hero'
                      and not _chrome(r)),
@@ -8970,7 +9069,7 @@ def check_layout_options(ctx):
     txt = ctx.read('preview/layouts.html')
     if txt is None:
         return f                      # picker not produced yet
-    chrome = ('nav-bar', 'footer-bar', 'form-panel')
+    chrome = ('nav-bar', 'footer-bar', 'form-panel', 'flyout-nav')
     rows_by_sec = {r.get('name'): r for _, r in ctx.rows()}
     # the card's section markup is the BUILT page it iframes
     pages = _shell_card_pages(os.path.join(
@@ -9657,7 +9756,7 @@ def _corpus_texts(ctx, cp):
     return out
 
 
-_CHROME_COMP = ('nav-bar', 'footer-bar', 'form-panel')
+_CHROME_COMP = ('nav-bar', 'footer-bar', 'form-panel', 'flyout-nav')
 
 
 def _chrome_texts(ctx):
@@ -11024,9 +11123,19 @@ def _check_pool(checks, ctx):
             return [f'{chk.__name__} errored: {e}']
     if not checks:
         return []
-    with ThreadPoolExecutor(max_workers=min(8, len(checks))) as ex:
-        results = list(ex.map(call, checks))
-    return list(zip(checks, results))
+    res = {}
+    # mutating checks (check_astro_build rewrites dist/) run serially
+    # before the read pool — a reader measuring dist mid-build sees a
+    # torn artifact (404/transparent), never a verdict on the design
+    readers = []
+    for chk in checks:
+        if getattr(chk, '_mutates', False):
+            res[chk] = call(chk)
+        else:
+            readers.append(chk)
+    with ThreadPoolExecutor(max_workers=min(8, len(readers))) as ex:
+        res.update(zip(readers, ex.map(call, readers)))
+    return [(chk, res[chk]) for chk in checks]
 
 
 def run_wave(ctx):
@@ -12066,8 +12175,8 @@ REDTEAM_MUTATIONS = [
    'image-led-ratio: balanced', 'image-led-ratio: image-led'),)),
  ('RT-J8-UNDECLARED', 'J.8', (
   ('REPL', 'site/dist/home/index.html',
-   'data-seam="tonal"',
-   'data-seam="tonal" data-seam-shape-top="wave"'),)),
+   'data-seam="whitespace"',
+   'data-seam="whitespace" data-seam-shape-top="wave"'),)),
  ('RT-J8-MISMATCH', 'J.8', (
   ('REPL', 'DESIGN-PLAN.md',
    'seam-shape: flat', 'seam-shape: wave'),
@@ -13014,6 +13123,8 @@ COMP_ARCH = {
     'app-band': ('split-media',),
     'hero-act-merge': ('split-media', 'stacked-center'),
     'link-grid': ('editorial-single', 'table-matrix'),
+    'flyout-nav': ('horizontal-band',),
+    'modal-form': ('split-form',),
     'carousel-track': ('carousel-track',),
     'table-matrix': ('table-matrix',),
     'form-inline': ('split-form',),
@@ -13078,7 +13189,8 @@ def check_genotype(ctx):
         for slug, row in ctx.rows():
             acts = str((row or {}).get('speech_act') or '')
             comp = str((row or {}).get('composition') or '')
-            if 'chrome' in acts or comp in ('nav-bar', 'footer-bar'):
+            if 'chrome' in acts or comp in ('nav-bar', 'footer-bar',
+                                            'flyout-nav'):
                 continue
             for c in [x.strip() for x in comp.split('+') if x.strip()]:
                 if not _arch_ok(c, arch):
@@ -13601,7 +13713,7 @@ def _independent_sections(ctx):
         if isinstance(acts, str):
             acts = [acts]
         if 'chrome' in acts or str(r.get('composition') or '') in \
-                ('nav-bar', 'footer-bar'):
+                ('nav-bar', 'footer-bar', 'flyout-nav'):
             continue
         out.append((slug, r))
     return out
@@ -14048,7 +14160,7 @@ def check_block_trace(ctx):
     return f
 
 
-CHROME_COMPS = ('nav-bar', 'footer-bar')
+CHROME_COMPS = ('nav-bar', 'footer-bar', 'flyout-nav')
 
 
 def _content_ids(ctx):

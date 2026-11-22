@@ -137,7 +137,7 @@ pages:
     layout_family: conversion
     rhetoric: [promise, proof, how, act]
     sections:
-      - {name: nav, wf_ref: "cards/index.html#d1:nav", recipe: "brixies/bottom-navigation-bar/bot-nav-1.topo", speech_act: [chrome], category: headers, surface: base, density: compact, composition: nav-bar, emphasis: nav, align: center-axis, stack: text-first, collapse: burger, media_ratio: none, disclosure: open, intent: chrome, items: [{label: "Service", href: "/service"}], cta: {label: "Book now", href: "/book"}, refs: [mobbin-abc123]}
+      - {name: nav, wf_ref: "cards/index.html#d1:nav", recipe: "bricksmaven/headers/header-21", speech_act: [chrome], category: headers, surface: base, density: compact, composition: flyout-nav, emphasis: nav, align: center-axis, stack: text-first, collapse: burger, media_ratio: none, disclosure: open, intent: chrome, items: [{label: "Service", href: "/service"}], cta: {label: "Book now", href: "/book"}, refs: [mobbin-abc123]}
       - {name: hero, wf_ref: "cards/index.html#d1:hero", recipe: "brixies/banner-section/banner-1.topo", speech_act: [promise, act], category: hero, surface: base, density: spacious, composition: split-media, emphasis: headline, align: col-1-edge, stack: text-first, collapse: stacked, media_ratio: "16:9", disclosure: open, intent: hero, copy_ref: lede, cta: {label: "Book now", href: "/book"}, refs: [mobbin-abc124, mobbin-abc125], content_ids: [c-h1], vector: [{heading: "Testing Site", fs: "Testing is the thing."}]}
       - {name: services, wf_ref: "cards/index.html#d1:services", recipe: "hyperui/marketing/feature-grids/1", speech_act: [detail], category: content, surface: muted, density: regular, composition: cards-n, emphasis: answer, align: col-1-edge, stack: text-first, collapse: "2-col", media_ratio: none, disclosure: open, intent: definition, copy_ref: b01, refs: [mobbin-def456, mobbin-def457], content_ids: [c-def], vector: [{heading: "What is testing?", fs: "Testing is the thing."}]}
       - {name: proof, wf_ref: "cards/index.html#d1:proof", recipe: "hyperui/marketing/testimonials/1", speech_act: [proof], category: content, surface: base, density: regular, composition: quote-grid, emphasis: voices, align: col-1-edge, stack: text-first, collapse: "3-col", media_ratio: none, disclosure: open, intent: proof, copy_ref: b02, refs: [mobbin-def458], content_ids: [c-proof], vector: [{heading: "What clients say", fs: "Twelve thousand cleans, and counting."}]}
@@ -267,9 +267,9 @@ MOBBIN = '''# MOBBIN-REFS — consulted before direction (W1) and per compositio
 | https://mobbin.com/screens/ghi789 | screen | home · form-panel · field stack | w1 |
 | https://mobbin.com/screens/ghi790 | screen | home · form-panel · label placement | w1 |
 | https://mobbin.com/screens/ghi791 | section | home · form-panel · submit emphasis | w1 |
-| https://mobbin.com/screens/jkl012 | screen | home · nav-bar · sticky bar | w1 |
-| https://mobbin.com/screens/jkl013 | screen | home · nav-bar · nav CTA | w1 |
-| https://mobbin.com/screens/jkl014 | section | home · nav-bar · logo scale | w1 |
+| https://mobbin.com/screens/jkl012 | screen | home · flyout-nav · sticky bar | w1 |
+| https://mobbin.com/screens/jkl013 | screen | home · flyout-nav · nav CTA | w1 |
+| https://mobbin.com/screens/jkl014 | section | home · flyout-nav · logo scale | w1 |
 | https://mobbin.com/screens/mno345 | screen | home · footer-bar · footer density | w1 |
 | https://mobbin.com/screens/mno346 | section | home · footer-bar · legal row | w1 |
 | https://mobbin.com/screens/mno347 | screen | home · footer-bar · contact block | w1 |
@@ -1111,6 +1111,7 @@ BASE = {
         'cards-n': {'vh_iqr': [0.5, 1.2]},
         'form-panel': {'vh_iqr': [0.6, 1.4]},
         'nav-bar': {'vh_iqr': [0.2, 0.8]},
+        'flyout-nav': {'vh_iqr': [0.2, 0.8]},
         'footer-bar': {'vh_iqr': [0.5, 1.2]}}}),
     'SOP-CONSTANTS.json': json.dumps({
         'dataset': 'sop-adherence.json',
@@ -1340,7 +1341,7 @@ MUT = {
      ('REPL','site/dist/home/index.html',
       '</main>','<img src="/x.png" alt="a"></main>')),
  'check_logo': mut(('REPL','site/dist/home/index.html',
-     'class="brand-mark logo"','class="logo"')),
+     'class="logo brand-mark"','class="logo"')),
  'check_accent_surfaces': mut(('REPL','site/dist/home/index.html',
      'surface-muted','surface-inverse')),
  'check_landmarks': mut(('REPL','site/dist/home/index.html',
@@ -1507,7 +1508,7 @@ MUT = {
  'check_section_gates': mut(('SET','sections/01-hero.gate.json',
     '{"section": "hero", "pass": false, "failures": ["seeded"]}')),
  'check_exemplars': mut(('REPL','site/src/components/sections/Nav.astro',
-    'exemplar: nav-bar','exemplar: bogus')),
+    'exemplar: flyout-nav','exemplar: bogus')),
  'check_assembly': mut(('REPL','site/src/pages/home.astro',
     '<Hero />','<Hero2 />')),
  'check_rhythm_render': mut(('REPL','site/dist/home/index.html','surface-inverse','surface-base'),

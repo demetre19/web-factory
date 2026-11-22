@@ -47,16 +47,16 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
 <div class="wf-header-8">
   <div class="sec-inner">
     <div class="bm-header-8__topbar">
-      {list.length > 0 && <nav class="nav-links" aria-label="Primary"><ul class="row gap-fluid-m list-plain">{(list || []).map((it) => <li><a class="nav-link" href={it.href}>{it.label || it.term || it.title || it.text}</a></li>)}</ul></nav>}
-      {list.length > 0 && <button class="burger wf-cta-button" type="button" aria-label="Menu">Menu</button>}
+      {list.length > 0 && <nav class="nav-links" aria-label="Primary"><button class="nav-close" type="button" aria-label="Close menu">&times;</button><ul class="row gap-fluid-m list-plain">{(list || []).map((it) => <li><a class="nav-link" href={it.href}>{it.label || it.term || it.title || it.text}</a></li>)}</ul></nav>}
+      {list.length > 0 && <button class="burger" type="button" aria-label="Menu"><span aria-hidden="true">&#9776;</span></button>}
     </div>
     <div class="bm-header-8__container row between">
       <div>
         <span class="logo brand-mark">{brand}</span>
       </div>
       <div>
-        {list.length > 0 && <nav class="nav-links" aria-label="Primary"><ul class="row gap-fluid-m list-plain">{(list || []).map((it) => <li><a class="nav-link" href={it.href}>{it.label || it.term || it.title || it.text}</a></li>)}</ul></nav>}
-        {list.length > 0 && <button class="burger wf-cta-button" type="button" aria-label="Menu">Menu</button>}
+        {list.length > 0 && <nav class="nav-links" aria-label="Primary"><button class="nav-close" type="button" aria-label="Close menu">&times;</button><ul class="row gap-fluid-m list-plain">{(list || []).map((it) => <li><a class="nav-link" href={it.href}>{it.label || it.term || it.title || it.text}</a></li>)}</ul></nav>}
+        {list.length > 0 && <button class="burger" type="button" aria-label="Menu"><span aria-hidden="true">&#9776;</span></button>}
       </div>
     </div>
   </div>

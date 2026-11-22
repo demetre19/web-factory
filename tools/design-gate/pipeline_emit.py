@@ -811,10 +811,14 @@ def main(argv):
     cdir = os.path.join(ctx.site, 'src', 'components')
     ckeep = {comp + '.astro' for comp in comps} | {'Section.astro'}
     pages_root = os.path.join(ctx.site, 'src', 'pages')
+    # system.astro/design-system.astro are rewritten from `comps`
+    # later in this same emit — their on-disk imports are one emit
+    # behind, so honoring them would pin a retired comp forever
+    regen = {'system.astro', 'design-system.astro'}
     if os.path.isdir(pages_root):
         for dpth, _, fns in os.walk(pages_root):
             for fn in fns:
-                if not fn.endswith('.astro'):
+                if not fn.endswith('.astro') or fn in regen:
                     continue
                 for m in re.finditer(
                         r"components/([\w.-]+)\.astro",
@@ -859,7 +863,7 @@ def main(argv):
     indep = [str(r.get('name')) for _, r in rows
              if 'chrome' not in (r.get('speech_act') or [])
              and str(r.get('composition') or '')
-             not in ('nav-bar', 'footer-bar')]
+             not in ('nav-bar', 'footer-bar', 'flyout-nav')]
     lanes = ([{'id': f'sec-{n}', 'kind': 'section', 'section': n,
                'model_lane': 'cheap'} for n in indep] +
              [{'id': 'orchestrate', 'kind': 'orchestrator',

@@ -3,7 +3,7 @@
 
 Site type **services** · vibe **approachable / calm** (dependable, orderly, plain-spoken) · first paint **light**, follows OS: **False**, dark toggle: **True**
 
-DNA hashes: look `f33934ff1986` · structure `77945db23270` · status **v0 (unlocked until the operator approves the look at w4)**
+DNA hashes: look `f0dddea6ee69` · structure `4fcb216ec80b` · status **v0 (unlocked until the operator approves the look at w4)**
 
 ## Colour — light (default)
 
@@ -37,7 +37,7 @@ DNA hashes: look `f33934ff1986` · structure `77945db23270` · status **v0 (unlo
 
 - Family: **Satoshi** (display + body) — DISCOVERY.fonts (live site) · files: Fontshare · ITF Free Font License
 - Stack: `"Satoshi", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif`
-- Weights: 400, 700 · display weight 700 · tracking -0.005em
+- Weights: 400, 700 · display weight 700 · tracking -0.04em
 
 ## Fluid sizes (Automatic.css fluidClamp — clamp.py)
 
@@ -88,64 +88,64 @@ Stops: text-xs 11px · text-s 12px · h5 12px · h6 11px. Pinned live values: te
 
 | Knob | Value |
 |---|---|
-| space.density_scale | space-m |
+| space.density_scale | space-s |
 | space.section_py | compact→section-space-s, regular→section-space-m, spacious→section-space-l |
-| grid.gutter | space-l |
+| grid.gutter | space-s |
 | width.inner_rung | 60 |
 | radius.personality | 10px |
-| elevation.level | 1 |
+| elevation.level | 0 |
 | motion.level | subtle |
 | motion.engine | css |
-| btn.size | m |
-| btn.padding_ratio | 2.0 |
-| color.accent_usage | cta-only |
-| image.treatment | editorial-crop |
+| btn.size | s |
+| btn.padding_ratio | 1.5 |
+| color.accent_usage | cta+motif+links |
+| image.treatment | cinematic |
 
 | CSS var | Value |
 |---|---|
 | `--radius` | `0.625rem` |
-| `--gap` | `clamp(1.5rem, calc(0.625vw + 1.375rem), 1.875rem)` |
-| `--pad-block` | `clamp(4.5rem, calc(5vw + 3.5rem), 7.5rem)` |
+| `--gap` | `clamp(1.1253rem, calc(0.2079vw + 1.0837rem), 1.25rem)` |
+| `--pad-block` | `clamp(3.3758rem, calc(2.7069vw + 2.8345rem), 5rem)` |
 | `--f-display` | `clamp(1.728rem, calc(3.4481vw + 1.0384rem), 3.7969rem)` |
 | `--f-body` | `clamp(1rem, calc(0.2083vw + 0.9583rem), 1.125rem)` |
-| `--shadow` | `0 2px 8px rgb(0 0 0 / 10%)` |
+| `--shadow` | `none` |
 | `--btn-pad` | `0.75em 1.5em` |
 
 ## Genotype (structure + look genes)
 
 | Gene | Allele | Source |
 |---|---|---|
-| layout-archetype | stacked-center | profile-services sample |
-| page-macro-structure | promise-detail-act | profile-services sample |
-| density-tier | regular | profile-services sample |
-| image-led-ratio | text-led | profile-services sample |
-| type-contrast | medium | profile-services sample |
+| layout-archetype | horizontal-band | profile-services sample |
+| page-macro-structure | promise-proof-how-act | profile-services sample |
+| density-tier | compact | profile-services sample |
+| image-led-ratio | balanced | profile-services sample |
+| type-contrast | high | profile-services sample |
 | display-face | sans | profile-services sample |
 | radius-personality | soft | profile-services sample |
-| surface-rhythm | one-contrast-moment | profile-services sample |
-| cta-restraint | single-primary | profile-services sample |
-| cta-rank | none | profile-services sample |
-| disclosure-tier | open | profile-services sample |
+| surface-rhythm | dark-dominant | profile-services sample |
+| cta-restraint | multi | profile-services sample |
+| cta-rank | hero | profile-services sample |
+| disclosure-tier | carousel | profile-services sample |
 | nav-pattern | bar | profile-services sample |
 | motion-tier | subtle | profile-services sample |
-| proof-type | none | profile-services sample |
-| media-treatment | none | profile-services sample |
-| columns | 2 | profile-services sample |
-| heading-form | claim | profile-services sample |
-| whitespace-band | airy | profile-services sample |
-| gallery-mode | single-hero | profile-services sample |
+| proof-type | testimonials | profile-services sample |
+| media-treatment | photo | profile-services sample |
+| columns | 1 | profile-services sample |
+| heading-form | query | profile-services sample |
+| whitespace-band | tight | profile-services sample |
+| gallery-mode | grid | profile-services sample |
 | form-presence | none | profile-services sample |
 | mood-energy | calm | DISCOVERY.vibe (matched “contract”) |
 | mood-register | approachable | DISCOVERY.vibe (matched “contract”) |
-| image-style | editorial | profile-services sample |
-| trend | none | profile-services sample |
+| image-style | luxury | profile-services sample |
+| trend | resonant-stark | profile-services sample |
 | seam-shape | flat | profile-services dominant (not sampled by derive) |
 | ornament | none | profile-services dominant (not sampled by derive) |
 
 ## Components (what the genotype allows)
 
-- Nav: `bar` · CTA: `single-primary` (one primary action) · accent use: `cta-only`
-- Hero archetype: `stacked-center` · page macro: `promise-detail-act` · image ratio: `text-led`
-- Surfaces: `one-contrast-moment` — one brand/inverse moment per page, the rest alternate canvas/surface
-- Proof: `none` (no logos, quotes or stats unless the copy sources them)
-- Disclosure: `open` · forms: `none` · radius: `soft`
+- Nav: `bar` · CTA: `multi` (one primary action) · accent use: `cta+motif+links`
+- Hero archetype: `horizontal-band` · page macro: `promise-proof-how-act` · image ratio: `balanced`
+- Surfaces: `dark-dominant` — one brand/inverse moment per page, the rest alternate canvas/surface
+- Proof: `testimonials` (no logos, quotes or stats unless the copy sources them)
+- Disclosure: `carousel` · forms: `none` · radius: `soft`

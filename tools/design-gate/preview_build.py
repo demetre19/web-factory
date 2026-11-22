@@ -130,6 +130,9 @@ def _option_comps(ctx):
 
 
 
+_SEM_SCOPE_CACHE = {}
+
+
 def _semantic_scope(tok, merged):
     """Project a knob vector to the semantic --var overrides the token
     layer actually emits: run emit_tokens.emit + _base_css on a
@@ -151,7 +154,14 @@ def _semantic_scope(tok, merged):
     def decls(css):
         return dict(re.findall(r'(--[\w-]+)\s*:\s*([^;{}]+);', css))
     base_knobs = dict(tok.get('knobs') or {})
+    # emit_for is pure in (tok, kn) and assemble_fine probes ~19
+    # knob nudges through it — the base decls are identical every
+    # call, so memoize per token record
+    cache = _SEM_SCOPE_CACHE.setdefault(id(tok), {})
     def emit_for(kn):
+        key = json.dumps(kn, sort_keys=True)
+        if key in cache:
+            return cache[key]
         tv = json.loads(json.dumps(tok or {}))
         tv['knobs'] = kn
         if kn != base_knobs:
@@ -170,7 +180,8 @@ def _semantic_scope(tok, merged):
                 else:
                     res[k] = v1              # enum aliases map absolute
             tv['fluid'] = res
-        return ET.emit(tv) + emit_global._base_css(tv)
+        cache[key] = ET.emit(tv) + emit_global._base_css(tv)
+        return cache[key]
 
     b = decls(emit_for(base_knobs))
     v = decls(emit_for({**base_knobs, **merged}))
@@ -323,10 +334,27 @@ def _system_astro(ctx, comps):
 
 def _build(ctx):
     """Clone the vendored toolchain + astro build once. Returns
-    (ok, message). WF_DEFER_BUILD skips the toolchain+build entirely —
-    callers set it when this emit's dist output is never consumed
-    (a following emit's build covers every preview page, or the emit
-    runs inside a byte-compare replay)."""
+    (ok, message). WF_DEFER_BUILD=1 skips the build — used by
+    repro, which runs the picker emits back-to-back and lets the
+    LAST one's single astro build cover every preview page
+    (astro always builds all of src/pages)."""
+    # a preview page survives from an earlier plan/DNA — when the comp
+    # it imports is no longer emitted, the page is stale and its
+    # unresolved import fails the whole build. Prune it; every live
+    # page is re-written by the emit that just ran.
+    cdir = os.path.join(ctx.site, 'src', 'components')
+    have = set(os.listdir(cdir)) if os.path.isdir(cdir) else set()
+    pdir = os.path.join(ctx.site, 'src', 'pages', 'preview')
+    if os.path.isdir(pdir):
+        for fn in os.listdir(pdir):
+            if not fn.endswith('.astro'):
+                continue
+            p = os.path.join(pdir, fn)
+            refs = re.findall(r"components/([\w.-]+\.astro)",
+                              open(p, encoding='utf-8',
+                                   errors='replace').read())
+            if any(rf not in have for rf in refs):
+                os.remove(p)
     if os.environ.get('WF_DEFER_BUILD'):
         return True, ''
     ok = PE._toolchain(ctx)
