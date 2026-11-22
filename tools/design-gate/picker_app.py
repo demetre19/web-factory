@@ -41,6 +41,7 @@ except ImportError:
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 import gate as G
+from emit_global import floor_gaps  # G.floor — ≥1rem sibling gaps
 
 # ------------------------------------------------------------------
 # element galleries — which bank compositions each rail item shows
@@ -3746,18 +3747,27 @@ def emit_bank_previews(pd):
     outdir = os.path.join(pd, 'site', 'dist', 'preview', 'bank')
     os.makedirs(outdir, exist_ok=True)
     css_dst = os.path.join(outdir, 'bank-preview.css')
-    if os.path.isfile(css_src) and (
-            not os.path.isfile(css_dst) or
-            os.path.getmtime(css_src) > os.path.getmtime(css_dst)):
+    # unconditional rewrite — the 1rem gap floor applies on copy, so
+    # a same-mtime stale css must still pick it up on re-emit
+    if os.path.isfile(css_src):
         with open(css_src, 'rb') as fi:
             blob = fi.read()
         with open(css_dst, 'wb') as fo:
-            fo.write(blob)
+            fo.write(floor_gaps(blob.decode('utf-8',
+                                        'replace')).encode('utf-8'))
     extra, dark_extra = _bank_fallback_css()
     extra_dst = os.path.join(outdir, 'bank-preview-extra.css')
     with open(extra_dst, 'w') as fh:
         fh.write('/* generated fallback utilities — vendored '
-                 'tailwind v3 dialect gaps */\n' + extra)
+                 'tailwind v3 dialect gaps */\n' + floor_gaps(extra)
+                 # G.floor catch-all — layered so every declared gap
+                 # (bank-preview.css utilities, fragment styles,
+                 # inline style=) wins; it only arms a container that
+                 # never declared one (operator: EVERY layout ≥1rem)
+                 + '\n@layer wf_floor {\n'
+                 '.wf-page :where(:has(> :nth-child(2))),'
+                 '.wf-stage :where(:has(> :nth-child(2)))'
+                 '{gap:1rem}}\n')
     dark_dst = os.path.join(outdir, 'bank-preview-dark.css')
     with open(dark_dst, 'w') as fh:
         fh.write('/* generated light-utility → dark-role map — '
@@ -3828,7 +3838,7 @@ def emit_bank_previews(pd):
                     (os.path.isfile(css_dst) and
                      os.path.getmtime(css_dst) >
                      os.path.getmtime(dst)) or \
-                    '<!--wf:bank:v16-->' not in open(
+                    '<!--wf:bank:v17-->' not in open(
                         dst, encoding='utf-8',
                         errors='replace').read(64)
                 if stale:
@@ -3849,6 +3859,10 @@ def emit_bank_previews(pd):
                     frag = re.sub(
                         r'<script[^>]*_aistudio-iframe[^>]*>'
                         r'\s*</script>', '', frag)
+                    # G.floor — the fragment's own <style> blocks and
+                    # inline style= attributes carry gap declarations
+                    # the external css pass never sees
+                    frag = floor_gaps(frag)
                     fx = cls.startswith(('fx-', 'imgfx-', 'mobfx-'))
                     if fx:
                         frag = _fx_strip_freeze(frag)
@@ -3878,12 +3892,12 @@ def emit_bank_previews(pd):
                     # surfaces — the stage underlay binds their
                     # intended surface or light text sits on the
                     # light frame (E1 readability)
-                    css_ = _BANK_STAGE_CSS + (
+                    css_ = floor_gaps(_BANK_STAGE_CSS + (
                         'body{padding:0}' if page else '') + (
                         'body{background:#0b0e14}'
-                        if row.get('mode') == 'dark' else '')
+                        if row.get('mode') == 'dark' else ''))
                     with open(dst, 'w', encoding='utf-8') as fh:
-                        fh.write('<!--wf:bank:v16-->' +
+                        fh.write('<!--wf:bank:v17-->' +
                                  _doc(head, '', stage,
                                       extra=(_STAGE_SCROLL_SHIM
                                              if not page else '') +

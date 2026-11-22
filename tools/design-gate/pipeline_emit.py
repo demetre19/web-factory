@@ -246,7 +246,11 @@ def _bank_copy(ctx, comp, recipe):
     os.makedirs(os.path.dirname(dst), exist_ok=True)
     shutil.copyfile(src, dst)
     css = os.path.join(BANK, cat, stem + '.css')
-    return _read(css) if os.path.isfile(css) else ''
+    # G.floor — every consumer of bank skeleton css (global.css
+    # append, preview-bank.css for lo-* docs) inherits the 1rem gap
+    # floor at the copy, not per call site
+    return emit_global.floor_gaps(
+        _read(css)) if os.path.isfile(css) else ''
 
 
 COPY_BLOCK_KEYS = ('answer', 'before', 'items', 'list_ordered', 'qa',

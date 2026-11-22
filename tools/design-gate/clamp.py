@@ -339,11 +339,15 @@ def aliases(s=None, radius_rem=None):
     (emit_tokens._radius_map) — the ONE radius source; a live ACSS
     radius reaches it only via dna_from_discovery's knob snap."""
     s = s or settings()
-    out = {'grid-gap': f"var(--{s['grid_gap']})",
-           'content-gap': f"var(--{s['content_gap']})",
-           'elements-gap': f"var(--{s['elements_gap']})",
-           'container-gap': f"var(--{s['container_gap']})",
-           'list-item-spacing': f"var(--{s['list_item_spacing']})",
+    # G.floor — gap-bound tokens never resolve under 1rem at any
+    # viewport: the floor is emitted at the alias so every binder
+    # inherits it (operator rule: every layout ≥1rem gap)
+    out = {'grid-gap': f"max(1rem, var(--{s['grid_gap']}))",
+           'content-gap': f"max(1rem, var(--{s['content_gap']}))",
+           'elements-gap': f"max(1rem, var(--{s['elements_gap']}))",
+           'container-gap': f"max(1rem, var(--{s['container_gap']}))",
+           'list-item-spacing':
+               f"max(1rem, var(--{s['list_item_spacing']}))",
            # D: measure tracks the type knob — a denser family reads
            # a narrower column (28 + 2×base → 60ch at the 16px ACSS
            # default, 64ch at 18, 68ch at 20, 56ch at 14)

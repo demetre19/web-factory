@@ -1557,6 +1557,10 @@ MUT = {
      k: files[k] + '\n.zgap-stack{display:flex}' for k in list(files)
      if k == 'site/src/styles/global.css' or
      k.startswith('site/dist/_astro/') and k.endswith('.css')})),
+ 'check_section_pad': (lambda files: files.update({
+     k: files[k] + '\n.sec-band{padding-block:0}' for k in list(files)
+     if k == 'site/src/styles/global.css' or
+     k.startswith('site/dist/_astro/') and k.endswith('.css')})),
  'check_type_scale_min': (lambda files: files.update({
      k: files[k] + '\n:root{--h2:clamp(1rem,1rem,1rem);'
      '--h3:clamp(1rem,1rem,1rem)}' for k in list(files)

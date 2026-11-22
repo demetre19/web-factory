@@ -121,10 +121,25 @@ _RENDER_JS = r"""() => {
     checked++;
     if (L < 4.5) low++;
   }
+  // gap floor — every flex/grid container with ≥2 visible siblings
+  // must resolve row-gap/column-gap ≥16px (a lone child may sit at 0)
+  let gapLow = 0;
+  const vis = e => {const r = e.getBoundingClientRect();
+    return r.width > 0 && r.height > 0};
+  for (const el of root.querySelectorAll(
+      '*:not(style):not(script):not(noscript)')) {
+    const cs = getComputedStyle(el);
+    if (!/flex|grid/.test(cs.display)) continue;
+    const kids = [...el.children].filter(vis);
+    if (kids.length < 2) continue;
+    const rg = parseFloat(cs.rowGap), cg = parseFloat(cs.columnGap);
+    if ((isFinite(rg) && rg < 15.9) ||
+        (isFinite(cg) && cg < 15.9)) gapLow++;
+  }
   const r = root.getBoundingClientRect();
   const kid = root.firstElementChild;
   const kr = kid ? kid.getBoundingClientRect() : r;
-  return {clip, low, checked,
+  return {clip, low, checked, gapLow,
           inset: {l: kr.left - r.left, t: kr.top - r.top,
                   r: r.right - kr.right, b: r.bottom - kr.bottom},
           stage: !!document.querySelector('.wf-stage')};
@@ -145,8 +160,11 @@ with sync_playwright() as p:
         u = rt.request.url
         if u.startswith('file:///built/'):
             fp = urllib.parse.unquote(u[len('file:///built/'):])
-            if os.path.isfile('/' + fp.lstrip('/')):
-                return rt.fulfill(path='/' + fp.lstrip('/'))
+            # /built/<abs-path> and /built/<repo-relative> both occur
+            for c in (fp, '/' + fp.lstrip('/'),
+                      os.path.join(REPO, fp)):
+                if os.path.isfile(c):
+                    return rt.fulfill(path=c)
             return rt.fulfill(status=404, body='nf')
         rt.continue_()
     pg.route('**', _route)
@@ -163,6 +181,14 @@ with sync_playwright() as p:
             pg.wait_for_timeout(600)
             a = pg.evaluate(__RENDER_JS__)
             a['req_failed'] = len(set(failed))
+            # gap floor at 768 + 390 — same load, viewport resize
+            a['gaps'] = {'1280': a['gapLow']}
+            for vw in (768, 390):
+                pg.set_viewport_size({'width': vw, 'height': 860})
+                pg.wait_for_timeout(150)
+                a['gaps'][str(vw)] = pg.evaluate(
+                    __RENDER_JS__)['gapLow']
+            pg.set_viewport_size({'width': 1280, 'height': 860})
             if '/fx-' in rel:
                 s0 = pg.screenshot()
                 pg.wait_for_timeout(1000)
@@ -207,11 +233,14 @@ def main():
     insets = [k for k, v in res.items()
               if v.get('stage') and not v.get('error') and
               min((v.get('inset') or {}).values()) < 16]
+    gaps = {k: v['gaps'] for k, v in res.items()
+            if any((v.get('gaps') or {}).values())}
     lows = {k: v['low'] for k, v in res.items()
             if v.get('low') and v.get('checked')}
     print(f'{len(res)} docs: {len(errs)} errors, {len(reqs)} failed-'
           f'request docs, {len(clips)} clipped, '
           f'{len(static)} static fx, {len(insets)} tight insets, '
+          f'{len(gaps)} gap<16 docs, '
           f'{len(lows)} low-contrast docs')
     for k in errs:
         print('  ERR', k, errs[k])
@@ -223,6 +252,9 @@ def main():
         print('  STATIC', k)
     for k in insets[:10]:
         print('  INSET', k)
+    for k, v in list(gaps.items())[:15]:
+        print('  GAP', k,
+              ' '.join(f'{vw}:{n}' for vw, n in v.items()))
     for k, v in list(lows.items())[:15]:
         print('  CONTRAST', k, f'{v} low elements')
     return 0 if not (errs or reqs or clips) else 1
