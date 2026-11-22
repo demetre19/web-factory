@@ -1823,22 +1823,6 @@ _SHELL = r"""<!doctype html>
   --accent:#17171a;--accent-ink:#ffffff;
   --ok:#0f9d6b;--bad:#c73e3e;
 }
-#railBtn{display:none}
-@media(max-width:760px){
-  #app{grid-template-columns:1fr}
-  #rail{display:none;position:fixed;top:52px;left:0;bottom:0;
-       width:min(80vw,300px);z-index:50;overflow-y:auto;
-       box-shadow:10px 0 34px rgba(0,0,0,.45)}
-  #rail.open{display:block}
-  #railBtn{display:grid}
-  #top{gap:8px;padding:0 10px}
-  #top .who small{display:none}
-  #dnaPop .panel{right:-40px}
-  .grid{grid-template-columns:1fr}
-  .ingrow{grid-template-columns:1fr}
-  .srow .srh{flex-wrap:wrap}
-}
-@media(min-width:761px){#railBtn{display:none !important}}
 *{box-sizing:border-box}
 html,body{margin:0;height:100%}
 body{font-family:var(--font);background:var(--bg);color:var(--ink);
@@ -2029,6 +2013,25 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
      border:1px solid var(--line);border-radius:var(--r-sm);
      color:var(--accent);text-decoration:none;
      font:500 13px var(--mono);background:var(--panel)}
+#railBtn{display:none}
+@media(max-width:760px){
+  #app{grid-template-columns:1fr}
+  #board{grid-column:auto}
+  #top{grid-column:1/-1}
+  #rail{display:none;position:fixed;top:52px;left:0;bottom:0;
+       width:min(80vw,300px);z-index:50;overflow-y:auto;
+       box-shadow:10px 0 34px rgba(0,0,0,.45)}
+  #rail.open{display:block}
+  #railBtn{display:grid}
+  #top{gap:8px;padding:0 10px}
+  #top .who small{display:none}
+  #dnaPop .panel{right:-40px}
+  .grid{grid-template-columns:1fr}
+  .ingrow{grid-template-columns:1fr}
+  .srow .srh{flex-wrap:wrap}
+}
+@media(min-width:761px){#railBtn{display:none !important}}
+
 </style>
 </head>
 <body>
@@ -2207,7 +2210,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
     if(c.element==='vibe'&&BAKED===c.variant)isPicked=true;
     if(idx===SEL)cls+=' sel';
     if(isPicked)cls+=' picked';
-    var h='<div class="'+cls+'" data-tags="'+esc(tags.join(' '))+'">';
+    var h='<div class="'+cls+'" data-idx="'+idx+
+          '" data-tags="'+esc(tags.join(' '))+'">';
     h+='<div class="ch"><span class="id">'+esc(c.id)+'</span>'+
        '<span class="nm">'+esc(c.name)+'</span>'+
        (c.score!=null?'<span class="score">'+esc(c.score)+'</span>':'')+'</div>';
@@ -2428,10 +2432,17 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
       ev.preventDefault();return;
     }
     var n=(o.cards||[]).length;if(!n)return;
-    SEL=(SEL+d+n)%n;
     var cs=document.querySelectorAll('#board .card');
-    cs.forEach(function(c,i){c.classList.toggle('sel',i===SEL)});
-    if(cs[SEL])cs[SEL].scrollIntoView({block:'nearest'});
+    var vis=Array.prototype.map.call(cs,
+      function(c){return +c.dataset.idx});
+    var at=vis.indexOf(SEL);
+    at=at<0?(d>0?0:vis.length-1):(at+d+vis.length)%vis.length;
+    SEL=vis.length?vis[at]:SEL;
+    cs.forEach(function(c){
+      c.classList.toggle('sel',+c.dataset.idx===SEL)});
+    var selEl=document.querySelector(
+      '#board .card[data-idx="'+SEL+'"]');
+    if(selEl)selEl.scrollIntoView({block:'nearest'});
     ev.preventDefault();
   });
 
