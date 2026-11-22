@@ -49,7 +49,7 @@ HTTP (127.0.0.1 only, X-WF-Page-Token on every mutation):
     POST /element-pick {pipeline, element, variant}
                                    → signed ELEMENT-PICKS.json row
 """
-import argparse, datetime, hashlib, hmac, json, os, re, secrets, sys
+import argparse, datetime, hashlib, hmac, json, os, re, secrets,     sys, threading
 import urllib.parse
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -85,6 +85,26 @@ _PICKER_FILES = {
 # inside /built pages (/_astro/…, /fonts/…, /media/…) resolve
 # against its site/dist, so iframes render styled on this origin
 _LAST_PD = None
+_EMIT_LOCK = threading.Lock()
+
+
+def _ensure_preview(fp):
+    """A preview doc under <pd>/site/dist/preview/ missing on disk —
+    re-emit that pipeline's previews (app_data emits vibe + section
+    + element + bank docs), then re-check. A wiped or pre-pull dist
+    must self-heal instead of 404ing every frame."""
+    if '/preview/' not in fp or '/site/' not in fp:
+        return
+    pd = fp.split('/site/', 1)[0]
+    if not os.path.isdir(pd):
+        return
+    import picker_app
+    with _EMIT_LOCK:
+        if not os.path.isfile(fp):
+            try:
+                picker_app.app_data(pd)
+            except Exception:
+                pass
 
 
 def _nonces_dir():
@@ -738,6 +758,9 @@ def _handler():
                 F = picker_app.VIBE_FAMILIES.get(fam)
                 fp = urllib.parse.unquote(qpath)
                 fp = os.path.normpath('/' + fp.lstrip('/'))
+                if F and re.search(r'/site/', fp) and \
+                        not os.path.isfile(fp):
+                    _ensure_preview(fp)
                 if not (F and os.path.isfile(fp) and
                         re.search(r'/site/', fp) and
                         fp.lower().endswith(('.html', '.htm'))):
@@ -762,6 +785,9 @@ def _handler():
                 # under the served pipeline's site tree
                 fp = urllib.parse.unquote(q.path[len('/built/'):])
                 fp = os.path.normpath('/' + fp.lstrip('/'))
+                if re.search(r'/site/', fp) and \
+                        not os.path.isfile(fp):
+                    _ensure_preview(fp)
                 if not (os.path.isfile(fp) and
                         re.search(r'/site/', fp)):
                     self._send(404, {'error': 'not found'})
