@@ -1244,7 +1244,10 @@ def _clean_type_spec(spec, fluid):
         except (TypeError, ValueError):
             v = float(dflt)
         return max(lo, min(hi, v))
-    bmin = _n('bmin', 10, 32, float(f.get('text_base_mob') or 16))
+    # bmin < 12 inverts the ladder: text-s/xs and h5/h6 pin at
+    # 11-12px, so a 10px base signs a smaller base rung than its
+    # own small rungs
+    bmin = _n('bmin', 12, 32, float(f.get('text_base_mob') or 16))
     bmax = _n('bmax', 10, 40, float(f.get('text_base_desk') or 18))
     rmin = _n('rmin', 1.0, 1.8, float(f.get('text_scale_mob') or 1.2))
     rmax = _n('rmax', 1.0, 1.9, float(f.get('text_scale_desk') or 1.333))
@@ -1272,8 +1275,8 @@ def _clean_type_spec(spec, fluid):
 def _custom_ladder(fluid, spec):
     """custom editor spec → {rung: clamp css} — base/ratio/viewport
     widths from the spec over the pipeline's fluid record; heading
-    rungs past `steps` re-step at the TEXT ratio so a shallow
-    ladder collapses the small heads. The one math /type-ladder
+    rungs past `steps` collapse onto the smallest kept rung so the
+    count is a real, signed choice. The one math /type-ladder
     previews and the sign path share."""
     if clamp is None:
         return {}
@@ -1290,15 +1293,14 @@ def _custom_ladder(fluid, spec):
     except Exception:
         return {}
     horder = sorted(clamp._HEAD_STEPS, key=lambda k: -clamp._HEAD_STEPS[k])
-    args = (float(f['vp_min']), float(f['vp_max']), clamp._root(f))
-    for name in horder[spec['steps']:]:
-        n = clamp._HEAD_STEPS[name]
-        mn = clamp._stepped(f['text_base_mob'], f['text_scale_mob'], n)
-        mx = clamp._stepped(f['text_base_desk'], f['text_scale_desk'], n)
-        stop = f.get('stop_' + name)
-        rungs[name] = (clamp.fluid_clamp_stop(stop, mn, mx, *args)
-                       if stop else
-                       clamp.fluid_clamp(mn, mx, *args))
+    # steps = distinct heading rungs: heads beyond it collapse to
+    # the smallest kept rung (previously they re-stepped at the
+    # text ratio — identical to the heading ratio in this spec, so
+    # steps never changed the signed vars)
+    if spec['steps'] < len(horder):
+        smallest = horder[spec['steps'] - 1]
+        for name in horder[spec['steps']:]:
+            rungs[name] = rungs[smallest]
     return {k: v for k, v in rungs.items()
             if k.startswith('text-') or re.fullmatch(r'h[1-6]', k)}
 
@@ -6118,7 +6120,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
     return '<div class="tsed" id="tsed"><h2>custom ladder — '+
       'change the parameters</h2><div class="tsgrid">'+
       '<label>base min px<input id="ts-bmin" type="number" '+
-        'step="0.5" min="10" max="32" value="'+
+        'step="0.5" min="12" max="32" value="'+
         dv('bmin','text_base_mob',16)+'"></label>'+
       '<label>base max px<input id="ts-bmax" type="number" '+
         'step="0.5" min="10" max="40" value="'+
@@ -6156,11 +6158,12 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
       '</span></div></div>'}
 
   function tsSpec(){
-    var g=function(id){return document.getElementById(id).value};
-    return {bmin:+g('ts-bmin'),bmax:+g('ts-bmax'),
-      rmin:+g('ts-rmin'),rmax:+g('ts-rmax'),
-      vpmin:+g('ts-vpmin'),vpmax:+g('ts-vpmax'),
-      steps:+g('ts-steps'),
+    var g=function(id){return document.getElementById(id).value},
+        num=function(id){var v=g(id).trim();return v===''?NaN:+v};
+    return {bmin:num('ts-bmin'),bmax:num('ts-bmax'),
+      rmin:num('ts-rmin'),rmax:num('ts-rmax'),
+      vpmin:num('ts-vpmin'),vpmax:num('ts-vpmax'),
+      steps:num('ts-steps'),
       head_face:g('ts-hf')||null,body_face:g('ts-bf')||null}}
 
   var _tsT=null;

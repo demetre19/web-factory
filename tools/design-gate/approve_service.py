@@ -834,6 +834,18 @@ def _handler():
                 if F and re.search(r'/site/', fp) and \
                         not os.path.isfile(fp):
                     _ensure_preview(fp)
+                if F is None and os.path.isfile(fp) and \
+                        re.search(r'/site/', fp):
+                    # a superseded genes:/custom: family (re-pick
+                    # changed the signed variant) — the page exists;
+                    # serve it unframed instead of a 404
+                    self.send_response(302)
+                    self.send_header(
+                        'Location',
+                        '/built/' + urllib.parse.quote(qpath))
+                    self.send_header('Content-Length', '0')
+                    self.end_headers()
+                    return
                 if not (F and os.path.isfile(fp) and
                         re.search(r'/site/', fp) and
                         fp.lower().endswith(('.html', '.htm'))):
