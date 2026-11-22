@@ -150,6 +150,7 @@ _CHECK_PY = """
 import json, sys, glob, os
 from playwright.sync_api import sync_playwright
 bank = sys.argv[1]
+REPO = __REPO__
 files = sorted(glob.glob(os.path.join(bank, '*', '*.html')))
 out = {}
 with sync_playwright() as p:
@@ -203,7 +204,7 @@ with sync_playwright() as p:
             out[rel] = {'error': str(e)[:200]}
     b.close()
 print(json.dumps(out))
-""".replace('__RENDER_JS__', repr(_RENDER_JS))
+""".replace('__RENDER_JS__', repr(_RENDER_JS)).replace('__REPO__', repr(REPO))
 
 
 def main():
@@ -219,7 +220,7 @@ def main():
     for t, f in list(miss.items())[:15]:
         print(f'  {t}  ({os.path.relpath(f, bank)})')
     r = subprocess.run([VENV_PY, '-c', _CHECK_PY, bank],
-                       capture_output=True, text=True, timeout=2400)
+                       capture_output=True, text=True, timeout=5400)
     if r.returncode:
         print('render pass failed:', r.stderr[-600:])
         return 1
