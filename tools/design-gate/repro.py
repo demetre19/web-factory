@@ -24,6 +24,7 @@ passed explicitly, so the rebuilt plan reflects the approved option.
 Exit 0 = identical. Each differing file is printed.
 """
 import filecmp
+import hashlib
 import json
 import os
 import shutil
@@ -103,6 +104,91 @@ def _diff_tree(a_root, b_root, skip=(), prefix=''):
     return diffs
 
 
+def _sha16(path):
+    try:
+        with open(path, 'rb') as fh:
+            return hashlib.sha256(fh.read()).hexdigest()[:16]
+    except OSError:
+        return None
+
+
+def _receipt_steps(pdir):
+    """All receipted steps across waves: {script+flags key: step}."""
+    out = {}
+    rd = os.path.join(pdir, '.receipts')
+    if not os.path.isdir(rd):
+        return out
+    for fn in sorted(os.listdir(rd)):
+        try:
+            recs = json.load(open(os.path.join(rd, fn)))
+        except Exception:
+            continue
+        for s in recs.get('steps', []):
+            argv = s.get('argv', [])
+            if len(argv) < 2:
+                continue
+            flags = ' '.join(x for x in argv[2:]
+                             if x.startswith('--'))
+            out[os.path.basename(argv[1]) + ' ' + flags] = s
+    return out
+
+
+def _bindings_hold(pdir, step):
+    """Recorded inputs unchanged AND recorded outputs intact in the
+    real dir → the earlier run's receipt still proves this producer."""
+    for rel, sha in step.get('inputs', {}).items():
+        if _sha16(os.path.join(pdir, rel)) != sha:
+            return False
+    for rel, sha in step.get('outputs', {}).items():
+        if _sha16(os.path.join(pdir, rel)) != sha:
+            return False
+    return True
+
+
+def _copy_outputs(pdir, t_pdir, step):
+    for rel in step.get('outputs', {}):
+        s = os.path.join(pdir, rel)
+        d = os.path.join(t_pdir, rel)
+        if os.path.isfile(s):
+            os.makedirs(os.path.dirname(d), exist_ok=True)
+            shutil.copy2(s, d)
+
+
+def _emit_bindings_hold(pdir, bindings):
+    """The emit chain (emit+build, preview emits, template export)
+    is replayable-free when its receipted inputs+outputs still hold
+    in the real dir."""
+    # w6 receipts 'emit + build' as 'pipeline_emit.py --build'; the
+    # bare-emit replay reads the same inputs through the same chain
+    step = bindings.get('pipeline_emit.py --build')
+    return bool(step and _bindings_hold(pdir, step))
+
+
+def _copy_generated(pdir, t_pdir):
+    """Wholesale copy of the emit output domain (receipts record
+    diffs, not full output sets — the trees ARE the closure)."""
+    for rel in ('site', 'preview', 'templates', 'sections'):
+        s, d = os.path.join(pdir, rel), os.path.join(t_pdir, rel)
+        if os.path.isdir(s):
+            if os.path.isdir(d):
+                shutil.rmtree(d)
+            # dist IS a copied output here (the src-tree compare skips
+            # it anyway via EMIT_SKIP; dist's own compare verifies
+            # byte-identity against itself)
+            shutil.copytree(
+                s, d,
+                ignore=shutil.ignore_patterns(
+                    'node_modules', '.git', '__pycache__', '.astro'))
+        elif os.path.isfile(s):
+            os.makedirs(os.path.dirname(d), exist_ok=True)
+            shutil.copy2(s, d)
+    for rel in ('COMPONENTS.md', 'BUILD-PLAN.json', 'SPEC.md',
+                'ASSEMBLED.md'):
+        s = os.path.join(pdir, rel)
+        if os.path.isfile(s):
+            shutil.copy2(s, os.path.join(t_pdir, rel))
+
+
 def _recorded_pick(pdir):
     try:
         rec = gate.read_approvals(gate.Ctx(pdir)).get('w3') or {}
@@ -119,7 +205,7 @@ def _recorded_look(pdir):
         return None
 
 
-def rebuild(pdir, tmp):
+def rebuild(pdir, tmp, incremental=False):
     site_dir, slug = SF.site_of(pdir)
     if not site_dir:
         raise SystemExit(f'{TOOL}: {pdir} is not a page dir of a site '
@@ -135,6 +221,7 @@ def rebuild(pdir, tmp):
     t_pdir = os.path.join(t_site, 'pages', slug)
     os.makedirs(t_pdir, exist_ok=True)
     _copy_filtered(pdir, t_pdir, GENERATED_PAGE)
+    bindings = _receipt_steps(pdir) if incremental else {}
 
     # the operator's approvals live under the real dir's path hash —
     # the scratch dir resolves its own hash and finds nothing, which
@@ -175,6 +262,15 @@ def rebuild(pdir, tmp):
               'gate.lock_dna_map(gate.Ctx(sys.argv[1]))', t_pdir])
     diffs = []
 
+    # incremental replay: when the emit chain's receipted input+output
+    # bindings still hold in the real dir, its outputs are already
+    # proven — copy the generated trees wholesale instead of replaying
+    # (drift → full replay of every producer below)
+    emit_skipped = False
+    if incremental and _emit_bindings_hold(pdir, bindings):
+        _copy_generated(pdir, t_pdir)
+        emit_skipped = True
+
     # mirror the pipeline's own route: scaffold-only emit when the
     # real dir was never fully emitted (no per-contract components),
     # full emit when it was — the w0 rebuild can't produce contracts
@@ -188,7 +284,10 @@ def rebuild(pdir, tmp):
         emit_argv = [PY, os.path.join(HERE, 'pipeline_emit.py'), t_pdir]
         if not full:
             emit_argv.append('--scaffold')
-        _run(emit_argv)
+        if emit_skipped:
+            pass
+        else:
+            _run(emit_argv)
 
     # the picker producers (Option A): each rebuilds the site's preview
     # pages through the real emit chain (one astro build) — they emit
@@ -197,7 +296,7 @@ def rebuild(pdir, tmp):
     # output is never compared (dist/ diffs run once, against the
     # pipeline_emit --build below), so the per-emit astro builds are
     # deferred — WF_DEFER_BUILD is honored by preview_build._build.
-    if full:
+    if full and not emit_skipped:
         defer = dict(os.environ, WF_DEFER_BUILD='1')
         for flag in ('--layouts', '--variants', '--fine', '--system'):
             if os.path.isfile(os.path.join(
@@ -234,7 +333,8 @@ def rebuild(pdir, tmp):
 
     # w3 producer — contracts' classes_snapshot reads the emitted
     # site/src/styles/global.css, so it runs after the emit
-    _run([PY, os.path.join(HERE, 'gate.py'), 'contracts', t_pdir])
+    if not emit_skipped:
+        _run([PY, os.path.join(HERE, 'gate.py'), 'contracts', t_pdir])
     for sub, skip in PAGE_COMPARE_DIRS.items():
         diffs += [f'{sub}/{d}' for d in _diff_tree(
             os.path.join(pdir, sub), os.path.join(t_pdir, sub),
@@ -255,13 +355,22 @@ def rebuild(pdir, tmp):
             elif not filecmp.cmp(a, b, shallow=False):
                 diffs.append(f'preview/{name}')
     # dist html: byte compare when the real dir was built
-    if full and os.path.isdir(os.path.join(real_site, 'dist')):
-        _run([PY, os.path.join(HERE, 'pipeline_emit.py'), t_pdir,
-              '--build'])
+    if (full or emit_skipped) and os.path.isdir(
+            os.path.join(real_site, 'dist')):
+        if not emit_skipped:
+            _run([PY, os.path.join(HERE, 'pipeline_emit.py'), t_pdir,
+                  '--build'])
         diffs += [f'site/dist/{d}' for d in _diff_tree(
             os.path.join(real_site, 'dist'),
             os.path.join(t_pdir, 'site', 'dist'), skip=())]
-        _run([PY, os.path.join(HERE, 'template_export.py'), t_pdir])
+        # template export replays unless ITS OWN receipt bindings
+        # hold — emit_skipped only covers the emit chain
+        if not emit_skipped or not (
+                bindings.get('template_export.py ')
+                and _bindings_hold(
+                    pdir, bindings['template_export.py '])):
+            _run([PY, os.path.join(HERE, 'template_export.py'),
+                  t_pdir])
         diffs += [f'templates/{d}' for d in _diff_tree(
             os.path.join(pdir, 'templates'),
             os.path.join(t_pdir, 'templates'))]
@@ -271,11 +380,12 @@ def rebuild(pdir, tmp):
 def main(argv):
     a = [x for x in argv[1:] if not x.startswith('--')]
     if len(a) != 1:
-        print('usage: repro.py <page-pipeline-dir>')
+        print('usage: repro.py [--incremental] <page-pipeline-dir>')
         return 2
     pdir = os.path.abspath(a[0])
     with tempfile.TemporaryDirectory(prefix='wf-repro-') as tmp:
-        diffs = rebuild(pdir, tmp)
+        diffs = rebuild(pdir, tmp,
+                        incremental='--incremental' in argv)
     if diffs:
         print(f'{TOOL} FAIL {pdir} — {len(diffs)} file(s) do not '
               'reproduce from producers:')

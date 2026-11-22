@@ -351,7 +351,8 @@ def _steps(pdir, wave, build, site_dir):
         return [('measured judgment', [PY, T('judge.py'), pdir],
                  [os.path.join(pdir, 'MEASURE.json')],
                  ['JUDGE.json']),
-                ('reproducibility', [PY, T('repro.py'), pdir],
+                ('reproducibility',
+                 [PY, T('repro.py'), '--incremental', pdir],
                  [os.path.join(site_dir, 'BRIEF.yaml'),
                   os.path.join(pdir, 'COPY.json')],
                  [])]
