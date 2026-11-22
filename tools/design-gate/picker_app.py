@@ -1468,8 +1468,13 @@ def _enum_stat(answer):
              for x in re.split(r',\s*(?:and\s+)?|\s+and\s+', clause)]
     # a count is only proof when the list is whole: any empty or
     # sentence-length part means this isn't a clean enumeration
+    # and a true enumeration: ≥3 parallel noun items, none a verb
+    # phrase ("each area scoped and quality-checked" is not a list)
     if not all(x and len(x.split()) <= 4 for x in parts) \
-            or not 2 <= len(parts) <= 6:
+            or not 3 <= len(parts) <= 6 \
+            or any(re.search(r'(?:ed|ing)$', x.split()[-1])
+                   or x.split()[0].lower() in ('each', 'one', 'every')
+                   for x in parts):
         return None
     return {'value': str(len(parts)), 'label': ' · '.join(parts)}
 
