@@ -198,6 +198,38 @@ def intent_of(b):
     return intent
 
 
+# human labels for DNA genotype axes — the picker's gene chips show
+# these instead of the machine keys (audit C3)
+_GENE_LABELS = {
+    'layout-archetype': 'Layout',
+    'page-macro-structure': 'Page shape',
+    'density-tier': 'Density',
+    'image-led-ratio': 'Imagery weight',
+    'type-contrast': 'Type contrast',
+    'display-face': 'Display typeface',
+    'radius-personality': 'Corner style',
+    'surface-rhythm': 'Surfaces',
+    'cta-restraint': 'CTA restraint',
+    'cta-rank': 'CTA strength',
+    'disclosure-tier': 'Disclosure',
+    'nav-pattern': 'Navigation',
+    'motion-tier': 'Motion',
+    'proof-type': 'Proof style',
+    'media-treatment': 'Media treatment',
+    'columns': 'Columns',
+    'heading-form': 'Headings',
+    'whitespace-band': 'Breathing room',
+    'gallery-mode': 'Gallery',
+    'form-presence': 'Forms',
+    'mood-energy': 'Mood',
+    'mood-register': 'Tone',
+    'image-style': 'Image style',
+    'trend': 'Trend',
+    'seam-shape': 'Section seams',
+    'ornament': 'Ornament',
+}
+
+
 HERO_FOR_ARCH = {'stacked-center': 'stacked-hero',
                  'split-media': 'split-media',
                  'editorial-single': 'editorial'}
@@ -795,6 +827,17 @@ def build(pdir, option=None):
            # text e.g. 'faq-no-link-before-its-concept-defined')
            'labels': {r['name']: r.get('label') or r['name']
                       for r in rows},
+           # human labels for the genotype axes the picker's gene
+           # chips show (audit C3: 'disclosure-tier', 'cta-rank' read
+           # as jargon); allele display = prefix-strip + title-case,
+           # the picker's mechanical job
+           'gene_labels': dict(_GENE_LABELS),
+           # copy for the picker's bank-progress line (audit C4: the
+           # subtitle leaked 'raw skeleton backlog ~1039 (awaiting
+           # vectorisation)'); {n} is the picker's computed count
+           'ui_copy': {'bank_progress':
+                       '{n} more bank exemplars in the '
+                       'vectorisation queue'},
            'boards': board_copy.build(pdir),
            'score_formula': f'{SCORE_BASE} - 0.1*orphan_rows '
                             '- 0.05*long_card_texts '
