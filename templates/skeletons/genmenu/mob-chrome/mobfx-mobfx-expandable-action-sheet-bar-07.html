@@ -1,0 +1,395 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RidgeLine Roofing — Tap-to-Expand Mini Action Sheet Bar</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root {
+      --brand: #b45309;
+    }
+    .brand-bg { background-color: var(--brand); }
+    .brand-text { color: var(--brand); }
+    .brand-border { border-color: var(--brand); }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto !important; }
+      *, *::before, *::after {
+        transition-duration: 0.001ms !important;
+        transition-delay: 0ms !important;
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+      }
+    }
+
+  </style>
+<script src="/_aistudio-iframe.js?v=29045eb3"></script></head>
+<body id="top" class="bg-slate-50 text-slate-900 min-h-screen antialiased pb-24 md:pb-0">
+  <!-- Sticky Header -->
+  
+  <header class="sticky top-0 z-30 h-14 border-b backdrop-blur-md bg-white/95 border-slate-200 text-slate-900">
+    <div class="mx-auto flex h-full max-w-5xl items-center justify-between px-4">
+      <a href="#top" class="flex items-center gap-2 font-bold tracking-tight text-base whitespace-nowrap shrink-0">
+        <span class="inline-flex h-7 w-7 items-center justify-center rounded-lg text-white text-xs font-bold" style="background: var(--brand);" aria-hidden="true">RI</span>
+        <span>RidgeLine Roofing</span>
+      </a>
+      <nav class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-600" aria-label="Primary navigation">
+        <a href="#services" class="hover:underline whitespace-nowrap shrink-0">Services</a>
+        <a href="#pricing" class="hover:underline whitespace-nowrap shrink-0">Pricing</a>
+        <a href="#reviews" class="hover:underline whitespace-nowrap shrink-0">Reviews</a>
+        <a href="#faq" class="hover:underline whitespace-nowrap shrink-0">FAQ</a>
+      </nav>
+      <div class="flex items-center gap-2 shrink-0">
+        <span class="hidden md:inline-flex items-center text-xs font-medium text-slate-600 mr-2">0407 912 335</span>
+        <button type="button" onclick="mobfxNotify('Calling RidgeLine Roofing (0407 912 335)')" class="min-h-[44px] px-3.5 rounded-lg text-xs font-semibold text-white whitespace-nowrap shrink-0 transition-opacity hover:opacity-90 focus-visible:outline-2 focus-visible:outline-offset-2" style="background: var(--brand); outline-color: var(--brand);">
+          Book Now
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="mx-auto max-w-5xl">
+    <!-- Section 1: Above-Fold Hero (observed by #above-fold-hero for fold gate) -->
+    <section id="above-fold-hero" class="min-h-[calc(100vh-56px)] flex flex-col justify-between px-4 pt-6 pb-8 border-b border-slate-200/80">
+      <div class="space-y-5 max-w-xl">
+        <p class="text-xs font-semibold tracking-wide uppercase brand-text">Roof Restoration · Leak Detection & Gutters</p>
+        <h1 class="text-3xl md:text-5xl font-bold tracking-tight leading-[1.12]">
+          Stop Roof Leaks Before the Next Storm Hits
+        </h1>
+        <p class="text-base leading-relaxed text-slate-600">
+          Tiled and Colorbond metal roof repairs, ridge repointing, and gutter guard installs with drone inspection photos.
+        </p>
+
+        <!-- Primary & Secondary Hero Actions -->
+        <div class="flex flex-col sm:flex-row gap-3 pt-1">
+          <button type="button" onclick="mobfxNotify('Request Roof Inspection: Request sent to RidgeLine Roofing')" class="min-h-[48px] px-5 rounded-xl font-semibold text-sm text-white shadow-sm transition-transform active:scale-[0.98]" style="background: var(--brand);">
+            Request Roof Inspection
+          </button>
+          <a href="#pricing" class="min-h-[48px] px-5 rounded-xl font-semibold text-sm border inline-flex items-center justify-center bg-white border-slate-200">
+            View Repair Rates
+          </a>
+        </div>
+
+        <!-- Inline SVG Service Illustration (No External Assets) -->
+        <div class="rounded-2xl border p-4 bg-white border-slate-200">
+          <svg viewBox="0 0 340 120" class="w-full h-auto" role="img" aria-label="Roofing & Gutters service diagram">
+            <rect x="0" y="0" width="340" height="120" rx="12" fill="#f1f5f9" />
+            <circle cx="48" cy="60" r="24" fill="#b45309" fill-opacity="0.16" />
+            <circle cx="48" cy="60" r="14" fill="#b45309" />
+            <path d="M42 60l4 4 8-9" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+            <rect x="88" y="34" width="150" height="12" rx="6" fill="#cbd5e1" />
+            <rect x="88" y="56" width="210" height="8" rx="4" fill="#e2e8f0" />
+            <rect x="88" y="72" width="165" height="8" rx="4" fill="#e2e8f0" />
+            <rect x="266" y="30" width="54" height="22" rx="6" fill="#b45309" fill-opacity="0.18" />
+            <text x="293" y="45" text-anchor="middle" font-size="10" font-weight="700" fill="#b45309">4.9 ★</text>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Fold Trust Strip & Scroll Cue -->
+      <div class="mt-6 pt-4 border-t border-slate-200 flex items-center justify-between text-xs text-slate-600">
+        <span>Drone report included · 187 reviews</span>
+        <a href="#services" class="font-semibold brand-text min-h-[44px] inline-flex items-center">Scroll down ↓</a>
+      </div>
+    </section>
+
+    <!-- Fold Sentinel Marker -->
+    <div id="fold-sentinel" class="h-px w-full" aria-hidden="true"></div>
+
+    <!-- Section 2: Core Services -->
+    <section id="services" data-section-label="Pricing" data-next-target="#pricing" class="px-4 py-12 space-y-6">
+      <div class="space-y-1">
+        <p class="text-xs font-semibold uppercase tracking-wider brand-text">01. Core Services</p>
+        <h2 class="text-2xl font-bold tracking-tight">What We Fix &amp; Maintain</h2>
+        <p class="text-sm text-slate-600">Licensed technicians equipped on arrival for rapid first-visit completion.</p>
+      </div>
+
+      <div class="grid gap-4 md:grid-cols-3">
+        
+        <article class="rounded-2xl border p-5 space-y-3 bg-white border-slate-200">
+          <div class="flex items-start justify-between gap-3">
+            <span class="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-xl text-sm font-bold text-white" style="background: var(--brand);">01</span>
+            <span class="text-sm font-bold tabular-nums brand-text">From $220</span>
+          </div>
+          <h3 class="text-base font-semibold">Emergency Roof Leak Trace</h3>
+          <p class="text-sm leading-relaxed text-slate-600">Valley iron, flashing, and cracked tile replacement with water test.</p>
+          <button type="button" onclick="mobfxNotify('Selected Emergency Roof Leak Trace (From $220)')" class="min-h-[44px] w-full rounded-xl border text-xs font-semibold transition-colors border-slate-200 hover:bg-slate-50">
+            Book This Service
+          </button>
+        </article>
+        <article class="rounded-2xl border p-5 space-y-3 bg-white border-slate-200">
+          <div class="flex items-start justify-between gap-3">
+            <span class="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-xl text-sm font-bold text-white" style="background: var(--brand);">02</span>
+            <span class="text-sm font-bold tabular-nums brand-text">From $750</span>
+          </div>
+          <h3 class="text-base font-semibold">Ridge Cap Re-Bedding</h3>
+          <p class="text-sm leading-relaxed text-slate-600">Flexible polymer pointing preventing storm wind lift.</p>
+          <button type="button" onclick="mobfxNotify('Selected Ridge Cap Re-Bedding (From $750)')" class="min-h-[44px] w-full rounded-xl border text-xs font-semibold transition-colors border-slate-200 hover:bg-slate-50">
+            Book This Service
+          </button>
+        </article>
+        <article class="rounded-2xl border p-5 space-y-3 bg-white border-slate-200">
+          <div class="flex items-start justify-between gap-3">
+            <span class="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-xl text-sm font-bold text-white" style="background: var(--brand);">03</span>
+            <span class="text-sm font-bold tabular-nums brand-text">From $190</span>
+          </div>
+          <h3 class="text-base font-semibold">Gutter Clean & Guard Mesh</h3>
+          <p class="text-sm leading-relaxed text-slate-600">Vacuum leaf removal, downpipe flush, and ember-rated mesh.</p>
+          <button type="button" onclick="mobfxNotify('Selected Gutter Clean & Guard Mesh (From $190)')" class="min-h-[44px] w-full rounded-xl border text-xs font-semibold transition-colors border-slate-200 hover:bg-slate-50">
+            Book This Service
+          </button>
+        </article>
+      </div>
+    </section>
+
+    <!-- Section 3: Transparent Pricing -->
+    <section id="pricing" data-section-label="Reviews" data-next-target="#reviews" class="px-4 py-12 border-t border-slate-200 space-y-6">
+      <div class="space-y-1">
+        <p class="text-xs font-semibold uppercase tracking-wider brand-text">02. Upfront Rates</p>
+        <h2 class="text-2xl font-bold tracking-tight">Transparent Fixed Pricing</h2>
+        <p class="text-sm text-slate-600">Written price approval before any tool leaves the van.</p>
+      </div>
+
+      <div class="grid gap-4 md:grid-cols-2">
+        
+        <div class="rounded-2xl border p-5 space-y-4 bg-white border-slate-200">
+          <div class="flex items-baseline justify-between gap-4">
+            <h3 class="text-lg font-bold">Leak Trace + Patch</h3>
+            <span class="text-2xl font-bold tabular-nums brand-text">$220</span>
+          </div>
+          <p class="text-sm text-slate-600">Includes up to 5 spare tiles, flashing reseal, and photos.</p>
+          <ul class="space-y-2 text-sm border-t pt-3 border-slate-100">
+            <li class="flex items-center gap-2"><span class="inline-block h-1.5 w-1.5 rounded-full brand-bg" aria-hidden="true"></span><span>Before & after photos</span></li><li class="flex items-center gap-2"><span class="inline-block h-1.5 w-1.5 rounded-full brand-bg" aria-hidden="true"></span><span>Silicone & lead flashing check</span></li><li class="flex items-center gap-2"><span class="inline-block h-1.5 w-1.5 rounded-full brand-bg" aria-hidden="true"></span><span>2-year leak warranty</span></li>
+          </ul>
+        </div>
+        <div class="rounded-2xl border p-5 space-y-4 bg-white border-slate-200">
+          <div class="flex items-baseline justify-between gap-4">
+            <h3 class="text-lg font-bold">Full Gutter Flush</h3>
+            <span class="text-2xl font-bold tabular-nums brand-text">$190</span>
+          </div>
+          <p class="text-sm text-slate-600">Single-storey perimeter clean and downpipe flow test.</p>
+          <ul class="space-y-2 text-sm border-t pt-3 border-slate-100">
+            <li class="flex items-center gap-2"><span class="inline-block h-1.5 w-1.5 rounded-full brand-bg" aria-hidden="true"></span><span>Roof valley sweep</span></li><li class="flex items-center gap-2"><span class="inline-block h-1.5 w-1.5 rounded-full brand-bg" aria-hidden="true"></span><span>All debris bagged & removed</span></li><li class="flex items-center gap-2"><span class="inline-block h-1.5 w-1.5 rounded-full brand-bg" aria-hidden="true"></span><span>Bracket inspection</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Two-Viewport Gate Marker (approx 2x mobile viewport down) -->
+    <div id="two-vp-sentinel" class="h-px w-full" aria-hidden="true"></div>
+
+    <!-- Section 4: Local Customer Reviews -->
+    <section id="reviews" data-section-label="FAQ" data-next-target="#faq" class="px-4 py-12 border-t border-slate-200 space-y-6">
+      <div class="space-y-1">
+        <p class="text-xs font-semibold uppercase tracking-wider brand-text">03. Local Proof</p>
+        <h2 class="text-2xl font-bold tracking-tight">Recent Neighbour Reviews</h2>
+        <p class="text-sm text-slate-600">Verified 4.9/5 rating across 187 reviews.</p>
+      </div>
+
+      <div class="grid gap-4 md:grid-cols-2">
+        
+        <blockquote class="rounded-2xl border p-5 space-y-3 bg-white border-slate-200">
+          <p class="text-sm leading-relaxed">“Found a rusted valley iron two other roofers missed. Fixed the ceiling stain issue permanently.”</p>
+          <footer class="text-xs font-medium text-slate-600">Owen Gallagher · Ridgewood</footer>
+        </blockquote>
+        <blockquote class="rounded-2xl border p-5 space-y-3 bg-white border-slate-200">
+          <p class="text-sm leading-relaxed">“Loved seeing the drone photos before paying a cent.”</p>
+          <footer class="text-xs font-medium text-slate-600">Mei-Ling Zhou · Glenview</footer>
+        </blockquote>
+      </div>
+    </section>
+
+    <!-- Section 5: FAQ -->
+    <section id="faq" data-section-label="Top" data-next-target="#top" class="px-4 py-12 border-t border-slate-200 space-y-6">
+      <div class="space-y-1">
+        <p class="text-xs font-semibold uppercase tracking-wider brand-text">04. Common Questions</p>
+        <h2 class="text-2xl font-bold tracking-tight">Before You Book</h2>
+      </div>
+
+      <div class="space-y-3">
+        
+        <div class="rounded-2xl border p-4 space-y-1.5 bg-white border-slate-200">
+          <h3 class="text-sm font-semibold">Do you work on steep two-storey roofs?</h3>
+          <p class="text-sm leading-relaxed text-slate-600">Yes, our crew carries full roof-anchor harness kits and portable edge protection.</p>
+        </div>
+        <div class="rounded-2xl border p-4 space-y-1.5 bg-white border-slate-200">
+          <h3 class="text-sm font-semibold">Can you match discontinued roof tiles?</h3>
+          <p class="text-sm leading-relaxed text-slate-600">We hold a yard of salvaged terracotta and concrete profiles going back 50 years.</p>
+        </div>
+      </div>
+
+      <div class="rounded-2xl p-5 bg-slate-100/80 space-y-2">
+        <p class="text-sm font-semibold">Ready for same-day service?</p>
+        <p class="text-xs text-slate-600">304 Quarry Road, Ridgewood · Mon–Sat 6:30am – 5:00pm</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer Sentinel -->
+  <div id="footer-sentinel" class="h-px w-full" aria-hidden="true"></div>
+
+  <!-- Page Footer -->
+  <footer id="page-footer" class="border-t bg-slate-900 border-slate-800 text-slate-200 px-4 py-10">
+    <div class="mx-auto max-w-5xl space-y-4">
+      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+        <p class="text-base font-bold text-white">RidgeLine Roofing</p>
+        <p class="text-xs text-slate-400">0407 912 335 · Mon–Sat 6:30am – 5:00pm</p>
+      </div>
+      <p class="text-xs text-slate-400">304 Quarry Road, Ridgewood</p>
+      <div class="flex flex-wrap gap-4 pt-2 text-xs text-slate-400">
+        <a href="#services" class="min-h-[44px] inline-flex items-center hover:text-white">Services</a>
+        <a href="#pricing" class="min-h-[44px] inline-flex items-center hover:text-white">Pricing</a>
+        <a href="#reviews" class="min-h-[44px] inline-flex items-center hover:text-white">Reviews</a>
+        <a href="#top" class="min-h-[44px] inline-flex items-center hover:text-white">Top ↑</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Accessible Live Action Feedback Toast -->
+  <div id="mobfx-toast" role="status" aria-live="polite" class="fixed top-16 left-1/2 -translate-x-1/2 z-[60] max-w-[350px] w-[calc(100%-2rem)] rounded-xl px-4 py-3 text-xs font-medium text-white bg-slate-900 border border-slate-700 shadow-xl opacity-0 pointer-events-none transition-all duration-200 -translate-y-2">
+    <span id="mobfx-toast-msg"></span>
+  </div>
+
+  <!-- MOBILE-ONLY INTERACTION CHROME (md:hidden) -->
+  
+  <div id="mobfx-backdrop-07" class="md:hidden fixed inset-0 z-30 bg-slate-950/35 opacity-0 pointer-events-none transition-opacity duration-200" aria-hidden="true"></div>
+  <div id="mobfx-bar-07" class="md:hidden fixed bottom-0 inset-x-0 z-40 transform translate-y-full opacity-0 pointer-events-none transition-all duration-300 ease-out" aria-hidden="true" role="region" aria-label="Roofing quick options">
+    <div id="mobfx-sheet-07" class="mx-3 mb-2 rounded-2xl bg-white border border-slate-200 shadow-2xl overflow-hidden transform translate-y-3 scale-95 opacity-0 pointer-events-none transition-all duration-200 origin-bottom" aria-hidden="true">
+      <div class="px-4 py-2.5 border-b border-slate-100 flex items-center justify-between">
+        <span class="text-xs font-bold text-slate-900">Choose Roofing Service</span>
+        <button type="button" id="mobfx-close-07" aria-label="Close options" class="min-h-[44px] min-w-[44px] -mr-2 flex items-center justify-center text-slate-500">
+          <svg class="w-5 h-5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="divide-y divide-slate-100">
+        <button type="button" onclick="mobfxSelect07('Emergency Leak Repair ($220)')" class="w-full min-h-[48px] px-4 flex items-center justify-between text-left text-sm font-medium text-slate-900 hover:bg-slate-50">
+          <span>Emergency Leak Repair</span>
+          <span class="text-xs font-semibold brand-text">From $220</span>
+        </button>
+        <button type="button" onclick="mobfxSelect07('Free Drone Roof Quote')" class="w-full min-h-[48px] px-4 flex items-center justify-between text-left text-sm font-medium text-slate-900 hover:bg-slate-50">
+          <span>Free Drone Roof Quote</span>
+          <span class="text-xs font-semibold brand-text">Free</span>
+        </button>
+        <button type="button" onclick="mobfxSelect07('Full Gutter Flush ($190)')" class="w-full min-h-[48px] px-4 flex items-center justify-between text-left text-sm font-medium text-slate-900 hover:bg-slate-50">
+          <span>Full Gutter Flush</span>
+          <span class="text-xs font-semibold brand-text">From $190</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="bg-white border-t border-slate-200 px-4 py-2.5 shadow-[0_-6px_20px_rgba(15,23,42,0.08)] flex items-center justify-between gap-3">
+      <div>
+        <p class="text-xs font-bold text-slate-900">RidgeLine Roofing</p>
+        <p class="text-[11px] text-slate-500">Leak trace &amp; gutter specialists</p>
+      </div>
+      <button type="button" id="mobfx-toggle-07" aria-expanded="false" aria-controls="mobfx-sheet-07" class="min-h-[44px] px-4 rounded-xl text-xs font-semibold text-white brand-bg inline-flex items-center gap-1.5 whitespace-nowrap shrink-0">
+        <span>Get Help</span>
+        <svg class="w-5 h-5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="18 15 12 9 6 15"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <script>
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let toastTimer = null;
+    function mobfxNotify(message) {
+      const toast = document.getElementById('mobfx-toast');
+      const msg = document.getElementById('mobfx-toast-msg');
+      if (!toast || !msg) return;
+      msg.textContent = message;
+      toast.classList.remove('opacity-0', '-translate-y-2', 'pointer-events-none');
+      toast.classList.add('opacity-100', 'translate-y-0');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        toast.classList.add('opacity-0', '-translate-y-2', 'pointer-events-none');
+        toast.classList.remove('opacity-100', 'translate-y-0');
+      }, 2600);
+    }
+
+    function mobfxSmoothScrollTop() {
+      window.scrollTo({ top: 0, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
+    }
+
+    // Report scroll telemetry if embedded in parent studio iframe
+    window.addEventListener('scroll', () => {
+      if (window.parent && window.parent !== window) {
+        window.parent.postMessage({
+          type: 'mobfx-scroll',
+          scrollY: Math.round(window.scrollY),
+          innerHeight: window.innerHeight,
+          scrollHeight: document.documentElement.scrollHeight
+        }, '*');
+      }
+    }, { passive: true });
+  </script>
+  
+  <script>
+    (function () {
+      const bar = document.getElementById('mobfx-bar-07');
+      const sheet = document.getElementById('mobfx-sheet-07');
+      const backdrop = document.getElementById('mobfx-backdrop-07');
+      const toggleBtn = document.getElementById('mobfx-toggle-07');
+      const closeBtn = document.getElementById('mobfx-close-07');
+      let expanded = false;
+
+      function setExpanded(next) {
+        expanded = next;
+        if (!sheet || !backdrop || !toggleBtn) return;
+        toggleBtn.setAttribute('aria-expanded', String(expanded));
+        sheet.setAttribute('aria-hidden', String(!expanded));
+        sheet.classList.toggle('translate-y-3', !expanded);
+        sheet.classList.toggle('scale-95', !expanded);
+        sheet.classList.toggle('opacity-0', !expanded);
+        sheet.classList.toggle('pointer-events-none', !expanded);
+        sheet.classList.toggle('translate-y-0', expanded);
+        sheet.classList.toggle('scale-100', expanded);
+        sheet.classList.toggle('opacity-100', expanded);
+        sheet.classList.toggle('pointer-events-auto', expanded);
+
+        backdrop.classList.toggle('opacity-0', !expanded);
+        backdrop.classList.toggle('pointer-events-none', !expanded);
+        backdrop.classList.toggle('opacity-100', expanded);
+        backdrop.classList.toggle('pointer-events-auto', expanded);
+      }
+
+      window.mobfxSelect07 = function (label) {
+        setExpanded(false);
+        mobfxNotify('Requested: ' + label);
+      };
+
+      toggleBtn?.addEventListener('click', (e) => {
+        e.stopPropagation();
+        setExpanded(!expanded);
+      });
+      closeBtn?.addEventListener('click', () => setExpanded(false));
+      backdrop?.addEventListener('click', () => setExpanded(false));
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && expanded) setExpanded(false);
+      });
+
+      function toggleBar(visible) {
+        if (!bar) return;
+        if (!visible && expanded) setExpanded(false);
+        bar.setAttribute('aria-hidden', visible ? 'false' : 'true');
+        bar.classList.toggle('translate-y-full', !visible);
+        bar.classList.toggle('opacity-0', !visible);
+        bar.classList.toggle('pointer-events-none', !visible);
+        bar.classList.toggle('translate-y-0', visible);
+        bar.classList.toggle('opacity-100', visible);
+        bar.classList.toggle('pointer-events-auto', visible);
+      }
+      
+    const heroEl = document.getElementById('above-fold-hero');
+    const foldObserver = new IntersectionObserver((entries) => {
+      for (const entry of entries) {
+        const passedFold = !entry.isIntersecting && entry.boundingClientRect.top < 0;
+        toggleBar(passedFold);
+      }
+    }, { threshold: 0 });
+    if (heroEl) foldObserver.observe(heroEl);
+  
+    })();
+  </script>
+</body>
+</html>

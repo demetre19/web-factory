@@ -1,0 +1,349 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SunGrid Solar — SVG Scroll-Progress Ring Back-to-Top</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root {
+      --brand: #d97706;
+    }
+    .brand-bg { background-color: var(--brand); }
+    .brand-text { color: var(--brand); }
+    .brand-border { border-color: var(--brand); }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto !important; }
+      *, *::before, *::after {
+        transition-duration: 0.001ms !important;
+        transition-delay: 0ms !important;
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+      }
+    }
+
+  </style>
+<script src="/_aistudio-iframe.js?v=29045eb3"></script></head>
+<body id="top" class="bg-slate-50 text-slate-900 min-h-screen antialiased pb-24 md:pb-0">
+  <!-- Sticky Header -->
+  
+  <header class="sticky top-0 z-30 h-14 border-b backdrop-blur-md bg-white/95 border-slate-200 text-slate-900">
+    <div class="mx-auto flex h-full max-w-5xl items-center justify-between px-4">
+      <a href="#top" class="flex items-center gap-2 font-bold tracking-tight text-base whitespace-nowrap shrink-0">
+        <span class="inline-flex h-7 w-7 items-center justify-center rounded-lg text-white text-xs font-bold" style="background: var(--brand);" aria-hidden="true">SU</span>
+        <span>SunGrid Solar</span>
+      </a>
+      <nav class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-600" aria-label="Primary navigation">
+        <a href="#services" class="hover:underline whitespace-nowrap shrink-0">Services</a>
+        <a href="#pricing" class="hover:underline whitespace-nowrap shrink-0">Pricing</a>
+        <a href="#reviews" class="hover:underline whitespace-nowrap shrink-0">Reviews</a>
+        <a href="#faq" class="hover:underline whitespace-nowrap shrink-0">FAQ</a>
+      </nav>
+      <div class="flex items-center gap-2 shrink-0">
+        <span class="hidden md:inline-flex items-center text-xs font-medium text-slate-600 mr-2">0431 994 012</span>
+        <button type="button" onclick="mobfxNotify('Calling SunGrid Solar (0431 994 012)')" class="min-h-[44px] px-3.5 rounded-lg text-xs font-semibold text-white whitespace-nowrap shrink-0 transition-opacity hover:opacity-90 focus-visible:outline-2 focus-visible:outline-offset-2" style="background: var(--brand); outline-color: var(--brand);">
+          Book Now
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="mx-auto max-w-5xl">
+    <!-- Section 1: Above-Fold Hero (observed by #above-fold-hero for fold gate) -->
+    <section id="above-fold-hero" class="min-h-[calc(100vh-56px)] flex flex-col justify-between px-4 pt-6 pb-8 border-b border-slate-200/80">
+      <div class="space-y-5 max-w-xl">
+        <p class="text-xs font-semibold tracking-wide uppercase brand-text">CEC-Approved Solar & Home Battery Installers</p>
+        <h1 class="text-3xl md:text-5xl font-bold tracking-tight leading-[1.12]">
+          Cut Power Bills Up to 80% with Tier-1 Solar & Storage
+        </h1>
+        <p class="text-base leading-relaxed text-slate-600">
+          Custom roof-angle shading analysis, 6.6kW–13.2kW panel arrays, and hybrid battery systems with 10-year support.
+        </p>
+
+        <!-- Primary & Secondary Hero Actions -->
+        <div class="flex flex-col sm:flex-row gap-3 pt-1">
+          <button type="button" onclick="mobfxNotify('Get Solar Yield Report: Request sent to SunGrid Solar')" class="min-h-[48px] px-5 rounded-xl font-semibold text-sm text-white shadow-sm transition-transform active:scale-[0.98]" style="background: var(--brand);">
+            Get Solar Yield Report
+          </button>
+          <a href="#pricing" class="min-h-[48px] px-5 rounded-xl font-semibold text-sm border inline-flex items-center justify-center bg-white border-slate-200">
+            System Packages
+          </a>
+        </div>
+
+        <!-- Inline SVG Service Illustration (No External Assets) -->
+        <div class="rounded-2xl border p-4 bg-white border-slate-200">
+          <svg viewBox="0 0 340 120" class="w-full h-auto" role="img" aria-label="Solar & Battery Systems service diagram">
+            <rect x="0" y="0" width="340" height="120" rx="12" fill="#f1f5f9" />
+            <circle cx="48" cy="60" r="24" fill="#d97706" fill-opacity="0.16" />
+            <circle cx="48" cy="60" r="14" fill="#d97706" />
+            <path d="M42 60l4 4 8-9" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+            <rect x="88" y="34" width="150" height="12" rx="6" fill="#cbd5e1" />
+            <rect x="88" y="56" width="210" height="8" rx="4" fill="#e2e8f0" />
+            <rect x="88" y="72" width="165" height="8" rx="4" fill="#e2e8f0" />
+            <rect x="266" y="30" width="54" height="22" rx="6" fill="#d97706" fill-opacity="0.18" />
+            <text x="293" y="45" text-anchor="middle" font-size="10" font-weight="700" fill="#d97706">4.9 ★</text>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Fold Trust Strip & Scroll Cue -->
+      <div class="mt-6 pt-4 border-t border-slate-200 flex items-center justify-between text-xs text-slate-600">
+        <span>24-hr roof design · 241 reviews</span>
+        <a href="#services" class="font-semibold brand-text min-h-[44px] inline-flex items-center">Scroll down ↓</a>
+      </div>
+    </section>
+
+    <!-- Fold Sentinel Marker -->
+    <div id="fold-sentinel" class="h-px w-full" aria-hidden="true"></div>
+
+    <!-- Section 2: Core Services -->
+    <section id="services" data-section-label="Pricing" data-next-target="#pricing" class="px-4 py-12 space-y-6">
+      <div class="space-y-1">
+        <p class="text-xs font-semibold uppercase tracking-wider brand-text">01. Core Services</p>
+        <h2 class="text-2xl font-bold tracking-tight">What We Fix &amp; Maintain</h2>
+        <p class="text-sm text-slate-600">Licensed technicians equipped on arrival for rapid first-visit completion.</p>
+      </div>
+
+      <div class="grid gap-4 md:grid-cols-3">
+        
+        <article class="rounded-2xl border p-5 space-y-3 bg-white border-slate-200">
+          <div class="flex items-start justify-between gap-3">
+            <span class="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-xl text-sm font-bold text-white" style="background: var(--brand);">01</span>
+            <span class="text-sm font-bold tabular-nums brand-text">From $4,490</span>
+          </div>
+          <h3 class="text-base font-semibold">6.6kW Tier-1 Solar Package</h3>
+          <p class="text-sm leading-relaxed text-slate-600">N-type bifacial panels + 5kW smart hybrid-ready inverter.</p>
+          <button type="button" onclick="mobfxNotify('Selected 6.6kW Tier-1 Solar Package (From $4,490)')" class="min-h-[44px] w-full rounded-xl border text-xs font-semibold transition-colors border-slate-200 hover:bg-slate-50">
+            Book This Service
+          </button>
+        </article>
+        <article class="rounded-2xl border p-5 space-y-3 bg-white border-slate-200">
+          <div class="flex items-start justify-between gap-3">
+            <span class="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-xl text-sm font-bold text-white" style="background: var(--brand);">02</span>
+            <span class="text-sm font-bold tabular-nums brand-text">From $6,900</span>
+          </div>
+          <h3 class="text-base font-semibold">10kWh Home Battery Addition</h3>
+          <p class="text-sm leading-relaxed text-slate-600">Blackout backup circuit keeping fridge, Wi-Fi, and lights live.</p>
+          <button type="button" onclick="mobfxNotify('Selected 10kWh Home Battery Addition (From $6,900)')" class="min-h-[44px] w-full rounded-xl border text-xs font-semibold transition-colors border-slate-200 hover:bg-slate-50">
+            Book This Service
+          </button>
+        </article>
+        <article class="rounded-2xl border p-5 space-y-3 bg-white border-slate-200">
+          <div class="flex items-start justify-between gap-3">
+            <span class="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-xl text-sm font-bold text-white" style="background: var(--brand);">03</span>
+            <span class="text-sm font-bold tabular-nums brand-text">From $190</span>
+          </div>
+          <h3 class="text-base font-semibold">Solar Health Check & Clean</h3>
+          <p class="text-sm leading-relaxed text-slate-600">DC isolator thermal inspection, inverter firmware, and de-ionised wash.</p>
+          <button type="button" onclick="mobfxNotify('Selected Solar Health Check & Clean (From $190)')" class="min-h-[44px] w-full rounded-xl border text-xs font-semibold transition-colors border-slate-200 hover:bg-slate-50">
+            Book This Service
+          </button>
+        </article>
+      </div>
+    </section>
+
+    <!-- Section 3: Transparent Pricing -->
+    <section id="pricing" data-section-label="Reviews" data-next-target="#reviews" class="px-4 py-12 border-t border-slate-200 space-y-6">
+      <div class="space-y-1">
+        <p class="text-xs font-semibold uppercase tracking-wider brand-text">02. Upfront Rates</p>
+        <h2 class="text-2xl font-bold tracking-tight">Transparent Fixed Pricing</h2>
+        <p class="text-sm text-slate-600">Written price approval before any tool leaves the van.</p>
+      </div>
+
+      <div class="grid gap-4 md:grid-cols-2">
+        
+        <div class="rounded-2xl border p-5 space-y-4 bg-white border-slate-200">
+          <div class="flex items-baseline justify-between gap-4">
+            <h3 class="text-lg font-bold">6.6kW Everyday Array</h3>
+            <span class="text-2xl font-bold tabular-nums brand-text">$4,490</span>
+          </div>
+          <p class="text-sm text-slate-600">Ideal for 2–4 person homes after government STC rebate.</p>
+          <ul class="space-y-2 text-sm border-t pt-3 border-slate-100">
+            <li class="flex items-center gap-2"><span class="inline-block h-1.5 w-1.5 rounded-full brand-bg" aria-hidden="true"></span><span>15x 440W N-type panels</span></li><li class="flex items-center gap-2"><span class="inline-block h-1.5 w-1.5 rounded-full brand-bg" aria-hidden="true"></span><span>25-year panel performance</span></li><li class="flex items-center gap-2"><span class="inline-block h-1.5 w-1.5 rounded-full brand-bg" aria-hidden="true"></span><span>Grid export approval</span></li>
+          </ul>
+        </div>
+        <div class="rounded-2xl border p-5 space-y-4 bg-white border-slate-200">
+          <div class="flex items-baseline justify-between gap-4">
+            <h3 class="text-lg font-bold">10kW + 10kWh Hybrid</h3>
+            <span class="text-2xl font-bold tabular-nums brand-text">$11,800</span>
+          </div>
+          <p class="text-sm text-slate-600">Daytime EV charging plus overnight battery independence.</p>
+          <ul class="space-y-2 text-sm border-t pt-3 border-slate-100">
+            <li class="flex items-center gap-2"><span class="inline-block h-1.5 w-1.5 rounded-full brand-bg" aria-hidden="true"></span><span>Blackout gateway switch</span></li><li class="flex items-center gap-2"><span class="inline-block h-1.5 w-1.5 rounded-full brand-bg" aria-hidden="true"></span><span>Live app telemetry</span></li><li class="flex items-center gap-2"><span class="inline-block h-1.5 w-1.5 rounded-full brand-bg" aria-hidden="true"></span><span>In-house CEC installers</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Two-Viewport Gate Marker (approx 2x mobile viewport down) -->
+    <div id="two-vp-sentinel" class="h-px w-full" aria-hidden="true"></div>
+
+    <!-- Section 4: Local Customer Reviews -->
+    <section id="reviews" data-section-label="FAQ" data-next-target="#faq" class="px-4 py-12 border-t border-slate-200 space-y-6">
+      <div class="space-y-1">
+        <p class="text-xs font-semibold uppercase tracking-wider brand-text">03. Local Proof</p>
+        <h2 class="text-2xl font-bold tracking-tight">Recent Neighbour Reviews</h2>
+        <p class="text-sm text-slate-600">Verified 4.9/5 rating across 241 reviews.</p>
+      </div>
+
+      <div class="grid gap-4 md:grid-cols-2">
+        
+        <blockquote class="rounded-2xl border p-5 space-y-3 bg-white border-slate-200">
+          <p class="text-sm leading-relaxed">“Our winter quarterly bill dropped from $680 to $42 credit. Zero subcontractors—their own roof team nailed the install.”</p>
+          <footer class="text-xs font-medium text-slate-600">Simon & Bea · Frankston</footer>
+        </blockquote>
+        <blockquote class="rounded-2xl border p-5 space-y-3 bg-white border-slate-200">
+          <p class="text-sm leading-relaxed">“Clear shade modeling showed why east-west split beat pure north for our evening usage.”</p>
+          <footer class="text-xs font-medium text-slate-600">Rajesh Kumar · Werribee</footer>
+        </blockquote>
+      </div>
+    </section>
+
+    <!-- Section 5: FAQ -->
+    <section id="faq" data-section-label="Top" data-next-target="#top" class="px-4 py-12 border-t border-slate-200 space-y-6">
+      <div class="space-y-1">
+        <p class="text-xs font-semibold uppercase tracking-wider brand-text">04. Common Questions</p>
+        <h2 class="text-2xl font-bold tracking-tight">Before You Book</h2>
+      </div>
+
+      <div class="space-y-3">
+        
+        <div class="rounded-2xl border p-4 space-y-1.5 bg-white border-slate-200">
+          <h3 class="text-sm font-semibold">Do you use subcontractors?</h3>
+          <p class="text-sm leading-relaxed text-slate-600">Never. Every installation is completed by our salaried CEC-accredited electricians and roofers.</p>
+        </div>
+        <div class="rounded-2xl border p-4 space-y-1.5 bg-white border-slate-200">
+          <h3 class="text-sm font-semibold">What happens in a grid blackout?</h3>
+          <p class="text-sm leading-relaxed text-slate-600">With our hybrid battery gateway, essential home circuits switch over in under 20 milliseconds.</p>
+        </div>
+      </div>
+
+      <div class="rounded-2xl p-5 bg-slate-100/80 space-y-2">
+        <p class="text-sm font-semibold">Ready for same-day service?</p>
+        <p class="text-xs text-slate-600">118 Innovation Boulevard, Scoresby · Mon–Fri 8:00am – 5:30pm · Sat 9am–1pm</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer Sentinel -->
+  <div id="footer-sentinel" class="h-px w-full" aria-hidden="true"></div>
+
+  <!-- Page Footer -->
+  <footer id="page-footer" class="border-t bg-slate-900 border-slate-800 text-slate-200 px-4 py-10">
+    <div class="mx-auto max-w-5xl space-y-4">
+      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+        <p class="text-base font-bold text-white">SunGrid Solar</p>
+        <p class="text-xs text-slate-400">0431 994 012 · Mon–Fri 8:00am – 5:30pm · Sat 9am–1pm</p>
+      </div>
+      <p class="text-xs text-slate-400">118 Innovation Boulevard, Scoresby</p>
+      <div class="flex flex-wrap gap-4 pt-2 text-xs text-slate-400">
+        <a href="#services" class="min-h-[44px] inline-flex items-center hover:text-white">Services</a>
+        <a href="#pricing" class="min-h-[44px] inline-flex items-center hover:text-white">Pricing</a>
+        <a href="#reviews" class="min-h-[44px] inline-flex items-center hover:text-white">Reviews</a>
+        <a href="#top" class="min-h-[44px] inline-flex items-center hover:text-white">Top ↑</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Accessible Live Action Feedback Toast -->
+  <div id="mobfx-toast" role="status" aria-live="polite" class="fixed top-16 left-1/2 -translate-x-1/2 z-[60] max-w-[350px] w-[calc(100%-2rem)] rounded-xl px-4 py-3 text-xs font-medium text-white bg-slate-900 border border-slate-700 shadow-xl opacity-0 pointer-events-none transition-all duration-200 -translate-y-2">
+    <span id="mobfx-toast-msg"></span>
+  </div>
+
+  <!-- MOBILE-ONLY INTERACTION CHROME (md:hidden) -->
+  
+  <button id="mobfx-ring-20" type="button" aria-label="Scroll progress — tap to return to top" aria-hidden="true" onclick="mobfxSmoothScrollTop()" class="md:hidden fixed bottom-5 right-5 z-40 h-13 w-13 p-0.5 rounded-full bg-white border border-slate-200 shadow-lg flex items-center justify-center transform scale-75 opacity-0 pointer-events-none transition-all duration-300 ease-out">
+    <svg class="w-12 h-12 -rotate-90" viewBox="0 0 48 48" aria-hidden="true">
+      <circle cx="24" cy="24" r="20" fill="none" stroke="#e2e8f0" stroke-width="3.5" />
+      <circle id="mobfx-circle-20" cx="24" cy="24" r="20" fill="none" stroke="var(--brand)" stroke-width="3.5" stroke-linecap="round" stroke-dasharray="125.66" stroke-dashoffset="125.66" />
+    </svg>
+    <span id="mobfx-ring-pct-20" class="absolute text-[10px] font-bold tabular-nums text-slate-900">0%</span>
+    <span id="mobfx-ring-arrow-20" class="absolute text-slate-900 opacity-0 transition-opacity duration-200"><svg class="w-5 h-5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg></span>
+  </button>
+
+  <script>
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let toastTimer = null;
+    function mobfxNotify(message) {
+      const toast = document.getElementById('mobfx-toast');
+      const msg = document.getElementById('mobfx-toast-msg');
+      if (!toast || !msg) return;
+      msg.textContent = message;
+      toast.classList.remove('opacity-0', '-translate-y-2', 'pointer-events-none');
+      toast.classList.add('opacity-100', 'translate-y-0');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        toast.classList.add('opacity-0', '-translate-y-2', 'pointer-events-none');
+        toast.classList.remove('opacity-100', 'translate-y-0');
+      }, 2600);
+    }
+
+    function mobfxSmoothScrollTop() {
+      window.scrollTo({ top: 0, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
+    }
+
+    // Report scroll telemetry if embedded in parent studio iframe
+    window.addEventListener('scroll', () => {
+      if (window.parent && window.parent !== window) {
+        window.parent.postMessage({
+          type: 'mobfx-scroll',
+          scrollY: Math.round(window.scrollY),
+          innerHeight: window.innerHeight,
+          scrollHeight: document.documentElement.scrollHeight
+        }, '*');
+      }
+    }, { passive: true });
+  </script>
+  
+  <script>
+    (function () {
+      const btn = document.getElementById('mobfx-ring-20');
+      const circle = document.getElementById('mobfx-circle-20');
+      const pctEl = document.getElementById('mobfx-ring-pct-20');
+      const arrowEl = document.getElementById('mobfx-ring-arrow-20');
+      const CIRCUMFERENCE = 125.66;
+
+      function syncRing() {
+        const maxScroll = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+        const ratio = Math.min(1, Math.max(0, window.scrollY / maxScroll));
+        const pct = Math.round(ratio * 100);
+        if (circle) {
+          circle.style.strokeDashoffset = String(CIRCUMFERENCE * (1 - ratio));
+        }
+        if (pctEl) pctEl.textContent = pct + '%';
+
+        const morphToArrow = pct >= 55;
+        if (pctEl && arrowEl) {
+          pctEl.classList.toggle('opacity-0', morphToArrow);
+          arrowEl.classList.toggle('opacity-0', !morphToArrow);
+        }
+      }
+
+      function toggleRing(visible) {
+        if (!btn) return;
+        btn.setAttribute('aria-hidden', visible ? 'false' : 'true');
+        btn.classList.toggle('scale-75', !visible);
+        btn.classList.toggle('opacity-0', !visible);
+        btn.classList.toggle('pointer-events-none', !visible);
+        btn.classList.toggle('scale-100', visible);
+        btn.classList.toggle('opacity-100', visible);
+        btn.classList.toggle('pointer-events-auto', visible);
+      }
+
+      window.addEventListener('scroll', syncRing, { passive: true });
+      syncRing();
+      
+    const heroEl = document.getElementById('above-fold-hero');
+    const foldObserver = new IntersectionObserver((entries) => {
+      for (const entry of entries) {
+        const passedFold = !entry.isIntersecting && entry.boundingClientRect.top < 0;
+        toggleRing(passedFold);
+      }
+    }, { threshold: 0 });
+    if (heroEl) foldObserver.observe(heroEl);
+  
+    })();
+  </script>
+</body>
+</html>

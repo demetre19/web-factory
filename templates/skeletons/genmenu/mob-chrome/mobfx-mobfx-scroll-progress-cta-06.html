@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CoolBreeze HVAC — CTA Bar with Embedded Scroll-Progress Meter</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root {
+      --brand: #0284c7;
+    }
+    .brand-bg { background-color: var(--brand); }
+    .brand-text { color: var(--brand); }
+    .brand-border { border-color: var(--brand); }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto !important; }
+      *, *::before, *::after {
+        transition-duration: 0.001ms !important;
+        transition-delay: 0ms !important;
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+      }
+    }
+
+  </style>
+<script src="/_aistudio-iframe.js?v=29045eb3"></script></head>
+<body id="top" class="bg-slate-50 text-slate-900 min-h-screen antialiased pb-24 md:pb-0">
+  <!-- Sticky Header -->
+  
+  <header class="sticky top-0 z-30 h-14 border-b backdrop-blur-md bg-white/95 border-slate-200 text-slate-900">
+    <div class="mx-auto flex h-full max-w-5xl items-center justify-between px-4">
+      <a href="#top" class="flex items-center gap-2 font-bold tracking-tight text-base whitespace-nowrap shrink-0">
+        <span class="inline-flex h-7 w-7 items-center justify-center rounded-lg text-white text-xs font-bold" style="background: var(--brand);" aria-hidden="true">CO</span>
+        <span>CoolBreeze HVAC</span>
+      </a>
+      <nav class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-600" aria-label="Primary navigation">
+        <a href="#services" class="hover:underline whitespace-nowrap shrink-0">Services</a>
+        <a href="#pricing" class="hover:underline whitespace-nowrap shrink-0">Pricing</a>
+        <a href="#reviews" class="hover:underline whitespace-nowrap shrink-0">Reviews</a>
+        <a href="#faq" class="hover:underline whitespace-nowrap shrink-0">FAQ</a>
+      </nav>
+      <div class="flex items-center gap-2 shrink-0">
+        <span class="hidden md:inline-flex items-center text-xs font-medium text-slate-600 mr-2">0419 502 773</span>
+        <button type="button" onclick="mobfxNotify('Calling CoolBreeze HVAC (0419 502 773)')" class="min-h-[44px] px-3.5 rounded-lg text-xs font-semibold text-white whitespace-nowrap shrink-0 transition-opacity hover:opacity-90 focus-visible:outline-2 focus-visible:outline-offset-2" style="background: var(--brand); outline-color: var(--brand);">
+          Book Now
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="mx-auto max-w-5xl">
+    <!-- Section 1: Above-Fold Hero (observed by #above-fold-hero for fold gate) -->
+    <section id="above-fold-hero" class="min-h-[calc(100vh-56px)] flex flex-col justify-between px-4 pt-6 pb-8 border-b border-slate-200/80">
+      <div class="space-y-5 max-w-xl">
+        <p class="text-xs font-semibold tracking-wide uppercase brand-text">Heating, Cooling & Air Quality</p>
+        <h1 class="text-3xl md:text-5xl font-bold tracking-tight leading-[1.12]">
+          Fast AC Repairs & Ducted System Tune-Ups
+        </h1>
+        <p class="text-base leading-relaxed text-slate-600">
+          ARCtick-licensed refrigeration technicians servicing split systems, ducted reverse-cycle, and evaporative coolers.
+        </p>
+
+        <!-- Primary & Secondary Hero Actions -->
+        <div class="flex flex-col sm:flex-row gap-3 pt-1">
+          <button type="button" onclick="mobfxNotify('Schedule AC Tune-Up: Request sent to CoolBreeze HVAC')" class="min-h-[48px] px-5 rounded-xl font-semibold text-sm text-white shadow-sm transition-transform active:scale-[0.98]" style="background: var(--brand);">
+            Schedule AC Tune-Up
+          </button>
+          <a href="#pricing" class="min-h-[48px] px-5 rounded-xl font-semibold text-sm border inline-flex items-center justify-center bg-white border-slate-200">
+            Compare Packages
+          </a>
+        </div>
+
+        <!-- Inline SVG Service Illustration (No External Assets) -->
+        <div class="rounded-2xl border p-4 bg-white border-slate-200">
+          <svg viewBox="0 0 340 120" class="w-full h-auto" role="img" aria-label="HVAC & Air Conditioning service diagram">
+            <rect x="0" y="0" width="340" height="120" rx="12" fill="#f1f5f9" />
+            <circle cx="48" cy="60" r="24" fill="#0284c7" fill-opacity="0.16" />
+            <circle cx="48" cy="60" r="14" fill="#0284c7" />
+            <path d="M42 60l4 4 8-9" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+            <rect x="88" y="34" width="150" height="12" rx="6" fill="#cbd5e1" />
+            <rect x="88" y="56" width="210" height="8" rx="4" fill="#e2e8f0" />
+            <rect x="88" y="72" width="165" height="8" rx="4" fill="#e2e8f0" />
+            <rect x="266" y="30" width="54" height="22" rx="6" fill="#0284c7" fill-opacity="0.18" />
+            <text x="293" y="45" text-anchor="middle" font-size="10" font-weight="700" fill="#0284c7">4.8 ★</text>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Fold Trust Strip & Scroll Cue -->
+      <div class="mt-6 pt-4 border-t border-slate-200 flex items-center justify-between text-xs text-slate-600">
+        <span>Next-day installation · 264 reviews</span>
+        <a href="#services" class="font-semibold brand-text min-h-[44px] inline-flex items-center">Scroll down ↓</a>
+      </div>
+    </section>
+
+    <!-- Fold Sentinel Marker -->
+    <div id="fold-sentinel" class="h-px w-full" aria-hidden="true"></div>
+
+    <!-- Section 2: Core Services -->
+    <section id="services" data-section-label="Pricing" data-next-target="#pricing" class="px-4 py-12 space-y-6">
+      <div class="space-y-1">
+        <p class="text-xs font-semibold uppercase tracking-wider brand-text">01. Core Services</p>
+        <h2 class="text-2xl font-bold tracking-tight">What We Fix &amp; Maintain</h2>
+        <p class="text-sm text-slate-600">Licensed technicians equipped on arrival for rapid first-visit completion.</p>
+      </div>
+
+      <div class="grid gap-4 md:grid-cols-3">
+        
+        <article class="rounded-2xl border p-5 space-y-3 bg-white border-slate-200">
+          <div class="flex items-start justify-between gap-3">
+            <span class="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-xl text-sm font-bold text-white" style="background: var(--brand);">01</span>
+            <span class="text-sm font-bold tabular-nums brand-text">From $169</span>
+          </div>
+          <h3 class="text-base font-semibold">Split System Deep Clean</h3>
+          <p class="text-sm leading-relaxed text-slate-600">Hydro-bag coil wash removing mould, dust, and allergens.</p>
+          <button type="button" onclick="mobfxNotify('Selected Split System Deep Clean (From $169)')" class="min-h-[44px] w-full rounded-xl border text-xs font-semibold transition-colors border-slate-200 hover:bg-slate-50">
+            Book This Service
+          </button>
+        </article>
+        <article class="rounded-2xl border p-5 space-y-3 bg-white border-slate-200">
+          <div class="flex items-start justify-between gap-3">
+            <span class="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-xl text-sm font-bold text-white" style="background: var(--brand);">02</span>
+            <span class="text-sm font-bold tabular-nums brand-text">From $195</span>
+          </div>
+          <h3 class="text-base font-semibold">AC Fault & Gas Regas</h3>
+          <p class="text-sm leading-relaxed text-slate-600">Nitrogen leak test, PCB fault diagnosis, and refrigerant recharge.</p>
+          <button type="button" onclick="mobfxNotify('Selected AC Fault & Gas Regas (From $195)')" class="min-h-[44px] w-full rounded-xl border text-xs font-semibold transition-colors border-slate-200 hover:bg-slate-50">
+            Book This Service
+          </button>
+        </article>
+        <article class="rounded-2xl border p-5 space-y-3 bg-white border-slate-200">
+          <div class="flex items-start justify-between gap-3">
+            <span class="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-xl text-sm font-bold text-white" style="background: var(--brand);">03</span>
+            <span class="text-sm font-bold tabular-nums brand-text">From $640</span>
+          </div>
+          <h3 class="text-base font-semibold">Ducted Zoning Upgrade</h3>
+          <p class="text-sm leading-relaxed text-slate-600">Smart room-by-room damper controls from your phone.</p>
+          <button type="button" onclick="mobfxNotify('Selected Ducted Zoning Upgrade (From $640)')" class="min-h-[44px] w-full rounded-xl border text-xs font-semibold transition-colors border-slate-200 hover:bg-slate-50">
+            Book This Service
+          </button>
+        </article>
+      </div>
+    </section>
+
+    <!-- Section 3: Transparent Pricing -->
+    <section id="pricing" data-section-label="Reviews" data-next-target="#reviews" class="px-4 py-12 border-t border-slate-200 space-y-6">
+      <div class="space-y-1">
+        <p class="text-xs font-semibold uppercase tracking-wider brand-text">02. Upfront Rates</p>
+        <h2 class="text-2xl font-bold tracking-tight">Transparent Fixed Pricing</h2>
+        <p class="text-sm text-slate-600">Written price approval before any tool leaves the van.</p>
+      </div>
+
+      <div class="grid gap-4 md:grid-cols-2">
+        
+        <div class="rounded-2xl border p-5 space-y-4 bg-white border-slate-200">
+          <div class="flex items-baseline justify-between gap-4">
+            <h3 class="text-lg font-bold">Single Split Coil Clean</h3>
+            <span class="text-2xl font-bold tabular-nums brand-text">$169</span>
+          </div>
+          <p class="text-sm text-slate-600">Full antibacterial wash, drain flush, and airflow test.</p>
+          <ul class="space-y-2 text-sm border-t pt-3 border-slate-100">
+            <li class="flex items-center gap-2"><span class="inline-block h-1.5 w-1.5 rounded-full brand-bg" aria-hidden="true"></span><span>Coil & barrel fan wash</span></li><li class="flex items-center gap-2"><span class="inline-block h-1.5 w-1.5 rounded-full brand-bg" aria-hidden="true"></span><span>Condensate drain clear</span></li><li class="flex items-center gap-2"><span class="inline-block h-1.5 w-1.5 rounded-full brand-bg" aria-hidden="true"></span><span>Temp differential check</span></li>
+          </ul>
+        </div>
+        <div class="rounded-2xl border p-5 space-y-4 bg-white border-slate-200">
+          <div class="flex items-baseline justify-between gap-4">
+            <h3 class="text-lg font-bold">Ducted Annual Service</h3>
+            <span class="text-2xl font-bold tabular-nums brand-text">$275</span>
+          </div>
+          <p class="text-sm text-slate-600">Roof-space unit check, filter clean, and zone test.</p>
+          <ul class="space-y-2 text-sm border-t pt-3 border-slate-100">
+            <li class="flex items-center gap-2"><span class="inline-block h-1.5 w-1.5 rounded-full brand-bg" aria-hidden="true"></span><span>Compressor amp draw</span></li><li class="flex items-center gap-2"><span class="inline-block h-1.5 w-1.5 rounded-full brand-bg" aria-hidden="true"></span><span>Duct seal check</span></li><li class="flex items-center gap-2"><span class="inline-block h-1.5 w-1.5 rounded-full brand-bg" aria-hidden="true"></span><span>Thermostat calibration</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Two-Viewport Gate Marker (approx 2x mobile viewport down) -->
+    <div id="two-vp-sentinel" class="h-px w-full" aria-hidden="true"></div>
+
+    <!-- Section 4: Local Customer Reviews -->
+    <section id="reviews" data-section-label="FAQ" data-next-target="#faq" class="px-4 py-12 border-t border-slate-200 space-y-6">
+      <div class="space-y-1">
+        <p class="text-xs font-semibold uppercase tracking-wider brand-text">03. Local Proof</p>
+        <h2 class="text-2xl font-bold tracking-tight">Recent Neighbour Reviews</h2>
+        <p class="text-sm text-slate-600">Verified 4.8/5 rating across 264 reviews.</p>
+      </div>
+
+      <div class="grid gap-4 md:grid-cols-2">
+        
+        <blockquote class="rounded-2xl border p-5 space-y-3 bg-white border-slate-200">
+          <p class="text-sm leading-relaxed">“Our bedroom unit smelled musty and blew warm air. After the hydro wash and capacitor swap it cools like day one.”</p>
+          <footer class="text-xs font-medium text-slate-600">Rachel Kim · Sunbury</footer>
+        </blockquote>
+        <blockquote class="rounded-2xl border p-5 space-y-3 bg-white border-slate-200">
+          <p class="text-sm leading-relaxed">“Clean drop sheets over our white carpet and clear explanation of the error code.”</p>
+          <footer class="text-xs font-medium text-slate-600">Ben Walsh · Hillcrest</footer>
+        </blockquote>
+      </div>
+    </section>
+
+    <!-- Section 5: FAQ -->
+    <section id="faq" data-section-label="Top" data-next-target="#top" class="px-4 py-12 border-t border-slate-200 space-y-6">
+      <div class="space-y-1">
+        <p class="text-xs font-semibold uppercase tracking-wider brand-text">04. Common Questions</p>
+        <h2 class="text-2xl font-bold tracking-tight">Before You Book</h2>
+      </div>
+
+      <div class="space-y-3">
+        
+        <div class="rounded-2xl border p-4 space-y-1.5 bg-white border-slate-200">
+          <h3 class="text-sm font-semibold">How often should split systems be cleaned?</h3>
+          <p class="text-sm leading-relaxed text-slate-600">Every 12 months before summer keeps power draw lower and prevents mould spores inside the barrel fan.</p>
+        </div>
+        <div class="rounded-2xl border p-4 space-y-1.5 bg-white border-slate-200">
+          <h3 class="text-sm font-semibold">Do you repair older brands?</h3>
+          <p class="text-sm leading-relaxed text-slate-600">We stock universal boards and sensors for Daikin, Mitsubishi, Fujitsu, LG, and Panasonic.</p>
+        </div>
+      </div>
+
+      <div class="rounded-2xl p-5 bg-slate-100/80 space-y-2">
+        <p class="text-sm font-semibold">Ready for same-day service?</p>
+        <p class="text-xs text-slate-600">15 Climate Park Drive, Sunbury · Mon–Sat 7:00am – 6:00pm</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer Sentinel -->
+  <div id="footer-sentinel" class="h-px w-full" aria-hidden="true"></div>
+
+  <!-- Page Footer -->
+  <footer id="page-footer" class="border-t bg-slate-900 border-slate-800 text-slate-200 px-4 py-10">
+    <div class="mx-auto max-w-5xl space-y-4">
+      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+        <p class="text-base font-bold text-white">CoolBreeze HVAC</p>
+        <p class="text-xs text-slate-400">0419 502 773 · Mon–Sat 7:00am – 6:00pm</p>
+      </div>
+      <p class="text-xs text-slate-400">15 Climate Park Drive, Sunbury</p>
+      <div class="flex flex-wrap gap-4 pt-2 text-xs text-slate-400">
+        <a href="#services" class="min-h-[44px] inline-flex items-center hover:text-white">Services</a>
+        <a href="#pricing" class="min-h-[44px] inline-flex items-center hover:text-white">Pricing</a>
+        <a href="#reviews" class="min-h-[44px] inline-flex items-center hover:text-white">Reviews</a>
+        <a href="#top" class="min-h-[44px] inline-flex items-center hover:text-white">Top ↑</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Accessible Live Action Feedback Toast -->
+  <div id="mobfx-toast" role="status" aria-live="polite" class="fixed top-16 left-1/2 -translate-x-1/2 z-[60] max-w-[350px] w-[calc(100%-2rem)] rounded-xl px-4 py-3 text-xs font-medium text-white bg-slate-900 border border-slate-700 shadow-xl opacity-0 pointer-events-none transition-all duration-200 -translate-y-2">
+    <span id="mobfx-toast-msg"></span>
+  </div>
+
+  <!-- MOBILE-ONLY INTERACTION CHROME (md:hidden) -->
+  
+  <div id="mobfx-bar-06" class="md:hidden fixed bottom-0 inset-x-0 z-40 bg-white/95 backdrop-blur-md border-t border-slate-200 shadow-[0_-6px_20px_rgba(15,23,42,0.08)] transform translate-y-full opacity-0 pointer-events-none transition-all duration-300 ease-out" aria-hidden="true" role="region" aria-label="Scroll progress booking bar">
+    <div class="h-1 w-full bg-slate-200 overflow-hidden" role="progressbar" aria-label="Page reading progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="mobfx-progress-track">
+      <div id="mobfx-progress-fill" class="h-full w-full origin-left brand-bg transition-transform duration-75" style="transform: scaleX(0);"></div>
+    </div>
+    <div class="px-4 py-2.5 flex items-center justify-between gap-3">
+      <div class="min-w-0">
+        <p class="text-xs font-bold text-slate-900">CoolBreeze AC Tune-Up</p>
+        <p class="text-[11px] text-slate-500 tabular-nums"><span id="mobfx-progress-pct">0%</span> read · From $169</p>
+      </div>
+      <button type="button" onclick="mobfxNotify('AC Tune-Up slot requested with CoolBreeze HVAC')" class="min-h-[44px] px-4 rounded-xl text-xs font-semibold text-white brand-bg shrink-0 whitespace-nowrap active:opacity-90">
+        Schedule Tune-Up
+      </button>
+    </div>
+  </div>
+
+  <script>
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let toastTimer = null;
+    function mobfxNotify(message) {
+      const toast = document.getElementById('mobfx-toast');
+      const msg = document.getElementById('mobfx-toast-msg');
+      if (!toast || !msg) return;
+      msg.textContent = message;
+      toast.classList.remove('opacity-0', '-translate-y-2', 'pointer-events-none');
+      toast.classList.add('opacity-100', 'translate-y-0');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        toast.classList.add('opacity-0', '-translate-y-2', 'pointer-events-none');
+        toast.classList.remove('opacity-100', 'translate-y-0');
+      }, 2600);
+    }
+
+    function mobfxSmoothScrollTop() {
+      window.scrollTo({ top: 0, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
+    }
+
+    // Report scroll telemetry if embedded in parent studio iframe
+    window.addEventListener('scroll', () => {
+      if (window.parent && window.parent !== window) {
+        window.parent.postMessage({
+          type: 'mobfx-scroll',
+          scrollY: Math.round(window.scrollY),
+          innerHeight: window.innerHeight,
+          scrollHeight: document.documentElement.scrollHeight
+        }, '*');
+      }
+    }, { passive: true });
+  </script>
+  
+  <script>
+    (function () {
+      const bar = document.getElementById('mobfx-bar-06');
+      const fill = document.getElementById('mobfx-progress-fill');
+      const pct = document.getElementById('mobfx-progress-pct');
+      const track = document.getElementById('mobfx-progress-track');
+
+      function toggleBar(visible) {
+        if (!bar) return;
+        bar.setAttribute('aria-hidden', visible ? 'false' : 'true');
+        bar.classList.toggle('translate-y-full', !visible);
+        bar.classList.toggle('opacity-0', !visible);
+        bar.classList.toggle('pointer-events-none', !visible);
+        bar.classList.toggle('translate-y-0', visible);
+        bar.classList.toggle('opacity-100', visible);
+        bar.classList.toggle('pointer-events-auto', visible);
+      }
+
+      function updateProgress() {
+        const maxScroll = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+        const ratio = Math.min(1, Math.max(0, window.scrollY / maxScroll));
+        const percent = Math.round(ratio * 100);
+        if (fill) fill.style.transform = 'scaleX(' + ratio.toFixed(4) + ')';
+        if (pct) pct.textContent = percent + '%';
+        if (track) track.setAttribute('aria-valuenow', String(percent));
+      }
+
+      window.addEventListener('scroll', updateProgress, { passive: true });
+      updateProgress();
+      
+    const heroEl = document.getElementById('above-fold-hero');
+    const foldObserver = new IntersectionObserver((entries) => {
+      for (const entry of entries) {
+        const passedFold = !entry.isIntersecting && entry.boundingClientRect.top < 0;
+        toggleBar(passedFold);
+      }
+    }, { threshold: 0 });
+    if (heroEl) foldObserver.observe(heroEl);
+  
+    })();
+  </script>
+</body>
+</html>

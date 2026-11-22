@@ -1,0 +1,333 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BrightSmile Dental — Header CTA Link to Round Icon Button</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root {
+      --brand: #0d9488;
+    }
+    .brand-bg { background-color: var(--brand); }
+    .brand-text { color: var(--brand); }
+    .brand-border { border-color: var(--brand); }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto !important; }
+      *, *::before, *::after {
+        transition-duration: 0.001ms !important;
+        transition-delay: 0ms !important;
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+      }
+    }
+
+  </style>
+<script src="/_aistudio-iframe.js?v=29045eb3"></script></head>
+<body id="top" class="bg-slate-50 text-slate-900 min-h-screen antialiased pb-8 md:pb-0">
+  <!-- Sticky Header -->
+  
+  <header class="sticky top-0 z-30 h-14 border-b border-slate-200 bg-white/95 backdrop-blur-md text-slate-900">
+    <div class="mx-auto flex h-full max-w-5xl items-center justify-between px-4">
+      <a href="#top" class="flex items-center gap-2 font-bold tracking-tight text-base whitespace-nowrap shrink-0">
+        <span class="inline-flex h-7 w-7 items-center justify-center rounded-lg text-white text-xs font-bold brand-bg" aria-hidden="true">BS</span>
+        <span>BrightSmile Dental</span>
+      </a>
+      <nav class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-600" aria-label="Primary navigation">
+        <a href="#services" class="hover:underline whitespace-nowrap shrink-0">Services</a>
+        <a href="#pricing" class="hover:underline whitespace-nowrap shrink-0">Pricing</a>
+        <a href="#reviews" class="hover:underline whitespace-nowrap shrink-0">Reviews</a>
+        <a href="#faq" class="hover:underline whitespace-nowrap shrink-0">FAQ</a>
+      </nav>
+      <div class="hidden md:flex items-center shrink-0">
+        <button type="button" onclick="mobfxNotify('Opening BrightSmile Dental calendar')" class="min-h-[44px] px-4 rounded-lg text-xs font-semibold text-white brand-bg">Book Visit</button>
+      </div>
+
+      <!-- Mobile-only CTA text link -> 44x44 round icon button -->
+      <div class="md:hidden relative h-11 w-[112px] flex items-center justify-end shrink-0">
+        <a id="mobfx-cta-link-10" href="#pricing" onclick="event.preventDefault(); mobfxNotify('Opening BrightSmile Dental calendar')" class="absolute right-0 min-h-[44px] inline-flex items-center text-sm font-semibold brand-text underline underline-offset-4 whitespace-nowrap transition-all duration-300 opacity-100 scale-100 pointer-events-auto">
+          Book Visit
+        </a>
+        <button id="mobfx-cta-icon-10" type="button" aria-label="Book Visit" aria-hidden="true" onclick="mobfxNotify('Opening BrightSmile Dental calendar')" class="absolute right-0 h-11 w-11 rounded-full text-white brand-bg inline-flex items-center justify-center shadow-md transition-all duration-300 opacity-0 scale-75 pointer-events-none">
+          <svg class="w-5 h-5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="mx-auto max-w-5xl">
+    <!-- Section 1: Above-Fold Hero (observed by #above-fold-hero for fold gate) -->
+    <section id="above-fold-hero" class="min-h-[calc(100vh-56px)] flex flex-col justify-between px-4 pt-6 pb-8 border-b border-slate-200/80">
+      <div class="space-y-5 max-w-xl">
+        <p class="text-xs font-semibold tracking-wide uppercase brand-text">Preventive, Restorative & Cosmetic Care</p>
+        <h1 class="text-3xl md:text-5xl font-bold tracking-tight leading-[1.12]">
+          Modern Dentistry Built Around Patient Comfort
+        </h1>
+        <p class="text-base leading-relaxed text-slate-600">
+          Digital 3D scanning, painless numbing gel, and transparent treatment options with zero surprise bills.
+        </p>
+
+        <!-- Primary & Secondary Hero Actions -->
+        <div class="flex flex-col sm:flex-row gap-3 pt-1">
+          <button type="button" onclick="mobfxNotify('Book Appointment: Request sent to BrightSmile Dental')" class="min-h-[48px] px-5 rounded-xl font-semibold text-sm text-white shadow-sm transition-transform active:scale-[0.98]" style="background: var(--brand);">
+            Book Appointment
+          </button>
+          <a href="#pricing" class="min-h-[48px] px-5 rounded-xl font-semibold text-sm border inline-flex items-center justify-center bg-white border-slate-200">
+            Meet the Dentists
+          </a>
+        </div>
+
+        <!-- Inline SVG Service Illustration (No External Assets) -->
+        <div class="rounded-2xl border p-4 bg-white border-slate-200">
+          <svg viewBox="0 0 340 120" class="w-full h-auto" role="img" aria-label="Family Dentistry service diagram">
+            <rect x="0" y="0" width="340" height="120" rx="12" fill="#f1f5f9" />
+            <circle cx="48" cy="60" r="24" fill="#0d9488" fill-opacity="0.16" />
+            <circle cx="48" cy="60" r="14" fill="#0d9488" />
+            <path d="M42 60l4 4 8-9" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+            <rect x="88" y="34" width="150" height="12" rx="6" fill="#cbd5e1" />
+            <rect x="88" y="56" width="210" height="8" rx="4" fill="#e2e8f0" />
+            <rect x="88" y="72" width="165" height="8" rx="4" fill="#e2e8f0" />
+            <rect x="266" y="30" width="54" height="22" rx="6" fill="#0d9488" fill-opacity="0.18" />
+            <text x="293" y="45" text-anchor="middle" font-size="10" font-weight="700" fill="#0d9488">5.0 ★</text>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Fold Trust Strip & Scroll Cue -->
+      <div class="mt-6 pt-4 border-t border-slate-200 flex items-center justify-between text-xs text-slate-600">
+        <span>Online instant slots · 380 reviews</span>
+        <a href="#services" class="font-semibold brand-text min-h-[44px] inline-flex items-center">Scroll down ↓</a>
+      </div>
+    </section>
+
+    <!-- Fold Sentinel Marker -->
+    <div id="fold-sentinel" class="h-px w-full" aria-hidden="true"></div>
+
+    <!-- Section 2: Core Services -->
+    <section id="services" data-section-label="Pricing" data-next-target="#pricing" class="px-4 py-12 space-y-6">
+      <div class="space-y-1">
+        <p class="text-xs font-semibold uppercase tracking-wider brand-text">01. Core Services</p>
+        <h2 class="text-2xl font-bold tracking-tight">What We Fix &amp; Maintain</h2>
+        <p class="text-sm text-slate-600">Licensed technicians equipped on arrival for rapid first-visit completion.</p>
+      </div>
+
+      <div class="grid gap-4 md:grid-cols-3">
+        
+        <article class="rounded-2xl border p-5 space-y-3 bg-white border-slate-200">
+          <div class="flex items-start justify-between gap-3">
+            <span class="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-xl text-sm font-bold text-white" style="background: var(--brand);">01</span>
+            <span class="text-sm font-bold tabular-nums brand-text">$185</span>
+          </div>
+          <h3 class="text-base font-semibold">Preventive Check & AirFlow Clean</h3>
+          <p class="text-sm leading-relaxed text-slate-600">Warm-water gentle biofilm removal that leaves zero scraping sensitivity.</p>
+          <button type="button" onclick="mobfxNotify('Selected Preventive Check & AirFlow Clean ($185)')" class="min-h-[44px] w-full rounded-xl border text-xs font-semibold transition-colors border-slate-200 hover:bg-slate-50">
+            Book This Service
+          </button>
+        </article>
+        <article class="rounded-2xl border p-5 space-y-3 bg-white border-slate-200">
+          <div class="flex items-start justify-between gap-3">
+            <span class="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-xl text-sm font-bold text-white" style="background: var(--brand);">02</span>
+            <span class="text-sm font-bold tabular-nums brand-text">From $3,400</span>
+          </div>
+          <h3 class="text-base font-semibold">Clear Aligner Orthodontics</h3>
+          <p class="text-sm leading-relaxed text-slate-600">3D outcome simulation before you start with monthly payment plans.</p>
+          <button type="button" onclick="mobfxNotify('Selected Clear Aligner Orthodontics (From $3,400)')" class="min-h-[44px] w-full rounded-xl border text-xs font-semibold transition-colors border-slate-200 hover:bg-slate-50">
+            Book This Service
+          </button>
+        </article>
+        <article class="rounded-2xl border p-5 space-y-3 bg-white border-slate-200">
+          <div class="flex items-start justify-between gap-3">
+            <span class="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-xl text-sm font-bold text-white" style="background: var(--brand);">03</span>
+            <span class="text-sm font-bold tabular-nums brand-text">From $390</span>
+          </div>
+          <h3 class="text-base font-semibold">Composite Veneers & Bonding</h3>
+          <p class="text-sm leading-relaxed text-slate-600">Single-visit edge repair and natural shade sculpting.</p>
+          <button type="button" onclick="mobfxNotify('Selected Composite Veneers & Bonding (From $390)')" class="min-h-[44px] w-full rounded-xl border text-xs font-semibold transition-colors border-slate-200 hover:bg-slate-50">
+            Book This Service
+          </button>
+        </article>
+      </div>
+    </section>
+
+    <!-- Section 3: Transparent Pricing -->
+    <section id="pricing" data-section-label="Reviews" data-next-target="#reviews" class="px-4 py-12 border-t border-slate-200 space-y-6">
+      <div class="space-y-1">
+        <p class="text-xs font-semibold uppercase tracking-wider brand-text">02. Upfront Rates</p>
+        <h2 class="text-2xl font-bold tracking-tight">Transparent Fixed Pricing</h2>
+        <p class="text-sm text-slate-600">Written price approval before any tool leaves the van.</p>
+      </div>
+
+      <div class="grid gap-4 md:grid-cols-2">
+        
+        <div class="rounded-2xl border p-5 space-y-4 bg-white border-slate-200">
+          <div class="flex items-baseline justify-between gap-4">
+            <h3 class="text-lg font-bold">AirFlow Gentle Clean</h3>
+            <span class="text-2xl font-bold tabular-nums brand-text">$185</span>
+          </div>
+          <p class="text-sm text-slate-600">Warm-water Swiss clean ideal for sensitive gums.</p>
+          <ul class="space-y-2 text-sm border-t pt-3 border-slate-100">
+            <li class="flex items-center gap-2"><span class="inline-block h-1.5 w-1.5 rounded-full brand-bg" aria-hidden="true"></span><span>Digital cavity check</span></li><li class="flex items-center gap-2"><span class="inline-block h-1.5 w-1.5 rounded-full brand-bg" aria-hidden="true"></span><span>Warm AirFlow polish</span></li><li class="flex items-center gap-2"><span class="inline-block h-1.5 w-1.5 rounded-full brand-bg" aria-hidden="true"></span><span>Oral hygiene kit</span></li>
+          </ul>
+        </div>
+        <div class="rounded-2xl border p-5 space-y-4 bg-white border-slate-200">
+          <div class="flex items-baseline justify-between gap-4">
+            <h3 class="text-lg font-bold">Custom Nightguard</h3>
+            <span class="text-2xl font-bold tabular-nums brand-text">$420</span>
+          </div>
+          <p class="text-sm text-slate-600">3D-scanned slim guard for clenching and jaw tension.</p>
+          <ul class="space-y-2 text-sm border-t pt-3 border-slate-100">
+            <li class="flex items-center gap-2"><span class="inline-block h-1.5 w-1.5 rounded-full brand-bg" aria-hidden="true"></span><span>Zero-goop 3D scan</span></li><li class="flex items-center gap-2"><span class="inline-block h-1.5 w-1.5 rounded-full brand-bg" aria-hidden="true"></span><span>2-week fit check</span></li><li class="flex items-center gap-2"><span class="inline-block h-1.5 w-1.5 rounded-full brand-bg" aria-hidden="true"></span><span>Protective case</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Two-Viewport Gate Marker (approx 2x mobile viewport down) -->
+    <div id="two-vp-sentinel" class="h-px w-full" aria-hidden="true"></div>
+
+    <!-- Section 4: Local Customer Reviews -->
+    <section id="reviews" data-section-label="FAQ" data-next-target="#faq" class="px-4 py-12 border-t border-slate-200 space-y-6">
+      <div class="space-y-1">
+        <p class="text-xs font-semibold uppercase tracking-wider brand-text">03. Local Proof</p>
+        <h2 class="text-2xl font-bold tracking-tight">Recent Neighbour Reviews</h2>
+        <p class="text-sm text-slate-600">Verified 5.0/5 rating across 380 reviews.</p>
+      </div>
+
+      <div class="grid gap-4 md:grid-cols-2">
+        
+        <blockquote class="rounded-2xl border p-5 space-y-3 bg-white border-slate-200">
+          <p class="text-sm leading-relaxed">“Warm-water AirFlow cleaning changed my life—zero cold sensitivity!”</p>
+          <footer class="text-xs font-medium text-slate-600">Zoe McAllister · Kew</footer>
+        </blockquote>
+        <blockquote class="rounded-2xl border p-5 space-y-3 bg-white border-slate-200">
+          <p class="text-sm leading-relaxed">“Booking took 30 seconds and the clinic runs right on schedule.”</p>
+          <footer class="text-xs font-medium text-slate-600">Samir Patel · Hawthorn</footer>
+        </blockquote>
+      </div>
+    </section>
+
+    <!-- Section 5: FAQ -->
+    <section id="faq" data-section-label="Top" data-next-target="#top" class="px-4 py-12 border-t border-slate-200 space-y-6">
+      <div class="space-y-1">
+        <p class="text-xs font-semibold uppercase tracking-wider brand-text">04. Common Questions</p>
+        <h2 class="text-2xl font-bold tracking-tight">Before You Book</h2>
+      </div>
+
+      <div class="space-y-3">
+        
+        <div class="rounded-2xl border p-4 space-y-1.5 bg-white border-slate-200">
+          <h3 class="text-sm font-semibold">Do you see children?</h3>
+          <p class="text-sm leading-relaxed text-slate-600">Yes, we welcome kids from age 2 and accept government child dental benefit vouchers.</p>
+        </div>
+        <div class="rounded-2xl border p-4 space-y-1.5 bg-white border-slate-200">
+          <h3 class="text-sm font-semibold">How long is a first appointment?</h3>
+          <p class="text-sm leading-relaxed text-slate-600">Allow 45 minutes for photos, digital X-rays if needed, and your gentle clean.</p>
+        </div>
+      </div>
+
+      <div class="rounded-2xl p-5 bg-slate-100/80 space-y-2">
+        <p class="text-sm font-semibold">Ready for same-day service?</p>
+        <p class="text-xs text-slate-600">210 High Street, Kew · Mon–Fri 8:00am – 6:30pm · Sat 8:30am – 2pm</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer Sentinel -->
+  <div id="footer-sentinel" class="h-px w-full" aria-hidden="true"></div>
+
+  <!-- Page Footer -->
+  <footer id="page-footer" class="border-t bg-slate-900 border-slate-800 text-slate-200 px-4 py-10">
+    <div class="mx-auto max-w-5xl space-y-4">
+      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+        <p class="text-base font-bold text-white">BrightSmile Dental</p>
+        <p class="text-xs text-slate-400">0414 220 980 · Mon–Fri 8:00am – 6:30pm · Sat 8:30am – 2pm</p>
+      </div>
+      <p class="text-xs text-slate-400">210 High Street, Kew</p>
+      <div class="flex flex-wrap gap-4 pt-2 text-xs text-slate-400">
+        <a href="#services" class="min-h-[44px] inline-flex items-center hover:text-white">Services</a>
+        <a href="#pricing" class="min-h-[44px] inline-flex items-center hover:text-white">Pricing</a>
+        <a href="#reviews" class="min-h-[44px] inline-flex items-center hover:text-white">Reviews</a>
+        <a href="#top" class="min-h-[44px] inline-flex items-center hover:text-white">Top ↑</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Accessible Live Action Feedback Toast -->
+  <div id="mobfx-toast" role="status" aria-live="polite" class="fixed top-16 left-1/2 -translate-x-1/2 z-[60] max-w-[350px] w-[calc(100%-2rem)] rounded-xl px-4 py-3 text-xs font-medium text-white bg-slate-900 border border-slate-700 shadow-xl opacity-0 pointer-events-none transition-all duration-200 -translate-y-2">
+    <span id="mobfx-toast-msg"></span>
+  </div>
+
+  <!-- MOBILE-ONLY INTERACTION CHROME (md:hidden) -->
+  <!-- Mobile-only CTA morph lives inside sticky header (md:hidden) -->
+
+  <script>
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let toastTimer = null;
+    function mobfxNotify(message) {
+      const toast = document.getElementById('mobfx-toast');
+      const msg = document.getElementById('mobfx-toast-msg');
+      if (!toast || !msg) return;
+      msg.textContent = message;
+      toast.classList.remove('opacity-0', '-translate-y-2', 'pointer-events-none');
+      toast.classList.add('opacity-100', 'translate-y-0');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        toast.classList.add('opacity-0', '-translate-y-2', 'pointer-events-none');
+        toast.classList.remove('opacity-100', 'translate-y-0');
+      }, 2600);
+    }
+
+    function mobfxSmoothScrollTop() {
+      window.scrollTo({ top: 0, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
+    }
+
+    // Report scroll telemetry if embedded in parent studio iframe
+    window.addEventListener('scroll', () => {
+      if (window.parent && window.parent !== window) {
+        window.parent.postMessage({
+          type: 'mobfx-scroll',
+          scrollY: Math.round(window.scrollY),
+          innerHeight: window.innerHeight,
+          scrollHeight: document.documentElement.scrollHeight
+        }, '*');
+      }
+    }, { passive: true });
+  </script>
+  
+  <script>
+    (function () {
+      const linkEl = document.getElementById('mobfx-cta-link-10');
+      const iconEl = document.getElementById('mobfx-cta-icon-10');
+      function morphCta(passedFold) {
+        if (!linkEl || !iconEl) return;
+        linkEl.setAttribute('aria-hidden', passedFold ? 'true' : 'false');
+        linkEl.classList.toggle('opacity-0', passedFold);
+        linkEl.classList.toggle('scale-90', passedFold);
+        linkEl.classList.toggle('pointer-events-none', passedFold);
+        linkEl.classList.toggle('opacity-100', !passedFold);
+        linkEl.classList.toggle('scale-100', !passedFold);
+        linkEl.classList.toggle('pointer-events-auto', !passedFold);
+
+        iconEl.setAttribute('aria-hidden', passedFold ? 'false' : 'true');
+        iconEl.classList.toggle('opacity-100', passedFold);
+        iconEl.classList.toggle('scale-100', passedFold);
+        iconEl.classList.toggle('pointer-events-auto', passedFold);
+        iconEl.classList.toggle('opacity-0', !passedFold);
+        iconEl.classList.toggle('scale-75', !passedFold);
+        iconEl.classList.toggle('pointer-events-none', !passedFold);
+      }
+      
+    const heroEl = document.getElementById('above-fold-hero');
+    const foldObserver = new IntersectionObserver((entries) => {
+      for (const entry of entries) {
+        const passedFold = !entry.isIntersecting && entry.boundingClientRect.top < 0;
+        morphCta(passedFold);
+      }
+    }, { threshold: 0 });
+    if (heroEl) foldObserver.observe(heroEl);
+  
+    })();
+  </script>
+</body>
+</html>

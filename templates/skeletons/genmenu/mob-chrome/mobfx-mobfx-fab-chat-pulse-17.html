@@ -1,0 +1,377 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ShieldGuard Pest — Live-Chat Pulse FAB with Notification Dot</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root {
+      --brand: #10b981;
+    }
+    .brand-bg { background-color: var(--brand); }
+    .brand-text { color: var(--brand); }
+    .brand-border { border-color: var(--brand); }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto !important; }
+      *, *::before, *::after {
+        transition-duration: 0.001ms !important;
+        transition-delay: 0ms !important;
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+      }
+    }
+
+    @keyframes mobfx-fab-ring {
+      0% { transform: scale(1); opacity: 0.6; }
+      75% { transform: scale(1.45); opacity: 0; }
+      100% { transform: scale(1.45); opacity: 0; }
+    }
+    .mobfx-fab-pulse::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 9999px;
+      border: 2px solid var(--brand);
+      animation: mobfx-fab-ring 2s ease-out infinite;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .mobfx-fab-pulse::before { animation: none !important; opacity: 0 !important; }
+    }
+  </style>
+<script src="/_aistudio-iframe.js?v=29045eb3"></script></head>
+<body id="top" class="bg-slate-950 text-slate-100 min-h-screen antialiased pb-24 md:pb-0">
+  <!-- Sticky Header -->
+  
+  <header class="sticky top-0 z-30 h-14 border-b backdrop-blur-md bg-slate-950/90 border-slate-800 text-slate-100">
+    <div class="mx-auto flex h-full max-w-5xl items-center justify-between px-4">
+      <a href="#top" class="flex items-center gap-2 font-bold tracking-tight text-base whitespace-nowrap shrink-0">
+        <span class="inline-flex h-7 w-7 items-center justify-center rounded-lg text-white text-xs font-bold" style="background: var(--brand);" aria-hidden="true">SH</span>
+        <span>ShieldGuard Pest</span>
+      </a>
+      <nav class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-400" aria-label="Primary navigation">
+        <a href="#services" class="hover:underline whitespace-nowrap shrink-0">Services</a>
+        <a href="#pricing" class="hover:underline whitespace-nowrap shrink-0">Pricing</a>
+        <a href="#reviews" class="hover:underline whitespace-nowrap shrink-0">Reviews</a>
+        <a href="#faq" class="hover:underline whitespace-nowrap shrink-0">FAQ</a>
+      </nav>
+      <div class="flex items-center gap-2 shrink-0">
+        <span class="hidden md:inline-flex items-center text-xs font-medium text-slate-400 mr-2">0409 338 710</span>
+        <button type="button" onclick="mobfxNotify('Calling ShieldGuard Pest (0409 338 710)')" class="min-h-[44px] px-3.5 rounded-lg text-xs font-semibold text-white whitespace-nowrap shrink-0 transition-opacity hover:opacity-90 focus-visible:outline-2 focus-visible:outline-offset-2" style="background: var(--brand); outline-color: var(--brand);">
+          Book Now
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="mx-auto max-w-5xl">
+    <!-- Section 1: Above-Fold Hero (observed by #above-fold-hero for fold gate) -->
+    <section id="above-fold-hero" class="min-h-[calc(100vh-56px)] flex flex-col justify-between px-4 pt-6 pb-8 border-b border-slate-800/80">
+      <div class="space-y-5 max-w-xl">
+        <p class="text-xs font-semibold tracking-wide uppercase brand-text">Licensed Pest & Termite Technicians</p>
+        <h1 class="text-3xl md:text-5xl font-bold tracking-tight leading-[1.12]">
+          Keep Termites, Rodents & Spiders Out for Good
+        </h1>
+        <p class="text-base leading-relaxed text-slate-400">
+          Pet-safe barrier treatments, thermal termite inspections, and rapid live-chat scheduling with local techs.
+        </p>
+
+        <!-- Primary & Secondary Hero Actions -->
+        <div class="flex flex-col sm:flex-row gap-3 pt-1">
+          <button type="button" onclick="mobfxNotify('Chat with Technician: Request sent to ShieldGuard Pest')" class="min-h-[48px] px-5 rounded-xl font-semibold text-sm text-white shadow-sm transition-transform active:scale-[0.98]" style="background: var(--brand);">
+            Chat with Technician
+          </button>
+          <a href="#pricing" class="min-h-[48px] px-5 rounded-xl font-semibold text-sm border inline-flex items-center justify-center bg-slate-900 border-slate-800">
+            Treatment Plans
+          </a>
+        </div>
+
+        <!-- Inline SVG Service Illustration (No External Assets) -->
+        <div class="rounded-2xl border p-4 bg-slate-900 border-slate-800">
+          <svg viewBox="0 0 340 120" class="w-full h-auto" role="img" aria-label="Pest & Termite Control service diagram">
+            <rect x="0" y="0" width="340" height="120" rx="12" fill="#0f172a" />
+            <circle cx="48" cy="60" r="24" fill="#10b981" fill-opacity="0.16" />
+            <circle cx="48" cy="60" r="14" fill="#10b981" />
+            <path d="M42 60l4 4 8-9" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+            <rect x="88" y="34" width="150" height="12" rx="6" fill="#334155" />
+            <rect x="88" y="56" width="210" height="8" rx="4" fill="#1e293b" />
+            <rect x="88" y="72" width="165" height="8" rx="4" fill="#1e293b" />
+            <rect x="266" y="30" width="54" height="22" rx="6" fill="#10b981" fill-opacity="0.18" />
+            <text x="293" y="45" text-anchor="middle" font-size="10" font-weight="700" fill="#10b981">4.9 ★</text>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Fold Trust Strip & Scroll Cue -->
+      <div class="mt-6 pt-4 border-t border-slate-800 flex items-center justify-between text-xs text-slate-400">
+        <span>Live chat < 2 min · 274 reviews</span>
+        <a href="#services" class="font-semibold brand-text min-h-[44px] inline-flex items-center">Scroll down ↓</a>
+      </div>
+    </section>
+
+    <!-- Fold Sentinel Marker -->
+    <div id="fold-sentinel" class="h-px w-full" aria-hidden="true"></div>
+
+    <!-- Section 2: Core Services -->
+    <section id="services" data-section-label="Pricing" data-next-target="#pricing" class="px-4 py-12 space-y-6">
+      <div class="space-y-1">
+        <p class="text-xs font-semibold uppercase tracking-wider brand-text">01. Core Services</p>
+        <h2 class="text-2xl font-bold tracking-tight">What We Fix &amp; Maintain</h2>
+        <p class="text-sm text-slate-400">Licensed technicians equipped on arrival for rapid first-visit completion.</p>
+      </div>
+
+      <div class="grid gap-4 md:grid-cols-3">
+        
+        <article class="rounded-2xl border p-5 space-y-3 bg-slate-900 border-slate-800">
+          <div class="flex items-start justify-between gap-3">
+            <span class="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-xl text-sm font-bold text-white" style="background: var(--brand);">01</span>
+            <span class="text-sm font-bold tabular-nums brand-text">From $189</span>
+          </div>
+          <h3 class="text-base font-semibold">Full Home Spider & Ant Barrier</h3>
+          <p class="text-sm leading-relaxed text-slate-400">Internal gel baits plus external perimeter micro-encapsulated spray.</p>
+          <button type="button" onclick="mobfxNotify('Selected Full Home Spider & Ant Barrier (From $189)')" class="min-h-[44px] w-full rounded-xl border text-xs font-semibold transition-colors border-slate-700 hover:bg-slate-800">
+            Book This Service
+          </button>
+        </article>
+        <article class="rounded-2xl border p-5 space-y-3 bg-slate-900 border-slate-800">
+          <div class="flex items-start justify-between gap-3">
+            <span class="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-xl text-sm font-bold text-white" style="background: var(--brand);">02</span>
+            <span class="text-sm font-bold tabular-nums brand-text">From $240</span>
+          </div>
+          <h3 class="text-base font-semibold">Thermal Termite Inspection</h3>
+          <p class="text-sm leading-relaxed text-slate-400">FLIR thermal imaging + moisture meter check across subfloor and roof.</p>
+          <button type="button" onclick="mobfxNotify('Selected Thermal Termite Inspection (From $240)')" class="min-h-[44px] w-full rounded-xl border text-xs font-semibold transition-colors border-slate-700 hover:bg-slate-800">
+            Book This Service
+          </button>
+        </article>
+        <article class="rounded-2xl border p-5 space-y-3 bg-slate-900 border-slate-800">
+          <div class="flex items-start justify-between gap-3">
+            <span class="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-xl text-sm font-bold text-white" style="background: var(--brand);">03</span>
+            <span class="text-sm font-bold tabular-nums brand-text">From $175</span>
+          </div>
+          <h3 class="text-base font-semibold">Rodent Baiting & Entry Proofing</h3>
+          <p class="text-sm leading-relaxed text-slate-400">Lockable tamper-proof stations in roof void and perimeter.</p>
+          <button type="button" onclick="mobfxNotify('Selected Rodent Baiting & Entry Proofing (From $175)')" class="min-h-[44px] w-full rounded-xl border text-xs font-semibold transition-colors border-slate-700 hover:bg-slate-800">
+            Book This Service
+          </button>
+        </article>
+      </div>
+    </section>
+
+    <!-- Section 3: Transparent Pricing -->
+    <section id="pricing" data-section-label="Reviews" data-next-target="#reviews" class="px-4 py-12 border-t border-slate-800 space-y-6">
+      <div class="space-y-1">
+        <p class="text-xs font-semibold uppercase tracking-wider brand-text">02. Upfront Rates</p>
+        <h2 class="text-2xl font-bold tracking-tight">Transparent Fixed Pricing</h2>
+        <p class="text-sm text-slate-400">Written price approval before any tool leaves the van.</p>
+      </div>
+
+      <div class="grid gap-4 md:grid-cols-2">
+        
+        <div class="rounded-2xl border p-5 space-y-4 bg-slate-900 border-slate-800">
+          <div class="flex items-baseline justify-between gap-4">
+            <h3 class="text-lg font-bold">General Pest Shield</h3>
+            <span class="text-2xl font-bold tabular-nums brand-text">$189</span>
+          </div>
+          <p class="text-sm text-slate-400">Covers spiders, ants, cockroaches, and silverfish.</p>
+          <ul class="space-y-2 text-sm border-t pt-3 border-slate-800">
+            <li class="flex items-center gap-2"><span class="inline-block h-1.5 w-1.5 rounded-full brand-bg" aria-hidden="true"></span><span>12-month spider warranty</span></li><li class="flex items-center gap-2"><span class="inline-block h-1.5 w-1.5 rounded-full brand-bg" aria-hidden="true"></span><span>Kid & pet-safe dry time</span></li><li class="flex items-center gap-2"><span class="inline-block h-1.5 w-1.5 rounded-full brand-bg" aria-hidden="true"></span><span>Eaves & fence-line dust</span></li>
+          </ul>
+        </div>
+        <div class="rounded-2xl border p-5 space-y-4 bg-slate-900 border-slate-800">
+          <div class="flex items-baseline justify-between gap-4">
+            <h3 class="text-lg font-bold">Termite + Pest Combo</h3>
+            <span class="text-2xl font-bold tabular-nums brand-text">$360</span>
+          </div>
+          <p class="text-sm text-slate-400">Complete Australian Standard inspection + pest spray.</p>
+          <ul class="space-y-2 text-sm border-t pt-3 border-slate-800">
+            <li class="flex items-center gap-2"><span class="inline-block h-1.5 w-1.5 rounded-full brand-bg" aria-hidden="true"></span><span>16-page photo report</span></li><li class="flex items-center gap-2"><span class="inline-block h-1.5 w-1.5 rounded-full brand-bg" aria-hidden="true"></span><span>FLIR thermal scan</span></li><li class="flex items-center gap-2"><span class="inline-block h-1.5 w-1.5 rounded-full brand-bg" aria-hidden="true"></span><span>Full perimeter barrier</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Two-Viewport Gate Marker (approx 2x mobile viewport down) -->
+    <div id="two-vp-sentinel" class="h-px w-full" aria-hidden="true"></div>
+
+    <!-- Section 4: Local Customer Reviews -->
+    <section id="reviews" data-section-label="FAQ" data-next-target="#faq" class="px-4 py-12 border-t border-slate-800 space-y-6">
+      <div class="space-y-1">
+        <p class="text-xs font-semibold uppercase tracking-wider brand-text">03. Local Proof</p>
+        <h2 class="text-2xl font-bold tracking-tight">Recent Neighbour Reviews</h2>
+        <p class="text-sm text-slate-400">Verified 4.9/5 rating across 274 reviews.</p>
+      </div>
+
+      <div class="grid gap-4 md:grid-cols-2">
+        
+        <blockquote class="rounded-2xl border p-5 space-y-3 bg-slate-900 border-slate-800">
+          <p class="text-sm leading-relaxed">“Chatted online at 8am, technician arrived at 1pm, and we haven’t seen a redback spider since.”</p>
+          <footer class="text-xs font-medium text-slate-400">Lauren Price · Bentleigh</footer>
+        </blockquote>
+        <blockquote class="rounded-2xl border p-5 space-y-3 bg-slate-900 border-slate-800">
+          <p class="text-sm leading-relaxed">“Thorough subfloor crawl with thermal photos showing moisture near our bathroom.”</p>
+          <footer class="text-xs font-medium text-slate-400">Jason Wu · Moorabbin</footer>
+        </blockquote>
+      </div>
+    </section>
+
+    <!-- Section 5: FAQ -->
+    <section id="faq" data-section-label="Top" data-next-target="#top" class="px-4 py-12 border-t border-slate-800 space-y-6">
+      <div class="space-y-1">
+        <p class="text-xs font-semibold uppercase tracking-wider brand-text">04. Common Questions</p>
+        <h2 class="text-2xl font-bold tracking-tight">Before You Book</h2>
+      </div>
+
+      <div class="space-y-3">
+        
+        <div class="rounded-2xl border p-4 space-y-1.5 bg-slate-900 border-slate-800">
+          <h3 class="text-sm font-semibold">Do we have to leave the house during spraying?</h3>
+          <p class="text-sm leading-relaxed text-slate-400">Just step out for 45–60 minutes while surfaces dry—no lingering odour.</p>
+        </div>
+        <div class="rounded-2xl border p-4 space-y-1.5 bg-slate-900 border-slate-800">
+          <h3 class="text-sm font-semibold">Is the live chat staffed by real technicians?</h3>
+          <p class="text-sm leading-relaxed text-slate-400">Yes, our senior dispatchers answer technical pest ID questions directly.</p>
+        </div>
+      </div>
+
+      <div class="rounded-2xl p-5 bg-slate-900/70 space-y-2">
+        <p class="text-sm font-semibold">Ready for same-day service?</p>
+        <p class="text-xs text-slate-400">28 Reserve Street, Moorabbin · Mon–Sat 7:00am – 6:30pm</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer Sentinel -->
+  <div id="footer-sentinel" class="h-px w-full" aria-hidden="true"></div>
+
+  <!-- Page Footer -->
+  <footer id="page-footer" class="border-t bg-slate-900 border-slate-800 text-slate-300 px-4 py-10">
+    <div class="mx-auto max-w-5xl space-y-4">
+      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+        <p class="text-base font-bold text-white">ShieldGuard Pest</p>
+        <p class="text-xs text-slate-400">0409 338 710 · Mon–Sat 7:00am – 6:30pm</p>
+      </div>
+      <p class="text-xs text-slate-400">28 Reserve Street, Moorabbin</p>
+      <div class="flex flex-wrap gap-4 pt-2 text-xs text-slate-400">
+        <a href="#services" class="min-h-[44px] inline-flex items-center hover:text-white">Services</a>
+        <a href="#pricing" class="min-h-[44px] inline-flex items-center hover:text-white">Pricing</a>
+        <a href="#reviews" class="min-h-[44px] inline-flex items-center hover:text-white">Reviews</a>
+        <a href="#top" class="min-h-[44px] inline-flex items-center hover:text-white">Top ↑</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Accessible Live Action Feedback Toast -->
+  <div id="mobfx-toast" role="status" aria-live="polite" class="fixed top-16 left-1/2 -translate-x-1/2 z-[60] max-w-[350px] w-[calc(100%-2rem)] rounded-xl px-4 py-3 text-xs font-medium text-white bg-slate-900 border border-slate-700 shadow-xl opacity-0 pointer-events-none transition-all duration-200 -translate-y-2">
+    <span id="mobfx-toast-msg"></span>
+  </div>
+
+  <!-- MOBILE-ONLY INTERACTION CHROME (md:hidden) -->
+  
+  <div id="mobfx-chat-card-17" class="md:hidden fixed bottom-24 right-5 z-40 w-[290px] rounded-2xl bg-slate-900 border border-slate-700 text-slate-100 p-4 shadow-2xl transform translate-y-3 scale-95 opacity-0 pointer-events-none transition-all duration-200 origin-bottom-right" aria-hidden="true" role="dialog" aria-label="Live pest control chat">
+    <div class="flex items-center justify-between pb-2 border-b border-slate-800">
+      <div>
+        <p class="text-xs font-bold text-white">Live Tech Dispatch</p>
+        <p class="text-[11px] text-emerald-400">Live chat available</p>
+      </div>
+      <button type="button" id="mobfx-chat-close-17" aria-label="Close live chat" class="min-h-[44px] min-w-[44px] -mr-2 flex items-center justify-center text-slate-400">
+        <svg class="w-5 h-5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <p class="text-xs text-slate-300 py-3 leading-relaxed">Need urgent termite or spider advice? Send your suburb for an instant tech slot.</p>
+    <button type="button" onclick="mobfxNotify('Connected to ShieldGuard live chat')" class="w-full min-h-[44px] rounded-xl text-xs font-bold text-slate-950 brand-bg">Start Chat Now</button>
+  </div>
+
+  <button id="mobfx-fab-17" type="button" aria-label="Live chat available — open chat" aria-expanded="false" aria-hidden="true" class="md:hidden fixed bottom-5 right-5 z-40 h-14 w-14 rounded-full text-slate-950 brand-bg shadow-xl flex items-center justify-center mobfx-fab-pulse transform scale-75 opacity-0 pointer-events-none transition-all duration-300 ease-out">
+    <svg class="w-5 h-5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+    <span class="absolute top-0 right-0 h-3.5 w-3.5 rounded-full bg-white border-2 border-slate-900" aria-hidden="true"></span>
+  </button>
+
+  <script>
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let toastTimer = null;
+    function mobfxNotify(message) {
+      const toast = document.getElementById('mobfx-toast');
+      const msg = document.getElementById('mobfx-toast-msg');
+      if (!toast || !msg) return;
+      msg.textContent = message;
+      toast.classList.remove('opacity-0', '-translate-y-2', 'pointer-events-none');
+      toast.classList.add('opacity-100', 'translate-y-0');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        toast.classList.add('opacity-0', '-translate-y-2', 'pointer-events-none');
+        toast.classList.remove('opacity-100', 'translate-y-0');
+      }, 2600);
+    }
+
+    function mobfxSmoothScrollTop() {
+      window.scrollTo({ top: 0, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
+    }
+
+    // Report scroll telemetry if embedded in parent studio iframe
+    window.addEventListener('scroll', () => {
+      if (window.parent && window.parent !== window) {
+        window.parent.postMessage({
+          type: 'mobfx-scroll',
+          scrollY: Math.round(window.scrollY),
+          innerHeight: window.innerHeight,
+          scrollHeight: document.documentElement.scrollHeight
+        }, '*');
+      }
+    }, { passive: true });
+  </script>
+  
+  <script>
+    (function () {
+      const fab = document.getElementById('mobfx-fab-17');
+      const card = document.getElementById('mobfx-chat-card-17');
+      const closeBtn = document.getElementById('mobfx-chat-close-17');
+      let chatOpen = false;
+
+      function setChatOpen(next) {
+        chatOpen = next;
+        if (!card || !fab) return;
+        fab.setAttribute('aria-expanded', String(chatOpen));
+        card.setAttribute('aria-hidden', String(!chatOpen));
+        card.classList.toggle('translate-y-3', !chatOpen);
+        card.classList.toggle('scale-95', !chatOpen);
+        card.classList.toggle('opacity-0', !chatOpen);
+        card.classList.toggle('pointer-events-none', !chatOpen);
+        card.classList.toggle('translate-y-0', chatOpen);
+        card.classList.toggle('scale-100', chatOpen);
+        card.classList.toggle('opacity-100', chatOpen);
+        card.classList.toggle('pointer-events-auto', chatOpen);
+      }
+
+      fab?.addEventListener('click', () => setChatOpen(!chatOpen));
+      closeBtn?.addEventListener('click', () => setChatOpen(false));
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && chatOpen) setChatOpen(false);
+      });
+
+      function toggleFab(visible) {
+        if (!fab) return;
+        if (!visible && chatOpen) setChatOpen(false);
+        fab.setAttribute('aria-hidden', visible ? 'false' : 'true');
+        fab.classList.toggle('scale-75', !visible);
+        fab.classList.toggle('opacity-0', !visible);
+        fab.classList.toggle('pointer-events-none', !visible);
+        fab.classList.toggle('scale-100', visible);
+        fab.classList.toggle('opacity-100', visible);
+        fab.classList.toggle('pointer-events-auto', visible);
+      }
+      
+    const heroEl = document.getElementById('above-fold-hero');
+    const foldObserver = new IntersectionObserver((entries) => {
+      for (const entry of entries) {
+        const passedFold = !entry.isIntersecting && entry.boundingClientRect.top < 0;
+        toggleFab(passedFold);
+      }
+    }, { threshold: 0 });
+    if (heroEl) foldObserver.observe(heroEl);
+  
+    })();
+  </script>
+</body>
+</html>

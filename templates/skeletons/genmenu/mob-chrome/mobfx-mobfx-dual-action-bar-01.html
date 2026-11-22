@@ -1,0 +1,329 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RapidFlow Plumbing — Dual-Action Chat & Call Split Bar</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root {
+      --brand: #dc2626;
+    }
+    .brand-bg { background-color: var(--brand); }
+    .brand-text { color: var(--brand); }
+    .brand-border { border-color: var(--brand); }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto !important; }
+      *, *::before, *::after {
+        transition-duration: 0.001ms !important;
+        transition-delay: 0ms !important;
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+      }
+    }
+
+  </style>
+<script src="/_aistudio-iframe.js?v=29045eb3"></script></head>
+<body id="top" class="bg-slate-50 text-slate-900 min-h-screen antialiased pb-24 md:pb-0">
+  <!-- Sticky Header -->
+  
+  <header class="sticky top-0 z-30 h-14 border-b backdrop-blur-md bg-white/95 border-slate-200 text-slate-900">
+    <div class="mx-auto flex h-full max-w-5xl items-center justify-between px-4">
+      <a href="#top" class="flex items-center gap-2 font-bold tracking-tight text-base whitespace-nowrap shrink-0">
+        <span class="inline-flex h-7 w-7 items-center justify-center rounded-lg text-white text-xs font-bold" style="background: var(--brand);" aria-hidden="true">RA</span>
+        <span>RapidFlow Plumbing</span>
+      </a>
+      <nav class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-600" aria-label="Primary navigation">
+        <a href="#services" class="hover:underline whitespace-nowrap shrink-0">Services</a>
+        <a href="#pricing" class="hover:underline whitespace-nowrap shrink-0">Pricing</a>
+        <a href="#reviews" class="hover:underline whitespace-nowrap shrink-0">Reviews</a>
+        <a href="#faq" class="hover:underline whitespace-nowrap shrink-0">FAQ</a>
+      </nav>
+      <div class="flex items-center gap-2 shrink-0">
+        <span class="hidden md:inline-flex items-center text-xs font-medium text-slate-600 mr-2">0412 390 118</span>
+        <button type="button" onclick="mobfxNotify('Calling RapidFlow Plumbing (0412 390 118)')" class="min-h-[44px] px-3.5 rounded-lg text-xs font-semibold text-white whitespace-nowrap shrink-0 transition-opacity hover:opacity-90 focus-visible:outline-2 focus-visible:outline-offset-2" style="background: var(--brand); outline-color: var(--brand);">
+          Book Now
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="mx-auto max-w-5xl">
+    <!-- Section 1: Above-Fold Hero (observed by #above-fold-hero for fold gate) -->
+    <section id="above-fold-hero" class="min-h-[calc(100vh-56px)] flex flex-col justify-between px-4 pt-6 pb-8 border-b border-slate-200/80">
+      <div class="space-y-5 max-w-xl">
+        <p class="text-xs font-semibold tracking-wide uppercase brand-text">Licensed Master Plumbers · Same-Day Dispatch</p>
+        <h1 class="text-3xl md:text-5xl font-bold tracking-tight leading-[1.12]">
+          Burst Pipes & Hot Water Fixed Within 60 Minutes
+        </h1>
+        <p class="text-base leading-relaxed text-slate-600">
+          Upfront fixed-rate quotes before work begins. No hidden call-out fees across metro suburbs.
+        </p>
+
+        <!-- Primary & Secondary Hero Actions -->
+        <div class="flex flex-col sm:flex-row gap-3 pt-1">
+          <button type="button" onclick="mobfxNotify('Request Emergency Plumber: Request sent to RapidFlow Plumbing')" class="min-h-[48px] px-5 rounded-xl font-semibold text-sm text-white shadow-sm transition-transform active:scale-[0.98]" style="background: var(--brand);">
+            Request Emergency Plumber
+          </button>
+          <a href="#pricing" class="min-h-[48px] px-5 rounded-xl font-semibold text-sm border inline-flex items-center justify-center bg-white border-slate-200">
+            View Fixed Rates
+          </a>
+        </div>
+
+        <!-- Inline SVG Service Illustration (No External Assets) -->
+        <div class="rounded-2xl border p-4 bg-white border-slate-200">
+          <svg viewBox="0 0 340 120" class="w-full h-auto" role="img" aria-label="Plumbing & Heating service diagram">
+            <rect x="0" y="0" width="340" height="120" rx="12" fill="#f1f5f9" />
+            <circle cx="48" cy="60" r="24" fill="#dc2626" fill-opacity="0.16" />
+            <circle cx="48" cy="60" r="14" fill="#dc2626" />
+            <path d="M42 60l4 4 8-9" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+            <rect x="88" y="34" width="150" height="12" rx="6" fill="#cbd5e1" />
+            <rect x="88" y="56" width="210" height="8" rx="4" fill="#e2e8f0" />
+            <rect x="88" y="72" width="165" height="8" rx="4" fill="#e2e8f0" />
+            <rect x="266" y="30" width="54" height="22" rx="6" fill="#dc2626" fill-opacity="0.18" />
+            <text x="293" y="45" text-anchor="middle" font-size="10" font-weight="700" fill="#dc2626">4.9 ★</text>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Fold Trust Strip & Scroll Cue -->
+      <div class="mt-6 pt-4 border-t border-slate-200 flex items-center justify-between text-xs text-slate-600">
+        <span>45 min avg arrival · 340 reviews</span>
+        <a href="#services" class="font-semibold brand-text min-h-[44px] inline-flex items-center">Scroll down ↓</a>
+      </div>
+    </section>
+
+    <!-- Fold Sentinel Marker -->
+    <div id="fold-sentinel" class="h-px w-full" aria-hidden="true"></div>
+
+    <!-- Section 2: Core Services -->
+    <section id="services" data-section-label="Pricing" data-next-target="#pricing" class="px-4 py-12 space-y-6">
+      <div class="space-y-1">
+        <p class="text-xs font-semibold uppercase tracking-wider brand-text">01. Core Services</p>
+        <h2 class="text-2xl font-bold tracking-tight">What We Fix &amp; Maintain</h2>
+        <p class="text-sm text-slate-600">Licensed technicians equipped on arrival for rapid first-visit completion.</p>
+      </div>
+
+      <div class="grid gap-4 md:grid-cols-3">
+        
+        <article class="rounded-2xl border p-5 space-y-3 bg-white border-slate-200">
+          <div class="flex items-start justify-between gap-3">
+            <span class="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-xl text-sm font-bold text-white" style="background: var(--brand);">01</span>
+            <span class="text-sm font-bold tabular-nums brand-text">From $145</span>
+          </div>
+          <h3 class="text-base font-semibold">Burst Pipe & Leak Repair</h3>
+          <p class="text-sm leading-relaxed text-slate-600">Acoustic leak detection, copper/PEX repiping, and pressure testing.</p>
+          <button type="button" onclick="mobfxNotify('Selected Burst Pipe & Leak Repair (From $145)')" class="min-h-[44px] w-full rounded-xl border text-xs font-semibold transition-colors border-slate-200 hover:bg-slate-50">
+            Book This Service
+          </button>
+        </article>
+        <article class="rounded-2xl border p-5 space-y-3 bg-white border-slate-200">
+          <div class="flex items-start justify-between gap-3">
+            <span class="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-xl text-sm font-bold text-white" style="background: var(--brand);">02</span>
+            <span class="text-sm font-bold tabular-nums brand-text">From $890</span>
+          </div>
+          <h3 class="text-base font-semibold">Hot Water System Replacement</h3>
+          <p class="text-sm leading-relaxed text-slate-600">Gas, electric, and heat-pump tank swaps completed same day.</p>
+          <button type="button" onclick="mobfxNotify('Selected Hot Water System Replacement (From $890)')" class="min-h-[44px] w-full rounded-xl border text-xs font-semibold transition-colors border-slate-200 hover:bg-slate-50">
+            Book This Service
+          </button>
+        </article>
+        <article class="rounded-2xl border p-5 space-y-3 bg-white border-slate-200">
+          <div class="flex items-start justify-between gap-3">
+            <span class="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-xl text-sm font-bold text-white" style="background: var(--brand);">03</span>
+            <span class="text-sm font-bold tabular-nums brand-text">From $165</span>
+          </div>
+          <h3 class="text-base font-semibold">Blocked Drain Hydro-Jetting</h3>
+          <p class="text-sm leading-relaxed text-slate-600">CCTV drain camera inspection with high-pressure root clearing.</p>
+          <button type="button" onclick="mobfxNotify('Selected Blocked Drain Hydro-Jetting (From $165)')" class="min-h-[44px] w-full rounded-xl border text-xs font-semibold transition-colors border-slate-200 hover:bg-slate-50">
+            Book This Service
+          </button>
+        </article>
+      </div>
+    </section>
+
+    <!-- Section 3: Transparent Pricing -->
+    <section id="pricing" data-section-label="Reviews" data-next-target="#reviews" class="px-4 py-12 border-t border-slate-200 space-y-6">
+      <div class="space-y-1">
+        <p class="text-xs font-semibold uppercase tracking-wider brand-text">02. Upfront Rates</p>
+        <h2 class="text-2xl font-bold tracking-tight">Transparent Fixed Pricing</h2>
+        <p class="text-sm text-slate-600">Written price approval before any tool leaves the van.</p>
+      </div>
+
+      <div class="grid gap-4 md:grid-cols-2">
+        
+        <div class="rounded-2xl border p-5 space-y-4 bg-white border-slate-200">
+          <div class="flex items-baseline justify-between gap-4">
+            <h3 class="text-lg font-bold">Standard Service Call</h3>
+            <span class="text-2xl font-bold tabular-nums brand-text">$145</span>
+          </div>
+          <p class="text-sm text-slate-600">Inspection, pressure check, and minor valve or tap repair.</p>
+          <ul class="space-y-2 text-sm border-t pt-3 border-slate-100">
+            <li class="flex items-center gap-2"><span class="inline-block h-1.5 w-1.5 rounded-full brand-bg" aria-hidden="true"></span><span>Upfront written quote</span></li><li class="flex items-center gap-2"><span class="inline-block h-1.5 w-1.5 rounded-full brand-bg" aria-hidden="true"></span><span>12-month workmanship warranty</span></li><li class="flex items-center gap-2"><span class="inline-block h-1.5 w-1.5 rounded-full brand-bg" aria-hidden="true"></span><span>Zero weekend surcharge</span></li>
+          </ul>
+        </div>
+        <div class="rounded-2xl border p-5 space-y-4 bg-white border-slate-200">
+          <div class="flex items-baseline justify-between gap-4">
+            <h3 class="text-lg font-bold">Hydro-Jet & CCTV Clear</h3>
+            <span class="text-2xl font-bold tabular-nums brand-text">$240</span>
+          </div>
+          <p class="text-sm text-slate-600">Full drain clearance with recorded camera report.</p>
+          <ul class="space-y-2 text-sm border-t pt-3 border-slate-100">
+            <li class="flex items-center gap-2"><span class="inline-block h-1.5 w-1.5 rounded-full brand-bg" aria-hidden="true"></span><span>30m high-pressure jet</span></li><li class="flex items-center gap-2"><span class="inline-block h-1.5 w-1.5 rounded-full brand-bg" aria-hidden="true"></span><span>Root & grease removal</span></li><li class="flex items-center gap-2"><span class="inline-block h-1.5 w-1.5 rounded-full brand-bg" aria-hidden="true"></span><span>Digital footage sent via SMS</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Two-Viewport Gate Marker (approx 2x mobile viewport down) -->
+    <div id="two-vp-sentinel" class="h-px w-full" aria-hidden="true"></div>
+
+    <!-- Section 4: Local Customer Reviews -->
+    <section id="reviews" data-section-label="FAQ" data-next-target="#faq" class="px-4 py-12 border-t border-slate-200 space-y-6">
+      <div class="space-y-1">
+        <p class="text-xs font-semibold uppercase tracking-wider brand-text">03. Local Proof</p>
+        <h2 class="text-2xl font-bold tracking-tight">Recent Neighbour Reviews</h2>
+        <p class="text-sm text-slate-600">Verified 4.9/5 rating across 340 reviews.</p>
+      </div>
+
+      <div class="grid gap-4 md:grid-cols-2">
+        
+        <blockquote class="rounded-2xl border p-5 space-y-3 bg-white border-slate-200">
+          <p class="text-sm leading-relaxed">“Pipe split under our kitchen sink at 7am. RapidFlow arrived in 38 minutes and billed the exact quoted price.”</p>
+          <footer class="text-xs font-medium text-slate-600">Claire Henderson · Northside</footer>
+        </blockquote>
+        <blockquote class="rounded-2xl border p-5 space-y-3 bg-white border-slate-200">
+          <p class="text-sm leading-relaxed">“Clean boot covers, tidy solder work on our hot water manifold, and zero mess left behind.”</p>
+          <footer class="text-xs font-medium text-slate-600">David K. · Bayside</footer>
+        </blockquote>
+      </div>
+    </section>
+
+    <!-- Section 5: FAQ -->
+    <section id="faq" data-section-label="Top" data-next-target="#top" class="px-4 py-12 border-t border-slate-200 space-y-6">
+      <div class="space-y-1">
+        <p class="text-xs font-semibold uppercase tracking-wider brand-text">04. Common Questions</p>
+        <h2 class="text-2xl font-bold tracking-tight">Before You Book</h2>
+      </div>
+
+      <div class="space-y-3">
+        
+        <div class="rounded-2xl border p-4 space-y-1.5 bg-white border-slate-200">
+          <h3 class="text-sm font-semibold">Do you charge extra after 6pm?</h3>
+          <p class="text-sm leading-relaxed text-slate-600">Standard dispatch covers 7am–8pm seven days a week. Overnight emergency rates are confirmed upfront on the phone.</p>
+        </div>
+        <div class="rounded-2xl border p-4 space-y-1.5 bg-white border-slate-200">
+          <h3 class="text-sm font-semibold">Are your plumbers licensed and insured?</h3>
+          <p class="text-sm leading-relaxed text-slate-600">Yes, every technician carries full state plumbing & gas-fitting accreditation and $20M public liability cover.</p>
+        </div>
+      </div>
+
+      <div class="rounded-2xl p-5 bg-slate-100/80 space-y-2">
+        <p class="text-sm font-semibold">Ready for same-day service?</p>
+        <p class="text-xs text-slate-600">42 Industrial Way, Northside · Open 24/7 for Urgent Leaks</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer Sentinel -->
+  <div id="footer-sentinel" class="h-px w-full" aria-hidden="true"></div>
+
+  <!-- Page Footer -->
+  <footer id="page-footer" class="border-t bg-slate-900 border-slate-800 text-slate-200 px-4 py-10">
+    <div class="mx-auto max-w-5xl space-y-4">
+      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+        <p class="text-base font-bold text-white">RapidFlow Plumbing</p>
+        <p class="text-xs text-slate-400">0412 390 118 · Open 24/7 for Urgent Leaks</p>
+      </div>
+      <p class="text-xs text-slate-400">42 Industrial Way, Northside</p>
+      <div class="flex flex-wrap gap-4 pt-2 text-xs text-slate-400">
+        <a href="#services" class="min-h-[44px] inline-flex items-center hover:text-white">Services</a>
+        <a href="#pricing" class="min-h-[44px] inline-flex items-center hover:text-white">Pricing</a>
+        <a href="#reviews" class="min-h-[44px] inline-flex items-center hover:text-white">Reviews</a>
+        <a href="#top" class="min-h-[44px] inline-flex items-center hover:text-white">Top ↑</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Accessible Live Action Feedback Toast -->
+  <div id="mobfx-toast" role="status" aria-live="polite" class="fixed top-16 left-1/2 -translate-x-1/2 z-[60] max-w-[350px] w-[calc(100%-2rem)] rounded-xl px-4 py-3 text-xs font-medium text-white bg-slate-900 border border-slate-700 shadow-xl opacity-0 pointer-events-none transition-all duration-200 -translate-y-2">
+    <span id="mobfx-toast-msg"></span>
+  </div>
+
+  <!-- MOBILE-ONLY INTERACTION CHROME (md:hidden) -->
+  
+  <div id="mobfx-bar-01" class="md:hidden fixed bottom-0 inset-x-0 z-40 bg-white border-t border-slate-200 shadow-[0_-6px_20px_rgba(15,23,42,0.08)] transform translate-y-full opacity-0 pointer-events-none transition-all duration-300 ease-out" aria-hidden="true" role="region" aria-label="Quick contact bar">
+    <div class="grid grid-cols-2 divide-x divide-slate-200">
+      <button type="button" onclick="mobfxNotify('Live chat opened with RapidFlow dispatch')" class="min-h-[52px] flex items-center justify-center gap-2 text-sm font-semibold text-slate-900 bg-white active:bg-slate-100">
+        <svg class="w-5 h-5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        <span>Chat</span>
+      </button>
+      <button type="button" onclick="mobfxNotify('Calling RapidFlow Plumbing on 0412 390 118')" class="min-h-[52px] flex items-center justify-center gap-2 text-sm font-semibold text-white brand-bg active:opacity-90">
+        <svg class="w-5 h-5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        <span>Call</span>
+      </button>
+    </div>
+  </div>
+
+  <script>
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let toastTimer = null;
+    function mobfxNotify(message) {
+      const toast = document.getElementById('mobfx-toast');
+      const msg = document.getElementById('mobfx-toast-msg');
+      if (!toast || !msg) return;
+      msg.textContent = message;
+      toast.classList.remove('opacity-0', '-translate-y-2', 'pointer-events-none');
+      toast.classList.add('opacity-100', 'translate-y-0');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        toast.classList.add('opacity-0', '-translate-y-2', 'pointer-events-none');
+        toast.classList.remove('opacity-100', 'translate-y-0');
+      }, 2600);
+    }
+
+    function mobfxSmoothScrollTop() {
+      window.scrollTo({ top: 0, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
+    }
+
+    // Report scroll telemetry if embedded in parent studio iframe
+    window.addEventListener('scroll', () => {
+      if (window.parent && window.parent !== window) {
+        window.parent.postMessage({
+          type: 'mobfx-scroll',
+          scrollY: Math.round(window.scrollY),
+          innerHeight: window.innerHeight,
+          scrollHeight: document.documentElement.scrollHeight
+        }, '*');
+      }
+    }, { passive: true });
+  </script>
+  
+  <script>
+    (function () {
+      const bar = document.getElementById('mobfx-bar-01');
+      function toggleBar(visible) {
+        if (!bar) return;
+        bar.setAttribute('aria-hidden', visible ? 'false' : 'true');
+        bar.classList.toggle('translate-y-full', !visible);
+        bar.classList.toggle('opacity-0', !visible);
+        bar.classList.toggle('pointer-events-none', !visible);
+        bar.classList.toggle('translate-y-0', visible);
+        bar.classList.toggle('opacity-100', visible);
+        bar.classList.toggle('pointer-events-auto', visible);
+      }
+      
+    const heroEl = document.getElementById('above-fold-hero');
+    const foldObserver = new IntersectionObserver((entries) => {
+      for (const entry of entries) {
+        const passedFold = !entry.isIntersecting && entry.boundingClientRect.top < 0;
+        toggleBar(passedFold);
+      }
+    }, { threshold: 0 });
+    if (heroEl) foldObserver.observe(heroEl);
+  
+    })();
+  </script>
+</body>
+</html>
