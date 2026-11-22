@@ -10372,11 +10372,14 @@ def assemble_fine(ctx):
     computed = _variant_entries(ctx)
     entry = (computed.get(str(pick)) or (None,))[0]
     if not entry:
-        # a signed fine pick: the fine round nudges ITS OWN merged
-        # vector — resolve it from the persisted fv record, never the
-        # fallback look base (the shipped artifact binds the signed
-        # vector via approvals.w4.look_deltas either way)
-        fv = look_deltas(ctx, pick)
+        # a signed fine pick: the fine round nudges the SIGNED vector
+        # — the approval record pins it (look_deltas), so re-emitting
+        # this round stays byte-stable. look_deltas(ctx, pick) covers
+        # approvals signed before the vector rode the record.
+        fv = ((read_approvals(ctx) or {}).get('w4') or {}).get(
+            'look_deltas')
+        if fv is None:
+            fv = look_deltas(ctx, pick)
         if fv is not None:
             entry = {'id': str(pick), 'deltas': fv}
     if not entry:
