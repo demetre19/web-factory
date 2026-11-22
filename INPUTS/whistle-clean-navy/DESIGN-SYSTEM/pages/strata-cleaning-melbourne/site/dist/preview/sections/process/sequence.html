@@ -1,0 +1,39 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Whistle Clean</title><meta name="description" content="Strata Cleaning Melbourne – common-area cleaning for strata buildings – foyers, lifts, carparks and amenities. Eco products, audited visits."><meta property="og:title" content="Whistle Clean"><meta property="og:description" content="Strata Cleaning Melbourne – common-area cleaning for strata buildings – foyers, lifts, carparks and amenities. Eco products, audited visits."><meta property="og:image" content="/og.webp"><link rel="icon" href="/favicon.svg"><script>
+(function () {
+  // U.3 — first paint is BRIEF theme.default (never the OS preference);
+  // a manual toggle persists the choice in localStorage.
+  var s = new URLSearchParams(location.search).get('theme') || localStorage.getItem('theme');
+  var m = s || "light";
+  document.documentElement.dataset.theme = m;
+  document.documentElement.classList.toggle('dark', m === 'dark');
+  window.__wfSetTheme = function (v) {
+    localStorage.setItem('theme', v);
+    document.documentElement.dataset.theme = v;
+    document.documentElement.classList.toggle('dark', v === 'dark');
+  };
+  document.addEventListener('click', function (e) {
+    if (e.target && e.target.closest && e.target.closest('[data-theme-toggle]')) {
+      window.__wfSetTheme(document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark');
+    }
+    var nl = document.querySelector('.nav-links');
+    if (e.target && e.target.closest && e.target.closest('.burger')) {
+      if (nl) nl.classList.toggle('open');
+    } else if (nl && nl.classList.contains('open')) {
+      // flyout closes on the close control, on a link it navigates
+      // to, or on any click outside the sheet (the scrim)
+      var inside = e.target && e.target.closest &&
+                   e.target.closest('.nav-links');
+      if (!inside || e.target.closest('.nav-close') ||
+          e.target.closest('.nav-links a')) {
+        nl.classList.remove('open');
+      }
+    }
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') {
+      var nl = document.querySelector('.nav-links');
+      if (nl) nl.classList.remove('open');
+    }
+  });
+})();
+</script><link rel="stylesheet" href="/_astro/design-system.DVFyCvPd.css"><style>.burger{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;min-width:44px;min-height:44px;padding:0!important;font-size:0!important;border:1px solid var(--border-default);border-radius:var(--radius,10px);background:var(--bg-elevated);color:var(--text-primary);box-shadow:none!important;cursor:pointer}.burger::after{content:"";width:20px;height:14px;background:repeating-linear-gradient(to bottom,currentColor 0 2px,transparent 2px 6px)}</style></head><body><section class="sec-band surface-muted density-regular" data-sec="process" data-comp="sequence" data-ratio="none" data-disclosure="open" data-surface="muted" data-density="regular" data-mode="band" data-wf-ref="preview/layouts.html#d5:process" data-intent="process" data-content="c-b03" data-recipe="bricksmaven/how-it-works/how-it-works-1"> <div class="sec-inner">  <!-- section contract: composition=sequence section=process surface=muted density=regular speech_act=how --><div class="wf-how-it-works-1"> <div class="sec-inner"> <div class="hworks-1-container"> <div class="hworks-1-intro"> <h2 class="text-fluid-2">How does a strata cleaning contract run?</h2> <p class="text-fluid-0">Every strata cleaning contract runs <strong>the same four steps</strong> – site audit, scope plan, team assignment, supervisor QA.</p>   </div> <div class="hworks-grid-ul"><div class="hworks-card card"> <div class="hworks-card__content"> <span class="icon-chip"><svg xmlns="http://www.w3.org/2000/svg" stroke-width="2" width="20" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" fill="none" viewBox="0 0 24 24" aria-hidden="true" class="lucide lucide-clipboard-check">  <rect width="8" height="4" x="8" y="2" rx="1" ry="1"></rect> <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path> <path d="m9 14 2 2 4-4"></path>  </svg></span> <h3 class="text-fluid-1">Site audit.</h3> <p class="text-fluid-0">A supervisor walks the building, maps shared areas and notes access, alarms and resident rules.</p> </div> </div><div class="hworks-card card"> <div class="hworks-card__content"> <span class="icon-chip"><svg xmlns="http://www.w3.org/2000/svg" stroke-width="2" width="20" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" fill="none" viewBox="0 0 24 24" aria-hidden="true" class="lucide lucide-clipboard-check">  <rect width="8" height="4" x="8" y="2" rx="1" ry="1"></rect> <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path> <path d="m9 14 2 2 4-4"></path>  </svg></span> <h3 class="text-fluid-1">Scope plan.</h3> <p class="text-fluid-0">The audit becomes a written task list with daily, weekly and monthly items.</p> </div> </div><div class="hworks-card card"> <div class="hworks-card__content"> <span class="icon-chip"><svg xmlns="http://www.w3.org/2000/svg" stroke-width="2" width="20" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" fill="none" viewBox="0 0 24 24" aria-hidden="true" class="lucide lucide-users">  <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path> <path d="M16 3.128a4 4 0 0 1 0 7.744"></path> <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path> <circle cx="9" cy="7" r="4"></circle>  </svg></span> <h3 class="text-fluid-1">Team assignment.</h3> <p class="text-fluid-0">The same trained cleaners take the site, inducted on its keys, hazards and layout.</p> </div> </div><div class="hworks-card card"> <div class="hworks-card__content"> <span class="icon-chip"><svg xmlns="http://www.w3.org/2000/svg" stroke-width="2" width="20" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" fill="none" viewBox="0 0 24 24" aria-hidden="true" class="lucide lucide-clipboard-check">  <rect width="8" height="4" x="8" y="2" rx="1" ry="1"></rect> <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path> <path d="m9 14 2 2 4-4"></path>  </svg></span> <h3 class="text-fluid-1">Supervisor QA.</h3> <p class="text-fluid-0">A supervisor inspects against the scope on a set cycle and signs off each visit.</p> </div> </div></div> </div> </div>   <div class="flow mt-stack"><p class="text-fluid-0">Strata buildings add resident-facing rules the audit captures early – quiet hours, lift bookings and foyer signage all land in the site notes before the first visit.</p><p class="text-fluid-0">The steps then repeat per building, so a second tower or an adjoining block runs the identical sequence.</p></div>  </div>  </div> </section></body></html>

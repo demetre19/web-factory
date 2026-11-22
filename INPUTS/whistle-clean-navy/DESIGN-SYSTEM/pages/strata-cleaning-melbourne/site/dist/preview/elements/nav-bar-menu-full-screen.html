@@ -1,0 +1,39 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Whistle Clean</title><meta name="description" content="Strata Cleaning Melbourne – common-area cleaning for strata buildings – foyers, lifts, carparks and amenities. Eco products, audited visits."><meta property="og:title" content="Whistle Clean"><meta property="og:description" content="Strata Cleaning Melbourne – common-area cleaning for strata buildings – foyers, lifts, carparks and amenities. Eco products, audited visits."><meta property="og:image" content="/og.webp"><link rel="icon" href="/favicon.svg"><script>
+(function () {
+  // U.3 — first paint is BRIEF theme.default (never the OS preference);
+  // a manual toggle persists the choice in localStorage.
+  var s = new URLSearchParams(location.search).get('theme') || localStorage.getItem('theme');
+  var m = s || "light";
+  document.documentElement.dataset.theme = m;
+  document.documentElement.classList.toggle('dark', m === 'dark');
+  window.__wfSetTheme = function (v) {
+    localStorage.setItem('theme', v);
+    document.documentElement.dataset.theme = v;
+    document.documentElement.classList.toggle('dark', v === 'dark');
+  };
+  document.addEventListener('click', function (e) {
+    if (e.target && e.target.closest && e.target.closest('[data-theme-toggle]')) {
+      window.__wfSetTheme(document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark');
+    }
+    var nl = document.querySelector('.nav-links');
+    if (e.target && e.target.closest && e.target.closest('.burger')) {
+      if (nl) nl.classList.toggle('open');
+    } else if (nl && nl.classList.contains('open')) {
+      // flyout closes on the close control, on a link it navigates
+      // to, or on any click outside the sheet (the scrim)
+      var inside = e.target && e.target.closest &&
+                   e.target.closest('.nav-links');
+      if (!inside || e.target.closest('.nav-close') ||
+          e.target.closest('.nav-links a')) {
+        nl.classList.remove('open');
+      }
+    }
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') {
+      var nl = document.querySelector('.nav-links');
+      if (nl) nl.classList.remove('open');
+    }
+  });
+})();
+</script><link rel="stylesheet" href="/_astro/design-system.DVFyCvPd.css"><style>.burger{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;min-width:44px;min-height:44px;padding:0!important;font-size:0!important;border:1px solid var(--border-default);border-radius:var(--radius,10px);background:var(--bg-elevated);color:var(--text-primary);box-shadow:none!important;cursor:pointer}.burger::after{content:"";width:20px;height:14px;background:repeating-linear-gradient(to bottom,currentColor 0 2px,transparent 2px 6px)}.nav-links.open{width:auto;inset-inline:0;border-inline-start:0}</style></head><body><header class="sec-bar surface-base density-compact" data-sec="nav" data-comp="nav-bar" data-ratio="none" data-disclosure="open" data-surface="base" data-density="compact" data-mode="bar" data-wf-ref="preview/layouts.html#d5:nav" data-intent="chrome" data-recipe="bricksmaven/headers/header-1"> <div class="sec-inner">  <!-- section contract: composition=nav-bar section=nav surface=base density=compact speech_act=chrome --><div class="wf-header-1"> <div class="sec-inner"> <div class="bm-header-1__container row between"> <div> <span class="logo brand-mark">Whistle Clean</span> </div> <div> <nav class="nav-links" aria-label="Primary"><ul class="row gap-fluid-m list-plain"><li><a class="nav-link" href="/cleaning-services/">all commercial cleaning services</a></li><li><a class="nav-link" href="/cleaning-services/body-corporate-cleaning-melbourne/">body corporate cleaning</a></li><li><a class="nav-link" href="/cleaning-services/strata-window-cleaning-melbourne/">strata window cleaning</a></li><li><a class="nav-link" href="/cleaning-services/strata-floor-scrubbing-melbourne/">strata floor scrubbing</a></li></ul></nav> <button class="burger wf-cta-button" type="button" aria-label="Menu">Menu</button> </div> <div class="bm-header-1__cta"> <p class="mt-fluid-m"><a class="wf-cta-button nav-cta" href="tel:+61370032223">+61 3 7003 2223</a></p> </div> </div> </div> </div>  </div> </header><script>(function(){var n=document.querySelector(".nav-links");if(n)n.classList.add("open");})()</script></body></html>
