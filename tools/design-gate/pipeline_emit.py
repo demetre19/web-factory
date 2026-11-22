@@ -447,6 +447,8 @@ def _instance_body(ctx, contract, row, copy=None):
                      + ')}')
     if h1_text:
         props.append('h1={true}')
+    if (contract.get('stack') or row.get('stack')) == 'media-first':
+        props.append('stack="media-first"')
     # the brand is site chrome: every composition that renders a logo
     # takes it from the plan's site block, never a default
     site = ctx.site_block() or {}

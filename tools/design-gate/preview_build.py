@@ -623,6 +623,10 @@ def emit_layouts(ctx):
         for sec, dens in (o.get('densities') or {}).items():
             if dens in ('compact', 'regular', 'spacious'):
                 override[f'{sec}@density'] = dens
+        for sec, st in (o.get('stacks') or {}).items():
+            override[f'{sec}@stack'] = st
+        for sec, sf in (o.get('surfaces') or {}).items():
+            override[f'{sec}@surface'] = sf
         options.append((str(o.get('id')), o.get('label') or
                         o.get('id'), float(o.get('score') or 0),
                         override))
@@ -730,6 +734,19 @@ def emit_layouts(ctx):
             if (c['section'] == 'hero' and cc.get('surface') == 'media'
                     and cc.get('composition') not in PC.MEDIA_BAND_HEROES):
                 cc['surface'] = r2['surface'] = 'base'
+            st = override.get(f"{c['section']}@stack")
+            if st:
+                cc['stack'] = r2['stack'] = st
+            # a muted hero flips the body's base/muted order — the
+            # same surfaces the projection binds for this option
+            if override.get('hero@surface') == 'muted':
+                sf = cc.get('surface')
+                if c['section'] == 'hero' and sf == 'base':
+                    cc['surface'] = r2['surface'] = 'muted'
+                elif (c['section'] not in ('nav', 'footer', 'hero')
+                        and sf in ('base', 'muted')):
+                    cc['surface'] = r2['surface'] = (
+                        'muted' if sf == 'base' else 'base')
             ov_rows.append((cc, r2))
         # and after the split-media rows, the same media-pane rows
         # the plan's post-pass fills — the card locks the ratios the

@@ -547,6 +547,7 @@ def recorded_pick(pdir):
 
 
 MEDIA_BAND_HEROES = {'hero-act-merge'}
+SPLIT_HEROES = {'split-media', 'cutout-hero-split'}
 
 
 def signed_chrome(pdir):
@@ -658,6 +659,12 @@ def build(pdir, option=None):
     zone_of = {b['id']: b['zone'] for b in blocks}
     table = []
     row_media = max(0, len(media) - 1)
+    # alternates (never d1, the plan default) vary the first screen
+    # beyond the hero comp: every other split hero puts its media
+    # first (image-left), and every other non-media-band hero sits on
+    # muted — the body's base/muted order flips with it, so the fold
+    # boundary and the S-M-L surface steps hold by construction
+    n_split = n_muted = 0
     for oi, (oid, label, v) in enumerate(opts):
         seq = repair_rhythm(
             [(b['id'], v[b['id']] if v[b['id']] in allowed[b['id']]
@@ -670,6 +677,15 @@ def build(pdir, option=None):
         # a hero that shares the first body row's comp steps density
         # (compact) — adjacent rows never share comp AND density
         hc = hero_pool[oi % len(hero_pool)]
+        vary = {}
+        if oi and hc in SPLIT_HEROES:
+            if n_split % 2 == 0:
+                vary['stacks'] = {'hero': 'media-first'}
+            n_split += 1
+        if oi and hc not in MEDIA_BAND_HEROES:
+            if n_muted % 2 == 0:
+                vary['surfaces'] = {'hero': 'muted'}
+            n_muted += 1
         table.append({'id': oid, 'label': label,
                       'compositions': {bid: c for bid, c in seq},
                       'chrome': {'nav': nav_pool[oi % len(nav_pool)],
@@ -677,6 +693,7 @@ def build(pdir, option=None):
                                  'footer': foot_pool[oi % len(foot_pool)]},
                       **({'densities': {'hero': 'compact'}}
                          if seq and seq[0][1] == hc else {}),
+                      **vary,
                       'score': s, 'score_inputs': inputs})
     chosen = next((o for o in table if o['id'] == pick), None)
     if chosen is None:
@@ -714,6 +731,8 @@ def build(pdir, option=None):
             continue
         nav_items.append({'label': l['anchor'], 'href': l['href']})
     hero_cta = (copy.get('closing') or {}).get('cta')
+    hero_surface = ('muted' if (chosen.get('surfaces') or {}).get('hero')
+                    == 'muted' else 'base')
     rows.append(base_row(
         'nav', nav_comp, label='Header', speech_act=['chrome'],
         category='headers',
@@ -728,17 +747,22 @@ def build(pdir, option=None):
     rows.append(base_row(
         'hero', hero_comp, label='Hero', speech_act=['promise'],
         category='hero',
-        surface='media' if hero_comp in MEDIA_BAND_HEROES else 'base',
+        surface=('media' if hero_comp in MEDIA_BAND_HEROES
+                 else hero_surface),
         density=(chosen.get('densities') or {}).get('hero') or 'regular',
         emphasis='headline',
-        align='center-axis', stack='text-first', collapse='stacked',
+        align='center-axis',
+        stack=(chosen.get('stacks') or {}).get('hero') or 'text-first',
+        collapse='stacked',
         media_ratio='none', disclosure='open', intent='hero',
         content_ids=['c-h1'], copy_ref='lede',
         vector=[{'heading': copy['h1'], 'fs': strip_md(copy['lede'])}],
         **({'cta': hero_cta} if hero_cta else {})))
     comps = chosen['compositions']
     seq = [(b['id'], comps[b['id']]) for b in blocks]
-    surfaces = ['muted', 'base']
+    # the body opens on the surface the hero doesn't wear
+    surfaces = (['base', 'muted'] if hero_surface == 'muted'
+                else ['muted', 'base'])
     media_left = list(media)
     # V.1 — a real service's promise row carries the first-party
     # photo; the hero spends the media budget before any detail row

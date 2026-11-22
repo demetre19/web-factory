@@ -593,8 +593,18 @@ input, textarea { border: 1px solid var(--input-border); padding: var(--input-py
            grid-template-columns: 1fr; align-items: center; }
   @media (min-width: 48rem) {
     .split { grid-template-columns: 1.05fr 1fr; }
-    .split.media-first { grid-template-columns: 1fr 1.05fr; }
+    .split.media-first, .split[data-media-first] {
+      grid-template-columns: 1fr 1.05fr; }
+    .split[data-media-first] > .stack { order: 2; }
   }
+  /* a media-band hero (hero-act-merge) covers its band with the photo
+     under a canvas scrim — the band ink stays legible in both modes */
+  .surface-media:has(> .sec-inner > .act-merge-media) {
+    position: relative; isolation: isolate; overflow: hidden; }
+  .act-merge-media { position: absolute; inset: 0; z-index: -1; }
+  .act-merge-media img { width: 100%; height: 100%; object-fit: cover; }
+  .act-merge-media::after { content: ""; position: absolute; inset: 0;
+    background: color-mix(in oklab, var(--bg-canvas) 65%, transparent); }
   .cta-row { display: flex; flex-wrap: wrap; gap: var(--space-s);
              align-items: center; }
   .link-quiet { color: var(--text-secondary); text-decoration: none;
