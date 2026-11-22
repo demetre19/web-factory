@@ -4493,7 +4493,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
     function setW(w){
       var pad=Math.max(0,Math.min(14,Math.floor((innerWidth-w-8)/2)));
       ov.querySelector('.xstage').style.padding=pad+'px';
-      fr.style.width=(w<1280?Math.min(w,innerWidth):w)+'px';
+      fr.style.width=w+'px';
       ov.querySelectorAll('.xdev button').forEach(function(b){
         b.classList.toggle('on',+b.dataset.w===w)})}
     setW(w0);
@@ -4612,6 +4612,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
         '<div class="noprev">TOKENS.json not emitted for this '+
         'pipeline yet</div>')+'</div></div>';
       wireXp(el);
+      wireFrames(el);
       return}
     if(o.scrub){
       el.innerHTML=h+scrubView(o);
