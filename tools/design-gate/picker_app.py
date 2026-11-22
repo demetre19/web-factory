@@ -3234,6 +3234,13 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
 .chip{font:600 11px var(--mono);border:1px solid var(--line);
   border-radius:999px;padding:4px 10px;color:var(--muted);cursor:pointer}
 .chip.on{color:var(--ink);border-color:var(--ink)}
+/* vibe board uses the pre-split card layout (operator revert) */
+#board[data-pane=vibe] .card{display:flex;flex-direction:column}
+#board[data-pane=vibe] .card .cb{border-right:0}
+#board[data-pane=vibe] .card .cf{flex-direction:row;align-items:center;
+     justify-content:center;gap:10px;padding:10px 12px;
+     border-top:1px solid var(--line);min-height:44px}
+#board[data-pane=vibe] .card .cf .crow{margin-top:0}
 .vprev{max-width:760px;border:1px solid var(--line);border-radius:12px;
   overflow:hidden;margin:12px 0 20px;background:var(--panel)}
 .vprev .cb{height:340px;position:relative;overflow:hidden}
@@ -3663,7 +3670,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
       if(seen[v])return 0;seen[v]=1;return 1})}
 
   // vibe space: gene sliders + preset atlas + signed gene bundle
-  var VGENES={},VQ='',VRES=null,VMOOD='',VADV=false;
+  var VGENES={},VQ='',VRES=null,VMOOD='',VADV=true;
   function vibePane(el,o){
     var axes=o.axes||[],cards=o.cards||[];
     var h='<h1>Vibe space</h1><div class="desc">'+esc(o.desc||'')+'</div>';
@@ -3701,9 +3708,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
         '<div class="noprev">pick a mood, a preset, or move a '+
         'slider — the resolved vibe renders here</div>')+'</div>'+
        '<div class="cf"><span class="vname">'+
-       esc((VRES&&VRES.name)||'computed vibe')+
-       (Object.keys(VGENES).length?' · '+Object.keys(VGENES).length+
-        ' genes':'')+'</span>'+
+       esc((VRES&&VRES.name)||'computed vibe')+'</span>'+
        '<button class="pick" id="vBake">Bake</button></div></div>';
     h+='<div class="filters">'+filters(o.clusters||[])+'</div>';
     h+='<input class="vq" id="vq" placeholder="search presets…" '+
@@ -4340,6 +4345,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
 
   function board(){
     var el=document.getElementById('board');
+    el.dataset.pane=CUR;
     if(CUR==='ingest'){ingestPane(el);return}
     if(CUR==='remix'){remixPane(el);return}
     if(CUR==='saved'){
