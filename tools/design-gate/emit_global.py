@@ -779,17 +779,19 @@ input, textarea { border: 1px solid var(--input-border); padding: var(--input-py
        .\!open important variants, whose :not(.\!open) form would hide
        the OPEN panel — a plain class list keeps those variants inert */
     .nav-links.nav-links.nav-mega,
-    .nav-links.nav-links[data-over] { display: none; }
+    .nav-links.nav-links[data-over],
+    .nav-desk.nav-desk[data-over] { display: none; }
     /* a plain link row that can't fit collapses to the burger —
        the layout script marks its header .nav-crowded and stamps
        data-over on the nav, so the links hide and the burger
-       reappears (the derived breakpoint, audit #138) */
+       reappears (the derived breakpoint, audit 138) */
     .nav-crowded .burger, .nav-crowded .burger.wf-cta-button {
               display: inline-flex; }
     /* the open overflow panel is a dropdown under the bar, not the
        mobile sheet — the sheet's fixed/scrim/scroll-lock rules live
        under 60rem, so the desktop flyout carries its own box */
-    .nav-links.nav-mega.open, .nav-links[data-over].open {
+    .nav-links.nav-mega.open, .nav-links[data-over].open,
+    .nav-desk[data-over].open {
               display: flex; flex-direction: column;
               gap: var(--space-m);
               position: absolute; inset-block-start: 100%;
@@ -803,7 +805,8 @@ input, textarea { border: 1px solid var(--input-border); padding: var(--input-py
               box-shadow: var(--shadow-pop);
               z-index: calc(var(--primitive-z-sticky) + 1); }
     .nav-links.nav-mega.open .nav-close,
-    .nav-links[data-over].open .nav-close {
+    .nav-links[data-over].open .nav-close,
+    .nav-desk[data-over].open .nav-close {
               display: inline-flex; align-self: flex-end;
               min-height: var(--tap); min-width: var(--tap);
               align-items: center; justify-content: center;
@@ -813,17 +816,20 @@ input, textarea { border: 1px solid var(--input-border); padding: var(--input-py
     /* a sheet-head in the flyout keeps its brand + close row
        (the head is desktop-hidden until the panel opens) */
     .nav-links.nav-mega.open .nav-sheet-head,
-    .nav-links[data-over].open .nav-sheet-head {
+    .nav-links[data-over].open .nav-sheet-head,
+    .nav-desk[data-over].open .nav-sheet-head {
               display: flex; align-items: center;
               justify-content: space-between; gap: var(--space-m);
               padding-block-end: var(--space-s);
               border-block-end: 1px solid
                   var(--border-subtle, var(--border-default)); }
     .nav-links.nav-mega.open .nav-sheet-head .nav-sheet-brand,
-    .nav-links[data-over].open .nav-sheet-head .nav-sheet-brand {
+    .nav-links[data-over].open .nav-sheet-head .nav-sheet-brand,
+    .nav-desk[data-over].open .nav-sheet-head .nav-sheet-brand {
               font-weight: 700; }
     .nav-links.nav-mega.open .nav-sheet-head .nav-close,
-    .nav-links[data-over].open .nav-sheet-head .nav-close {
+    .nav-links[data-over].open .nav-sheet-head .nav-close,
+    .nav-desk[data-over].open .nav-sheet-head .nav-close {
               align-self: center; margin-inline-start: auto; }
     .nav-links.nav-mega.open:has(.nav-sheet-head)
         .nav-close:not(.nav-sheet-head .nav-close),

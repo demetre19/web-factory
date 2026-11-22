@@ -423,7 +423,7 @@ class _BankBind(html.parser.HTMLParser):
             # foreign app copy that isn't a link/button/brand — an
             # exemplar's backdrop headings, paragraphs and meta
             # spans ("Gallery · Explore") — rebinds to the site's
-            # own link labels rather than leaking (audit #138)
+            # own link labels rather than leaking (audit 138)
             parent = ''
             for t in reversed(self._stack):
                 if t != '[data-wf-panel]':

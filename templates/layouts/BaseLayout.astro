@@ -77,25 +77,34 @@ import '../styles/global.css';
     // crowd check — an inline link row that can't fit collapses to
     // the burger at any width: the header is marked .nav-crowded and
     // the nav stamped data-over so it hides/opens as the flyout
-    // (the link-count-derived breakpoint, audit #138). One-way
+    // (the link-count-derived breakpoint, audit 138). One-way
     // latch: once crowded it stays crowded — re-measuring a hidden
     // nav reads 0 width and would thrash on resize.
-    var crowdNav = document.querySelector('.nav-links');
-    var crowdAuthored = crowdNav &&
-        crowdNav.hasAttribute('data-over');
     var crowdLatch = false;
     var crowd = function () {
-      if (crowdLatch || crowdAuthored || !crowdNav ||
-          crowdNav.classList.contains('nav-mega')) return;
-      if (crowdNav.scrollWidth > crowdNav.clientWidth + 1) {
-        crowdLatch = true;
-        var h = crowdNav.closest('header');
-        if (h) h.classList.add('nav-crowded');
-        crowdNav.setAttribute('data-over', '');
+      if (crowdLatch) return;
+      var cands = document.querySelectorAll('.nav-links, .nav-desk');
+      for (var i = 0; i < cands.length; i++) {
+        var nav = cands[i];
+        if (nav.hasAttribute('data-over') ||
+            nav.classList.contains('nav-mega')) continue;
+        if (nav.scrollWidth > nav.clientWidth + 1) {
+          crowdLatch = true;
+          var h = nav.closest('header');
+          if (h) h.classList.add('nav-crowded');
+          nav.setAttribute('data-over', '');
+          break;
+        }
       }
     };
     crowd();
     window.addEventListener('resize', crowd);
+    window.addEventListener('load', crowd);
+    // webfonts land after DOMContentLoaded and can grow the link
+    // row past the bar — re-check once they settle
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(crowd);
+    }
     // preview surfaces request the open state through the real
     // toggle path — the sheet opens exactly as a burger click opens
     // it (E-M3, no synthetic markup). No open state at/above the
@@ -106,10 +115,17 @@ import '../styles/global.css';
     }
   });
   markHead();
+  // the togglable nav panel: normally .nav-links; on skeletons
+  // whose inline nav is .nav-desk (header-21), the crowd latch
+  // stamps data-over and the same collapse→flyout contract applies
+  var navEl = function () {
+    return document.querySelector('.nav-links') ||
+           document.querySelector('.nav-desk[data-over]');
+  };
   var setNav = function (open, opts) {
     // re-queried each call — this script can run before the nav
     // markup exists (first paint defers to DOMContentLoaded)
-    var nl = document.querySelector('.nav-links');
+    var nl = navEl();
     if (!nl) return;
     var small = window.matchMedia('(max-width: 59.99rem)').matches;
     // the sheet only exists under the nav breakpoint — at/above it
@@ -143,7 +159,7 @@ import '../styles/global.css';
     if (e.target && e.target.closest && e.target.closest('[data-theme-toggle]')) {
       window.__wfSetTheme(document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark');
     }
-    var nl = document.querySelector('.nav-links');
+    var nl = navEl();
     var burger = e.target && e.target.closest &&
                  e.target.closest('.burger, .nav-more');
     if (burger) {
@@ -152,9 +168,9 @@ import '../styles/global.css';
       // flyout closes on the close control, on a link it navigates
       // to, or on any click outside the sheet (the scrim)
       var inside = e.target && e.target.closest &&
-                   e.target.closest('.nav-links');
+                   e.target.closest('.nav-links, .nav-desk');
       if (!inside || e.target.closest('.nav-close') ||
-          e.target.closest('.nav-links a')) {
+          e.target.closest('.nav-links a, .nav-desk a')) {
         setNav(false);
       }
     }
@@ -175,7 +191,7 @@ import '../styles/global.css';
     }
   });
   document.addEventListener('keydown', function (e) {
-    var nl = document.querySelector('.nav-links');
+    var nl = navEl();
     if (e.key === 'Escape') {
       // Esc closes with the same contract as the close control:
       // .open off, scroll lock lifted, aria-expanded reset, focus
