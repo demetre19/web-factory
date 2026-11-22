@@ -806,7 +806,8 @@ def _handler():
                     else ''
                 F = picker_app.VIBE_FAMILIES.get(fam) or \
                     picker_app.donor_family(_fpd, fam) or \
-                    picker_app.remix_family(fam)
+                    picker_app.remix_family(fam) or \
+                    picker_app.atlas_family(_fpd, fam)
                 if F and re.search(r'/site/', fp) and \
                         not os.path.isfile(fp):
                     _ensure_preview(fp)
@@ -925,9 +926,14 @@ def _handler():
                 import picker_app
                 code, txt = picker_app.record_element_pick(
                     body.get('pipeline', ''), body.get('element', ''),
-                    body.get('variant', ''))
+                    body.get('variant', ''), body.get('bundle'))
                 self._send(200 if code == 0 else 400,
                            {'ok': code == 0, 'message': txt})
+            elif self.path == '/vibe-resolve':
+                import picker_app
+                self._send(200, picker_app.vibe_resolve(
+                    body.get('pipeline', ''),
+                    body.get('genes') or {}))
             elif self.path == '/save-system':
                 import picker_app
                 code, txt, rec = picker_app.save_system(
