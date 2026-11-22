@@ -1,0 +1,39 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Whistle Clean</title><meta name="description" content="Strata Cleaning Melbourne – common-area cleaning for strata buildings – foyers, lifts, carparks and amenities. Eco products, audited visits."><meta property="og:title" content="Whistle Clean"><meta property="og:description" content="Strata Cleaning Melbourne – common-area cleaning for strata buildings – foyers, lifts, carparks and amenities. Eco products, audited visits."><meta property="og:image" content="/og.webp"><link rel="icon" href="/favicon.svg"><script>
+(function () {
+  // U.3 — first paint is BRIEF theme.default (never the OS preference);
+  // a manual toggle persists the choice in localStorage.
+  var s = new URLSearchParams(location.search).get('theme') || localStorage.getItem('theme');
+  var m = s || "light";
+  document.documentElement.dataset.theme = m;
+  document.documentElement.classList.toggle('dark', m === 'dark');
+  window.__wfSetTheme = function (v) {
+    localStorage.setItem('theme', v);
+    document.documentElement.dataset.theme = v;
+    document.documentElement.classList.toggle('dark', v === 'dark');
+  };
+  document.addEventListener('click', function (e) {
+    if (e.target && e.target.closest && e.target.closest('[data-theme-toggle]')) {
+      window.__wfSetTheme(document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark');
+    }
+    var nl = document.querySelector('.nav-links');
+    if (e.target && e.target.closest && e.target.closest('.burger')) {
+      if (nl) nl.classList.toggle('open');
+    } else if (nl && nl.classList.contains('open')) {
+      // flyout closes on the close control, on a link it navigates
+      // to, or on any click outside the sheet (the scrim)
+      var inside = e.target && e.target.closest &&
+                   e.target.closest('.nav-links');
+      if (!inside || e.target.closest('.nav-close') ||
+          e.target.closest('.nav-links a')) {
+        nl.classList.remove('open');
+      }
+    }
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') {
+      var nl = document.querySelector('.nav-links');
+      if (nl) nl.classList.remove('open');
+    }
+  });
+})();
+</script><link rel="stylesheet" href="/_astro/design-system.DVFyCvPd.css"><style>.wf-lorem{display:inline-block;outline:1px dashed var(--action-primary,#999);outline-offset:2px;font-style:italic;opacity:.75;padding:0 .3em;border-radius:3px}</style></head><body><section class="sec-band surface-base density-regular" data-sec="scope" data-comp="editorial"><div class="sec-inner"><div><div class="max-w-prose"><h2 class="text-fluid-3">What does a strata clean include?</h2><p class="mt-stack lede">A strata clean covers <strong>foyers, lifts, carparks and shared amenities</strong> on every scheduled visit – each area scoped and quality-checked.</p><p class="mt-stack text-fluid-0">The visit scope for strata cleaning services covers:</p><ul class="mt-stack list-items text-fluid-0"><li><strong>Foyers.</strong> – <span>Entry glass polished, floors mopped, letterboxes and intercoms wiped.</span></li><li><strong>Lifts.</strong> – <span>Walls, buttons and floors detailed; high-touch points sanitised every visit.</span></li><li><strong>Carparks.</strong> – <span>Sweeping, litter pickup and stain spotting on a set rotation.</span></li><li><strong>Shared amenities.</strong> – <span>Gym equipment, pool surrounds and common rooms reset, with consumables restocked under the restocking clause.</span></li></ul><p class="mt-stack text-fluid-0">Bin rooms, storage cages and plant corridors join the rotation on monthly cycles. The scope also names what stays out: individual lots, balcony glass and appliances inside apartments remain the owner's job.</p><p class="mt-stack text-fluid-0">Weekly cycles add deeper detail like skirting, cobwebs and bin-room wash-downs to the same written scope.</p></div></div></div></section></body></html>
