@@ -11,13 +11,49 @@
     document.documentElement.dataset.theme = v;
     document.documentElement.classList.toggle('dark', v === 'dark');
   };
+  // the sticky header lifts a shadow once content scrolls under it
+  var markHead = function () {
+    var head = document.querySelector('header[data-sec="nav"], header.site-head');
+    if (head) head.classList.toggle('scrolled', window.scrollY > 4);
+  };
+  window.addEventListener('scroll', markHead, { passive: true });
+  window.addEventListener('DOMContentLoaded', function () {
+    markHead();
+    // nav triggers that arrived without the attribute default to
+    // collapsed — the toggle flips it from there
+    document.querySelectorAll('.burger').forEach(function (b) {
+      if (!b.hasAttribute('aria-expanded')) {
+        b.setAttribute('aria-expanded', 'false');
+      }
+    });
+  });
+  markHead();
+  var setNav = function (open, opts) {
+    // re-queried each call — this script can run before the nav
+    // markup exists (first paint defers to DOMContentLoaded)
+    var nl = document.querySelector('.nav-links');
+    if (!nl) return;
+    nl.classList.toggle('open', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+    var b = document.querySelector('.burger');
+    if (b) {
+      b.setAttribute('aria-expanded', open ? 'true' : 'false');
+      if (!open && opts && opts.refocus) b.focus();
+    }
+    if (open) {
+      var first = nl.querySelector('a, button, input');
+      if (first) first.focus();
+    }
+  };
   document.addEventListener('click', function (e) {
     if (e.target && e.target.closest && e.target.closest('[data-theme-toggle]')) {
       window.__wfSetTheme(document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark');
     }
     var nl = document.querySelector('.nav-links');
-    if (e.target && e.target.closest && e.target.closest('.burger')) {
-      if (nl) nl.classList.toggle('open');
+    var burger = e.target && e.target.closest &&
+                 e.target.closest('.burger, .nav-more');
+    if (burger) {
+      if (nl) setNav(!nl.classList.contains('open'));
     } else if (nl && nl.classList.contains('open')) {
       // flyout closes on the close control, on a link it navigates
       // to, or on any click outside the sheet (the scrim)
@@ -25,15 +61,49 @@
                    e.target.closest('.nav-links');
       if (!inside || e.target.closest('.nav-close') ||
           e.target.closest('.nav-links a')) {
-        nl.classList.remove('open');
+        setNav(false);
+      }
+    }
+    // the generic overlay family (.flyout — modals/popups/dialogs)
+    // rides the same contract: trigger toggles, close control and
+    // scrim clicks dismiss (N.flyout)
+    var fo = document.querySelector('.flyout');
+    if (fo) {
+      if (e.target && e.target.closest && e.target.closest('.flyout-open')) {
+        fo.classList.toggle('open');
+      } else if (fo.classList.contains('open')) {
+        var inFo = e.target && e.target.closest &&
+                   e.target.closest('.flyout');
+        if (!inFo || e.target.closest('.flyout-close')) {
+          fo.classList.remove('open');
+        }
       }
     }
   });
   document.addEventListener('keydown', function (e) {
+    var nl = document.querySelector('.nav-links');
     if (e.key === 'Escape') {
-      var nl = document.querySelector('.nav-links');
-      if (nl) nl.classList.remove('open');
+      // Esc closes with the same contract as the close control:
+      // .open off, scroll lock lifted, aria-expanded reset, focus
+      // handed back to the trigger (W4.1 flyout spec)
+      if (nl && nl.classList.contains('open')) {
+        setNav(false, { refocus: true });
+      }
+      var fo = document.querySelector('.flyout');
+      if (fo) fo.classList.remove('open');
+    }
+    // the open sheet holds focus: Tab cycles inside the panel
+    if (e.key === 'Tab' && nl && nl.classList.contains('open')) {
+      var f = nl.querySelectorAll('a, button, input, [tabindex]');
+      if (f.length) {
+        var first = f[0], last = f[f.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+          last.focus(); e.preventDefault();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          first.focus(); e.preventDefault();
+        }
+      }
     }
   });
 })();
-</script><link rel="stylesheet" href="/_astro/design-system.DVFyCvPd.css"><style>.burger{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;min-width:44px;min-height:44px;padding:0!important;font-size:0!important;border:1px solid var(--border-default);border-radius:var(--radius,10px);background:var(--bg-elevated);color:var(--text-primary);box-shadow:none!important;cursor:pointer}.burger::after{content:"";width:20px;height:14px;background:repeating-linear-gradient(to bottom,currentColor 0 2px,transparent 2px 6px)}.wf-lorem{display:inline-block;outline:1px dashed var(--action-primary,#999);outline-offset:2px;font-style:italic;opacity:.75;padding:0 .3em;border-radius:3px}</style></head><body><section class="sec-band surface-base density-regular" data-sec="pricing" data-comp="split-media"><div class="sec-inner"><div class="split"><div class="stack"><h2 class="text-fluid-3">How is strata cleaning priced?</h2><p class="t0 lede">Strata cleaning prices follow <strong>building size, visit frequency and access points</strong> – written as a monthly invoice after a site audit.</p><p class="t0 lede">Building size sets the base minutes; visit frequency multiplies them across the week; access points decide whether the team services one entry or several. Amenity count, lift banks and carpark area adjust the figure inside that frame. Every engagement ships as a written quote first, so the owners corporation sees the rate structure before approval.</p><p class="t0 lede">Older walk-ups and new towers price on the same frame – stairwell count, lift banks and basement levels feed the audit, and committees compare like-for-like written quotes rather than hourly guesses.</p><p class="t0 lede">Buyers who ask about an hourly rate find it folded into the contract figure – the monthly invoice carries wages, super and insurance, then stays flat until scope changes.</p><ul class="mt-stack list-items text-fluid-0"><li><strong>building size</strong> – <span>Building size sets the base minutes; visit frequency multiplies them across the week; access points decide whether the team services one entry or several.</span></li><li><strong>visit frequency</strong> – <span>Building size sets the base minutes; visit frequency multiplies them across the week; access points decide whether the team services one entry or several.</span></li><li><strong>access points</strong> – <span>Building size sets the base minutes; visit frequency multiplies them across the week; access points decide whether the team services one entry or several.</span></li><li><strong>monthly invoice</strong> – <span>Buyers who ask about an hourly rate find it folded into the contract figure – the monthly invoice carries wages, super and insurance, then stays flat until scope changes.</span></li><li><strong>written quote</strong> – <span>Every engagement ships as a written quote first, so the owners corporation sees the rate structure before approval.</span></li><li><strong>hourly rate</strong> – <span>Buyers who ask about an hourly rate find it folded into the contract figure – the monthly invoice carries wages, super and insurance, then stays flat until scope changes.</span></li></ul></div><figure class="media-round"><img src="/built//home/ubuntu/repos/web-factory/INPUTS/whistle-clean-navy/DESIGN-SYSTEM/pages/strata-cleaning-melbourne/site/dist/media/gallery-vacuum.jpg" alt="" style="width:100%;height:100%;object-fit:cover;display:block"></figure></div></div></section></body></html>
+</script><link rel="stylesheet" href="/_astro/design-system.BL1Mhrw1.css"><style>.burger{display:none;align-items:center;justify-content:center;width:44px;height:44px;min-width:44px;min-height:44px;padding:0!important;font-size:0!important;border:1px solid var(--border-subtle,var(--border-default));border-radius:var(--radius,10px);background:transparent;color:var(--text-primary);box-shadow:none!important;cursor:pointer}@media (max-width:60rem){.burger{display:inline-flex}}.burger::after{content:"";width:20px;height:14px;background:repeating-linear-gradient(to bottom,currentColor 0 2px,transparent 2px 6px)}</style></head><body><section class="sec-band surface-muted density-regular" data-sec="definition" data-comp="split-media" data-ratio="4:3" data-disclosure="open" data-surface="muted" data-density="regular" data-mode="band" data-wf-ref="preview/layouts.html#d5:definition" data-intent="hero" data-content="c-b01" data-recipe="bricksmaven/feature/feature-1"> <div class="sec-inner">  <!-- section contract: composition=split-media section=definition surface=muted density=regular speech_act=detail --><div class="wf-feature-1"> <div class="split"> <div class="stack"> <div class="sec-inner"> <div> <div class="intro"> <h2 class="text-fluid-2">What is strata cleaning?</h2> <p class="text-fluid-0">Strata cleaning is <strong>the scheduled cleaning of a building&#39;s shared areas</strong> – a trained team keeps foyers, lifts, carparks and amenities to a documented standard on a recurring roster.</p> </div> <div class="flow mt-stack"> <p class="mt-flow text-fluid-0">The work answers to the strata manager and the strata management company, not to one household: the owners corporation signs for the scope, and the same residents judge the result every day.</p><p class="mt-flow text-fluid-0">That is why the standard stays written down – shared areas hold no single owner to complain for them.</p><p class="mt-flow text-fluid-0">Common-area work differs from a residential booking because the payer judges collectively.</p><p class="mt-flow text-fluid-0">The owners corporation holds the budget, the committee holds the vote, and the manager answers when a foyer slips – so the scope stays written and reported.</p><p class="mt-flow text-fluid-0">Strata Cleaning Melbourne runs this way for strata managers, owners corporations and building managers. Foyers mark the building&#39;s first impression, and the roster keeps it fixed.</p> </div> </div>  </div> </div> <div class="media-round" data-ratio="3:2" aria-label="Whistle Clean cleaner detailing an office kitchen bench"><img src="/_astro/office-clean.ZCBEoRaM_1jIx3g.webp" srcset="/_astro/office-clean.ZCBEoRaM_1lje3A.webp 480w, /_astro/office-clean.ZCBEoRaM_ZY3hjz.webp 960w, /_astro/office-clean.ZCBEoRaM_Z2pJAOh.webp 1440w" alt="Whistle Clean cleaner detailing an office kitchen bench" sizes="(min-width: 48rem) 50vw, 100vw" loading="lazy" decoding="async" fetchpriority="auto" width="900" height="600"></div> </div>     </div>  </div> </section></body></html>
