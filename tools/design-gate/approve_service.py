@@ -950,8 +950,14 @@ def _handler():
                 import picker_app
                 code, txt = picker_app.record_element_pick(
                     body.get('pipeline', ''), body.get('element', ''),
-                    body.get('variant', ''), body.get('bundle'))
+                    body.get('variant', ''), body.get('bundle'),
+                    spec=body.get('spec'))
                 self._send(200, {'ok': code == 0, 'message': txt})
+            elif self.path == '/type-ladder':
+                import picker_app
+                self._send(200, picker_app.type_ladder(
+                    body.get('pipeline', ''),
+                    body.get('spec') or {}))
             elif self.path == '/vibe-resolve':
                 import picker_app
                 self._send(200, picker_app.vibe_resolve(
