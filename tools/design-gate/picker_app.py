@@ -3132,7 +3132,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
 .railbank .ritem{padding-left:26px}
 
 /* --- board --- */
-#board{overflow-y:auto;padding:22px 26px 60px;
+#board{overflow-y:auto;overflow-x:hidden;padding:22px 26px 60px;
      container-type:inline-size;container-name:board}
 #board>*{max-width:1600px;margin-left:auto;margin-right:auto}
 #board>#stepper{max-width:none;position:sticky;top:-22px;z-index:15;
@@ -3214,7 +3214,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
 .crow .pick{margin-left:auto}
 .card.picked{border-color:var(--ok)}
 .card .ch{display:flex;align-items:center;gap:8px;
-     padding:10px 12px;border-bottom:1px solid var(--line)}
+     padding:10px 12px;border-bottom:1px solid var(--line);
+     min-width:0;max-width:100%;box-sizing:border-box}
 .card .ch .nm{font-weight:650;font-size:13px;flex:1;
  min-width:0;overflow:hidden;text-overflow:ellipsis;
  white-space:nowrap}
@@ -3225,7 +3226,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
      padding:1px 5px}
 .card .ch .score{margin-left:auto;font:600 11px var(--mono);
      color:var(--muted)}
-.card .cb{position:relative;background:var(--bg);min-height:64px}
+.card .cb{position:relative;background:var(--bg);min-height:64px;
+     max-width:100%;box-sizing:border-box}
 .card .cb:has(iframe)::before{content:'';position:absolute;inset:0;
      background:linear-gradient(100deg,var(--bg) 30%,var(--bg-2) 50%,var(--bg) 70%);
      background-size:200% 100%;animation:cbsk 1.3s linear infinite}
@@ -3250,7 +3252,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
 .card .vp button.on{color:var(--accent);border-color:var(--accent)}
 .card .cf{display:flex;align-items:center;justify-content:flex-start;
      gap:10px;padding:10px 12px;border-top:1px solid var(--line);
-     min-height:44px}
+     min-height:44px;min-width:0;max-width:100%;
+     box-sizing:border-box;flex-wrap:wrap}
 .card .cb{min-height:300px}
 .card .tags{display:flex;gap:5px;flex-wrap:wrap}
 .tag{font:600 11px var(--mono);color:var(--muted);
