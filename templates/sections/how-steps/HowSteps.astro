@@ -1,0 +1,74 @@
+/**
+ * how-steps — gold exemplar (SB.5), bound to bank recipe bricksmaven/how-it-works/how-it-works-2. The skeleton IS the gold structure — this file is the recipe verbatim so emit and the gate judge one artifact.
+ */
+---
+/**
+ * bm-how-it-works-2 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (how-it-works-2.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  brand?: string;
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string; term?: string;
+             label?: string; href?: string;
+             icon?: string; items?: any[] }[];
+  image?: { src: string; alt: string };
+  copy?: any;
+}
+import { inline } from '../_shared/inline';
+import IconChip from '../_shared/IconChip.astro';
+const {
+  brand = 'Brand',
+  heading = '',
+  fs = '',
+  cta = { label: '', href: '#' },
+  items = [],
+  image,
+  copy,
+} = Astro.props;
+// §4.3 — a copy slot binds verbatim article copy onto
+// the skeleton's native props (F.1 — nothing dropped)
+const cp = copy || {};
+const head = cp.heading || heading;
+const sub = cp.answer || cp.text || fs;
+const before = cp.before || [];
+const list = (cp.items && cp.items.length
+  ? cp.items : items) || [];
+const qas = cp.qa || [];
+const links = cp.links || [];
+const after = cp.after || [];
+const act = cp.cta || cta;
+const phone = cp.phone || '';
+const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
+---
+
+<div class="wf-how-it-works-2">
+  {head && <h2 class="text-fluid-2">{head}</h2>}
+  {sub && <p class="mt-stack lede" set:html={inline(sub)} />}
+  {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
+  {list.length > 0 &&   <div class="sec-inner">
+    {list.length > 0 &&     <div>
+      {list.length > 0 && <div class="hworks-grid-ul">{(list || []).map((it) => (
+            <div class="hworks-card card">
+              <div class="hworks-card__content">
+                {it.icon && <IconChip name={it.icon} />}
+                <h3 class="text-fluid-1">{it.term || it.title}</h3>
+                <p class="text-fluid-0">{it.text}</p>
+              </div>
+            </div>
+          ))}</div>}
+    </div>
+    }
+  </div>
+  }
+  {qas.length > 0 && <dl class="mt-stack">{qas.map((qa) => <><dt class="text-fluid-0" set:html={inline(qa.q)} /><dd class="text-fluid-0" set:html={inline(qa.a)} /></>)}</dl>}
+  {links.length > 0 && <div class="flow mt-stack">{links.map((l) => <p class="text-fluid-0" set:html={inline(l.text || `[${l.anchor}](${l.href})`)} />)}</div>}
+  {after.length > 0 && <div class="flow mt-stack">{after.map((p) => <p class="text-fluid-0" set:html={inline(p)} />)}</div>}
+  {tel && <p class="mt-stack"><a class="link-quiet" href={tel}>{phone}</a></p>}
+</div>
