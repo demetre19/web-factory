@@ -2927,11 +2927,12 @@ def _bank_fallback_css():
         # pseudo-el/other variants unhandled → skip silently
     # ?theme=dark — fragments authored light-only keep pale surfaces
     # + dark text unless a dark: utility overrides them. The map
-    # binds the common light tokens to the frame's dark roles; the
-    # :where() wrapper keeps the rule at 0-1-0 specificity so an
-    # authored .dark:.utility (0-2-0) always wins (audit F-5).
-    # Kept in a SEPARATE sheet linked before the utils so a
-    # malformed utility rule can never starve it (audit F-7).
+    # binds the common light tokens to the frame's dark roles at
+    # [data-theme] + class weight (0-2-0): it beats every plain
+    # class rule including doc-inline styles (audit F-9: :where()
+    # tied at 0-1-0 and the later inline rule won). Authored
+    # .dark:.utilities sit at the same 0-2-0 — the dark sheet
+    # loads BEFORE bank-preview.css so they still win on ties.
     dark = []
     for tok in sorted(toks):
         if ':' in tok or ('[' in tok and '[#' not in tok):
@@ -2939,7 +2940,7 @@ def _bank_fallback_css():
         decl = _bank_dark_map(tok)
         if not decl:
             continue
-        sel = ':where(.' + _css_esc(tok) + ')'
+        sel = '.' + _css_esc(tok)
         if tok.startswith('divide-'):
             # tailwind divide-color styles the children's shared
             # borders — the utility itself paints nothing
@@ -2978,10 +2979,12 @@ def _bank_dark_map(tok):
             return 'background-color:' + (
                 '#%02x%02x%02x' % (22, 26, 34))
         return None
+    # any palette family counts, not just the neutrals —
+    # bg-emerald-50/70 and bg-red-50 are light surfaces too
+    # (audit F-9); shade rules below do the filtering
     m = re.fullmatch(
-        r'(bg|text|border|divide)-(white|black|' +
-        '|'.join(_DARK_FAMILIES) +
-        r')(?:-(\d{2,3}))?(?:/(\d{1,3}))?', tok)
+        r'(bg|text|border|divide)-(white|black|[a-z]+)' +
+        r'(?:-(\d{2,3}))?(?:/(\d{1,3}))?', tok)
     if not m:
         return None
     prop, name, shade, alpha = m.groups()
@@ -2995,6 +2998,9 @@ def _bank_dark_map(tok):
     if prop == 'bg':
         if name == 'white':
             return 'background-color:' + rgba((22, 26, 34))
+        if name == 'opacity':
+            # bg-opacity-NN sets --tw-bg-opacity, never a colour
+            return None
         rgb = _DARK_BG.get(shade or '')
         return ('background-color:' + rgba(rgb)) if rgb else None
     if prop == 'text':
@@ -3003,11 +3009,10 @@ def _bank_dark_map(tok):
         if shade in ('600', '500'):
             return 'color:' + _DARK_TEXT_MID
         return None
-    # border / divide — light hairlines go dark-line; a bare
-    # border-<family> (no shade) is usually a light rule. divide-*
+    # border / divide — light hairlines go dark-line. divide-*
     # reaches the children's borders via the caller's >*+* selector
-    if name in ('white', 'black') or (shade or '100') in \
-            ('50', '100', '200', '300'):
+    if name in ('white', 'black') or shade in ('50', '100',
+                                             '200', '300'):
         return 'border-color:' + _DARK_LINE
     return None
 
@@ -3272,14 +3277,11 @@ def emit_bank_previews(pd):
             'documentElement.classList.toggle("dark",m==="dark")'
             '})()</script>'
             '<link rel="stylesheet" href="/built/' +
+            urllib.parse.quote(dark_dst) + '">'
+            '<link rel="stylesheet" href="/built/' +
             urllib.parse.quote(os.path.join(
                 pd, 'site', 'dist', 'preview', 'bank',
                 'bank-preview.css')) + '">'
-            # the dark map ships as its own sheet BEFORE the
-            # utils — an unclosed block in extra.css can no
-            # longer eat it (audit F-7)
-            '<link rel="stylesheet" href="/built/' +
-            urllib.parse.quote(dark_dst) + '">'
             '<link rel="stylesheet" href="/built/' +
             urllib.parse.quote(extra_dst) + '">')
     out = {}
@@ -6749,10 +6751,16 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
           bst=bEl?bEl.scrollTop:0;
       topchips();rail();board();
       if(bEl){bEl.scrollTop=bst;
-        // iframes size after the swap — restore once the new
-        // layout settles or the saved offset lands short (audit F-8)
-        requestAnimationFrame(function(){
-          requestAnimationFrame(function(){bEl.scrollTop=bst})})}
+        // iframes (type-scale specimen) grow the board after the
+        // swap and clamp the offset — keep re-applying until the
+        // value sticks, capped ~2s and cancelled by a user scroll
+        // (audit F-8: 600 kept landing at 422)
+        var last,t0=Date.now();
+        (function re(){
+          if(last!==undefined&&bEl.scrollTop!==last)return;
+          bEl.scrollTop=bst;last=bEl.scrollTop;
+          if(last<bst-10&&Date.now()-t0<2000)
+            requestAnimationFrame(re)})()}
       if(d._warming)
         document.getElementById('whoSub').textContent=
           'refreshing previews…';
