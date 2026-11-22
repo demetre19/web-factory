@@ -4883,7 +4883,10 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
                   toast(msg);rb.disabled=false;
                   if(g.ok)stat.textContent=wv+
                     ' clean — pick again';
-                  else stat.textContent=msg;
+                  else{stat.textContent=msg+' ';
+                    // keep the re-gate control alive — a pause
+                    // (pick gate) or a new failure still needs it
+                    stat.appendChild(rb)}
                 })};
             stat.appendChild(rb);
           }else stat.textContent=(j.message||(j.ok?'recorded':'refused'))

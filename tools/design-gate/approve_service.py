@@ -301,6 +301,13 @@ def record_approval(wave, pipeline, nonce=None, design=None,
         return 1, ('approve REFUSED: no design — a pick is a card '
                    'click, not free text')
     if design not in _design_options(ctx, wave):
+        # a wave whose pickers were re-projected away (or never
+        # emitted) and which has not passed must name the re-gate
+        # path, not pretend the design was invalid — recovery is
+        # 're-gate wN', which rebuilds the pickers
+        g0 = G.load_gates(ctx)
+        if not (g0.get(wave) or {}).get('pass'):
+            return 1, f'approve REFUSED: {wave} has not passed'
         return 1, (f'approve REFUSED: design "{design}" is not an '
                    'option in the rendered picker — the pick '
                    'binds to rendered output, not a name')
