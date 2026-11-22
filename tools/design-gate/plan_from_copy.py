@@ -563,18 +563,32 @@ def build(pdir, option=None):
     hero_comp = (_media_hero if media and _media_hero else
                  HERO_FOR_ARCH.get(geno['layout-archetype'],
                                    'stacked-hero'))
+    _arch_pool = HERO_COMP.get(geno['layout-archetype'])
+    def _hero_ok(c):
+        return ('promise' in gate.COMP_FOR_ACT.get(c, ())
+                and (_arch_pool is None or c in _arch_pool))
+    # the default hero is bound on approval too — when the
+    # archetype's mapped comp cannot carry the promise (editorial
+    # &c) prefer the first legal comp in the pool (W3)
+    if not _hero_ok(hero_comp):
+        hero_comp = next((c for c in sorted(_arch_pool or ())
+                          if _hero_ok(c)), hero_comp)
     # the archetype's own hero pool first, then every other hero
     # comp — an archetype outside HERO_COMP (horizontal-band &c)
     # still earns a rotating hero, never stacked-hero for all
+    # an offered hero must be legal when picked: it carries the
+    # promise row, so it needs 'promise' in COMP_FOR_ACT and a seat
+    # in the archetype's own pool (J.10) — a comp from another
+    # archetype's pool or one that cannot carry the promise is an
+    # option the gate rejects after approval (W3)
     _hero_rest = sorted({c for pool in HERO_COMP.values()
-                         for c in pool})
+                         for c in pool if _hero_ok(c)})
     allowed['hero'] = [hero_comp] + sorted(
-        c for c in HERO_COMP.get(geno['layout-archetype'], ())
-        if c != hero_comp and c in gate.COMP_FOR_ACT) + [
+        c for c in _arch_pool or ()
+        if c != hero_comp and _hero_ok(c)) + [
         c for c in _hero_rest
         if c != hero_comp
-        and c not in HERO_COMP.get(geno['layout-archetype'], ())
-        and c in gate.COMP_FOR_ACT]
+        and c not in (_arch_pool or ())]
     nav_pool = allowed['nav'] or ['flyout-nav']
     foot_pool = allowed['footer'] or ['footer-bar']
     hero_pool = allowed['hero']

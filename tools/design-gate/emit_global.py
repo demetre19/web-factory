@@ -400,13 +400,35 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
   .nav-links.open .nav-close { display: inline-flex;
             align-self: flex-end; min-height: var(--tap);
             min-width: var(--tap); align-items: center;
-            justify-content: center; background: none; border: 0;
+            justify-content: center; background: none !important;
+            border: 0 !important;
             color: var(--text-secondary); font-size: var(--fs-2);
             line-height: 1; cursor: pointer; }
+  /* the sheet's top row: brand left, ghost close right — one row,
+     never a floating X (N.flyout) */
+  .nav-sheet-head { display: none; }
+  .nav-links.open .nav-sheet-head { display: flex;
+            align-items: center; justify-content: space-between;
+            gap: var(--space-m);
+            padding-block-end: var(--space-s);
+            border-block-end: 1px solid
+                var(--border-subtle, var(--border-default)); }
+  .nav-links.open .nav-sheet-head .nav-close {
+            align-self: center; margin-inline-start: auto; }
+  /* exactly one close — an exemplar's own mid-sheet X is dropped in
+     favour of the head-row ghost close (N.flyout) */
+  .nav-links.open .nav-close:not(.nav-sheet-head .nav-close) {
+            display: none; }
   body:has(.nav-links.open)::after { content: ""; position: fixed;
             inset: 0; background: color-mix(in oklch,
                 var(--text-primary) 45%, transparent);
             z-index: var(--primitive-z-sticky); }
+  /* the scrim paints after the header at equal z — lift the whole
+     header context (sheet + docked CTA ride inside it) above the
+     scrim, and park the floating call button while open (N.flyout) */
+  header[data-sec="nav"]:has(.nav-links.open) {
+          z-index: calc(var(--primitive-z-sticky) + 2); }
+  body:has(.nav-links.open) .call-bar { display: none; }
   body:has(.nav-links.open) .nav-cta { display: block;
             position: fixed; inset-inline-end: 0; inset-block-end: 0;
             width: min(20rem, 85vw); margin: 0;
@@ -416,7 +438,9 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
   body:has(.nav-links.open) .nav-cta .wf-cta-button,
   body:has(.nav-links.open) .nav-cta { display: block; }
   body:has(.nav-links.open) .nav-cta > .wf-cta-button {
-            display: flex; justify-content: center; }
+            display: flex; justify-content: center; width: 100%; }
+  body:has(.nav-links.open) .nav-cta a {
+            display: flex; justify-content: center; width: 100%; }
   /* header CTA: below the nav breakpoint it rides inside the flyout;
      burger, links and CTA share one breakpoint (60rem — the
      .nav-links one below) or a dead zone opens where the header

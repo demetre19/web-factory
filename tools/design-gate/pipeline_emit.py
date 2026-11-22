@@ -161,7 +161,7 @@ def _scaffold(ctx, comps):
        '---\nconst to = ' + repr(f'/{_slug0}/').replace("'", '"')
        + ';\n---\n<!doctype html><html><head>\n'
        '<meta charset="utf-8"><meta http-equiv="refresh" '
-       'content="0;url=" + to>\n'
+       'content={"0;url=" + to}>\n'
        '<link rel="canonical" href={to}><title>Redirect</title>\n'
        '</head><body><a href={to}>Continue</a></body></html>\n')
     # Every translated bank figure points at /media/placeholder.svg.
