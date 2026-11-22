@@ -525,13 +525,17 @@ def _system(ctx, comps, contracts=None, copy=None, by_name=None):
         _, _, frag = _instance_body(
             ctx, contract or {'composition': c, 'content': {}},
             row or _specimen_row(c), copy)
-        tags += f'<div data-comp="{c}">{frag}</div>\n'
+        tags += (f'<div data-comp="{c}" data-align="'
+                 + str((contract or {}).get('align') or '')
+                 + '">' + frag + '</div>\n')
     _w(os.path.join(ctx.site, 'src', 'pages', 'system.astro'),
        '---\n'
-       "import '../styles/global.css';\n"
+       "import BaseLayout from '../layouts/BaseLayout.astro';\n"
        + imps + '\n---\n'
+       '<BaseLayout title="system">\n'
        '<button data-theme-toggle aria-label="Light or dark">'
-       'Light/Dark</button>\n' + tags + '\n')
+       'Light/Dark</button>\n' + tags + '\n'
+       '</BaseLayout>\n')
 
 
 def _design_system(ctx, tokens, comps):

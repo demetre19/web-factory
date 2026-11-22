@@ -471,6 +471,25 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
               gap: var(--space-s); max-width: 46rem; }
   .sec-head.center { align-items: center; text-align: center;
                      margin-inline: auto; }
+  /* A.axis — one alignment axis per section, from the contract's
+     align allele (data-align on <Section>/tile), never per-element:
+     a centre-axis heading forces the lead, CTA row and media onto
+     the same axis. */
+  [data-align="center-axis"] :is(.sec-head, .intro, .stack) {
+      align-items: center; text-align: center; }
+  [data-align="center-axis"] :is(.lede, .flow > p, .stack > p,
+      .intro > p, p.max-w-prose) {
+      margin-inline: auto; text-align: center; }
+  [data-align="center-axis"] :is(.cta-row, .cta-combo, .nav-cta,
+      [class*="__cta"]) { justify-content: center; }
+  [data-align="center-axis"] p:has(> .wf-cta-button) {
+      text-align: center; }
+  [data-align="center-axis"] :is(figure, .media-round, .media-bg,
+      .cutout-slot) { margin-inline: auto; }
+  /* vertical rhythm is token law (G.floor): heading→lead s/m,
+     lead→CTA m/l, CTA→media l via the mt-* rungs — a nested band
+     never stacks its own padding on top (dead >--space-xl gaps) */
+  [data-align] .sec-inner .sec-inner { padding-block: 0; }
   .eyebrow { font-size: var(--fs--1); font-weight: 600;
              letter-spacing: .1em; text-transform: uppercase;
              color: var(--action-primary); }
