@@ -4504,7 +4504,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
     h+='<button class="sbchip sbr" data-b="saved">Review &amp; save →</button>';
     return h}
   function wireFlow(){
-    document.querySelectorAll('#stepper .stp,#selbar .sbchip')
+    document.querySelectorAll('#stepper .stp,#selbar .sbchip[data-b]')
       .forEach(function(b){b.onclick=function(){gotoBoard(b.dataset.b)}})}
 
   function topchips(){
