@@ -644,12 +644,26 @@ def build(pdir, option=None):
     # table never depends on which option is picked (re-projecting an
     # approval, or a clean repro rebuild, yields the same table)
     pick = option or recorded_pick(pdir) or 'd1'
+    # a block whose items carry no cutout image never offers a
+    # cutout comp — dropped BEFORE the rhythm repair, so the repair
+    # sees the comps that will really render (no post-repair swap
+    # rebuilding a run of identical grids)
+    for b in blocks:
+        if not any(isinstance(i, dict) and i.get('image')
+                   for i in b['items']):
+            keep = [c for c in allowed.get(b['id']) or []
+                    if not c.startswith('cutout-')]
+            if keep:
+                allowed[b['id']] = keep
     zone_of = {b['id']: b['zone'] for b in blocks}
     table = []
     row_media = max(0, len(media) - 1)
     for oi, (oid, label, v) in enumerate(opts):
-        seq = repair_rhythm([(b['id'], v[b['id']]) for b in blocks],
-                            allowed, zone_of)
+        seq = repair_rhythm(
+            [(b['id'], v[b['id']] if v[b['id']] in allowed[b['id']]
+              else eff_comp(by[b['id']], v[b['id']], allowed[b['id']],
+                            row_media)) for b in blocks],
+            allowed, zone_of)
         seq = [(bid, eff_comp(by[bid], c, allowed[bid], row_media))
                for bid, c in seq]
         s, inputs = score(seq, by)
