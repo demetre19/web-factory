@@ -198,6 +198,38 @@ def intent_of(b):
     return intent
 
 
+# human labels for DNA genotype axes — the picker's gene chips show
+# these instead of the machine keys (audit C3)
+_GENE_LABELS = {
+    'layout-archetype': 'Layout',
+    'page-macro-structure': 'Page shape',
+    'density-tier': 'Density',
+    'image-led-ratio': 'Imagery weight',
+    'type-contrast': 'Type contrast',
+    'display-face': 'Display typeface',
+    'radius-personality': 'Corner style',
+    'surface-rhythm': 'Surfaces',
+    'cta-restraint': 'CTA restraint',
+    'cta-rank': 'CTA strength',
+    'disclosure-tier': 'Disclosure',
+    'nav-pattern': 'Navigation',
+    'motion-tier': 'Motion',
+    'proof-type': 'Proof style',
+    'media-treatment': 'Media treatment',
+    'columns': 'Columns',
+    'heading-form': 'Headings',
+    'whitespace-band': 'Breathing room',
+    'gallery-mode': 'Gallery',
+    'form-presence': 'Forms',
+    'mood-energy': 'Mood',
+    'mood-register': 'Tone',
+    'image-style': 'Image style',
+    'trend': 'Trend',
+    'seam-shape': 'Section seams',
+    'ornament': 'Ornament',
+}
+
+
 HERO_FOR_ARCH = {'stacked-center': 'stacked-hero',
                  'split-media': 'split-media',
                  'editorial-single': 'editorial'}
@@ -576,14 +608,16 @@ def build(pdir, option=None):
         nav_items.append({'label': l['anchor'], 'href': l['href']})
     hero_cta = (copy.get('closing') or {}).get('cta')
     rows.append(base_row(
-        'nav', 'flyout-nav', speech_act=['chrome'], category='headers',
+        'nav', 'flyout-nav', label='Header', speech_act=['chrome'],
+        category='headers',
         surface='base', density='compact', emphasis='nav',
         align='center-axis', stack='text-first', collapse='burger',
         media_ratio='none', disclosure='open', intent='chrome',
         items=nav_items,
         cta={'label': phone, 'href': tel}))
     rows.append(base_row(
-        'hero', hero_comp, speech_act=['promise'], category='hero',
+        'hero', hero_comp, label='Hero', speech_act=['promise'],
+        category='hero',
         surface='media' if hero_comp == 'hero-act-merge' else 'base',
         density='regular', emphasis='headline',
         align='center-axis', stack='text-first', collapse='stacked',
@@ -617,7 +651,8 @@ def build(pdir, option=None):
         if prev == comp and rows[-1].get('density') == dens:
             dens = 'regular' if dens == 'compact' else 'compact'
         row = base_row(
-            name_of[bid], comp, speech_act=[act], category='content',
+            name_of[bid], comp, label=strip_md(b['h2']) or name_of[bid],
+            speech_act=[act], category='content',
             surface=surfaces[i % 2], density=dens, emphasis=emph,
             align=align, stack='text-first', collapse=collapse,
             media_ratio='none', disclosure='open',
@@ -654,7 +689,7 @@ def build(pdir, option=None):
         folded = geno.get('disclosure-tier') == 'folded'
         rows.append(base_row(
             'end-act', 'modal-form' if folded else 'form-panel',
-            speech_act=['act'],
+            label='Contact', speech_act=['act'],
             category='contact', surface='brand', density='spacious',
             emphasis='action', align='col-1-edge', stack='text-first',
             collapse='stacked', media_ratio='none',
@@ -662,7 +697,8 @@ def build(pdir, option=None):
             intent='cta', content_ids=['c-close'], copy_ref='closing',
             cta=clo['cta']))
     rows.append(base_row(
-        'footer', 'footer-bar', speech_act=['chrome'], category='footer',
+        'footer', 'footer-bar', label='Footer', speech_act=['chrome'],
+        category='footer',
         surface='base', density='compact', emphasis='links',
         align='center-axis', stack='text-first', collapse='1-col',
         media_ratio='none', disclosure='open', intent='chrome',
@@ -786,6 +822,22 @@ def build(pdir, option=None):
     import board_copy
     lay = {'generated_by': TOOL, 'copy_sha256': copy_sha, 'pick': pick,
            'allowed': allowed, 'options': table,
+           # human row titles — the picker's scrub rows display these,
+           # never the machine name (which is a slug, sometimes rule
+           # text e.g. 'faq-no-link-before-its-concept-defined')
+           'labels': {r['name']: r.get('label') or r['name']
+                      for r in rows},
+           # human labels for the genotype axes the picker's gene
+           # chips show (audit C3: 'disclosure-tier', 'cta-rank' read
+           # as jargon); allele display = prefix-strip + title-case,
+           # the picker's mechanical job
+           'gene_labels': dict(_GENE_LABELS),
+           # copy for the picker's bank-progress line (audit C4: the
+           # subtitle leaked 'raw skeleton backlog ~1039 (awaiting
+           # vectorisation)'); {n} is the picker's computed count
+           'ui_copy': {'bank_progress':
+                       '{n} more bank exemplars in the '
+                       'vectorisation queue'},
            'boards': board_copy.build(pdir),
            'score_formula': f'{SCORE_BASE} - 0.1*orphan_rows '
                             '- 0.05*long_card_texts '
