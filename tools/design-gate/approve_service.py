@@ -755,9 +755,12 @@ def _handler():
                 # bundle — server-side var overrides, no rebuild
                 import picker_app
                 fam, _, qpath = q.path[len('/frame/'):].partition('/')
-                F = picker_app.VIBE_FAMILIES.get(fam)
                 fp = urllib.parse.unquote(qpath)
                 fp = os.path.normpath('/' + fp.lstrip('/'))
+                _fpd = fp.split('/site/', 1)[0] if '/site/' in fp \
+                    else ''
+                F = picker_app.VIBE_FAMILIES.get(fam) or \
+                    picker_app.donor_family(_fpd, fam)
                 if F and re.search(r'/site/', fp) and \
                         not os.path.isfile(fp):
                     _ensure_preview(fp)
