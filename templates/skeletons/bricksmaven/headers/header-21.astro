@@ -109,7 +109,8 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
               </div>}
 
             </div>
-          }
+            {act.label && <p class="nav-sheet-cta mt-fluid-m"><a class="wf-cta-button" href={act.href}>{act.label}</a></p>}
+          </nav>}
           {act.label && <p class="nav-cta"><a class="wf-cta-button" href={act.href}>{act.label}</a></p>}
         </div>
       </div>
