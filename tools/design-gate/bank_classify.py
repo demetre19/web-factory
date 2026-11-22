@@ -111,8 +111,8 @@ def _call(key, model, img_path):
 
 def main():
     args = sys.argv[1:]
-    if '--test' in args:
-        return  # handled by test_run() below
+    if '--test' in args or '--dedupe' in args:
+        return  # handled by test_run()/dedupe_run() below
     tags = json.load(open(TAGS))
     items = _items(tags)
     cp = _checkpoint()
@@ -1037,3 +1037,148 @@ def run_bank():
 
 if '--run-bank' in sys.argv:
     run_bank()
+
+
+# -------------------------------------------------------------------
+# --dedupe mode — E-K3: exemplars that RENDER near-identically
+# produce near-identical preview docs (all-10 statecraft fx-check
+# cluster, sheetmenu2/5/7, footers-footer3 vs footercraft-footer3) —
+# their markups differ so the check is visual: render each exemplar,
+# difference-hash the shot, and mark every non-canonical exemplar's
+# .classify.json with `dup_of` (the emit skips flagged exemplars, so
+# no second doc/card ships).
+# -------------------------------------------------------------------
+
+
+def _dhash(png_path, size=17):
+    """Difference hash (horizontal gradient) — 16x16 bits, computed
+    on the CONTENT bbox: exemplars render as a strip on a mostly
+    empty page and the dead white area would flatten every pair."""
+    from PIL import Image
+    im = Image.open(png_path).convert('L')
+    dark = Image.eval(im, lambda p: 255 - p)
+    bbox = dark.point(lambda p: 255 if p > 24 else 0).getbbox()
+    if bbox:
+        im = im.crop(bbox)
+    else:
+        im = Image.new('L', (1, 1), 255)
+    px = list(im.resize((size, size - 1)).getdata())
+    bits = 0
+    for r in range(size - 1):
+        for c in range(size - 1):
+            a = px[r * size + c]
+            b = px[r * size + c + 1]
+            bits = (bits << 1) | (1 if a > b else 0)
+    return bits
+
+
+def _hdist(a, b):
+    return bin(a ^ b).count('1')
+
+
+def _preview_bank_dir():
+    """The emitted preview/bank tree of the first INPUTS pipeline —
+    the docs the auditor compares (source exemplars differ; the
+    emitted wrappers are what look near-dup)."""
+    import glob as _glob
+    hits = sorted(_glob.glob(os.path.join(
+        REPO, 'INPUTS', '*', 'DESIGN-SYSTEM', 'pages', '*',
+        'site', 'dist', 'preview', 'bank')))
+    return hits[0] if hits else None
+
+
+def _doc_shot(doc_path, shots_dir, pw_browser):
+    """Render an emitted preview doc to a cached png: /built/ css
+    links are inlined so set_content needs no server."""
+    out = os.path.join(
+        shots_dir,
+        os.path.basename(os.path.dirname(doc_path)) + '-' +
+        os.path.basename(doc_path)[:-5] + '.png')
+    if os.path.exists(out):
+        return out
+    import re as _re
+    import urllib.parse as _up
+    html = open(doc_path, encoding='utf-8', errors='replace').read()
+    doc_dir = os.path.dirname(os.path.abspath(doc_path))
+
+    def _inline(m):
+        href = _up.unquote(m.group(1))
+        base = 'bank-preview-extra.css' if 'extra' in href \
+            else 'bank-preview.css'
+        fp = os.path.join(os.path.dirname(doc_dir), base)
+        try:
+            return '<style>' + open(
+                fp, encoding='utf-8', errors='replace').read() + \
+                '</style>'
+        except OSError:
+            return ''
+    html = _re.sub(r'<link[^>]*href="(/built/)?([^"]*)"[^>]*>',
+                   lambda m: _inline(m) if 'bank-preview' in m.group(2)
+                   else '', html)
+    pg = pw_browser.new_page(viewport={'width': 1280, 'height': 1100})
+    try:
+        pg.set_content(html, wait_until='load')
+        pg.wait_for_timeout(800)
+        pg.screenshot(path=out)
+    finally:
+        pg.close()
+    return out
+
+
+def dedupe_run(max_hdist=40):
+    """Visual-dup emitted docs within one preview-bank dir collapse
+    onto the first-sorted exemplar; the rest get dup_of in their
+    .classify.json so emit drops the doc/card. Stale marks clear."""
+    bank_dir = _preview_bank_dir()
+    if not bank_dir:
+        return print('dedupe: no emitted preview/bank tree found')
+    shots_dir = os.path.join(TEST_DIR, 'shots-dedupe')
+    os.makedirs(shots_dir, exist_ok=True)
+    from playwright.sync_api import sync_playwright
+    marked = cleared = 0
+    with sync_playwright() as pw:
+        br = pw.chromium.launch()
+        for cls in sorted(os.listdir(bank_dir)):
+            cdir = os.path.join(bank_dir, cls)
+            if not os.path.isdir(cdir):
+                continue
+            canon = []
+            for fn in sorted(os.listdir(cdir)):
+                if not fn.endswith('.html'):
+                    continue
+                slug = fn[:-5]
+                out = os.path.join(
+                    GENMENU, cls, slug + '.classify.json')
+                try:
+                    png = _doc_shot(
+                        os.path.join(cdir, fn), shots_dir, br)
+                except Exception:
+                    continue
+                h = _dhash(png)
+                dup_of = sim = None
+                for cslug, ch in canon:
+                    d = _hdist(h, ch)
+                    if d <= max_hdist:
+                        dup_of, sim = cslug, 1 - d / 256
+                        break
+                rec = (json.load(open(out))
+                       if os.path.isfile(out) else {'id': slug})
+                if dup_of is None:
+                    canon.append((slug, h))
+                    if 'dup_of' in rec:
+                        rec.pop('dup_of')
+                        rec.pop('dup_sim', None)
+                        json.dump(rec, open(out, 'w'), indent=1)
+                        cleared += 1
+                    continue
+                rec['dup_of'] = cls + '-' + dup_of
+                rec['dup_sim'] = round(sim, 3)
+                json.dump(rec, open(out, 'w'), indent=1)
+                marked += 1
+        br.close()
+    print(f'dedupe: {marked} marked dup_of, {cleared} cleared '
+          f'over {bank_dir}')
+
+
+if '--dedupe' in sys.argv:
+    dedupe_run()

@@ -3394,6 +3394,13 @@ def emit_bank_previews(pd):
                 slug = fn[:-5]
                 fp = os.path.join(cdir, fn)
                 dst = os.path.join(outdir, cls, slug + '.html')
+                # E-K3 — exemplars bank_classify --dedupe marked
+                # dup_of ship no doc/card; drop a stale one
+                if (_json_at(cdir, slug + '.classify.json') or {}) \
+                        .get('dup_of'):
+                    if os.path.isfile(dst):
+                        os.remove(dst)
+                    continue
                 os.makedirs(os.path.dirname(dst), exist_ok=True)
                 row = tags.get(cls + '/' + slug) or {}
                 stale = (not os.path.isfile(dst)) or \
