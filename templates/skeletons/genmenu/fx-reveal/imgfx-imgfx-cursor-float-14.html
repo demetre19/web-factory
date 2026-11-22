@@ -196,21 +196,27 @@
       preview.style.opacity = '0';
     }
 
-    function clampX(x) {
+    function floatX(cx) {
       const w = preview.offsetWidth || 300;
-      return Math.max(8, Math.min(window.innerWidth - w - 8, x));
+      const right = cx + 24;
+      if (right + w <= window.innerWidth - 8) return right;
+      const left = cx - w - 24;
+      if (left >= 8) return left;
+      return Math.max(8, window.innerWidth - w - 8);
     }
 
     document.querySelectorAll('.index-row').forEach((row) => {
       const idx = Number(row.dataset.idx || 0);
       row.addEventListener('pointerenter', (e) => {
-        const x = clampX(e.clientX + 24);
+        if (window.innerWidth < 640) { hidePlate(); return; }
+        const x = floatX(e.clientX);
         currentX = x;
         currentY = e.clientY - 140;
         showPlate(idx, x, e.clientY - 140);
       });
       row.addEventListener('pointermove', (e) => {
-        targetX = clampX(e.clientX + 24);
+        if (window.innerWidth < 640) { hidePlate(); return; }
+        targetX = floatX(e.clientX);
         targetY = Math.max(20, Math.min(window.innerHeight - 360, e.clientY - 160));
       });
       row.addEventListener('pointerleave', hidePlate);
