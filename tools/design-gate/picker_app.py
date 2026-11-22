@@ -187,12 +187,13 @@ _MENU_DRIVER = (
 
 
 _BANK_DIRS = {
-    'menu': ('nav-dock-left-drawer', 'nav-top-sheet',
-             'nav-bottom-sheet', 'nav-dropdown-menu',
-             'nav-mega-panel', 'nav-modal'),
+    # nav-*/footer-* bank dirs each get their OWN pick board (added
+    # per-dir at emit time) — 'menu'/'footers' keep only their
+    # emitted-comps galleries
+    'menu': (),
     'modals': ('modal-dialog', 'modal-bottom-sheet',
                'modal-slide-over'),
-    'footers': ('footer-mega', 'footer-columns', 'footer-minimal'),
+    'footers': (),
     'pricing': ('pricing-tiers', 'pricing-single', 'pricing-table'),
     'auth': ('auth-form',),
     'empty-states': ('empty-state',),
@@ -2759,6 +2760,8 @@ def app_data(pipeline):
                   for k, v in (lo.get('allowed') or {}).items()}
     galleries = {}
     for g in ELEMENT_GALLERIES:
+        if g.get('merged_into_types'):
+            continue  # the per-type boards below cover this bank
         gcards = []
         for grp in g['groups']:
             comps = grp['comps']
@@ -2852,6 +2855,28 @@ def app_data(pipeline):
         galleries[g['id']] = dict(
             g, cards=gcards,
             emitted_n=sum(1 for c in gcards if c['emitted']))
+
+    # per-type header/footer pick boards — one board per bank
+    # nav-*/footer-* dir, every stored exemplar of that type through
+    # the real BaseLayout chrome (closed-by-default nav, M/T/D)
+    for gid in sorted(bank_cards):
+        if not gid.startswith(('nav-', 'footer-')):
+            continue
+        kind, _, pretty = gid.partition('-')
+        pretty = pretty.replace('-', ' ')
+        galleries[gid] = {
+            'id': gid,
+            'title': ('Nav · ' if kind == 'nav' else 'Footer · ') +
+                     pretty,
+            'icon': 'burger' if kind == 'nav' else 'bars',
+            'desc': (f'Every banked {pretty} {kind} exemplar — real '
+                     'BaseLayout chrome, closed-by-default nav, '
+                     'correct M/T/D behaviour. Pick signs the '
+                     'element-pick path.'),
+            'groups': [], 'mobile': kind == 'nav',
+            'cards': bank_cards[gid],
+            'emitted_n': len(bank_cards[gid]),
+            'hf_type': True}
 
     boards = {}
     # step 1 — VIBE: the coarse family scrub
@@ -3701,6 +3726,12 @@ def emit_bank_previews(pd):
         d for d in os.listdir(_GENMENU)
         if d.startswith(('fx-', 'imgfx-', 'mobfx-', 'mob-')) and
         os.path.isdir(os.path.join(_GENMENU, d))))
+    # per-type header/footer pick boards — every nav-*/footer-* dir
+    # is its own gallery keyed by the dir name (the bank taxonomy)
+    for d in sorted(os.listdir(_GENMENU)):
+        if d.startswith(('nav-', 'footer-')) and os.path.isdir(
+                os.path.join(_GENMENU, d)):
+            _BANK_DIRS.setdefault(d, (d,))
     tags = _genmenu_tags()
     # /built/ URLs are repo-relative; Ctx.dir callers hand in an
     # absolute pipeline dir — normalize for URL building only
@@ -3852,7 +3883,8 @@ def emit_bank_previews(pd):
                     fx = cls.startswith(('fx-', 'imgfx-', 'mobfx-'))
                     if fx:
                         frag = _fx_strip_freeze(frag)
-                    mob = gid == 'menu' or cls.startswith('mob')
+                    mob = (gid == 'menu' or
+                           cls.startswith(('mob', 'nav-')))
                     if gid == 'menu':
                         frag = _menu_closed(frag)
                     page = (not mob) and _bank_scale(frag) == 'page'
@@ -3909,7 +3941,8 @@ def emit_bank_previews(pd):
                     'tags': ctags, 'emitted': True, 'bank': True,
                     'element': cls, 'variant': slug,
                     'grp': 'bank · ' + cls,
-                    'mobile': gid == 'menu'})
+                    'mobile': (gid == 'menu' or
+                               cls.startswith('nav-'))})
         out[gid] = cards
     # a pick on an fx card signs the SITE-DEFAULT effect; each
     # exemplar advertises which element types it may decorate
@@ -5461,12 +5494,19 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
     LAYOUT_TABS.forEach(function(k){
       if(DATA.boards[k])item('b',DATA.boards[k])});
     h+='<div class="railgrp">3 · Sections · Elements</div>';
-    var banked=[];
+    var banked=[],hf=[];
     Object.keys(DATA.galleries).forEach(function(k){
       if(k==='fx')return;
       var g=DATA.galleries[k];
-      if(/\u00b7\s*bank/.test(g.title||''))banked.push(g);
+      if(g.hf_type)hf.push(g);
+      else if(/\u00b7\s*bank/.test(g.title||''))banked.push(g);
       else item('g',g)});
+    if(hf.length){
+      h+='<details class="railbank" open><summary>'+ICON.burger+
+         'Headers &amp; footers<span class="cnt">'+hf.length+
+         '</span></summary>';
+      hf.forEach(function(g){item('g',g)});
+      h+='</details>'}
     if(banked.length){
       h+='<details class="railbank"><summary>'+ICON.bars+
          'Bank (reference)<span class="cnt">'+banked.length+
