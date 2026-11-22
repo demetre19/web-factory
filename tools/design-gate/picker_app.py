@@ -3423,7 +3423,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
   display:flex;flex-direction:column}
 #xpBar{display:flex;align-items:center;gap:8px;padding:9px 14px;
   background:var(--panel);border-bottom:1px solid var(--line);
-  flex:none}
+  flex:none;flex-wrap:wrap}
+#xpBar .xdev{flex:none}
 .xttl{font:600 12.5px var(--font);color:var(--ink);max-width:26%;
   overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .xdev{display:flex;border:1px solid var(--line);border-radius:7px;
@@ -4457,7 +4458,9 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
   function expand(u,opts){
     opts=opts||{};
     var prevFocus=document.activeElement;
-    var xps=[...document.querySelectorAll('.xp')];
+    var xps=[...document.querySelectorAll('.xp')].filter(
+      function(x){var cd=x.closest('.card,.srow');
+        return !cd||cd.style.display!=='none'});
     var cur=opts.xp?xps.indexOf(opts.xp):-1;
     var ov=document.createElement('div');ov.id='xpOv';
     var theme=document.documentElement.dataset.theme==='dark'?'dark':'light';
@@ -4769,6 +4772,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
   // swaps the current row's alternative on the scrub board
   document.addEventListener('keydown',function(ev){
     if(!DATA||CUR==null)return;
+    if(document.getElementById('xpOv'))return;
     if(ev.key!=='ArrowLeft'&&ev.key!=='ArrowRight')return;
     if(/INPUT|TEXTAREA/.test(ev.target.tagName))return;
     var d=ev.key==='ArrowRight'?1:-1;
