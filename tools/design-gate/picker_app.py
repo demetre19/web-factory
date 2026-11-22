@@ -1809,15 +1809,33 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
 .chip b{color:var(--ink);font-weight:600}
 .chip .sw{width:10px;height:10px;border-radius:3px;
      border:1px solid var(--line-2)}
-#themeBtn{border:1px solid var(--line);background:var(--panel);
-     color:var(--ink);border-radius:999px;padding:6px 12px;
+#themeBtn{width:34px;height:34px;display:grid;place-items:center;
+     border:1px solid var(--line);background:var(--panel);
+     color:var(--ink);border-radius:999px;padding:0;
      font:600 12px var(--font);cursor:pointer}
+#themeBtn svg{width:15px;height:15px}
 #themeBtn:hover{border-color:var(--line-2)}
 #vwCtl{display:flex;border:1px solid var(--line);border-radius:999px;
      overflow:hidden}
 #vwCtl button{border:0;background:var(--panel);color:var(--muted);
-     padding:8px 15px;font:600 12px var(--font);cursor:pointer}
+     padding:8px 15px;font:600 12px var(--font);cursor:pointer;
+     display:grid;place-items:center}
+#vwCtl button svg{width:15px;height:15px}
 #vwCtl button.on{background:var(--accent);color:var(--accent-ink)}
+#dnaPop{position:relative}
+#dnaPop>summary{list-style:none;width:34px;height:34px;
+     display:grid;place-items:center;border:1px solid var(--line);
+     border-radius:999px;background:var(--panel);color:var(--muted);
+     cursor:pointer}
+#dnaPop>summary::-webkit-details-marker{display:none}
+#dnaPop>summary svg{width:15px;height:15px}
+#dnaPop[open]>summary{border-color:var(--accent);color:var(--accent)}
+#dnaPop .panel{position:absolute;right:0;top:calc(100% + 10px);
+     z-index:60;min-width:280px;max-width:480px;padding:10px;
+     display:flex;flex-wrap:wrap;gap:6px;background:var(--bg-2);
+     border:1px solid var(--line);border-radius:12px;
+     box-shadow:0 12px 32px rgba(0,0,0,.35)}
+#dnaPop .panel:empty{display:none}
 .card .cb iframe,.srow iframe{max-width:var(--vw,100%);
      margin-inline:auto}
 .aa{display:inline-block;padding:2px 8px;border-radius:999px;
@@ -1960,10 +1978,29 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
       <small id="whoSub">design-file not loaded</small></div>
     <div class="sp"></div>
     <div id="vwCtl" title="preview breakpoint — applies to every preview">
-      <button data-w="340px">M</button><button data-w="700px">T</button>
-      <button data-w="100%" class="on">D</button></div>
-    <div id="topChips"></div>
-    <button id="themeBtn" type="button">light</button>
+      <button data-w="340px" title="mobile" aria-label="mobile">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor"
+          stroke-width="1.4"><rect x="4.5" y="1.5" width="7"
+          height="13" rx="1.5"/><path d="M7 12.5h2"/></svg></button>
+      <button data-w="700px" title="tablet" aria-label="tablet">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor"
+          stroke-width="1.4"><rect x="2.5" y="1.5" width="11"
+          height="13" rx="1.5"/><path d="M7 12.5h2"/></svg></button>
+      <button data-w="100%" class="on" title="desktop"
+        aria-label="desktop"><svg viewBox="0 0 16 16" fill="none"
+          stroke="currentColor" stroke-width="1.4">
+          <rect x="1.5" y="2.5" width="13" height="9" rx="1.5"/>
+          <path d="M6 14h4M8 11.5V14"/></svg></button></div>
+    <details id="dnaPop">
+      <summary title="design DNA" aria-label="design DNA">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor"
+          stroke-width="1.4"><path d="M3 2.5v11M13 2.5v11"/>
+          <path d="M3 4.5c3 0 7 2 10 2M3 11.5c3 0 7-2 10-2"/></svg>
+      </summary>
+      <div class="panel"><div id="topChips"></div></div>
+    </details>
+    <button id="themeBtn" type="button" title="light/dark"
+      aria-label="toggle light/dark"></button>
   </div>
   <nav id="rail"></nav>
   <main id="board"></main>
@@ -2000,8 +2037,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
   // without one the app follows prefers-color-scheme, light by default
   function applyTheme(m){
     document.documentElement.dataset.theme=m;
-    document.getElementById('themeBtn').textContent =
-      m==='dark'?'light':'dark';
+    document.getElementById('themeBtn').innerHTML = ICON[
+      m==='dark'?'sun':'moon'];
     // propagate into live previews — built pages honour ?theme=
     document.querySelectorAll('.card iframe[data-src],.srow iframe').forEach(
       function(f){var u=(f.dataset.src||f.src).split('?')[0];
@@ -2035,7 +2072,9 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
     bars:'<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="1.5" y="3" width="13" height="4" rx="1"/><path d="M3.5 10h9M3.5 13h5"/></svg>',
     burger:'<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M2.5 4.5h11M2.5 8h11M2.5 11.5h11"/></svg>',
     foot:'<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="1.5" y="9" width="13" height="4" rx="1"/><path d="M3.5 6h9M3.5 3h5"/></svg>',
-    modal:'<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="2.5" y="4" width="11" height="8" rx="1.5"/><path d="M6 8h4"/></svg>'};
+    modal:'<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="2.5" y="4" width="11" height="8" rx="1.5"/><path d="M6 8h4"/></svg>',
+    sun:'<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="8" cy="8" r="3"/><path d="M8 1.5v2M8 12.5v2M1.5 8h2M12.5 8h2M3.4 3.4l1.4 1.4M11.2 11.2l1.4 1.4M3.4 12.6l1.4-1.4M11.2 4.8l1.4-1.4"/></svg>',
+    moon:'<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M13.5 9.5A6 6 0 016.5 2.5a6 6 0 107 7z"/></svg>'};
 
   var LAYOUT_TABS=['page','home','service','location','contact',
                    'blog'];
