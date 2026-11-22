@@ -400,6 +400,56 @@ def camel(s):
     return ''.join(w.capitalize() for w in re.split(r'[\-_]+', s))
 
 
+_FORM_NEED = (('name', 'text', 'Name'), ('email', 'email', 'Email'),
+              ('phone', 'tel', 'Phone'), ('message', 'textarea', 'Message'))
+_FORM_AC = {'name': 'name', 'email': 'email', 'phone': 'tel'}
+_PAGINATION = ('<nav class="pagination row gap-fluid-s" '
+               'aria-label="Pagination"><a href="?page=1" '
+               'aria-current="page">1</a><a href="?page=2">2</a>'
+               '<a href="?page=3">3</a><a href="?page=2" rel="next">'
+               'Next</a></nav>')
+
+
+def _form_fields(s, cat, pad):
+    """A Bricks form's `fields` → labelled controls + submit. A contact
+    form always asks name / email / phone / message (the contact
+    contract), whatever subset the skeleton shipped."""
+    rows, have = [], set()
+    for f in s.get('fields') or []:
+        t = f.get('type')
+        if t not in ('text', 'email', 'tel', 'number', 'textarea'):
+            continue
+        lab = str(f.get('label') or f.get('placeholder') or t)
+        low = lab.lower()
+        key = ('email' if t == 'email' else
+               'phone' if t == 'tel' or 'phone' in low else
+               'message' if t == 'textarea' else
+               'name' if 'name' in low else low)
+        if key in have:
+            continue   # first + last name fold into one name control
+        have.add(key)
+        rows.append((key, 'tel' if key == 'phone' else t,
+                     'Name' if key == 'name' else lab))
+    if cat == 'contact':
+        rows += [r for r in _FORM_NEED if r[0] not in have]
+    rows.sort(key=lambda r: r[1] == 'textarea')
+    if not rows:
+        return ''
+    out = ''
+    for key, t, lab in rows:
+        fid = re.sub(r'[^a-z0-9]+', '-', key.lower()).strip('-') or 'f'
+        ac = f' autocomplete="{_FORM_AC[key]}"' if key in _FORM_AC else ''
+        ctl = (f'<textarea name="{fid}" rows="4" required></textarea>'
+               if t == 'textarea' else
+               f'<input type="{t}" name="{fid}"{ac} required />')
+        lab = lab.replace('{', '&#123;').replace('<', '&lt;')
+        out += (f'{pad}<label class="field flow"><span '
+                f'class="text-fluid--1">{lab}</span>{ctl}</label>\n')
+    btn = str(s.get('submitButtonText') or 'Send').replace('{', '')
+    return out + (f'{pad}<button type="submit" class="wf-cta-button">'
+                  f'{btn}</button>\n')
+
+
 def translate(payload, stem):
     """payload dict → (astro_src, report dict)."""
     els = {e['id']: e for e in payload.get('content') or []}
@@ -550,6 +600,9 @@ def translate(payload, stem):
         name = el.get('name')
         s = el.get('settings') or {}
         children = el.get('children') or []
+        if name == 'pagination':
+            seen['paged'] = True
+            return f'{pad}{_PAGINATION}\n'
 
         # A real card list alternates heading/text/heading/text — not
         # three identical siblings. Detect a repeating cycle of 2–4
@@ -1166,6 +1219,28 @@ def translate(payload, stem):
                 if not _item.strip():
                     continue   # an item template that emits nothing
                     # is not a loop — nothing to guard or render
+                _q = next(((els.get(r) or {}).get('settings', {})
+                           .get('query') for r in run
+                           if (els.get(r) or {}).get('settings', {})
+                           .get('query')), None)
+                if cat == 'blog' and _q:
+                    # a post card always reads title, author · date ·
+                    # read time and its category — the dynamic-data
+                    # slots ({post_title}, {author_name}, terms) the
+                    # Bricks query loop rendered
+                    _ip, _need = pad + '      ', ''
+                    if f'{var}.term' not in _item:
+                        _need += (f'{_ip}<h3 class="text-fluid-1">'
+                                  f'{{{var}.term || {var}.title}}</h3>\n')
+                    if f'{var}.meta' not in _item:
+                        _need += (f'{_ip}{{{var}.meta && <p class="meta '
+                                  f'text-fluid--1">{{{var}.meta}}</p>}}\n')
+                    if f'{var}.tag' not in _item:
+                        _need += (f'{_ip}{{{var}.tag && <span class="tag '
+                                  f'text-fluid--1">{{{var}.tag}}</span>}}\n')
+                    if _need:
+                        _cut = _item.rstrip('\n').rfind('\n') + 1
+                        _item = _item[:_cut] + _need + _item[_cut:]
                 _guard = _guard or f'{coll}.length > 0'
                 _parts += 1
                 inner += (f'{pad}  {{{coll}.length > 0 && '
@@ -1174,6 +1249,18 @@ def translate(payload, stem):
                           + _frag(_item, pad)
                           + f'{pad}    ))}}'
                           f'</div>}}\n')
+                try:
+                    _ppp = int((_q or {}).get('posts_per_page') or 0)
+                except (TypeError, ValueError):
+                    _ppp = 0
+                if cat == 'blog' and _ppp >= 4 and not any(
+                        e.get('name') == 'pagination'
+                        for e in els.values()):
+                    # an archive query of 4+ posts pages — the loop
+                    # the Bricks archive query paginates
+                    seen['paged'] = True
+                    inner += (f'{pad}  {{{coll}.length > 0 && '
+                              f'{_PAGINATION}}}\n')
                 if coll == 'links' and cat == 'footer':
                     # the legal nav is empty until the copy slot
                     # ships privacy/terms — PS.10 still wants a legal
@@ -1197,7 +1284,8 @@ def translate(payload, stem):
                         _static = True
                     inner += sub
         if name == 'form':
-            out = f'{pad}<form{cattr} novalidate>\n{inner}{pad}</form>\n'
+            out = (f'{pad}<form{cattr} novalidate>\n{inner}'
+                   f'{_form_fields(s, cat, pad + "  ")}{pad}</form>\n')
         elif inner:
             out = f'{pad}<{tag}{cattr}>\n{inner}{pad}</{tag}>\n'
         else:

@@ -79,6 +79,8 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
 
         <div>
           <form novalidate>
+            <label class="field flow"><span class="text-fluid--1">Email</span><input type="email" name="email" autocomplete="email" required /></label>
+            <button type="submit" class="wf-cta-button">Subscribe</button>
           </form>
         </div>
         {image && image.src && <figure class="media-bg" aria-hidden="true"><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[960, 1440, 1920]} sizes="100vw" width={1600} height={900} loading="eager" fetchpriority="high" /></figure>}

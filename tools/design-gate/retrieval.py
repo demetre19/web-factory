@@ -717,6 +717,12 @@ def vibe_fit(genes, section_type, k=8, styles=None, bank=None):
     t0 = time.time()
     bank = bank or SectionBank()
     rows = bank.filter_rows(section_type, styles)
+    # a row whose own topology names another family (a nav-top-bar
+    # filed under hero) never ranks inside this one
+    _fam = {'nav': 'nav', 'hero': 'hero', 'footer': 'footer'}
+    rows = [r for r in rows if _fam.get(str(
+        (r.get('topo') or {}).get('topology_id') or '').split('-')[0],
+        section_type) == section_type] or rows
     out = {'mode': 'empty', 'section_type': section_type,
            'topology_id': None, 'composition': None,
            'ranked': [], 'ranked_rows': []}

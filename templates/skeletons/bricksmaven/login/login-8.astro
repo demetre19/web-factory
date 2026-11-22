@@ -75,6 +75,8 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
   {sub && <p class="mt-stack lede" set:html={inline(sub)} />}
   {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
             <form novalidate>
+              <label class="field flow"><span class="text-fluid--1">Username or Email</span><input type="email" name="email" autocomplete="email" required /></label>
+              <button type="submit" class="wf-cta-button">Log in</button>
             </form>
             {list.length > 0 && <div class="login-footer">
               <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (

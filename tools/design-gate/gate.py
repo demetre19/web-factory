@@ -15459,6 +15459,7 @@ _BR_1280 = r"""() => {
  const hdr = document.querySelector('[data-sec="header"]');
  const out = {h1: h1s, hdr: null, media: 0, hcomp: hdr ? (hdr.dataset.comp || '') : ''};
  const hero = document.querySelector('[data-sec="hero"]');
+ out.htop = hero ? Math.round(hero.getBoundingClientRect().top + scrollY) : 0;
  if (hero) out.media = Math.max(0, ...[...hero.querySelectorAll('img,iframe,video')].filter(vis)
    .map(i => { const r = i.getBoundingClientRect(); return Math.round(Math.max(0, Math.min(r.bottom, 900) - Math.max(r.top, 0)) * r.width); }));
  out.imgov = [];
@@ -15515,6 +15516,9 @@ def _br_clusters(thumbs):
         else:
             leaders.append([oid, t, [oid]])
     return [ld[2] for ld in leaders]
+
+
+BR_MAX_HERO_TOP = 120
 
 
 def _br_probe(dist, oids):
@@ -15574,7 +15578,9 @@ def check_board_render(ctx):
     overlapping items. BR.2 exactly one visible <h1>. BR.3 no
     horizontal overflow at 390px. BR.4 ≥ BR_MIN_CLUSTERS distinct
     1280×900 first screens per board (all, when a board has fewer).
-    BR.5 no two content images overlap inside one section."""
+    BR.5 no two content images overlap inside one section. BR.6 the
+    hero starts within BR_MAX_HERO_TOP px of the top at 1280 (no tall
+    chrome dead space)."""
     dist = os.path.join(ctx.dir, 'boards', 'site', 'dist')
     pv = os.path.join(dist, 'preview')
     if not os.path.isdir(pv):
@@ -15606,6 +15612,10 @@ def check_board_render(ctx):
                      'visible <h1> — exactly one')
         if r.get('o390'):
             f.append(f"BR.3 lo-{oid}: overflows 390px ({r['o390']})")
+        if r.get('htop', 0) > BR_MAX_HERO_TOP:
+            f.append(f"BR.6 lo-{oid}: first section starts "
+                     f"{r['htop']}px down at 1280 (max "
+                     f"{BR_MAX_HERO_TOP}px of chrome above it)")
         if r.get('imgov'):
             f.append(f"BR.5 lo-{oid}: images overlap in "
                      f"{', '.join(sorted(set(r['imgov'])))}")
@@ -15627,19 +15637,56 @@ def check_board_render(ctx):
 BOARD_ROLES = {
     'home': ('hero', 'services', 'process', 'proof', 'cta'),
     'service': ('hero', 'scope', 'process', 'pricing', 'proof'),
-    'location': ('hero', 'coverage', 'proof', 'services', 'contact'),
+    'location': ('hero', 'coverage', 'map', 'proof', 'services',
+                 'contact'),
     'contact': ('hero', 'form', 'map', 'hours'),
     'blog': ('hero', 'featured', 'listing', 'categories', 'newsletter'),
 }
 
 
+# role → the controls a role's section must carry (not just text):
+# a contact form asks name/email/phone/message and submits; a blog
+# listing pages
+BOARD_CONTROLS = {
+    'contact': {
+        'form:name': ('form', r'<input[^>]*name="name"'),
+        'form:email': ('form', r'<input[^>]*type="email"'),
+        'form:phone': ('form', r'<input[^>]*type="tel"'),
+        'form:message': ('form', r'<textarea\b'),
+        'form:submit': ('form', r'<button[^>]*type="submit"'),
+        'map:embed': ('map', r'<iframe\b|<img\b'),
+        'details:email': ('hours', r'[\w.+-]+@[\w-]+\.[\w.]+'),
+    },
+    'location': {'map:embed': ('map', r'<iframe\b|<img\b')},
+    'blog': {
+        'listing:pagination': ('listing',
+                               r'<nav[^>]*aria-label="Pagination"'),
+    },
+}
+
+
+# hero topologies with a media pane — BRR.3 fails one that renders none
+BOARD_MEDIA_TOPOS = ('hero-media-right', 'hero-media-left', 'hero-media-bg',
+                     'hero-media-top', 'hero-cutout', 'band-media')
+
+
 def check_board_roles(ctx):
     """BRR.1 — every built page-board option (boards/site/dist/
     preview/lo-<board>-<nn>) carries a non-empty section for each
-    role BOARD_ROLES requires of its page type."""
+    role BOARD_ROLES requires of its page type, and the controls
+    BOARD_CONTROLS requires inside them (form fields, map, email,
+    pagination). BRR.3 no builder-scaffolding composition, and a hero
+    whose topology has a media pane renders media."""
     pv = os.path.join(ctx.dir, 'boards', 'site', 'dist', 'preview')
     if not os.path.isdir(pv):
         return []
+    try:
+        _pb = json.load(open(os.path.join(ctx.dir, 'PAGE-BOARDS.json'),
+                             encoding='utf-8')).get('boards') or {}
+    except (OSError, ValueError):
+        _pb = {}
+    media_topo = {o.get('id'): (o.get('hero') or {}).get('topology_id')
+                  for b in _pb.values() for o in b.get('options') or []}
     f = []
     for d in sorted(os.listdir(pv)):
         m = re.match(r'lo-([a-z]+)-\d+$', d)
@@ -15655,9 +15702,50 @@ def check_board_roles(ctx):
             if re.sub(r'<[^>]+>|\s+', '', sm.group(3)):
                 have.add(sm.group(2))
         miss = [r for r in BOARD_ROLES[m.group(1)] if r not in have]
+        for need, (sec, pat) in BOARD_CONTROLS.get(m.group(1), {}).items():
+            sm = re.search(r'<(section|header|footer)\b[^>]*data-sec="'
+                           + sec + r'"[^>]*>(.*?)</\1>', html, re.S)
+            if not sm or not re.search(pat, sm.group(2), re.S):
+                miss.append(need)
         if miss:
             f.append(f'BRR.1 {d}: missing {m.group(1)} section role(s) '
                      f'{", ".join(miss)}')
+        scaf = sorted(set(re.findall(r'data-comp="([^"]*(?:remove-this|'
+                                     r'take-out|remove-contents)[^"]*)"',
+                                     html)))
+        if scaf:
+            f.append(f'BRR.3 {d}: builder scaffolding composition(s) '
+                     f'{", ".join(scaf)}')
+        topo = media_topo.get(d[3:])
+        hm = re.search(r'<section\b[^>]*data-sec="hero"[^>]*>(.*?)'
+                       r'</section>', html, re.S)
+        if topo in BOARD_MEDIA_TOPOS and hm and not re.search(
+                r'<(img|video|iframe)\b|background-image', hm.group(1)):
+            f.append(f'BRR.3 {d}: hero topology {topo} renders no media')
+    return f
+
+
+def check_board_pools(ctx):
+    """BRR.2 — page boards draw their own pools: across PAGE-BOARDS.json
+    no two boards share more than 20% of their first-screen (hero)
+    recipes, so no board is another's pool at a different rotation."""
+    try:
+        boards = json.load(open(os.path.join(ctx.dir, 'PAGE-BOARDS.json'),
+                                encoding='utf-8')).get('boards') or {}
+    except (OSError, ValueError):
+        return []
+    hero = {b: {(o.get('hero') or {}).get('recipe') or
+                (o.get('hero') or {}).get('comp')
+                for o in (d.get('options') or [])} - {None, ''}
+            for b, d in boards.items()}
+    f, names = [], sorted(hero)
+    for i, a in enumerate(names):
+        for b in names[i + 1:]:
+            lo = min(len(hero[a]), len(hero[b]))
+            share = len(hero[a] & hero[b]) / lo if lo else 0.0
+            if share > 0.20:
+                f.append(f'BRR.2 boards {a}/{b} share {share:.0%} of '
+                         f'their hero recipes (max 20%)')
     return f
 
 
@@ -15760,6 +15848,7 @@ WAVE_CHECKS['w7'].append(check_parallel_build)
 WAVE_CHECKS['w8'].append(check_bounded_review)
 WAVE_CHECKS['w3'].append(check_board_render)
 WAVE_CHECKS['w3'].append(check_board_roles)
+WAVE_CHECKS['w3'].append(check_board_pools)
 WAVE_CHECKS['w8'].append(check_measured_evidence)
 WAVE_CHECKS['w8'].append(check_judged_verdict)
 

@@ -76,6 +76,8 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
             {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
             {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
             <form novalidate>
+              <label class="field flow"><span class="text-fluid--1">Email</span><input type="email" name="email" autocomplete="email" required /></label>
+              <button type="submit" class="wf-cta-button">Send</button>
             </form>
           </div>
           {links.length >= 0 &&           <div>
