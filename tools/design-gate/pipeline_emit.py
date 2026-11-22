@@ -530,10 +530,12 @@ def _system(ctx, comps, contracts=None, copy=None, by_name=None):
                  + '">' + frag + '</div>\n')
     _w(os.path.join(ctx.site, 'src', 'pages', 'system.astro'),
        '---\n'
-       "import '../styles/global.css';\n"
+       "import BaseLayout from '../layouts/BaseLayout.astro';\n"
        + imps + '\n---\n'
+       '<BaseLayout title="system">\n'
        '<button data-theme-toggle aria-label="Light or dark">'
-       'Light/Dark</button>\n' + tags + '\n')
+       'Light/Dark</button>\n' + tags + '\n'
+       '</BaseLayout>\n')
 
 
 def _design_system(ctx, tokens, comps):
