@@ -1295,6 +1295,19 @@ def _emit_page_boards(ctx, doc):
     if not ok:
         return msg, set(comps)
     _rewrite_dist(bctx)
+    # the Header·Footer gallery shows these pages as live specimens —
+    # the same inspect-only guard as its emitted element docs (a link
+    # click would navigate the card to an unbuilt page)
+    import picker_app as _PA
+    for oid in pages:
+        if not oid.startswith('chrome-'):
+            continue
+        fp = _dist_page(bctx, f'lo-{oid}')
+        if fp and os.path.isfile(fp):
+            txt = open(fp, encoding='utf-8').read()
+            if _PA._NO_NAV not in txt and '</body>' in txt:
+                open(fp, 'w', encoding='utf-8').write(
+                    txt.replace('</body>', _PA._NO_NAV + '</body>', 1))
     import page_boards as PBD
     stamp = os.path.join(bctx.site, '.inputs_sha')
     with open(stamp, 'w') as fh:
