@@ -74,22 +74,31 @@ def _den(var):
 _ALLELE = {
     'display-face': {
         'sans': ({'L': '--font-display:' + _SANS +
-                  ';--primitive-font-display:' + _SANS},),
+                  ';--primitive-font-display:' + _SANS +
+                  ';--font-body:' + _SANS},),
         'serif': ({'L': '--font-display:' + _SERIF +
-                  ';--primitive-font-display:' + _SERIF},),
+                  ';--primitive-font-display:' + _SERIF +
+                  ';--font-body:' + _SERIF},),
         'mono': ({'L': '--font-display:' + _MONO +
                   ';--primitive-font-display:' + _MONO +
                   ';--font-body:' + _MONO},),
         'mixed': ({'L': '--font-display:' + _SERIF +
-                   ';--primitive-font-display:' + _SERIF},),
+                   ';--primitive-font-display:' + _SERIF +
+                   ';--font-body:' + _SANS},),
     },
     'type-contrast': {
-        'low': ({'S': 'h1,h2,h3,.sec-h{font-weight:400;'
+        'low': ({'L': '--h1:clamp(1.6rem,calc(2vw + 1.1rem),2.6rem);'
+                 '--h2:clamp(1.3rem,calc(1.2vw + 1rem),1.9rem)',
+                 'S': 'h1,h2,h3,.sec-h{font-weight:400;'
                  'letter-spacing:0}'},),
-        'medium': ({'S': 'h1,h2,h3,.sec-h{font-weight:600}'},),
+        'medium': ({'L': '--h1:clamp(1.75rem,calc(2.8vw + 1rem),3.2rem);'
+                    '--h2:clamp(1.4rem,calc(1.5vw + 1rem),2.2rem)',
+                    'S': 'h1,h2,h3,.sec-h{font-weight:600}'},),
         'high': ({'S': 'h1,h2,h3,.sec-h{font-weight:700;'
                   'letter-spacing:-.01em}'},),
-        'extreme': ({'S': 'h1,h2,.sec-h{font-weight:800;'
+        'extreme': ({'L': '--h1:clamp(2.2rem,calc(5.2vw + 1rem),5.6rem);'
+                     '--h2:clamp(1.6rem,calc(2.6vw + 1rem),3.2rem)',
+                     'S': 'h1,h2,.sec-h{font-weight:800;'
                      'letter-spacing:-.03em;text-transform:uppercase}'
                      '.sec-kicker{letter-spacing:.18em;'
                      'text-transform:uppercase}'},),
@@ -101,10 +110,14 @@ _ALLELE = {
         'query': ({'S': '.sec-h h2::after{content:"?"}'},),
     },
     'density-tier': {
-        'compact': ({'L': _den('s')},),
+        'compact': ({'L': _den('s') + ';--card-pad:var(--space-s);'
+                     '--btn-padding-block:.5em;'
+                     '--btn-padding-inline:1em'},),
         'regular': ({'L': _den('m')},),
-        'spacious': ({'L': _den('l') +
-                     '--section-space-m:var(--section-space-l)'},),
+        'spacious': ({'L': _den('l') + ';--card-pad:var(--space-l);'
+                      '--btn-padding-block:1em;'
+                      '--btn-padding-inline:2em;'
+                      '--section-space-m:var(--section-space-l)'},),
     },
     'whitespace-band': {
         'tight': ({'L': '--measure:38rem;--section-space-m:'
@@ -123,13 +136,14 @@ _ALLELE = {
                'repeat(4,1fr)!important}'},),
     },
     'radius-personality': {
-        'sharp': ({'L': '--radius:0;--primitive-radius:0;--r-card:0'},),
+        'sharp': ({'L': '--radius:0;--primitive-radius:0;--r-card:0;'
+                   '--r-btn:0'},),
         'soft': ({'L': '--radius:.625rem;--primitive-radius:.625rem;'
-                  '--r-card:.625rem'},),
+                  '--r-card:.625rem;--r-btn:.375rem'},),
         'pill': ({'L': '--radius:999px;--primitive-radius:999px;'
-                  '--r-card:1.5rem'},),
+                  '--r-card:1.5rem;--r-btn:999px'},),
         'mixed': ({'L': '--radius:.5rem;--primitive-radius:.5rem;'
-                   '--r-card:1.25rem'},),
+                   '--r-card:1.25rem;--r-btn:0'},),
     },
     'surface-rhythm': {
         'single-surface': ({'S': '.sec-band{background:'
@@ -153,15 +167,21 @@ _ALLELE = {
     },
     'image-style': {
         'minimal': ({'S': 'img{filter:saturate(.85)}'},),
-        'editorial': ({'S': 'img{filter:contrast(1.06) '
-                       'saturate(.95)}'},),
-        'luxury': ({'S': 'img{filter:saturate(1.08) contrast(1.04)}'},),
+        'editorial': ({'S': 'img{filter:contrast(1.06) saturate(.95)}'
+                       '.media-round{border-radius:0}'},),
+        'luxury': ({'S': 'img{filter:saturate(1.08) contrast(1.04)}'
+                    '.media-round{padding:var(--space-xs);'
+                    'background:var(--bg-surface);'
+                    'border:1px solid var(--border-default)}'},),
         'bold-graphic': ({'S': 'img{filter:saturate(1.35) '
-                          'contrast(1.1)}'},),
-        'playful': ({'S': 'img{filter:saturate(1.18) hue-rotate(4deg);'
-                     'border-radius:var(--radius,12px)}'},),
+                          'contrast(1.1)}.media-round{box-shadow:'
+                          '.75rem .75rem 0 var(--action-primary)}'},),
+        'playful': ({'S': 'img{filter:saturate(1.18) hue-rotate(4deg)}'
+                     '.media-round{border-radius:2rem;'
+                     'transform:rotate(-1.5deg)}'},),
         'technical': ({'S': 'img{filter:grayscale(.35) '
-                       'contrast(1.05)}'},),
+                       'contrast(1.05)}.media-round{border-radius:0;'
+                       'border:1px solid var(--text-primary)}'},),
     },
     'motion-tier': {
         'static': ({'S': '*,*::before,*::after{transition:none!'
@@ -186,12 +206,15 @@ _ALLELE = {
     },
     'mood-energy': {
         'still': ({'L': '--shadow-card:none;--shadow-pop:none;'
-                   '--border-default:#00000018'},),
+                   '--border-default:#00000018;--card-border-w:1px'},),
         'calm': ({'L': '--shadow-card:0 1px 3px #0000000d'},),
-        'balanced': ({'L': '--shadow-card:0 2px 10px #00000012'},),
-        'lively': ({'L': '--shadow-card:0 6px 24px #0000001c'},),
+        'balanced': ({'L': '--shadow-card:0 2px 10px #00000012;'
+                      '--card-border-w:0'},),
+        'lively': ({'L': '--shadow-card:0 6px 24px #0000001c;'
+                    '--card-border-w:0'},),
         'energetic': ({'L': '--shadow-card:0 10px 34px #00000026;'
-                       '--shadow-pop:0 16px 50px #00000030'},),
+                       '--shadow-pop:0 16px 50px #00000030;'
+                       '--card-border-w:0'},),
     },
     'mood-register': {
         'everyday': ({'L': '--action-primary:#D97706;'
@@ -206,6 +229,7 @@ _ALLELE = {
                           '--action-primary-ink:#0B1E3F'},),
         'premium': ({'L': '--action-primary:#1E3A8A;'
                      '--action-primary-hover:#172E6E',
+                     'S': '.wf-cta-button{letter-spacing:.04em}',
                      'D': '--action-primary:#A5B4FC;'
                      '--action-primary-hover:#C7D2FE;'
                      '--action-primary-ink:#141B3F'},),
@@ -221,7 +245,8 @@ _ALLELE = {
                    '--action-primary-hover:#FFFFFF;'
                    '--action-primary-ink:#101010',
                    'S': '.sec-h{letter-spacing:.06em;'
-                   'text-transform:uppercase}'},),
+                   'text-transform:uppercase}.wf-cta-button{'
+                   'text-transform:uppercase;letter-spacing:.12em}'},),
     },
     'trend': {
         'none': ({},),
@@ -230,7 +255,8 @@ _ALLELE = {
         'dial-up-delight': ({'L': '--font-display:' + _MONO,
                              'S': '.card{border:1px solid '
                              'var(--text-primary)}'},),
-        'resonant-stark': ({'L': '--radius:0;--primitive-radius:0',
+        'resonant-stark': ({'L': '--radius:0;--primitive-radius:0;'
+                            '--card-border-w:2px;--r-btn:0',
                             'S': '.sec-band{border-bottom:2px solid '
                             'var(--text-primary)}'},),
         'frosted-touch': ({'S': '.nav-bar,.site-header{'
@@ -241,8 +267,8 @@ _ALLELE = {
                                  '#ffffff,0 2px 8px #00000014'},),
         'ai-personalisation': ({},),
         'snug-simple': ({'L': _den('s')},),
-        'human-scribble': ({'S': '.card{border:1.5px dashed '
-                            'var(--border-default)}'},),
+        'human-scribble': ({'L': '--card-border-style:dashed;'
+                            '--card-border-w:1.5px'},),
         'dated': ({'L': '--font-display:Arial,sans-serif',
                    'S': 'a{text-decoration:underline}'},),
     },

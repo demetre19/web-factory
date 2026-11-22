@@ -237,8 +237,10 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
   .between { justify-content: space-between; }
   .stack { display: flex; flex-direction: column; gap: var(--space-s); }
   .card { background: var(--bg-surface);
-          border: 1px solid var(--border-default);
-          border-radius: var(--r-card); padding: var(--space-m);
+          border: var(--card-border-w, 1px) var(--card-border-style, solid)
+                  var(--border-default);
+          border-radius: var(--r-card);
+          padding: var(--card-pad, var(--space-m));
           box-shadow: var(--shadow-card); }
   /* brand mark — the inlined SVG scales to the bar height via the
      token layer, never an arbitrary-value utility on the element.
@@ -342,7 +344,7 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
                    align-items: center; justify-content: center;
                    text-align: center;
                    padding: var(--btn-padding-block) var(--btn-padding-inline);
-                   border-radius: var(--r-card);
+                   border-radius: var(--r-btn, var(--r-card));
                    background: var(--action-primary);
                    color: var(--action-primary-ink);
                    font-weight: 600; text-decoration: none;
