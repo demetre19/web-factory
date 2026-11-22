@@ -2892,7 +2892,7 @@ def _bank_fallback_css():
                 toks.update(html.unescape(cm.group(1)).split())
     rules = []
     for tok in sorted(toks):
-        if tok.startswith(('wf-', 'lucide')):
+        if tok.startswith(('wf-', 'lucide')) or '[&' in tok:
             continue
         bi = tok.find('[')
         base = tok[tok.rfind(':', 0, bi if bi >= 0 else
@@ -2905,7 +2905,10 @@ def _bank_fallback_css():
             (tok.rfind(':') if ':' in tok else -1)
         var = tok[:cix] if cix > 0 else ''
         decl = _util_rule(tok)
-        if not decl:
+        if not decl or decl.count('[') != decl.count(']'):
+            # an unbalanced '[' inside the braces opens a square
+            # block that swallows every later rule in the sheet
+            # (audit F-7: the [&>*] variant decls did exactly this)
             continue
         sel = '.' + _css_esc(tok)
         if var in ('sm', 'md', 'lg', 'xl', '2xl'):
@@ -2926,7 +2929,10 @@ def _bank_fallback_css():
     # + dark text unless a dark: utility overrides them. The map
     # binds the common light tokens to the frame's dark roles; the
     # :where() wrapper keeps the rule at 0-1-0 specificity so an
-    # authored .dark:.utility (0-2-0) always wins (audit F-5)
+    # authored .dark:.utility (0-2-0) always wins (audit F-5).
+    # Kept in a SEPARATE sheet linked before the utils so a
+    # malformed utility rule can never starve it (audit F-7).
+    dark = []
     for tok in sorted(toks):
         if ':' in tok or ('[' in tok and '[#' not in tok):
             continue
@@ -2938,9 +2944,9 @@ def _bank_fallback_css():
             # tailwind divide-color styles the children's shared
             # borders — the utility itself paints nothing
             sel += '>*+*'
-        rules.append('[data-theme="dark"] ' + sel +
-                     '{' + decl + '}')
-    return ''.join(rules)
+        dark.append('[data-theme="dark"] ' + sel +
+                    '{' + decl + '}')
+    return ''.join(rules), ''.join(dark)
 
 
 # light-utility → dark-role bindings for fragments that ship no
@@ -3244,11 +3250,16 @@ def emit_bank_previews(pd):
             blob = fi.read()
         with open(css_dst, 'wb') as fo:
             fo.write(blob)
-    extra = _bank_fallback_css()
+    extra, dark_extra = _bank_fallback_css()
     extra_dst = os.path.join(outdir, 'bank-preview-extra.css')
     with open(extra_dst, 'w') as fh:
         fh.write('/* generated fallback utilities — vendored '
                  'tailwind v3 dialect gaps */\n' + extra)
+    dark_dst = os.path.join(outdir, 'bank-preview-dark.css')
+    with open(dark_dst, 'w') as fh:
+        fh.write('/* generated light-utility → dark-role map — '
+                 'own sheet so a malformed utility rule cannot '
+                 'starve it */\n' + dark_extra)
     head = ('<meta charset="utf-8"><meta name="viewport" '
             'content="width=device-width,initial-scale=1">'
             # U.3 — ?theme=dark / localStorage bind the doc like the
@@ -3264,6 +3275,11 @@ def emit_bank_previews(pd):
             urllib.parse.quote(os.path.join(
                 pd, 'site', 'dist', 'preview', 'bank',
                 'bank-preview.css')) + '">'
+            # the dark map ships as its own sheet BEFORE the
+            # utils — an unclosed block in extra.css can no
+            # longer eat it (audit F-7)
+            '<link rel="stylesheet" href="/built/' +
+            urllib.parse.quote(dark_dst) + '">'
             '<link rel="stylesheet" href="/built/' +
             urllib.parse.quote(extra_dst) + '">')
     out = {}
@@ -3286,7 +3302,7 @@ def emit_bank_previews(pd):
                     (os.path.isfile(css_dst) and
                      os.path.getmtime(css_dst) >
                      os.path.getmtime(dst)) or \
-                    '<!--wf:bank:v7-->' not in open(
+                    '<!--wf:bank:v8-->' not in open(
                         dst, encoding='utf-8',
                         errors='replace').read(64)
                 if stale:
@@ -3339,7 +3355,7 @@ def emit_bank_previews(pd):
                         'body{background:#0b0e14}'
                         if row.get('mode') == 'dark' else '')
                     with open(dst, 'w', encoding='utf-8') as fh:
-                        fh.write('<!--wf:bank:v7-->' +
+                        fh.write('<!--wf:bank:v8-->' +
                                  _doc(head, '', stage,
                                       extra=(_STAGE_SCROLL_SHIM
                                              if not page else '') +
@@ -6732,7 +6748,11 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
       var bEl=document.getElementById('board'),
           bst=bEl?bEl.scrollTop:0;
       topchips();rail();board();
-      if(bEl)bEl.scrollTop=bst;
+      if(bEl){bEl.scrollTop=bst;
+        // iframes size after the swap — restore once the new
+        // layout settles or the saved offset lands short (audit F-8)
+        requestAnimationFrame(function(){
+          requestAnimationFrame(function(){bEl.scrollTop=bst})})}
       if(d._warming)
         document.getElementById('whoSub').textContent=
           'refreshing previews…';
