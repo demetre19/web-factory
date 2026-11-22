@@ -942,6 +942,12 @@ def _handler():
                 self._send(200 if code == 0 else 400,
                            {'ok': code == 0, 'message': txt,
                             'system': rec if code == 0 else None})
+            elif self.path == '/delete-system':
+                import picker_app
+                code, txt = picker_app.delete_system(
+                    body.get('pipeline', ''), body.get('slug', ''))
+                self._send(200 if code == 0 else 400,
+                           {'ok': code == 0, 'message': txt})
             elif self.path == '/ingest':
                 import picker_app
                 res = picker_app.run_ingest(
