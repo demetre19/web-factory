@@ -1422,8 +1422,52 @@ def iter_payloads(limit=None):
     return files[:limit] if limit else files
 
 
+GOLD = os.path.normpath(os.path.join(HERE, '..', '..', 'templates',
+                                     'sections'))
+# the bank-bound gold header — one doc comment naming the recipe. It sits
+# INSIDE the frontmatter fence: Astro only parses a frontmatter that
+# opens the file, so a comment ahead of `---` turns the whole script
+# into template text (raw JSX in the build, `head is not defined`).
+_GOLD_HEAD = re.compile(r'(?:---\n)?(/\*\*\n \* \S+ — gold exemplar '
+                        r'\(SB\.5\), bound to bank recipe (\S+)\. .*?'
+                        r'\n \*/\n)(?:---\n)?', re.S)
+
+
+def sync_gold():
+    """A bank-bound gold exemplar is its recipe verbatim (SB.5) under
+    the header — refresh every copy from the banked skeleton so emit and
+    the gate keep judging one artifact."""
+    n = 0
+    skel = os.path.dirname(BANK)
+    for comp in sorted(os.listdir(GOLD)):
+        d = os.path.join(GOLD, comp)
+        for fn in sorted(os.listdir(d)) if os.path.isdir(d) else []:
+            f = os.path.join(d, fn)
+            if not fn.endswith('.astro'):
+                continue
+            with open(f, encoding='utf-8') as fh:
+                s = fh.read()
+            m = _GOLD_HEAD.match(s)
+            rf = os.path.join(skel, m.group(2) + '.astro') if m else ''
+            if not rf or not os.path.isfile(rf):
+                continue
+            with open(rf, encoding='utf-8') as fh:
+                src = fh.read()
+            if not src.startswith('---\n'):
+                continue
+            want = '---\n' + m.group(1) + src[4:]
+            if s != want:
+                with open(f, 'w', encoding='utf-8') as fh:
+                    fh.write(want)
+                n += 1
+    return n
+
+
 def main(argv):
     args = argv[1:]
+    if args == ['--gold']:
+        print(f'gold exemplars refreshed from their recipe: {sync_gold()}')
+        return 0
     if '--all' in args:
         lim = None
         if '--limit' in args:
@@ -1454,6 +1498,7 @@ def main(argv):
         for v in rep['unmapped_vars']:
             unmapped_all[v] = unmapped_all.get(v, 0) + 1
     print(f'translated {total} payloads → .astro + .css beside each')
+    print(f'gold exemplars refreshed from their recipe: {sync_gold()}')
     if unmapped_all:
         print('unmapped ACSS vars (surfaced as var(--acss-*)):')
         for v, c in sorted(unmapped_all.items(),
