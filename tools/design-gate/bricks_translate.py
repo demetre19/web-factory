@@ -886,7 +886,7 @@ def translate(payload, stem):
                 # N.select — links past the bar's budget open from
                 # "More" (the offcanvas holds the full list)
                 out += (f'{pad}{{navOver && <button class="nav-more" '
-                        f'type="button" aria-label="More links">More'
+                        f'type="button" aria-label="More links" aria-expanded="false">More'
                         f'</button>}}\n')
                 if not has_toggle:
                     out += (f'{pad}{{list.length > 0 && '
@@ -964,7 +964,7 @@ def translate(payload, stem):
                     f'{{it.label || it.term || it.title || it.text}}'
                     f'</a></li>)}}</ul></nav>'
                     f'<button class="nav-more" type="button" '
-                    f'aria-label="More links">More</button>'
+                    f'aria-label="More links" aria-expanded="false">More</button>'
                     f'</Fragment>}}\n'
                     f'{pad}{{list.length > 0 && <button class="burger" '
                     f'type="button" aria-label="Menu">'
@@ -1358,6 +1358,11 @@ def translate(payload, stem):
         if _bg and _bar:
             btxt = _bg.group(0)
             body = body[:_bg.start()] + body[_bg.end():]
+            # re-find the bar opener on the shrunken body — a burger
+            # that preceded it shifted its offsets (header-8)
+            _bar = re.search(
+                r'^( *)<div class="[^"]*\brow between\b[^"]*">\n',
+                body, re.M)
             # find the bar container's matching close: depth walk from
             # the opener so the trigger lands inside, not after it
             depth, pos = 0, _bar.end()

@@ -366,7 +366,8 @@ class _BankBind(html.parser.HTMLParser):
         if relabeled:
             self._relstk.append(tag)
         at = ''.join(
-            f' {k}' if v in (None, '') else f' {k}="{v}"'
+            f' {k}' if v in (None, '') else
+            f' {k}="{html.escape(str(v), quote=True)}"'
             for k, v in a.items())
         self.out.append(f'<{tag}{at}{" /" if selfclose else ""}>')
         if not selfclose and tag not in self.VOID:
@@ -393,20 +394,21 @@ class _BankBind(html.parser.HTMLParser):
     def handle_data(self, data):
         if self._relabel is not None:
             if not self._relabel[1] and data.strip():
-                self.out.append(self._relabel[0])
+                self.out.append(
+                    html.escape(self._relabel[0], quote=False))
                 self._relabel = (self._relabel[0], True)
             elif not data.strip():
-                self.out.append(data)
+                self.out.append(html.escape(data, quote=False))
             # later text nodes in a relabeled element drop
             return
         if not self._brand_done and len(data.strip()) > 2 and \
                 re.search(r'[A-Za-z]', data):
             # the exemplar's brand is bare text in several topologies
             # (no logo anchor) — the first word-y text node is it
-            self.out.append(self.brand)
+            self.out.append(html.escape(self.brand, quote=False))
             self._brand_done = True
             return
-        self.out.append(data)
+        self.out.append(html.escape(data, quote=False))
 
     def handle_entityref(self, name):
         self.out.append(f'&{name};')
@@ -6232,10 +6234,12 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
       var orig=f.dataset.orig||(f.dataset.src||f.src.split('?')[0]);
       if(!f.dataset.orig)f.dataset.orig=orig;
       var u=orig;
+      // compare query-free — a card variant's ?menu=open is its own
+      // src, not a reason to keep reloading it
       var cur=(f.dataset.src||'').split('?')[0];
-      if(u!==cur){f.dataset.src=u;
+      if(u.split('?')[0]!==cur){f.dataset.src=u;
         f.src=u+(document.documentElement.dataset.theme==='dark'
-          ?'?theme=dark':'')}
+          ?(u.indexOf('?')<0?'?':'&')+'theme=dark':'')}
       var cb=f.parentElement,
           fixedBox=!!cb.closest('.vprev')||
             cb.classList.contains('rmprev'),

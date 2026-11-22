@@ -1,182 +1,85 @@
 ---
-/**
- * BaseLayout.astro — the document shell every assembled page renders
- * inside. assemble_page wraps its <Section> blocks in this layout;
- * pipeline_emit.py copies it to site/src/layouts/BaseLayout.astro.
- *
- * The shell owns head/meta (P.16, R.1), the light/dark toggle +
- * paint-first theme script (C.5), skip-link and the page landmarks
- * (PS.9). It ships no style blocks, no inline styles, no colour
- * literals: classes bind the shared layer in global.css only.
- */
+import '../styles/global.css';
+import SEOHead from '../components/SEOHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import MobileCTA from '../components/MobileCTA.astro';
+import JsonLd from '../components/JsonLd.astro';
+
+// Every route renders inside this layout: SEOHead gets the page's
+// frontmatter fields copied verbatim, body content lands in <slot />.
+// One layout per template kind (service-detail / article / utility) is
+// the S5 build lane's job — this file is the shared shell they extend.
 interface Props {
   title: string;
-  description?: string;
+  description: string;
+  path?: string;
   image?: string;
+  robots?: string;
+  ogType?: string;
+  /** BCP-47 lang for <html>. */
   lang?: string;
-  slug?: string;
+  /** sitemap page_class — drives Service/Article JSON-LD nodes. */
+  pageClass?: 'money' | 'article' | 'ancillary' | string;
+  /** Breadcrumb trail root→leaf for BreadcrumbList JSON-LD. */
+  breadcrumbs?: { name: string; path: string }[];
+  /** FAQ Q/A pairs — only on faq: yes routes. */
+  faq?: { q: string; a: string }[];
 }
+
 const {
   title,
-  description = '',
-  image = '/og.webp',
+  description,
+  path = '/',
+  image,
+  robots,
+  ogType,
   lang = 'en',
-  slug = '',
+  pageClass,
+  breadcrumbs = [],
+  faq = [],
 } = Astro.props;
-// F3 fix — applyBaseStyles:false means nothing styles the page unless
-// the layout imports the shared layer itself (the starter does).
-import '../styles/global.css';
-
 ---
-<!doctype html>
-<html lang={lang} dir="ltr">
-<head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>{title}</title>
-<meta name="description" content={description} />
-<meta property="og:title" content={title} />
-<meta property="og:description" content={description} />
-<meta property="og:image" content={image} />
-<link rel="icon" href="/favicon.svg" />
-<script is:inline>
-(function () {
-  // U.3 — first paint is BRIEF theme.default (never the OS preference);
-  // a manual toggle persists the choice in localStorage.
-  var s = new URLSearchParams(location.search).get('theme') || localStorage.getItem('theme');
-  var m = s || {{default_theme}};
-  document.documentElement.dataset.theme = m;
-  document.documentElement.classList.toggle('dark', m === 'dark');
-  window.__wfSetTheme = function (v) {
-    localStorage.setItem('theme', v);
-    document.documentElement.dataset.theme = v;
-    document.documentElement.classList.toggle('dark', v === 'dark');
-  };
-  // the sticky header lifts a shadow once content scrolls under it
-  var markHead = function () {
-    var head = document.querySelector('header[data-sec="nav"], header.site-head');
-    if (head) head.classList.toggle('scrolled', window.scrollY > 4);
-  };
-  window.addEventListener('scroll', markHead, { passive: true });
-  window.addEventListener('DOMContentLoaded', function () {
-    markHead();
-    // nav triggers that arrived without the attribute default to
-    // collapsed — the toggle flips it from there. E-M4: every
-    // trigger names the panel it controls; the first .nav-links on
-    // the page is the sheet it opens.
-    var navPanel = document.querySelector('.nav-links');
-    if (navPanel && !navPanel.id) navPanel.id = 'wf-nav-links';
-    document.querySelectorAll('.burger').forEach(function (b) {
-      if (!b.hasAttribute('aria-expanded')) {
-        b.setAttribute('aria-expanded', 'false');
-      }
-      if (navPanel && !b.hasAttribute('aria-controls')) {
-        b.setAttribute('aria-controls', navPanel.id);
-      }
-    });
-    // preview surfaces request the open state through the real
-    // toggle path — the sheet opens exactly as a burger click opens
-    // it (E-M3, no synthetic markup). No open state at/above the
-    // nav breakpoint — the menu-desktop doc must stay a closed bar.
-    if (new URLSearchParams(location.search).get('menu') === 'open' &&
-        window.matchMedia('(max-width: 59.99rem)').matches) {
-      setNav(true);
-    }
-  });
-  markHead();
-  var setNav = function (open, opts) {
-    // re-queried each call — this script can run before the nav
-    // markup exists (first paint defers to DOMContentLoaded)
-    var nl = document.querySelector('.nav-links');
-    if (!nl) return;
-    // the sheet only exists under the nav breakpoint — refuse to
-    // pin a panel (and lock scroll) on the desktop bar
-    if (open && !window.matchMedia('(max-width: 59.99rem)').matches) {
-      return;
-    }
-    nl.classList.toggle('open', open);
-    document.body.style.overflow = open ? 'hidden' : '';
-    var b = document.querySelector('.burger');
-    if (b) {
-      b.setAttribute('aria-expanded', open ? 'true' : 'false');
-      if (!open && opts && opts.refocus) b.focus();
-    }
-    if (open) {
-      var first = nl.querySelector('a, button, input');
-      if (first) first.focus();
-    }
-  };
-  document.addEventListener('click', function (e) {
-    if (e.target && e.target.closest && e.target.closest('[data-theme-toggle]')) {
-      window.__wfSetTheme(document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark');
-    }
-    var nl = document.querySelector('.nav-links');
-    var burger = e.target && e.target.closest &&
-                 e.target.closest('.burger, .nav-more');
-    if (burger) {
-      if (nl) setNav(!nl.classList.contains('open'));
-    } else if (nl && nl.classList.contains('open')) {
-      // flyout closes on the close control, on a link it navigates
-      // to, or on any click outside the sheet (the scrim)
-      var inside = e.target && e.target.closest &&
-                   e.target.closest('.nav-links');
-      if (!inside || e.target.closest('.nav-close') ||
-          e.target.closest('.nav-links a')) {
-        setNav(false);
-      }
-    }
-    // the generic overlay family (.flyout — modals/popups/dialogs)
-    // rides the same contract: trigger toggles, close control and
-    // scrim clicks dismiss (N.flyout)
-    var fo = document.querySelector('.flyout');
-    if (fo) {
-      if (e.target && e.target.closest && e.target.closest('.flyout-open')) {
-        fo.classList.toggle('open');
-      } else if (fo.classList.contains('open')) {
-        var inFo = e.target && e.target.closest &&
-                   e.target.closest('.flyout');
-        if (!inFo || e.target.closest('.flyout-close')) {
-          fo.classList.remove('open');
-        }
-      }
-    }
-  });
-  document.addEventListener('keydown', function (e) {
-    var nl = document.querySelector('.nav-links');
-    if (e.key === 'Escape') {
-      // Esc closes with the same contract as the close control:
-      // .open off, scroll lock lifted, aria-expanded reset, focus
-      // handed back to the trigger (W4.1 flyout spec)
-      if (nl && nl.classList.contains('open')) {
-        setNav(false, { refocus: true });
-      }
-      var fo = document.querySelector('.flyout');
-      if (fo) fo.classList.remove('open');
-    }
-    // the open sheet holds focus: Tab cycles inside the panel
-    if (e.key === 'Tab' && nl && nl.classList.contains('open')) {
-      var f = nl.querySelectorAll('a, button, input, [tabindex]');
-      if (f.length) {
-        var first = f[0], last = f[f.length - 1];
-        if (e.shiftKey && document.activeElement === first) {
-          last.focus(); e.preventDefault();
-        } else if (!e.shiftKey && document.activeElement === last) {
-          first.focus(); e.preventDefault();
-        }
-      }
-    }
-  });
-})();
-</script>
-</head>
-<body>
-<a class="skip-link" href="#main">Skip to content</a>
 
-<main id="main">
-<slot />
-</main>
-<a class="call-bar" href="{{tel}}">
-  <span>{{phone}}</span><span class="sr-only">Call now</span>
-</a>
-</body>
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <SEOHead
+      title={title}
+      description={description}
+      path={path}
+      image={image}
+      robots={robots}
+      ogType={ogType}
+    />
+    <JsonLd
+      path={path}
+      title={title}
+      description={description}
+      pageClass={pageClass}
+      breadcrumbs={breadcrumbs}
+      faq={faq}
+    />
+  </head>
+  <body>
+    <a class="wf-skip" href="#main">Skip to content</a>
+    <Header />
+    <main id="main" class="wf-container">
+      <slot />
+    </main>
+    <Footer />
+    <MobileCTA path={path} />
+  </body>
 </html>
+
+<style>
+  .wf-skip {
+    position: absolute; left: -9999px; top: 0;
+    padding: 0.75rem 1rem; background: var(--c-ink);
+    color: var(--c-paper); z-index: 100; text-decoration: none;
+  }
+  .wf-skip:focus-visible { left: 0; }
+</style>

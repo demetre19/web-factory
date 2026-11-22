@@ -71,7 +71,7 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
       <span class="logo brand-mark">{brand}</span>
       <div>
         {list.length > 0 && <nav class="nav-desk" aria-label="Primary"><ul class="row gap-fluid-m list-plain">{(navOver ? list.slice(0, navCut) : list).map((it) => <li><a class="nav-link" href={it.href}>{it.label || it.term || it.title || it.text}</a></li>)}</ul></nav>}
-        {navOver && <button class="nav-more" type="button" aria-label="More links">More</button>}
+        {navOver && <button class="nav-more" type="button" aria-label="More links" aria-expanded="false">More</button>}
       </div>
       {image &&       <div>
         {image && image.src && <figure class="ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}

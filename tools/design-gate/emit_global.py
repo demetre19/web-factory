@@ -769,11 +769,39 @@ input, textarea { border: 1px solid var(--input-border); padding: var(--input-py
     :has(> .nav-desk + .nav-more), :has(> .nav-priority + .nav-more) {
               display: flex; align-items: center; gap: var(--space-s); }
     /* a mega nav never unrolls inline — the priority row + More own
-       the desktop bar; the panel still opens as a flyout */
-    .nav-links.nav-links.nav-mega:not(.open),
-    .nav-links.nav-links[data-over]:not(.open) { display: none; }
+       the desktop bar; the panel still opens as a flyout. No
+       :not(.open) selector here: Tailwind's content scan reads the
+       !open operator in the layout script as a candidate and emits
+       .\!open important variants, whose :not(.\!open) form would hide
+       the OPEN panel — a plain class list keeps those variants inert */
+    .nav-links.nav-links.nav-mega,
+    .nav-links.nav-links[data-over] { display: none; }
+    /* the open overflow panel is a dropdown under the bar, not the
+       mobile sheet — the sheet's fixed/scrim/scroll-lock rules live
+       under 60rem, so the desktop flyout carries its own box */
     .nav-links.nav-mega.open, .nav-links[data-over].open {
-              display: flex; }
+              display: flex; flex-direction: column;
+              gap: var(--space-m);
+              position: absolute; inset-block-start: 100%;
+              inset-inline-end: 0;
+              width: min(46rem, 94vw); max-height: 80vh;
+              overflow-y: auto;
+              background: var(--bg-canvas);
+              padding: var(--space-m);
+              border: 1px solid var(--border-default);
+              border-radius: var(--r-card);
+              box-shadow: var(--shadow-pop);
+              z-index: calc(var(--primitive-z-sticky) + 1); }
+    .nav-links.nav-mega.open .nav-close,
+    .nav-links[data-over].open .nav-close {
+              display: inline-flex; align-self: flex-end;
+              min-height: var(--tap); min-width: var(--tap);
+              align-items: center; justify-content: center;
+              background: none; border: 0;
+              color: var(--text-secondary); font-size: var(--fs-2);
+              line-height: 1; cursor: pointer; }
+    /* the flyout anchors to the bar it drops from — the sticky
+       header is already a positioned ancestor */
   }
   /* the generic overlay family — modals, popups, form dialogs
      (N.flyout): a centred .flyout panel over the same scrim, a

@@ -89,14 +89,17 @@ import '../styles/global.css';
     // markup exists (first paint defers to DOMContentLoaded)
     var nl = document.querySelector('.nav-links');
     if (!nl) return;
-    // the sheet only exists under the nav breakpoint — refuse to
-    // pin a panel (and lock scroll) on the desktop bar
-    if (open && !window.matchMedia('(max-width: 59.99rem)').matches) {
+    var small = window.matchMedia('(max-width: 59.99rem)').matches;
+    // the sheet only exists under the nav breakpoint — at/above it
+    // the overflow mega panel may still open as a flyout, but it
+    // carries no scrim and no scroll lock
+    if (open && !small && !nl.classList.contains('nav-mega') &&
+        !nl.hasAttribute('data-over')) {
       return;
     }
     nl.classList.toggle('open', open);
-    document.body.style.overflow = open ? 'hidden' : '';
-    var b = document.querySelector('.burger');
+    document.body.style.overflow = open && small ? 'hidden' : '';
+    var b = document.querySelector('.burger, .nav-more');
     if (b) {
       b.setAttribute('aria-expanded', open ? 'true' : 'false');
       if (!open && opts && opts.refocus) b.focus();
@@ -153,8 +156,10 @@ import '../styles/global.css';
       var fo = document.querySelector('.flyout');
       if (fo) fo.classList.remove('open');
     }
-    // the open sheet holds focus: Tab cycles inside the panel
-    if (e.key === 'Tab' && nl && nl.classList.contains('open')) {
+    // the open sheet holds focus: Tab cycles inside the panel — a
+    // desktop flyout never traps
+    if (e.key === 'Tab' && nl && nl.classList.contains('open') &&
+        window.matchMedia('(max-width: 59.99rem)').matches) {
       var f = nl.querySelectorAll('a, button, input, [tabindex]');
       if (f.length) {
         var first = f[0], last = f[f.length - 1];
