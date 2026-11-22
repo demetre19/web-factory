@@ -139,28 +139,29 @@ _BANK_DIRS['fx'] = ()  # resolved below — every fx-* exemplar dir
 
 PAGE_BOARDS = [
     {'id': 'home', 'title': 'Home', 'icon': 'home',
-     'desc': 'Layout options (w3) and look options (w4) for the '
-             'emitted page — card pick posts a signed approval'},
+     'desc': 'Home page layouts — each option retrieves its own header, '
+             'hero topology and section compositions from the bank, '
+             'ranked by fit to the vibe genes and diversified; the w3/w4 '
+             'cards of the emitted page follow. Pick signs the home '
+             'composition'},
     {'id': 'service', 'title': 'Service', 'icon': 'doc',
-     'desc': 'Section composition for the service page — this '
-             'pipeline emits one page, so the previews render the '
-             'live page\'s sections; a pick signs the composition '
-             'applied to that plan'},
+     'desc': 'Service page layouts — hero, benefits, process, scope, '
+             'pricing, proof, FAQ, CTA; each option a different bank '
+             'hero topology + section set bound to this service\'s own '
+             'copy. Pick signs the service composition'},
     {'id': 'location', 'title': 'Location', 'icon': 'pin',
-     'desc': 'Section composition for the location page — this '
-             'pipeline emits one page, so the previews render the '
-             'live page\'s sections; a pick signs the composition '
-             'applied to that plan'},
+     'desc': 'Location page layouts — area hero, coverage/suburbs, local '
+             'proof, services, FAQ, contact; location content only '
+             '(lorem where the plan has none). Pick signs the location '
+             'composition'},
     {'id': 'contact', 'title': 'Contact', 'icon': 'mail',
-     'desc': 'Section composition for the contact page — this '
-             'pipeline emits one page, so the previews render the '
-             'live page\'s sections; a pick signs the composition '
-             'applied to that plan'},
+     'desc': 'Contact page layouts — page hero, form + details, map/area, '
+             'hours, FAQ; contact content only (lorem where the plan has '
+             'none). Pick signs the contact composition'},
     {'id': 'blog', 'title': 'Blog', 'icon': 'news',
-     'desc': 'Section composition for the blog page — this '
-             'pipeline emits one page, so the previews render the '
-             'live page\'s sections; a pick signs the composition '
-             'applied to that plan'},
+     'desc': 'Blog page layouts — page hero, featured post, listing, '
+             'categories, newsletter; guide links from the plan, lorem '
+             'elsewhere. Pick signs the blog composition'},
 ]
 
 # galleries whose cards pick an element (element → comp ids)
@@ -1584,57 +1585,6 @@ def emit_section_fragments(pd):
     return spec, depth
 
 
-def emit_layout_previews(pd):
-    """preview/layouts/<opt>.html — each LAYOUT-OPTIONS d-option
-    rendered as the real stacked page: every block's chosen comp in
-    plan order (the section's own emitted block where the option
-    keeps it, else the comp's skeleton bound to that block's slots).
-    Returns {option_id: dist-relative path}."""
-    lo = _json_at(pd, 'LAYOUT-OPTIONS.json') or {}
-    options = lo.get('options') or []
-    blocks, rows = _comp_blocks(pd)
-    if not options or not rows:
-        return {}
-    head, battr = rows[0][4], rows[0][5]
-    outdir = os.path.join(pd, 'site', 'dist', 'preview', 'layouts')
-    os.makedirs(outdir, exist_ok=True)
-    dist = os.path.join(pd, 'site', 'dist')
-    out = {}
-    for o in options:
-        oid = o.get('id')
-        comp_map = o.get('compositions') or {}
-        parts = []
-        for sec, bid, comp, block, h2, b2 in rows:
-            want = comp_map.get(bid, comp)
-            if want == comp:
-                parts.append(block)
-                continue
-            # HARD RULE: previews show emitted output, never an
-            # interpretation — reuse the comp's real emitted fragment
-            # (the same HTML the pipeline wrote for another page);
-            # _slot_frag is the last resort when no artifact exists
-            frag = blocks.get(want)
-            if frag:
-                parts.append(frag[0])
-                continue
-            inner, _unmap = _slot_frag(want, _copy_slot(pd, bid))
-            if inner is None:
-                continue
-            parts.append(
-                '<section class="sec-band surface-base density-regular"'
-                ' data-sec="' + str(sec) + '" data-comp="' + str(want) +
-                '"><div class="sec-inner">' + inner +
-                '</div></section>')
-        if not parts:
-            continue
-        fp = os.path.join(outdir, str(oid) + '.html')
-        with open(fp, 'w', encoding='utf-8') as fh:
-            fh.write(_doc(head, battr, '\n'.join(parts),
-                          css=_LOREM_CSS))
-        out[oid] = os.path.relpath(fp, dist)
-    return out
-
-
 # ------------------------------------------------------------------
 # option sets — the same blocks /approve accepts (F-27)
 # ------------------------------------------------------------------
@@ -1691,46 +1641,68 @@ def _picker_cards(ctx, pd):
     return cards
 
 
-def _composition_board(pd, layout_prevs=None):
-    """The layout vocabulary boards: per-option rendered previews
-    (stacked section fragments in plan order) with the b-rows matrix
-    demoted to secondary detail."""
-    lo = _json_at(pd, 'LAYOUT-OPTIONS.json')
-    if not lo:
-        return None
-    dist = os.path.join(pd, 'site', 'dist')
-    opts = []
-    for o in lo.get('options') or []:
-        oid = o.get('id')
-        # the fully-built option page wins when the emit produced
-        # one (real imagery/copy); the stacked fragment doc is the
-        # fallback for options without a build
-        built = os.path.join(dist, 'preview',
-                             'lo-' + str(oid), 'index.html')
-        if os.path.isfile(built):
-            prev = built
-        else:
-            rel = (layout_prevs or {}).get(oid)
-            prev = os.path.join(dist, rel) if rel else None
-        comps = o.get('compositions') or {}
-        opts.append({
-            'id': oid, 'name': o.get('label') or oid,
-            'score': o.get('score'),
-            'preview': ('/built/' + urllib.parse.quote(prev))
-                       if prev else None,
-            'tags': ['layout'] + sorted(set(comps.values())),
-            'element': 'layout', 'variant': o.get('id'),
-            'desc': 'rendered on the home page — the only page '
-                    'with a build · ' +
-                    ' · '.join(k + ' ' + v for k, v in
-                              list(comps.items())[:4]) +
-                    (' …' if len(comps) > 4 else ''),
-            'compositions': comps})
-    return {'allowed': {k: list(dict.fromkeys(v or []))
-                        for k, v in
-                        (lo.get('allowed') or {}).items()},
-            'options': opts,
-            'pick': lo.get('pick')}
+def _page_boards(pd):
+    """{board: {'cards', 'compositions'}} — page_boards.py's per-page-
+    type options (PAGE-BOARDS.json), each previewed as its built page
+    (preview_build.emit_page_boards, rebuilt lazily when the inputs
+    moved). A pick signs element layout:<board>."""
+    import page_boards as PBD
+    import preview_build
+    ctx = G.Ctx(pd)
+    doc = PBD.ensure(pd)
+    bsite = os.path.join(pd, 'boards', 'site')
+    try:
+        stamp = open(os.path.join(bsite, '.inputs_sha')).read().strip()
+    except OSError:
+        stamp = ''
+    opts = [o['id'] for b in doc['boards'].values() for o in b['options']]
+    pages = {o: os.path.join(bsite, 'dist', 'preview', 'lo-' + o,
+                             'index.html') for o in opts}
+    err = None
+    if stamp != doc.get('inputs_sha') or not all(
+            os.path.isfile(p) for p in pages.values()):
+        try:
+            preview_build.emit_page_boards(ctx)
+            doc = PBD.ensure(pd)
+            pages = {o['id']: os.path.join(
+                bsite, 'dist', 'preview', 'lo-' + o['id'], 'index.html')
+                for b in doc['boards'].values() for o in b['options']}
+        except SystemExit as e:
+            err = str(e)
+    picks = {p.get('element'): p.get('variant')
+             for p in (_json_at(pd, 'ELEMENT-PICKS.json') or {})
+             .get('picks', [])}
+    out = {}
+    for board, b in doc['boards'].items():
+        cards = []
+        for o in b['options']:
+            fp = pages.get(o['id'])
+            comps = o.get('compositions') or {}
+            cards.append({
+                'id': o['id'], 'name': o.get('label') or o['id'],
+                'score': o.get('fit'),
+                'preview': ('/built/' + urllib.parse.quote(fp))
+                           if fp and os.path.isfile(fp) else None,
+                'tags': ['layout', board, o['hero']['topology_id'],
+                         o.get('header') or ''],
+                'element': 'layout:' + board, 'variant': o['id'],
+                'desc': ' · '.join(f'{r} {c}' for r, c in comps.items()),
+                'compositions': comps})
+        out[board] = {
+            'cards': cards,
+            'error': err,
+            'compositions': {
+                'allowed': {p['role']: p['candidates']
+                            for p in b['plan']},
+                'options': [{'id': o['id'], 'label': o.get('label'),
+                             'compositions': o['compositions']}
+                            for o in b['options']],
+                'pick': picks.get('layout:' + board),
+                'page_type': b.get('page_type'),
+                'lorem_slots': b.get('lorem_slots'),
+                'sources': {r: c.get('sources')
+                            for r, c in (b.get('content') or {}).items()}}}
+    return out
 
 
 # ------------------------------------------------------------------
@@ -2034,17 +2006,17 @@ def app_data(pipeline):
                 'row swaps that section\'s composition/topology '
                 'in place; ✓ signs the row\'s choice.',
         'scrub': scrub, 'cards': []}
-    layout_prevs = emit_layout_previews(pd)
-    comp = _composition_board(pd, layout_prevs)
+    pboards = _page_boards(pd)
     for b in PAGE_BOARDS:
+        pb = pboards.get(b['id']) or {}
+        bcards = list(pb.get('cards') or [])
         if b['id'] == 'home':
-            boards[b['id']] = dict(
-                b, cards=(cards['layouts'] + cards['looks'] +
-                          cards['fine']))
-        else:
-            boards[b['id']] = dict(
-                b, cards=(comp or {}).get('options') or [],
-                compositions=comp)
+            # the emitted page's w3/w4 approval cards follow the home
+            # layout options
+            bcards += cards['layouts'] + cards['looks'] + cards['fine']
+        boards[b['id']] = dict(b, cards=bcards,
+                               compositions=pb.get('compositions'),
+                               error=pb.get('error'))
 
     knobs = (tokens.get('knobs') or {}) if isinstance(
         tokens, dict) else {}
@@ -2905,9 +2877,28 @@ def record_element_pick(pipeline, element, variant, bundle=None):
             {d for dirs in _BANK_DIRS.values() for d in dirs}
     fxel = re.fullmatch(
         r'fx:(default|sec:[\w-]{1,40}|[\w-]{1,40})', element or '')
-    if element not in valid and not fxel and not re.fullmatch(
-            r'sec:[\w-]{1,40}', element or ''):
+    lay = re.fullmatch(r'layout:(home|service|location|contact|blog)',
+                       element or '')
+    if element not in valid and not fxel and not lay and not \
+            re.fullmatch(r'sec:[\w-]{1,40}', element or ''):
         return 1, f'unknown element gallery {element}'
+    if lay:
+        # a page-board pick signs THAT page type's composition — the
+        # bundle is the option's own record, never the client's
+        doc = _json_at(G.Ctx(pipeline).dir, 'PAGE-BOARDS.json') or {}
+        opt = next((o for o in ((doc.get('boards') or {})
+                                .get(lay.group(1)) or {})
+                    .get('options') or [] if o.get('id') == variant),
+                   None)
+        if not opt:
+            return 1, (f'{variant} is not a {lay.group(1)} option in '
+                       'PAGE-BOARDS.json')
+        bundle = {'page_type': doc['boards'][lay.group(1)]
+                  .get('page_type'),
+                  'compositions': opt.get('compositions'),
+                  'recipes': opt.get('recipes'),
+                  'hero': opt.get('hero'),
+                  'inputs_sha': doc.get('inputs_sha')}
     if fxel:
         # decoration is opt-in: only when the design's motion
         # vector is non-zero — a static design never gets fx
@@ -3720,7 +3711,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
        tags.map(function(t){return '<span class="tag">'+esc(t)+'</span>'}).join('')+
        '</div>';
     // first-class effect control — the per-element decorator, labeled
-    if(!c.bank&&c.element&&c.element!=='vibe'&&c.element!=='layout'&&
+    if(!c.bank&&c.element&&c.element!=='vibe'&&
+       String(c.element).indexOf('layout')!==0&&
        c.element!=='fx:default'){
       var fel='fx:'+c.element,fcur=DATA.picked_elements[fel]||'none',
           fopts=fxOpts(fel);
