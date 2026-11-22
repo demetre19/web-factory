@@ -2721,6 +2721,19 @@ _FORM_DRIVER = (
     '})})()</script>')
 
 
+_FORM_EMAIL = re.compile(r'\be-?mail\b', re.I)
+_FORM_PHONE = re.compile(
+    r'\b(?:tel|phone|mobile|cell|sms)\b|\+?\d[\d\s().-]{6,}\d',
+    re.I)
+
+
+def _form_dual(hint):
+    # the field accepts either an email or a phone channel --
+    # typing it as either would reject the other
+    return bool(_FORM_EMAIL.search(hint) and
+                _FORM_PHONE.search(hint))
+
+
 def _infer_form_type(attrs):
     """a name/id/placeholder hint → the input's semantic type —
     banked exemplars ship bare <input> so the browser never
@@ -2731,14 +2744,11 @@ def _infer_form_type(attrs):
     hint = ' '.join(re.findall(
         r'(?:name|id|placeholder|aria-label)\s*=\s*["\']([^"\']+)',
         attrs)).lower()
-    emailish = re.search(r'\be-?mail\b', hint)
-    phoneish = re.search(r'\b(?:tel|phone|mobile|cell|sms)\b|'
-                         r'\+?\d[\d\s().-]{6,}\d', hint)
-    if emailish and phoneish:
+    if _form_dual(hint):
         return 'text'
-    if emailish:
+    if _FORM_EMAIL.search(hint):
         return 'email'
-    if phoneish:
+    if _FORM_PHONE.search(hint):
         return 'tel'
     for pat, ty in (
             (r'\b(?:url|website)\b', 'url'),
@@ -2769,6 +2779,8 @@ def _form_required(attrs):
     hint = ' '.join(re.findall(
         r'(?:name|id|placeholder|aria-label)\s*=\s*["\']([^"\']+)',
         attrs))
+    # 'you@company.com' must not read as a 'company' optional cue
+    hint = re.sub(r'\S+@\S+', ' ', hint)
     return not _FORM_OPTIONAL.search(hint)
 
 
@@ -2798,7 +2810,10 @@ def _bank_form_attrs(frag):
                 if tm:
                     at = at[:tm.start()] + at[tm.end():]
                 at = ' type="%s"' % ty + at
-            elif _infer_form_type(at) == 'text':
+            elif ty in ('email', 'tel') and _form_dual(
+                    ' '.join(re.findall(
+                        r'(?:name|id|placeholder|aria-label)'
+                        r'\s*=\s*["\']([^"\']+)', at)).lower()):
                 # dual-purpose banked type ("phone or email" shipped
                 # as type="email") rejects the other channel — drop
                 # back to text so either answer validates
@@ -3070,7 +3085,7 @@ def emit_bank_previews(pd):
                     (os.path.isfile(css_dst) and
                      os.path.getmtime(css_dst) >
                      os.path.getmtime(dst)) or \
-                    '<!--wf:bank:v10-->' not in open(
+                    '<!--wf:bank:v11-->' not in open(
                         dst, encoding='utf-8',
                         errors='replace').read(64)
                 if stale:
@@ -3110,7 +3125,7 @@ def emit_bank_previews(pd):
                     css_ = _BANK_STAGE_CSS + \
                         ('body{padding:0}' if page else '')
                     with open(dst, 'w', encoding='utf-8') as fh:
-                        fh.write('<!--wf:bank:v10-->' +
+                        fh.write('<!--wf:bank:v11-->' +
                                  _doc(head, '', stage,
                                       extra=(_STAGE_SCROLL_SHIM
                                              if not page else '') +
