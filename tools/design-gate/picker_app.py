@@ -127,26 +127,9 @@ _STAGE_SCROLL_SHIM = (
 
 # page-scale fragments render at natural width (a 1280px checkout in
 # a 390px frame would scroll horizontally — the audit counts that as
-# overflow). The stage scroll shim also maps wheel scroll for pages:
-# documentElement.scrollTop on a .wf-page doc resolves onto the
-# page element so scroll-driven fx animate while the doc is panned.
-_PAGE_SCROLL_SHIM = (
-    '<script>(function(){var s=document.querySelector(".wf-page");'
-    'if(!s)return;try{'
-    'var de=document.documentElement;'
-    'Object.defineProperty(window,"scrollY",{get:function(){'
-    'return s.scrollTop}});'
-    'Object.defineProperty(window,"pageYOffset",{get:function(){'
-    'return s.scrollTop}});'
-    'Object.defineProperty(window,"scrollX",{get:function(){'
-    'return s.scrollLeft}});'
-    'Object.defineProperty(de,"scrollTop",{get:function(){'
-    'return s.scrollTop},set:function(v){s.scrollTop=v},'
-    'configurable:true});'
-    'Object.defineProperty(de,"scrollHeight",{get:function(){'
-    'return s.scrollHeight},configurable:true});'
-    's.addEventListener("scroll",function(){window.dispatchEvent('
-    'new Event("scroll"))},{passive:true})}catch(e){}})();</script>')
+# overflow). .wf-page grows to content height so the DOCUMENT scrolls
+# — real scrollY/scroll events drive scroll fx (shadowing them onto
+# the wrapper would freeze them at 0).
 
 def _menu_closed(frag):
     """E-K2 — nav exemplars are banked mid-interaction: the snapshot
@@ -3466,8 +3449,7 @@ def emit_bank_previews(pd):
                         fh.write('<!--wf:bank:v11-->' +
                                  _doc(head, '', stage,
                                       extra=(_STAGE_SCROLL_SHIM
-                                             if not page else
-                                             _PAGE_SCROLL_SHIM) +
+                                             if not page else '') +
                                       (_FX_DRIVER if fx else ''),
                                       css=css_,
                                       chrome=gid == 'menu' or
