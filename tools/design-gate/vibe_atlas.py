@@ -476,18 +476,30 @@ _CLUSTERS_DICT = {c: base for c, _n, base in _CLUSTERS}
 _PALETTE_PREFIXES = ('--action-primary', '--bg-', '--text-',
                      '--border', '--ink', '--font-body')
 
+# vars that never change the RENDERED first screen — radii, shadows,
+# borders, gaps and accents show below the fold (or only in cards
+# off the first viewport): the audit measures visible first-screen
+# Δ, so the signature must not count them (#137 residue)
+_FS_INVISIBLE_PREFIXES = _PALETTE_PREFIXES + (
+    '--radius', '--primitive-radius', '--r-', '--shadow',
+    '--content-gap', '--flow-spacing', '--grid-gap', '--gap',
+    '--action')
+
 
 def _struct_sig(r):
-    """a preset's *structural* signature: face, radius, spacing,
-    measure, shadows, type scale/weight and the shape rules — the
-    traits that make a vibe visibly distinct. Palette vars and the
-    body face are ignored so palette twins fold together."""
+    """a preset's *visible first-screen structural* signature:
+    theme, face, type scale/weight, measure and column layout — the
+    traits a rendered first screen actually shows. Palette vars,
+    radii, shadows, borders, gaps and the shape layer are excluded:
+    their diffs render below the fold, and counting them left
+    rendered-identical pairs (industrial-03/08, luxe-01/08 …) alive
+    as "distinct" vibes."""
     def fil(tok):
         return tuple(sorted(
             (k, v) for k, v in tok.items()
-            if not k.startswith(_PALETTE_PREFIXES)))
-    return (r['theme'], r['shape'],
-            fil(r['tokens']['light']), fil(r['tokens']['dark']))
+            if not k.startswith(_FS_INVISIBLE_PREFIXES)))
+    return (r['theme'], fil(r['tokens']['light']),
+            fil(r['tokens']['dark']))
 
 
 def _build_presets():
