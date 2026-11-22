@@ -87,6 +87,13 @@ ELEMENT_GALLERIES = [
      'desc': 'Reference atomic UI elements — pickers, toggles, '
              'chips, controls.',
      'groups': []},
+    {'id': 'fx', 'title': 'Effects · bank', 'icon': 'fx',
+     'desc': 'Interactive fx exemplars rendered live — hover and '
+             'scroll states actually run. Pick signs the site-'
+             'default effect; decorate toggles bind it per element. '
+             'Applied only when the design’s motion vector is '
+             'non-zero.',
+     'groups': []},
 ]
 
 # genmenu bank exemplars surfaced as scrubbable cards — gallery id
@@ -105,6 +112,7 @@ _BANK_DIRS = {
                  'commerce-flow'),
     'ui-elements': ('ui-element',),
 }
+_BANK_DIRS['fx'] = ()  # resolved below — every fx-* exemplar dir
 
 PAGE_BOARDS = [
     {'id': 'home', 'title': 'Home', 'icon': 'home',
@@ -1836,6 +1844,10 @@ def emit_bank_previews(pd):
     Returns {gallery_id: [cards]}."""
     if not os.path.isdir(_GENMENU):
         return {}
+    _BANK_DIRS['fx'] = tuple(sorted(
+        d for d in os.listdir(_GENMENU)
+        if d.startswith('fx-') and
+        os.path.isdir(os.path.join(_GENMENU, d))))
     tags = _genmenu_tags()
     css_src = os.path.join(_GENMENU, 'bank-preview.css')
     outdir = os.path.join(pd, 'site', 'dist', 'preview', 'bank')
@@ -1895,6 +1907,9 @@ def emit_bank_previews(pd):
                     'grp': 'bank · ' + cls,
                     'mobile': gid == 'menu'})
         out[gid] = cards
+    # a pick on an fx card signs the SITE-DEFAULT effect
+    for c in out.get('fx', []):
+        c['element'] = 'fx:default'
     return out
 
 
@@ -2420,9 +2435,25 @@ def record_element_pick(pipeline, element, variant, bundle=None):
                                         'mobile-menu', 'modals',
                                         'layout'} | \
             {d for dirs in _BANK_DIRS.values() for d in dirs}
-    if element not in valid and not re.fullmatch(
+    fxel = re.fullmatch(r'fx:(default|[\w-]{1,40})', element or '')
+    if element not in valid and not fxel and not re.fullmatch(
             r'sec:[\w-]{1,40}', element or ''):
         return 1, f'unknown element gallery {element}'
+    if fxel:
+        # decoration is opt-in: only when the design's motion
+        # vector is non-zero — a static design never gets fx
+        tk = _json_at(pipeline, 'TOKENS.json') or _json_at(
+            os.path.dirname(pipeline), 'TOKENS.json') or {}
+        mo = {'none': 0, 'subtle': .3, 'moderate': .6, 'rich': 1}\
+            .get(str((tk.get('knobs') or {})
+                 .get('motion.level')), 0)
+        if not mo:
+            return 1, ('decoration needs a non-zero motion vector — '
+                       'this design is motion:none')
+        if variant == 'none':
+            pass  # clearing a decoration is always allowed
+        elif not re.fullmatch(r'[\w-]{1,48}', variant or ''):
+            return 1, 'invalid fx id'
     if not variant or not re.fullmatch(r'[\w:-]{1,64}', variant):
         return 1, 'invalid variant id'
     ctx = G.Ctx(pipeline)
@@ -2745,6 +2776,12 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
 .srow .spos{margin-left:auto;font:600 10.5px var(--mono);
       color:var(--muted)}
 .srow .snav{display:flex;gap:3px}
+.fxbtn{margin-left:6px;padding:5px 10px;border:1px solid var(--line);
+  border-radius:999px;background:transparent;color:var(--muted);
+  font:650 11.5px var(--font);cursor:pointer}
+.fxbtn:hover{color:var(--ink)}
+.fxbtn.on{border-color:var(--ink);color:var(--ink)}
+.srow .fxbtn{padding:3px 8px;margin-left:0}
 .srow .snav button,.srow .spick{border:1px solid var(--line);
       background:var(--panel);color:var(--ink);border-radius:6px;
       font:600 12px var(--font);padding:3px 10px;cursor:pointer}
@@ -2943,7 +2980,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
     foot:'<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="1.5" y="9" width="13" height="4" rx="1"/><path d="M3.5 6h9M3.5 3h5"/></svg>',
     modal:'<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="2.5" y="4" width="11" height="8" rx="1.5"/><path d="M6 8h4"/></svg>',
     sun:'<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="8" cy="8" r="3"/><path d="M8 1.5v2M8 12.5v2M1.5 8h2M12.5 8h2M3.4 3.4l1.4 1.4M11.2 11.2l1.4 1.4M3.4 12.6l1.4-1.4M11.2 4.8l1.4-1.4"/></svg>',
-    moon:'<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M13.5 9.5A6 6 0 016.5 2.5a6 6 0 107 7z"/></svg>'};
+    moon:'<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M13.5 9.5A6 6 0 016.5 2.5a6 6 0 107 7z"/></svg>',
+    fx:'<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M8 1l1.7 4.4L14 7l-4.3 1.6L8 13l-1.7-4.4L2 7l4.3-1.6z"/></svg>'};
 
   var LAYOUT_TABS=['page','home','service','location','contact',
                    'blog'];
@@ -3051,6 +3089,13 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
     }else if(c.element){
       h+='<button class="pick" data-elem="'+c.element+'" data-var="'+esc(c.variant)+'">'+
          (c.element==='vibe'?'Bake':'Pick')+'</button>';
+      if(!c.bank&&c.element!=='vibe'&&c.element!=='layout'&&
+         c.element!=='fx:default'){
+        var fel='fx:'+c.element,fcur=DATA.picked_elements[fel];
+        h+='<button class="fxbtn'+(fcur&&fcur!=='none'?' on':'')+
+           '" data-fx="'+fel+'" title="decorate with the default '+
+           'effect (motion-gated)">&#9670;'+
+           (fcur&&fcur!=='none'?' '+esc(fcur):'')+'</button>';}
     }
     h+='<span class="pstat'+(isPicked?' ok':'')+'">'+
        (isPicked?'picked ✓':'')+'</span></div></div>';
@@ -3216,12 +3261,31 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
          '<div class="snav"><button data-d="-1">‹</button>'+
          '<button data-d="1">›</button></div>'+
          '<button class="spick" title="sign this row\'s choice">✓</button>'+
+         '<button class="fxbtn'+((DATA.picked_elements['fx:sec:'+r.sec]&&
+          DATA.picked_elements['fx:sec:'+r.sec]!=='none')?' on':'')+
+         '" data-fx="fx:sec:'+r.sec+
+         '" title="decorate this section">&#9670;</button>'+
          '<span class="sstat"></span></div>'+
          '<iframe data-src="'+esc(frame('/built/'+encodeURI(DATA.pipeline+'/site/dist/'+alt.preview)))+
          '" src="'+esc(frame('/built/'+encodeURI(DATA.pipeline+'/site/dist/'+alt.preview)))+
          '" loading="lazy"></iframe></div>';
     });
     return h;
+  }
+
+  function fxToggle(b){
+    var el=b.dataset.fx,cur=DATA.picked_elements[el];
+    var v=(cur&&cur!=='none')?'none':
+          DATA.picked_elements['fx:default'];
+    if(!v){toast('pick a default effect on the Effects board first');
+      return}
+    api('/element-pick',{pipeline:PIPELINE,element:el,variant:v})
+      .then(function(j){
+        if(j.ok){
+          if(v==='none')delete DATA.picked_elements[el];
+          else DATA.picked_elements[el]=v;
+          board()}
+        else toast(j.message||'refused')});
   }
 
   function srowSwap(rowEl,d){
@@ -3551,6 +3615,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
         f.onload=function(){try{
           f.style.height=f.contentDocument.body.scrollHeight+'px'
         }catch(e){f.style.height='480px'}};
+        rowEl.querySelector('.fxbtn').onclick=function(e){
+          e.stopPropagation();fxToggle(e.target)};
         rowEl.querySelector('.spick').onclick=function(){
           var r=DATA.boards.page.scrub[+rowEl.dataset.i];
           var stat=rowEl.querySelector('.sstat');
@@ -3575,6 +3641,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
         b.onclick=function(){doPick(b)}});
       el.querySelectorAll('.xp').forEach(function(b){
         b.onclick=function(e){e.stopPropagation();expand(b.dataset.x)}});
+      el.querySelectorAll('.fxbtn').forEach(function(b){
+        b.onclick=function(e){e.stopPropagation();fxToggle(b)}});
       el.querySelectorAll('.cb iframe').forEach(function(f){
         f.addEventListener('load',function(){setTimeout(fitIframes,90)})});
       setTimeout(fitIframes,150);
