@@ -1,6 +1,6 @@
 ---
 /**
- * bm-footer-16 — TRANSLATED Bricksmaven skeleton.
+ * wf-footer-16 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (footer-16.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -55,24 +55,24 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
   <div class={image && image.src ? 'split' : undefined}>
     <div class="stack">
   <div class="sec-inner">
-    <div class="bm-footer-16__container row between">
-      <div class="bm-footer-16__intro row between">
+    <div class="wf-footer-16__container row between">
+      <div class="wf-footer-16__intro row between">
         {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
               </div>
       {before.length > 0 && <div class="flow mt-stack">
 {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
       </div>}
 
-      {list.length > 0 &&       <div class="bm-footer-16__content row between">
+      {list.length > 0 &&       <div class="wf-footer-16__content row between">
         {list.length > 0 && <div class="row gap-fluid-m">{(list || []).map((it) => (
-            <div class="bm-footer-16-card row between">
+            <div class="wf-footer-16-card row between">
               <h3 class="text-fluid-1">{it.term || it.title}</h3>
             </div>
           ))}</div>}
       </div>
       }
-      <div class="bm-footer-16__nav row between">
-        {links.length > 0 && <div class="bm-footer-16-nav-menu row between">
+      <div class="wf-footer-16__nav row between">
+        {links.length > 0 && <div class="wf-footer-16-nav-menu row between">
           <div class="row gap-fluid-m">{(links || []).map((it) => (
               <div>
                 <a class="text-fluid-0" href={it.href}>{it.icon && <IconChip name={it.icon} />} {it.label || it.term || it.anchor || it.text}</a>

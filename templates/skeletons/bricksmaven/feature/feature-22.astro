@@ -1,6 +1,6 @@
 ---
 /**
- * bm-feature-22 — TRANSLATED Bricksmaven skeleton.
+ * wf-feature-22 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (feature-22.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -46,7 +46,7 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
 
 <div class="wf-feature-22">
   <div class="sec-inner">
-    <div class="feature-22-container">
+    <div class="wf-feature-22-container">
       <div class="intro">
         {head && <h2 class="text-fluid-2">{head}</h2>}
   {sub && <p class="mt-stack lede" set:html={inline(sub)} />}
@@ -56,8 +56,8 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
         </div>
         }
       </div>
-      {list.length > 0 && <div class="bm-feature-list-ul">{(list || []).map((it) => (
-            <div class="bm-feature-list-card card">
+      {list.length > 0 && <div class="wf-feature-list-ul">{(list || []).map((it) => (
+            <div class="wf-feature-list-card card">
               <h3 class="text-fluid-1">{it.term || it.title}</h3>
               <p class="text-fluid-0">{it.text}</p>
             </div>

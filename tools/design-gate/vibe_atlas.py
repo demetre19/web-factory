@@ -107,10 +107,13 @@ _ALLELE = {
                      '--section-space-m:var(--section-space-l)'},),
     },
     'whitespace-band': {
-        'tight': ({'L': '--measure:38rem;--section-space-m:'
+        # measure is a ch cap (reading width) — rem values rendered
+        # 82–99ch at the desk rung (item 5); keep the band spread
+        # inside the ≤75ch prose ceiling
+        'tight': ({'L': '--measure:56ch;--section-space-m:'
                    'var(--section-space-s)'},),
-        'medium': ({'L': '--measure:46rem'},),
-        'airy': ({'L': '--measure:56rem;--section-space-m:'
+        'medium': ({'L': '--measure:64ch'},),
+        'airy': ({'L': '--measure:72ch;--section-space-m:'
                   'var(--section-space-xl)'},),
     },
     'columns': {

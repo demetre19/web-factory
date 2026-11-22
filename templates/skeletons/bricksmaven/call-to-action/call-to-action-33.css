@@ -1,24 +1,24 @@
-  .wf-call-to-action-33 .bm-cta-33__container {
+  .wf-call-to-action-33 .wf-cta-33__container {
     display: grid;
     gap: var(--space-m);
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
   }
 
-  .wf-call-to-action-33 .bm-cta-33__content {
+  .wf-call-to-action-33 .wf-cta-33__content {
     row-gap: var(--flow-spacing);
   }
 
-  .wf-call-to-action-33 .bm-cta-33__intro {
+  .wf-call-to-action-33 .wf-cta-33__intro {
     row-gap: calc(var(--flow-spacing) / 2);
   }
 
-  .wf-call-to-action-33 .bm-cta-33-accordion {
+  .wf-call-to-action-33 .wf-cta-33-accordion {
     display: flex;
     flex-direction: column;
     gap: calc(var(--flow-spacing) / 4);
   }
 
-  .wf-call-to-action-33 .bm-cta-33-accordion-item__title {
+  .wf-call-to-action-33 .wf-cta-33-accordion-item__title {
     display: flex;
     flex-wrap: nowrap;
     flex-direction: row;
@@ -26,5 +26,5 @@
   }
 
   @media (max-width: 44rem) {
-    .wf-call-to-action-33 .bm-cta-33-accordion-item__title { flex-direction: column; }
+    .wf-call-to-action-33 .wf-cta-33-accordion-item__title { flex-direction: column; }
   }

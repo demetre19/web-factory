@@ -10,19 +10,19 @@
     row-gap: var(--space-s);
   }
 
-  .wf-counter-6 .counter-6-grid-ul {
+  .wf-counter-6 .wf-counter-6-grid-ul {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
     gap: var(--grid-gap);
   }
 
-  .wf-counter-6 .counter-6-card {
+  .wf-counter-6 .wf-counter-6-card {
     display: flex;
     flex-direction: column;
     row-gap: var(--flow-spacing);
   }
 
-  .wf-counter-6 .counter-6-card__box {
+  .wf-counter-6 .wf-counter-6-card__box {
     display: flex;
     row-gap: var(--space-xs);
     flex-direction: column;

@@ -1,6 +1,6 @@
 ---
 /**
- * bm-portoflio-single-3 — TRANSLATED Bricksmaven skeleton.
+ * wf-portoflio-single-3 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (portoflio-single-3.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -53,8 +53,8 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
 
 <div class="wf-portoflio-single-3">
   <div class="sec-inner">
-    <div class="bm-portfolio-single-3__container">
-      <div class="bm-portfolio-single-3__intro">
+    <div class="wf-portfolio-single-3__container">
+      <div class="wf-portfolio-single-3__intro">
         {head && <h1 class="text-fluid-4">{head}</h1>}
         {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
               </div>
@@ -66,8 +66,8 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
         {image && image.src && <figure class="ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
       </div>
       }
-      <div class="bm-portfolio-single__case-section-1">
-        <div class="bm-2col-media">
+      <div class="wf-portfolio-single__case-section-1">
+        <div class="wf-2col-media">
           {image &&           <div>
             {image && image.src && <figure class="ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
           </div>
@@ -82,8 +82,8 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
         {image && image.src && <figure class="ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
       </div>
       }
-      {image &&       <div class="bm-portfolio-single__case-section-1">
-        {image &&         <div class="bm-portfolio-single__solution-wrapper">
+      {image &&       <div class="wf-portfolio-single__case-section-1">
+        {image &&         <div class="wf-portfolio-single__solution-wrapper">
           {image &&           <div>
             {image && image.src && <figure class="ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
           </div>
@@ -92,9 +92,9 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
         }
       </div>
       }
-      {links.length > 0 &&       <div class="bm-portfolio-single__case-section-2">
-        {links.length > 0 && <div class="bm-portfolio-single-result-list bm-portfolio-single-result-list--alt">{(links || []).map((it) => (
-              <div class="bm-portfolio-single-result-item card">
+      {links.length > 0 &&       <div class="wf-portfolio-single__case-section-2">
+        {links.length > 0 && <div class="wf-portfolio-single-result-list wf-portfolio-single-result-list--alt">{(links || []).map((it) => (
+              <div class="wf-portfolio-single-result-item card">
                 {it.icon && <IconChip name={it.icon} />}
                 <h3 class="text-fluid-1">{it.term || it.title}</h3>
                 <p class="text-fluid-0">{it.text}</p>
@@ -103,7 +103,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
             ))}</div>}
       </div>
       }
-      {image &&       <div class="bm-portfolio-single-testimonial-3">
+      {image &&       <div class="wf-portfolio-single-testimonial-3">
         {image &&         <div class="testimonial-list-card__profile">
           {image &&           <div>
             {image && image.src && <figure class="ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
@@ -114,18 +114,18 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
       </div>
       }
     </div>
-    <div class="bm-portfolio-single-3__cta-container">
-      <div class="bm-contact-widget-4">
-        <div class="bm-contact-widget-4__manager-data">
+    <div class="wf-portfolio-single-3__cta-container">
+      <div class="wf-contact-widget-4">
+        <div class="wf-contact-widget-4__manager-data">
           {image &&           <div>
             {image && image.src && <figure class="ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
           </div>
           }
-          {links.length > 0 &&           <div class="bm-contact-widget-4__data">
-            {links.length > 0 && <div class="bm-contact-25-side-list-ul">
+          {links.length > 0 &&           <div class="wf-contact-widget-4__data">
+            {links.length > 0 && <div class="wf-contact-25-side-list-ul">
               <div class="grid-auto gap-fluid-m">{(links || []).map((it) => (
-                  <div class="bm-contact-25-side-list-item card">
-                    <div class="bm-contact-25-side-list-item__detail">
+                  <div class="wf-contact-25-side-list-item card">
+                    <div class="wf-contact-25-side-list-item__detail">
                       <h3 class="text-fluid-1"><a class="text-fluid-0" href={it.href}>{it.icon && <IconChip name={it.icon} />} {it.label || it.term || it.anchor || it.text}</a></h3>
                       {(it.label || it.term || it.anchor) && it.text && <p class="text-fluid-0">{it.text}</p>}
                     </div>
@@ -137,11 +137,11 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
         </div>
       </div>
     </div>
-    {links.length > 0 &&     <div class="bm-portfolio-single-3__footer-container">
-      {links.length > 0 && <div class="bm-portfolio-2-related-list">{(links || []).map((it) => (
+    {links.length > 0 &&     <div class="wf-portfolio-single-3__footer-container">
+      {links.length > 0 && <div class="wf-portfolio-2-related-list">{(links || []).map((it) => (
             <div class="card">
-              <div class="bm-portfolio-2-related-card__content">
-                <div class="bm-portfolio-2-related-card__top">
+              <div class="wf-portfolio-2-related-card__content">
+                <div class="wf-portfolio-2-related-card__top">
                   {it.icon && <IconChip name={it.icon} />}
                   <h3 class="text-fluid-1">{it.term || it.title}</h3>
                   <p class="text-fluid-0">{it.text}</p>

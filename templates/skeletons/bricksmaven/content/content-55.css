@@ -1,19 +1,19 @@
-  .wf-content-55 .bm-content-55__intro {
+  .wf-content-55 .wf-content-55__intro {
     display: grid;
     gap: var(--space-m);
     grid-template-columns: calc(100% * 3 / 2);
   }
 
-  .wf-content-55 .bm-content-55__column {
+  .wf-content-55 .wf-content-55__column {
     row-gap: calc(var(--flow-spacing) / 2);
   }
 
-  .wf-content-55 .bm-content-55__content {
+  .wf-content-55 .wf-content-55__content {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
     gap: var(--space-m);
   }
 
-  .wf-content-55 .bm-content-55-card {
+  .wf-content-55 .wf-content-55-card {
     row-gap: var(--flow-spacing);
   }

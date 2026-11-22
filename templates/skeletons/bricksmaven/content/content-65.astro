@@ -1,6 +1,6 @@
 ---
 /**
- * bm-content-65 — TRANSLATED Bricksmaven skeleton.
+ * wf-content-65 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (content-65.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -53,14 +53,14 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
 
 <div class="wf-content-65">
   <div class="sec-inner">
-    <div class="bm-content-65__container">
+    <div class="wf-content-65__container">
       {head && <h2 class="text-fluid-2">{head}</h2>}
   {sub && <p class="mt-stack lede" set:html={inline(sub)} />}
   {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
       <div>
-        <div class="bm-content-65__inner grid-auto gap-fluid-l">
-          {list.length > 0 && <div class="bm-content-column-wrapper">{(list || []).map((it) => (
-                <div class="bm-content-column card">
+        <div class="wf-content-65__inner grid-auto gap-fluid-l">
+          {list.length > 0 && <div class="wf-content-column-wrapper">{(list || []).map((it) => (
+                <div class="wf-content-column card">
                   {it.icon && <IconChip name={it.icon} />}
                   <div class="stack">
                     <h3 class="text-fluid-1">{it.term || it.title || it.text}</h3>

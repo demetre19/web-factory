@@ -1,6 +1,6 @@
 ---
 /**
- * bm-portfolio-section-21 — TRANSLATED Bricksmaven skeleton.
+ * wf-portfolio-section-21 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (portfolio-section-21.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -55,8 +55,8 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
   <div class={image && image.src ? 'split' : undefined}>
     <div class="stack">
   <div class="sec-inner">
-    <div class="bm-portfolio-section-21__container">
-      <div class="bm-portfolio-section-21__content">
+    <div class="wf-portfolio-section-21__container">
+      <div class="wf-portfolio-section-21__content">
         {head && <h2 class="text-fluid-2">{head}</h2>}
         {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
         {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
@@ -66,7 +66,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
         {list.length > 0 &&         <div>
           {list.length > 0 && <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
               <div class="card">
-                <div class="bm-portfolio-section-21-card__content">
+                <div class="wf-portfolio-section-21-card__content">
                   {it.icon && <IconChip name={it.icon} />}
                   <h3 class="text-fluid-1">{it.term || it.title}</h3>
                   <p class="text-fluid-0">{it.text}</p>

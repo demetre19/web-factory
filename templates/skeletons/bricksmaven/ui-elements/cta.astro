@@ -1,6 +1,6 @@
 ---
 /**
- * bm-cta — TRANSLATED Bricksmaven skeleton.
+ * wf-cta — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (cta.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -49,7 +49,7 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
   {head && <h2 class="text-fluid-2">{head}</h2>}
   {sub && <p class="mt-stack lede" set:html={inline(sub)} />}
   {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
-  {act.label &&   <div class="cta-combo">
+  {act.label &&   <div class="wf-cta-combo">
     {act.label && <p class="mt-fluid-m"><a class="wf-cta-button" href={act.href}>{act.label}</a></p>}
   </div>
   }

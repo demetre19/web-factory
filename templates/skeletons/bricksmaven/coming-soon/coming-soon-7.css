@@ -1,30 +1,30 @@
-  .wf-coming-soon-7 .bm-coming-soon-7__container {
+  .wf-coming-soon-7 .wf-coming-soon-7__container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
     gap: var(--grid-gap);
   }
 
-  .wf-coming-soon-7 .bm-coming-soon-7__content {
+  .wf-coming-soon-7 .wf-coming-soon-7__content {
     row-gap: var(--flow-spacing);
   }
 
-  .wf-coming-soon-7 .bm-coming-soon-7__intro {
+  .wf-coming-soon-7 .wf-coming-soon-7__intro {
     row-gap: var(--flow-spacing);
   }
 
-  .wf-coming-soon-7 .bm-form {
+  .wf-coming-soon-7 .wf-form {
     display: flex;
     flex-direction: column;
     row-gap: var(--flow-spacing);
   }
 
-  .wf-coming-soon-7 .bm-form-widget {
+  .wf-coming-soon-7 .wf-form-widget {
     display: flex;
     gap: var(--space-xs);
     flex-direction: row;
   }
 
-  .wf-coming-soon-7 .bm-social-share {
+  .wf-coming-soon-7 .wf-social-share {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
@@ -32,6 +32,6 @@
   }
 
   @media (max-width: 44rem) {
-    .wf-coming-soon-7 .bm-form-widget { flex-direction: column; }
-    .wf-coming-soon-7 .bm-social-share { flex-direction: column; }
+    .wf-coming-soon-7 .wf-form-widget { flex-direction: column; }
+    .wf-coming-soon-7 .wf-social-share { flex-direction: column; }
   }

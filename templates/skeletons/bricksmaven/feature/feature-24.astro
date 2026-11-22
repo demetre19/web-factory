@@ -1,6 +1,6 @@
 ---
 /**
- * bm-feature-24 — TRANSLATED Bricksmaven skeleton.
+ * wf-feature-24 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (feature-24.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -52,13 +52,13 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
 
 <div class="wf-feature-24">
   <div class="sec-inner">
-    <div class="feature-24-container">
+    <div class="wf-feature-24-container">
       <div class="feature-24__content">
         {head && <h2 class="text-fluid-2">{head}</h2>}
   {sub && <p class="mt-stack lede" set:html={inline(sub)} />}
   {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
-        {list.length > 0 && <div class="bm-feature-list-ul">{(list || []).map((it) => (
-              <div class="bm-feature-list-card card">
+        {list.length > 0 && <div class="wf-feature-list-ul">{(list || []).map((it) => (
+              <div class="wf-feature-list-card card">
                 <h3 class="text-fluid-1">{it.term || it.title}</h3>
                 <p class="text-fluid-0">{it.text}</p>
               </div>

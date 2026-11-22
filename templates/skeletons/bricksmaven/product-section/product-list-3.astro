@@ -1,6 +1,6 @@
 ---
 /**
- * bm-product-list-3 — TRANSLATED Bricksmaven skeleton.
+ * wf-product-list-3 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (product-list-3.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -57,7 +57,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
   <div class="sec-inner">
     <div class="product-list-3__container">
       <div class="product-list-3__content">
-        {head && <h1 class="product-list-3-card__heading text-fluid-4">{head}</h1>}
+        {head && <h1 class="wf-product-list-3-card__heading text-fluid-4">{head}</h1>}
         {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
               </div>
       {before.length > 0 && <div class="flow mt-stack">
@@ -65,11 +65,11 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
       </div>}
 
       {list.length > 0 &&       <div class="product-list-3__list">
-        {list.length > 0 && <div class="product-list-3-card__container">{(list || []).map((it) => (
-              <div class="product-list-3-card card">
-                <div class="product-list-3-card__content">
+        {list.length > 0 && <div class="wf-product-list-3-card__container">{(list || []).map((it) => (
+              <div class="wf-product-list-3-card card">
+                <div class="wf-product-list-3-card__content">
                   {it.icon && <IconChip name={it.icon} />}
-                  <h3 class="product-list-3-card__heading text-fluid-1">{it.term || it.title}</h3>
+                  <h3 class="wf-product-list-3-card__heading text-fluid-1">{it.term || it.title}</h3>
                   <p class="text-fluid-0">{it.text}</p>
                 </div>
                 <div class="grid-auto gap-fluid-l">

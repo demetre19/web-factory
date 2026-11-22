@@ -1,4 +1,4 @@
-  .wf-hero-2 .hero-2-container {
+  .wf-hero-2 .wf-hero-2-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
     gap: var(--grid-gap);
@@ -21,7 +21,7 @@
     flex-direction: column;
   }
 
-  .wf-hero-2 .hero-2-logo-ul {
+  .wf-hero-2 .wf-hero-2-logo-ul {
     display: flex;
     row-gap: var(space-s);
     flex-direction: row;
@@ -30,5 +30,5 @@
 
   @media (max-width: 44rem) {
     .wf-hero-2 .hero-2__cta { flex-direction: column; }
-    .wf-hero-2 .hero-2-logo-ul { flex-direction: column; }
+    .wf-hero-2 .wf-hero-2-logo-ul { flex-direction: column; }
   }

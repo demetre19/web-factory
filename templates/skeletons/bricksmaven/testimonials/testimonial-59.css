@@ -1,4 +1,4 @@
-  .wf-testimonial-59 .bm-testimonial-59__container {
+  .wf-testimonial-59 .wf-testimonial-59__container {
     row-gap: var(--space-s);
   }
 
@@ -14,33 +14,33 @@
     gap: var(--space-s);
   }
 
-  .wf-testimonial-59 .bm-testimonial-59__wrapper {
+  .wf-testimonial-59 .wf-testimonial-59__wrapper {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
     gap: var(--space-m);
   }
 
-  .wf-testimonial-59 .bm-testimonial-59-card {
+  .wf-testimonial-59 .wf-testimonial-59-card {
     row-gap: calc(var(--flow-spacing) * 2);
   }
 
-  .wf-testimonial-59 .bm-testimonial-59-card__client {
+  .wf-testimonial-59 .wf-testimonial-59-card__client {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
     column-gap: calc(var(--flow-spacing) / 2);
   }
 
-  .wf-testimonial-59 .bm-testimonial-59-stats {
+  .wf-testimonial-59 .wf-testimonial-59-stats {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
     gap: var(--space-m);
   }
 
-  .wf-testimonial-59 .bm-testimonial-59-stats-card {
+  .wf-testimonial-59 .wf-testimonial-59-stats-card {
     row-gap: calc(var(--flow-spacing) / 3);
   }
 
   @media (max-width: 44rem) {
-    .wf-testimonial-59 .bm-testimonial-59-card__client { flex-direction: column; }
+    .wf-testimonial-59 .wf-testimonial-59-card__client { flex-direction: column; }
   }

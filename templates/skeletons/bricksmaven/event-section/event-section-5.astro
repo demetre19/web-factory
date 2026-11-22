@@ -1,6 +1,6 @@
 ---
 /**
- * bm-event-section-5 — TRANSLATED Bricksmaven skeleton.
+ * wf-event-section-5 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (event-section-5.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -47,15 +47,15 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
 
 <div class="wf-event-section-5">
   <div class="sec-inner">
-    <div class="bm-event-section-5__container">
-      <div class="bm-event-section__intro">
+    <div class="wf-event-section-5__container">
+      <div class="wf-event-section__intro">
         {head && <h2 class="text-fluid-2">{head}</h2>}
   {sub && <p class="mt-stack lede" set:html={inline(sub)} />}
   {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
         {act.label && <p class="mt-fluid-m"><a class="wf-cta-button" href={act.href}>{act.label}</a></p>}
       </div>
       {list.length > 0 &&       <div>
-        {list.length > 0 &&         <div class="bm-event-section-5-accordion">
+        {list.length > 0 &&         <div class="wf-event-section-5-accordion">
           {list.length > 0 && <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
               <div class="card">
                 <div>
@@ -64,18 +64,18 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
                 {(it.items || []).length > 0 &&                 <div>
                   {(it.items || []).length > 0 &&                   <div>
                     {(it.items || []).length > 0 && <div class="grid-auto gap-fluid-m">{((it.items || []) || []).map((it2) => (
-                        <div class="bm-event-section-5-accordion-event-card card">
+                        <div class="wf-event-section-5-accordion-event-card card">
                           {it2.icon && <IconChip name={it2.icon} />}
                           <div class="stack">
                             <h3 class="text-fluid-1">{it2.term || it2.title || it2.text}</h3>
                             {it2.text && (it2.term || it2.title) && <p class="text-fluid-0">{it2.text}</p>}
                           </div>
-                          <div class="bm-event-section-5-accordion-event-card__heading-wrapper">
+                          <div class="wf-event-section-5-accordion-event-card__heading-wrapper">
                             <h3 class="text-fluid-1">{it2.term || it2.title}</h3>
                             <p class="text-fluid-0">{it2.text}</p>
                           </div>
                           <p class="text-fluid-0">{it2.text}</p>
-                          <div class="bm-event-meta-info">
+                          <div class="wf-event-meta-info">
                             <p class="text-fluid-0">{it2.text}</p>
                           </div>
                         </div>

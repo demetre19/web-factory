@@ -1,4 +1,4 @@
-  .wf-team-23 .bm-team-23__container {
+  .wf-team-23 .wf-team-23__container {
     row-gap: var(--space-s);
   }
 
@@ -22,29 +22,29 @@
     row-gap: var(--flow-spacing);
   }
 
-  .wf-team-23 .bm-team-23-lijst {
+  .wf-team-23 .wf-team-23-lijst {
     display: grid;
     gap: var(--space-m);
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
   }
 
-  .wf-team-23 .bm-team-23-card__content {
+  .wf-team-23 .wf-team-23-card__content {
     row-gap: calc(var(--flow-spacing) / 2);
   }
 
-  .wf-team-23 .bm-team-23-card-feature-list {
+  .wf-team-23 .wf-team-23-card-feature-list {
     flex-direction: row;
     flex-wrap: wrap;
     column-gap: calc(var(--space-xs) / 2);
     row-gap: calc(var(--space-xs) / 2);
   }
 
-  .wf-team-23 .bm-team-23-cta__icon-wrapper {
+  .wf-team-23 .wf-team-23-cta__icon-wrapper {
     display: flex;
     gap: var(--space-s);
   }
 
   @media (max-width: 44rem) {
-    .wf-team-23 .bm-team-23-card-feature-list { flex-direction: column; }
-    .wf-team-23 .bm-team-23-cta__icon-wrapper { flex-direction: column; }
+    .wf-team-23 .wf-team-23-card-feature-list { flex-direction: column; }
+    .wf-team-23 .wf-team-23-cta__icon-wrapper { flex-direction: column; }
   }

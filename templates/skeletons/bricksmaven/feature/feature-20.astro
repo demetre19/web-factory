@@ -1,6 +1,6 @@
 ---
 /**
- * bm-feature-20 — TRANSLATED Bricksmaven skeleton.
+ * wf-feature-20 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (feature-20.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -50,9 +50,9 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
   {sub && <p class="mt-stack lede" set:html={inline(sub)} />}
   {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
   {list.length > 0 &&   <div class="sec-inner">
-    {list.length > 0 &&     <div class="feature-20-container">
-      {list.length > 0 && <div class="feature-20-content">{(list || []).map((it) => (
-            <div class="feature-20-content__intro card">
+    {list.length > 0 &&     <div class="wf-feature-20-container">
+      {list.length > 0 && <div class="wf-feature-20-content">{(list || []).map((it) => (
+            <div class="wf-feature-20-content__intro card">
               {it.icon && <IconChip name={it.icon} />}
               <h3 class="text-fluid-1">{it.term || it.title}</h3>
               <p class="text-fluid-0">{it.text}</p>

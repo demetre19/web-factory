@@ -1,4 +1,4 @@
-  .wf-timeline-14 .timeline-14-container {
+  .wf-timeline-14 .wf-timeline-14-container {
     row-gap: var(--space-s);
   }
 
@@ -8,24 +8,24 @@
     row-gap: var(--space-s);
   }
 
-  .wf-timeline-14 .timeline-14-list {
+  .wf-timeline-14 .wf-timeline-14-list {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
     gap: calc(var(--space-m) * 4);
   }
 
-  .wf-timeline-14 .timeline-14-card {
+  .wf-timeline-14 .wf-timeline-14-card {
     display: grid;
     gap: var(--space-m);
     grid-template-columns: calc(100% * 2 / 3);
   }
 
-  .wf-timeline-14 .timeline-14-card__content {
+  .wf-timeline-14 .wf-timeline-14-card__content {
     row-gap: var(--flow-spacing);
     display: flex;
     flex-direction: column;
   }
 
-  .wf-timeline-14 .timeline-14-card__top {
+  .wf-timeline-14 .wf-timeline-14-card__top {
     row-gap: calc(var(--flow-spacing) / 2);
   }

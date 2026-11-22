@@ -1,33 +1,33 @@
-  .wf-feature-68 .bm-feature-68-lijst {
+  .wf-feature-68 .wf-feature-68-lijst {
     display: grid;
     gap: var(--space-m);
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
   }
 
-  .wf-feature-68 .bm-feature-68-intro {
+  .wf-feature-68 .wf-feature-68-intro {
     row-gap: var(--flow-spacing);
   }
 
-  .wf-feature-68 .bm-feature-68-intro__top {
+  .wf-feature-68 .wf-feature-68-intro__top {
     row-gap: calc(var(--flow-spacing) / 2);
   }
 
-  .wf-feature-68 .bm-feature-68-card {
+  .wf-feature-68 .wf-feature-68-card {
     display: flex;
     flex-wrap: nowrap;
     gap: var(--space-s);
   }
 
-  .wf-feature-68 .bm-feature-68-card__content {
+  .wf-feature-68 .wf-feature-68-card__content {
     row-gap: calc(var(--flow-spacing) / 2);
   }
 
-  .wf-feature-68 .bm-feature-68-card__icon-wrapper {
+  .wf-feature-68 .wf-feature-68-card__icon-wrapper {
     display: flex;
     gap: var(--space-s);
   }
 
   @media (max-width: 44rem) {
-    .wf-feature-68 .bm-feature-68-card { flex-direction: column; }
-    .wf-feature-68 .bm-feature-68-card__icon-wrapper { flex-direction: column; }
+    .wf-feature-68 .wf-feature-68-card { flex-direction: column; }
+    .wf-feature-68 .wf-feature-68-card__icon-wrapper { flex-direction: column; }
   }

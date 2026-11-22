@@ -1,6 +1,6 @@
 ---
 /**
- * bm-feature-51 — TRANSLATED Bricksmaven skeleton.
+ * wf-feature-51 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (feature-51.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -53,7 +53,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
 
 <div class="wf-feature-51">
   <div class="sec-inner">
-    <div class="bm-feature-51__container">
+    <div class="wf-feature-51__container">
       <div class="intro">
         {head && <h2 class="text-fluid-2">{head}</h2>}
         {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
@@ -62,11 +62,11 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
 {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
       </div>}
 
-      {list.length > 0 &&       <div class="bm-feature-51-feature-grid">
+      {list.length > 0 &&       <div class="wf-feature-51-feature-grid">
         {list.length > 0 && <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
-            <div class="bm-feature-51-feature-card card">
+            <div class="wf-feature-51-feature-card card">
               {image && image.src && <figure class="media-bg" aria-hidden="true"><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[960, 1440, 1920]} sizes="100vw" width={1600} height={900} loading="eager" fetchpriority="high" /></figure>}
-              <div class="bm-feature-51-feature-card__content">
+              <div class="wf-feature-51-feature-card__content">
                 {it.icon && <IconChip name={it.icon} />}
                 <h3 class="text-fluid-1">{it.term || it.title}</h3>
                 <p class="text-fluid-0">{it.text}</p>

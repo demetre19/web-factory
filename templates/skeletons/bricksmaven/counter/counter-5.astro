@@ -1,6 +1,6 @@
 ---
 /**
- * bm-counter-5 — TRANSLATED Bricksmaven skeleton.
+ * wf-counter-5 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (counter-5.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -56,8 +56,8 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
 {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
       </div>}
 
-      {list.length > 0 && <div class="counter-5-grid-ul">{(list || []).map((it) => (
-            <div class="counter-5-introduction card">
+      {list.length > 0 && <div class="wf-counter-5-grid-ul">{(list || []).map((it) => (
+            <div class="wf-counter-5-introduction card">
               {it.icon && <IconChip name={it.icon} />}
               <div class="stack">
                 <h3 class="text-fluid-1">{it.term || it.title || it.text}</h3>

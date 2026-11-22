@@ -1,25 +1,25 @@
-  .wf-hero-96 .bm-hero-96 {
+  .wf-hero-96 .wf-hero-96 {
     row-gap: var(--space-s);
   }
 
-  .wf-hero-96 .bm-hero-96__container {
+  .wf-hero-96 .wf-hero-96__container {
     row-gap: var(--space-s);
   }
 
-  .wf-hero-96 .bm-hero-96__intro {
+  .wf-hero-96 .wf-hero-96__intro {
     row-gap: var(--flow-spacing);
   }
 
-  .wf-hero-96 .bm-carousel-list {
+  .wf-hero-96 .wf-carousel-list {
     flex-wrap: nowrap;
   }
 
-  .wf-hero-96 .bm-media-carousel-list {
+  .wf-hero-96 .wf-media-carousel-list {
     flex-direction: row;
     flex-wrap: nowrap;
   }
 
-  .wf-hero-96 .bm-hero-96__footer {
+  .wf-hero-96 .wf-hero-96__footer {
     display: grid;
     gap: var(--space-m);
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
@@ -31,6 +31,6 @@
   }
 
   @media (max-width: 44rem) {
-    .wf-hero-96 .bm-media-carousel-list { flex-direction: column; }
+    .wf-hero-96 .wf-media-carousel-list { flex-direction: column; }
     .wf-hero-96 .cta-combo { flex-direction: column; }
   }

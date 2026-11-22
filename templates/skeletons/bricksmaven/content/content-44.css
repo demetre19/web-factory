@@ -1,4 +1,4 @@
-  .wf-content-44 .bm-content-44__container {
+  .wf-content-44 .wf-content-44__container {
     row-gap: var(--space-s);
   }
 
@@ -14,27 +14,27 @@
     gap: var(--space-s);
   }
 
-  .wf-content-44 .bm-content-44__main {
+  .wf-content-44 .wf-content-44__main {
     display: grid;
     gap: var(--space-m);
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
   }
 
-  .wf-content-44 .bm-content-44__column {
+  .wf-content-44 .wf-content-44__column {
     row-gap: var(--flow-spacing);
   }
 
-  .wf-content-44 .bm-content-44-card {
+  .wf-content-44 .wf-content-44-card {
     flex-direction: row;
     flex-wrap: nowrap;
     display: flex;
     column-gap: var(--flow-spacing);
   }
 
-  .wf-content-44 .bm-content-44-card__content {
+  .wf-content-44 .wf-content-44-card__content {
     row-gap: calc(var(--flow-spacing) / 6);
   }
 
   @media (max-width: 44rem) {
-    .wf-content-44 .bm-content-44-card { flex-direction: column; }
+    .wf-content-44 .wf-content-44-card { flex-direction: column; }
   }

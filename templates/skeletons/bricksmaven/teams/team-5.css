@@ -1,4 +1,4 @@
-  .wf-team-5 .team-5-container {
+  .wf-team-5 .wf-team-5-container {
     display: flex;
     flex-direction: column;
     row-gap: var(--section-space-xxl);
@@ -10,19 +10,19 @@
     row-gap: var(--space-s);
   }
 
-  .wf-team-5 .team-5-list {
+  .wf-team-5 .wf-team-5-list {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
     gap: var(--space-l);
   }
 
-  .wf-team-5 .team-5-card {
+  .wf-team-5 .wf-team-5-card {
     display: flex;
     flex-direction: column;
     gap: var(--space-s);
   }
 
-  .wf-team-5 .team-5-card__box {
+  .wf-team-5 .wf-team-5-card__box {
     display: flex;
     flex-direction: column;
     gap: var(--space-s);

@@ -1,63 +1,63 @@
-  .wf-event-section-4 .bm-event-section-4__container {
+  .wf-event-section-4 .wf-event-section-4__container {
     row-gap: var(--space-s);
   }
 
-  .wf-event-section-4 .bm-event-section__intro {
+  .wf-event-section-4 .wf-event-section__intro {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
     gap: var(--space-s);
   }
 
-  .wf-event-section-4 .bm-event-section-4-list {
+  .wf-event-section-4 .wf-event-section-4-list {
     row-gap: var(--flow-spacing);
   }
 
-  .wf-event-section-4 .bm-event-section-4-card {
+  .wf-event-section-4 .wf-event-section-4-card {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
     gap: var(--grid-gap);
   }
 
-  .wf-event-section-4 .bm-event-section-4-card__content {
+  .wf-event-section-4 .wf-event-section-4-card__content {
     row-gap: var(--flow-spacing);
   }
 
-  .wf-event-section-4 .bm-event-meta-info {
+  .wf-event-section-4 .wf-event-meta-info {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
     column-gap: calc(var(--flow-spacing) / 4);
   }
 
-  .wf-event-section-4 .bm-event-section-4-card__heading-wrapper {
+  .wf-event-section-4 .wf-event-section-4-card__heading-wrapper {
     row-gap: calc(var(--flow-spacing) / 2);
   }
 
-  .wf-event-section-4 .bm-event-section-4-card__speaker-wrapper {
+  .wf-event-section-4 .wf-event-section-4-card__speaker-wrapper {
     flex-direction: row;
     column-gap: calc(var(--flow-spacing) / 2);
     row-gap: calc(var(--flow-spacing) / 2);
   }
 
-  .wf-event-section-4 .bm-event-speaker-list {
+  .wf-event-section-4 .wf-event-speaker-list {
     flex-direction: row;
     flex-wrap: nowrap;
   }
 
-  .wf-event-section-4 .bm-event-hart-molecule {
+  .wf-event-section-4 .wf-event-hart-molecule {
     display: flex;
     gap: var(--space-s);
   }
 
-  .wf-event-section-4 .bm-event-hart-molecule-active {
+  .wf-event-section-4 .wf-event-hart-molecule-active {
     display: none;
   }
 
   @media (max-width: 44rem) {
-    .wf-event-section-4 .bm-event-section__intro { flex-direction: column; }
-    .wf-event-section-4 .bm-event-meta-info { flex-direction: column; }
-    .wf-event-section-4 .bm-event-section-4-card__speaker-wrapper { flex-direction: column; }
-    .wf-event-section-4 .bm-event-speaker-list { flex-direction: column; }
-    .wf-event-section-4 .bm-event-hart-molecule { flex-direction: column; }
+    .wf-event-section-4 .wf-event-section__intro { flex-direction: column; }
+    .wf-event-section-4 .wf-event-meta-info { flex-direction: column; }
+    .wf-event-section-4 .wf-event-section-4-card__speaker-wrapper { flex-direction: column; }
+    .wf-event-section-4 .wf-event-speaker-list { flex-direction: column; }
+    .wf-event-section-4 .wf-event-hart-molecule { flex-direction: column; }
   }
