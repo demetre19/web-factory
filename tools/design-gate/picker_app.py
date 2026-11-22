@@ -1659,7 +1659,7 @@ def _page_boards(pd):
     pages = {o: os.path.join(bsite, 'dist', 'preview', 'lo-' + o,
                              'index.html') for o in opts}
     err = None
-    if stamp != doc.get('inputs_sha') or not all(
+    if stamp != PBD.render_sha(ctx, doc) or not all(
             os.path.isfile(p) for p in pages.values()):
         try:
             preview_build.emit_page_boards(ctx)
@@ -2926,7 +2926,10 @@ def record_element_pick(pipeline, element, variant, bundle=None):
         now = datetime.datetime.now().isoformat(timespec='seconds')
         for p in data.get('picks', []):
             if p.get('element') == element:
-                if p.get('variant') == variant:
+                # a regenerated board option keeps its id but not its
+                # composition — re-sign when the bundle moved
+                if p.get('variant') == variant and not (
+                        lay and p.get('bundle') != bundle):
                     return 0, (f'{element} already is {variant} — '
                                'still signed')
                 old_v = p.get('variant')
