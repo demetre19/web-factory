@@ -64,6 +64,18 @@ ROLE = {
     'stat-band': ('proof', 'items', 'col-1-edge', '1-col'),
     'proof-band': ('proof', 'proof', 'col-1-edge', '1-col'),
     'quote-grid': ('proof', 'items', 'col-1-edge', '1-col'),
+    'timeline-steps': ('how', 'steps', 'col-1-edge', 'stacked'),
+    'how-steps': ('how', 'steps', 'col-1-edge', 'stacked'),
+    'newsletter-band': ('act', 'text', 'col-1-edge', 'stacked'),
+    'banner-cta': ('act', 'text', 'col-1-edge', 'stacked'),
+    'contact-panel': ('act', 'text', 'col-1-edge', 'stacked'),
+    'teams-grid': ('detail', 'items', 'col-1-edge', '1-col'),
+    'gallery-grid': ('detail', 'items', 'col-1-edge', '1-col'),
+    'pricing-table': ('detail', 'items', 'col-1-edge', '1-col'),
+    'portfolio-grid': ('detail', 'items', 'col-1-edge', '1-col'),
+    'event-list': ('detail', 'items', 'col-1-edge', '1-col'),
+    'feature-grid': ('detail', 'items', 'col-1-edge', '1-col'),
+    'logo-wall': ('proof', 'items', 'col-1-edge', '1-col'),
 }
 
 # prose-only block → intent-fit compositions (§3 rhythm: a run of
@@ -71,7 +83,7 @@ ROLE = {
 # diversifies by what it argues — a cost answer compares, a cadence
 # numbers, a coverage indexes, a proof quotes).
 INTENT_COMP = {
-    'cost': ['comparison', 'stat-band', 'text-index'],
+    'cost': ['comparison', 'stat-band', 'text-index', 'pricing-table'],
     'duration': ['stat-band', 'text-index'],
     'coverage': ['link-grid', 'cards-n', 'text-index'],
     'proof': ['proof-band', 'quote-grid', 'text-index'],
@@ -82,11 +94,14 @@ INTENT_COMP = {
 # is the prose column the copy actually carries.
 ITEM_COMPS = {'cards-n', 'text-index', 'stat-band', 'link-grid',
               'comparison', 'sequence', 'proof-band', 'quote-grid',
-              'cutout-catalog-grid'}
+              'cutout-catalog-grid', 'timeline-steps', 'how-steps',
+              'teams-grid', 'gallery-grid', 'pricing-table',
+              'portfolio-grid', 'event-list', 'feature-grid',
+              'logo-wall'}
 # comps that accept a term-projected item list (ordered-step and
 # quote shapes need their own slots, not terms)
 PROJ_COMPS = {'cards-n', 'text-index', 'stat-band', 'link-grid',
-              'comparison', 'cutout-catalog-grid'}
+              'comparison', 'cutout-catalog-grid', 'feature-grid'}
 
 # CONTENT/<collection>/<slug>.md → PS page type (J.6 picks the layout
 # family from it). A services stub is a service page on the
@@ -254,10 +269,11 @@ def shape(b, has_media):
                 else ['link-grid'])
     if n_items >= 3 and (b.get('list_ordered')
                          or re.search(r'\bsteps?\b', b['h2'], re.I)):
-        return ['sequence', 'cards-n']
+        return ['sequence', 'timeline-steps', 'how-steps', 'cards-n']
     if n_items >= 4:
         return ['cards-n', 'cutout-catalog-grid', 'editorial',
-                'text-index']
+                'text-index', 'feature-grid', 'portfolio-grid',
+                'teams-grid']
     if n_items:
         return ['editorial', 'cards-n']
     # prose-only answer — the default comp is intent-fit, 'editorial'
@@ -496,6 +512,15 @@ def build(pdir, option=None):
     # the hero spends the first media asset (V.1) — the rows'
     # budget and allowed comps are computed on what remains
     opts, allowed = option_vectors(blocks, max(0, len(media) - 1))
+    # chrome rows pick from the banked header/footer topology classes —
+    # the plan default stays first, every other banked class is a
+    # pickable option (E: the Header·Footer board lists these).
+    nav_opts = (['flyout-nav', 'nav-bar']
+                + sorted(c for c in gate.RECIPE_FOR_COMP
+                         if c.startswith(('nav-', 'nav_', 'navshop'))))
+    allowed['nav'] = [c for c in nav_opts if c in gate.COMP_FOR_ACT]
+    allowed['footer'] = ['footer-bar'] + sorted(
+        c for c in gate.RECIPE_FOR_COMP if c.startswith('footer-'))
     zone_of = {b['id']: b['zone'] for b in blocks}
     table = []
     row_media = max(0, len(media) - 1)
