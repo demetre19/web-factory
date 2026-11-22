@@ -3688,7 +3688,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
   var FTAG_LABEL={
     'fv1':'variant 1','fv2':'variant 2','fv3':'variant 3',
     'v1':'variant 1','v2':'variant 2','v3':'variant 3',
-    'bank-option':'in bank','bank':'in bank'};
+    'bank-option':'in bank','bank':'in bank',
+    'derived':'from this design','web':'from the web'};
   function filters(tags){
     var n=Object.keys(FILT).length,seen={};
     var h='<button class="fchip'+(!n?' on':'')+'" data-f="" '+
@@ -3744,7 +3745,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
        tags.filter(function(t){var tl=String(t).toLowerCase();
          return tl!==String(c.name||'').toLowerCase()&&
                 tl!==String(c.id||'').toLowerCase()})
-        .map(function(t){return '<span class="tag">'+esc(t)+'</span>'}).join('')+
+        .map(function(t){return '<span class="tag">'+
+          esc(FTAG_LABEL[t]||t)+'</span>'}).join('')+
        '</div>';
     // first-class effect control — the per-element decorator, labeled
     if(!c.bank&&c.element&&c.element!=='vibe'&&c.element!=='layout'&&
