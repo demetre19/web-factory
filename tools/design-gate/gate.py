@@ -10628,6 +10628,22 @@ def read_approvals(ctx):
         return {}
 
 
+EVOLVING_INPUTS = frozenset({'DESIGN-PLAN.md'})
+
+
+def inputs_drifted(recorded, current):
+    """Whether a recorded verdict's bound inputs changed in a way the
+    verdict doesn't cover. DESIGN-PLAN.md legitimately evolves through
+    sanctioned producers (the w3 pick projection, the w4 look rewrite —
+    P.22 exempts it from frozen-input checks for the same reason), so
+    drift on it alone never invalidates the verdict."""
+    r = {k: v for k, v in (recorded or {}).items()
+         if os.path.basename(k) not in EVOLVING_INPUTS}
+    c = {k: v for k, v in (current or {}).items()
+         if os.path.basename(k) not in EVOLVING_INPUTS}
+    return r != c
+
+
 def input_hashes_for(ctx, wave):
     """Rehash the file list the wave RECORDED at gate time (A F41 —
     current CLI args must not shrink the comparison set)."""
@@ -10954,8 +10970,8 @@ def ancestry_fails(ctx):
                          f'inside the pipeline cannot approve')
         hc = Ctx(ctx.site_dir) \
             if (w.startswith('s') and ctx.site_dir) else ctx
-        if e.get('inputs_sha256') and e['inputs_sha256'] != \
-                input_hashes_for(hc, w):
+        if e.get('inputs_sha256') and inputs_drifted(
+                e['inputs_sha256'], input_hashes_for(hc, w)):
             f.append(f'ORDER: {w} inputs changed since it passed — '
                      f're-gate {w}')
     return f

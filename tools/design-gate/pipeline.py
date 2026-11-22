@@ -569,7 +569,7 @@ def _regate_drifted(pdir, site_dir, wave, env):
     if wave not in ORDER:
         return None                 # the site wave has no ancestors
     prior = ORDER[:ORDER.index(wave)]
-    drifted = []
+    drifted, evolving = [], []
     for w in prior:
         d = site_dir if w == SITE_WAVE else pdir
         ctx = G.Ctx(d)
@@ -579,12 +579,38 @@ def _regate_drifted(pdir, site_dir, wave, env):
         if not e or not e.get('pass'):
             continue
         rec = e.get('inputs_sha256')
-        if rec and rec != G.input_hashes_for(ctx, w):
-            drifted.append(w)
-    if not drifted:
+        cur = rec and G.input_hashes_for(ctx, w)
+        if rec and rec != cur:
+            if G.inputs_drifted(rec, cur):
+                drifted.append(w)
+            else:
+                evolving.append(w)
+    if not drifted and not evolving:
         return None
-    print(f'  {wave}: earlier inputs drifted — re-gating '
-          f'{", ".join(drifted)} (producers do not re-run)')
+    # evolving-input drift only (the machinery legitimately rewrites
+    # those files — P.22 sanctions it): the recorded verdict still
+    # covers the wave, so refresh the evidence that cites current
+    # bytes (stale artifact receipts + checklist + the approval's
+    # input binding) and skip the gate re-run itself
+    for w in evolving:
+        d = site_dir if w == SITE_WAVE else pdir
+        if w in APPROVABLE and _verified(d, w) and \
+                not _current(d, w):
+            if not _confirm(d, w):
+                return (f'{w} pick not re-bound to the current '
+                        'inputs; check the pick surface is up')
+        ectx = G.Ctx(d)
+        ectx.wave = w
+        for rel in G.clear_stale_receipts(ectx):
+            G.write_receipt(ectx, rel)
+        _checklist(d, w, env)
+    if evolving:
+        print(f'  {wave}: machinery-evolved inputs only '
+              f'({", ".join(sorted(G.EVOLVING_INPUTS))}) — '
+              f're-bound {", ".join(evolving)} without re-gate')
+    if drifted:
+        print(f'  {wave}: earlier inputs drifted — re-gating '
+              f'{", ".join(drifted)} (producers do not re-run)')
     for w in drifted:
         d = site_dir if w == SITE_WAVE else pdir
         if w in APPROVABLE and _verified(d, w) and \
