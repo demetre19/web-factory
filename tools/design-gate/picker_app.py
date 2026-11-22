@@ -3952,8 +3952,7 @@ _BANK_MENU_CSS = (
     # open state must clear every hiding mechanism the bank ships
     'html.wf-menu-open [data-wf-panel]{opacity:1 !important;'
     'visibility:visible !important;transform:none !important;'
-    'pointer-events:auto !important;left:auto !important;'
-    'right:auto !important;top:auto !important}')
+    'pointer-events:auto !important}')
 _BANK_MENU_DRV = (
     '<script>(function(){var d=document,r=d.documentElement;'
     'function so(o){r.classList.toggle("wf-menu-open",o);'
