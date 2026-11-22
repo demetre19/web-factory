@@ -67,6 +67,12 @@ def _code_sha():
         open(os.path.abspath(__file__), 'rb').read()).hexdigest()[:12]
 
 
+# captured ONCE at import — a per-request re-read of the file would
+# report the NEW sha on a daemon still running the OLD code, hiding
+# exactly the stale-build case the field exists to expose
+_CODE_SHA = _code_sha()
+
+
 # the file the picker page is rendered from, per wave/kind
 _PICKER_FILES = {
     ('w1', 'candidates'): 'preview/candidates.html',
@@ -679,7 +685,7 @@ def _handler():
                 # svc tag + source sha — a stale build still bound to
                 # the port fails the sha check and gets restarted
                 self._send(200, {'svc': VERSION, 'ok': True,
-                                 'sha': _code_sha()})
+                                 'sha': _CODE_SHA})
                 return
             if self.path == '/page-token':
                 self._send(200, {'token': _page_token()})
@@ -831,11 +837,12 @@ def _handler():
                            {'ok': code == 0, 'message': txt})
             elif self.path == '/save-system':
                 import picker_app
-                code, txt = picker_app.save_system(
+                code, txt, rec = picker_app.save_system(
                     body.get('pipeline', ''), body.get('name', ''),
                     body.get('mode'))
                 self._send(200 if code == 0 else 400,
-                           {'ok': code == 0, 'message': txt})
+                           {'ok': code == 0, 'message': txt,
+                            'system': rec if code == 0 else None})
             elif self.path == '/confirm':
                 code, txt = confirm_approval(body.get('wave', ''),
                                              body.get('pipeline', ''))
@@ -852,12 +859,15 @@ def _handler():
 def serve(port):
     """Boot the pick surface: provision the signing key (first
     start only), publish its public half, then serve loopback."""
-    from http.server import HTTPServer
+    from http.server import ThreadingHTTPServer
     import approval_key as AK
     pub, _ = AK.ensure_signing_key()
     print(f'approve_service on 127.0.0.1:{port} — pick surface '
           f'(key pub {pub[:16]}…)')
-    HTTPServer(('127.0.0.1', port), _handler()).serve_forever()
+    # threaded — a held connection must not starve the app's
+    # concurrent preview requests
+    ThreadingHTTPServer(('127.0.0.1', port),
+                        _handler()).serve_forever()
 
 
 def main(argv=None):
