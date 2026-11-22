@@ -1918,6 +1918,24 @@ def _palette(galleries):
 
 _GENMENU = os.path.join(_SKEL_ROOT, 'genmenu')
 
+# every bank exemplar renders inside a fixed stage — the frags are
+# authored as `h-full w-full` roots expecting a containing viewport,
+# so a bare <body> stretches them edge-to-edge. transform:translateZ
+# makes the stage the containing block for `position:fixed` children
+# (cursor trails, pinned demos) so they fill the stage, not the frame.
+_BANK_STAGE_CSS = (
+    'html,body{height:100%}'
+    'body{display:flex;align-items:center;justify-content:center;'
+    'background:#e8e9ec;margin:0;padding:18px;box-sizing:border-box}'
+    '.wf-stage{position:relative;overflow:auto;'
+    'transform:translateZ(0);display:flex;'
+    'border-radius:14px;background:#fff;'
+    'box-shadow:0 10px 34px rgba(15,18,30,.16);'
+    'width:min(100%,640px);height:min(70vh,460px)}'
+    '.wf-stage>*{margin:auto;flex:none}'
+    '.wf-stage.mob{width:min(360px,96%);height:min(660px,86vh);'
+    'border-radius:24px}')
+
 
 def _genmenu_tags():
     fp = os.path.join(_GENMENU, 'tags.json')
@@ -2031,7 +2049,7 @@ def emit_bank_previews(pd):
         return {}, {}
     _BANK_DIRS['fx'] = tuple(sorted(
         d for d in os.listdir(_GENMENU)
-        if d.startswith(('fx-', 'imgfx-', 'mobfx-')) and
+        if d.startswith(('fx-', 'imgfx-', 'mobfx-', 'mob-')) and
         os.path.isdir(os.path.join(_GENMENU, d))))
     tags = _genmenu_tags()
     css_src = os.path.join(_GENMENU, 'bank-preview.css')
@@ -2072,8 +2090,13 @@ def emit_bank_previews(pd):
                      os.path.getmtime(dst))
                 if stale:
                     frag = open(fp, encoding='utf-8').read()
+                    mob = gid == 'menu' or cls.startswith('mob')
+                    stage = ('<div class="wf-stage' +
+                             (' mob' if mob else '') + '">' + frag +
+                             '</div>')
                     with open(dst, 'w', encoding='utf-8') as fh:
-                        fh.write(_doc(head, '', frag))
+                        fh.write(_doc(head, '', stage,
+                                      css=_BANK_STAGE_CSS))
                 row = tags.get(cls + '/' + slug) or {}
                 ctags = [cls, 'bank'] + \
                     list(row.get('style') or []) + \
