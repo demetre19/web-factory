@@ -74,6 +74,12 @@ FAMILY_FOR = {
     'blog-article': 'site-article', 'auth-form': 'site-auth',
     'notifications-feed': 'site-notifications',
     'error-screen': 'site-error',
+    'product-detail': 'site-product', 'cart': 'site-cart',
+    'orders': 'site-orders', 'billing': 'site-billing',
+    'help-docs': 'site-docs', 'changelog': 'site-changelog',
+    'careers': 'site-careers', 'portfolio': 'site-portfolio',
+    'home-feed': 'site-feed', 'messages': 'site-messages',
+    'comments': 'site-comments', 'upload-create': 'site-upload',
 }
 
 # topology_class → (closest existing bank topology_id, confidence)
@@ -121,6 +127,18 @@ MATCHED_TOPO = {
     'auth-form': ('form-centered', 'high'),
     'notifications-feed': ('list-vertical-rows', 'high'),
     'error-screen': ('content', 'high'),
+    'product-detail': ('split-50-50', 'medium'),
+    'cart': ('form-split', 'medium'),
+    'orders': ('table-cell', 'medium'),
+    'billing': ('list-vertical-rows', 'medium'),
+    'help-docs': ('split-50-50', 'medium'),
+    'changelog': ('list-vertical-rows', 'medium'),
+    'careers': ('content', 'medium'),
+    'portfolio': ('grid-3col-uniform', 'high'),
+    'home-feed': ('list-cards', 'medium'),
+    'messages': ('split-50-50', 'medium'),
+    'comments': ('list-vertical-rows', 'high'),
+    'upload-create': ('form-centered', 'medium'),
 }
 
 ELEMENT_SIG = {
@@ -168,6 +186,19 @@ ELEMENT_SIG = {
     'auth-form': {'h': 1, 'input': 3, 'btn': 2, 'a': 2},
     'notifications-feed': {'h': 1, 'ul': 1, 'li': 10, 'icn': 10},
     'error-screen': {'h': 1, 'p': 1, 'btn': 1, 'img': 1},
+    'product-detail': {'h': 1, 'p': 2, 'img': 4, 'btn': 2, 'ul': 1},
+    'cart': {'h': 1, 'ul': 1, 'li': 4, 'img': 4, 'btn': 2, 'form': 1},
+    'orders': {'h': 1, 'table': 1, 'th': 4, 'td': 12},
+    'billing': {'h': 2, 'ul': 1, 'li': 8, 'card': 2, 'btn': 2},
+    'help-docs': {'aside': 1, 'nav': 1, 'h': 4, 'p': 8, 'a': 8},
+    'changelog': {'h': 4, 'p': 6, 'ul': 3, 'a': 4},
+    'careers': {'h': 3, 'p': 3, 'card': 6, 'btn': 2, 'img': 3},
+    'portfolio': {'h': 2, 'card': 6, 'img': 6, 'a': 6},
+    'home-feed': {'nav': 1, 'card': 6, 'img': 6, 'a': 8},
+    'messages': {'aside': 1, 'ul': 2, 'li': 10, 'input': 1, 'card': 8},
+    'comments': {'h': 1, 'card': 6, 'p': 6, 'img': 6, 'input': 1},
+    'upload-create': {'h': 1, 'form': 1, 'input': 4, 'btn': 2,
+                      'img': 1},
 }
 
 
@@ -448,7 +479,8 @@ def _write_indexes(rows):
                  '|---|---|---|---|---|---|---|---|---|']
         for i, r in enumerate(group):
             c = r['c'] if 'c' in r else r.get('spec', {})
-            t = (c.get('tags') or {})
+            t = ((r.get('spec') or {}).get('tags')
+                 or c.get('tags') or {})
             lines.append(
                 f"| {i} | {c.get('site_name','')} | {r['family']} | "
                 f"{t.get('topology_class', c.get('topology_class',''))} | "
