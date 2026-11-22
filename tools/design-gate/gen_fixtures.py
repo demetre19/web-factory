@@ -1311,7 +1311,7 @@ MUT = {
      'class="sec-band surface-base density-spacious"',
      'class="sec-band surface-base density-spacious min-h-screen"'),
      ('REPL','site/dist/home/index.html',
-     '<a class="wf-cta-button mt-stack" href="/book">Book now</a>','')),
+     '<a class="wf-cta-button mt-stack" href="#">Book now</a>','')),
  'check_canon_padding': mut(('SET','CANON-PADDING.json',
      '{"components":{}}'),
      ('REPL','site/dist/home/index.html','data-disclosure="open"',
@@ -1323,7 +1323,7 @@ MUT = {
      'data-dna-fit="42"></div><div data-candidate="c2" '
      'data-dna-fit="80"></div><input type="radio"></div>'),),
  'check_primary_cta': mut(('REPL','site/dist/home/index.html',
-     '<a class="wf-cta-button cta-large" href="/book">Book now</a>',
+     '<a class="wf-cta-button cta-large" href="#">Book now</a>',
      '<a class="btn-primary" href="/x">One</a>'
      '<a class="btn-primary" href="/y">Two</a>')),
  'check_interaction_states': mut(('REPL','site/src/styles/global.css',
