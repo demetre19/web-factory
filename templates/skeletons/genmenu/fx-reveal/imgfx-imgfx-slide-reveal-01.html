@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>01 · Slide & Scale Caption Card — Atelier Reveal</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          }
+        }
+      }
+    };
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root { --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1); }
+    .reveal-plate {
+      transition: transform 520ms var(--ease-out-expo), border-radius 520ms var(--ease-out-expo), filter 520ms var(--ease-out-expo);
+      transform-origin: center top;
+      will-change: transform;
+    }
+    .reveal-card:hover .reveal-plate,
+    .reveal-card:focus-within .reveal-plate {
+      transform: translateY(-22%) scale(0.91);
+      border-radius: 10px;
+      filter: brightness(0.92);
+    }
+    .reveal-underlay {
+      transition: opacity 420ms var(--ease-out-expo), transform 460ms var(--ease-out-expo);
+    }
+    .reveal-card:hover .reveal-underlay,
+    .reveal-card:focus-within .reveal-underlay {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .photo-halden {
+      background:
+        radial-gradient(120% 85% at 78% 18%, rgba(246, 224, 193, 0.72) 0%, rgba(215, 166, 121, 0.25) 38%, transparent 66%),
+        linear-gradient(128deg, #272523 0%, #4d453d 34%, #877664 68%, #d2c5b4 100%);
+    }
+    .photo-verriere {
+      background:
+        radial-gradient(95% 90% at 24% 20%, rgba(226, 234, 240, 0.65) 0%, rgba(124, 146, 162, 0.22) 45%, transparent 72%),
+        linear-gradient(155deg, #171d22 0%, #313d48 44%, #6a7c8b 78%, #bbc7cf 100%);
+    }
+    .photo-kanso {
+      background:
+        radial-gradient(100% 75% at 65% 28%, rgba(235, 222, 198, 0.6) 0%, rgba(154, 134, 107, 0.25) 45%, transparent 70%),
+        linear-gradient(142deg, #1d211d 0%, #3f483b 42%, #7e7d6c 76%, #cbc3b2 100%);
+    }
+    .film-grain {
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
+      mix-blend-mode: overlay;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .reveal-plate, .reveal-underlay { transition-duration: 0.01ms !important; }
+    }
+  </style>
+<script src="/_aistudio-iframe.js?v=29045eb3"></script></head>
+<body class="min-h-screen bg-[#F6F4EF] text-[#161513] dark:bg-[#111110] dark:text-[#F2EFE9] font-sans antialiased transition-colors duration-300">
+  <header class="max-w-6xl mx-auto px-6 py-6 flex items-center justify-between border-b border-black/10 dark:border-white/10">
+    <div class="flex items-baseline gap-4">
+      <span class="font-mono text-xs tracking-wider text-neutral-500 dark:text-neutral-400">01 / 24</span>
+      <h1 class="font-serif text-2xl sm:text-3xl tracking-tight font-medium">Slide &amp; Scale Caption Card</h1>
+    </div>
+    <button id="themeToggle" type="button" aria-label="Toggle light or dark theme" class="px-3.5 py-1.5 text-xs font-medium border border-black/15 dark:border-white/15 rounded-md hover:bg-black/5 dark:hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#B65237] transition-colors">
+      <span id="themeLabel">Dark Mode</span>
+    </button>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-6 py-12">
+    <p class="max-w-2xl text-sm text-neutral-600 dark:text-neutral-400 mb-10 leading-relaxed">
+      Hover or focus any architectural plate. The photograph lifts vertically and recedes slightly in scale to reveal the archival caption and monograph link anchored below.
+    </p>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <!-- Card 1 -->
+      <article class="reveal-card group relative rounded-xl bg-[#ECE8E0] dark:bg-[#1B1A18] border border-black/10 dark:border-white/10 overflow-hidden h-[430px] focus-within:ring-2 focus-within:ring-[#B65237]">
+        <!-- Underlying Caption Layer -->
+        <div id="caption-01" class="reveal-underlay absolute inset-x-0 bottom-0 p-6 flex flex-col justify-end opacity-60 translate-y-2">
+          <div class="flex items-center justify-between text-xs font-mono text-neutral-500 dark:text-neutral-400 mb-1.5">
+            <span>Zurich · 2026</span>
+            <span>Plate 01A</span>
+          </div>
+          <h2 class="font-serif text-2xl font-medium tracking-tight mb-2">Villa Halden Concrete Study</h2>
+          <a href="#monograph-halden" class="inline-flex items-center gap-2 text-xs font-semibold tracking-wide text-[#B65237] dark:text-[#DF7A5E] hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#B65237] w-fit">
+            <span>Read Monograph</span>
+            <span aria-hidden="true">-&gt;</span>
+          </a>
+        </div>
+
+        <!-- Sliding Photographic Plate -->
+        <div tabindex="0" role="region" aria-label="Villa Halden Concrete Study architectural photograph" aria-describedby="caption-01" class="reveal-plate absolute inset-0 photo-halden cursor-pointer focus:outline-none">
+          <svg viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true" class="w-full h-full">
+            <polygon points="0,330 220,165 400,255 400,500 0,500" fill="#1b1917" fill-opacity="0.72" />
+            <polygon points="180,0 400,0 400,260 220,165" fill="#f2dec4" fill-opacity="0.18" />
+            <rect x="64" y="190" width="96" height="210" fill="#141311" fill-opacity="0.65" />
+            <rect x="82" y="212" width="60" height="84" fill="#ecd5b8" fill-opacity="0.35" />
+            <line x1="0" y1="330" x2="400" y2="120" stroke="#f5e6d3" stroke-opacity="0.22" stroke-width="1" />
+          </svg>
+          <div aria-hidden="true" class="film-grain absolute inset-0 opacity-35 pointer-events-none"></div>
+          <div class="absolute top-5 left-5 right-5 flex justify-between items-center text-[11px] font-mono text-white/85">
+            <span>01 · ARCHITECTURE</span>
+            <span>35MM</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 2 -->
+      <article class="reveal-card group relative rounded-xl bg-[#ECE8E0] dark:bg-[#1B1A18] border border-black/10 dark:border-white/10 overflow-hidden h-[430px] focus-within:ring-2 focus-within:ring-[#B65237]">
+        <div id="caption-02" class="reveal-underlay absolute inset-x-0 bottom-0 p-6 flex flex-col justify-end opacity-60 translate-y-2">
+          <div class="flex items-center justify-between text-xs font-mono text-neutral-500 dark:text-neutral-400 mb-1.5">
+            <span>Lyon · 2026</span>
+            <span>Plate 01B</span>
+          </div>
+          <h2 class="font-serif text-2xl font-medium tracking-tight mb-2">Maison Verrière Atrium</h2>
+          <a href="#monograph-verriere" class="inline-flex items-center gap-2 text-xs font-semibold tracking-wide text-[#B65237] dark:text-[#DF7A5E] hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#B65237] w-fit">
+            <span>Inspect Elevation</span>
+            <span aria-hidden="true">-&gt;</span>
+          </a>
+        </div>
+
+        <div tabindex="0" role="region" aria-label="Maison Verrière Atrium daylight photograph" aria-describedby="caption-02" class="reveal-plate absolute inset-0 photo-verriere cursor-pointer focus:outline-none">
+          <svg viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true" class="w-full h-full">
+            <path d="M0 360 Q 190 210 400 320 L 400 500 L 0 500 Z" fill="#101519" fill-opacity="0.7" />
+            <circle cx="135" cy="145" r="95" fill="#dde7ee" fill-opacity="0.16" />
+            <line x1="135" y1="0" x2="135" y2="500" stroke="#ffffff" stroke-opacity="0.16" stroke-width="1" />
+            <line x1="255" y1="0" x2="255" y2="500" stroke="#ffffff" stroke-opacity="0.12" stroke-width="1" />
+            <rect x="135" y="130" width="120" height="210" fill="none" stroke="#e4edf2" stroke-opacity="0.28" stroke-width="1.2" />
+          </svg>
+          <div aria-hidden="true" class="film-grain absolute inset-0 opacity-35 pointer-events-none"></div>
+          <div class="absolute top-5 left-5 right-5 flex justify-between items-center text-[11px] font-mono text-white/85">
+            <span>02 · GLASSWORK</span>
+            <span>50MM</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 3 -->
+      <article class="reveal-card group relative rounded-xl bg-[#ECE8E0] dark:bg-[#1B1A18] border border-black/10 dark:border-white/10 overflow-hidden h-[430px] focus-within:ring-2 focus-within:ring-[#B65237]">
+        <div id="caption-03" class="reveal-underlay absolute inset-x-0 bottom-0 p-6 flex flex-col justify-end opacity-60 translate-y-2">
+          <div class="flex items-center justify-between text-xs font-mono text-neutral-500 dark:text-neutral-400 mb-1.5">
+            <span>Kyoto · 2025</span>
+            <span>Plate 01C</span>
+          </div>
+          <h2 class="font-serif text-2xl font-medium tracking-tight mb-2">Kanso Timber Sanctuary</h2>
+          <a href="#monograph-kanso" class="inline-flex items-center gap-2 text-xs font-semibold tracking-wide text-[#B65237] dark:text-[#DF7A5E] hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#B65237] w-fit">
+            <span>View Timber Joinery</span>
+            <span aria-hidden="true">-&gt;</span>
+          </a>
+        </div>
+
+        <div tabindex="0" role="region" aria-label="Kanso Timber Sanctuary courtyard photograph" aria-describedby="caption-03" class="reveal-plate absolute inset-0 photo-kanso cursor-pointer focus:outline-none">
+          <svg viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true" class="w-full h-full">
+            <rect x="0" y="310" width="400" height="190" fill="#171915" fill-opacity="0.74" />
+            <rect x="52" y="90" width="296" height="220" fill="#f3ebd8" fill-opacity="0.12" />
+            <line x1="126" y1="90" x2="126" y2="310" stroke="#181b16" stroke-opacity="0.6" stroke-width="5" />
+            <line x1="200" y1="90" x2="200" y2="310" stroke="#181b16" stroke-opacity="0.6" stroke-width="5" />
+            <line x1="274" y1="90" x2="274" y2="310" stroke="#181b16" stroke-opacity="0.6" stroke-width="5" />
+            <line x1="52" y1="200" x2="348" y2="200" stroke="#181b16" stroke-opacity="0.45" stroke-width="3" />
+          </svg>
+          <div aria-hidden="true" class="film-grain absolute inset-0 opacity-35 pointer-events-none"></div>
+          <div class="absolute top-5 left-5 right-5 flex justify-between items-center text-[11px] font-mono text-white/85">
+            <span>03 · COURTYARD</span>
+            <span>85MM</span>
+          </div>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <script>
+    const root = document.documentElement;
+    const toggle = document.getElementById('themeToggle');
+    const label = document.getElementById('themeLabel');
+
+    function applyTheme(mode) {
+      const dark = mode === 'dark';
+      root.classList.toggle('dark', dark);
+      label.textContent = dark ? 'Light Mode' : 'Dark Mode';
+    }
+
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('theme') === 'dark') applyTheme('dark');
+
+    toggle.addEventListener('click', () => {
+      applyTheme(root.classList.contains('dark') ? 'light' : 'dark');
+    });
+
+    window.addEventListener('message', (e) => {
+      if (e.data && e.data.type === 'set-theme') applyTheme(e.data.theme);
+    });
+  </script>
+</body>
+</html>

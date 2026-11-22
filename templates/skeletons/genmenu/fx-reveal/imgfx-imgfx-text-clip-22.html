@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>22 · Background-Clip Kinetic Headline — Atelier Reveal</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          }
+        }
+      }
+    };
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root { --ease-clip: cubic-bezier(0.16, 1, 0.3, 1); }
+    .kinetic-letters {
+      background-image:
+        radial-gradient(60% 80% at 25% 35%, rgba(250, 212, 168, 0.92) 0%, transparent 55%),
+        radial-gradient(55% 75% at 78% 65%, rgba(162, 198, 224, 0.85) 0%, transparent 60%),
+        linear-gradient(125deg, #3a2b24 0%, #b86c48 32%, #e8c7a3 58%, #4d6273 82%, #1d232b 100%);
+      background-size: 160% 160%;
+      background-position: 20% 50%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      transition: background-position 650ms var(--ease-clip), letter-spacing 550ms var(--ease-clip), transform 550ms var(--ease-clip);
+    }
+    .headline-zone:hover .kinetic-letters,
+    .headline-zone:focus-within .kinetic-letters {
+      background-position: 82% 45%;
+      letter-spacing: 0.015em;
+      transform: scale(1.015);
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .kinetic-letters { transition-duration: 0.01ms !important; transform: none !important; }
+    }
+  </style>
+<script src="/_aistudio-iframe.js?v=29045eb3"></script></head>
+<body class="min-h-screen bg-[#F5F3EE] text-[#151412] dark:bg-[#0C0D0F] dark:text-[#F2EFEA] font-sans antialiased transition-colors duration-300">
+  <header class="max-w-6xl mx-auto px-6 py-6 flex items-center justify-between border-b border-black/10 dark:border-white/10">
+    <div class="flex items-baseline gap-4">
+      <span class="font-mono text-xs tracking-wider text-neutral-500 dark:text-neutral-400">22 / 24</span>
+      <h1 class="font-serif text-2xl sm:text-3xl tracking-tight font-medium">Background-Clip Kinetic Headline</h1>
+    </div>
+    <button id="themeToggle" type="button" aria-label="Toggle light or dark theme" class="px-3.5 py-1.5 text-xs font-medium border border-black/15 dark:border-white/15 rounded-md hover:bg-black/5 dark:hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#D97B48] transition-colors">
+      <span id="themeLabel">Light Mode</span>
+    </button>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-6 py-20">
+    <div tabindex="0" role="region" aria-label="Form Light Stone Issue 04 Kinetic Headline" aria-describedby="clip-sub" class="headline-zone rounded-2xl border border-black/10 dark:border-white/10 p-10 sm:p-16 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#D97B48] cursor-pointer">
+      <p class="font-mono text-xs uppercase tracking-[0.2em] text-neutral-500 dark:text-neutral-400 mb-6">
+        Geneva Monograph · Issue 04 · Hover or Focus
+      </p>
+      <h2 class="kinetic-letters font-sans font-bold uppercase text-5xl sm:text-7xl lg:text-8xl leading-[0.95] tracking-tighter select-none">
+        Form<br />Light &amp;<br />Stone
+      </h2>
+      <div id="clip-sub" class="mt-10 pt-6 border-t border-black/10 dark:border-white/10 flex flex-wrap items-center justify-between gap-4 text-sm text-neutral-600 dark:text-neutral-400">
+        <span>Photographic horizon gradient masked cleanly through display letterforms.</span>
+        <span class="font-mono text-xs text-[#B35A2E] dark:text-[#D97B48]">BACKGROUND-CLIP: TEXT</span>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const root = document.documentElement;
+    const toggle = document.getElementById('themeToggle');
+    const label = document.getElementById('themeLabel');
+    function applyTheme(mode) {
+      const dark = mode === 'dark';
+      root.classList.toggle('dark', dark);
+      label.textContent = dark ? 'Light Mode' : 'Dark Mode';
+    }
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('theme') === 'light') applyTheme('light');
+    toggle.addEventListener('click', () => applyTheme(root.classList.contains('dark') ? 'light' : 'dark'));
+    window.addEventListener('message', (e) => { if (e.data && e.data.type === 'set-theme') applyTheme(e.data.theme); });
+  </script>
+</body>
+</html>

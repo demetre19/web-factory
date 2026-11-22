@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>05 · Bipartite Split-Shutter Card — Atelier Reveal</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          }
+        }
+      }
+    };
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root { --ease-shutter: cubic-bezier(0.16, 1, 0.3, 1); }
+    .shutter-left, .shutter-right {
+      transition: transform 560ms var(--ease-shutter);
+      will-change: transform;
+    }
+    .split-card:hover .shutter-left,
+    .split-card:focus-within .shutter-left {
+      transform: translateX(-92%);
+    }
+    .split-card:hover .shutter-right,
+    .split-card:focus-within .shutter-right {
+      transform: translateX(92%);
+    }
+    .center-copy {
+      opacity: 0;
+      transform: scale(0.95);
+      transition: opacity 420ms var(--ease-shutter) 90ms, transform 460ms var(--ease-shutter) 90ms;
+    }
+    .split-card:hover .center-copy,
+    .split-card:focus-within .center-copy {
+      opacity: 1;
+      transform: scale(1);
+    }
+    .photo-silver {
+      background:
+        radial-gradient(85% 75% at 50% 35%, rgba(236, 229, 218, 0.65) 0%, rgba(124, 117, 108, 0.25) 48%, transparent 72%),
+        linear-gradient(165deg, #121211 0%, #3d3a36 45%, #7c756c 76%, #cbc3b7 100%);
+    }
+    .film-grain {
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.84' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
+      mix-blend-mode: overlay;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .shutter-left, .shutter-right, .center-copy { transition-duration: 0.01ms !important; transition-delay: 0ms !important; }
+    }
+  </style>
+<script src="/_aistudio-iframe.js?v=29045eb3"></script></head>
+<body class="min-h-screen bg-[#F5F3EE] text-[#141413] dark:bg-[#0D0D0C] dark:text-[#F2EFEA] font-sans antialiased transition-colors duration-300">
+  <header class="max-w-5xl mx-auto px-6 py-6 flex items-center justify-between border-b border-black/10 dark:border-white/10">
+    <div class="flex items-baseline gap-4">
+      <span class="font-mono text-xs tracking-wider text-neutral-500 dark:text-neutral-400">05 / 24</span>
+      <h1 class="font-serif text-2xl sm:text-3xl tracking-tight font-medium">Bipartite Split-Shutter Card</h1>
+    </div>
+    <button id="themeToggle" type="button" aria-label="Toggle light or dark theme" class="px-3.5 py-1.5 text-xs font-medium border border-black/15 dark:border-white/15 rounded-md hover:bg-black/5 dark:hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#D17A47] transition-colors">
+      <span id="themeLabel">Light Mode</span>
+    </button>
+  </header>
+
+  <main class="max-w-5xl mx-auto px-6 py-12">
+    <p class="max-w-2xl text-sm text-neutral-600 dark:text-neutral-400 mb-10 leading-relaxed">
+      Two synchronized image halves part horizontally like a mechanical darkroom shutter when hovered or focused, unveiling centered exhibition notes in the negative space.
+    </p>
+
+    <div class="max-w-3xl mx-auto">
+      <article tabindex="0" role="region" aria-label="Chiaroscuro Silver Gelatin Exhibition" aria-describedby="split-copy-1" class="split-card relative h-[460px] rounded-xl overflow-hidden bg-[#EBE7DF] dark:bg-[#171615] border border-black/10 dark:border-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#D17A47] cursor-pointer">
+        <!-- Revealed Centered Exhibition Layer -->
+        <div id="split-copy-1" class="center-copy absolute inset-0 flex flex-col items-center justify-center text-center px-10">
+          <span class="font-mono text-xs uppercase tracking-[0.2em] text-[#A84D26] dark:text-[#D17A47] mb-3">Paris · Autumn Exhibition</span>
+          <h2 class="font-serif text-4xl sm:text-5xl font-medium tracking-tight mb-4">Chiaroscuro<br />Silver Gelatin</h2>
+          <p class="max-w-md text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed mb-6">
+            Twenty-four hand-pulled contact prints examining hard directional studio daylight across raw linen and cast plaster forms.
+          </p>
+          <a href="#reserve-catalogue" class="px-5 py-2.5 text-xs font-semibold bg-[#141413] text-[#F5F3EE] dark:bg-[#F2EFEA] dark:text-[#0D0D0C] rounded-md hover:opacity-90 transition-opacity focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D17A47]">
+            View Contact Prints
+          </a>
+        </div>
+
+        <!-- Left Half Shutter -->
+        <div aria-hidden="true" class="shutter-left absolute inset-y-0 left-0 w-1/2 overflow-hidden border-r border-white/15 pointer-events-none">
+          <div class="w-[200%] h-full photo-silver relative">
+            <svg viewBox="0 0 800 460" preserveAspectRatio="xMidYMid slice" class="w-full h-full">
+              <ellipse cx="400" cy="215" rx="115" ry="155" fill="#141312" fill-opacity="0.72" />
+              <line x1="400" y1="0" x2="400" y2="460" stroke="#f5efe6" stroke-opacity="0.22" stroke-width="1" />
+              <rect x="0" y="340" width="800" height="120" fill="#0d0d0c" fill-opacity="0.65" />
+            </svg>
+            <div class="film-grain absolute inset-0 opacity-45"></div>
+            <span class="absolute top-6 left-6 font-mono text-xs text-white/80">PLATE 05 · LEFT SHUTTER</span>
+          </div>
+        </div>
+
+        <!-- Right Half Shutter -->
+        <div aria-hidden="true" class="shutter-right absolute inset-y-0 right-0 w-1/2 overflow-hidden border-l border-white/15 pointer-events-none">
+          <div class="w-[200%] -ml-[100%] h-full photo-silver relative">
+            <svg viewBox="0 0 800 460" preserveAspectRatio="xMidYMid slice" class="w-full h-full">
+              <ellipse cx="400" cy="215" rx="115" ry="155" fill="#141312" fill-opacity="0.72" />
+              <line x1="400" y1="0" x2="400" y2="460" stroke="#f5efe6" stroke-opacity="0.22" stroke-width="1" />
+              <rect x="0" y="340" width="800" height="120" fill="#0d0d0c" fill-opacity="0.65" />
+            </svg>
+            <div class="film-grain absolute inset-0 opacity-45"></div>
+            <span class="absolute bottom-6 right-6 font-mono text-xs text-white/80">HOVER TO PART -&gt;</span>
+          </div>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <script>
+    const root = document.documentElement;
+    const toggle = document.getElementById('themeToggle');
+    const label = document.getElementById('themeLabel');
+
+    function applyTheme(mode) {
+      const dark = mode === 'dark';
+      root.classList.toggle('dark', dark);
+      label.textContent = dark ? 'Light Mode' : 'Dark Mode';
+    }
+
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('theme') === 'light') applyTheme('light');
+
+    toggle.addEventListener('click', () => {
+      applyTheme(root.classList.contains('dark') ? 'light' : 'dark');
+    });
+
+    window.addEventListener('message', (e) => {
+      if (e.data && e.data.type === 'set-theme') applyTheme(e.data.theme);
+    });
+  </script>
+</body>
+</html>

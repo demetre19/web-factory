@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>04 · Duotone Fade & Rising Tile — Atelier Reveal</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          }
+        }
+      }
+    };
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root { --ease-duo: cubic-bezier(0.16, 1, 0.3, 1); }
+    .duo-photo {
+      transition: filter 480ms var(--ease-duo), transform 520ms var(--ease-duo);
+      will-change: filter, transform;
+    }
+    .duo-tint {
+      opacity: 0;
+      mix-blend-mode: multiply;
+      transition: opacity 480ms var(--ease-duo);
+    }
+    .duo-tile:hover .duo-photo,
+    .duo-tile:focus-within .duo-photo {
+      filter: grayscale(100%) contrast(1.18) brightness(0.85);
+      transform: scale(1.04);
+    }
+    .duo-tile:hover .duo-tint,
+    .duo-tile:focus-within .duo-tint {
+      opacity: 0.72;
+    }
+    .rising-panel {
+      transform: translateY(100%);
+      transition: transform 440ms var(--ease-duo);
+      will-change: transform;
+    }
+    .duo-tile:hover .rising-panel,
+    .duo-tile:focus-within .rising-panel {
+      transform: translateY(0);
+    }
+    .plate-solstice {
+      background:
+        radial-gradient(95% 70% at 72% 24%, rgba(250, 214, 179, 0.72) 0%, transparent 56%),
+        linear-gradient(138deg, #271e1a 0%, #6f4f3f 46%, #bf8b6d 78%, #eed3be 100%);
+    }
+    .plate-silk {
+      background:
+        radial-gradient(100% 75% at 28% 22%, rgba(212, 224, 238, 0.65) 0%, transparent 60%),
+        linear-gradient(148deg, #161d24 0%, #3b4b5c 45%, #798ca0 78%, #cad4de 100%);
+    }
+    .plate-basalt {
+      background:
+        radial-gradient(90% 80% at 50% 25%, rgba(226, 220, 206, 0.56) 0%, transparent 60%),
+        linear-gradient(155deg, #181817 0%, #44423d 48%, #857f74 78%, #d2ccc0 100%);
+    }
+    .film-grain {
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.52'/%3E%3C/svg%3E");
+      mix-blend-mode: overlay;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .duo-photo, .duo-tint, .rising-panel { transition-duration: 0.01ms !important; }
+    }
+  </style>
+<script src="/_aistudio-iframe.js?v=29045eb3"></script></head>
+<body class="min-h-screen bg-[#F7F5F1] text-[#151412] dark:bg-[#10100F] dark:text-[#F3EFE8] font-sans antialiased transition-colors duration-300">
+  <header class="max-w-6xl mx-auto px-6 py-6 flex items-center justify-between border-b border-black/10 dark:border-white/10">
+    <div class="flex items-baseline gap-4">
+      <span class="font-mono text-xs tracking-wider text-neutral-500 dark:text-neutral-400">04 / 24</span>
+      <h1 class="font-serif text-2xl sm:text-3xl tracking-tight font-medium">Duotone Fade &amp; Rising Tile</h1>
+    </div>
+    <button id="themeToggle" type="button" aria-label="Toggle light or dark theme" class="px-3.5 py-1.5 text-xs font-medium border border-black/15 dark:border-white/15 rounded-md hover:bg-black/5 dark:hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#9E3E26] transition-colors">
+      <span id="themeLabel">Dark Mode</span>
+    </button>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-6 py-12">
+    <p class="max-w-2xl text-sm text-neutral-600 dark:text-neutral-400 mb-10 leading-relaxed">
+      Each grid tile shifts into a rich editorial duotone wash on hover or focus while a crisp project title, year, and archive link rise cleanly from the base edge.
+    </p>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <!-- Tile 1 -->
+      <article tabindex="0" role="region" aria-label="Solstice Lookbook AW26" aria-describedby="duo-meta-1" class="duo-tile relative h-[400px] rounded-xl overflow-hidden border border-black/10 dark:border-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#9E3E26] cursor-pointer">
+        <div class="duo-photo absolute inset-0 plate-solstice">
+          <svg viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice" aria-hidden="true" class="w-full h-full">
+            <path d="M120 400 C 135 240, 175 130, 205 110 C 235 130, 270 245, 290 400 Z" fill="#1d1410" fill-opacity="0.72" />
+            <circle cx="205" cy="92" r="22" fill="#1d1410" fill-opacity="0.72" />
+            <line x1="0" y1="330" x2="400" y2="330" stroke="#f7e2d1" stroke-opacity="0.22" stroke-width="1" />
+          </svg>
+        </div>
+        <div aria-hidden="true" class="duo-tint absolute inset-0 bg-[#9E3E26]"></div>
+        <div aria-hidden="true" class="film-grain absolute inset-0 opacity-35 pointer-events-none"></div>
+
+        <div id="duo-meta-1" class="rising-panel absolute inset-x-0 bottom-0 p-6 bg-[#F8F6F1] dark:bg-[#191816] border-t border-black/10 dark:border-white/10">
+          <div class="flex items-center justify-between text-xs font-mono text-neutral-500 dark:text-neutral-400 mb-1">
+            <span>Milan · Fashion</span>
+            <span>2026</span>
+          </div>
+          <div class="flex items-center justify-between gap-4">
+            <h2 class="font-serif text-2xl font-medium">Solstice Lookbook</h2>
+            <a href="#solstice" class="text-xs font-semibold text-[#9E3E26] dark:text-[#E27B60] hover:underline shrink-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#9E3E26]">
+              Archive -&gt;
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Tile 2 -->
+      <article tabindex="0" role="region" aria-label="Boreal Wool Tailoring" aria-describedby="duo-meta-2" class="duo-tile relative h-[400px] rounded-xl overflow-hidden border border-black/10 dark:border-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#9E3E26] cursor-pointer">
+        <div class="duo-photo absolute inset-0 plate-silk">
+          <svg viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice" aria-hidden="true" class="w-full h-full">
+            <polygon points="80,400 185,110 315,400" fill="#12171d" fill-opacity="0.7" />
+            <circle cx="290" cy="110" r="70" fill="#dce7f2" fill-opacity="0.18" />
+          </svg>
+        </div>
+        <div aria-hidden="true" class="duo-tint absolute inset-0 bg-[#3B5978]"></div>
+        <div aria-hidden="true" class="film-grain absolute inset-0 opacity-35 pointer-events-none"></div>
+
+        <div id="duo-meta-2" class="rising-panel absolute inset-x-0 bottom-0 p-6 bg-[#F8F6F1] dark:bg-[#191816] border-t border-black/10 dark:border-white/10">
+          <div class="flex items-center justify-between text-xs font-mono text-neutral-500 dark:text-neutral-400 mb-1">
+            <span>Stockholm · Tailoring</span>
+            <span>2026</span>
+          </div>
+          <div class="flex items-center justify-between gap-4">
+            <h2 class="font-serif text-2xl font-medium">Boreal Overcoat</h2>
+            <a href="#boreal" class="text-xs font-semibold text-[#9E3E26] dark:text-[#E27B60] hover:underline shrink-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#9E3E26]">
+              Archive -&gt;
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Tile 3 -->
+      <article tabindex="0" role="region" aria-label="Basalt Plinth Monograph" aria-describedby="duo-meta-3" class="duo-tile relative h-[400px] rounded-xl overflow-hidden border border-black/10 dark:border-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#9E3E26] cursor-pointer">
+        <div class="duo-photo absolute inset-0 plate-basalt">
+          <svg viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice" aria-hidden="true" class="w-full h-full">
+            <rect x="115" y="135" width="170" height="265" fill="#151514" fill-opacity="0.72" />
+            <rect x="135" y="160" width="130" height="90" fill="#e5dfd2" fill-opacity="0.16" />
+          </svg>
+        </div>
+        <div aria-hidden="true" class="duo-tint absolute inset-0 bg-[#6B5A45]"></div>
+        <div aria-hidden="true" class="film-grain absolute inset-0 opacity-35 pointer-events-none"></div>
+
+        <div id="duo-meta-3" class="rising-panel absolute inset-x-0 bottom-0 p-6 bg-[#F8F6F1] dark:bg-[#191816] border-t border-black/10 dark:border-white/10">
+          <div class="flex items-center justify-between text-xs font-mono text-neutral-500 dark:text-neutral-400 mb-1">
+            <span>Basel · Objects</span>
+            <span>2025</span>
+          </div>
+          <div class="flex items-center justify-between gap-4">
+            <h2 class="font-serif text-2xl font-medium">Basalt Plinth Series</h2>
+            <a href="#basalt" class="text-xs font-semibold text-[#9E3E26] dark:text-[#E27B60] hover:underline shrink-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#9E3E26]">
+              Archive -&gt;
+            </a>
+          </div>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <script>
+    const root = document.documentElement;
+    const toggle = document.getElementById('themeToggle');
+    const label = document.getElementById('themeLabel');
+
+    function applyTheme(mode) {
+      const dark = mode === 'dark';
+      root.classList.toggle('dark', dark);
+      label.textContent = dark ? 'Light Mode' : 'Dark Mode';
+    }
+
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('theme') === 'dark') applyTheme('dark');
+
+    toggle.addEventListener('click', () => {
+      applyTheme(root.classList.contains('dark') ? 'light' : 'dark');
+    });
+
+    window.addEventListener('message', (e) => {
+      if (e.data && e.data.type === 'set-theme') applyTheme(e.data.theme);
+    });
+  </script>
+</body>
+</html>

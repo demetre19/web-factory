@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>15 · Cursor-Origin Giant Word Preview — Atelier Reveal</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          }
+        }
+      }
+    };
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root { --ease-bloom: cubic-bezier(0.16, 1, 0.3, 1); }
+    #giantPreview {
+      transition: transform 440ms var(--ease-bloom), opacity 340ms var(--ease-bloom);
+      will-change: transform, opacity;
+    }
+    .film-grain {
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.52'/%3E%3C/svg%3E");
+      mix-blend-mode: overlay;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      #giantPreview { transition-duration: 0.01ms !important; }
+    }
+  </style>
+<script src="/_aistudio-iframe.js?v=29045eb3"></script></head>
+<body class="min-h-screen bg-[#F5F3EE] text-[#141413] dark:bg-[#0D0D0C] dark:text-[#F2EFEA] font-sans antialiased transition-colors duration-300 overflow-x-hidden">
+  <header class="max-w-5xl mx-auto px-6 py-6 flex items-center justify-between border-b border-black/10 dark:border-white/10 relative z-20">
+    <div class="flex items-baseline gap-4">
+      <span class="font-mono text-xs tracking-wider text-neutral-500 dark:text-neutral-400">15 / 24</span>
+      <h1 class="font-serif text-2xl sm:text-3xl tracking-tight font-medium">Cursor-Origin Giant Word Preview</h1>
+    </div>
+    <button id="themeToggle" type="button" aria-label="Toggle light or dark theme" class="px-3.5 py-1.5 text-xs font-medium border border-black/15 dark:border-white/15 rounded-md hover:bg-black/5 dark:hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#D6784B] transition-colors">
+      <span id="themeLabel">Light Mode</span>
+    </button>
+  </header>
+
+  <main class="max-w-5xl mx-auto px-6 py-14 relative">
+    <p class="max-w-2xl text-sm text-neutral-600 dark:text-neutral-400 mb-12 leading-relaxed relative z-20">
+      Point or tab through the textile and spatial lexicon below. Each word spawns an oversized photographic plate that blooms outward from your exact pointer origin.
+    </p>
+
+    <!-- Giant Preview Canvas -->
+    <div id="giantPreview" aria-hidden="true" class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[320px] sm:w-[480px] h-[380px] sm:h-[520px] rounded-2xl overflow-hidden shadow-2xl border border-white/15 pointer-events-none z-10 opacity-0 scale-50">
+      <div id="giantBg" class="w-full h-full relative">
+        <svg id="giantSvg" viewBox="0 0 480 520" preserveAspectRatio="xMidYMid slice" class="w-full h-full"></svg>
+        <div class="film-grain absolute inset-0 opacity-45"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-transparent"></div>
+        <span id="giantLabel" class="absolute bottom-6 left-6 font-mono text-xs text-white/85">LOOKBOOK · AW26</span>
+      </div>
+    </div>
+
+    <!-- Interactive Word List -->
+    <div id="wordCloud" class="relative z-20 flex flex-wrap gap-x-8 gap-y-5 items-baseline">
+      <button type="button" data-word="0" class="word-btn font-serif text-4xl sm:text-6xl font-medium tracking-tight hover:text-[#D6784B] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#D6784B] transition-colors">Silhouettes</button>
+      <span aria-hidden="true" class="text-neutral-400">/</span>
+      <button type="button" data-word="1" class="word-btn font-serif text-4xl sm:text-6xl font-medium tracking-tight hover:text-[#D6784B] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#D6784B] transition-colors">Travertine</button>
+      <span aria-hidden="true" class="text-neutral-400">/</span>
+      <button type="button" data-word="2" class="word-btn font-serif text-4xl sm:text-6xl font-medium tracking-tight hover:text-[#D6784B] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#D6784B] transition-colors">Chiaroscuro</button>
+      <span aria-hidden="true" class="text-neutral-400">/</span>
+      <button type="button" data-word="3" class="word-btn font-serif text-4xl sm:text-6xl font-medium tracking-tight hover:text-[#D6784B] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#D6784B] transition-colors">Clerestory</button>
+      <span aria-hidden="true" class="text-neutral-400">/</span>
+      <button type="button" data-word="4" class="word-btn font-serif text-4xl sm:text-6xl font-medium tracking-tight hover:text-[#D6784B] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#D6784B] transition-colors">Selvedge</button>
+      <span aria-hidden="true" class="text-neutral-400">/</span>
+      <button type="button" data-word="5" class="word-btn font-serif text-4xl sm:text-6xl font-medium tracking-tight hover:text-[#D6784B] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#D6784B] transition-colors">Monolith</button>
+    </div>
+  </main>
+
+  <script>
+    const root = document.documentElement;
+    const toggle = document.getElementById('themeToggle');
+    const label = document.getElementById('themeLabel');
+    function applyTheme(mode) {
+      const dark = mode === 'dark';
+      root.classList.toggle('dark', dark);
+      label.textContent = dark ? 'Light Mode' : 'Dark Mode';
+    }
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('theme') === 'light') applyTheme('light');
+    toggle.addEventListener('click', () => applyTheme(root.classList.contains('dark') ? 'light' : 'dark'));
+    window.addEventListener('message', (e) => { if (e.data && e.data.type === 'set-theme') applyTheme(e.data.theme); });
+
+    const lookbook = [
+      { label: '01 · SILHOUETTES — PLEATED WOOL', bg: 'radial-gradient(90% 70% at 62% 28%, rgba(244,210,180,0.68) 0%, transparent 58%), linear-gradient(148deg, #1b1614 0%, #5c4336 48%, #cda286 100%)', svg: '<path d="M160 520 C 185 280, 215 160, 240 135 C 265 160, 295 280, 320 520 Z" fill="#14100e" fill-opacity="0.78"/>' },
+      { label: '02 · TRAVERTINE — ROMAN QUARRY', bg: 'radial-gradient(90% 70% at 32% 26%, rgba(242,235,220,0.72) 0%, transparent 58%), linear-gradient(155deg, #25221d 0%, #7d7364 48%, #ddd4c6 100%)', svg: '<rect x="110" y="130" width="260" height="390" fill="#1b1814" fill-opacity="0.68"/>' },
+      { label: '03 · CHIAROSCURO — SILVER PRINT', bg: 'radial-gradient(90% 70% at 50% 35%, rgba(235,229,218,0.65) 0%, transparent 58%), linear-gradient(160deg, #10100f 0%, #44403a 48%, #c7bfb3 100%)', svg: '<ellipse cx="240" cy="240" rx="110" ry="165" fill="#0d0d0c" fill-opacity="0.74"/>' },
+      { label: '04 · CLERESTORY — DAYLIGHT BAFFLE', bg: 'radial-gradient(90% 70% at 72% 24%, rgba(215,230,242,0.65) 0%, transparent 58%), linear-gradient(150deg, #141b22 0%, #3d5061 48%, #c4d2de 100%)', svg: '<polygon points="0,360 480,210 480,520 0,520" fill="#0f151a" fill-opacity="0.75"/>' },
+      { label: '05 · SELVEDGE — INDIGO LOOM', bg: 'radial-gradient(90% 70% at 35% 28%, rgba(190,210,235,0.58) 0%, transparent 58%), linear-gradient(152deg, #111622 0%, #2b3c5c 48%, #8b9cb5 100%)', svg: '<rect x="80" y="90" width="320" height="340" fill="#0d111a" fill-opacity="0.58"/><line x1="240" y1="0" x2="240" y2="520" stroke="#dfe9f5" stroke-opacity="0.28" stroke-width="2"/>' },
+      { label: '06 · MONOLITH — BASALT PLINTH', bg: 'radial-gradient(90% 70% at 60% 25%, rgba(226,216,204,0.56) 0%, transparent 58%), linear-gradient(158deg, #161615 0%, #46433e 48%, #b9b2a7 100%)', svg: '<polygon points="100,520 240,120 380,520" fill="#121211" fill-opacity="0.76"/>' }
+    ];
+
+    const giant = document.getElementById('giantPreview');
+    const giantBg = document.getElementById('giantBg');
+    const giantSvg = document.getElementById('giantSvg');
+    const giantLabel = document.getElementById('giantLabel');
+
+    function openFromPoint(idx, clientX, clientY) {
+      const item = lookbook[idx] || lookbook[0];
+      giantBg.style.background = item.bg;
+      giantSvg.innerHTML = item.svg;
+      giantLabel.textContent = item.label;
+
+      const box = giant.getBoundingClientRect();
+      const centerX = window.innerWidth / 2;
+      const centerY = window.innerHeight / 2;
+      const ox = ((clientX - (centerX - box.width / 2)) / Math.max(1, box.width)) * 100;
+      const oy = ((clientY - (centerY - box.height / 2)) / Math.max(1, box.height)) * 100;
+
+      giant.style.transformOrigin = `${Math.max(0, Math.min(100, ox)).toFixed(1)}% ${Math.max(0, Math.min(100, oy)).toFixed(1)}%`;
+      giant.style.opacity = '0.92';
+      giant.style.transform = 'translate(-50%, -50%) scale(1)';
+    }
+
+    function closePreview() {
+      giant.style.opacity = '0';
+      giant.style.transform = 'translate(-50%, -50%) scale(0.5)';
+    }
+
+    document.querySelectorAll('.word-btn').forEach((btn) => {
+      const idx = Number(btn.dataset.word || 0);
+      btn.addEventListener('pointerenter', (e) => openFromPoint(idx, e.clientX, e.clientY));
+      btn.addEventListener('pointerleave', closePreview);
+      btn.addEventListener('focus', () => {
+        const r = btn.getBoundingClientRect();
+        openFromPoint(idx, r.left + r.width / 2, r.top + r.height / 2);
+      });
+      btn.addEventListener('blur', closePreview);
+    });
+  </script>
+</body>
+</html>

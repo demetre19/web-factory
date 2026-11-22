@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>24 · Decode Scramble Editorial Hero — Atelier Reveal</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          }
+        }
+      }
+    };
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    .photo-stockholm {
+      background:
+        radial-gradient(95% 75% at 72% 24%, rgba(214, 224, 236, 0.56) 0%, transparent 58%),
+        radial-gradient(60% 60% at 24% 68%, rgba(216, 126, 74, 0.28) 0%, transparent 62%),
+        linear-gradient(150deg, #101419 0%, #2d3947 46%, #748494 78%, #c7cfd7 100%);
+    }
+    .film-grain {
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.52'/%3E%3C/svg%3E");
+      mix-blend-mode: overlay;
+    }
+  </style>
+<script src="/_aistudio-iframe.js?v=29045eb3"></script></head>
+<body class="min-h-screen bg-[#F5F3EE] text-[#151412] dark:bg-[#0D0F12] dark:text-[#F2EFEA] font-sans antialiased transition-colors duration-300">
+  <header class="max-w-6xl mx-auto px-6 py-6 flex items-center justify-between border-b border-black/10 dark:border-white/10">
+    <div class="flex items-baseline gap-4">
+      <span class="font-mono text-xs tracking-wider text-neutral-500 dark:text-neutral-400">24 / 24</span>
+      <h1 class="font-serif text-2xl sm:text-3xl tracking-tight font-medium">Decode Scramble Editorial Hero</h1>
+    </div>
+    <button id="themeToggle" type="button" aria-label="Toggle light or dark theme" class="px-3.5 py-1.5 text-xs font-medium border border-black/15 dark:border-white/15 rounded-md hover:bg-black/5 dark:hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#D87E4A] transition-colors">
+      <span id="themeLabel">Light Mode</span>
+    </button>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-6 py-12">
+    <section id="heroStage" tabindex="0" role="region" aria-label="Stockholm Monograph Editorial Hero" aria-describedby="hero-sub" class="relative h-[500px] rounded-2xl overflow-hidden border border-black/10 dark:border-white/10 photo-stockholm focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#D87E4A] cursor-pointer">
+      <svg viewBox="0 0 1100 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true" class="absolute inset-0 w-full h-full">
+        <polygon points="0,350 1100,230 1100,500 0,500" fill="#0d1014" fill-opacity="0.74" />
+        <rect x="640" y="100" width="220" height="250" fill="#d9e3ec" fill-opacity="0.14" />
+        <line x1="0" y1="350" x2="1100" y2="230" stroke="#e4ecf4" stroke-opacity="0.22" stroke-width="1" />
+      </svg>
+      <div aria-hidden="true" class="film-grain absolute inset-0 opacity-40 pointer-events-none"></div>
+      <div aria-hidden="true" class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-black/25"></div>
+
+      <div class="relative z-10 h-full p-8 sm:p-14 flex flex-col justify-between text-white">
+        <div class="flex items-center justify-between font-mono text-xs text-white/75">
+          <span class="scramble-line" data-text="STOCKHOLM · ARCHIVAL MONOGRAPH 2026">STOCKHOLM · ARCHIVAL MONOGRAPH 2026</span>
+          <button id="retriggerBtn" type="button" class="px-3 py-1 rounded border border-white/25 hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-white">
+            Decode Again
+          </button>
+        </div>
+
+        <div class="max-w-2xl">
+          <h2 class="scramble-line font-serif text-4xl sm:text-6xl font-medium tracking-tight leading-[1.04]" data-text="Architecture in Northern Light">
+            Architecture in Northern Light
+          </h2>
+          <p id="hero-sub" class="text-sm sm:text-base text-white/80 mt-4 leading-relaxed">
+            Hover or focus the hero frame—or activate Decode Again—to trigger the character-by-character optical cipher reveal across the headline.
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const root = document.documentElement;
+    const toggle = document.getElementById('themeToggle');
+    const label = document.getElementById('themeLabel');
+    function applyTheme(mode) {
+      const dark = mode === 'dark';
+      root.classList.toggle('dark', dark);
+      label.textContent = dark ? 'Light Mode' : 'Dark Mode';
+    }
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('theme') === 'light') applyTheme('light');
+    toggle.addEventListener('click', () => applyTheme(root.classList.contains('dark') ? 'light' : 'dark'));
+    window.addEventListener('message', (e) => { if (e.data && e.data.type === 'set-theme') applyTheme(e.data.theme); });
+
+    const GLYPHS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789·/';
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const lines = document.querySelectorAll('.scramble-line');
+    let animTimers = [];
+
+    function runScramble() {
+      animTimers.forEach((id) => cancelAnimationFrame(id));
+      animTimers = [];
+
+      if (reduced) {
+        lines.forEach((el) => { el.textContent = el.dataset.text || ''; });
+        return;
+      }
+
+      lines.forEach((el) => {
+        const target = el.dataset.text || '';
+        const duration = 560;
+        const start = performance.now();
+
+        function step(now) {
+          const progress = Math.min(1, (now - start) / duration);
+          const lockedCount = Math.floor(progress * target.length);
+          let out = '';
+          for (let i = 0; i < target.length; i++) {
+            const ch = target[i];
+            if (ch === ' ' || i < lockedCount) {
+              out += ch;
+            } else {
+              out += GLYPHS[Math.floor(Math.random() * GLYPHS.length)];
+            }
+          }
+          el.textContent = out;
+          if (progress < 1) {
+            animTimers.push(requestAnimationFrame(step));
+          } else {
+            el.textContent = target;
+          }
+        }
+        animTimers.push(requestAnimationFrame(step));
+      });
+    }
+
+    const hero = document.getElementById('heroStage');
+    const retrigger = document.getElementById('retriggerBtn');
+    hero.addEventListener('pointerenter', runScramble);
+    hero.addEventListener('focus', runScramble);
+    retrigger.addEventListener('click', (e) => {
+      e.stopPropagation();
+      runScramble();
+    });
+
+    runScramble();
+  </script>
+</body>
+</html>

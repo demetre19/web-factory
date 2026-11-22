@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>21 · Image-to-Copy Frame Swap — Atelier Reveal</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          }
+        }
+      }
+    };
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root { --ease-swap: cubic-bezier(0.16, 1, 0.3, 1); }
+    .face-image {
+      transition: opacity 420ms var(--ease-swap), transform 460ms var(--ease-swap);
+      will-change: opacity, transform;
+    }
+    .face-copy {
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity 420ms var(--ease-swap) 40ms, transform 460ms var(--ease-swap) 40ms;
+      will-change: opacity, transform;
+    }
+    .swap-box:hover .face-image,
+    .swap-box:focus-within .face-image {
+      opacity: 0;
+      transform: scale(0.97);
+    }
+    .swap-box:hover .face-copy,
+    .swap-box:focus-within .face-copy {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .plate-garment {
+      background:
+        radial-gradient(95% 75% at 50% 28%, rgba(235, 224, 210, 0.65) 0%, transparent 58%),
+        linear-gradient(155deg, #1b1a18 0%, #524b42 46%, #dcd4c9 100%);
+    }
+    .plate-linen {
+      background:
+        radial-gradient(95% 75% at 70% 28%, rgba(238, 220, 198, 0.68) 0%, transparent 58%),
+        linear-gradient(150deg, #241e19 0%, #725d4c 46%, #e3d3c1 100%);
+    }
+    .film-grain {
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.52'/%3E%3C/svg%3E");
+      mix-blend-mode: overlay;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .face-image, .face-copy { transition-duration: 0.01ms !important; transition-delay: 0ms !important; transform: none !important; }
+    }
+  </style>
+<script src="/_aistudio-iframe.js?v=29045eb3"></script></head>
+<body class="min-h-screen bg-[#F6F4EF] text-[#151412] dark:bg-[#10100F] dark:text-[#F2EFE8] font-sans antialiased transition-colors duration-300">
+  <header class="max-w-5xl mx-auto px-6 py-6 flex items-center justify-between border-b border-black/10 dark:border-white/10">
+    <div class="flex items-baseline gap-4">
+      <span class="font-mono text-xs tracking-wider text-neutral-500 dark:text-neutral-400">21 / 24</span>
+      <h1 class="font-serif text-2xl sm:text-3xl tracking-tight font-medium">Image-to-Copy Frame Swap</h1>
+    </div>
+    <button id="themeToggle" type="button" aria-label="Toggle light or dark theme" class="px-3.5 py-1.5 text-xs font-medium border border-black/15 dark:border-white/15 rounded-md hover:bg-black/5 dark:hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#A6462A] transition-colors">
+      <span id="themeLabel">Dark Mode</span>
+    </button>
+  </header>
+
+  <main class="max-w-5xl mx-auto px-6 py-12">
+    <p class="max-w-2xl text-sm text-neutral-600 dark:text-neutral-400 mb-10 leading-relaxed">
+      Hover or focus a specimen frame. Within identical card bounds, the photographic plate dissolves cleanly out while a typeset curator dossier enters in its place.
+    </p>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <!-- Swap Frame 1 -->
+      <article tabindex="0" role="region" aria-label="Garment Archive Plate 09" aria-describedby="swap-note-1" class="swap-box relative h-[420px] rounded-xl overflow-hidden bg-[#ECE7DD] dark:bg-[#191816] border border-black/10 dark:border-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#A6462A] cursor-pointer">
+        <!-- Image Face -->
+        <div class="face-image absolute inset-0 plate-garment">
+          <svg viewBox="0 0 500 420" preserveAspectRatio="xMidYMid slice" aria-hidden="true" class="w-full h-full">
+            <path d="M165 420 C 185 245, 215 130, 250 105 C 285 130, 315 245, 335 420 Z" fill="#171513" fill-opacity="0.74" />
+          </svg>
+          <div aria-hidden="true" class="film-grain absolute inset-0 opacity-40"></div>
+          <span class="absolute bottom-6 left-6 font-mono text-xs text-white/85">PLATE 09 · TOKYO ARCHIVE</span>
+        </div>
+
+        <!-- Copy Face (Same Box) -->
+        <div id="swap-note-1" class="face-copy relative z-10 h-full p-8 sm:p-10 flex flex-col justify-between">
+          <div class="flex items-center justify-between font-mono text-xs text-neutral-500 dark:text-neutral-400">
+            <span>CURATOR NOTE 09</span>
+            <span>RAW WOOL · 480 GSM</span>
+          </div>
+          <div>
+            <h2 class="font-serif text-3xl font-medium tracking-tight mb-3">Unstructured Box Coat</h2>
+            <p class="text-sm text-neutral-600 dark:text-neutral-300 leading-relaxed mb-5">
+              Woven on shuttle looms in Bishu from undyed Shetland fleece. Zero internal shoulder canvas preserves a single architectural drape line from collar to hem.
+            </p>
+            <a href="#garment-09" class="inline-flex items-center gap-2 text-xs font-semibold text-[#A6462A] dark:text-[#E17D60] hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#A6462A]">
+              <span>View Pattern Sheet</span>
+              <span aria-hidden="true">-&gt;</span>
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Swap Frame 2 -->
+      <article tabindex="0" role="region" aria-label="Flax Linen Specimen Plate 12" aria-describedby="swap-note-2" class="swap-box relative h-[420px] rounded-xl overflow-hidden bg-[#ECE7DD] dark:bg-[#191816] border border-black/10 dark:border-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#A6462A] cursor-pointer">
+        <div class="face-image absolute inset-0 plate-linen">
+          <svg viewBox="0 0 500 420" preserveAspectRatio="xMidYMid slice" aria-hidden="true" class="w-full h-full">
+            <rect x="140" y="95" width="220" height="240" fill="#1e1813" fill-opacity="0.65" />
+            <line x1="140" y1="215" x2="360" y2="215" stroke="#efe2d2" stroke-opacity="0.3" stroke-width="1" />
+          </svg>
+          <div aria-hidden="true" class="film-grain absolute inset-0 opacity-40"></div>
+          <span class="absolute bottom-6 left-6 font-mono text-xs text-white/85">PLATE 12 · COURTRAI FLAX</span>
+        </div>
+
+        <div id="swap-note-2" class="face-copy relative z-10 h-full p-8 sm:p-10 flex flex-col justify-between">
+          <div class="flex items-center justify-between font-mono text-xs text-neutral-500 dark:text-neutral-400">
+            <span>CURATOR NOTE 12</span>
+            <span>BELGIAN LINEN · 310 GSM</span>
+          </div>
+          <div>
+            <h2 class="font-serif text-3xl font-medium tracking-tight mb-3">Stone-Washed Atelier Apron</h2>
+            <p class="text-sm text-neutral-600 dark:text-neutral-300 leading-relaxed mb-5">
+              Dew-retted Flemish flax laundered in river-stone drums to soften creases into matte architectural folds suited for gallery conservation work.
+            </p>
+            <a href="#garment-12" class="inline-flex items-center gap-2 text-xs font-semibold text-[#A6462A] dark:text-[#E17D60] hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#A6462A]">
+              <span>Inspect Weave Macro</span>
+              <span aria-hidden="true">-&gt;</span>
+            </a>
+          </div>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <script>
+    const root = document.documentElement;
+    const toggle = document.getElementById('themeToggle');
+    const label = document.getElementById('themeLabel');
+    function applyTheme(mode) {
+      const dark = mode === 'dark';
+      root.classList.toggle('dark', dark);
+      label.textContent = dark ? 'Light Mode' : 'Dark Mode';
+    }
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('theme') === 'dark') applyTheme('dark');
+    toggle.addEventListener('click', () => applyTheme(root.classList.contains('dark') ? 'light' : 'dark'));
+    window.addEventListener('message', (e) => { if (e.data && e.data.type === 'set-theme') applyTheme(e.data.theme); });
+  </script>
+</body>
+</html>

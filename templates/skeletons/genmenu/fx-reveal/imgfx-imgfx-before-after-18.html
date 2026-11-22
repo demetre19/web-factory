@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>18 · Draggable Before / After Divider — Atelier Reveal</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          }
+        }
+      }
+    };
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    .plate-before {
+      background:
+        radial-gradient(95% 75% at 70% 24%, rgba(212, 220, 228, 0.45) 0%, transparent 58%),
+        linear-gradient(154deg, #1b1e22 0%, #444c54 48%, #8f98a0 100%);
+    }
+    .plate-after {
+      background:
+        radial-gradient(95% 75% at 70% 24%, rgba(248, 218, 182, 0.78) 0%, transparent 58%),
+        linear-gradient(154deg, #271f1a 0%, #7d5d47 48%, #e4cbb2 100%);
+    }
+    .film-grain {
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.52'/%3E%3C/svg%3E");
+      mix-blend-mode: overlay;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+    }
+  </style>
+<script src="/_aistudio-iframe.js?v=29045eb3"></script></head>
+<body class="min-h-screen bg-[#F6F4EF] text-[#151412] dark:bg-[#10100F] dark:text-[#F2EFE8] font-sans antialiased transition-colors duration-300">
+  <header class="max-w-5xl mx-auto px-6 py-6 flex items-center justify-between border-b border-black/10 dark:border-white/10">
+    <div class="flex items-baseline gap-4">
+      <span class="font-mono text-xs tracking-wider text-neutral-500 dark:text-neutral-400">18 / 24</span>
+      <h1 class="font-serif text-2xl sm:text-3xl tracking-tight font-medium">Draggable Before / After Divider</h1>
+    </div>
+    <button id="themeToggle" type="button" aria-label="Toggle light or dark theme" class="px-3.5 py-1.5 text-xs font-medium border border-black/15 dark:border-white/15 rounded-md hover:bg-black/5 dark:hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#A8482B] transition-colors">
+      <span id="themeLabel">Dark Mode</span>
+    </button>
+  </header>
+
+  <main class="max-w-5xl mx-auto px-6 py-12">
+    <div class="flex flex-wrap items-baseline justify-between gap-4 mb-8">
+      <p class="max-w-xl text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed">
+        Drag the vertical hairline divider—or focus the handle and press Left/Right arrow keys—to compare the pre-restoration raw concrete frame against finished oak glazing.
+      </p>
+      <span id="splitReadout" class="font-mono text-xs text-neutral-500 dark:text-neutral-400">SPLIT 50%</span>
+    </div>
+
+    <div id="compareBox" class="relative h-[470px] rounded-2xl overflow-hidden border border-black/10 dark:border-white/10 select-none touch-none" role="region" aria-label="Silo Loft Restoration Before and After Comparison" aria-describedby="compare-notes">
+      <!-- AFTER Layer (Full Base) -->
+      <div class="absolute inset-0 plate-after">
+        <svg viewBox="0 0 900 470" preserveAspectRatio="xMidYMid slice" aria-hidden="true" class="w-full h-full">
+          <rect x="0" y="330" width="900" height="140" fill="#231913" fill-opacity="0.72" />
+          <rect x="190" y="95" width="520" height="235" fill="#f7e2ca" fill-opacity="0.22" />
+          <line x1="360" y1="95" x2="360" y2="330" stroke="#3c2a1e" stroke-width="6" />
+          <line x1="540" y1="95" x2="540" y2="330" stroke="#3c2a1e" stroke-width="6" />
+        </svg>
+        <div aria-hidden="true" class="film-grain absolute inset-0 opacity-40"></div>
+        <span class="absolute top-6 right-6 px-3 py-1 rounded bg-black/50 backdrop-blur text-[11px] font-mono text-white">AFTER · WARM OAK 2026</span>
+      </div>
+
+      <!-- BEFORE Layer (Clipped Left Side) -->
+      <div id="beforeClip" class="absolute inset-0 plate-before" style="clip-path: inset(0 50% 0 0);">
+        <svg viewBox="0 0 900 470" preserveAspectRatio="xMidYMid slice" aria-hidden="true" class="w-full h-full">
+          <rect x="0" y="330" width="900" height="140" fill="#131619" fill-opacity="0.78" />
+          <rect x="190" y="95" width="520" height="235" fill="#89929b" fill-opacity="0.24" />
+          <line x1="360" y1="95" x2="360" y2="330" stroke="#181c20" stroke-width="8" />
+          <line x1="540" y1="95" x2="540" y2="330" stroke="#181c20" stroke-width="8" />
+          <line x1="190" y1="210" x2="710" y2="210" stroke="#181c20" stroke-width="4" />
+        </svg>
+        <div aria-hidden="true" class="film-grain absolute inset-0 opacity-45"></div>
+        <span class="absolute top-6 left-6 px-3 py-1 rounded bg-black/50 backdrop-blur text-[11px] font-mono text-white">BEFORE · RAW SHELL 2024</span>
+      </div>
+
+      <!-- Draggable Divider Handle -->
+      <div id="dividerLine" class="absolute inset-y-0 left-1/2 -translate-x-1/2 w-[2px] bg-white shadow-lg pointer-events-none"></div>
+      <button id="sliderHandle" type="button" role="slider" aria-label="Comparison divider position" aria-valuemin="5" aria-valuemax="95" aria-valuenow="50" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white text-[#141413] shadow-xl border border-black/15 flex items-center justify-center font-mono text-xs font-semibold cursor-ew-resize focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#A8482B]">
+        &lt;-&gt;
+      </button>
+
+      <div id="compare-notes" class="sr-only">Use Left and Right arrow keys or drag the divider to compare before and after restoration states.</div>
+    </div>
+  </main>
+
+  <script>
+    const root = document.documentElement;
+    const toggle = document.getElementById('themeToggle');
+    const label = document.getElementById('themeLabel');
+    function applyTheme(mode) {
+      const dark = mode === 'dark';
+      root.classList.toggle('dark', dark);
+      label.textContent = dark ? 'Light Mode' : 'Dark Mode';
+    }
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('theme') === 'dark') applyTheme('dark');
+    toggle.addEventListener('click', () => applyTheme(root.classList.contains('dark') ? 'light' : 'dark'));
+    window.addEventListener('message', (e) => { if (e.data && e.data.type === 'set-theme') applyTheme(e.data.theme); });
+
+    const box = document.getElementById('compareBox');
+    const beforeClip = document.getElementById('beforeClip');
+    const dividerLine = document.getElementById('dividerLine');
+    const handle = document.getElementById('sliderHandle');
+    const readout = document.getElementById('splitReadout');
+
+    let pct = 50;
+    let dragging = false;
+
+    function setSplit(next) {
+      pct = Math.max(5, Math.min(95, next));
+      beforeClip.style.clipPath = `inset(0 ${(100 - pct).toFixed(2)}% 0 0)`;
+      dividerLine.style.left = `${pct.toFixed(2)}%`;
+      handle.style.left = `${pct.toFixed(2)}%`;
+      handle.setAttribute('aria-valuenow', String(Math.round(pct)));
+      readout.textContent = `SPLIT ${Math.round(pct)}%`;
+    }
+
+    function updateFromClientX(clientX) {
+      const r = box.getBoundingClientRect();
+      setSplit(((clientX - r.left) / r.width) * 100);
+    }
+
+    handle.addEventListener('pointerdown', (e) => {
+      dragging = true;
+      handle.setPointerCapture(e.pointerId);
+    });
+    box.addEventListener('pointerdown', (e) => {
+      dragging = true;
+      updateFromClientX(e.clientX);
+    });
+    window.addEventListener('pointermove', (e) => {
+      if (dragging) updateFromClientX(e.clientX);
+    });
+    window.addEventListener('pointerup', () => { dragging = false; });
+
+    handle.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') { e.preventDefault(); setSplit(pct - 4); }
+      if (e.key === 'ArrowRight') { e.preventDefault(); setSplit(pct + 4); }
+    });
+  </script>
+</body>
+</html>
