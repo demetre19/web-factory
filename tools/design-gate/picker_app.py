@@ -1212,9 +1212,12 @@ def type_candidates(pd):
         # genes — a re-bake changes the base, and the signed pick
         # is rebuilt over the CURRENT vibe at click time, so the
         # variant must stay stable across bakes
+        # F111-2 — ids name the candidate spec only (label + face
+        # override): hashing the current fluid ratios would change
+        # the variant id after every re-bake even though the pick
+        # rebuilds over the CURRENT vibe at click time
         gh = hashlib.sha256(json.dumps(
-            {'l': label, 'g': sorted(overrides.items()),
-             'f': [tm, tr, hm, hr]},
+            {'l': label, 'g': sorted(overrides.items())},
             sort_keys=True).encode()).hexdigest()[:10]
         # the emitted doc still keys on resolved content
         ch = hashlib.sha256(json.dumps(
@@ -3003,10 +3006,16 @@ def run_ingest(pipeline, url='', html='', css_text=''):
     '''URL/pasted-HTML ingest — slices the page into section
     fragments, vectorises each through the shared genmenu parser
     (Tree + sniff_topology), ranks bank exemplars and drafts a
-    DNA-shaped style guess. No browser for paste mode.'''
+    DNA-shaped style guess. No browser for paste mode.
+    Render/extraction failures (missing playwright, timeouts)
+    return a refused result instead of dropping the connection.'''
     import ingest_url
-    return ingest_url.ingest(url=url or None, html=html or None,
-                             css_text=css_text or '')
+    try:
+        return ingest_url.ingest(url=url or None, html=html or None,
+                                 css_text=css_text or '')
+    except Exception as e:
+        return {'ok': False, 'error': str(e)[:400],
+                'reason': str(e)[:400]}
 
 
 # ------------------------------------------------------------------
@@ -3856,7 +3865,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
 .nextstep:hover{border-color:var(--accent);color:var(--accent)}
 #selbar{display:none}
 @media(min-width:768px){
-  #selbar{position:fixed;left:0;right:0;bottom:0;z-index:40;
+  #selbar{position:fixed;left:0;right:0;bottom:0;z-index:70;
     display:flex;align-items:center;gap:8px;padding:8px 18px;
     overflow:hidden;white-space:nowrap;
     background:var(--panel);border-top:1px solid var(--line)}}
@@ -4199,7 +4208,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
   font-size:11px;cursor:pointer;margin-left:auto}
 .xp:hover{background:var(--panel-2)}
 .srow .xp{margin-left:0;align-self:center}
-#xpOv{position:fixed;inset:0;z-index:60;background:rgba(0,0,0,.72);
+#xpOv{position:fixed;inset:0;z-index:90;background:rgba(0,0,0,.72);
   display:flex;flex-direction:column}
 #xpBar{display:flex;align-items:center;gap:8px;padding:9px 14px;
   background:var(--panel);border-bottom:1px solid var(--line);

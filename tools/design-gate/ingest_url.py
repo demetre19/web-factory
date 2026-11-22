@@ -378,14 +378,40 @@ print(json.dumps({'html': html, 'computed': comp}))
 """
 
 
+def _render_pythons():
+    """candidates that can run playwright — the repo venv first,
+    then the ambient python (blueprint installs playwright there)."""
+    cands = []
+    if os.path.isfile(VENV_PY):
+        cands.append(VENV_PY)
+    if sys.executable not in cands:
+        cands.append(sys.executable)
+    return cands
+
+
 def fetch_rendered(url: str):
-    if not os.path.isfile(VENV_PY):
-        raise RuntimeError(f'venv playwright missing: {VENV_PY}')
-    r = subprocess.run([VENV_PY, '-c', _RENDER_PY, url],
-                       capture_output=True, text=True, timeout=120)
-    if r.returncode:
-        raise RuntimeError('render failed: ' + (r.stderr or '')[-300:])
-    return json.loads(r.stdout)
+    errs = []
+    for py in _render_pythons():
+        chk = subprocess.run(
+            [py, '-c', 'import playwright'], capture_output=True,
+            text=True, timeout=30)
+        if chk.returncode:
+            errs.append(f'{py}: no playwright module')
+            continue
+        try:
+            r = subprocess.run([py, '-c', _RENDER_PY, url],
+                               capture_output=True, text=True,
+                               timeout=120)
+        except subprocess.TimeoutExpired:
+            errs.append(f'{py}: render timed out')
+            continue
+        if r.returncode:
+            errs.append(f'{py}: ' + (r.stderr or '')[-200:])
+            continue
+        return json.loads(r.stdout)
+    raise RuntimeError(
+        'render failed (no working playwright): ' +
+        ' | '.join(errs)[-280:])
 
 
 # ------------------------------------------------------------------
