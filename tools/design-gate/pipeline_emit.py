@@ -272,7 +272,7 @@ def _split_para(p, cap=240):
     return final
 
 
-def _copy_slot(copy, ref):
+def _copy_slot(copy, ref, comp=None):
     """The full-copy prop for a plan row's copy_ref (§4.3), verbatim
     from COPY.json — inline markdown kept for the shared renderer:
       bNN     → {heading, answer, before, items, list_ordered, qa,
@@ -311,8 +311,11 @@ def _copy_slot(copy, ref):
     # still carries real copy: terms become card titles, the first
     # sentence mentioning each term becomes its text (the §4.3
     # tagger's mechanical fill, not invented copy — same binding the
-    # picker's slot fragments apply)
-    if not slot.get('items'):
+    # picker's slot fragments apply). Only item-shaped comps consume
+    # {term, text} rows — a quote/stat slot would render a term as
+    # voice or number, which is neither its shape nor honest copy
+    # (F.1/Q.2).
+    if not slot.get('items') and comp in _TERM_ITEM_COMPS:
         terms = blk.get('terms') or []
         if terms:
             sents = []
@@ -330,6 +333,13 @@ def _copy_slot(copy, ref):
     return slot
 
 
+# comps whose item rows are {term, text} cards/steps — the terms fill
+# is honest for these and only these (quote-grid/proof-band/stat-band
+# bind voice/number slots, not term cards)
+_TERM_ITEM_COMPS = {'cards-n', 'sequence', 'text-index', 'link-grid',
+                    'comparison'}
+
+
 def _instance_body(ctx, contract, row, copy=None):
     """The <Comp props/> render call + its import — the ONE instance
     serializer (P.6/W6). Returns (import_line, render_line); the
@@ -339,7 +349,7 @@ def _instance_body(ctx, contract, row, copy=None):
     comp = contract['composition']
     camel = gate.camel(comp)
     c = contract['content'] or {}
-    slot = _copy_slot(copy, row.get('copy_ref'))
+    slot = _copy_slot(copy, row.get('copy_ref'), comp)
     # the plan's vector IS the copy: a stub paragraph may describe the
     # section, but the claim a reader sees is the one the row declares
     vec = (row.get('vector') or [{}])

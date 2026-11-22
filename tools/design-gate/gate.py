@@ -2738,10 +2738,20 @@ def _shell_card_pages(path, txt):
             continue
         pt = open(p, encoding='utf-8', errors='replace').read()
         pdir = os.path.dirname(p)
+        # astro emits root-absolute asset refs (/_astro/…); they
+        # resolve against the page's own dist root — the same base the
+        # pick service uses for /built responses
+        dist_root = pdir
+        while os.path.basename(dist_root) != 'dist' and \
+                dist_root != os.path.dirname(dist_root):
+            dist_root = os.path.dirname(dist_root)
         css = ''
         for lm in re.finditer(
                 r'<link\b[^>]*\bhref="([^"]+\.css)(?:\?[^"]*)?"', pt):
-            cp = os.path.normpath(os.path.join(pdir, lm.group(1)))
+            href = lm.group(1)
+            cp = os.path.normpath(
+                dist_root + href if href.startswith('/')
+                else os.path.join(pdir, href))
             if os.path.isfile(cp):
                 css += '\n' + open(cp, encoding='utf-8',
                                    errors='replace').read()
