@@ -114,19 +114,28 @@ def _read_cache(pd):
 
 def _warm_thread(pd, tag):
     import picker_app
-    try:
-        data, _err = picker_app.app_data(pd)
-    except Exception:
-        data = None
-    with _WARM_LOCK:
-        st = _WARM.get(pd) or {}
-        if st.get('tag') is not tag:
-            # a pick/sign landed mid-emit — this payload was built
-            # from pre-pick state and must be discarded, not served
-            return
-        st['data'] = data if data is not None else st.get('data')
-        st['busy'] = False
-        _WARM[pd] = st
+    while True:
+        try:
+            data, _err = picker_app.app_data(pd)
+        except Exception:
+            data = None
+        with _WARM_LOCK:
+            st = _WARM.get(pd) or {}
+            if st.get('tag') is not tag:
+                # a newer warm owns pd — this emitter is orphaned
+                return
+            if st.get('dirty') and data is not None:
+                # a pick/sign landed mid-emit: this payload was built
+                # from pre-pick state — discard it and re-emit under
+                # the same ownership (busy stays True, so no second
+                # emitter can start while the rebuild runs)
+                st['dirty'] = False
+                _WARM[pd] = st
+                continue
+            st['data'] = data if data is not None else st.get('data')
+            st['busy'] = False
+            _WARM[pd] = st
+            break
     if data:
         try:
             os.makedirs(_CACHE_DIR, exist_ok=True)
@@ -146,7 +155,11 @@ def _start_warm(pd):
             return
         tag = object()
         _WARM[pd] = {'data': (st or {}).get('data'), 'busy': True,
-                     'tag': tag}
+                     'tag': tag,
+                     # a pick while idle is WHY this emit starts —
+                     # clear the flag so the fresh payload commits
+                     # instead of discarding itself
+                     'dirty': False}
     threading.Thread(target=_warm_thread, args=(pd, tag),
                      daemon=True).start()
 
@@ -155,11 +168,18 @@ def _invalidate_warm(pd):
     """A pick/sign mutates what app_data emits — drop the live and
     disk-cached payload so the next /app-data re-emits instead of
     replaying the pre-pick snapshot (audit: picks showed null until
-    a manual re-warm)."""
+    a manual re-warm). busy is NOT touched: while an emit is in
+    flight the pick only flags the state dirty, and the running
+    emitter re-emits itself — marking idle would start a second
+    emitter over a pipeline mid-rebuild (review finding: the emit
+    can delete sources an active Astro build still needs)."""
     if not pd:
         return
     with _WARM_LOCK:
-        _WARM[pd] = {'data': None, 'busy': False, 'tag': None}
+        st = _WARM.setdefault(
+            pd, {'data': None, 'busy': False, 'tag': None})
+        st['data'] = None
+        st['dirty'] = True
     try:
         os.remove(_cache_path(pd))
     except OSError:

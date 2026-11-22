@@ -2928,7 +2928,7 @@ def _bank_fallback_css():
     # :where() wrapper keeps the rule at 0-1-0 specificity so an
     # authored .dark:.utility (0-2-0) always wins (audit F-5)
     for tok in sorted(toks):
-        if ':' in tok or '[' in tok:
+        if ':' in tok or ('[' in tok and '[#' not in tok):
             continue
         decl = _bank_dark_map(tok)
         if not decl:
@@ -2957,6 +2957,21 @@ _DARK_LINE = '#2a2f3a'
 
 def _bank_dark_map(tok):
     """the dark-role decl for a light-only utility token, or None."""
+    arb = re.fullmatch(r'(bg|text)-\[#([0-9a-fA-F]{3,8})\]', tok)
+    if arb:
+        prop, hexv = arb.groups()
+        rgb = _hex_rgb(hexv)
+        if rgb is None:
+            return None
+        lum = (0.299 * rgb[0] + 0.587 * rgb[1] + 0.114 * rgb[2]) / 255
+        # near-black text disappears on the darkened surfaces;
+        # near-white surfaces blind on the dark frame
+        if prop == 'text' and lum < 0.35:
+            return 'color:' + _DARK_TEXT_HI
+        if prop == 'bg' and lum > 0.55:
+            return 'background-color:' + (
+                '#%02x%02x%02x' % (22, 26, 34))
+        return None
     m = re.fullmatch(
         r'(bg|text|border|divide)-(white|black|' +
         '|'.join(_DARK_FAMILIES) +
@@ -2989,6 +3004,18 @@ def _bank_dark_map(tok):
             ('50', '100', '200', '300'):
         return 'border-color:' + _DARK_LINE
     return None
+
+
+def _hex_rgb(h):
+    """#rgb/#rgba/#rrggbb/#rrggbbaa → (r,g,b) ints, or None."""
+    if len(h) in (3, 4):
+        h = ''.join(c * 2 for c in h)
+    if len(h) != 8 and len(h) != 6:
+        return None
+    try:
+        return (int(h[0:2], 16), int(h[2:4], 16), int(h[4:6], 16))
+    except ValueError:
+        return None
 
 
 def _bank_scale(frag):
