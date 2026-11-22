@@ -1172,9 +1172,12 @@ def _type_sign_bundle(pd, variant, spec=None):
         rungs = _custom_ladder(fluid, custom)
         extra = ';'.join('--%s:%s' % kv for kv in rungs.items())
         if custom['body_face'] in _FACE_STACKS:
+            # the resolved vibe emits --font-body itself — the
+            # primitive alone would never reach the cascade
             extra += (';' if extra else '') + \
-                '--primitive-font-body:' + \
-                _FACE_STACKS[custom['body_face']]
+                '--primitive-font-body:%s;--font-body:%s' % (
+                    _FACE_STACKS[custom['body_face']],
+                    _FACE_STACKS[custom['body_face']])
         ladder = extra
     else:
         ladder = _ladder_css(
@@ -1322,6 +1325,7 @@ def type_ladder(pipeline, spec):
     if clean['body_face'] in _FACE_STACKS:
         varz['--primitive-font-body'] = \
             _FACE_STACKS[clean['body_face']]
+        varz['--font-body'] = _FACE_STACKS[clean['body_face']]
     return {'ok': True, 'spec': clean, 'vars': varz, 'px': px}
 
 
@@ -2297,6 +2301,14 @@ def app_data(pipeline):
     epicks = {p.get('element'): p.get('variant')
               for p in (_json_at(pd, 'ELEMENT-PICKS.json')
                         or {}).get('picks', [])}
+    type_spec = next(
+        ((p.get('bundle') or {}).get('type_spec')
+         for p in (_json_at(pd, 'ELEMENT-PICKS.json')
+                   or {}).get('picks', [])
+         if p.get('element') == 'type'
+         and isinstance(p.get('bundle'), dict)
+         and (p.get('bundle') or {}).get('type_spec')),
+        None)
 
     brief = _brief_file(ctx)
     dna = _json_at(pd, 'DNA.json') or _json_at(
@@ -2498,6 +2510,7 @@ def app_data(pipeline):
               for w in ('w3', 'w4')}
     return {'pipeline': pd,
             'picked_elements': epicks,
+            'type_spec': type_spec,
             'vibe_genes': _current_vibe_genes(pd),
             'fluid': tokens.get('fluid') or {},
             'bank_depth': bank_depth,
@@ -6082,41 +6095,53 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
     ['lead','text-l'],['body','text-m'],['small','text-s']];
 
   function tsEditor(){
-    var f=DATA.fluid||{},d=function(k,x){return f[k]!=null?f[k]:x},
-    ro=function(id,cur){var o='<option value="">custom</option>';
+    // seed from the signed custom ladder when one exists — reopening
+    // the board shows the saved params, not the pipeline defaults
+    var S=DATA.type_spec||null,f=DATA.fluid||{},
+    d=function(k,x){return f[k]!=null?f[k]:x},
+    dv=function(sf,ff,x){
+      return S&&S[sf]!=null?S[sf]:d(ff,x)},
+    selh=function(v){return S&&S.head_face===v?' selected':''},
+    selb=function(v){return S&&S.body_face===v?' selected':''},
+    ro=function(id,cur){var o='',seen=0;
       TS_RATIOS.forEach(function(p){
-        o+='<option value="'+p[0]+'"'+
-          (Math.abs(p[0]-(+cur))<0.0005?' selected':'')+'>'+
+        var s=Math.abs(p[0]-(+cur))<0.0005;if(s)seen=1;
+        o+='<option value="'+p[0]+'"'+(s?' selected':'')+'>'+
           p[1]+' '+p[0]+'</option>'});
+      o=(seen?'':'<option value="'+cur+'" selected>'+cur+
+        '</option>')+o+'<option value="">custom</option>';
       return '<select id="'+id+'" class="tsnum">'+o+'</select>'};
     return '<div class="tsed" id="tsed"><h2>custom ladder — '+
       'change the parameters</h2><div class="tsgrid">'+
       '<label>base min px<input id="ts-bmin" type="number" '+
-        'step="0.5" min="10" max="32" value="'+d('text_base_mob',16)+
-        '"></label>'+
+        'step="0.5" min="10" max="32" value="'+
+        dv('bmin','text_base_mob',16)+'"></label>'+
       '<label>base max px<input id="ts-bmax" type="number" '+
-        'step="0.5" min="10" max="40" value="'+d('text_base_desk',18)+
-        '"></label>'+
-      '<label>ratio min'+ro('ts-rmin',d('text_scale_mob',1.2))+
+        'step="0.5" min="10" max="40" value="'+
+        dv('bmax','text_base_desk',18)+'"></label>'+
+      '<label>ratio min'+ro('ts-rmin',dv('rmin','text_scale_mob',1.2))+
         '</label>'+
-      '<label>ratio max'+ro('ts-rmax',d('text_scale_desk',1.333))+
+      '<label>ratio max'+ro('ts-rmax',dv('rmax','text_scale_desk',1.333))+
         '</label>'+
       '<label>viewport min px<input id="ts-vpmin" type="number" '+
-        'step="10" min="240" max="1024" value="'+d('vp_min',320)+
-        '"></label>'+
+        'step="10" min="240" max="1024" value="'+
+        dv('vpmin','vp_min',320)+'"></label>'+
       '<label>viewport max px<input id="ts-vpmax" type="number" '+
-        'step="10" min="241" max="1920" value="'+d('vp_max',1280)+
-        '"></label>'+
+        'step="10" min="241" max="1920" value="'+
+        dv('vpmax','vp_max',1280)+'"></label>'+
       '<label>steps<input id="ts-steps" type="number" min="3" '+
-        'max="6" value="6"></label>'+
+        'max="6" value="'+(S&&S.steps||6)+'"></label>'+
       '<label>heading face<select id="ts-hf">'+
         '<option value="">vibe default</option>'+
-        '<option>sans</option><option>serif</option>'+
-        '<option>mono</option><option>mixed</option></select></label>'+
+        '<option'+selh('sans')+'>sans</option>'+
+        '<option'+selh('serif')+'>serif</option>'+
+        '<option'+selh('mono')+'>mono</option>'+
+        '<option'+selh('mixed')+'>mixed</option></select></label>'+
       '<label>body face<select id="ts-bf">'+
         '<option value="">vibe default</option>'+
-        '<option>sans</option><option>serif</option>'+
-        '<option>mono</option></select></label>'+
+        '<option'+selb('sans')+'>sans</option>'+
+        '<option'+selb('serif')+'>serif</option>'+
+        '<option'+selb('mono')+'>mono</option></select></label>'+
       '</div>'+
       '<div class="tsprev"><div class="tscol" id="ts-pa"></div>'+
       '<div class="tscol" id="ts-pb"></div></div>'+
@@ -6190,10 +6215,11 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
           st.textContent=j.message||(j.ok?'signed':'refused')}
         if(j.ok){toast(j.message);
           DATA.picked_elements=DATA.picked_elements||{};
-          // the server derives the variant — it echoes it in the
-          // message ('type → custom:<sha> …')
-          var mv=/\bcustom:[0-9a-f]+\b/.exec(j.message||'');
-          DATA.picked_elements.type=mv?mv[0]:'custom';
+          // the server derives the variant — the supersession
+          // message carries old → new, so take the LAST match
+          var mv=(j.message||'').match(/\bcustom:[0-9a-f]+\b/g);
+          DATA.picked_elements.type=mv?mv[mv.length-1]:'custom';
+          DATA.type_spec=tsSpec();
           BAKED=DATA.picked_elements.type;board()}})};
     tsRefresh()}
 
