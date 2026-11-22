@@ -3236,7 +3236,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
 .chip.on{color:var(--ink);border-color:var(--ink)}
 .vprev{max-width:760px;border:1px solid var(--line);border-radius:12px;
   overflow:hidden;margin:12px 0 20px;background:var(--panel)}
-.vprev .cb{height:340px;position:relative}
+.vprev .cb{height:340px;position:relative;overflow:hidden}
 .vprev iframe{width:100%;height:100%;border:0}
 .vprev .cf{display:flex;align-items:center;justify-content:space-between;
   padding:10px 14px;border-top:1px solid var(--line)}
@@ -3816,8 +3816,12 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
       function(j){
         if(j.preview){VRES=j;
           var cb=document.getElementById('vprevCb');
-          if(cb)cb.innerHTML='<iframe src="'+esc(j.preview)+
+          if(cb){cb.innerHTML='<iframe src="'+esc(j.preview)+
             '"></iframe>';
+            var vf=cb.querySelector('iframe');
+            if(vf)vf.addEventListener('load',function(){
+              setTimeout(fitIframes,60)});
+            setTimeout(fitIframes,80)};
           var tsf=document.querySelector('.tsfr');
           if(tsf&&j.typescale)tsf.src=j.typescale+
             (document.documentElement.dataset.theme==='dark'
@@ -4169,15 +4173,20 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
     function go(){
       clearTimeout(t);
       t=setTimeout(function(){
-        var sp=spec();
-        if(!sp.sources.length){var st=el.querySelector('#rmStatus');
-          if(st)st.textContent='pick a source or set a share above 0%';
+        var sp=spec(),st=el.querySelector('#rmStatus');
+        if(!slots.some(function(s){return s.id})){
+          if(st)st.textContent='pick a source first';
+          return}
+        if(!sp.sources.some(function(s){return s.share>0})){
+          if(st)st.textContent='set at least one share above 0%';
           return}
         api('/remix',{pipeline:PIPELINE,spec:sp}).then(function(j){
           if(j.error){toast(j.error);return}
           var f=document.getElementById('rmFrame');
-          if(f&&page)f.src=page.replace('/built/',
-            '/frame/'+j.slug+'/')})},140)}
+          if(f&&page){f.onload=function(){
+              setTimeout(fitIframes,80)};
+            f.src=page.replace('/built/',
+            '/frame/'+j.slug+'/')}})},140)}
 
     var h='<h1>Remix — DNA mixer</h1>'+
       '<div class="desc">Blend up to three DNA sources — this '+
@@ -4263,9 +4272,12 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
         if(rd.value==='mix')delete over[g];else over[g]=+rd.value;
         go()}});
     el.querySelector('#rmSave').onclick=function(){
-      var nm=el.querySelector('#rmName').value.trim();
+      var nm=el.querySelector('#rmName').value.trim(),
+          sp0=spec();
       if(!nm){toast('name the remix');return}
-      api('/remix-save',{pipeline:PIPELINE,name:nm,spec:spec()})
+      if(!sp0.sources.some(function(s){return s.share>0})){
+        toast('set at least one share above 0%');return}
+      api('/remix-save',{pipeline:PIPELINE,name:nm,spec:sp0})
         .then(function(r){
           var st=el.querySelector('#rmStatus');
           st.textContent=r.message||'';
@@ -4292,7 +4304,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
   function fitIframes(){
     var vw=document.documentElement.style.getPropertyValue('--vw')
         ||'100%';
-    document.querySelectorAll('.card .cb iframe,.vprev iframe').forEach(function(f){
+    document.querySelectorAll('.card .cb iframe,.vprev iframe,'+
+      '.rmprev iframe').forEach(function(f){
       // remember each frame's own src once — derived variants come
       // back from it, never from a previously-swapped one
       var orig=f.dataset.orig||(f.dataset.src||f.src.split('?')[0]);
@@ -4304,7 +4317,9 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
       if(u!==cur){f.dataset.src=u;
         f.src=u+(document.documentElement.dataset.theme==='dark'
           ?'?theme=dark':'')}
-      var cb=f.parentElement;
+      var cb=f.parentElement,
+          fixedBox=!!cb.closest('.vprev')||
+            cb.classList.contains('rmprev');
       if(vw==='100%'){
         var W=1280,s=Math.min(1,cb.clientWidth/W)||1;
         f.style.maxWidth='none';   // --vw cap would clamp the 1280 render
@@ -4313,12 +4328,11 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
         f.style.transformOrigin='0 0';
         try{var hh=f.contentDocument.body.scrollHeight;
           if(hh>0){f.style.height=hh+'px';
-            if(!cb.classList.contains('vprev'))
-              cb.style.height=(hh*s)+'px'}}catch(e){}
+            if(!fixedBox)cb.style.height=(hh*s)+'px'}}catch(e){}
       }else{
         f.style.maxWidth='';f.style.width='';f.style.transform='';
         f.style.height='';
-        if(!cb.classList.contains('vprev'))cb.style.height=''}
+        if(!fixedBox)cb.style.height=''}
     })}
 
   document.querySelectorAll('#vwCtl button').forEach(function(b){
