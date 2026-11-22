@@ -1211,7 +1211,7 @@ def emit_section_fragments(pd):
                           f'density-regular" data-sec="{sec}" '
                           f'data-comp="{c}"><div class="sec-inner">'
                           + inner + '</div></section>')
-                css = _LOREM_CSS
+                css = _LOREM_CSS + _SEQ_CSS
                 if unmap:
                     unmapped_map[c] = unmap
             emitted.append(c)
@@ -2901,7 +2901,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
     // propagate into live previews — built pages honour ?theme=
     document.querySelectorAll('.card iframe[data-src],.srow iframe').forEach(
       function(f){var u=(f.dataset.src||f.src).split('?')[0];
-        f.src=u+(m==='dark'?'?theme=dark':'')});
+        f.src=u+'?theme='+m});
   }
   function setTheme(m){applyTheme(m);
     try{localStorage.setItem('wfapp-theme',m)}catch(e){}}
@@ -3231,8 +3231,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
     var u='/built/'+encodeURI(DATA.pipeline+'/site/dist/'+alt.preview);
     var f=rowEl.querySelector('iframe');
     f.dataset.src=frame(u);
-    f.src=frame(u)+(document.documentElement.dataset.theme==='dark'
-      ?'?theme=dark':'');
+    f.src=frame(u)+'?theme='+document.documentElement.dataset.theme;
     rowEl.querySelector('[data-role="nm"]').textContent=alt.id;
     rowEl.querySelector('[data-role="pos"]').textContent=
       (r.idx+1)+'/'+r.alts.length;
