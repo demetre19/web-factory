@@ -1725,15 +1725,16 @@ def _hex_mix(a, b, amt):
         for x, y in zip(ta, tb))
 
 
-_FONT_NAME = re.compile(r'[^A-Za-z0-9 ._-]+')
+_FONT_BAD = re.compile(r'[<>"\'`{}();\\&]|url', re.I)
 
 
 def _clean_fonts(fams):
-    # donor font families are untrusted page CSS - strict charset so
-    # they can never break out of the style block
+    # donor font families are untrusted page CSS - strip only the
+    # chars that could break out of the style block; unicode family
+    # names (e.g. localized fonts) stay valid
     out = []
     for f in fams or []:
-        f = _FONT_NAME.sub('', str(f)).strip(' ._-')[:48]
+        f = _FONT_BAD.sub('', str(f)).strip(' ._-')[:48]
         if f and f not in out:
             out.append(f)
     return out[:3]
