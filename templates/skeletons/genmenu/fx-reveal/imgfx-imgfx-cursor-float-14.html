@@ -205,10 +205,31 @@
       return Math.max(8, window.innerWidth - w - 8);
     }
 
+    function inlinePlate(idx) {
+      const d = document.createElement('div');
+      d.className = 'row-inline-plate sm:hidden relative h-48 rounded-xl overflow-hidden my-2 border border-black/10 dark:border-white/10';
+      d.innerHTML = '<div class="absolute inset-0"></div>' +
+        '<svg viewBox="0 0 300 360" preserveAspectRatio="xMidYMid slice" class="absolute inset-0 w-full h-full"></svg>' +
+        '<span class="absolute bottom-2 left-3 font-mono text-[11px] text-white/80"></span>';
+      d.children[0].style.background = plates[idx].bg;
+      d.children[1].innerHTML = plates[idx].svg;
+      d.children[2].textContent = plates[idx].tag;
+      return d;
+    }
+
+    function showInline(idx, row) {
+      document.querySelectorAll('.row-inline-plate').forEach((n) => n.remove());
+      row.insertAdjacentElement('afterend', inlinePlate(idx));
+    }
+
+    function hideInline() {
+      document.querySelectorAll('.row-inline-plate').forEach((n) => n.remove());
+    }
+
     document.querySelectorAll('.index-row').forEach((row) => {
       const idx = Number(row.dataset.idx || 0);
       row.addEventListener('pointerenter', (e) => {
-        if (window.innerWidth < 640) { hidePlate(); return; }
+        if (window.innerWidth < 640) { hidePlate(); showInline(idx, row); return; }
         const x = floatX(e.clientX);
         currentX = x;
         currentY = e.clientY - 140;
@@ -219,12 +240,13 @@
         targetX = floatX(e.clientX);
         targetY = Math.max(20, Math.min(window.innerHeight - 360, e.clientY - 160));
       });
-      row.addEventListener('pointerleave', hidePlate);
+      row.addEventListener('pointerleave', () => { hidePlate(); hideInline(); });
       row.addEventListener('focus', () => {
+        if (window.innerWidth < 640) { hidePlate(); showInline(idx, row); return; }
         const r = row.getBoundingClientRect();
         showPlate(idx, Math.min(window.innerWidth - 310, r.right - 320), Math.max(24, r.top - 110));
       });
-      row.addEventListener('blur', hidePlate);
+      row.addEventListener('blur', () => { hidePlate(); hideInline(); });
     });
   </script>
 </body>
