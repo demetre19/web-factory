@@ -5879,12 +5879,18 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
          '</div>'});
     h+='</div><div class="rmgroups">';
     Object.keys(GRP).forEach(function(g){
+      // over[] persists across warm swaps — the radios must show the
+      // pinned slot, not always 'mix', or spec() saves a different
+      // mix than the controls display
+      var ov=over[g];
       h+='<div class="rmrow" data-g="'+esc(g)+'"><span>'+esc(GRP[g])+
          '</span><label><input type="radio" name="rg-'+esc(g)+
-         '" value="mix" checked>mix</label>';
+         '" value="mix"'+(ov==null||ov==='mix'?' checked':'')+
+         '>mix</label>';
       ['A','B','C'].forEach(function(L,i){
         h+='<label><input type="radio" name="rg-'+esc(g)+
-           '" value="'+i+'"'+(i>0&&!slots[i].id?' disabled':'')+
+           '" value="'+i+'"'+(ov===i?' checked':'')+
+           (i>0&&!slots[i].id?' disabled':'')+
            '>'+L+'</label>'});
       h+='</div>'});
     h+='</div><div class="rmsave"><input id="rmName" placeholder='+
