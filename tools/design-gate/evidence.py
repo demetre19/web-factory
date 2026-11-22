@@ -40,13 +40,19 @@ def _serve(root, port):
 
 
 def shots(ctx, port=18173):
-    dist = os.path.join(ctx.dir, 'site', 'dist')
-    if not os.path.isdir(dist):
-        print('evidence: no site/dist — run w6 first')
+    site = os.path.join(ctx.dir, 'site')
+    # HTML mode: the standalone site/html/<slug>.html artifact is the
+    # page — serve site/ so its ../dist/* asset refs resolve. A
+    # dist-only dir (pre-html emit, bare --astro) shoots dist as
+    # before.
+    html_mode = os.path.isdir(os.path.join(site, 'html'))
+    dist = os.path.join(site, 'dist')
+    if not html_mode and not os.path.isdir(dist):
+        print('evidence: no site/html or site/dist — run w6 first')
         return 1
     slugs = sorted(ctx.pages() or {'index': {}})
     os.makedirs(os.path.join(ctx.dir, 'shots'), exist_ok=True)
-    srv = _serve(dist, port)
+    srv = _serve(site if html_mode else dist, port)
     try:
         script = f'''
 import sys
@@ -63,8 +69,9 @@ def shoot(w, mode):
         b = p.chromium.launch()
         pg = b.new_page(viewport={{"width": w, "height": 1100}})
         for slug in slugs:
-            url = "http://127.0.0.1:{port}/" + (
-                "" if slug == "index" else slug + "/")
+            url = "http://127.0.0.1:{port}" + (
+                "/html/%s.html" % slug if {html_mode!r} else
+                "/" + ("" if slug == "index" else slug + "/"))
             pg.goto(url, wait_until="networkidle")
             if mode == "dark":
                 pg.evaluate(

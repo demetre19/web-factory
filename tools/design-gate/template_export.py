@@ -30,12 +30,20 @@ def _page_type(pdir):
 def main():
     pdir = os.path.abspath(sys.argv[1])
     site, slug = SF.site_of(pdir) or (None, None)
-    dist = os.path.join(pdir, 'site', 'dist')
-    src = (os.path.join(dist, slug, 'index.html') if slug else None)
+    # the standalone .html artifact is the canonical page (pipeline_emit
+    # --html); a dist-only dir (pre-html emit or a bare --astro run)
+    # falls back to the built page
+    src = (os.path.join(pdir, 'site', 'html', slug + '.html')
+           if slug else None)
     if not src or not os.path.isfile(src):
-        src = os.path.join(dist, 'index.html')
-    if not os.path.isfile(src):
-        raise SystemExit(f'{pdir}: no built page at {src} — run w6 first')
+        dist = os.path.join(pdir, 'site', 'dist')
+        src = (os.path.join(dist, slug, 'index.html')
+               if slug else None)
+        if not src or not os.path.isfile(src):
+            src = os.path.join(dist, 'index.html')
+    if not src or not os.path.isfile(src):
+        raise SystemExit(f'{pdir}: no html artifact at {src} — '
+                         'run w6 first')
     ptype = _page_type(pdir)
     out_dir = os.path.join(pdir, 'templates')
     os.makedirs(out_dir, exist_ok=True)

@@ -861,6 +861,11 @@ def check_scaffold(ctx):
     return f
 
 def check_astro_build(ctx):
+    if os.path.isdir(os.path.join(ctx.site, 'html')):
+        # HTML mode: the emit's internal build already produced dist
+        # + the site/html artifact — astro is the terminal packaging
+        # step (--astro) the downstream LLM runs, not a wave gate
+        return []
     if not os.path.isfile(os.path.join(ctx.site, 'package.json')):
         return ['P.1 no site/package.json — not an Astro project']
     if not os.path.isdir(os.path.join(ctx.site, 'node_modules')):

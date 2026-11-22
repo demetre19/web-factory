@@ -262,14 +262,19 @@ def _serve(dist, shots_root):
 
 def _pw(ctx):
     """Playwright-measured metrics for every plan page."""
-    dist = os.path.join(ctx.dir, 'site', 'dist')
-    if not os.path.isdir(dist):
-        return None, 'site/dist missing — run w6 first'
+    site = os.path.join(ctx.dir, 'site')
+    # HTML mode: serve site/ so the artifact's ../dist/* refs resolve
+    # — the standalone site/html/<slug>.html IS the page now; a
+    # dist-only dir keeps the old dist-root behavior.
+    html_mode = os.path.isdir(os.path.join(site, 'html'))
+    dist = os.path.join(site, 'dist')
+    if not html_mode and not os.path.isdir(dist):
+        return None, 'site/html and site/dist missing — run w6 first'
     shots = os.path.join(ctx.dir, 'shots')
     if not os.path.isdir(shots):
         os.makedirs(shots, exist_ok=True)
     slugs = sorted(ctx.pages() or {'index': {}})
-    srv, port = _serve(dist, shots)
+    srv, port = _serve(site if html_mode else dist, shots)
     try:
         script = f'''
 import json
@@ -283,8 +288,9 @@ out = {{}}
 with sync_playwright() as p:
     b = p.chromium.launch()
     for slug in slugs:
-        url = "http://127.0.0.1:{port}/" + (
-            "" if slug == "index" else slug + "/")
+        url = "http://127.0.0.1:{port}" + (
+            "/html/%s.html" % slug if {html_mode!r} else
+            "/" + ("" if slug == "index" else slug + "/"))
         page = {{"viewports": {{}}}}
         for w in widths:
             pg = b.new_page(viewport={{"width": w, "height": 1100}})

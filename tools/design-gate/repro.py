@@ -14,8 +14,8 @@ Rebuilt & compared:
                            LAYOUT-OPTIONS.json, DNA.json, TOKENS.json}
   pipeline_emit.py       → site/src/**, site/package.json,
                            tailwind.config.js, astro.config.mjs ...
-  pipeline_emit --build  → site/dist/**.html (only when the real dir
-                           carries dist/)
+  pipeline_emit --html   → site/dist/**.html + site/html/<slug>.html
+                           (only when the real dir carries dist/)
 
 The recorded w3 pick is re-read from the operator's approval record and
 passed explicitly, so the rebuilt plan reflects the approved option.
@@ -59,7 +59,10 @@ PAGE_COMPARE = ['COPY.json', 'DESIGN-PLAN.md', 'STUB.md',
 PREVIEW_COMPARE = ['layouts.html', 'variants.html', 'fine.html',
                    'system.html']
 PAGE_COMPARE_DIRS = {'sections': ()}   # *.contract.json, *.gate.json
-EMIT_SKIP = {'node_modules', 'dist', '.git', '__pycache__', '.astro'}
+# dist + the derived site/html artifact replay in the --html emit
+# below, not in the src-tree walk
+EMIT_SKIP = {'node_modules', 'dist', 'html', '.git', '__pycache__',
+             '.astro'}
 
 
 def _run(argv, cwd=None, env=None):
@@ -158,9 +161,11 @@ def _emit_bindings_hold(pdir, bindings):
     """The emit chain (emit+build, preview emits, template export)
     is replayable-free when its receipted inputs+outputs still hold
     in the real dir."""
-    # w6 receipts 'emit + build' as 'pipeline_emit.py --build'; the
-    # bare-emit replay reads the same inputs through the same chain
-    step = bindings.get('pipeline_emit.py --build')
+    # w6 receipts 'emit + build' — 'pipeline_emit.py --html' now
+    # ('--build' on pre-html runs); the bare-emit replay reads the
+    # same inputs through the same chain
+    step = (bindings.get('pipeline_emit.py --html')
+            or bindings.get('pipeline_emit.py --build'))
     return bool(step and _bindings_hold(pdir, step))
 
 
@@ -354,15 +359,19 @@ def rebuild(pdir, tmp, incremental=False):
                              'produced none)')
             elif not filecmp.cmp(a, b, shallow=False):
                 diffs.append(f'preview/{name}')
-    # dist html: byte compare when the real dir was built
+    # dist html + the site/html artifact: byte compare when the real
+    # dir was built — the --html emit replay produces both
     if (full or emit_skipped) and os.path.isdir(
             os.path.join(real_site, 'dist')):
         if not emit_skipped:
             _run([PY, os.path.join(HERE, 'pipeline_emit.py'), t_pdir,
-                  '--build'])
+                  '--html'])
         diffs += [f'site/dist/{d}' for d in _diff_tree(
             os.path.join(real_site, 'dist'),
             os.path.join(t_pdir, 'site', 'dist'), skip=())]
+        diffs += [f'site/html/{d}' for d in _diff_tree(
+            os.path.join(real_site, 'html'),
+            os.path.join(t_pdir, 'site', 'html'), skip=())]
         # template export replays unless ITS OWN receipt bindings
         # hold — emit_skipped only covers the emit chain
         if not emit_skipped or not (

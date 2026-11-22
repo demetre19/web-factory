@@ -330,12 +330,15 @@ def _steps(pdir, wave, build, site_dir):
     if wave == 'w6':
         em = [PY, T('pipeline_emit.py'), pdir]
         if build:
-            em.append('--build')
+            # --html: emit + internal astro build + the standalone
+            # site/html/<slug>.html artifact (the page's canonical
+            # form — astro is terminal packaging via --astro now)
+            em.append('--html')
         return [('emit + build', em,
                  [os.path.join(pdir, 'DESIGN-PLAN.md'),
                   os.path.join(pdir, 'DNA.json')],
                  ['COMPONENTS.md', 'BUILD-PLAN.json',
-                  'site/src/pages/system.astro']),
+                  'site/src/pages/system.astro', 'site/html/']),
                 ('template export', [PY, T('template_export.py'), pdir],
                  [os.path.join(pdir, 'DESIGN-PLAN.md')],
                  ['templates/'])]
