@@ -1651,7 +1651,10 @@ def _block_slot(block):
     if not block:
         return slot
     def txt(s):
-        return re.sub(r'\s+', ' ', re.sub(r'<[^>]+>', '', s)).strip()
+        # markup-derived text carries character references — unescape
+        # or _inline re-escapes them into literal &amp;/&#39;
+        return html.unescape(re.sub(
+            r'\s+', ' ', re.sub(r'<[^>]+>', '', s)).strip())
     m = re.search(r'<h[12][^>]*>(.*?)</h[12]>', block, re.S)
     if m:
         slot['heading'] = txt(m.group(1))
@@ -1660,11 +1663,24 @@ def _block_slot(block):
     ps = [p for p in ps if p]
     if ps:
         slot['before'] = ps[:3]
+    if len(ps) > 3:
+        slot['after'] = ps[3:]
     links = [{'text': t} for t in
              (txt(a) for a in re.findall(
                  r'<a\b[^>]*>(.*?)</a>', block, re.S)) if t]
     if links:
         slot['links'] = links[:4]
+    qas = [{'q': txt(m.group(1)), 'a': txt(m.group(2))}
+           for m in re.finditer(
+               r'<details[^>]*>\s*<summary[^>]*>(.*?)</summary>'
+               r'(.*?)</details>', block, re.S)]
+    if qas:
+        slot['qa'] = qas
+    lis = [txt(l) for l in
+           re.findall(r'<li[^>]*>(.*?)</li>', block, re.S)]
+    lis = [l for l in lis if l]
+    if lis:
+        slot['items'] = [{'term': l, 'text': ''} for l in lis]
     im = re.search(r'<img[^>]+src="([^"]+)"', block)
     if im:
         slot['media'] = im.group(1)
@@ -1673,6 +1689,16 @@ def _block_slot(block):
 
 def _iterm(i):
     return (i or {}).get('term') or (i or {}).get('title') or ''
+
+
+def _tail(after, links):
+    """trailing slot copy a mirror's skeleton has no slot for —
+    rendered after the comp's own content, never dropped"""
+    t = ''.join(f'<p class="mt-flow text-fluid-0">{_inline(l)}</p>'
+                for l in links)
+    t += ''.join(f'<p class="mt-flow text-fluid-0">{_inline(p)}</p>'
+                 for p in after)
+    return t
 
 
 def _slot_frag(comp, slot):
@@ -1691,6 +1717,14 @@ def _slot_frag(comp, slot):
     sub = slot.get('answer') or ''
     before = slot.get('before') or []
     items = slot.get('items') or []
+    # faq rows carry copy as qa pairs; they outrank the mechanical
+    # items-from-terms fill — a card-list alternative binds the real
+    # questions/answers, not keyword stubs
+    if slot.get('qa') and (
+            not items or slot.get('items_from') == 'terms'):
+        items = [{'term': q.get('q') or q.get('term') or '',
+                  'text': q.get('a') or q.get('text') or ''}
+                 for q in slot['qa']]
     links = [l.get('text') or f"[{l.get('anchor','')}]({l.get('href','')})"
              for l in (slot.get('links') or [])]
     after = slot.get('after') or []
@@ -2098,6 +2132,7 @@ def _slot_frag(comp, slot):
         if links:
             h += ('<a class="wf-cta-button mt-fluid-l" href="#">'
                   f'{_inline(links[0])}</a>')
+        h += _tail(after, [])
         h += '</div>'
     elif comp == 'badge-center':
         h += '<div class="text-center">'
@@ -2135,6 +2170,7 @@ def _slot_frag(comp, slot):
             f'<h3 class="text-fluid-1">{_val(_iterm(i))}</h3>'
             f'<p class="text-fluid-0">{_val(i.get("text") or "")}</p>'
             '</div></div>' for i in its) + '</div></div>'
+        h += _tail(after, links)
         h += '</div></div></div>'
     elif comp == 'timeline-steps':
         h += ('<div class="wf-timeline-1"><div class="sec-inner"><div>'
@@ -2160,6 +2196,7 @@ def _slot_frag(comp, slot):
             f'<h3 class="text-fluid-1">{_val(_iterm(i))}</h3>'
             f'<p class="text-fluid-0">{_val(i.get("text") or "")}</p>'
             '</div></div>' for i in its) + '</div></div>')
+        h += _tail(after, links)
         h += '</div></div></div></div>'
     elif comp == 'how-steps':
         h += '<div class="wf-how-it-works-2">' \
@@ -2209,6 +2246,7 @@ def _slot_frag(comp, slot):
         if links:
             h += ('<p class="mt-fluid-m"><a class="wf-cta-button" '
                   f'href="#">{_inline(links[0])}</a></p>')
+        h += _tail(after, [])
         h += '</div></div></div>'
     elif comp == 'contact-panel':
         h += ('<div class="wf-contact-1"><div class="contact-1">'
@@ -2233,6 +2271,7 @@ def _slot_frag(comp, slot):
             f'<h3 class="text-fluid-1">{_val(_iterm(i))}</h3>'
             f'<p class="text-fluid-0">{_val(i.get("text") or "")}</p>'
             '</div>' for i in its) + '</div></div>')
+        h += _tail(after, links)
         h += '</div></div></div>'
     elif comp == 'logo-wall':
         h += '<div class="split"><div class="sec-head">'
@@ -2249,7 +2288,8 @@ def _slot_frag(comp, slot):
             '<li><span class="brand-logo">'
             + _val(i.get('label') or i.get('term') or
                    i.get('title') or i.get('text') or '')
-            + '</span></li>' for i in its) + '</ul></div>'
+            + '</span></li>' for i in its) + '</ul>'
+        h += _tail(after, links) + '</div>'
     elif comp == 'banner-cta':
         h += ('<div class="wf-call-to-action-11"><div class="sec-inner">'
               '<div class="wf-cta-11-container">'
@@ -2262,6 +2302,7 @@ def _slot_frag(comp, slot):
         if links:
             h += ('<p class="mt-fluid-m"><a class="wf-cta-button" '
                   f'href="#">{_inline(links[0])}</a></p>')
+        h += _tail(after, [])
         h += '</div></div></div></div>'
     elif comp == 'cutout-cta-band':
         h += '<div class="split cta-band"><div class="stack">'
@@ -2274,6 +2315,7 @@ def _slot_frag(comp, slot):
             h += ('<div class="cta-row mt-act">'
                   f'<a class="wf-cta-button" href="#">'
                   f'{_inline(links[0])}</a></div>')
+        h += _tail(after, [])
         h += '</div>'
         if slot.get('media'):
             h += ('<figure class="cutout-slot"><img src="'
@@ -2298,6 +2340,7 @@ def _slot_frag(comp, slot):
               '<button class="wf-cta-button" type="submit">'
               + _inline(links[0] if links else 'Submit')
               + '</button></form>')
+        h += _tail(after, links[1:] if links else [])
         h += '</div></div>'
     elif comp == 'newsletter-band':
         h += ('<div class="wf-newsletter-1"><div class="sec-inner">'
@@ -2313,6 +2356,7 @@ def _slot_frag(comp, slot):
               'type="email" placeholder="Email">'
               '<button class="wf-cta-button" type="submit">'
               'Subscribe</button></form></div>')
+        h += _tail(after, links)
         h += '</div></div></div></div>'
     elif comp == 'footer-shop':
         h += ('<div class="wf-shop-footer-1"><div class="stack">'
@@ -2336,6 +2380,7 @@ def _slot_frag(comp, slot):
         if links:
             h += '<ul class="mt-stack list-plain">' + ''.join(
                 f'<li>{_inline(t)}</li>' for t in links) + '</ul>'
+        h += _tail(after, [])
         h += '</div></div></div></div></div>'
     elif comp == 'footer-bar':
         h += '<div class="stack gap-form"><div class="foot-cols">'
