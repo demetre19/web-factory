@@ -24,6 +24,7 @@ Without --option the tool projects the operator's recorded w3 pick
 the projection (layout_pick).
 """
 import hashlib
+import itertools
 import json
 import os
 import re
@@ -97,7 +98,12 @@ COLL_TYPE = {
 # structurally requiring one — where unspent brief media lands after
 # the hero and the split-media rows (which need an image to render)
 # have been served.
-MEDIA_PANE_EXTRA = {'editorial', 'comparison', 'proof-band'}
+MEDIA_PANE_EXTRA = {'editorial', 'comparison', 'proof-band',
+                    'form-panel', 'quote-grid'}
+# pane renderability is a RECIPE property — only the bank recipes
+# whose skeleton renders the image prop take the extras spend (a
+# form-panel on another recipe has no pane to fill)
+MEDIA_PANE_RECIPES = frozenset(RECIPE[c] for c in MEDIA_PANE_EXTRA)
 
 
 def page_type_of(copy):
@@ -599,7 +605,8 @@ def build(pdir, option=None):
                 row['columns'] = cols_for(len(b['items']))
         if comp == 'split-media' and media_left:
             m = media_left.pop(0)
-            row['image'] = {'src': m['src'], 'alt': m['alt']}
+            row['image'] = {'src': m.get('src') or m.get('file'),
+                            'alt': m.get('alt', '')}
             row['media_ratio'] = '4:3'
         # a run of >2 short micro answers is one organism (the reader
         # meets a family of quick answers, not three unrelated rows)
@@ -635,15 +642,21 @@ def build(pdir, option=None):
 
     # unspent brief media lands on rows whose comp renders a media
     # pane — a brief-declared photo is intake the page must carry,
-    # never an asset the emit drops (measured coverage, J.12)
-    if media_left:
+    # never an asset the emit drops. When pane rows outnumber the
+    # unspent assets the non-hero intake cycles from its head — a
+    # media-bearing comp never renders an empty pane while the brief
+    # declared photos (measured coverage is look-dependent: the tall
+    # looks stretch page height, J.12)
+    if media:
+        cyc = itertools.cycle(media[1:] or media)
         for r in rows:
-            if not media_left:
-                break
             if (r.get('composition') in MEDIA_PANE_EXTRA
+                    and r.get('recipe') in MEDIA_PANE_RECIPES
                     and not r.get('image')):
-                m = media_left.pop(0)
-                r['image'] = {'src': m['src'], 'alt': m['alt']}
+                m = (media_left.pop(0) if media_left
+                     else next(cyc))
+                r['image'] = {'src': m.get('src') or m.get('file'),
+                              'alt': m.get('alt', '')}
                 r['media_ratio'] = '4:3'
 
     rhetoric = []
