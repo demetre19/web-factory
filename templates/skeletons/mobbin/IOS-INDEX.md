@@ -17,7 +17,7 @@ measured from the image (mean luminance), not classified.
 | ios-paywalls | monetisation | 26 |
 | ios-profile | utility | 12 |
 | ios-search | utility | 12 |
-| ios-settings | utility | 12 |
+| ios-settings | utility | 24 |
 | ios-sheets | overlay | 24 |
 | ios-tab-bars | navigation | 27 |
 | ios-verification | flow | 12 |
