@@ -116,11 +116,11 @@ _ALLELE = {
     'columns': {
         '1': ({'S': '.card-grid,.grid{grid-template-columns:1fr! '
                'important}'},),
-        '2': ({'S': '.card-grid{grid-template-columns:'
-               'repeat(2,1fr)!important}'},),
+        '2': ({'S': '@media (min-width:560px){.card-grid{'
+               'grid-template-columns:repeat(2,1fr)!important}}'},),
         '3': ({},),
-        '4': ({'S': '.card-grid{grid-template-columns:'
-               'repeat(4,1fr)!important}'},),
+        '4': ({'S': '@media (min-width:720px){.card-grid{'
+               'grid-template-columns:repeat(4,1fr)!important}}'},),
     },
     'radius-personality': {
         'sharp': ({'L': '--radius:0;--primitive-radius:0;--r-card:0'},),
@@ -471,10 +471,32 @@ def _preset_genes(cluster, i):
 _CLUSTERS_DICT = {c: base for c, _n, base in _CLUSTERS}
 
 
+# vars that only recolour the page — two presets that differ only in
+# these render as palette twins, and the audit counts them identical
+_PALETTE_PREFIXES = ('--action-primary', '--bg-', '--text-',
+                     '--border', '--ink', '--font-body')
+
+
+def _struct_sig(r):
+    """a preset's *structural* signature: face, radius, spacing,
+    measure, shadows, type scale/weight and the shape rules — the
+    traits that make a vibe visibly distinct. Palette vars and the
+    body face are ignored so palette twins fold together."""
+    def fil(tok):
+        return tuple(sorted(
+            (k, v) for k, v in tok.items()
+            if not k.startswith(_PALETTE_PREFIXES)))
+    return (r['theme'], r['shape'],
+            fil(r['tokens']['light']), fil(r['tokens']['dark']))
+
+
 def _build_presets():
-    out, seen = [], set()
+    out, seen, seen_sig = [], set(), set()
     for cluster, n, _base in _CLUSTERS:
-        for i in range(1, n + 1):
+        got = 0
+        i = 0
+        while got < n and i < n * 12:
+            i += 1
             genes = _preset_genes(cluster, i)
             r = resolve(genes)
             sig = tuple(sorted(r['tokens']['light'].items()) +
@@ -495,8 +517,16 @@ def _build_presets():
                             [(r['shape'])])
                 tries += 1
             seen.add(sig)
-            out.append({'id': f'{cluster}-{i:02d}',
-                        'name': f'{cluster.title()} {i:02d}',
+            ssig = _struct_sig(r)
+            if ssig in seen_sig:
+                # structural twin of an earlier preset — same face /
+                # radius / spacing / shape, differing only in colour;
+                # skip it rather than minting a near-identical card
+                continue
+            seen_sig.add(ssig)
+            got += 1
+            out.append({'id': f'{cluster}-{got:02d}',
+                        'name': f'{cluster.title()} {got:02d}',
                         'cluster': cluster, 'genes': genes,
                         'theme': r['theme']})
     return out
