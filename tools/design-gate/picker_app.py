@@ -1166,11 +1166,11 @@ def emit_section_fragments(pd):
         cand = list(dict.fromkeys(
             ([comp] if comp else []) + (allowed.get(bid) or [])))
         for c in cand:
-            src = blocks.get(c) if c == comp else None
+            src = blocks.get(c)
             if src:
-                # only the row's OWN emitted comp carries this
-                # section's copy — every other candidate renders its
-                # skeleton bound to this block's §4.3 slots instead
+                # HARD RULE: a candidate renders the comp's real
+                # emitted fragment — the pipeline's own file — never
+                # a re-rendered skeleton when an artifact exists
                 markup, bhead, battr, css = src[0], src[1], src[2], ''
             else:
                 inner, unmap = _slot_frag(c, _copy_slot(pd, bid))
@@ -1235,6 +1235,14 @@ def emit_layout_previews(pd):
             want = comp_map.get(bid, comp)
             if want == comp:
                 parts.append(block)
+                continue
+            # HARD RULE: previews show emitted output, never an
+            # interpretation — reuse the comp's real emitted fragment
+            # (the same HTML the pipeline wrote for another page);
+            # _slot_frag is the last resort when no artifact exists
+            frag = blocks.get(want)
+            if frag:
+                parts.append(frag[0])
                 continue
             inner, _unmap = _slot_frag(want, _copy_slot(pd, bid))
             if inner is None:
