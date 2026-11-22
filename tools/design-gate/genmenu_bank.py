@@ -67,6 +67,7 @@ PACK_META = {
     "folio-ornamenta": ("deco-content", "decoration", ["decoration"], "decoration"),
     "folio-ornaments": ("deco-ornament", "decoration", ["ornament"], "ornament"),
     "cursor": ("fx-cursor", "decoration", ["micro interaction"], "cursor effect"),
+    "viscous": ("fx-goo", "decoration", ["micro interaction"], "liquid effect"),
 }
 
 # component-name prefix -> (baseline, section_class, category, query) override
@@ -313,6 +314,17 @@ def sniff_topology(html_text: str, baseline: str) -> tuple[str, str]:
         if "translate" in low or "hover:" in low:
             return "fx-hover", "medium"
         return "fx-motion", "low"
+    if baseline == "fx-goo":
+        low = c.lower()
+        if "wipe" in low or "transition" in low and "translatex" in c.lower():
+            return "fx-liquid-wipe", "medium"
+        if "blob" in low or "border-radius: 4" in low or "morph" in low:
+            return "fx-blob", "medium"
+        if "fegaussianblur" in c.replace(" ", "").lower() or "gooey" in low or "metaball" in low:
+            return "fx-gooey", "high"
+        if "merge" in low or "split" in low:
+            return "fx-merge", "medium"
+        return "fx-goo", "medium"
     if baseline == "fx-cursor":
         low = c.lower()
         if "magnet" in low or "attract" in low or "translate3d" in c:
