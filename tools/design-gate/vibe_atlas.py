@@ -537,8 +537,12 @@ def _build_presets():
                 continue
             seen_sig.add(ssig)
             got += 1
-            out.append({'id': f'{cluster}-{got:02d}',
-                        'name': f'{cluster.title()} {got:02d}',
+            # id from the generation index, not the kept count: the
+            # sweep is deterministic on (cluster, i), so structural-
+            # dedupe changes leave gaps instead of silently
+            # renumbering ids that signed picks already reference
+            out.append({'id': f'{cluster}-{i:02d}',
+                        'name': f'{cluster.title()} {i:02d}',
                         'cluster': cluster, 'genes': genes,
                         'theme': r['theme']})
     return out
