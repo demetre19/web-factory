@@ -804,6 +804,9 @@ def _handler():
                 fp = os.path.normpath('/' + fp.lstrip('/'))
                 _fpd = fp.split('/site/', 1)[0] if '/site/' in fp \
                     else ''
+                if os.path.basename(_fpd) == 'boards':
+                    # page-board options build in <pd>/boards/site
+                    _fpd = os.path.dirname(_fpd)
                 F = picker_app.VIBE_FAMILIES.get(fam) or \
                     picker_app.donor_family(_fpd, fam) or \
                     picker_app.remix_family(fam) or \
