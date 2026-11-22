@@ -1,6 +1,6 @@
-# GENMENU-INDEX — AI-Studio-generated navigation exemplars
+# GENMENU-INDEX — AI-Studio-generated exemplars
 
-80 navigation exemplars generated with Google AI Studio (operator-supplied
+200 exemplars generated with Google AI Studio / Claude (operator-supplied
 React + Tailwind sources), SSR-rendered to static open-state fragments and
 vectorised by `tools/design-gate/genmenu_bank.py` (deterministic — no paid
 calls).
@@ -8,19 +8,34 @@ calls).
 | dir | class | exemplars | packs |
 |---|---|---|---|
 | `nav-dock-left-drawer/` | nav-dock-left-drawer | 20 | drawernav-pro |
-| `nav-top-sheet/` | nav-top-sheet | ~15 | menucraft-react |
-| `nav-bottom-sheet/` | nav-bottom-sheet | ~5 | menucraft-react |
-| `nav-dropdown-menu/` | nav-dropdown-menu | ~14 | navmenu-architect |
-| `nav-mega-panel/` | nav-mega-panel | ~6 | navmenu-architect |
+| `nav-top-sheet/` | nav-top-sheet | 9 | menucraft-react |
+| `nav-bottom-sheet/` | nav-bottom-sheet | 11 | menucraft-react |
+| `nav-dropdown-menu/` | nav-dropdown-menu | 13 | navmenu-architect |
+| `nav-mega-panel/` | nav-mega-panel | 7 | navmenu-architect |
 | `nav-modal/` | nav-modal | 20 | modalnav-kit |
+| `footer-mega/` | footer-mega | 17 | footercraft |
+| `footer-columns/` | footer-columns | 14 | footercraft |
+| `footer-minimal/` | footer-minimal | 9 | footercraft |
+| `pricing-tiers/` | pricing-tiers | 31 | pricing-atlas |
+| `pricing-single/` | pricing-single | 5 | pricing-atlas |
+| `pricing-table/` | pricing-table | 4 | pricing-atlas |
+| `auth-form/` | auth-form | 10 | patternfolio |
+| `empty-state/` | empty-state | 10 | patternfolio |
+| `modal-dialog/` | modal-dialog | 16 | modal-atlas |
+| `modal-bottom-sheet/` | modal-bottom-sheet | 3 | modal-atlas |
+| `modal-slide-over/` | modal-slide-over | 1 | modal-atlas |
 
-Counts are per `tags.json` (80 rows). `nav-bottom-sheet` and `nav-top-sheet`
+Counts are per `tags.json` (200 rows). `nav-bottom-sheet` and `nav-top-sheet`
 are NEW topology ids — web Mobbin returned no exemplars for these classes
-(iOS-heavy classes).
+(iOS-heavy classes). `footer-*`, `pricing-*`, `auth-form`, `empty-state` and
+`modal-*` classes are new to this corpus (generator families, distinct from
+the mobbin corpus signatures).
 
 ## Per-exemplar files
 
-- `<slug>.tsx` — original component source (provenance)
+- `<slug>.tsx` — original component source (provenance). Multi-component
+  batch files are banked once per topology dir as `<pack>-src-<file>.tsx`
+  and referenced by `component_source`.
 - `<slug>.html` — SSR open-state fragment (canonical artifact; Tailwind classes)
 - `<slug>.topo.json` — element_sig + semantic tree (same schema as mobbin)
 - `<slug>.spec.json` — tags {section_class, topology_class, style[], category[],
