@@ -119,13 +119,25 @@ PAGE_BOARDS = [
      'desc': 'Layout options (w3) and look options (w4) for the '
              'emitted page — card pick posts a signed approval'},
     {'id': 'service', 'title': 'Service', 'icon': 'doc',
-     'desc': 'Composition options the plan offers per section'},
+     'desc': 'Section composition for the service page — this '
+             'pipeline emits one page, so the previews render the '
+             'live page\'s sections; a pick signs the composition '
+             'applied to that plan'},
     {'id': 'location', 'title': 'Location', 'icon': 'pin',
-     'desc': 'Composition options the plan offers per section'},
+     'desc': 'Section composition for the location page — this '
+             'pipeline emits one page, so the previews render the '
+             'live page\'s sections; a pick signs the composition '
+             'applied to that plan'},
     {'id': 'contact', 'title': 'Contact', 'icon': 'mail',
-     'desc': 'Composition options the plan offers per section'},
+     'desc': 'Section composition for the contact page — this '
+             'pipeline emits one page, so the previews render the '
+             'live page\'s sections; a pick signs the composition '
+             'applied to that plan'},
     {'id': 'blog', 'title': 'Blog', 'icon': 'news',
-     'desc': 'Composition options the plan offers per section'},
+     'desc': 'Section composition for the blog page — this '
+             'pipeline emits one page, so the previews render the '
+             'live page\'s sections; a pick signs the composition '
+             'applied to that plan'},
 ]
 
 # galleries whose cards pick an element (element → comp ids)
