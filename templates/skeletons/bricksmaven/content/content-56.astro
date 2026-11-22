@@ -61,12 +61,10 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
 
         {list.length > 0 && <div class="bm-content-56-data">
           <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
-            <>
               <div class="bm-content-56-data-card card">
                 <h3>{it.stat || it.term || it.title}</h3>
                 <p class="text-fluid-0">{it.text}</p>
               </div>
-            </>
             ))}</div>
         </div>}
       </div>

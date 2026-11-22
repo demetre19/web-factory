@@ -53,25 +53,21 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
       </div>
       {list.length > 0 &&       <div class="bm-footer-19__content row between">
         {list.length > 0 && <div class="row gap-fluid-m">{(list || []).map((it) => (
-          <>
             <div class="bm-footer-19__content-column row between">
               <h3 class="text-fluid-1">{it.term || it.title}</h3>
               <a class="text-fluid-0" href={it.href}>{it.icon && <IconChip name={it.icon} />} {it.label || it.term || it.anchor || it.text}</a>
               {(it.label || it.term || it.anchor) && it.text && <p class="text-fluid-0">{it.text}</p>}
               {(it.items || []).length > 0 && <div class="bm-footer-19-phone-ul row between">
                 <div class="row gap-fluid-m">{((it.items || []) || []).map((it2) => (
-                  <>
                     <div class="bm-footer-19-phone-list row between">
                       <div>
                         <a class="text-fluid-0" href={it2.href}>{it2.icon && <IconChip name={it2.icon} />} {it2.label || it2.term || it2.anchor || it2.text}</a>
                         {(it2.label || it2.term || it2.anchor) && it2.text && <p class="text-fluid-0">{it2.text}</p>}
                       </div>
                     </div>
-                  </>
                   ))}</div>
               </div>}
             </div>
-          </>
           ))}</div>}
       </div>
       }

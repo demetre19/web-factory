@@ -60,7 +60,6 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
   {list.length > 0 &&   <div class="sec-inner">
     {list.length > 0 &&     <div>
       {list.length > 0 && <div class="gridcard-8-grid-ul">{(list || []).map((it) => (
-          <>
             <div class="gridcard-8-card card">
               <div class="gridcard-8-card__box">
                 {it.icon && <IconChip name={it.icon} />}
@@ -68,7 +67,6 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
                 <p class="text-fluid-0">{it.text}</p>
               </div>
             </div>
-          </>
           ))}</div>}
     </div>
     }

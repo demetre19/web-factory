@@ -54,12 +54,10 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
         {act.label && <p class="mt-fluid-m"><a class="wf-cta-button" href={act.href}>{act.label}</a></p>}
       </div>
       {list.length > 0 && <div class="feature-13-phases-list">{(list || []).map((it) => (
-          <>
             <div class="feature-13-phases-item card">
               <h3 class="text-fluid-1">{it.term || it.title}</h3>
               <p class="text-fluid-0">{it.text}</p>
             </div>
-          </>
           ))}</div>}
     </div>
   </div>

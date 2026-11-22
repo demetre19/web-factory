@@ -70,7 +70,6 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
 
       </div>
       {list.length > 0 && <div class="bm-feature-56-feature-list">{(list || []).map((it) => (
-          <>
             <div class="card">
               <div class="bm-feature-56-feature-card__content">
                 {it.icon && <IconChip name={it.icon} />}
@@ -78,20 +77,17 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
                 <p class="text-fluid-0">{it.text}</p>
               </div>
             </div>
-          </>
           ))}</div>}
       <div class="bm-feature-56__footer">
         <div class="bm-feature-56__sub-feature-list">
           {links.length > 0 && <div class="bm-list">
             <div class="grid-auto gap-fluid-m">{(links || []).map((it) => (
-              <>
                 <div class="bm-list-item card">
                   <div>
                     <h4 class="text-fluid-1">{it.term || it.title}</h4>
                     <p class="text-fluid-0">{it.text}</p>
                   </div>
                 </div>
-              </>
               ))}</div>
           </div>}
           {act.label && <p class="mt-fluid-m"><a class="wf-cta-button" href={act.href}>{act.label}</a></p>}

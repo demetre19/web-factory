@@ -1419,15 +1419,19 @@ def translate(payload, stem):
 
 
 def _frag(item, pad):
-    """A map callback returns ONE expression: an item template with two
-    or more top-level siblings rides a fragment, else esbuild rejects
-    the compiled arrow (`Expected ")" but found "{"`)."""
+    """A map callback returns ONE element: an item template with two or
+    more top-level siblings (or a bare `{…}` root) rides a fragment,
+    else esbuild rejects the compiled arrow."""
     lines = [ln for ln in item.split('\n') if ln.strip()]
     if not lines:
         return item
     ind = min(len(ln) - len(ln.lstrip()) for ln in lines)
-    tops = [ln for ln in lines if len(ln) - len(ln.lstrip()) == ind]
-    if len(tops) < 2:
+    tops = [ln.lstrip() for ln in lines
+            if len(ln) - len(ln.lstrip()) == ind
+            and not ln.lstrip().startswith('</')]
+    # a lone `{cond && …}` root is an expression, not an element — the
+    # arrow would return an object literal; it needs the fragment too
+    if len(tops) < 2 and not (tops and tops[0].startswith('{')):
         return item
     return f'{pad}    <>\n' + item + f'{pad}    </>\n'
 

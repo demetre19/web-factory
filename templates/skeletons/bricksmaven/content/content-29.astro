@@ -67,7 +67,6 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
           <div class="content-29__list-cta">
             {list.length > 0 && <div class="bm-list">
               <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
-                <>
                   <div class="bm-list__item card">
                     {it.icon && <IconChip name={it.icon} />}
                     <div class="stack">
@@ -75,21 +74,18 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
                       {it.text && (it.term || it.title) && <p class="text-fluid-0">{it.text}</p>}
                     </div>
                   </div>
-                </>
                 ))}</div>
             </div>}
             {act.label && <p class="mt-fluid-m"><a class="wf-cta-button" href={act.href}>{act.label}</a></p>}
           </div>
           {links.length > 0 && <div>
             <div class="grid-auto gap-fluid-m">{(links || []).map((it) => (
-              <>
                 <div class="content-29-list-item card">
                   <div class="content-29-list-item__data">
                     <h3>{it.stat || it.term || it.title}</h3>
                     <p class="text-fluid-0">{it.text}</p>
                   </div>
                 </div>
-              </>
               ))}</div>
           </div>}
         </div>

@@ -62,7 +62,6 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
         {act.label && <p class="mt-fluid-m"><a class="wf-cta-button" href={act.href}>{act.label}</a></p>}
       </div>
       {list.length > 0 && <div class="bm-event-section-1-grid-ul">{(list || []).map((it) => (
-          <>
             <div class="card">
               <div class="bm-event-section-1-card__content">
                 <div class="bm-event-section-1-card__header">
@@ -90,7 +89,6 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
                 </div>
               </div>
             </div>
-          </>
           ))}</div>}
     </div>
   </div>

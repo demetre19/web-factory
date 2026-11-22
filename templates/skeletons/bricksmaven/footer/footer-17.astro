@@ -59,23 +59,19 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
       {list.length > 0 &&       <div>
         {list.length > 0 && <div class="bm-footer-17-nav-menu row between">
           <div class="row gap-fluid-m">{(list || []).map((it) => (
-            <>
               <div>
                 <a class="text-fluid-0" href={it.href}>{it.icon && <IconChip name={it.icon} />} {it.label || it.term || it.anchor || it.text}</a>
                 {(it.label || it.term || it.anchor) && it.text && <p class="text-fluid-0">{it.text}</p>}
               </div>
-            </>
             ))}</div>
         </div>}
       </div>
       }
       {links.length > 0 && <div class="bm-footer-17__contact-info row between">{(links || []).map((it) => (
-          <>
             <div>
               <a class="text-fluid-0" href={it.href}>{it.icon && <IconChip name={it.icon} />} {it.label || it.term || it.anchor || it.text}</a>
               {(it.label || it.term || it.anchor) && it.text && <p class="text-fluid-0">{it.text}</p>}
             </div>
-          </>
           ))}</div>}
       {links.length === 0 && <p class="footer-legal-nav text-fluid-0">Copyright {new Date().getFullYear()} {brand}</p>}
       <div class="bm-footer-17__footer row between">

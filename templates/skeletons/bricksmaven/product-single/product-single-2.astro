@@ -66,7 +66,6 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
           {links.length > 0 &&           <div class="bm-product-single-2__sticky-wrapper">
             {links.length > 0 && <div class="bm-product-single-usp-1">
               <div class="grid-auto gap-fluid-m">{(links || []).map((it) => (
-                <>
                   <div class="bm-product-single-usp-1-list-item card">
                     {it.icon && <IconChip name={it.icon} />}
                     <div class="stack">
@@ -74,7 +73,6 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
                       {it.text && (it.term || it.title) && <p class="text-fluid-0">{it.text}</p>}
                     </div>
                   </div>
-                </>
                 ))}</div>
             </div>}
           </div>

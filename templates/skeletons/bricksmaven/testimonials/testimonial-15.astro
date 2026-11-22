@@ -59,7 +59,6 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
   {list.length > 0 &&   <div class="sec-inner">
     {list.length > 0 &&     <div>
       {list.length > 0 && <div class="testimonial-15-content">{(list || []).map((it) => (
-          <>
             <div class="card">
               <div class="testimonial-15-content__card-author">
                 <div class="testimonial-15-content__card-meta">
@@ -69,7 +68,6 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
               </div>
               <p class="text-fluid-0">{it.text}</p>
             </div>
-          </>
           ))}</div>}
     </div>
     }

@@ -62,13 +62,11 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
   {sub && <p class="mt-stack lede" set:html={inline(sub)} />}
   {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
         {list.length > 0 && <div class="bm-content-45__columns">{(list || []).map((it) => (
-            <>
               <div class="bm-content-45__column card">
                 {it.icon && <IconChip name={it.icon} />}
                 <h3 class="text-fluid-1">{it.term || it.title}</h3>
                 <p class="text-fluid-0">{it.text}</p>
               </div>
-            </>
             ))}</div>}
       </div>
       <div class="bm-content-45__content">

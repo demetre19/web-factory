@@ -94,14 +94,12 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
       }
       {links.length > 0 &&       <div class="bm-portfolio-single__case-section-2">
         {links.length > 0 && <div class="bm-portfolio-single-result-list bm-portfolio-single-result-list--alt">{(links || []).map((it) => (
-            <>
               <div class="bm-portfolio-single-result-item card">
                 {it.icon && <IconChip name={it.icon} />}
                 <h3 class="text-fluid-1">{it.term || it.title}</h3>
                 <p class="text-fluid-0">{it.text}</p>
                 <p class="text-fluid-0">{it.text}</p>
               </div>
-            </>
             ))}</div>}
       </div>
       }
@@ -126,14 +124,12 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
           {links.length > 0 &&           <div class="bm-contact-widget-4__data">
             {links.length > 0 && <div class="bm-contact-25-side-list-ul">
               <div class="grid-auto gap-fluid-m">{(links || []).map((it) => (
-                <>
                   <div class="bm-contact-25-side-list-item card">
                     <div class="bm-contact-25-side-list-item__detail">
                       <h3 class="text-fluid-1"><a class="text-fluid-0" href={it.href}>{it.icon && <IconChip name={it.icon} />} {it.label || it.term || it.anchor || it.text}</a></h3>
                       {(it.label || it.term || it.anchor) && it.text && <p class="text-fluid-0">{it.text}</p>}
                     </div>
                   </div>
-                </>
                 ))}</div>
             </div>}
           </div>
@@ -143,7 +139,6 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
     </div>
     {links.length > 0 &&     <div class="bm-portfolio-single-3__footer-container">
       {links.length > 0 && <div class="bm-portfolio-2-related-list">{(links || []).map((it) => (
-          <>
             <div class="card">
               <div class="bm-portfolio-2-related-card__content">
                 <div class="bm-portfolio-2-related-card__top">
@@ -154,7 +149,6 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
                 <p class="text-fluid-0">{it.text}</p>
               </div>
             </div>
-          </>
           ))}</div>}
     </div>
     }

@@ -54,23 +54,19 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
         {head && <h2 class="text-fluid-2">{head}</h2>}
         {list.length > 0 && <div class="bm-off-canvas-nav-ul">
           <div class="nav-group">{(list || []).map((it) => (
-            <>
               <div class="card">
                 <h3 class="text-fluid-1"><a class="text-fluid-0" href={it.href}>{it.icon && <IconChip name={it.icon} />} {it.label || it.term || it.anchor || it.text}</a></h3>
                 {(it.label || it.term || it.anchor) && it.text && <p class="text-fluid-0">{it.text}</p>}
               </div>
-            </>
             ))}</div>
         </div>}
         <div class="bm-off-canvas-6__contact-footer">
           {links.length > 0 && <div class="bm-off-canvas-contact">
             <div class="nav-group">{(links || []).map((it) => (
-              <>
                 <div class="bm-off-canvas-contact-item card">
                   <h3 class="text-fluid-1"><a class="text-fluid-0" href={it.href}>{it.icon && <IconChip name={it.icon} />} {it.label || it.term || it.anchor || it.text}</a></h3>
                   {(it.label || it.term || it.anchor) && it.text && <p class="text-fluid-0">{it.text}</p>}
                 </div>
-              </>
               ))}</div>
           </div>}
           {sub && <p class="text-fluid-0" set:html={inline(sub)} />}

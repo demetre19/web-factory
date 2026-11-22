@@ -70,7 +70,6 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
       }
       {list.length > 0 &&       <div class="bm-hero-80__content">
         {list.length > 0 && <div class="bm-hero-80-data-list">{(list || []).map((it) => (
-            <>
               <div class="card">
                 <div class="bm-hero-80-data-card__top">
                   {it.icon && <IconChip name={it.icon} />}
@@ -82,7 +81,6 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
                 </div>
                 <p class="text-fluid-0">{it.text}</p>
               </div>
-            </>
             ))}</div>}
       </div>
       }

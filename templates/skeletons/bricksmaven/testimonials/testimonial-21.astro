@@ -62,7 +62,6 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
   {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
         {list.length > 0 &&         <div>
           {list.length > 0 && <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
-            <>
               <div class="testimonial-21-content__item card">
                 {it.icon && <IconChip name={it.icon} />}
                 <div class="stack">
@@ -76,20 +75,17 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
                   </div>
                 </div>
               </div>
-            </>
             ))}</div>}
         </div>
         }
       </div>
       {links.length > 0 && <div class="testimonial-21-post">{(links || []).map((it) => (
-          <>
             <div class="card">
               <div class="testimonial-21-post__card grid-auto gap-fluid-l">
                 {it.icon && <IconChip name={it.icon} />}
                 <h4 class="text-fluid-1">{it.term || it.title}</h4>
               </div>
             </div>
-          </>
           ))}</div>}
     </div>
   </div>

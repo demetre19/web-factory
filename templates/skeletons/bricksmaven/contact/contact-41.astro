@@ -71,7 +71,6 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
         </div>
         {links.length > 0 && <div>
           <div class="grid-auto gap-fluid-m">{(links || []).map((it) => (
-            <>
               <div class="bm-contact-41-contact-card card">
                 <div class="bm-contact-41-contact-card__team-data">
                   <div>
@@ -90,7 +89,6 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
                   {(it.label || it.term || it.anchor) && it.text && <p class="text-fluid-0">{it.text}</p>}
                 </div>
               </div>
-            </>
             ))}</div>
         </div>}
       </div>

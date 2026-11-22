@@ -58,7 +58,6 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
 
       {list.length > 0 && <div>
         <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
-          <>
             <div class="bm-li-benefits card">
               {it.icon && <IconChip name={it.icon} />}
               <div class="stack">
@@ -66,7 +65,6 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
                 {it.text && (it.term || it.title) && <p class="text-fluid-0">{it.text}</p>}
               </div>
             </div>
-          </>
           ))}</div>
       </div>}
       {act.label && <p class="mt-fluid-m"><a class="wf-cta-button" href={act.href}>{act.label}</a></p>}

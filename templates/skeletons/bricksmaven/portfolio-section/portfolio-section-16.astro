@@ -65,7 +65,6 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
       </div>}
 
       {list.length > 0 && <div class="bm-portfolio-8-related-list">{(list || []).map((it) => (
-          <>
             <div class="bm-portfolio-8-related-card card">
               <div class="bm-portfolio-8-related-card__content">
                 {it.icon && <IconChip name={it.icon} />}
@@ -74,7 +73,6 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
                 {(it.label || it.term || it.anchor) && it.text && <p class="text-fluid-0">{it.text}</p>}
               </div>
             </div>
-          </>
           ))}</div>}
     </div>
   </div>

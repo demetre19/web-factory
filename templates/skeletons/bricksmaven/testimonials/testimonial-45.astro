@@ -71,7 +71,6 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
       {links.length > 0 &&       <div>
         {links.length > 0 &&         <div>
           {links.length > 0 && <div class="grid-auto gap-fluid-m">{(links || []).map((it) => (
-            <>
               <div class="card">
                 <div class="bm-testimonial-45-card__content">
                   {it.icon && <IconChip name={it.icon} />}
@@ -85,7 +84,6 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
                   </div>
                 </div>
               </div>
-            </>
             ))}</div>}
         </div>
         }

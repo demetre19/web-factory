@@ -68,12 +68,10 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
     }
     {list.length > 0 &&     <div>
       {list.length > 0 && <div class="counter-7-grid-ul">{(list || []).map((it) => (
-          <>
             <div class="counter-7-card card">
               <h3>{it.stat || it.term || it.title}</h3>
               <p class="text-fluid-0">{it.text}</p>
             </div>
-          </>
           ))}</div>}
     </div>
     }

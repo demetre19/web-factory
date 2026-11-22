@@ -55,13 +55,11 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
   <div class="sec-inner">
     <div class="contact-3-container">
       {list.length > 0 && <div class="contact-3-grid-ul">{(list || []).map((it) => (
-          <>
             <div class="contact-3-card card">
               {it.icon && <IconChip name={it.icon} />}
               <h3 class="text-fluid-1">{it.term || it.title}</h3>
               <p class="text-fluid-0">{it.text}</p>
             </div>
-          </>
           ))}</div>}
       <div class="contact-3-footer">
         <div class="contact-3-form">

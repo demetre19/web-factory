@@ -74,12 +74,10 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
               <div class="bm-product-archive-off-canvas__content">
                 {list.length > 0 &&                 <div class="bm-product-archive-2__filter-container">
                   {list.length > 0 && <div class="nav-group">{(list || []).map((it) => (
-                    <>
                       <div class="bm-product-archive__filter-row card">
                         {it.icon && <IconChip name={it.icon} />}
                         <h4 class="text-fluid-1">{it.term || it.title}</h4>
                       </div>
-                    </>
                     ))}</div>}
                 </div>
                 }

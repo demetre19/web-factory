@@ -67,7 +67,6 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
       {list.length > 0 &&       <div>
         {list.length > 0 &&         <div>
           {list.length > 0 && <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
-            <>
               <div class="card">
                 <div class="bm-portfolio-section-20-card__content">
                   <h3 class="text-fluid-1">{it.term || it.title}</h3>
@@ -79,7 +78,6 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
                   {(it.label || it.term || it.anchor) && it.text && <p class="text-fluid-0">{it.text}</p>}
                 </div>
               </div>
-            </>
             ))}</div>}
         </div>
         }

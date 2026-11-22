@@ -68,7 +68,6 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
 
       </div>
       {list.length > 0 && <div class="bm-testimonial-56-list">{(list || []).map((it) => (
-          <>
             <div class="card">
               <div class="bm-testimonial-56-card__content">
                 {it.icon && <IconChip name={it.icon} />}
@@ -83,7 +82,6 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
               </div>
               {image && image.src && <figure class="media-bg" aria-hidden="true"><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[960, 1440, 1920]} sizes="100vw" width={1600} height={900} loading="eager" fetchpriority="high" /></figure>}
             </div>
-          </>
           ))}</div>}
     </div>
   </div>

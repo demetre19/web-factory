@@ -53,7 +53,6 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
   {sub && <p class="mt-stack lede" set:html={inline(sub)} />}
   {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
         {list.length > 0 && <div class="bm-content-column-wrapper">{(list || []).map((it) => (
-            <>
               <div class="bm-content-column card">
                 {it.icon && <IconChip name={it.icon} />}
                 <div class="stack">
@@ -61,18 +60,15 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
                   {it.text && (it.term || it.title) && <p class="text-fluid-0">{it.text}</p>}
                 </div>
               </div>
-            </>
             ))}</div>}
       </div>
       {links.length > 0 &&       <div class="bm-contact-38-contact-data">
         {links.length > 0 && <div class="grid-auto gap-fluid-m">{(links || []).map((it) => (
-          <>
             <div class="bm-contact-38-card card">
               {it.icon && <IconChip name={it.icon} />}
               <h3 class="text-fluid-1">{it.term || it.title}</h3>
               <p class="text-fluid-0">{it.text}</p>
             </div>
-          </>
           ))}</div>}
       </div>
       }

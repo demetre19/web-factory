@@ -64,7 +64,6 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
 
       {list.length > 0 &&       <div>
         {list.length > 0 && <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
-          <>
             <div class="bm-testimonial-54-slide card">
               <div class="bm-testimonial-54-slide__content">
                 <div class="bm-testimonial-54-slide__client-review">
@@ -89,7 +88,6 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
               </div>
               {image && image.src && <figure class="media-bg" aria-hidden="true"><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[960, 1440, 1920]} sizes="100vw" width={1600} height={900} loading="eager" fetchpriority="high" /></figure>}
             </div>
-          </>
           ))}</div>}
       </div>
       }

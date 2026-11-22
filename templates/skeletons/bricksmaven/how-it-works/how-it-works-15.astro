@@ -57,7 +57,6 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
       </div>}
 
       {list.length > 0 && <div class="hworks-15-list">{(list || []).map((it) => (
-          <>
             <div class="hworks-15-card card">
               {it.icon && <IconChip name={it.icon} />}
               <div class="stack">
@@ -68,7 +67,6 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
               <h3 class="text-fluid-1">{it.term || it.title}</h3>
               <p class="text-fluid-0">{it.text}</p>
             </div>
-          </>
           ))}</div>}
     </div>
   </div>

@@ -58,7 +58,6 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
         {head && <h1 class="text-fluid-4">{head}</h1>}
         {list.length > 0 &&         <div class="bm-portfolio-single-meta-data-1">
           {list.length > 0 && <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
-            <>
               <div class="card">
                 {it.icon && <IconChip name={it.icon} />}
                 <div class="stack">
@@ -67,7 +66,6 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
                 </div>
                 <p class="text-fluid-0">{it.text}</p>
               </div>
-            </>
             ))}</div>}
         </div>
         }
@@ -118,7 +116,6 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
     </div>
     {links.length > 0 &&     <div class="bm-portfolio-single-1__footer-container">
       {links.length > 0 && <div class="bm-portfolio-related-list">{(links || []).map((it) => (
-          <>
             <div class="card">
               <div class="bm-portfolio-related-card__content">
                 {it.icon && <IconChip name={it.icon} />}
@@ -126,7 +123,6 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
                 <p class="text-fluid-0">{it.text}</p>
               </div>
             </div>
-          </>
           ))}</div>}
     </div>
     }

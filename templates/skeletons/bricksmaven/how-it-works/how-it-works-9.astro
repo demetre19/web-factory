@@ -56,7 +56,6 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
   {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
       {list.length > 0 && <div class="hworks-9-grid-ul">
         <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
-          <>
             <div class="hworks-9-card card">
               <div class="hworks-9-card__content">
                 {it.icon && <IconChip name={it.icon} />}
@@ -64,7 +63,6 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
                 <p class="text-fluid-0">{it.text}</p>
               </div>
             </div>
-          </>
           ))}</div>
       </div>}
     </div>

@@ -67,7 +67,6 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
       {list.length > 0 &&       <div>
         {list.length > 0 &&         <div>
           {list.length > 0 && <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
-            <>
               <div class="bm-testimonial-48-card card">
                 <div class="bm-testimonial-48-card__client-card">
                   <div class="bm-testimonial-48-card__client-data">
@@ -81,7 +80,6 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
                 </div>
                 <p class="text-fluid-0">{it.text}</p>
               </div>
-            </>
             ))}</div>}
         </div>
         }
