@@ -653,6 +653,73 @@ def _topo_variants(block, comp):
     return [('as-built', block, '')]
 
 
+_SEC_SIBLINGS = {
+    # pipeline sec key → same-family emitted comps in
+    # templates/sections — the real topology alternatives for a
+    # scrub row. The SectionBank is PNG-only (adapt() → 'gen' on all
+    # 17k rows), so the legal real-topology source is the pipeline's
+    # own section vocabulary rendered through _slot_frag.
+    'hero': ['stacked-hero', 'cutout-hero-split', 'hero-act-merge',
+             'full-bleed', 'badge-center'],
+    'definition': ['split-media', 'editorial', 'text-index',
+                   'quote-grid', 'proof-band'],
+    'reporting': ['split-media', 'proof-band', 'quote-grid',
+                  'editorial', 'text-index'],
+    'siblings': ['link-grid', 'split-media', 'editorial'],
+    'coverage': ['link-grid', 'cards-n', 'feature-grid', 'editorial'],
+    'scope': ['cards-n', 'feature-grid', 'link-grid', 'logo-wall'],
+    'process': ['sequence', 'timeline-steps', 'how-steps', 'cards-n'],
+    'pricing': ['comparison', 'pricing-table', 'stat-band'],
+    'frequency': ['stat-band', 'cards-n', 'feature-grid'],
+    'end-act': ['form-panel', 'banner-cta', 'cutout-cta-band',
+                'capture-form', 'newsletter-band'],
+    'footer': ['footer-bar', 'footer-shop', 'newsletter-band'],
+}
+
+
+def _sec_siblings(sec):
+    """the same-family comp names a sec may swap to. faq-* rows map
+    to the faq family; unknown secs get the generic content set."""
+    if sec in _SEC_SIBLINGS:
+        return _SEC_SIBLINGS[sec]
+    if sec and sec.startswith('faq'):
+        return ['faq', 'contact-panel', 'cards-n']
+    return ['editorial', 'cards-n', 'split-media']
+
+
+def _real_topo_variants(pd, sec, comp, slot, head, battr, sdir, dist,
+                        have, cap=6):
+    """REAL topology alternatives for a scrub row: same-family
+    templates/sections comps rendered through _slot_frag — real
+    skeleton markup bound to the block's declared copy (the fake
+    injected-CSS variants were dropped in the sweep; the SectionBank
+    is PNG-only so adapt() has no markup to bind). Returns
+    [{'id','preview'}] — at most `cap`, skipping comps already in
+    `have` (LAYOUT-OPTIONS' own allowed list)."""
+    out = []
+    for c in _sec_siblings(sec):
+        if c == comp or c in have or len(out) >= cap:
+            continue
+        inner, unmap = _slot_frag(c, slot)
+        if inner is None:
+            continue
+        markup = (f'<section class="sec-band surface-base '
+                  f'density-regular" data-sec="{sec}" '
+                  f'data-comp="{c}"><div class="sec-inner">'
+                  + inner + '</div></section>')
+        fn = f'{comp}--{c}.html'
+        with open(os.path.join(sdir, fn), 'w',
+                  encoding='utf-8') as fh:
+            fh.write(_doc(head, battr, markup,
+                          css=_LOREM_CSS + _SEQ_CSS))
+        out.append({'id': f'{comp}:{c}',
+                    'preview': os.path.relpath(
+                        os.path.join(sdir, fn), dist)})
+        if unmap:
+            out[-1]['unmapped'] = unmap
+    return out
+
+
 # the menu trigger is a designed affordance, not a text pill — the
 # bank's .burger renders "Menu" text; this turns it into a hamburger
 # icon button bound to tokens, applied to every emitted preview doc
@@ -1575,6 +1642,35 @@ def _copy_slot(pd, bid):
     return slot
 
 
+def _block_slot(block):
+    """minimal slot derived from the section's own emitted markup —
+    rows whose block isn't a COPY.json b-row (hero/end-act/footer)
+    bind their real emitted copy instead of lorem: h1/h2 → heading,
+    first <p>s → before, <a>s → links, first <img> → media."""
+    slot = {}
+    if not block:
+        return slot
+    def txt(s):
+        return re.sub(r'\s+', ' ', re.sub(r'<[^>]+>', '', s)).strip()
+    m = re.search(r'<h[12][^>]*>(.*?)</h[12]>', block, re.S)
+    if m:
+        slot['heading'] = txt(m.group(1))
+    ps = [txt(p) for p in
+          re.findall(r'<p[^>]*>(.*?)</p>', block, re.S)]
+    ps = [p for p in ps if p]
+    if ps:
+        slot['before'] = ps[:3]
+    links = [{'text': t} for t in
+             (txt(a) for a in re.findall(
+                 r'<a\b[^>]*>(.*?)</a>', block, re.S)) if t]
+    if links:
+        slot['links'] = links[:4]
+    im = re.search(r'<img[^>]+src="([^"]+)"', block)
+    if im:
+        slot['media'] = im.group(1)
+    return slot
+
+
 def _iterm(i):
     return (i or {}).get('term') or (i or {}).get('title') or ''
 
@@ -1926,6 +2022,338 @@ def _slot_frag(comp, slot):
               f'<button class="wf-cta-button" type="submit">'
               f'{_L.format(s="cta")}</button></form></div></div>')
         unmapped.append('cta')
+    elif comp == 'stacked-hero':
+        h += '<div class="text-center"><div class="mx-auto max-w-prose">'
+        h += f'<h2 class="text-fluid-3">{head}</h2>'
+        if sub:
+            h += f'<p class="mt-stack text-fluid-1">{_inline(sub)}</p>'
+        h += ''.join(f'<p class="mt-stack text-fluid-0">'
+                     f'{_inline(p)}</p>' for p in before)
+        h += ''.join(f'<p class="mt-stack text-fluid-0">'
+                     f'{_inline(p)}</p>' for p in after)
+        if links:
+            h += f'<a class="wf-cta-button mt-stack" href="#">' \
+                 f'{_inline(links[0])}</a>'
+        h += '</div><div class="mt-stack media-round">'
+        if slot.get('media'):
+            h += ('<img src="' + _inline(slot['media']) + '" alt="" '
+                  'style="width:100%;object-fit:cover;display:block">')
+        else:
+            h += ('<div class="ph-media wf-lorem" data-slot="media">'
+                  'media slot</div>')
+        h += '</div></div>'
+    elif comp == 'cutout-hero-split':
+        h += '<div class="split"><div class="stack">'
+        h += f'<h2 class="t0 h-section text-fluid-3">{head}</h2>'
+        if sub:
+            h += f'<p class="t0 lede">{_inline(sub)}</p>'
+        h += ''.join(f'<p class="t0 sub-p">{_inline(p)}</p>'
+                     for p in before)
+        if items:
+            h += '<ul class="t0 sub-p list-items">' + ''.join(
+                f'<li><strong>{_inline(_iterm(i))}</strong> – '
+                f'<span>{_inline(i.get("text") or "")}</span></li>'
+                for i in items) + '</ul>'
+        h += ''.join(f'<p class="t0 sub-p">{_inline(t)}</p>'
+                     for t in links)
+        h += ''.join(f'<p class="t0 sub-p">{_inline(p)}</p>'
+                     for p in after)
+        h += '</div>'
+        if slot.get('media'):
+            h += ('<figure><img src="' + _inline(slot['media']) +
+                  '" alt="" style="width:100%;object-fit:contain">'
+                  '</figure></div>')
+        else:
+            h += ('<figure><div class="cutout-ph ph-media wf-lorem" '
+                  'data-slot="media">media slot</div></figure></div>')
+    elif comp == 'hero-act-merge':
+        h += '<div class="grid gap-fluid-l md:grid-cols-2 ' \
+             'md:items-center"><div class="max-w-prose">'
+        h += f'<h2 class="text-fluid-3">{head}</h2>'
+        if sub:
+            h += f'<p class="mt-stack text-fluid-1">{_inline(sub)}</p>'
+        h += ''.join(f'<p class="mt-stack text-fluid-0">'
+                     f'{_inline(p)}</p>' for p in before)
+        h += ''.join(f'<p class="mt-stack text-fluid-0">'
+                     f'{_inline(p)}</p>' for p in after)
+        h += '</div>'
+        if links:
+            h += f'<a class="wf-cta-button" href="#">' \
+                 f'{_inline(links[0])}</a>'
+        h += '</div>'
+    elif comp == 'full-bleed':
+        h += '<div class="media-bg">'
+        if slot.get('media'):
+            h += f'<img src="{_inline(slot["media"])}" alt="">'
+        else:
+            h += ('<div class="ph-media wf-lorem" data-slot="media">'
+                  'media slot</div>')
+        h += '</div><div class="text-center">'
+        h += f'<h2 class="text-fluid-3">{head}</h2>'
+        if sub:
+            h += ('<p class="mx-auto mt-stack max-w-prose '
+                  f'text-fluid-1">{_inline(sub)}</p>')
+        h += ''.join(f'<p class="mx-auto mt-stack max-w-prose '
+                     f'text-fluid-0">{_inline(p)}</p>' for p in before)
+        if links:
+            h += ('<a class="wf-cta-button mt-fluid-l" href="#">'
+                  f'{_inline(links[0])}</a>')
+        h += '</div>'
+    elif comp == 'badge-center':
+        h += '<div class="text-center">'
+        h += ('<span class="wf-badge-chip" aria-hidden="true">'
+              '<svg width="16" height="16" viewBox="0 0 16 16" '
+              'fill="none"><path d="M3 8.5l3 3 7-7" stroke='
+              '"currentColor" stroke-width="2"/></svg></span>')
+        h += f'<h2 class="mt-fluid-s text-fluid-1">{head}</h2>'
+        if sub:
+            h += f'<p class="mt-fluid-s text-fluid-0">' \
+                 f'{_inline(sub)}</p>'
+        h += ''.join(f'<p class="mt-fluid-s text-fluid-0">'
+                     f'{_inline(p)}</p>' for p in before)
+        h += ''.join(f'<p class="mt-fluid-s text-fluid-0">'
+                     f'{_inline(p)}</p>' for p in after)
+        h += '</div>'
+    elif comp == 'feature-grid':
+        h += '<div class="wf-feature-2"><div class="sec-inner"><div>'
+        h += '<div class="intro">' \
+             f'<h2 class="text-fluid-2">{head}</h2>'
+        if sub:
+            h += f'<p class="text-fluid-0">{_inline(sub)}</p>'
+        h += '</div>'
+        if before:
+            h += '<div class="flow mt-stack">' + ''.join(
+                f'<p class="mt-flow text-fluid-0">{_inline(p)}</p>'
+                for p in before) + '</div>'
+        its = items or [{'term': _Raw(_L.format(s='items[]')),
+                         'text': _Raw(_L.format(s='items[]'))}
+                        for _i in range(3)]
+        if not items:
+            unmapped.append('items')
+        h += '<div><div class="grid-auto gap-fluid-m">' + ''.join(
+            '<div class="card"><div class="wf-feature-2-li__content">'
+            f'<h3 class="text-fluid-1">{_val(_iterm(i))}</h3>'
+            f'<p class="text-fluid-0">{_val(i.get("text") or "")}</p>'
+            '</div></div>' for i in its) + '</div></div>'
+        h += '</div></div></div>'
+    elif comp == 'timeline-steps':
+        h += ('<div class="wf-timeline-1"><div class="sec-inner"><div>'
+              '<div class="wf-timeline-1__content">'
+              '<div class="intro intro--left">'
+              f'<h2 class="text-fluid-2">{head}</h2>')
+        if sub:
+            h += f'<p class="text-fluid-0">{_inline(sub)}</p>'
+        h += '</div>'
+        if before:
+            h += '<div class="flow mt-stack">' + ''.join(
+                f'<p class="mt-flow text-fluid-0">{_inline(p)}</p>'
+                for p in before) + '</div>'
+        its = items or [{'term': _Raw(_L.format(s='items[]')),
+                         'text': _Raw(_L.format(s='items[]'))}
+                        for _i in range(4)]
+        if not items:
+            unmapped.append('items')
+        h += ('<div class="wf-timeline-1-list">'
+              '<div class="grid-auto gap-fluid-m">' + ''.join(
+            '<div class="wf-timeline-1-card card">'
+            '<div class="wf-timeline-1-card__content">'
+            f'<h3 class="text-fluid-1">{_val(_iterm(i))}</h3>'
+            f'<p class="text-fluid-0">{_val(i.get("text") or "")}</p>'
+            '</div></div>' for i in its) + '</div></div>')
+        h += '</div></div></div></div>'
+    elif comp == 'how-steps':
+        h += '<div class="wf-how-it-works-2">' \
+             f'<h2 class="text-fluid-2">{head}</h2>'
+        if sub:
+            h += f'<p class="mt-stack lede">{_inline(sub)}</p>'
+        h += ''.join(f'<p class="mt-flow text-fluid-0">'
+                     f'{_inline(p)}</p>' for p in before)
+        its = items or [{'term': _Raw(_L.format(s='items[]')),
+                         'text': _Raw(_L.format(s='items[]'))}
+                        for _i in range(3)]
+        if not items:
+            unmapped.append('items')
+        h += ('<div class="sec-inner"><div><div class="hworks-grid-ul">'
+              + ''.join(
+            '<div class="hworks-card card">'
+            '<div class="hworks-card__content">'
+            f'<h3 class="text-fluid-1">{_val(_iterm(i))}</h3>'
+            f'<p class="text-fluid-0">{_val(i.get("text") or "")}</p>'
+            '</div></div>' for i in its) + '</div></div></div>')
+        h += ''.join(f'<p class="text-fluid-0">{_inline(t)}</p>'
+                     for t in links)
+        h += ''.join(f'<p class="mt-flow text-fluid-0">'
+                     f'{_inline(p)}</p>' for p in after)
+        h += '</div>'
+    elif comp == 'pricing-table':
+        h += ('<div class="wf-item-bpivlr"><div class="sec-inner">'
+              '<div class="wf-pricing-2-container"><div class="intro">'
+              f'<h2 class="text-fluid-2">{head}</h2>')
+        if sub:
+            h += f'<p class="text-fluid-0">{_inline(sub)}</p>'
+        h += '</div>'
+        if before:
+            h += '<div class="flow mt-stack">' + ''.join(
+                f'<p class="mt-flow text-fluid-0">{_inline(p)}</p>'
+                for p in before) + '</div>'
+        its = items or [{'term': _Raw(_L.format(s='items[]')),
+                         'text': _Raw(_L.format(s='items[]'))}
+                        for _i in range(3)]
+        if not items:
+            unmapped.append('items')
+        h += ('<div><div class="grid-auto gap-fluid-m">' + ''.join(
+            '<div class="wf-li-benefits card"><div class="stack">'
+            f'<h3 class="text-fluid-1">{_val(_iterm(i))}</h3>'
+            f'<p class="text-fluid-0">{_val(i.get("text") or "")}</p>'
+            '</div></div>' for i in its) + '</div></div>')
+        if links:
+            h += ('<p class="mt-fluid-m"><a class="wf-cta-button" '
+                  f'href="#">{_inline(links[0])}</a></p>')
+        h += '</div></div></div>'
+    elif comp == 'contact-panel':
+        h += ('<div class="wf-contact-1"><div class="contact-1">'
+              '<div class="wf-contact-1__container">'
+              '<div class="intro">'
+              f'<h2 class="text-fluid-2">{head}</h2>')
+        if sub:
+            h += f'<p class="text-fluid-0">{_inline(sub)}</p>'
+        h += '</div>'
+        if before:
+            h += '<div class="flow mt-stack">' + ''.join(
+                f'<p class="mt-flow text-fluid-0">{_inline(p)}</p>'
+                for p in before) + '</div>'
+        its = items or [{'term': _Raw(_L.format(s='items[]')),
+                         'text': _Raw(_L.format(s='items[]'))}
+                        for _i in range(3)]
+        if not items:
+            unmapped.append('items')
+        h += ('<div class="wf-contact-1__content">'
+              '<div class="wf-contact-1-grid-ul">' + ''.join(
+            '<div class="wf-contact-1-card card">'
+            f'<h3 class="text-fluid-1">{_val(_iterm(i))}</h3>'
+            f'<p class="text-fluid-0">{_val(i.get("text") or "")}</p>'
+            '</div>' for i in its) + '</div></div>')
+        h += '</div></div></div>'
+    elif comp == 'logo-wall':
+        h += '<div class="split"><div class="sec-head">'
+        h += f'<h2 class="text-fluid-3">{head}</h2>'
+        if sub:
+            h += f'<p class="lede">{_inline(sub)}</p>'
+        h += '</div>'
+        its = items or [{'term': _Raw(_L.format(s='items[]')),
+                         'text': _Raw(_L.format(s='items[]'))}
+                        for _i in range(4)]
+        if not items:
+            unmapped.append('items')
+        h += '<ul class="logo-row list-plain">' + ''.join(
+            '<li><span class="brand-logo">'
+            + _val(i.get('label') or i.get('term') or
+                   i.get('title') or i.get('text') or '')
+            + '</span></li>' for i in its) + '</ul></div>'
+    elif comp == 'banner-cta':
+        h += ('<div class="wf-call-to-action-11"><div class="sec-inner">'
+              '<div class="wf-cta-11-container">'
+              '<div class="wf-cta-11__box">')
+        h += f'<h2 class="text-fluid-2">{head}</h2>'
+        if sub:
+            h += f'<p class="text-fluid-0">{_inline(sub)}</p>'
+        h += ''.join(f'<p class="mt-flow text-fluid-0">'
+                     f'{_inline(p)}</p>' for p in before)
+        if links:
+            h += ('<p class="mt-fluid-m"><a class="wf-cta-button" '
+                  f'href="#">{_inline(links[0])}</a></p>')
+        h += '</div></div></div></div>'
+    elif comp == 'cutout-cta-band':
+        h += '<div class="split cta-band"><div class="stack">'
+        h += f'<h2 class="t0 h-section text-fluid-3">{head}</h2>'
+        if sub:
+            h += f'<p class="t0 lede">{_inline(sub)}</p>'
+        h += ''.join(f'<p class="t0 sub-p">{_inline(p)}</p>'
+                     for p in before)
+        if links:
+            h += ('<div class="cta-row mt-act">'
+                  f'<a class="wf-cta-button" href="#">'
+                  f'{_inline(links[0])}</a></div>')
+        h += '</div>'
+        if slot.get('media'):
+            h += ('<figure class="cutout-slot"><img src="'
+                  + _inline(slot['media'])
+                  + '" alt="" style="width:100%;object-fit:contain">'
+                    '</figure></div>')
+        else:
+            h += ('<figure class="cutout-slot"><div class="ph-media '
+                  'wf-lorem" data-slot="media">media slot</div>'
+                  '</figure></div>')
+    elif comp == 'capture-form':
+        h += '<div class="text-center"><div class="mx-auto max-w-prose">'
+        h += f'<h2 class="text-fluid-3">{head}</h2>'
+        if sub:
+            h += f'<p class="mt-stack text-fluid-0">{_inline(sub)}</p>'
+        h += ''.join(f'<p class="mt-stack text-fluid-0">'
+                     f'{_inline(p)}</p>' for p in before)
+        h += ('<form class="mt-stack flex flex-wrap justify-center '
+              'gap-fluid-s" onsubmit="return false">'
+              '<label class="sr-only">Email</label>'
+              '<input class="input" type="email" placeholder="Email">'
+              '<button class="wf-cta-button" type="submit">'
+              + _inline(links[0] if links else 'Submit')
+              + '</button></form>')
+        h += '</div></div>'
+    elif comp == 'newsletter-band':
+        h += ('<div class="wf-newsletter-1"><div class="sec-inner">'
+              '<div class="newsletter-1-container">'
+              '<div class="newsletter-1__left-box">')
+        h += f'<h2 class="text-fluid-2">{head}</h2>'
+        if sub:
+            h += f'<p class="text-fluid-0">{_inline(sub)}</p>'
+        h += ''.join(f'<p class="mt-flow text-fluid-0">'
+                     f'{_inline(p)}</p>' for p in before)
+        h += ('<div class="bm-form"><form class="bm-form-widget" '
+              'onsubmit="return false"><input class="input" '
+              'type="email" placeholder="Email">'
+              '<button class="wf-cta-button" type="submit">'
+              'Subscribe</button></form></div>')
+        h += '</div></div></div></div>'
+    elif comp == 'footer-shop':
+        h += ('<div class="wf-shop-footer-1"><div class="stack">'
+              '<div class="sec-inner"><div class="wf-usp-1-list">')
+        its = items or [{'term': _Raw(_L.format(s='items[]')),
+                         'text': _Raw(_L.format(s='items[]'))}
+                        for _i in range(3)]
+        if not items:
+            unmapped.append('items')
+        h += ''.join(
+            '<div class="wf-usp-1-list-card card">'
+            '<div class="wf-usp-1-list-card__content">'
+            f'<h3 class="text-fluid-1">{_val(_iterm(i))}</h3>'
+            f'<p class="text-fluid-0">{_val(i.get("text") or "")}</p>'
+            '</div></div>' for i in its)
+        h += ('</div><div class="wf-shop-footer-1__container">'
+              '<div class="wf-shop-footer-1__content">')
+        h += f'<h2 class="text-fluid-2">{head}</h2>'
+        if sub:
+            h += f'<p class="text-fluid-0">{_inline(sub)}</p>'
+        if links:
+            h += '<ul class="mt-stack list-plain">' + ''.join(
+                f'<li>{_inline(t)}</li>' for t in links) + '</ul>'
+        h += '</div></div></div></div></div>'
+    elif comp == 'footer-bar':
+        h += '<div class="stack gap-form"><div class="foot-cols">'
+        h += f'<div class="foot-col"><div class="brand-mark">{head}</div>'
+        if sub:
+            h += f'<p class="t0 sub-p measure-28">{_inline(sub)}</p>'
+        h += ''.join(f'<p class="t0 sub-p">{_inline(p)}</p>'
+                     for p in before)
+        h += '<p class="t0 attrib">©</p></div>'
+        if links:
+            h += '<div class="foot-col"><p class="foot-head">'
+            h += f'{_inline(links[0])}</p>'
+            h += ''.join(f'<a class="nav-link" href="#">{_inline(t)}'
+                         '</a>' for t in links[1:])
+            h += '</div>'
+        h += ''.join(f'<p class="t0 sub-p">{_inline(p)}</p>'
+                     for p in after)
+        h += '</div></div>'
     else:
         return _generic_frag(slot, unmapped), unmapped
     return h, unmapped
@@ -1997,6 +2425,9 @@ def emit_section_fragments(pd):
         # shape comps (they render via _slot_frag, no artifact needed)
         if 'sequence' in cand and 'sequence' not in blocks:
             cand += ['timeline-spine', 'numbered-rail', 'icon-badge']
+        # rows without a COPY.json b-row (hero/end-act/footer) bind
+        # their copy from the section's own emitted block, not lorem
+        slot = _copy_slot(pd, bid) or _block_slot(block)
         for c in cand:
             src = blocks.get(c)
             if src:
@@ -2005,7 +2436,7 @@ def emit_section_fragments(pd):
                 # a re-rendered skeleton when an artifact exists
                 markup, bhead, battr, css = src[0], src[1], src[2], ''
             else:
-                inner, unmap = _slot_frag(c, _copy_slot(pd, bid))
+                inner, unmap = _slot_frag(c, slot)
                 if inner is None:
                     missing.append(c)
                     continue
@@ -2024,16 +2455,13 @@ def emit_section_fragments(pd):
             rel = os.path.relpath(fp, dist)
             alts.append({'id': c, 'preview': rel})
             if c == comp:
-                for topo, markup, tcss in _topo_variants(
-                        src[0], c)[1:]:
-                    fn = f'{c}--{topo}.html'
-                    with open(os.path.join(sdir, fn), 'w',
-                              encoding='utf-8') as fh:
-                        fh.write(_doc(src[1], src[2], markup,
-                                      css=tcss))
-                    rel = os.path.relpath(
-                        os.path.join(sdir, fn), dist)
-                    alts.append({'id': f'{c}:{topo}', 'preview': rel})
+                # real topology alternatives: same-family emitted
+                # comps rendered through _slot_frag (SectionBank is
+                # PNG-only — adapt() has no markup to bind)
+                for alt in _real_topo_variants(
+                        pd, sec, c, slot,
+                        src[1], src[2], sdir, dist, set(cand)):
+                    alts.append(alt)
         cur = [i for i, a in enumerate(alts) if a['id'] == comp]
         spec.append({'sec': sec, 'bid': bid, 'comp': comp,
                      'alts': alts, 'idx': cur[0] if cur else 0})
