@@ -29,6 +29,11 @@ import datetime, hashlib, html.parser, json, os, re, sys, \
     threading, urllib.parse
 from pathlib import Path
 
+try:
+    import vibe_atlas
+except ImportError:
+    vibe_atlas = None
+
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 import gate as G
@@ -655,6 +660,31 @@ def _fam_css(f):
             ':root{' + f['css'] + '}'
             '[data-theme="dark"]{' + f['css_dark'] + '}'
             + (f.get('shape') or ''))
+
+
+def emit_vibe_doc(pd, fam, bundle):
+    """one vibe doc for a resolved bundle — emits only when
+    missing (deterministic content); returns dist-relative path."""
+    outdir = os.path.join(pd, 'site', 'dist', 'preview', 'vibes')
+    blocks, _rows = _comp_blocks(pd)
+    if not blocks:
+        return None
+    head, battr = blocks[next(iter(blocks))][1:3]
+    body = ''
+    for comp in _SINK_ORDER:
+        if comp in blocks:
+            body += blocks[comp][0]
+    fp = os.path.join(outdir, fam + '.html')
+    if not os.path.isfile(fp):
+        os.makedirs(outdir, exist_ok=True)
+        css = _fam_css(bundle)
+        theme = ('<script>document.documentElement.dataset.theme='
+                 '"dark";document.documentElement.classList.add('
+                 '"dark")</script>'
+                 if bundle.get('theme') == 'dark' else '')
+        with open(fp, 'w', encoding='utf-8') as fh:
+            fh.write(_doc(head, battr, body, theme, css))
+    return 'preview/vibes/' + fam + '.html'
 
 
 def emit_vibe_previews(pd):
@@ -1589,26 +1619,49 @@ def app_data(pipeline):
 
     boards = {}
     # step 1 — VIBE: the coarse family scrub
+    preset_cards = []
+    clusters = []
+    if vibe_atlas is not None:
+        for p in vibe_atlas.PRESETS:
+            r = vibe_atlas.resolve(p['genes'])
+            rel = emit_vibe_doc(pd, 'atlas-' + p['id'], r)
+            if p['cluster'] not in clusters:
+                clusters.append(p['cluster'])
+            toks = r['tokens']
+            preset_cards.append({
+                'id': p['id'], 'name': p['name'],
+                'preview': '/built/' + urllib.parse.quote(
+                    os.path.join(pd, 'site', 'dist', rel))
+                    if rel else None,
+                'tags': [p['cluster'],
+                         p['theme'] or 'light'] + r['genes'],
+                'grp': p['cluster'],
+                'desc': ' · '.join(r['genes'][:5]) +
+                        (' …' if len(r['genes']) > 5 else ''),
+                'element': 'vibe', 'variant': p['id'],
+                'genes': p['genes'],
+                'swatch': [(toks['light'].get('--bg-canvas'),
+                            toks['light'].get('--text-primary'),
+                            toks['light'].get('--action-primary'))]})
     boards['vibe'] = {
-        'id': 'vibe', 'title': 'Vibe', 'icon': 'vibe',
-        'desc': 'Coarse style families — pick one to bake its '
-                'genes into every preview below. Arrow keys scrub; '
-                'click Pick to sign the family.',
-        'cards': [{'id': fam, 'name': f['name'],
-                   'preview': '/built/' + urllib.parse.quote(
-                       os.path.join(pd, 'site', 'dist',
-                                    vibes_emitted[fam]))
-                   if fam in vibes_emitted else None,
-                   'tags': f['genes'] +
-                       [f.get('theme') or 'light'] +
-                       [t for t in ('professional', 'playful',
-                                    'colourful')
-                        if t in _VIBE_MOODS.get(fam, ())],
-                   'genes': f['genes'],
-                   'desc': f['desc'], 'element': 'vibe',
-                   'contrast': contrast.get(fam),
-                   'variant': fam}
-                  for fam, f in VIBE_FAMILIES.items()]}
+        'id': 'vibe', 'title': 'Vibe space', 'icon': 'vibe',
+        'desc': 'Vibes are a space, not a list — steer the genes '
+                'directly (sliders) or start from a preset and '
+                'tweak on top. Bake signs the resolved gene bundle.',
+        'atlas': True,
+        'axes': (vibe_atlas.AXES if vibe_atlas else []),
+        'clusters': clusters,
+        'cards': preset_cards,
+        'core': [{'id': fam, 'name': f['name'],
+                  'preview': '/built/' + urllib.parse.quote(
+                      os.path.join(pd, 'site', 'dist',
+                                   vibes_emitted[fam]))
+                  if fam in vibes_emitted else None,
+                  'tags': f['genes'] + [f.get('theme') or 'light'],
+                  'genes': f['genes'], 'desc': f['desc'],
+                  'element': 'vibe', 'variant': fam,
+                  'contrast': contrast.get(fam)}
+                 for fam, f in VIBE_FAMILIES.items()]}
     # step 2 — LAYOUT: whole-page scrub over section topologies,
     # then the option boards
     boards['page'] = {
@@ -1723,6 +1776,21 @@ def _genmenu_tags():
     except Exception:
         return {}
     return {r.get('path'): r for r in rows if r.get('path')}
+
+
+def vibe_resolve(pd, genes):
+    """resolve a gene map through the atlas → emit its doc →
+    {preview, name, genes, tokens, theme}."""
+    if vibe_atlas is None:
+        return {'error': 'vibe atlas unavailable'}
+    r = vibe_atlas.resolve(genes)
+    rel = emit_vibe_doc(pd, 'gen-' + vibe_atlas.gene_hash(genes), r)
+    if not rel:
+        return {'error': 'no emitted blocks'}
+    return {'preview': '/built/' + urllib.parse.quote(
+                os.path.join(pd, 'site', 'dist', rel)),
+            'name': r['name'], 'genes': r['genes'],
+            'tokens': r['tokens'], 'theme': r['theme']}
 
 
 def emit_bank_previews(pd):
@@ -2307,7 +2375,7 @@ def list_systems(pd):
 _PICKS_LOCK = threading.Lock()
 
 
-def record_element_pick(pipeline, element, variant):
+def record_element_pick(pipeline, element, variant, bundle=None):
     """Signed element decision — ELEMENT-PICKS.json in the pipeline
     dir. Same service-side signing as candidate decisions; the file
     is the element-choice registry the plan consumes later."""
@@ -2346,6 +2414,8 @@ def record_element_pick(pipeline, element, variant):
                 return 0, (f'{element} {old_v} → {variant} '
                            '(superseded, signed into ELEMENT-PICKS.json)')
         rec = {'element': element, 'variant': variant, 'ts': now}
+        if isinstance(bundle, dict):
+            rec['bundle'] = bundle
         rec['sig'] = G._sig(rec, G.op_key(create=True))
         data.setdefault('picks', []).append(rec)
         with open(fp, 'w') as fh:
@@ -2578,7 +2648,33 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
 .comptab td .o.sel{border-color:var(--ok);color:var(--ok)}
 .comptab td .o.pickd{background:var(--accent);color:var(--accent-ink);
      border-color:var(--accent)}
-.empty{color:var(--muted);font-size:13px;padding:28px 4px}
+.empty{color:var(--muted);font-size:13px;padding:28px 4px}.vtweak{display:grid;grid-template-columns:repeat(auto-fill,
+  minmax(200px,1fr));gap:8px 18px;margin:16px 0;padding:14px 16px;
+  border:1px solid var(--line);border-radius:12px;background:var(--bg-2)}
+.vgrp{grid-column:1/-1;font:700 10.5px var(--font);color:var(--muted);
+  letter-spacing:.08em;text-transform:uppercase;margin-top:4px}
+.vax{display:flex;align-items:center;gap:8px;font:500 11.5px var(--font)}
+.vaxn{min-width:88px;color:var(--ink-dim)}
+.vax input{flex:1;accent-color:var(--ink)}
+.vaxa{min-width:64px;font:600 10.5px var(--mono);color:var(--ink)}
+.vchips{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}
+.chip{font:600 11px var(--mono);border:1px solid var(--line);
+  border-radius:999px;padding:4px 10px;color:var(--muted);cursor:pointer}
+.chip.on{color:var(--ink);border-color:var(--ink)}
+.vprev{max-width:760px;border:1px solid var(--line);border-radius:12px;
+  overflow:hidden;margin:12px 0 20px;background:var(--panel)}
+.vprev .cb{height:340px;position:relative}
+.vprev iframe{width:100%;height:100%;border:0}
+.vprev .cf{display:flex;align-items:center;justify-content:space-between;
+  padding:10px 14px;border-top:1px solid var(--line)}
+.vname{font:650 12.5px var(--font);color:var(--ink)}
+.vq{width:100%;max-width:340px;margin:10px 0;padding:8px 12px;
+  border:1px solid var(--line);border-radius:8px;background:var(--bg-2);
+  color:var(--ink);font:12.5px var(--font)}
+.vsw{display:inline-flex;gap:3px;margin-left:auto}
+.vsw i{width:14px;height:14px;border-radius:4px;display:inline-block;
+  border:1px solid var(--line)}
+
 
 /* card selection (keyboard scrub) */
 .card.sel{outline:2px solid var(--accent);outline-offset:-1px}
@@ -2910,6 +3006,127 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
        (isPicked?'picked ✓':'')+'</span></div></div>';
     return h;
   }
+
+  // vibe space: gene sliders + preset atlas + signed gene bundle
+  var VGENES={},VQ='',VRES=null;
+  function vibePane(el,o){
+    var axes=o.axes||[],cards=o.cards||[];
+    var h='<h1>Vibe space</h1><div class="desc">'+esc(o.desc||'')+'</div>';
+    h+='<div class="vtweak">';
+    var grp=null;
+    axes.forEach(function(a){
+      if(a.group!==grp){grp=a.group;
+        h+='<div class="vgrp">'+esc(grp)+'</div>'}
+      var cur=VGENES[a.axis],ix=cur?a.alleles.indexOf(cur):-1;
+      h+='<div class="vax"><span class="vaxn">'+esc(a.axis)+'</span>'+
+         '<input type="range" min="0" max="'+(a.alleles.length-1)+
+         '" value="'+Math.max(0,ix)+'" data-ax="'+a.axis+
+         '" data-n="'+a.alleles.length+'">'+
+         '<span class="vaxa">'+(cur?esc(cur):'—')+'</span></div>';
+    });
+    h+='</div>';
+    var gkeys=Object.keys(VGENES);
+    h+='<div class="vchips">'+(gkeys.length?gkeys.map(function(k){
+      return '<span class="chip on" data-ax="'+k+'">'+esc(k)+':'+
+             esc(VGENES[k])+' ×</span>'}).join(''):
+      '<span class="chip">baseline genes — move a slider</span>')+'</div>';
+    h+='<div class="vprev"><div class="cb" id="vprevCb">'+
+       (VRES&&VRES.preview?
+        '<iframe src="'+esc(VRES.preview)+'" loading="lazy"></iframe>':
+        '<div class="noprev">resolved vibe preview</div>')+'</div>'+
+       '<div class="cf"><span class="vname">'+
+       esc((VRES&&VRES.name)||'computed vibe')+'</span>'+
+       '<button class="pick" id="vBake">Bake</button></div></div>';
+    h+='<div class="filters">'+filters(o.clusters||[])+'</div>';
+    h+='<input class="vq" id="vq" placeholder="search presets…" '+
+       'value="'+esc(VQ)+'">';
+    h+='<div class="grid">';
+    var lastG=null;
+    cards.forEach(function(c,i){
+      if(!Object.keys(FILT).every(function(t){
+        return (c.tags||[]).indexOf(t)>=0}))return;
+      if(VQ&&(c.id+' '+c.name+' '+(c.tags||[]).join(' '))
+         .toLowerCase().indexOf(VQ)<0)return;
+      if(c.grp&&c.grp!==lastG){lastG=c.grp;
+        h+='<div class="glabel">'+esc(c.grp)+'</div>'}
+      var sw=(c.swatch&&c.swatch[0])||[];
+      h+='<div class="card" data-i="'+i+'"><div class="ch">'+
+         '<span class="id">'+esc(c.id)+'</span>'+
+         '<span class="nm">'+esc(c.name)+'</span>'+
+         '<span class="vsw">'+(sw[2]?'<i style="background:'+
+          esc(sw[2])+'"></i>':'')+(sw[0]?'<i style="background:'+
+          esc(sw[0])+'"></i>':'')+'</span></div>'+
+         '<div class="cb">'+(c.preview?
+          '<iframe src="'+esc(c.preview)+'" loading="lazy"></iframe>':
+          '<div class="noprev">no emit</div>')+
+         '<div class="desc">'+esc(c.desc||'')+'</div></div>'+
+         '<div class="cf">'+
+         '<button class="abtn vload" data-i="'+i+
+         '">load genes</button>'+
+         '<button class="pick" data-i="'+i+'">Bake</button></div></div>';
+    });
+    h+='</div>';
+    el.innerHTML=h;
+    // wire: sliders → resolve; chips → clear axis; bake → sign bundle
+    el.querySelectorAll('.vax input').forEach(function(r){
+      r.oninput=function(){
+        var a=o.axes.find(function(x){return x.axis===r.dataset.ax});
+        VGENES[a.axis]=a.alleles[+r.value];
+        r.parentElement.querySelector('.vaxa').textContent=
+          a.alleles[+r.value];
+        resolveVibe(el,o)}});
+    el.querySelectorAll('.vchips .chip.on').forEach(function(ch){
+      ch.onclick=function(){delete VGENES[ch.dataset.ax];
+        vibePane(el,o)}});
+    el.querySelectorAll('.fchip').forEach(function(b){
+      b.onclick=function(ev){doFilt(b.dataset.t,ev);
+        vibePane(el,o)}});
+    el.querySelector('#vq').oninput=function(e){
+      VQ=e.target.value.toLowerCase();
+      el.querySelectorAll('.grid .card').forEach(function(cd){
+        var c=cards[+cd.dataset.i],hay=(c.id+' '+c.name+' '+
+          (c.tags||[]).join(' ')).toLowerCase();
+        cd.style.display=(VQ&&!hay.includes(VQ))?'none':''})};
+    el.querySelector('#vBake').onclick=function(){
+      api('/element-pick',{pipeline:PIPELINE,element:'vibe',
+        variant:'genes:'+vhash(VGENES),
+        bundle:{genes:VGENES,tokens:VRES&&VRES.tokens}}).then(
+        function(j){toast(j.message||(j.ok?'baked':'refused'))})};
+    el.querySelectorAll('.vload').forEach(function(b){
+      b.onclick=function(){
+        VGENES=Object.assign({},cards[+b.dataset.i].genes||{});
+        resolveVibe(el,o)}});
+    el.querySelectorAll('.cf .pick:not(#vBake)').forEach(function(b){
+      b.onclick=function(){
+        var c=cards[+b.dataset.i];
+        api('/element-pick',{pipeline:PIPELINE,element:'vibe',
+          variant:'atlas:'+c.id,
+          bundle:{genes:c.genes}}).then(function(j){
+          toast(j.message||(j.ok?'baked':'refused'))})}});
+    setTheme(document.documentElement.dataset.theme);
+    setTimeout(fitIframes,150);
+  }
+  function vhash(g){
+    var s=Object.keys(g).sort().map(function(k){
+      return k+':'+g[k]}).join('|'),h=0;
+    for(var i=0;i<s.length;i++){h=(h*31+s.charCodeAt(i))|0}
+    return (h>>>0).toString(36)}
+  function resolveVibe(el,o){
+    api('/vibe-resolve',{pipeline:PIPELINE,genes:VGENES}).then(
+      function(j){
+        if(j.preview){VRES=j;
+          var cb=document.getElementById('vprevCb');
+          if(cb)cb.innerHTML='<iframe src="'+esc(j.preview)+
+            '"></iframe>';
+          var vn=document.querySelector('.vname');
+          if(vn)vn.textContent=j.name;
+          el.querySelector('.vchips').innerHTML=
+            Object.keys(VGENES).map(function(k){
+            return '<span class="chip on" data-ax="'+k+'">'+
+                   esc(k)+':'+esc(VGENES[k])+' ×</span>'}).join('');
+          el.querySelectorAll('.vchips .chip.on').forEach(function(c){
+            c.onclick=function(){delete VGENES[c.dataset.ax];
+              vibePane(el,o)}})}})}
 
   // the whole page, one row per section, in-place alt swapping
   function scrubView(o){
@@ -3252,6 +3469,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
       wireSaved();return}
     var o=DATA.boards[CUR]||DATA.galleries[CUR];
     if(!o){el.innerHTML='<div class="empty">pick a board</div>';return}
+    if(o.atlas){vibePane(el,o);return}
     var h='<h1>'+esc(o.title)+'</h1><div class="desc">'+esc(o.desc||'')+'</div>';
     if(o.scrub){
       el.innerHTML=h+scrubView(o);
