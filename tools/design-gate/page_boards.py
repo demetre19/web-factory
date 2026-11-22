@@ -15,9 +15,10 @@ each preview a page TYPE, not the one emitted article. This producer:
      role-appropriate source gets lorem ipsum (sized per slot) — never
      another page's copy. Every slot records its source;
   3. options — candidates per role retrieved from the bricksmaven bank
-     (+ catalog gold exemplars), ranked by tag-vector cosine between the
-     recipe's classify labels and the resolved vibe genes (DNA genotype
-     overlaid by the signed vibe pick), top-k per role, then diversified:
+     (+ catalog gold exemplars), ranked by retrieval.vibe_fit — the
+     section bank ranked for the resolved vibe genes (DNA genotype
+     overlaid by the signed vibe pick); a candidate scores its
+     topology_id's best ranked row — top-k per role, then diversified:
      heroes round-robin across topology_ids, sections by least-used
      (MMR), and no two options sharing a hero topology_id may share
      more than half their section compositions.
@@ -31,7 +32,6 @@ each preview a page TYPE, not the one emitted article. This producer:
 import glob
 import hashlib
 import json
-import math
 import os
 import re
 import sys
@@ -238,34 +238,42 @@ def _json(p):
         return None
 
 
-_LABELS = {}
+# bricksmaven category → section-bank family vibe_fit ranks inside
+_SECTION_TYPE = {'headers': 'nav', 'hero': 'hero',
+                 'header-page-sections': 'hero', 'footer': 'footer',
+                 'call-to-action': 'call-to-action',
+                 'testimonials': 'testimonials', 'faq': 'faq',
+                 'pricing': 'pricing', 'contact': 'contact',
+                 'feature': 'feature', 'grids-and-cards': 'grids-and-cards',
+                 'gallery': 'gallery', 'teams': 'teams',
+                 'logo-sections': 'logo-sections'}
+_TOPO_FIT = {}
 
 
-def _labels(recipe):
-    """bricksmaven/<cat>/<stem> → {gene: (allele, confidence)}."""
-    if recipe not in _LABELS:
-        _p, cat, stem = recipe.split('/')
-        d = _json(os.path.join(BANK, cat, stem + '.classify.json')) or {}
-        _LABELS[recipe] = {k: (str(v.get('allele')),
-                               float(v.get('confidence') or 0))
-                           for k, v in (d.get('labels') or {}).items()
-                           if isinstance(v, dict)}
-    return _LABELS[recipe]
+def topo_fit(genes, section_type):
+    """{topology_id: fit 0..1} — retrieval.vibe_fit ranks the section
+    bank for the resolved genes; each topology scores its best ranked
+    row, normalised to the family's top score."""
+    key = (section_type, json.dumps(genes, sort_keys=True))
+    if key not in _TOPO_FIT:
+        import retrieval
+        out = retrieval.vibe_fit(genes, section_type, k=400)
+        best = {}
+        for score, _rp, topo in out.get('ranked') or []:
+            if topo and topo not in best:
+                best[topo] = float(score)
+        top = max(best.values(), default=0.0)
+        _TOPO_FIT[key] = {t: round(v / top, 4) if top > 0 else 0.0
+                          for t, v in best.items()}
+    return _TOPO_FIT[key]
 
 
-def vibe_fit(recipe, genes):
-    """Tag-vector cosine: the recipe's confidence-weighted one-hot
-    label vector vs the one-hot resolved-gene query vector."""
-    if not recipe or not recipe.startswith('bricksmaven/') or not genes:
+def _fit(cats, topology_id, genes):
+    if not genes:
         return 0.0
-    lab = _labels(recipe)
-    dims = [g for g in genes if g in lab]
-    if not dims:
-        return 0.0
-    dot = sum(lab[g][1] for g in dims if lab[g][0] == genes[g])
-    norm = math.sqrt(sum(lab[g][1] ** 2 for g in dims)) * \
-        math.sqrt(len(dims))
-    return round(dot / norm, 4) if norm else 0.0
+    st = next((_SECTION_TYPE[c] for c in cats if c in _SECTION_TYPE),
+              'content')
+    return topo_fit(genes, st).get(topology_id, 0.0)
 
 
 def _topo(recipe):
@@ -290,9 +298,10 @@ def _candidates(role, cats, catalog, genes, exclude=()):
             rec = f'bricksmaven/{cat}/{stem}'
             if f'bm-{cat}-{stem}' in exclude:
                 continue
+            topo = _topo(rec)
             out.append({'comp': f'bm-{cat}-{stem}', 'recipe': rec,
-                        'topology_id': _topo(rec),
-                        'fit': vibe_fit(rec, genes)})
+                        'topology_id': topo,
+                        'fit': _fit([cat], topo, genes)})
     for comp in catalog:
         if comp in exclude:
             continue
@@ -300,11 +309,10 @@ def _candidates(role, cats, catalog, genes, exclude=()):
                                            gate.camel(comp) + '.astro')):
             continue
         rec = gate.RECIPE_FOR_COMP.get(comp) or ''
-        out.append({'comp': comp, 'recipe': rec,
-                    'topology_id': _HERO_CATALOG_TOPO.get(comp) or (
-                        _topo(rec) if rec.startswith('bricksmaven/')
-                        else comp),
-                    'fit': vibe_fit(rec, genes)})
+        topo = _HERO_CATALOG_TOPO.get(comp) or (
+            _topo(rec) if rec.startswith('bricksmaven/') else comp)
+        out.append({'comp': comp, 'recipe': rec, 'topology_id': topo,
+                    'fit': _fit(cats, topo, genes)})
     out.sort(key=lambda c: (-c['fit'], c['comp']))
     return out
 

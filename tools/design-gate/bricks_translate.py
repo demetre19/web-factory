@@ -1270,7 +1270,10 @@ def translate(payload, stem):
     body = re.sub(
         r'(\{before\.map\(\(p\) => <p class="mt-flow text-fluid-0" '
         r'set:html=\{inline\(p\)\} />\)\}\n)'
-        r'(\s+)</div>', _outdent, body)
+        # never when that </div> closes a `{cond && <div>` wrapper —
+        # a sibling after the element inside `{…}` is not JSX
+        r'(\s+)</div>(?![ \t]*\n(?:[ \t]*\n)*[ \t]*\})',
+        _outdent, body)
     # V.8 lift — a bound image that sat inside a per-item loop becomes
     # the media cell of the gold split shape (SB.5): copy in the stack
     # column, media beside it. A bare figure inside the bank's centred
