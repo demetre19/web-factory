@@ -3675,7 +3675,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
       if(seen[v])return 0;seen[v]=1;return 1})}
 
   // vibe space: gene sliders + preset atlas + signed gene bundle
-  var VGENES={},VQ='',VRES=null,VMOOD='',VADV=true;
+  var VGENES={},VQ='',VRES=null,VMOOD='',VADV=true,VSRC='';
   function vibePane(el,o){
     var axes=o.axes||[],cards=o.cards||[];
     var h='<h1>Vibe space</h1><div class="desc">'+esc(o.desc||'')+'</div>';
@@ -3713,7 +3713,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
         '<div class="noprev">pick a mood, a preset, or move a '+
         'slider — the resolved vibe renders here</div>')+'</div>'+
        '<div class="cf"><span class="vname">'+
-       esc((VRES&&VRES.name)||'computed vibe')+'</span>'+
+       esc(VSRC||'computed vibe')+'</span>'+
        '<button class="pick" id="vBake">Bake</button></div></div>';
     h+='<div class="filters">'+filters(o.clusters||[])+'</div>';
     h+='<input class="vq" id="vq" placeholder="search presets…" '+
@@ -3749,7 +3749,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
     el.innerHTML=h;
     // wire: sliders → resolve; chips → clear axis; bake → sign bundle
     el.querySelectorAll('.vax input').forEach(function(r){
-      r.oninput=function(){VMOOD='';
+      r.oninput=function(){VMOOD='';VSRC='';
         var a=o.axes.find(function(x){return x.axis===r.dataset.ax});
         VGENES[a.axis]=a.alleles[+r.value];
         r.parentElement.querySelector('.vaxa').textContent=
@@ -3770,6 +3770,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
             var first=(cards||[]).filter(function(cc){
               return cc.grp===t})[0];
             if(first&&first.genes){VMOOD='';
+              VSRC=(first&&first.name)||t;
               VGENES=Object.assign({},first.genes);
               vibePane(el,o);resolveVibe(el,o);return}}}
         vibePane(el,o)}});
@@ -3792,7 +3793,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
             setTheme((VRES&&VRES.theme)||'light')}})};
     el.querySelectorAll('.vmood').forEach(function(m){
       m.onclick=function(){
-        VMOOD=m.dataset.cl;
+        VMOOD=m.dataset.cl;VSRC=m.textContent.trim();
         var first=(o.cards||[]).filter(function(cc){
           return cc.grp===m.dataset.cl})[0];
         VGENES=Object.assign({},first?first.genes||{}:{});
@@ -3800,6 +3801,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
         resolveVibe(el,o)}});
     el.querySelectorAll('.vload').forEach(function(b){
       b.onclick=function(){VMOOD='';
+        VSRC=cards[+b.dataset.i].name||'';
         VGENES=Object.assign({},cards[+b.dataset.i].genes||{});
         vibePane(el,o);
         resolveVibe(el,o)}});
@@ -3837,7 +3839,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
             (document.documentElement.dataset.theme==='dark'
              ?'?theme=dark':'');
           var vn=document.querySelector('.vname');
-          if(vn)vn.textContent=j.name;
+          if(vn)vn.textContent=VSRC||'computed vibe';
           el.querySelector('.vchips').innerHTML=
             Object.keys(VGENES).map(function(k){
             return '<span class="chip on" data-ax="'+k+'">'+
@@ -4338,11 +4340,14 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
         f.style.transformOrigin='0 0';
         try{var hh=f.contentDocument.body.scrollHeight;
           if(hh>0){f.style.height=hh+'px';
-            if(!fixedBox)cb.style.height=(hh*s)+'px'}}catch(e){}
+            if(!fixedBox){cb.style.height=(hh*s)+'px';
+              // short content (nav/footer strips) must not sit atop
+              // the 300px min-height placeholder box
+              cb.style.minHeight='0'}}}catch(e){}
       }else{
         f.style.maxWidth='';f.style.width='';f.style.transform='';
         f.style.height='';
-        if(!fixedBox)cb.style.height=''}
+        if(!fixedBox){cb.style.height='';cb.style.minHeight=''}}
     })}
 
   document.querySelectorAll('#vwCtl button').forEach(function(b){
