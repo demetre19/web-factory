@@ -760,6 +760,27 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
                 justify-self: end; width: 100%; }
   .sub-flow { margin: var(--space-xs) 0 0; }
   .measure-28 { max-width: 28ch; }
+  /* G cutout-media: a background-removed object floats on the
+     section surface — contain, no frame, no radius, the shadow is
+     a drop-shadow (follows the alpha edge) bound to the elevation
+     rung so it composites in light + dark alike. The placeholder
+     holds the same slot until the cutout stage delivers a PNG. */
+  .cutout-slot { display: flex; align-items: center;
+                 justify-content: center; min-width: 0; }
+  .cutout { object-fit: contain; max-height: 100%;
+            width: auto; height: auto; max-width: 100%;
+            filter: drop-shadow(0 var(--space-xs) var(--space-s)
+                    color-mix(in oklch, var(--text-primary) 28%,
+                              transparent)); }
+  .cta-band .cutout { max-height: 18rem; }
+  .cutout-ph { aspect-ratio: 1 / 1; width: 100%; max-width: 24rem;
+               display: grid; place-items: center;
+               border: 1px dashed var(--border-default);
+               border-radius: var(--r-card);
+               background: var(--bg-elevated);
+               color: var(--text-secondary);
+               font-size: var(--fs--1); }
+  .cutout-card .cutout-ph { max-width: 100%; }
   /* surface/density classes are the shell's rhythm signature — the
      L.14/L.7 gate reads them off the built <section> tag. */
   .surface-base { --sec-bg: var(--bg-canvas); --sec-fg: var(--text-primary); }

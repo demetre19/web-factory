@@ -343,7 +343,7 @@ def aliases(s=None, radius_rem=None):
            'content-gap': f"var(--{s['content_gap']})",
            'elements-gap': f"var(--{s['elements_gap']})",
            'container-gap': f"var(--{s['container_gap']})",
-           'list_item_spacing': f"var(--{s['list_item_spacing']})",
+           'list-item-spacing': f"var(--{s['list_item_spacing']})",
            # D: measure tracks the type knob — a denser family reads
            # a narrower column (28 + 2×base → 60ch at the 16px ACSS
            # default, 64ch at 18, 68ch at 20, 56ch at 14)

@@ -86,6 +86,9 @@ COMP_FOR_ACT = {
     'text-index': {'detail'}, 'app-band': {'detail'},
     'hero-act-merge': {'promise', 'act'}, 'link-grid': {'detail'},
     'modal-form': {'act'},
+    'cutout-hero-split': {'promise', 'detail'},
+    'cutout-catalog-grid': {'how', 'detail'},
+    'cutout-cta-band': {'act'},
     # chrome structural rows (declared, not in §2)
     'nav-bar': {'chrome'}, 'footer-bar': {'chrome'},
     'flyout-nav': {'chrome'},
@@ -6310,7 +6313,7 @@ SECTION_PROGRAM = {
 # not a hero.
 HERO_COMP = {
     'split-media': {'split-media', 'hero-act-merge', 'media-gallery',
-                    'full-bleed'},
+                    'full-bleed', 'cutout-hero-split'},
     'editorial-single': {'editorial', 'split-media', 'full-bleed'},
     'stacked-center': {'stacked-hero', 'badge-center',
                        'hero-act-merge'},
