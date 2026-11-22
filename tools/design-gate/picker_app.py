@@ -3120,6 +3120,16 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
 .ritem svg{width:15px;height:15px;flex:none;opacity:.85}
 .ritem .cnt{margin-left:auto;font:600 11px var(--mono);
      color:var(--muted)}
+.railbank{margin:2px 0}
+.railbank summary{display:flex;align-items:center;gap:10px;
+     padding:8px 10px;border-radius:var(--r-sm);cursor:pointer;
+     font:600 12.5px var(--font);color:var(--muted);list-style:none}
+.railbank summary::-webkit-details-marker{display:none}
+.railbank summary svg{width:15px;height:15px;flex:none;opacity:.85}
+.railbank summary:hover{background:var(--panel-2)}
+.railbank summary .cnt{margin-left:auto;font:600 11px var(--mono)}
+.railbank[open] summary{color:var(--ink)}
+.railbank .ritem{padding-left:26px}
 
 /* --- board --- */
 #board{overflow-y:auto;padding:22px 26px 60px;
