@@ -470,10 +470,14 @@ input, textarea { border: 1px solid var(--input-border); padding: var(--input-py
      shows brand alone */
   .nav-cta { display: none; }
   /* the header CTA is a compact pill — 40–44px tall (never the
-     --tap-sized hero button). F113-1/audit: ≥15px label, ≤44px */
+     --tap-sized hero button). F113-1/audit: ≥15px label, ≤44px.
+     padding-block:0 + inline-flex centring keeps the computed
+     height at the 2.5rem floor whatever --fs-0 resolves to */
   .nav-cta .wf-cta-button, .nav-cta > a {
-            min-height: 2.5rem;
-            padding-block: .5em;
+            display: inline-flex; align-items: center;
+            justify-content: center;
+            min-height: 2.5rem; max-height: 2.75rem;
+            padding-block: 0; padding-inline: .75em;
             font-size: var(--fs-0); }
   /* 59.99 not 60 — at exactly 60rem both media queries matched and
      the burger showed beside the inline links (audit) */
@@ -776,6 +780,12 @@ input, textarea { border: 1px solid var(--input-border); padding: var(--input-py
        the OPEN panel — a plain class list keeps those variants inert */
     .nav-links.nav-links.nav-mega,
     .nav-links.nav-links[data-over] { display: none; }
+    /* a plain link row that can't fit collapses to the burger —
+       the layout script marks its header .nav-crowded and stamps
+       data-over on the nav, so the links hide and the burger
+       reappears (the derived breakpoint, audit #138) */
+    .nav-crowded .burger, .nav-crowded .burger.wf-cta-button {
+              display: inline-flex; }
     /* the open overflow panel is a dropdown under the bar, not the
        mobile sheet — the sheet's fixed/scrim/scroll-lock rules live
        under 60rem, so the desktop flyout carries its own box */
@@ -898,8 +908,11 @@ input, textarea { border: 1px solid var(--input-border); padding: var(--input-py
   /* the header CTA fits the bar — compact padding and nav font,
      never the hero-sized call — but still tap-sized and legible
      (≥15px label, ≥40px tall) */
-  .nav-cta .wf-cta-button { padding: .5em .75em;
+  .nav-cta .wf-cta-button { padding: 0 .75em;
               font-size: var(--fs-0); min-height: 2.5rem;
+              max-height: 2.75rem;
+              display: inline-flex; align-items: center;
+              justify-content: center;
               /* E-M6 — a nowrap phone label overflowed the bar at
                  1024; the compact pill wraps instead of pushing the
                  header past the viewport */

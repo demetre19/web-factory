@@ -254,6 +254,7 @@ class _BankBind(html.parser.HTMLParser):
         self._trigger_seen = False
         self._btn_seen = False
         self._relabel = None   # (text, seen_first) inside relabel el
+        self._pi = 0           # prose-copy cycle index (stray nodes)
         self._relstk = []      # outer relabels restored on endtag
 
     @staticmethod
@@ -391,6 +392,16 @@ class _BankBind(html.parser.HTMLParser):
             self._relstk.pop()
             self._relabel = None
 
+    _PROSE_TAGS = {'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p',
+                   'figcaption'}
+    _STRAY_TAGS = {'span', 'div', 'li', 'td', 'dd', 'dt', 'summary'}
+
+    def _next_prose(self):
+        labels = [l for _h, l in self.links] or [self.brand]
+        l = labels[self._pi % len(labels)]
+        self._pi += 1
+        return l
+
     def handle_data(self, data):
         if self._relabel is not None:
             if not self._relabel[1] and data.strip():
@@ -408,6 +419,24 @@ class _BankBind(html.parser.HTMLParser):
             self.out.append(html.escape(self.brand, quote=False))
             self._brand_done = True
             return
+        if data.strip():
+            # foreign app copy that isn't a link/button/brand — an
+            # exemplar's backdrop headings, paragraphs and meta
+            # spans ("Gallery · Explore") — rebinds to the site's
+            # own link labels rather than leaking (audit #138)
+            parent = ''
+            for t in reversed(self._stack):
+                if t != '[data-wf-panel]':
+                    parent = t
+                    break
+            filler = ('\u00b7' in data or '\u2014' in data or
+                      '\u2013' in data or len(data.split()) >= 4)
+            if parent in self._PROSE_TAGS or \
+                    (parent in self._STRAY_TAGS and filler):
+                self._relabel = (self._next_prose(), False)
+                self._relstk.append(parent)
+                self.handle_data(data)
+                return
         self.out.append(html.escape(data, quote=False))
 
     def handle_entityref(self, name):
@@ -980,7 +1009,9 @@ _CHROME_CSS = (
     'border-radius:var(--radius,10px);background:transparent;'
     'color:var(--text-primary);box-shadow:none!important;'
     'cursor:pointer}'
-    '@media (max-width:60rem){.burger{display:inline-flex}}'
+    # 59.99 not 60 — at exactly 960px this and the global
+    # min-width:60rem burger-hide both match and order wins
+    '@media (max-width:59.99rem){.burger{display:inline-flex}}'
     '.burger::after{content:"";width:20px;height:14px;'
     'background:repeating-linear-gradient(to bottom,'
     'currentColor 0 2px,transparent 2px 6px)}')

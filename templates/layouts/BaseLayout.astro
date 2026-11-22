@@ -74,6 +74,28 @@ import '../styles/global.css';
         b.setAttribute('aria-controls', navPanel.id);
       }
     });
+    // crowd check — an inline link row that can't fit collapses to
+    // the burger at any width: the header is marked .nav-crowded and
+    // the nav stamped data-over so it hides/opens as the flyout
+    // (the link-count-derived breakpoint, audit #138). One-way
+    // latch: once crowded it stays crowded — re-measuring a hidden
+    // nav reads 0 width and would thrash on resize.
+    var crowdNav = document.querySelector('.nav-links');
+    var crowdAuthored = crowdNav &&
+        crowdNav.hasAttribute('data-over');
+    var crowdLatch = false;
+    var crowd = function () {
+      if (crowdLatch || crowdAuthored || !crowdNav ||
+          crowdNav.classList.contains('nav-mega')) return;
+      if (crowdNav.scrollWidth > crowdNav.clientWidth + 1) {
+        crowdLatch = true;
+        var h = crowdNav.closest('header');
+        if (h) h.classList.add('nav-crowded');
+        crowdNav.setAttribute('data-over', '');
+      }
+    };
+    crowd();
+    window.addEventListener('resize', crowd);
     // preview surfaces request the open state through the real
     // toggle path — the sheet opens exactly as a burger click opens
     // it (E-M3, no synthetic markup). No open state at/above the

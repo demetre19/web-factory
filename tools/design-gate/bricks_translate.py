@@ -799,10 +799,12 @@ def translate(payload, stem):
             if cat == 'header':
                 return (f'{pad}{{list.length > 0 && '
                         f'<button class="burger" type="button" '
-                        f'aria-label="Menu"><span aria-hidden="true">'
-                        f'≡</span></button>}}\n')
+                        f'aria-label="Menu" aria-expanded="false" '
+                        f'aria-controls="wf-nav-links"><span '
+                        f'aria-hidden="true">≡</span></button>}}\n')
             return (f'{pad}<button class="flyout-open" type="button" '
-                    f'aria-label="Open panel"><span '
+                    f'aria-label="Open panel" aria-expanded="false" '
+                    f'aria-controls="wf-flyout"><span '
                     f'aria-hidden="true">≡</span></button>\n')
         if name == 'offcanvas':
             _ot = set()
@@ -851,7 +853,8 @@ def translate(payload, stem):
                      f'{pad}  <button class="flyout-close" '
                      'type="button" aria-label="Close">'
                      '×</button>\n')
-            return (f'{pad}<div class="flyout" role="dialog" '
+            return (f'{pad}<div class="flyout" id="wf-flyout" '
+                    f'role="dialog" '
                     f'aria-modal="true">\n{close}{inner}'
                     f'{pad}</div>\n')
         if name == 'nav-menu':
@@ -886,12 +889,14 @@ def translate(payload, stem):
                 # N.select — links past the bar's budget open from
                 # "More" (the offcanvas holds the full list)
                 out += (f'{pad}{{navOver && <button class="nav-more" '
-                        f'type="button" aria-label="More links" aria-expanded="false">More'
+                        f'type="button" aria-label="More links" aria-expanded="false" '
+                        f'aria-controls="wf-nav-links">More'
                         f'</button>}}\n')
                 if not has_toggle:
                     out += (f'{pad}{{list.length > 0 && '
                             f'<button class="burger" type="button" '
-                            f'aria-label="Menu"><span aria-hidden='
+                            f'aria-label="Menu" aria-expanded="false" '
+                            f'aria-controls="wf-nav-links"><span aria-hidden='
                             f'"true">≡</span></button>}}\n')
                 return out
             ncls = (c + ' nav-links') if c else 'nav-links'
@@ -964,10 +969,13 @@ def translate(payload, stem):
                     f'{{it.label || it.term || it.title || it.text}}'
                     f'</a></li>)}}</ul></nav>'
                     f'<button class="nav-more" type="button" '
-                    f'aria-label="More links" aria-expanded="false">More</button>'
+                    f'aria-label="More links" aria-expanded="false" '
+                    f'aria-controls="wf-nav-links">More</button>'
                     f'</Fragment>}}\n'
                     f'{pad}{{list.length > 0 && <button class="burger" '
-                    f'type="button" aria-label="Menu">'
+                    f'type="button" aria-label="Menu" '
+                    f'aria-expanded="false" '
+                    f'aria-controls="wf-nav-links">'
                     f'<span aria-hidden="true">≡</span>'
                     f'</button>}}\n')
         if name == 'text-link' and not ivar:
