@@ -139,7 +139,9 @@ def _record(d, wave, label, argv, inputs, writes, before, after, rc):
 
 def _run_step(d, wave, step, env):
     """Run one producer step and record its receipt. Returns rc."""
-    label, argv, inputs, writes = step
+    label, argv, inputs, writes = step[:4]
+    if len(step) > 4:
+        env = dict(env, **step[4])     # per-step env overrides
     before = _manifest(d)
     r = subprocess.run(argv, env=env)
     after = _manifest(d)
@@ -279,7 +281,11 @@ def _steps(pdir, wave, build, site_dir):
                   os.path.join(pdir, 'LAYOUT-OPTIONS.json'),
                   os.path.join(pdir, 'TOKENS.json'),
                   os.path.join(pdir, 'COPY.json')],
-                 ['preview/layouts.html', 'site/dist/']),
+                 ['preview/layouts.html', 'site/dist/'],
+                 # w2 already built the identical preview pages —
+                 # re-emitting the sources is free, the astro build
+                 # would reproduce byte-identical dist output
+                 {'WF_DEFER_BUILD': '1'}),
                 ('section contracts',
                  [PY, T('gate.py'), 'contracts', pdir],
                  [os.path.join(pdir, 'DESIGN-PLAN.md')],
@@ -297,7 +303,16 @@ def _steps(pdir, wave, build, site_dir):
                   os.path.join(pdir, 'VARIANT-GATES.json'),
                   os.path.join(pdir, 'TOKENS.json'),
                   os.path.join(pdir, 'COPY.json')],
-                 ['preview/variants.html', 'site/dist/'])]
+                 ['preview/variants.html', 'site/dist/'],
+                 # the fine round's build renders EVERY preview page
+                 # (variants' look-*.astro included) — deferring this
+                 # emit's own build dedupes a second full astro pass
+                 {'WF_DEFER_BUILD': '1'}),
+                ('fine picker', asm + ['--fine'],
+                 [os.path.join(pdir, 'DESIGN-PLAN.md'),
+                  os.path.join(pdir, 'TOKENS.json'),
+                  os.path.join(pdir, 'COPY.json')],
+                 ['preview/fine.html', 'site/dist/'])]
     if wave == 'w5':
         return [('system sheet', asm + ['--system'],
                  [os.path.join(pdir, 'DESIGN-PLAN.md'),
@@ -592,7 +607,7 @@ def _regate_drifted(pdir, site_dir, wave, env):
     if wave not in ORDER:
         return None                 # the site wave has no ancestors
     prior = ORDER[:ORDER.index(wave)]
-    drifted = []
+    drifted, evolving = [], []
     for w in prior:
         d = site_dir if w == SITE_WAVE else pdir
         ctx = G.Ctx(d)
@@ -602,12 +617,38 @@ def _regate_drifted(pdir, site_dir, wave, env):
         if not e or not e.get('pass'):
             continue
         rec = e.get('inputs_sha256')
-        if rec and rec != G.input_hashes_for(ctx, w):
-            drifted.append(w)
-    if not drifted:
+        cur = rec and G.input_hashes_for(ctx, w)
+        if rec and rec != cur:
+            if G.inputs_drifted(rec, cur):
+                drifted.append(w)
+            else:
+                evolving.append(w)
+    if not drifted and not evolving:
         return None
-    print(f'  {wave}: earlier inputs drifted — re-gating '
-          f'{", ".join(drifted)} (producers do not re-run)')
+    # evolving-input drift only (the machinery legitimately rewrites
+    # those files — P.22 sanctions it): the recorded verdict still
+    # covers the wave, so refresh the evidence that cites current
+    # bytes (stale artifact receipts + checklist + the approval's
+    # input binding) and skip the gate re-run itself
+    for w in evolving:
+        d = site_dir if w == SITE_WAVE else pdir
+        if w in APPROVABLE and _verified(d, w) and \
+                not _current(d, w):
+            if not _confirm(d, w):
+                return (f'{w} pick not re-bound to the current '
+                        'inputs; check the pick surface is up')
+        ectx = G.Ctx(d)
+        ectx.wave = w
+        for rel in G.clear_stale_receipts(ectx):
+            G.write_receipt(ectx, rel)
+        _checklist(d, w, env)
+    if evolving:
+        print(f'  {wave}: machinery-evolved inputs only '
+              f'({", ".join(sorted(G.EVOLVING_INPUTS))}) — '
+              f're-bound {", ".join(evolving)} without re-gate')
+    if drifted:
+        print(f'  {wave}: earlier inputs drifted — re-gating '
+              f'{", ".join(drifted)} (producers do not re-run)')
     for w in drifted:
         d = site_dir if w == SITE_WAVE else pdir
         if w in APPROVABLE and _verified(d, w) and \

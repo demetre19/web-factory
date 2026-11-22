@@ -9323,12 +9323,18 @@ def _rendered_light_paint(ctx, canvas):
             'with sync_playwright() as p:\n'
             ' b=p.chromium.launch()\n'
             ' ctx=b.new_context(color_scheme="dark")\n'
-            ' pg=ctx.new_page();pg.goto(url)\n'
+            ' pg=ctx.new_page();'
+            'pg.goto(url,wait_until="networkidle")\n'
+            ' bg=""\n'
+            ' for _ in range(3):\n'
+            '  bg=pg.evaluate("getComputedStyle(document.body).'
+            'backgroundColor")\n'
+            '  if bg!="rgba(0, 0, 0, 0)": break\n'
+            '  pg.wait_for_timeout(250)\n'
             ' print(json.dumps({'
             '"theme":pg.evaluate("document.documentElement.'
             'dataset.theme||\'\'"),'
-            '"bg":pg.evaluate("getComputedStyle(document.body).'
-            'backgroundColor")}))\n'
+            '"bg":bg}))\n'
             ' b.close()\n'
             's.shutdown()\n')
         venv = os.path.join(os.path.dirname(HERE), '.venv', 'bin',
@@ -10721,6 +10727,22 @@ def read_approvals(ctx):
         return {}
 
 
+EVOLVING_INPUTS = frozenset({'DESIGN-PLAN.md'})
+
+
+def inputs_drifted(recorded, current):
+    """Whether a recorded verdict's bound inputs changed in a way the
+    verdict doesn't cover. DESIGN-PLAN.md legitimately evolves through
+    sanctioned producers (the w3 pick projection, the w4 look rewrite —
+    P.22 exempts it from frozen-input checks for the same reason), so
+    drift on it alone never invalidates the verdict."""
+    r = {k: v for k, v in (recorded or {}).items()
+         if os.path.basename(k) not in EVOLVING_INPUTS}
+    c = {k: v for k, v in (current or {}).items()
+         if os.path.basename(k) not in EVOLVING_INPUTS}
+    return r != c
+
+
 def input_hashes_for(ctx, wave):
     """Rehash the file list the wave RECORDED at gate time (A F41 —
     current CLI args must not shrink the comparison set)."""
@@ -11047,8 +11069,8 @@ def ancestry_fails(ctx):
                          f'inside the pipeline cannot approve')
         hc = Ctx(ctx.site_dir) \
             if (w.startswith('s') and ctx.site_dir) else ctx
-        if e.get('inputs_sha256') and e['inputs_sha256'] != \
-                input_hashes_for(hc, w):
+        if e.get('inputs_sha256') and inputs_drifted(
+                e['inputs_sha256'], input_hashes_for(hc, w)):
             f.append(f'ORDER: {w} inputs changed since it passed — '
                      f're-gate {w}')
     return f

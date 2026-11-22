@@ -41,7 +41,8 @@ def _load(path):
 
 
 def _score_map(root):
-    """{url: (score, reasons)} from each <src>.scores.json."""
+    """{url: (score, [reasons])} from each <src>.scores.json — the
+    reasons join is lazy: only emitted rows pay for it."""
     out = {}
     if not os.path.isdir(root):
         return out
@@ -53,8 +54,7 @@ def _score_map(root):
             u = str(c.get('url') or c.get('site') or '').rstrip('/')
             if u:
                 out[u] = (c.get('score'),
-                          ' ; '.join(str(x) for x in
-                                     c.get('score_reasons') or []))
+                          c.get('score_reasons') or [])
     return out
 
 
@@ -76,12 +76,12 @@ def _prior(path):
     return out
 
 
-def seed(pdir, top=TOP):
-    root = _sources_root()
-    scores = _score_map(root)
-    rows = {}
-    if not os.path.isdir(root):
-        raise SystemExit(f'{TOOL}: no candidate source bank at {root}')
+def _bank_index(root):
+    """{url: name} — every tier:'candidate' source entry, minimal.
+    Full row data (score reasons, shot path) is materialized only for
+    the candidates the picker shows — several thousand rows are
+    ranked, sixty emitted."""
+    out = {}
     for fn in sorted(os.listdir(root)):
         if not fn.endswith('.json') or fn.endswith('.scores.json'):
             continue
@@ -92,20 +92,43 @@ def seed(pdir, top=TOP):
             if not isinstance(c, dict):
                 continue
             u = str(c.get('url') or c.get('site') or '').rstrip('/')
-            if not u:
-                continue
-            sc, why = scores.get(u, (None, ''))
-            row = {'url': u, 'name': str(c.get('name') or u),
-                   'status': 'pending', 'score': sc}
-            if why:
-                row['score_reasons'] = why
-            row['shot'] = ('shots/' +
-                           u.replace('://', '-').replace('/', '-')
-                           + '.webp')
-            rows[u] = row
-    ranked = sorted(rows.values(),
-                    key=lambda r: -(r['score'] or 0))
-    pending = ranked[:top] if top else ranked
+            if u:
+                out[u] = str(c.get('name') or u)
+    return out
+
+
+def _row(u, name, scored):
+    """The full registry row for one candidate."""
+    sc, why = scored or (None, [])
+    row = {'url': u, 'name': name or u,
+           'status': 'pending', 'score': sc}
+    if why:
+        row['score_reasons'] = ' ; '.join(str(x) for x in why)
+    row['shot'] = ('shots/' +
+                   u.replace('://', '-').replace('/', '-') + '.webp')
+    return row
+
+
+def materialize(root, u):
+    """Build a pending row for one bank candidate on demand — the
+    registry only emits the picker's top slice, so a service decision
+    landing on a deeper site resolves its row from the banks."""
+    index = _bank_index(root)
+    if u not in index:
+        return None
+    return _row(u, index[u], _score_map(root).get(u))
+
+
+def seed(pdir, top=TOP):
+    root = _sources_root()
+    if not os.path.isdir(root):
+        raise SystemExit(f'{TOOL}: no candidate source bank at {root}')
+    scores = _score_map(root)
+    index = _bank_index(root)
+    ranked = sorted(index, key=lambda u: -(
+        (scores.get(u) or (None,))[0] or 0))
+    pending = [_row(u, index[u], scores.get(u))
+               for u in (ranked[:top] if top else ranked)]
     out = _prior(os.path.join(pdir, 'CANDIDATES.json'))
     decided = [c for u, c in out.items()]
     doc = {'generated_by': TOOL,
@@ -114,7 +137,7 @@ def seed(pdir, top=TOP):
     path = os.path.join(pdir, 'CANDIDATES.json')
     with open(path, 'w') as fh:
         json.dump(doc, fh, indent=1)
-    return path, len(rows), len(pending), len(decided)
+    return path, len(index), len(pending), len(decided)
 
 
 def main(argv):
