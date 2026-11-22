@@ -3951,7 +3951,7 @@ _BANK_MENU_CSS = (
     # display:block alone leaves them invisible once open, so the
     # open state must clear every hiding mechanism the bank ships
     'html.wf-menu-open [data-wf-panel]{opacity:1 !important;'
-    'visibility:visible !important;transform:none !important;'
+    'visibility:visible !important;'
     'pointer-events:auto !important;max-height:100vh !important;'
     'max-width:100vw !important;overflow-y:auto !important}')
 _BANK_MENU_DRV = (
@@ -3959,6 +3959,15 @@ _BANK_MENU_DRV = (
     'function so(o){r.classList.toggle("wf-menu-open",o);'
     'd.querySelectorAll("[data-wf-trigger]").forEach(function(b){'
     'b.setAttribute("aria-expanded",o?"true":"false")});'
+    'if(o){d.querySelectorAll("[data-wf-panel]").forEach(function(p){'
+    'var q=p.getBoundingClientRect();'
+    # only panels rendered fully off-viewport are hidden by a
+    # translate — clearing transform would break translate-based
+    # centering, so clear it just for the off-canvas ones
+    'if(q.right<0||q.bottom<0||q.left>innerWidth||q.top>innerHeight)'
+    'p.style.transform="none"})}else{'
+    'd.querySelectorAll("[data-wf-panel]").forEach(function(p){'
+    'p.style.transform=""})}'
     'if(d.body)d.body.style.overflow=o?"hidden":""}'
     'd.addEventListener("DOMContentLoaded",function(){'
     'if(new URLSearchParams(location.search).get("menu")==="open")'
