@@ -62,8 +62,7 @@ Return ONLY JSON:
 Be terse; vocab values only, no prose."""
 
 
-def _items():
-    tags = json.load(open(TAGS))
+def _items(tags):
     out = []
     for tid, t in tags.items():
         p = os.path.join(REPO, 'templates', 'skeletons',
@@ -103,7 +102,8 @@ def _call(key, model, img_path):
 
 def main():
     args = sys.argv[1:]
-    items = _items()
+    tags = json.load(open(TAGS))
+    items = _items(tags)
     cp = _checkpoint()
     todo = [x for x in items if x[0] not in cp]
     if '--dry-run' in args or '--run' not in args:
@@ -123,7 +123,6 @@ def main():
         else MODEL_DEFAULT
     limit = int(args[args.index('--limit') + 1]) \
         if '--limit' in args else len(todo)
-    tags = json.load(open(TAGS))
     done = 0
     for tid, t, p in todo[:limit]:
         try:
