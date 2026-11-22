@@ -941,8 +941,12 @@ def emit_element_previews(pd):
             # mobile chrome (burger + closed drawer), not a forced
             # desktop row (r6 @390)
             _MENU_DESK = ('@media (min-width:60rem){'
-                          '.burger,.nav-close{display:none !important}'
-                          '.nav-links{position:static !important;'
+                          '.nav-close{display:none !important}'
+                          '.burger{display:none !important}'
+                          '.nav-crowded .burger{'
+                          'display:inline-flex !important}'
+                          '.nav-links:not([data-over]){'
+                          'position:static !important;'
                           'display:flex !important;transform:none '
                           '!important;visibility:visible !important;'
                           'opacity:1 !important;width:auto '
@@ -1014,7 +1018,22 @@ _CHROME_CSS = (
     '@media (max-width:59.99rem){.burger{display:inline-flex}}'
     '.burger::after{content:"";width:20px;height:14px;'
     'background:repeating-linear-gradient(to bottom,'
-    'currentColor 0 2px,transparent 2px 6px)}')
+    'currentColor 0 2px,transparent 2px 6px)}'
+    # the collapse→flyout contract on picker docs: the layout script
+    # stamps .nav-crowded + data-over when the link row can't fit —
+    # same contract as emit_global's, needed here because menu docs
+    # don't carry the compiled page css
+    '@media (min-width:60rem){'
+    '.nav-crowded .burger{display:inline-flex}'
+    '.nav-links[data-over],.nav-desk[data-over]{display:none}'
+    '.nav-links[data-over].open,.nav-desk[data-over].open{'
+    'display:flex;flex-direction:column;gap:var(--space-m);'
+    'position:absolute;inset-block-start:100%;inset-inline-end:0;'
+    'width:min(46rem,94vw);max-height:80vh;overflow-y:auto;'
+    'background:var(--bg-canvas);padding:var(--space-m);'
+    'border:1px solid var(--border-default);'
+    'border-radius:var(--r-card);box-shadow:var(--shadow-pop);'
+    'z-index:60}}')
 
 
 # live preview docs are inspect-only: in-card iframes are interactive
