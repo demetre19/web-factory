@@ -1,6 +1,6 @@
 ---
 /**
- * bm-team-22 — TRANSLATED Bricksmaven skeleton.
+ * wf-team-22 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (team-22.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -55,7 +55,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
   <div class={image && image.src ? 'split' : undefined}>
     <div class="stack">
   <div class="sec-inner">
-    <div class="bm-team-22__container">
+    <div class="wf-team-22__container">
       <div class="intro">
         {head && <h2 class="text-fluid-2">{head}</h2>}
         {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
@@ -64,10 +64,10 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
 {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
       </div>}
 
-      {list.length > 0 &&       <div class="bm-team-22-team-list">
+      {list.length > 0 &&       <div class="wf-team-22-team-list">
         {list.length > 0 && <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
-            <div class="bm-team-22-team-card card">
-              <div class="bm-team-22-team-card__content">
+            <div class="wf-team-22-team-card card">
+              <div class="wf-team-22-team-card__content">
                 <div>
                   {it.icon && <IconChip name={it.icon} />}
                   <div class="stack">

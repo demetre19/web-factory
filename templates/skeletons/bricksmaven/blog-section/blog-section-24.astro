@@ -1,6 +1,6 @@
 ---
 /**
- * bm-blog-section-24 — TRANSLATED Bricksmaven skeleton.
+ * wf-blog-section-24 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (blog-section-24.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -55,7 +55,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
   <div class={image && image.src ? 'split' : undefined}>
     <div class="stack">
   <div class="sec-inner">
-    <div class="bm-blog-section-24__container">
+    <div class="wf-blog-section-24__container">
       <div class="intro intro--split">
         {head &&         <div class="intro__left-column">
           {head && <h2 class="text-fluid-2">{head}</h2>}
@@ -69,10 +69,10 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
         </div>}
 
       </div>
-      {list.length > 0 && <div class="bm-blog-section-24-list">{(list || []).map((it) => (
-            <div class="bm-blog-section-24-card card">
-              <div class="bm-blog-section-24-card__content">
-                <div class="bm-blog-section-24-card__footer">
+      {list.length > 0 && <div class="wf-blog-section-24-list">{(list || []).map((it) => (
+            <div class="wf-blog-section-24-card card">
+              <div class="wf-blog-section-24-card__content">
+                <div class="wf-blog-section-24-card__footer">
                   {it.icon && <IconChip name={it.icon} />}
                   <div class="stack">
                     <h3 class="text-fluid-1">{it.term || it.title || it.text}</h3>
@@ -80,7 +80,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
                   </div>
                 </div>
               </div>
-              <div class="bm-blog-section-24-card__term-wrapper">
+              <div class="wf-blog-section-24-card__term-wrapper">
                 <p class="text-fluid-0">{it.text}</p>
               </div>
             </div>

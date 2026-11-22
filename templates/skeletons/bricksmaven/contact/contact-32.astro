@@ -1,6 +1,6 @@
 ---
 /**
- * bm-contact-32 — TRANSLATED Bricksmaven skeleton.
+ * wf-contact-32 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (contact-32.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -52,15 +52,15 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
 
 <div class="wf-contact-32">
   <div class="sec-inner">
-    <div class="bm-contact-32__container">
-      <div class="bm-contact-32__content">
-        {head &&         <div class="bm-contact-32__top">
+    <div class="wf-contact-32__container">
+      <div class="wf-contact-32__content">
+        {head &&         <div class="wf-contact-32__top">
           {head && <h1 class="text-fluid-4">{head}</h1>}
         </div>
         }
         {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
         {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
-        {list.length > 0 &&         <div class="bm-accordion-clean">
+        {list.length > 0 &&         <div class="wf-accordion-clean">
           {list.length > 0 && <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
               <div class="card">
                 <div>

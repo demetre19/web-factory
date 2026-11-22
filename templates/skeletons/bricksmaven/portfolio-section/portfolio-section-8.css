@@ -23,18 +23,18 @@
     row-gap: var(--flow-spacing);
   }
 
-  .wf-portfolio-section-8 .portfolio-section-8-list {
+  .wf-portfolio-section-8 .wf-portfolio-section-8-list {
     display: grid;
     gap: calc(var(--space-m) * 2);
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
   }
 
-  .wf-portfolio-section-8 .portfolio-section-8-card {
+  .wf-portfolio-section-8 .wf-portfolio-section-8-card {
     display: grid;
     gap: var(--space-m);
     grid-template-columns: calc(100% * 2 / 1);
   }
 
-  .wf-portfolio-section-8 .portfolio-section-8-card__intro {
+  .wf-portfolio-section-8 .wf-portfolio-section-8-card__intro {
     row-gap: calc(var(--flow-spacing) / 2);
   }

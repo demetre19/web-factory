@@ -1,6 +1,6 @@
 ---
 /**
- * bm-footer-22 — TRANSLATED Bricksmaven skeleton.
+ * wf-footer-22 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (footer-22.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -47,13 +47,13 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
 
 <div class="wf-footer-22">
   <div class="sec-inner">
-    <div class="bm-footer-22__top-container row between">
-      {head &&       <div class="bm-footer-22__top row between">
+    <div class="wf-footer-22__top-container row between">
+      {head &&       <div class="wf-footer-22__top row between">
         {head && <h2 class="text-fluid-2">{head}</h2>}
       </div>
       }
       {list.length > 0 &&       <div class="row between">
-        {list.length > 0 && <div class="bm-footer-22-social-links row between">
+        {list.length > 0 && <div class="wf-footer-22-social-links row between">
           <div class="row gap-fluid-m">{(list || []).map((it) => (
               <div>
                 <a class="text-fluid-0" href={it.href}>{it.icon && <IconChip name={it.icon} />} {it.label || it.term || it.anchor || it.text}</a>
@@ -64,7 +64,7 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
       </div>
       }
     </div>
-    <div class="bm-footer-22__mid-container row between">
+    <div class="wf-footer-22__mid-container row between">
       {links.length >= 0 &&       <div>
         {links.length >= 0 &&         <div class="footer-nav-wrapper footer-nav-wrapper-21 row between">
           {links.length > 0 && <div class="row gap-fluid-m">{(links || []).map((it) => (
@@ -87,7 +87,7 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
       </div>
       }
       <div>
-        <div class="bm-footer-22__newsletter row between">
+        <div class="wf-footer-22__newsletter row between">
           {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
           {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
           <form novalidate>
@@ -96,7 +96,7 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
       </div>
     </div>
     <div>
-      <div class="bm-footer-22__start row between">
+      <div class="wf-footer-22__start row between">
         <div class="footer-nav-legal">
           {links.length > 0 && <div class="footer-legal-nav row between">
             <div class="row gap-fluid-m">{(links || []).map((it) => (

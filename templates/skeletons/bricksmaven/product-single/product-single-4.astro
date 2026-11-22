@@ -1,6 +1,6 @@
 ---
 /**
- * bm-product-single-4 — TRANSLATED Bricksmaven skeleton.
+ * wf-product-single-4 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (product-single-4.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -53,20 +53,20 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
 
 <div class="wf-product-single-4">
   <div class="sec-inner">
-    <div class="bm-product-single-4__container">
-      <div class="bm-product-single-4__breadcrumb-wrapper">
+    <div class="wf-product-single-4__container">
+      <div class="wf-product-single-4__breadcrumb-wrapper">
         {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
               </div>
       {before.length > 0 && <div class="flow mt-stack">
 {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
       </div>}
 
-      {links.length > 0 &&       <div class="bm-product-single-4__main">
-        {links.length > 0 &&         <div class="bm-product-single-4__content">
-          {links.length > 0 &&           <div class="bm-product-single-4__content-wrapper">
-            {links.length > 0 && <div class="bm-product-single-usp-1">
+      {links.length > 0 &&       <div class="wf-product-single-4__main">
+        {links.length > 0 &&         <div class="wf-product-single-4__content">
+          {links.length > 0 &&           <div class="wf-product-single-4__content-wrapper">
+            {links.length > 0 && <div class="wf-product-single-usp-1">
               <div class="grid-auto gap-fluid-m">{(links || []).map((it) => (
-                  <div class="bm-product-single-usp-1-list-item card">
+                  <div class="wf-product-single-usp-1-list-item card">
                     {it.icon && <IconChip name={it.icon} />}
                     <div class="stack">
                       <h3 class="text-fluid-1">{it.term || it.title || it.text}</h3>
@@ -82,10 +82,10 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
       </div>
       }
     </div>
-    <div class="bm-product-single__related-products-container">
+    <div class="wf-product-single__related-products-container">
       {links.length > 0 &&       <div>
         {links.length > 0 &&         <div>
-          {links.length > 0 &&           <div class="bm-product-single-accordion">
+          {links.length > 0 &&           <div class="wf-product-single-accordion">
             {links.length > 0 && <div class="grid-auto gap-fluid-m">{(links || []).map((it) => (
                 <div class="card">
                   <div>
@@ -103,11 +103,11 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
       </div>
       }
       {head && <h2 class="text-fluid-2">{head}</h2>}
-      {image &&       <div class="bm-related-products-list-1__list">
+      {image &&       <div class="wf-related-products-list-1__list">
         {image &&         <div>
-          {image &&           <div class="bm-related-products-list-1-card">
+          {image &&           <div class="wf-related-products-list-1-card">
             {image &&             <div>
-              {image && image.src && <figure class="bm-related-products-list-1-card__image ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
+              {image && image.src && <figure class="wf-related-products-list-1-card__image ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
             </div>
             }
           </div>

@@ -1,6 +1,6 @@
 ---
 /**
- * bm-testimonial-32 — TRANSLATED Bricksmaven skeleton.
+ * wf-testimonial-32 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (testimonial-32.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -55,7 +55,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
   <div class={image && image.src ? 'split' : undefined}>
     <div class="stack">
   <div class="sec-inner">
-    <div class="testimonial-32-container">
+    <div class="wf-testimonial-32-container">
       <div class="intro intro--left">
         {head && <h2 class="text-fluid-2">{head}</h2>}
         <div class="intro__text-cta-wrapper">
@@ -66,14 +66,14 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
       </div>
       {list.length > 0 &&       <div>
         {list.length > 0 && <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
-            <div class="testimonial-32-slide card">
+            <div class="wf-testimonial-32-slide card">
               {it.icon && <IconChip name={it.icon} />}
               <div class="stack">
                 <h3 class="text-fluid-1">{it.term || it.title || it.text}</h3>
                 {it.text && (it.term || it.title) && <p class="text-fluid-0">{it.text}</p>}
               </div>
-              <div class="testimonial-32-slide__client-wrapper">
-                <div class="testimonial-32-slide__meta-data">
+              <div class="wf-testimonial-32-slide__client-wrapper">
+                <div class="wf-testimonial-32-slide__meta-data">
                   {it.icon && <IconChip name={it.icon} />}
                   <h3 class="text-fluid-1">{it.term || it.title}</h3>
                   <p class="text-fluid-0">{it.text}</p>

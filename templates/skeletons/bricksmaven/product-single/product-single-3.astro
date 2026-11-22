@@ -1,6 +1,6 @@
 ---
 /**
- * bm-product-single-3 — TRANSLATED Bricksmaven skeleton.
+ * wf-product-single-3 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (product-single-3.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -52,8 +52,8 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
 
 <div class="wf-product-single-3">
   <div class="sec-inner">
-    <div class="bm-product-single-3__container">
-      <div class="bm-product-single-3__breadcrumb-wrapper">
+    <div class="wf-product-single-3__container">
+      <div class="wf-product-single-3__breadcrumb-wrapper">
         {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
               </div>
       {before.length > 0 && <div class="flow mt-stack">
@@ -61,9 +61,9 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
       </div>}
 
       {list.length > 0 &&       <div>
-        {list.length > 0 &&         <div class="bm-product-single-3__footer-content">
-          {list.length > 0 &&           <div class="bm-product-single-3__details">
-            {list.length > 0 &&             <div class="bm-product-single-accordion">
+        {list.length > 0 &&         <div class="wf-product-single-3__footer-content">
+          {list.length > 0 &&           <div class="wf-product-single-3__details">
+            {list.length > 0 &&             <div class="wf-product-single-accordion">
               {list.length > 0 && <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
                   <div class="card">
                     <div>
@@ -83,13 +83,13 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
       </div>
       }
     </div>
-    <div class="bm-product-single__related-products-container">
+    <div class="wf-product-single__related-products-container">
       {head && <h2 class="text-fluid-2">{head}</h2>}
-      {image &&       <div class="bm-related-products-list-1__list">
+      {image &&       <div class="wf-related-products-list-1__list">
         {image &&         <div>
-          {image &&           <div class="bm-related-products-list-1-card">
+          {image &&           <div class="wf-related-products-list-1-card">
             {image &&             <div>
-              {image && image.src && <figure class="bm-related-products-list-1-card__image ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
+              {image && image.src && <figure class="wf-related-products-list-1-card__image ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
             </div>
             }
           </div>

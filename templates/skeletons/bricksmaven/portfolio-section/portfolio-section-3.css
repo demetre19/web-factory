@@ -1,4 +1,4 @@
-  .wf-portfolio-section-3 .portfolio-section-3-container {
+  .wf-portfolio-section-3 .wf-portfolio-section-3-container {
     row-gap: var(--space-s);
   }
 
@@ -8,16 +8,16 @@
     row-gap: var(--space-s);
   }
 
-  .wf-portfolio-section-3 .portfolio-section-3-list {
+  .wf-portfolio-section-3 .wf-portfolio-section-3-list {
     display: grid;
     gap: calc(var(--space-m) * 2);
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
   }
 
-  .wf-portfolio-section-3 .portfolio-section-3-card {
+  .wf-portfolio-section-3 .wf-portfolio-section-3-card {
     flex-wrap: nowrap;
   }
 
-  .wf-portfolio-section-3 .portfolio-section-3-card__content {
+  .wf-portfolio-section-3 .wf-portfolio-section-3-card__content {
     row-gap: var(--flow-spacing);
   }

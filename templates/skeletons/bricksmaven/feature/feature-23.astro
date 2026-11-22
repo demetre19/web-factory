@@ -1,6 +1,6 @@
 ---
 /**
- * bm-feature-23 — TRANSLATED Bricksmaven skeleton.
+ * wf-feature-23 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (feature-23.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -53,13 +53,13 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
 
 <div class="wf-feature-23">
   <div class="sec-inner">
-    <div class="feature-23-container">
+    <div class="wf-feature-23-container">
       <div class="feature-23__content">
         {head && <h2 class="text-fluid-2">{head}</h2>}
         {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
         {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
-        {list.length > 0 && <div class="feature-23-list-ul">{(list || []).map((it) => (
-              <div class="feature-23-list-card card">
+        {list.length > 0 && <div class="wf-feature-23-list-ul">{(list || []).map((it) => (
+              <div class="wf-feature-23-list-card card">
                 <div>
                   {it.icon && <IconChip name={it.icon} />}
                   <div class="stack">

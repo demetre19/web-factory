@@ -1,4 +1,4 @@
-  .wf-contact-15 .contact-15-container {
+  .wf-contact-15 .wf-contact-15-container {
     row-gap: var(--space-xl);
   }
 
@@ -8,13 +8,13 @@
     row-gap: var(--space-s);
   }
 
-  .wf-contact-15 .contact-15-list-ul {
+  .wf-contact-15 .wf-contact-15-list-ul {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
     gap: var(--space-xl) var(--space-m);
   }
 
-  .wf-contact-15 .contact-15-list-team {
+  .wf-contact-15 .wf-contact-15-list-team {
     display: flex;
     flex-direction: column;
     row-gap: var(--space-s);

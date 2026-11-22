@@ -1,53 +1,53 @@
-  .wf-linktree-5 .bm-linktree-5__bio-data {
+  .wf-linktree-5 .wf-linktree-5__bio-data {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 2fr) minmax(0, 1fr);
     gap: var(--space-m);
   }
 
-  .wf-linktree-5 .bm-linktree-5-bio-card {
+  .wf-linktree-5 .wf-linktree-5-bio-card {
     row-gap: var(--flow-spacing);
   }
 
-  .wf-linktree-5 .bm-social-share {
+  .wf-linktree-5 .wf-social-share {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
     column-gap: calc(var(--flow-spacing) / 2);
   }
 
-  .wf-linktree-5 .bm-linktree-list {
+  .wf-linktree-5 .wf-linktree-list {
     row-gap: calc(var(--flow-spacing) / 2);
   }
 
-  .wf-linktree-5 .bm-linktree-5-newsletter-card {
+  .wf-linktree-5 .wf-linktree-5-newsletter-card {
     row-gap: var(--flow-spacing);
   }
 
-  .wf-linktree-5 .bm-linktree-5-newsletter-card__content {
+  .wf-linktree-5 .wf-linktree-5-newsletter-card__content {
     row-gap: calc(var(--flow-spacing) / 2);
   }
 
-  .wf-linktree-5 .bm-linktree-5-newsletter-card__top {
+  .wf-linktree-5 .wf-linktree-5-newsletter-card__top {
     row-gap: calc(var(--flow-spacing) / 2);
   }
 
-  .wf-linktree-5 .bm-linktree-5-newsletter-card__form-wrapper {
+  .wf-linktree-5 .wf-linktree-5-newsletter-card__form-wrapper {
     row-gap: calc(var(--flow-spacing) / 2);
   }
 
-  .wf-linktree-5 .bm-form-widget {
+  .wf-linktree-5 .wf-form-widget {
     display: flex;
     gap: var(--space-xs);
     flex-direction: row;
   }
 
-  .wf-linktree-5 .bm-form-widget--stacked {
+  .wf-linktree-5 .wf-form-widget--stacked {
     flex-direction: column;
   }
 
   @media (max-width: 44rem) {
-    .wf-linktree-5 .bm-linktree-5__bio-data { grid-template-columns: 1fr; }
-    .wf-linktree-5 .bm-social-share { flex-direction: column; }
-    .wf-linktree-5 .bm-form-widget { flex-direction: column; }
+    .wf-linktree-5 .wf-linktree-5__bio-data { grid-template-columns: 1fr; }
+    .wf-linktree-5 .wf-social-share { flex-direction: column; }
+    .wf-linktree-5 .wf-form-widget { flex-direction: column; }
   }
-  .wf-linktree-5 .bm-linktree-5__bio-data > :only-child { grid-column: 1 / -1; }
+  .wf-linktree-5 .wf-linktree-5__bio-data > :only-child { grid-column: 1 / -1; }

@@ -1,16 +1,16 @@
-  .wf-banner-4 .bm-banner-4__container {
+  .wf-banner-4 .wf-banner-4__container {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
     gap: var(--space-s);
   }
 
-  .wf-banner-4 .bm-banner-inline-content__info {
+  .wf-banner-4 .wf-banner-inline-content__info {
     column-gap: calc(var(--flow-spacing) / 4);
     flex-wrap: wrap;
     row-gap: calc(var(--flow-spacing) / 4);
   }
 
   @media (max-width: 44rem) {
-    .wf-banner-4 .bm-banner-4__container { flex-direction: column; }
+    .wf-banner-4 .wf-banner-4__container { flex-direction: column; }
   }

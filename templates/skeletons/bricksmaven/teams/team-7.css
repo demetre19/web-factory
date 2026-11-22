@@ -1,4 +1,4 @@
-  .wf-team-7 .team-7-container {
+  .wf-team-7 .wf-team-7-container {
     display: grid;
     gap: var(--space-m);
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
@@ -10,19 +10,19 @@
     row-gap: var(--space-xs);
   }
 
-  .wf-team-7 .team-7-content {
+  .wf-team-7 .wf-team-7-content {
     display: grid;
     gap: var(--space-m);
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
   }
 
-  .wf-team-7 .team-7-card {
+  .wf-team-7 .wf-team-7-card {
     display: flex;
     flex-direction: column;
     gap: var(--space-s);
   }
 
-  .wf-team-7 .team-7-card__box {
+  .wf-team-7 .wf-team-7-card__box {
     display: flex;
     flex-direction: column;
     gap: var(--space-s);

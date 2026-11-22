@@ -1,6 +1,6 @@
 ---
 /**
- * bm-hero-102 — TRANSLATED Bricksmaven skeleton.
+ * wf-hero-102 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (hero-102.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -53,17 +53,17 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
 
 <div class="wf-hero-102">
   <div class="sec-inner">
-    <div class="bm-hero-102__container grid-auto gap-fluid-l">
-      <div class="bm-hero-102__inner-content">
-        <div class="bm-hero-102__intro">
+    <div class="wf-hero-102__container grid-auto gap-fluid-l">
+      <div class="wf-hero-102__inner-content">
+        <div class="wf-hero-102__intro">
           {head && <h1 class="text-fluid-4">{head}</h1>}
-          {act.label &&           <div class="bm-hero-102__cta-cover">
+          {act.label &&           <div class="wf-hero-102__cta-cover">
             {act.label && <p class="mt-fluid-m"><a class="wf-cta-button" href={act.href}>{act.label}</a></p>}
           </div>
           }
         </div>
-        <div class="bm-hero-102-card">
-          <div class="bm-hero-102-card__content">
+        <div class="wf-hero-102-card">
+          <div class="wf-hero-102-card__content">
             {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
                       </div>
           {before.length > 0 && <div class="flow mt-stack">
@@ -77,9 +77,9 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
         </div>
       </div>
       {list.length > 0 &&       <div>
-        {list.length > 0 && <div class="bm-list bm-list--inline">
+        {list.length > 0 && <div class="wf-list wf-list--inline">
           <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
-              <div class="bm-list-item card">
+              <div class="wf-list-item card">
                 {it.icon && <IconChip name={it.icon} />}
                 <div class="stack">
                   <h3 class="text-fluid-1">{it.term || it.title || it.text}</h3>

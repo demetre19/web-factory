@@ -1,6 +1,6 @@
 ---
 /**
- * bm-feature-18 — TRANSLATED Bricksmaven skeleton.
+ * wf-feature-18 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (feature-18.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -55,8 +55,8 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
   <div class={image && image.src ? 'split' : undefined}>
     <div class="stack">
   <div class="sec-inner">
-    <div class="feature-18-container">
-      <div class="feature-18-content">
+    <div class="wf-feature-18-container">
+      <div class="wf-feature-18-content">
         {head && <h2 class="text-fluid-2">{head}</h2>}
         {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
               </div>
@@ -65,9 +65,9 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
       </div>}
 
       {list.length > 0 &&       <div>
-        {list.length > 0 && <div class="feature-18-list-ul">{(list || []).map((it) => (
-              <div class="feature-18-list-item card">
-                <div class="feature-18-list-item__content">
+        {list.length > 0 && <div class="wf-feature-18-list-ul">{(list || []).map((it) => (
+              <div class="wf-feature-18-list-item card">
+                <div class="wf-feature-18-list-item__content">
                   {it.icon && <IconChip name={it.icon} />}
                   <h3 class="text-fluid-1">{it.term || it.title}</h3>
                   <p class="text-fluid-0">{it.text}</p>

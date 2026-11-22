@@ -1,6 +1,6 @@
 ---
 /**
- * bm-comparison-3 — TRANSLATED Bricksmaven skeleton.
+ * wf-comparison-3 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (comparison-3.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -46,7 +46,7 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
 
 <div class="wf-comparison-3">
   <div class="sec-inner">
-    <div class="bm-comparison-3__container">
+    <div class="wf-comparison-3__container">
       <div class="intro">
         {head && <h2 class="text-fluid-2">{head}</h2>}
         {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
@@ -55,12 +55,12 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
 {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
       </div>}
 
-      <div class="bm-comparison-3__grid">
-        {list.length > 0 &&         <div class="bm-comparison-3__column">
-          {list.length > 0 && <div class="bm-comparison-3-list">
+      <div class="wf-comparison-3__grid">
+        {list.length > 0 &&         <div class="wf-comparison-3__column">
+          {list.length > 0 && <div class="wf-comparison-3-list">
             <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
-                <div class="bm-comparison-3-card card">
-                  <div class="bm-comparison-3-card__content">
+                <div class="wf-comparison-3-card card">
+                  <div class="wf-comparison-3-card__content">
                     <h4 class="text-fluid-1">{it.term || it.title}</h4>
                     <p class="text-fluid-0">{it.text}</p>
                   </div>
@@ -69,14 +69,14 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
           </div>}
         </div>
         }
-        {links.length > 0 &&         <div class="bm-comparison-3__column">
-          {links.length > 0 && <div class="bm-comparison-3-list">
+        {links.length > 0 &&         <div class="wf-comparison-3__column">
+          {links.length > 0 && <div class="wf-comparison-3-list">
             <div class="grid-auto gap-fluid-m">{(links || []).map((it) => (
-                <div class="bm-comparison-3-card card">
-                  <div class="bm-comparison-3-card__content">
+                <div class="wf-comparison-3-card card">
+                  <div class="wf-comparison-3-card__content">
                     <h4 class="text-fluid-1">{it.term || it.title}</h4>
                     <p class="text-fluid-0">{it.text}</p>
-                    <div class="bm-comparison-3-card__micro-wrapper">
+                    <div class="wf-comparison-3-card__micro-wrapper">
                       <p class="text-fluid-0">{it.text}</p>
                     </div>
                   </div>

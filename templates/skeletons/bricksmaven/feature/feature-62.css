@@ -1,4 +1,4 @@
-  .wf-feature-62 .bm-feature-62__container {
+  .wf-feature-62 .wf-feature-62__container {
     row-gap: var(--space-s);
   }
 
@@ -14,30 +14,30 @@
     gap: var(--space-s);
   }
 
-  .wf-feature-62 .bm-feature-62-tabs {
+  .wf-feature-62 .wf-feature-62-tabs {
     gap: var(--space-s);
   }
 
-  .wf-feature-62 .bm-feature-62-tabs__menu {
+  .wf-feature-62 .wf-feature-62-tabs__menu {
     column-gap: calc(var(--flow-spacing) / 2);
     flex-direction: row;
   }
 
-  .wf-feature-62 .bm-feature-62-feature-list {
+  .wf-feature-62 .wf-feature-62-feature-list {
     display: grid;
     gap: var(--space-m);
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
   }
 
-  .wf-feature-62 .bm-feature-62-feature-card {
+  .wf-feature-62 .wf-feature-62-feature-card {
     flex-wrap: nowrap;
     row-gap: var(--flow-spacing);
   }
 
-  .wf-feature-62 .bm-feature-62-feature-card__top {
+  .wf-feature-62 .wf-feature-62-feature-card__top {
     row-gap: calc(var(--flow-spacing) / 2);
   }
 
   @media (max-width: 44rem) {
-    .wf-feature-62 .bm-feature-62-tabs__menu { flex-direction: column; }
+    .wf-feature-62 .wf-feature-62-tabs__menu { flex-direction: column; }
   }

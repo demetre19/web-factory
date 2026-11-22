@@ -1,6 +1,6 @@
 ---
 /**
- * bm-testimonial-24 — TRANSLATED Bricksmaven skeleton.
+ * wf-testimonial-24 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (testimonial-24.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -62,13 +62,13 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
       {list.length > 0 &&       <div>
         {list.length > 0 && <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
             <div class="card">
-              <div class="testimonial-24-content__wrapper">
+              <div class="wf-testimonial-24-content__wrapper">
                 {it.icon && <IconChip name={it.icon} />}
                 <div class="stack">
                   <h3 class="text-fluid-1">{it.term || it.title || it.text}</h3>
                   {it.text && (it.term || it.title) && <p class="text-fluid-0">{it.text}</p>}
                 </div>
-                <div class="testimonial-24-content__profile">
+                <div class="wf-testimonial-24-content__profile">
                   {it.icon && <IconChip name={it.icon} />}
                   <h4 class="text-fluid-1">{it.term || it.title}</h4>
                   <p class="text-fluid-0">{it.text}</p>

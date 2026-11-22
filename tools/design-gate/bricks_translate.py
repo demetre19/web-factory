@@ -1414,6 +1414,12 @@ def translate(payload, stem):
                "${_mn}`]?.default ?? null) : null;\n")
               if _has_media else '')
            + f'---\n\n<div class="wf-{stem}">\n' + body + '</div>\n')
+    # no vendor class names in emitted docs: the skeleton's own
+    # bm-*/{stem}-* tokens become wf-* — markup and scoped css must
+    # rename together or the layout declarations unbind
+    for _a, _b in (('bm-', 'wf-'), (f'{stem}-', f'wf-{stem}-')):
+        src = re.sub(rf'(?<![\w-]){re.escape(_a)}', _b, src)
+        style = re.sub(rf'(?<![\w-]){re.escape(_a)}', _b, style)
     return src, {'stem': stem, 'rules': 0, 'css': style,
                  'unmapped_vars': sorted(unmapped)}
 

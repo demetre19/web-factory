@@ -1,4 +1,4 @@
-  .wf-feature-25 .feature-25-container {
+  .wf-feature-25 .wf-feature-25-container {
     row-gap: var(--space-xl);
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
@@ -11,13 +11,13 @@
     row-gap: var(--space-l);
   }
 
-  .wf-feature-25 .bm-feature-list-ul {
+  .wf-feature-25 .wf-feature-list-ul {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
     gap: var(--space-m);
   }
 
-  .wf-feature-25 .bm-feature-list-card {
+  .wf-feature-25 .wf-feature-list-card {
     display: flex;
     flex-direction: column;
     row-gap: var(--space-s);

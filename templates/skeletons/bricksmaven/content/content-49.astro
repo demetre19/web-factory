@@ -1,6 +1,6 @@
 ---
 /**
- * bm-content-49 — TRANSLATED Bricksmaven skeleton.
+ * wf-content-49 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (content-49.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -53,7 +53,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
 
 <div class="wf-content-49">
   <div class="sec-inner">
-    <div class="bm-content-49__container">
+    <div class="wf-content-49__container">
       <div>
         <div class="intro intro--left">
           {head && <h2 class="text-fluid-2">{head}</h2>}
@@ -64,8 +64,8 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
         </div>}
 
       </div>
-      <div class="bm-content-49__content">
-        <div class="bm-content-49__media grid-auto gap-fluid-l">
+      <div class="wf-content-49__content">
+        <div class="wf-content-49__media grid-auto gap-fluid-l">
           {image && image.src && <figure class="ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
           {image && image.src && <figure class="ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
         </div>

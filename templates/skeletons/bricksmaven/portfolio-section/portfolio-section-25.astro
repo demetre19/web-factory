@@ -1,6 +1,6 @@
 ---
 /**
- * bm-portfolio-section-25 — TRANSLATED Bricksmaven skeleton.
+ * wf-portfolio-section-25 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (portfolio-section-25.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -55,7 +55,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
   <div class={image && image.src ? 'split' : undefined}>
     <div class="stack">
   <div class="sec-inner">
-    <div class="bm-portfolio-section-25__container">
+    <div class="wf-portfolio-section-25__container">
       <div class="intro intro--split">
         {head &&         <div class="intro__left-column">
           {head && <h2 class="text-fluid-2">{head}</h2>}
@@ -67,13 +67,13 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
           {act.label && <p class="mt-fluid-m"><a class="wf-cta-button" href={act.href}>{act.label}</a></p>}
         </div>
       </div>
-      {list.length > 0 && <div class="bm-portfolio-section-25-list">{(list || []).map((it) => (
-            <div class="bm-portfolio-section-25-card card">
-              <div class="bm-portfolio-section-25-card__content">
-                <div class="bm-portfolio-section-25-card__intro">
+      {list.length > 0 && <div class="wf-portfolio-section-25-list">{(list || []).map((it) => (
+            <div class="wf-portfolio-section-25-card card">
+              <div class="wf-portfolio-section-25-card__content">
+                <div class="wf-portfolio-section-25-card__intro">
                   {it.icon && <IconChip name={it.icon} />}
                   <h3 class="text-fluid-1">{it.term || it.title}</h3>
-                  {(it.items || []).length > 0 && <div class="bm-portfolio-section-25-card-terms-list">
+                  {(it.items || []).length > 0 && <div class="wf-portfolio-section-25-card-terms-list">
                     <div class="grid-auto gap-fluid-m">{((it.items || []) || []).map((it2) => (
                         <div class="card">
                           {it2.icon && <IconChip name={it2.icon} />}

@@ -1,6 +1,6 @@
 ---
 /**
- * bm-portfolio-single-4 — TRANSLATED Bricksmaven skeleton.
+ * wf-portfolio-single-4 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (portfolio-single-4.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -54,19 +54,19 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
 <div class="wf-portfolio-single-4">
   <div class="sec-inner">
     <div class="grid-auto gap-fluid-l">
-      {head &&       <div class="bm-portfolio-single-4__intro">
+      {head &&       <div class="wf-portfolio-single-4__intro">
         {head && <h1 class="text-fluid-4">{head}</h1>}
       </div>
       }
       {image && image.src && <figure class="media-bg" aria-hidden="true"><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[960, 1440, 1920]} sizes="100vw" width={1600} height={900} loading="eager" fetchpriority="high" /></figure>}
     </div>
-    <div class="bm-portfolio-single-4__content-container">
+    <div class="wf-portfolio-single-4__content-container">
       {image &&       <div>
         {image && image.src && <figure class="ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
       </div>
       }
-      <div class="bm-portfolio-single-4__overview">
-        <div class="bm-portfolio-single-4__column">
+      <div class="wf-portfolio-single-4__overview">
+        <div class="wf-portfolio-single-4__column">
           {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
                   </div>
         {before.length > 0 && <div class="flow mt-stack">
@@ -76,8 +76,8 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
       </div>
     </div>
     {image &&     <div>
-      {image &&       <div class="bm-contact-widget-5">
-        {image &&         <div class="bm-contact-widget-5__manager-data">
+      {image &&       <div class="wf-contact-widget-5">
+        {image &&         <div class="wf-contact-widget-5__manager-data">
           {image &&           <div>
             {image && image.src && <figure class="ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
           </div>
@@ -88,18 +88,18 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
       }
     </div>
     }
-    {links.length > 0 &&     <div class="bm-portfolio-single-4__footer-container">
-      {links.length > 0 &&       <div class="bm-portfolio-single-4__footer-inner">
-        {links.length > 0 &&         <div class="bm-portfolio-3-related-list">
+    {links.length > 0 &&     <div class="wf-portfolio-single-4__footer-container">
+      {links.length > 0 &&       <div class="wf-portfolio-single-4__footer-inner">
+        {links.length > 0 &&         <div class="wf-portfolio-3-related-list">
           {links.length > 0 && <div class="grid-auto gap-fluid-m">{(links || []).map((it) => (
               <div class="card">
                 <div>
-                  <div class="bm-portfolio-3-related-card__top">
+                  <div class="wf-portfolio-3-related-card__top">
                     {it.icon && <IconChip name={it.icon} />}
                     <h3 class="text-fluid-1">{it.term || it.title}</h3>
                     <p class="text-fluid-0">{it.text}</p>
                   </div>
-                  <div class="bm-portfolio-3-related-card__footer">
+                  <div class="wf-portfolio-3-related-card__footer">
                     <p class="text-fluid-0">{it.text}</p>
                   </div>
                 </div>

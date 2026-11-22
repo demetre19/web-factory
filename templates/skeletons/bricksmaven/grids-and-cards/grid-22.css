@@ -1,4 +1,4 @@
-  .wf-grid-22 .grid-22-container {
+  .wf-grid-22 .wf-grid-22-container {
     row-gap: var(--space-s);
   }
 
@@ -8,19 +8,19 @@
     row-gap: var(--space-s);
   }
 
-  .wf-grid-22 .grid-22-list {
+  .wf-grid-22 .wf-grid-22-list {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
     gap: var(--space-m);
   }
 
-  .wf-grid-22 .grid-22-card__front {
+  .wf-grid-22 .wf-grid-22-card__front {
     display: flex;
     flex-direction: column;
     gap: var(--space-s);
   }
 
-  .wf-grid-22 .grid-22-card__back {
+  .wf-grid-22 .wf-grid-22-card__back {
     row-gap: var(--flow-spacing);
     display: flex;
     flex-direction: column;

@@ -1,6 +1,6 @@
 ---
 /**
- * bm-hero-96 — TRANSLATED Bricksmaven skeleton.
+ * wf-hero-96 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (hero-96.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -53,15 +53,15 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
 
 <div class="wf-hero-96">
   <div class="sec-inner">
-    {head &&     <div class="bm-hero-96__container">
-      {head &&       <div class="bm-hero-96__intro">
+    {head &&     <div class="wf-hero-96__container">
+      {head &&       <div class="wf-hero-96__intro">
         {head && <h1 class="text-fluid-4">{head}</h1>}
       </div>
       }
     </div>
     }
-    <div class="bm-carousel-list">
-      <div class="bm-media-carousel-list">
+    <div class="wf-carousel-list">
+      <div class="wf-media-carousel-list">
         {image &&         <div>
           {image && image.src && <figure class="ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
         </div>
@@ -73,7 +73,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
       </div>
     </div>
     <div>
-      <div class="bm-hero-96__footer">
+      <div class="wf-hero-96__footer">
         <div>
           {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
                   </div>

@@ -1,47 +1,47 @@
-  .wf-blog-archive-3 .blog-archive-3-container {
+  .wf-blog-archive-3 .wf-blog-archive-3-container {
     row-gap: var(--space-s);
   }
 
-  .wf-blog-archive-3 .blog-archive-3-head {
+  .wf-blog-archive-3 .wf-blog-archive-3-head {
     display: flex;
     flex-direction: column;
     row-gap: var(--flow-spacing);
   }
 
-  .wf-blog-archive-3 .blog-archive-3-head__intro {
+  .wf-blog-archive-3 .wf-blog-archive-3-head__intro {
     display: flex;
     flex-direction: column;
     row-gap: var(--flow-spacing);
   }
 
-  .wf-blog-archive-3 .blog-archive-3-body {
+  .wf-blog-archive-3 .wf-blog-archive-3-body {
     display: flex;
     flex-direction: column;
     row-gap: var(--flow-spacing);
   }
 
-  .wf-blog-archive-3 .blog-archive-3-wrapper {
+  .wf-blog-archive-3 .wf-blog-archive-3-wrapper {
     gap: var(--space-m);
   }
 
-  .wf-blog-archive-3 .blog-archive-3-card {
+  .wf-blog-archive-3 .wf-blog-archive-3-card {
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
     display: grid;
     gap: var(--space-m);
   }
 
-  .wf-blog-archive-3 .blog-archive-3-card__box {
+  .wf-blog-archive-3 .wf-blog-archive-3-card__box {
     display: flex;
     flex-direction: column;
     row-gap: var(--flow-spacing);
   }
 
-  .wf-blog-archive-3 .blog-archive-3-card__author {
+  .wf-blog-archive-3 .wf-blog-archive-3-card__author {
     display: flex;
     flex-direction: row;
     column-gap: var(--flow-spacing);
   }
 
   @media (max-width: 44rem) {
-    .wf-blog-archive-3 .blog-archive-3-card__author { flex-direction: column; }
+    .wf-blog-archive-3 .wf-blog-archive-3-card__author { flex-direction: column; }
   }

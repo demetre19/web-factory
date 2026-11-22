@@ -1,47 +1,47 @@
-  .wf-pricing-16 .bm-pricing-16__container {
+  .wf-pricing-16 .wf-pricing-16__container {
     display: grid;
     grid-template-columns: calc(100% * 2 / 1);
     gap: var(--space-m);
   }
 
-  .wf-pricing-16 .bm-pricing-16__intro {
+  .wf-pricing-16 .wf-pricing-16__intro {
     row-gap: var(--flow-spacing);
   }
 
-  .wf-pricing-16 .bm-pricing-16__price-wrapper {
+  .wf-pricing-16 .wf-pricing-16__price-wrapper {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
     gap: var(--space-m);
   }
 
-  .wf-pricing-16 .bm-pricing-13-card {
+  .wf-pricing-16 .wf-pricing-13-card {
     row-gap: var(--flow-spacing);
   }
 
-  .wf-pricing-16 .bm-pricing-13-card__icon-wrapper {
+  .wf-pricing-16 .wf-pricing-13-card__icon-wrapper {
     display: flex;
     gap: var(--space-s);
   }
 
-  .wf-pricing-16 .bm-pricing-13-card__top {
+  .wf-pricing-16 .wf-pricing-13-card__top {
     display: flex;
     flex-direction: column;
     row-gap: calc(var(--flow-spacing) / 2);
   }
 
-  .wf-pricing-16 .bm-list {
+  .wf-pricing-16 .wf-list {
     display: flex;
     flex-direction: column;
     row-gap: calc(var(--flow-spacing) / 2);
   }
 
-  .wf-pricing-16 .bm-list-item {
+  .wf-pricing-16 .wf-list-item {
     flex-direction: row;
     display: flex;
     column-gap: calc(var(--flow-spacing) / 2);
   }
 
   @media (max-width: 44rem) {
-    .wf-pricing-16 .bm-pricing-13-card__icon-wrapper { flex-direction: column; }
-    .wf-pricing-16 .bm-list-item { flex-direction: column; }
+    .wf-pricing-16 .wf-pricing-13-card__icon-wrapper { flex-direction: column; }
+    .wf-pricing-16 .wf-list-item { flex-direction: column; }
   }

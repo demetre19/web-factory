@@ -1,6 +1,6 @@
 ---
 /**
- * bm-blog-archive-7 — TRANSLATED Bricksmaven skeleton.
+ * wf-blog-archive-7 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (blog-archive-7.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -55,17 +55,17 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
   <div class={image && image.src ? 'split' : undefined}>
     <div class="stack">
   <div class="sec-inner">
-    <div class="blog-archive-7-container">
+    <div class="wf-blog-archive-7-container">
       {head &&       <div>
         {head && <h1 class="text-fluid-4">{head}</h1>}
       </div>
       }
   {sub && <p class="mt-stack lede" set:html={inline(sub)} />}
   {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
-      {list.length > 0 &&       <div class="blog-archive-7-body">
-        {list.length > 0 && <div class="blog-archive-7-wrapper">{(list || []).map((it) => (
-              <div class="blog-archive-7-card card">
-                <div class="blog-archive-7-card__category">
+      {list.length > 0 &&       <div class="wf-blog-archive-7-body">
+        {list.length > 0 && <div class="wf-blog-archive-7-wrapper">{(list || []).map((it) => (
+              <div class="wf-blog-archive-7-card card">
+                <div class="wf-blog-archive-7-card__category">
                   {it.icon && <IconChip name={it.icon} />}
                   <div class="stack">
                     <h3 class="text-fluid-1">{it.term || it.title || it.text}</h3>

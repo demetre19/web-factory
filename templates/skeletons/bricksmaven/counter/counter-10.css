@@ -1,28 +1,28 @@
-  .wf-counter-10 .counter-10-container {
+  .wf-counter-10 .wf-counter-10-container {
     display: grid;
     gap: var(--space-m);
     grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
   }
 
-  .wf-counter-10 .counter-10-box {
+  .wf-counter-10 .wf-counter-10-box {
     display: flex;
     flex-direction: column;
     row-gap: var(--flow-spacing);
   }
 
-  .wf-counter-10 .counter-10-grid-ul {
+  .wf-counter-10 .wf-counter-10-grid-ul {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
     gap: var(--space-m);
   }
 
-  .wf-counter-10 .counter-10-card {
+  .wf-counter-10 .wf-counter-10-card {
     display: flex;
     flex-direction: column;
     row-gap: var(--flow-spacing);
   }
 
   @media (max-width: 44rem) {
-    .wf-counter-10 .counter-10-container { grid-template-columns: 1fr; }
+    .wf-counter-10 .wf-counter-10-container { grid-template-columns: 1fr; }
   }
-  .wf-counter-10 .counter-10-container > :only-child { grid-column: 1 / -1; }
+  .wf-counter-10 .wf-counter-10-container > :only-child { grid-column: 1 / -1; }

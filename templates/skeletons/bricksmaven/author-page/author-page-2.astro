@@ -1,6 +1,6 @@
 ---
 /**
- * bm-author-page-2 — TRANSLATED Bricksmaven skeleton.
+ * wf-author-page-2 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (author-page-2.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -53,28 +53,28 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
 
 <div class="wf-author-page-2">
   <div class="sec-inner">
-    <div class="bm-author-page-2__container">
+    <div class="wf-author-page-2__container">
       <div class="grid-auto gap-fluid-l">
         {image && image.src && <figure class="ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
-        {image &&         <div class="bm-author-card-2__bottom">
-          {image &&           <div class="bm-author-card-2__thumb">
+        {image &&         <div class="wf-author-card-2__bottom">
+          {image &&           <div class="wf-author-card-2__thumb">
             {image && image.src && <figure class="ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
           </div>
           }
         </div>
         }
       </div>
-      <div class="bm-author-page-2__post-container">
+      <div class="wf-author-page-2__post-container">
         {head && <h2 class="text-fluid-2">{head}</h2>}
   {sub && <p class="mt-stack lede" set:html={inline(sub)} />}
   {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
-        <div class="bm-author-page-2-post-list">
-          <div class="bm-blog-archive-6-card">
+        <div class="wf-author-page-2-post-list">
+          <div class="wf-blog-archive-6-card">
             {image &&             <div>
               {image && image.src && <figure class="ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
             </div>
             }
-            {act.label &&             <div class="bm-blog-archive-6-card__meta">
+            {act.label &&             <div class="wf-blog-archive-6-card__meta">
               {act.label && <p class="mt-fluid-m"><a class="wf-cta-button" href={act.href}>{act.label}</a></p>}
             </div>
             }
