@@ -626,6 +626,84 @@ def _topo_variants(block, comp):
                     '[data-comp="' + comp + '"] *{direction:ltr}'))
         out.append(('text-wide', block,
                     'figure{display:none!important}'))
+    if 'flow-list' in block:
+        # sequence topology: spine / rail / badge variants over the
+        # real emitted flow-list markup — structural CSS only
+        out.append(('timeline-spine', block,
+                    '.flow-list{list-style:none;position:relative;'
+                    'padding-left:2.2em}'
+                    '.flow-list::before{content:"";position:absolute;'
+                    'left:.8em;top:.4em;bottom:.4em;width:2px;'
+                    'background:var(--border-default,#888)}'
+                    '.flow-row{position:relative}'
+                    '.flow-row .num{position:absolute;left:-2.2em;'
+                    'top:.15em;width:1.6em;height:1.6em;border-radius:50%;'
+                    'background:var(--action-primary,#555);'
+                    'color:var(--bg-base,#fff);display:inline-flex;'
+                    'align-items:center;justify-content:center;'
+                    'font-size:.72em;line-height:1}'))
+        out.append(('numbered-rail', block,
+                    '.flow-list{list-style:none;display:grid;'
+                    'grid-template-columns:repeat(auto-fit,'
+                    'minmax(200px,1fr));gap:1.2em;padding-left:0}'
+                    '.flow-row{display:grid;'
+                    'grid-template-rows:auto 1fr;border-top:3px solid '
+                    'var(--action-primary,#555);padding-top:.6em}'
+                    '.flow-row .num{font-size:2.4em;font-weight:800;'
+                    'line-height:1;color:var(--action-primary,#555);'
+                    'display:block;margin-bottom:.25em}'))
+        out.append(('icon-badge', block,
+                    '.flow-list{list-style:none;padding-left:0;'
+                    'display:grid;gap:.9em}'
+                    '.flow-row{display:flex;align-items:flex-start;'
+                    'gap:.8em;background:var(--bg-elevated,#f2f2f2);'
+                    'border:1px solid var(--border-default,#ddd);'
+                    'border-radius:12px;padding:.9em}'
+                    '.flow-row .num{flex:none;width:2em;height:2em;'
+                    'border-radius:10px;background:var(--action-primary,'
+                    '#555);color:var(--bg-base,#fff);display:'
+                    'inline-flex;align-items:center;justify-content:'
+                    'center;font-weight:700}'))
+    if 'hworks-grid-ul' in block:
+        # the emitted how-it-works recipe: same steps, three real
+        # shapes — spine / numbered rail / badge wall
+        out.append(('timeline-spine', block,
+                    '.hworks-grid-ul{display:grid!important;'
+                    'grid-template-columns:1fr!important;gap:1em;'
+                    'position:relative;padding-left:2.4em}'
+                    '.hworks-grid-ul::before{content:"";position:'
+                    'absolute;left:.9em;top:.5em;bottom:.5em;width:2px;'
+                    'background:var(--border-default,#999)}'
+                    '.hworks-card{position:relative}'
+                    '.hworks-card .icon-chip{position:absolute;'
+                    'left:-2.4em;top:.6em;width:1.8em;height:1.8em;'
+                    'border-radius:50%;background:var(--action-primary,'
+                    '#555)!important;color:var(--bg-base,#fff);'
+                    'display:flex;align-items:center;'
+                    'justify-content:center}'))
+        out.append(('numbered-rail', block,
+                    '.hworks-grid-ul{counter-reset:wstep;display:grid!'
+                    'important;grid-template-columns:repeat(auto-fit,'
+                    'minmax(200px,1fr))!important;gap:1em}'
+                    '.hworks-card{border-top:3px solid '
+                    'var(--action-primary,#555);position:relative}'
+                    '.hworks-card::before{counter-increment:wstep;'
+                    'content:counter(wstep,decimal-leading-zero);'
+                    'display:block;font-size:2em;font-weight:800;'
+                    'line-height:1;color:var(--action-primary,#555);'
+                    'padding:.4em 0 .2em}'))
+        out.append(('icon-badge', block,
+                    '.hworks-card{border-radius:14px!important;'
+                    'box-shadow:0 4px 18px rgba(0,0,0,.10);'
+                    'text-align:center}'
+                    '.hworks-card .icon-chip{width:3em!important;'
+                    'height:3em!important;border-radius:14px;'
+                    'margin:.6em auto .3em;display:flex;'
+                    'align-items:center;justify-content:center;'
+                    'background:var(--action-primary,#555)!important;'
+                    'color:var(--bg-base,#fff)}'
+                    '.hworks-card .icon-chip svg{width:1.6em;'
+                    'height:1.6em}'))
     return out
 
 
@@ -674,7 +752,14 @@ def emit_vibe_doc(pd, fam, bundle):
         if comp in blocks:
             body += blocks[comp][0]
     fp = os.path.join(outdir, fam + '.html')
-    if not os.path.isfile(fp):
+    stale = True
+    if os.path.isfile(fp):
+        try:
+            with open(fp, encoding='utf-8', errors='replace') as rf:
+                stale = 'wf:vibe:v3' not in rf.read(4096)
+        except OSError:
+            stale = True
+    if stale:
         os.makedirs(outdir, exist_ok=True)
         css = _fam_css(bundle)
         theme = ('<script>document.documentElement.dataset.theme='
@@ -682,7 +767,8 @@ def emit_vibe_doc(pd, fam, bundle):
                  '"dark")</script>'
                  if bundle.get('theme') == 'dark' else '')
         with open(fp, 'w', encoding='utf-8') as fh:
-            fh.write(_doc(head, battr, body, theme, css))
+            fh.write('<!--wf:vibe:v3-->' + _doc(head, battr, body,
+                                                theme, css))
     return 'preview/vibes/' + fam + '.html'
 
 
@@ -730,6 +816,35 @@ class _Raw(str):
 
 _L = ('<em class="wf-lorem" data-slot="{s}">Lorem ipsum — '
       'unmapped {s}</em>')
+_SEQ_CSS = ('.wf-seq{list-style:none;padding-left:0;counter-reset:'
+            'wstep;display:grid;gap:1em}'
+            '.wf-seq .wf-seq-num{display:inline-block;min-width:1.8em;'
+            'font-weight:800;color:var(--action-primary,#555)}'
+            '.wf-seq-spine{position:relative;padding-left:2.4em}'
+            '.wf-seq-spine::before{content:"";position:absolute;'
+            'left:.8em;top:.4em;bottom:.4em;width:2px;'
+            'background:var(--border-default,#999)}'
+            '.wf-seq-spine .wf-seq-row{position:relative}'
+            '.wf-seq-spine .wf-seq-num{position:absolute;left:-2.4em;'
+            'top:.1em;width:1.8em;height:1.8em;min-width:0;'
+            'border-radius:50%;background:var(--action-primary,#555);'
+            'color:var(--bg-base,#fff);display:flex;align-items:center;'
+            'justify-content:center;font-size:.72em}'
+            '.wf-seq-rail{grid-template-columns:repeat(auto-fit,'
+            'minmax(200px,1fr));gap:1.2em}'
+            '.wf-seq-rail .wf-seq-row{border-top:3px solid '
+            'var(--action-primary,#555);padding-top:.5em}'
+            '.wf-seq-rail .wf-seq-num{display:block;font-size:2.2em;'
+            'line-height:1;margin-bottom:.2em}'
+            '.wf-seq-badge .wf-seq-row{display:flex;gap:.9em;'
+            'align-items:flex-start;background:var(--bg-elevated,'
+            '#f2f2f2);border:1px solid var(--border-default,#ddd);'
+            'border-radius:12px;padding:.9em}'
+            '.wf-seq-badge .wf-seq-num{flex:none;width:2em;height:2em;'
+            'min-width:0;border-radius:10px;background:'
+            'var(--action-primary,#555);color:var(--bg-base,#fff);'
+            'display:flex;align-items:center;justify-content:center}')
+
 _LOREM_CSS = ('.wf-lorem{display:inline-block;outline:1px dashed '
               'var(--action-primary,#999);outline-offset:2px;'
               'font-style:italic;opacity:.75;padding:0 .3em;'
@@ -949,6 +1064,28 @@ def _slot_frag(comp, slot):
                     for n, i in enumerate(its)) + '</ul>'
         h += ''.join(f'<p class="mt-stack max-w-prose text-fluid-0">'
                      f'{_inline(p)}</p>' for p in after) + '</div>'
+    elif comp in ('timeline-spine', 'numbered-rail', 'icon-badge'):
+        # shape variants of the step section — used for option rows
+        # the plan did not emit (emit can't reach non-own comps)
+        shape = {'timeline-spine': 'wf-seq-spine',
+                 'numbered-rail': 'wf-seq-rail',
+                 'icon-badge': 'wf-seq-badge'}[comp]
+        h += '<div><div class="sec-head">' \
+             f'<h2 class="text-fluid-3">{head}</h2>'
+        if sub:
+            h += f'<p class="lede">{_inline(sub)}</p>'
+        its = items or [{'term': _Raw(_L.format(s='items[]')),
+                         'text': _Raw(_L.format(s='items[]'))}
+                        for _i in range(4)]
+        if not items:
+            unmapped.append('items')
+        h += f'<ol class="wf-seq {shape} list-plain">' + \
+            ''.join(f'<li class="wf-seq-row"><span class="wf-seq-num">'
+                    f'{n + 1:02d}</span><div><h3 class="t0 sub-h">'
+                    f'{_val(i.get("term") or i.get("title") or "")}'
+                    f'</h3><p class="t0 sub-p">'
+                    f'{_val(i.get("text") or "")}</p></div></li>'
+                    for n, i in enumerate(its)) + '</ol></div>'
     elif comp == 'sequence':
         h += '<div><div class="sec-head">' \
              f'<h2 class="text-fluid-3">{head}</h2>'
@@ -1194,6 +1331,11 @@ def emit_section_fragments(pd):
         unmapped_map = {}
         cand = list(dict.fromkeys(
             ([comp] if comp else []) + (allowed.get(bid) or [])))
+        # sequence shape variety: the emitted block's own topo
+        # variants cover it when present; non-own rows get the three
+        # shape comps (they render via _slot_frag, no artifact needed)
+        if 'sequence' in cand and 'sequence' not in blocks:
+            cand += ['timeline-spine', 'numbered-rail', 'icon-badge']
         for c in cand:
             src = blocks.get(c)
             if src:
@@ -1211,7 +1353,7 @@ def emit_section_fragments(pd):
                           f'density-regular" data-sec="{sec}" '
                           f'data-comp="{c}"><div class="sec-inner">'
                           + inner + '</div></section>')
-                css = _LOREM_CSS
+                css = _LOREM_CSS + _SEQ_CSS
                 if unmap:
                     unmapped_map[c] = unmap
             emitted.append(c)
@@ -2901,7 +3043,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
     // propagate into live previews — built pages honour ?theme=
     document.querySelectorAll('.card iframe[data-src],.srow iframe').forEach(
       function(f){var u=(f.dataset.src||f.src).split('?')[0];
-        f.src=u+(m==='dark'?'?theme=dark':'')});
+        f.src=u+'?theme='+m});
   }
   function setTheme(m){applyTheme(m);
     try{localStorage.setItem('wfapp-theme',m)}catch(e){}}
@@ -3231,8 +3373,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
     var u='/built/'+encodeURI(DATA.pipeline+'/site/dist/'+alt.preview);
     var f=rowEl.querySelector('iframe');
     f.dataset.src=frame(u);
-    f.src=frame(u)+(document.documentElement.dataset.theme==='dark'
-      ?'?theme=dark':'');
+    f.src=frame(u)+'?theme='+document.documentElement.dataset.theme;
     rowEl.querySelector('[data-role="nm"]').textContent=alt.id;
     rowEl.querySelector('[data-role="pos"]').textContent=
       (r.idx+1)+'/'+r.alts.length;
