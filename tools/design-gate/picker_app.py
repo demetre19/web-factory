@@ -3183,7 +3183,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
 .sbchip b{font-weight:650;color:var(--muted);flex:0 0 auto}
 .sbchip.has b{color:var(--accent)}
 .sbchip.sbr{flex:0 0 auto;max-width:none}
-.sbchip.sbnext{border-color:var(--accent);color:var(--accent)}
+.sbchip.sbnext{background:transparent;border-color:var(--accent);
+  color:var(--accent)}
 .sbsp{flex:1 0 8px;min-width:8px}
 .sbr{background:var(--accent);color:var(--accent-ink);
   border-color:transparent;font-weight:650}
