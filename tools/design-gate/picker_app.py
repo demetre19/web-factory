@@ -2061,7 +2061,12 @@ def app_data(pipeline):
         if k in genotype:
             chips.append({'k': k, 'v': genotype[k]})
 
-    picked = {w: (gates.get(w) or {}).get('pick') for w in ('w3', 'w4')}
+    # a wave pick counts only when the gate verified the signed
+    # operator record — write_gate stores `design` even when the
+    # wave fails or approval is absent
+    picked = {w: ((gates.get(w) or {}).get('design')
+                  if (gates.get(w) or {}).get('approved') else None)
+              for w in ('w3', 'w4')}
     return {'pipeline': pd,
             'picked_elements': epicks,
             'bank_depth': bank_depth,
@@ -3120,11 +3125,67 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
 .ritem svg{width:15px;height:15px;flex:none;opacity:.85}
 .ritem .cnt{margin-left:auto;font:600 11px var(--mono);
      color:var(--muted)}
+.railbank{margin:2px 0}
+.railbank summary{display:flex;align-items:center;gap:10px;
+     padding:8px 10px;border-radius:var(--r-sm);cursor:pointer;
+     font:600 12.5px var(--font);color:var(--muted);list-style:none}
+.railbank summary::-webkit-details-marker{display:none}
+.railbank summary svg{width:15px;height:15px;flex:none;opacity:.85}
+.railbank summary:hover{background:var(--panel-2)}
+.railbank summary .cnt{margin-left:auto;font:600 11px var(--mono)}
+.railbank[open] summary{color:var(--ink)}
+.railbank .ritem{padding-left:26px}
 
 /* --- board --- */
-#board{overflow-y:auto;padding:22px 26px 60px;
+#board{overflow-y:auto;overflow-x:hidden;padding:22px 26px 108px;
      container-type:inline-size;container-name:board}
 #board>*{max-width:1600px;margin-left:auto;margin-right:auto}
+#board>#stepper{max-width:none;position:sticky;top:-22px;z-index:15;
+  display:flex;align-items:center;gap:6px;padding:9px 22px;
+  margin:-22px -26px 16px;background:var(--bg-2);
+  border-bottom:1px solid var(--line);overflow-x:auto}
+.stplab{font:700 11px var(--font);color:var(--muted);
+  letter-spacing:.08em;text-transform:uppercase;white-space:nowrap}
+.stp{display:flex;align-items:center;gap:7px;border:0;background:none;
+  color:var(--muted);cursor:pointer;padding:5px 8px;border-radius:7px;
+  white-space:nowrap;font:600 12px var(--font);flex:none}
+.stp .n{width:18px;height:18px;border-radius:50%;display:grid;
+  place-items:center;font:700 10px var(--mono);
+  border:1.5px solid var(--line);flex:none}
+.stp.done{color:var(--ink)}
+.stp.done .n{background:var(--ok,#1a7f37);border-color:transparent;
+  color:#fff}
+.stp.on{color:var(--ink);background:var(--panel)}
+.stp.on .n{border-color:var(--accent);color:var(--accent)}
+.stp .sub{font-weight:500;font-size:11px;color:var(--muted);
+  max-width:130px;overflow:hidden;text-overflow:ellipsis}
+.stp.done .sub{color:var(--ok,#1a7f37)}
+.stparr{color:var(--line);flex:none}
+.nextstep{display:block;margin:26px auto 10px;padding:10px 22px;
+  border:1px solid var(--line);border-radius:999px;background:var(--panel);
+  color:var(--ink);font:650 13px var(--font);cursor:pointer}
+.nextstep:hover{border-color:var(--accent);color:var(--accent)}
+#selbar{display:none}
+@media(min-width:768px){
+  #selbar{position:fixed;left:0;right:0;bottom:0;z-index:40;
+    display:flex;align-items:center;gap:8px;padding:8px 18px;
+    overflow:hidden;white-space:nowrap;
+    background:var(--panel);border-top:1px solid var(--line)}}
+@media(min-width:1025px){#selbar{left:232px}}
+.sblab{font:700 11px var(--font);color:var(--muted);
+  letter-spacing:.08em;text-transform:uppercase;flex:0 0 auto}
+.sbchip{display:flex;align-items:center;gap:6px;border:1px solid var(--line);
+  background:var(--bg-2);color:var(--muted);border-radius:999px;
+  padding:6px 13px;font:500 12px var(--font);cursor:pointer;
+  flex:0 1 auto;min-width:0;max-width:190px;overflow:hidden;
+  text-overflow:ellipsis}
+.sbchip.has{color:var(--ink);border-color:var(--accent)}
+.sbchip b{font-weight:650;color:var(--muted);flex:0 0 auto}
+.sbchip.has b{color:var(--accent)}
+.sbchip.sbr{flex:0 0 auto;max-width:none}
+.sbsp{flex:1 0 8px;min-width:8px}
+.sbr{background:var(--accent);color:var(--accent-ink);
+  border-color:transparent;font-weight:650}
 #scrim{display:none}
 #board h1{margin:0;font-size:19px;font-weight:650}
 #board .desc{color:var(--muted);font-size:13px;margin:5px 0 18px}
@@ -3162,7 +3223,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
 .crow .pick{margin-left:auto}
 .card.picked{border-color:var(--ok)}
 .card .ch{display:flex;align-items:center;gap:8px;
-     padding:10px 12px;border-bottom:1px solid var(--line)}
+     padding:10px 12px;border-bottom:1px solid var(--line);
+     min-width:0;max-width:100%;box-sizing:border-box}
 .card .ch .nm{font-weight:650;font-size:13px;flex:1;
  min-width:0;overflow:hidden;text-overflow:ellipsis;
  white-space:nowrap}
@@ -3173,7 +3235,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
      padding:1px 5px}
 .card .ch .score{margin-left:auto;font:600 11px var(--mono);
      color:var(--muted)}
-.card .cb{position:relative;background:var(--bg);min-height:64px}
+.card .cb{position:relative;background:var(--bg);min-height:64px;
+     max-width:100%;box-sizing:border-box}
 .card .cb:has(iframe)::before{content:'';position:absolute;inset:0;
      background:linear-gradient(100deg,var(--bg) 30%,var(--bg-2) 50%,var(--bg) 70%);
      background-size:200% 100%;animation:cbsk 1.3s linear infinite}
@@ -3198,7 +3261,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
 .card .vp button.on{color:var(--accent);border-color:var(--accent)}
 .card .cf{display:flex;align-items:center;justify-content:flex-start;
      gap:10px;padding:10px 12px;border-top:1px solid var(--line);
-     min-height:44px}
+     min-height:44px;min-width:0;max-width:100%;
+     box-sizing:border-box;flex-wrap:wrap}
 .card .cb{min-height:300px}
 .card .tags{display:flex;gap:5px;flex-wrap:wrap}
 .tag{font:600 11px var(--mono);color:var(--muted);
@@ -3523,6 +3587,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
   <nav id="rail"></nav>
   <div id="scrim"></div>
   <main id="board"></main>
+  <div id="selbar"></div>
 </div>
 <div id="toast"></div>
 <script>
@@ -3649,8 +3714,18 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
     LAYOUT_TABS.forEach(function(k){
       if(DATA.boards[k])item('b',DATA.boards[k])});
     h+='<div class="railgrp">3 · Sections · Elements</div>';
+    var banked=[];
     Object.keys(DATA.galleries).forEach(function(k){
-      if(k!=='fx')item('g',DATA.galleries[k])});
+      if(k==='fx')return;
+      var g=DATA.galleries[k];
+      if(/\u00b7\s*bank/.test(g.title||''))banked.push(g);
+      else item('g',g)});
+    if(banked.length){
+      h+='<details class="railbank"><summary>'+ICON.bars+
+         'Bank (reference)<span class="cnt">'+banked.length+
+         '</span></summary>';
+      banked.forEach(function(g){item('g',g)});
+      h+='</details>'}
     h+='<div class="railgrp">4 · Effects</div>';
     if(DATA.galleries.fx)item('g',DATA.galleries.fx);
     h+='<div class="railgrp">5 · Systems</div>';
@@ -3667,12 +3742,82 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
        '<span>URL · HTML</span></button>';
     el.innerHTML=h;
     el.querySelectorAll('.ritem').forEach(function(b){
-      b.onclick=function(){CUR=b.dataset.k;FILT={};SEL=0;ROW=0;
-        if(innerWidth<=1024){
-          document.getElementById('rail').classList.remove('open');
-          document.getElementById('scrim').classList.remove('open')}
-        rail();board()}});
+      b.onclick=function(){gotoBoard(b.dataset.k)}});
   }
+
+  function gotoBoard(k){CUR=k;FILT={};SEL=0;ROW=0;
+    if(innerWidth<=1024){
+      document.getElementById('rail').classList.remove('open');
+      document.getElementById('scrim').classList.remove('open')}
+    rail();board()}
+
+  // spec §1 flow — Vibe → Type → Layout → Sections → Effects → Review
+  var STEPS=[
+    {id:'vibe',label:'Vibe',board:'vibe'},
+    {id:'type',label:'Type',board:'typescale'},
+    {id:'layout',label:'Layout',board:'home'},
+    {id:'sections',label:'Sections',board:'page'},
+    {id:'effects',label:'Effects',board:'fx'},
+    {id:'review',label:'Review & save',board:'saved'}];
+  var NEXTSTEP={vibe:['typescale','Type'],typescale:['home','Layout'],
+    home:['page','Sections'],service:['page','Sections'],
+    location:['page','Sections'],contact:['page','Sections'],
+    blog:['page','Sections'],page:['fx','Effects'],
+    fx:['saved','Review & save']};
+  var SELCHIPS=[
+    {k:'vibe',label:'vibe',board:'vibe'},
+    {k:'layout',label:'layout',board:'home'},
+    {k:'header',label:'header',board:'chrome'},
+    {k:'footer',label:'footer',board:'chrome'},
+    {k:'menu',label:'menu',board:'menu'},
+    {k:'fx:default',label:'effect',board:'fx'}];
+  function _boardExists(b){
+    return b==='saved'||b==='remix'||!!((DATA.boards||{})[b]||
+      (DATA.galleries||{})[b])}
+  function stepDone(s){var p=(DATA&&DATA.picked_elements)||{};
+    if(s==='vibe')return (BAKED||p.vibe)?(VSRC||BAKED||p.vibe):null;
+    if(s==='type')return p.type||null;
+    // the signed w3 pick lives in the wave gates, not
+    // ELEMENT-PICKS — derive it so a reload shows the choice
+    if(s==='layout')return p.layout||
+      ((DATA.waves||{}).picked||{}).w3||null;
+    if(s==='sections'){var n=Object.keys(p).filter(function(k){
+      return k.indexOf('sec:')===0}).length;
+      return n?n+' signed':null}
+    if(s==='effects'){var f=p['fx:default'];
+      return f&&f!=='none'?f:null}
+    return null}
+  function stepperHtml(){
+    var h='<span class="stplab">pick the look</span>';
+    STEPS.forEach(function(s,i){
+      if(!_boardExists(s.board))return;
+      var dn=stepDone(s.id),cur=(CUR===s.board||
+        (s.id==='layout'&&LAYOUT_TABS.indexOf(CUR)>=0&&
+         CUR!=='page'));
+      h+='<span class="stparr">→</span>'+
+         '<button class="stp'+(dn?' done':'')+(cur?' on':'')+
+         '" data-b="'+s.board+'"><span class="n">'+(dn?'✓':(i+1))+
+         '</span>'+s.label+
+         (dn?'<span class="sub">'+esc(String(dn))+'</span>':'')+
+         '</button>'});
+    return h}
+  function selbarHtml(){
+    var p=(DATA&&DATA.picked_elements)||{},
+        h='<span class="sblab">picked</span>';
+    SELCHIPS.forEach(function(c){
+      var v=c.k==='vibe'?(VSRC||BAKED||p.vibe):
+        c.k==='layout'?(p.layout||
+          ((DATA.waves||{}).picked||{}).w3):p[c.k];
+      if(!v||v==='none'||v==='baseline')v=null;
+      h+='<button class="sbchip'+(v?' has':'')+'" data-b="'+c.board+
+         '"><b>'+c.label+'</b> '+esc(v?String(v).replace(/^atlas:/,''):'—')+
+         '</button>'});
+    h+='<span class="sbsp"></span>'+
+       '<button class="sbchip sbr" data-b="saved">Review &amp; save →</button>';
+    return h}
+  function wireFlow(){
+    document.querySelectorAll('#stepper .stp,#selbar .sbchip')
+      .forEach(function(b){b.onclick=function(){gotoBoard(b.dataset.b)}})}
 
   function topchips(){
     var d=DATA.design,h='';
@@ -4190,7 +4335,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
   function wireSaved(){
     var q=document.getElementById('ssq');
     if(q)q.oninput=function(){SSQ=q.value.toLowerCase();
-      var el=document.getElementById('board');
+      var el=document.getElementById('pane')||
+        document.getElementById('board');
       var keep=q.selectionStart;
       el.innerHTML='<h1>Saved systems</h1>'+savedView();wireSaved();
       var q2=document.getElementById('ssq');
@@ -4200,7 +4346,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
         if(!t)SSF={};
         else if(SSF[t])delete SSF[t];
         else{SSF={};SSF[t]=1}
-        var el=document.getElementById('board');
+        var el=document.getElementById('pane')||
+          document.getElementById('board');
         el.innerHTML='<h1>Saved systems</h1>'+savedView();wireSaved()}});
     var save=document.getElementById('sysSave');
     if(save)save.onclick=function(){
@@ -4636,6 +4783,18 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
   function board(){
     var el=document.getElementById('board');
     el.dataset.pane=CUR;
+    el.innerHTML='<div id="stepper">'+stepperHtml()+'</div>'+
+      '<div id="pane"></div>';
+    var el0=document.getElementById('selbar');
+    if(el0)el0.innerHTML=selbarHtml();
+    el=el.querySelector('#pane');
+    var nx=NEXTSTEP[CUR];
+    if(nx&&_boardExists(nx[0])){
+      var nb=document.createElement('button');
+      nb.className='nextstep';nb.textContent='Next: '+nx[1]+' →';
+      nb.onclick=function(){gotoBoard(nx[0])};
+      el.after(nb)}
+    wireFlow();
     if(CUR==='ingest'){ingestPane(el);return}
     if(CUR==='remix'){remixPane(el);return}
     if(CUR==='saved'){
@@ -4893,6 +5052,16 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
             .replace(/^approve REFUSED:? ?/,'');
           if(j.ok){b.textContent='picked ✓';
             b.closest('.card').classList.add('picked');
+            // reflect the signed approval in the flow UI: a w3
+            // pick IS the layout pick, w4 the page-design pick
+            DATA.picked_elements=DATA.picked_elements||{};
+            if(b.dataset.wave==='w3')
+              DATA.picked_elements.layout=b.dataset.d;
+            var st=document.getElementById('stepper');
+            if(st)st.innerHTML=stepperHtml();
+            var sb=document.getElementById('selbar');
+            if(sb)sb.innerHTML=selbarHtml();
+            wireFlow();
             toast(j.message)}else b.disabled=false})})
     }else{
       api('/element-pick',{pipeline:PIPELINE,
