@@ -14,10 +14,15 @@
 
   .wf-feature-36 .feature-36-card {
     display: grid;
-    grid-template-columns: calc(100% * 2 / 3);
+    grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
     gap: var(--space-m);
   }
 
   .wf-feature-36 .feature-36-card__content {
     row-gap: var(--flow-spacing);
   }
+
+  @media (max-width: 44rem) {
+    .wf-feature-36 .feature-36-card { grid-template-columns: 1fr; }
+  }
+  .wf-feature-36 .feature-36-card > :only-child { grid-column: 1 / -1; }

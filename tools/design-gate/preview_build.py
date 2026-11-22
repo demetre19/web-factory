@@ -632,6 +632,10 @@ def emit_layouts(ctx):
         ov_rows = []
         for c, row in contracts_rows:
             cc = dict(c)
+            # each option's sections trace to THAT option's card —
+            # the plan rows carry the picked option's ref, which would
+            # otherwise leak onto every lo-<oid> page
+            cc['wf_ref'] = f"preview/layouts.html#{oid}:{c['section']}"
             r2 = dict(row)
             ov = override.get(c['section'])
             eff = ov or c['composition']
@@ -648,11 +652,13 @@ def emit_layouts(ctx):
                 if m:
                     r2['image'] = {'src': m.get('src') or m.get('file'),
                                    'alt': m.get('alt', '')}
-                    r2['media_ratio'] = '4:3'
                     # data-ratio rides the contract's locked card —
-                    # the shipped media box locks the same ratio the
-                    # projected plan would declare (P.7)
-                    cc['media_ratio'] = '4:3'
+                    # the shipped media box locks the ratio the plan
+                    # row declares (P.4/P.7); 4:3 only when it has none
+                    lock = str(row.get('media_ratio') or 'none')
+                    lock = '4:3' if lock == 'none' else lock
+                    r2['media_ratio'] = lock
+                    cc['media_ratio'] = lock
                 else:
                     r2.pop('image', None)
             # a hero chrome override that turns the hero media-led
@@ -912,3 +918,281 @@ if __name__ == '__main__':
     open(fn, 'w', encoding='utf-8').write(txt)
     print(f'assembled real preview → {os.path.relpath(fn, ctx.dir)} '
           f'(marker {h})')
+
+
+# ------------------------------------------------------------------
+# page boards — every PAGE-BOARDS.json option as a real built page
+# ------------------------------------------------------------------
+_ACT_ROLES = ('cta', 'contact', 'form', 'newsletter')
+_BOARDS_ASTRO_CONFIG = '''import { defineConfig } from 'astro/config';
+import tailwind from '@astrojs/tailwind';
+
+export default defineConfig({
+  output: "static",
+  // node_modules is the page site's (symlinked) — keep the asset and
+  // dep caches inside the boards site
+  cacheDir: './.cache/astro',
+  integrations: [tailwind({ applyBaseStyles: false })],
+  vite: { cacheDir: './.cache/vite', build: { rollupOptions: { output: {
+    manualChunks(id) {
+      const m = id.match(/\\/src\\/components\\/([\\w.-]+)\\.astro$/);
+      return m ? 'comp-' + m[1] : undefined;
+    } } } } },
+});
+'''
+
+
+def _broken_comps(site, msg, comps):
+    """{comp: reason} for compositions whose compiled chunk carries
+    raw JSX (an arrow returning markup inside a template literal — the
+    skeleton did not compile), plus the comp the failing stack frame
+    names first."""
+    out = {}
+    cdir = os.path.join(site, 'dist', 'chunks')
+    if os.path.isdir(cdir):
+        for fn in os.listdir(cdir):
+            m = re.match(r'comp-(.+)_[\w-]{8}\.mjs$', fn)
+            if not m or m.group(1) not in comps:
+                continue
+            txt = open(os.path.join(cdir, fn), encoding='utf-8',
+                       errors='replace').read()
+            if '=> <' in txt:
+                out[m.group(1)] = 'compiled chunk carries raw JSX'
+    frame = re.search(r'at (?:\S+ \()?file://\S*?/chunks/comp-'
+                      r'([\w.-]+?)_[\w-]{8}\.mjs', msg)
+    if frame and frame.group(1) in comps and frame.group(1) not in out:
+        why = next((ln.strip() for ln in msg.split('\n')
+                    if 'not defined' in ln or 'Error' in ln),
+                   'render error')
+        out[frame.group(1)] = why[-120:]
+    return out
+
+
+def _boards_site(ctx):
+    """<page>/boards/site — an isolated astro site sharing the page
+    site's layout, tokens, assets and toolchain. The board options
+    import ~150 bank skeletons; keeping them out of site/src keeps the
+    wave gates' component/page scans on the shipped page only."""
+    import copy as _copy
+    bsite = os.path.join(ctx.dir, 'boards', 'site')
+    os.makedirs(bsite, exist_ok=True)
+    for fn in ('package.json', 'tailwind.config.js'):
+        src = os.path.join(ctx.site, fn)
+        if os.path.isfile(src):
+            shutil.copyfile(src, os.path.join(bsite, fn))
+    # the page site's config + one server chunk per component, so a
+    # skeleton that fails to compile/render names itself
+    PE._w(os.path.join(bsite, 'astro.config.mjs'), _BOARDS_ASTRO_CONFIG)
+    for sub in ('layouts', 'styles', '_shared', 'assets'):
+        src = os.path.join(ctx.site, 'src', sub)
+        dst = os.path.join(bsite, 'src', sub)
+        shutil.rmtree(dst, ignore_errors=True)
+        if os.path.isdir(src):
+            shutil.copytree(src, dst)
+    pb = os.path.join(bsite, 'src', 'styles', 'preview-bank.css')
+    if os.path.isfile(pb):
+        os.remove(pb)
+    for sub in ('pages', 'components'):
+        shutil.rmtree(os.path.join(bsite, 'src', sub), ignore_errors=True)
+    PE._toolchain(ctx)
+    for name in ('public', 'node_modules'):
+        link = os.path.join(bsite, name)
+        if not os.path.lexists(link):
+            os.symlink(os.path.join(ctx.site, name), link)
+    bctx = _copy.copy(ctx)
+    bctx.site = bsite
+    _ensure_shell(bctx)
+    return bctx
+
+
+_AHASH_JS = r"""
+const sharp = require(process.argv[1] + '/node_modules/sharp');
+(async () => { const out = {};
+  for (const f of process.argv.slice(2)) {
+    try { const px = await sharp(f).resize(8, 8, {fit: 'fill'})
+        .greyscale().raw().toBuffer();
+      const avg = px.reduce((a, b) => a + b, 0) / px.length;
+      out[f] = [...px].map(v => v >= avg ? 1 : 0).join('');
+    } catch (e) { out[f] = null; } }
+  process.stdout.write(JSON.stringify(out)); })();
+"""
+
+
+def _distinct_media(bctx, media):
+    """The brief's media with near-identical photos folded to their
+    first entry (8×8 average hash, Hamming ≤ 4) — one photo filed
+    under two names would repeat inside a multi-image hero."""
+    node = shutil.which('node')
+    if not node or len(media) < 2:
+        return media
+    paths = []
+    for m in media:
+        rel = (m.get('src') or m.get('file') or '').lstrip('/')
+        name = os.path.basename(rel)
+        f = next((p for p in (
+            os.path.join(bctx.site, 'src', 'assets', 'media', name),
+            os.path.join(bctx.site, 'public', rel))
+            if os.path.isfile(p)), None)
+        paths.append(f)
+    try:
+        out = subprocess.run(
+            [node, '-e', _AHASH_JS, bctx.site] + [p for p in paths if p],
+            capture_output=True, text=True, timeout=60, check=True)
+        hashes = json.loads(out.stdout or '{}')
+    except (subprocess.SubprocessError, ValueError, OSError):
+        return media
+    kept, seen = [], []
+    for m, p in zip(media, paths):
+        h = hashes.get(p) if p else None
+        if h and any(sum(a != b for a, b in zip(h, k)) <= 4
+                     for k in seen):
+            continue
+        if h:
+            seen.append(h)
+        kept.append(m)
+    return kept
+
+
+def emit_page_boards(ctx, doc=None, tries=40):
+    """Build every board option; a composition whose skeleton fails
+    to render is recorded in PAGE-BOARDS.json['excluded'] and the
+    options regenerate without it (never a silently broken card).
+    The built pages are judged by gate.py check_board_render (BR.*)."""
+    import page_boards as PBD
+    doc = doc or PBD.ensure(ctx.dir)
+    for _i in range(tries):
+        res, comps = _emit_page_boards(ctx, doc)
+        if isinstance(res, dict):
+            return res
+        bad = _broken_comps(os.path.join(ctx.dir, 'boards', 'site'),
+                            res, comps)
+        if not bad:
+            raise SystemExit(f'preview_build: boards {res}')
+        doc = PBD.ensure(ctx.dir, exclude=bad)
+    raise SystemExit('preview_build: boards — too many unrenderable '
+                     'compositions')
+
+
+_HERO_SURFACES = ('base', 'inverse', 'muted', 'brand')
+
+
+def _emit_page_boards(ctx, doc):
+    """lo-<board>-<nn> — one built page per PAGE-BOARDS.json option:
+    the option's retrieved compositions in the board's role order,
+    each bound to the role's own content (page_boards.bind), sections
+    tracing to their own option card (wf-ref). One astro build in the
+    isolated boards site. Returns {option_id: dist-abs index.html}."""
+    tpls = {}
+    for c, row in _contracts(ctx):
+        cat = c.get('category')
+        key = {'headers': 'header', 'hero': 'hero', 'footer': 'footer',
+               'contact': 'act'}.get(cat, 'content')
+        tpls.setdefault(key, (c, row))
+    if 'content' not in tpls:
+        raise SystemExit('preview_build: no content contract to clone')
+    bctx = _boards_site(ctx)
+    media = []
+    try:
+        media = list(gate._brief(ctx).get('media') or [])
+    except Exception:
+        pass
+    media = _distinct_media(bctx, media)
+    comps, pages = {}, {}
+    for board, b in doc['boards'].items():
+        prog = b['plan']
+        bound = b['content']
+        copy = {'h1': '', 'lede': '', 'closing': {},
+                'blocks': [v['block'] for v in bound.values()
+                           if v.get('block')]}
+        for oi, o in enumerate(b['options']):
+            oid = o['id']
+            rows, alt = [], 0
+            for ri, p in enumerate(prog):
+                role = p['role']
+                comp = o['compositions'].get(role)
+                if not comp:
+                    continue
+                recipe = o['recipes'].get(role) or ''
+                comps[comp] = recipe
+                tk = role if role in ('header', 'hero', 'footer') else (
+                    'act' if role in _ACT_ROLES and 'act' in tpls
+                    else 'content')
+                tc, _tr = tpls.get(tk) or tpls['content']
+                bnd = bound.get(role) or {}
+                blk = bnd.get('block')
+                extra = bnd.get('row') or {}
+                cc = dict(tc)
+                surface = 'base'
+                if role == 'hero':
+                    # the hero band rotates with the option — a light,
+                    # inverse, brand or muted first screen, never 30
+                    # cream bands with different markup inside
+                    surface = _HERO_SURFACES[oi % len(_HERO_SURFACES)]
+                elif tk == 'act':
+                    surface = 'brand'
+                elif tk == 'content':
+                    alt += 1
+                    surface = 'muted' if alt % 2 else 'base'
+                content = dict(tc.get('content') or {})
+                content.update(heading=None, fs=None, body=None,
+                               h1=role == 'hero',
+                               h1_text=(blk or {}).get('h2', '')
+                               if role == 'hero' else '',
+                               cta=extra.get('cta'))
+                cc.update(section=role, composition=comp,
+                          recipe=recipe or None,
+                          wf_ref=f'preview/boards/{board}.html#'
+                                 f'{oid}:{role}',
+                          surface=surface, intent=p['act'],
+                          content=content, content_ids=[], cols=None,
+                          media_ratio='none', disclosure='open',
+                          seam=None, seam_shape_top=None,
+                          seam_shape_bottom=None, skeleton=None)
+                row = {'name': role, 'speech_act': [p['act']]}
+                if blk:
+                    row['copy_ref'] = blk['id']
+                    row['vector'] = [{'heading': blk.get('h2') or '',
+                                      'fs': blk.get('answer') or ''}]
+                    if blk.get('items'):
+                        row['items'] = blk['items']
+                if extra.get('items'):
+                    row['items'] = extra['items']
+                if extra.get('cta'):
+                    row['cta'] = extra['cta']
+                if role in ('header', 'footer'):
+                    row['speech_act'] = ['chrome']
+                elif media:
+                    j = (oi + ri) % len(media)
+                    ring = media[j:] + media[:j]
+                    row['image'], *row['images'] = [
+                        {'src': x.get('src') or x.get('file'),
+                         'alt': x.get('alt', '')} for x in ring]
+                    cc['media_ratio'] = '4:3'
+                rows.append((cc, row))
+            pages[oid] = rows, copy
+    bank_css = []
+    for comp, recipe in sorted(comps.items()):
+        if comp.startswith('bm-'):
+            css = PE._bank_copy(bctx, comp, recipe)
+            if css:
+                bank_css.append(f'/* {recipe} */\n' + css)
+        else:
+            PE._comp_copy(bctx, comp)
+    bank_css = '\n'.join(bank_css)
+    if bank_css:
+        PE._w(os.path.join(bctx.site, 'src', 'styles',
+                           'preview-bank.css'), bank_css)
+    for oid, (rows, copy) in pages.items():
+        PE._w(os.path.join(bctx.site, 'src', 'pages', 'preview',
+                           f'lo-{oid}.astro'),
+              _page_astro(bctx, rows, copy, bank_css))
+    ok, msg = _build(bctx)
+    if not ok:
+        return msg, set(comps)
+    _rewrite_dist(bctx)
+    import page_boards as PBD
+    stamp = os.path.join(bctx.site, '.inputs_sha')
+    with open(stamp, 'w') as fh:
+        fh.write(PBD.render_sha(ctx, doc))
+    return {oid: _dist_page(bctx, f'lo-{oid}') for oid in pages}, \
+        set(comps)

@@ -11,7 +11,7 @@
   .wf-take-out-content-and-remove-this-div .hero-53-testimonial__container {
     display: grid;
     gap: var(--space-m);
-    grid-template-columns: calc(100% * 3 / 2);
+    grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
   }
 
   .wf-take-out-content-and-remove-this-div .hero-53-testimonial__review {
@@ -32,6 +32,8 @@
   }
 
   @media (max-width: 44rem) {
+    .wf-take-out-content-and-remove-this-div .hero-53-testimonial__container { grid-template-columns: 1fr; }
     .wf-take-out-content-and-remove-this-div .hero-53-testimonial__review-user-rating { flex-direction: column; }
     .wf-take-out-content-and-remove-this-div .hero-53-testimonial-review-rating { flex-direction: column; }
   }
+  .wf-take-out-content-and-remove-this-div .hero-53-testimonial__container > :only-child { grid-column: 1 / -1; }

@@ -11,7 +11,7 @@
   .wf-content-43 .bm-content-43__main {
     display: grid;
     gap: var(--space-m);
-    grid-template-columns: calc(100% * 3 / 2);
+    grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
   }
 
   .wf-content-43 .bm-content-43__column {
@@ -31,6 +31,8 @@
   }
 
   @media (max-width: 44rem) {
+    .wf-content-43 .bm-content-43__main { grid-template-columns: 1fr; }
     .wf-content-43 .bm-content-43 { flex-direction: column; }
     .wf-content-43 .bm-content-43__container { flex-direction: column; }
   }
+  .wf-content-43 .bm-content-43__main > :only-child { grid-column: 1 / -1; }

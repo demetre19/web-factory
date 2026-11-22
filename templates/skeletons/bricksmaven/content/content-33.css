@@ -1,6 +1,6 @@
   .wf-content-33 .content-3-container--alt {
     display: grid;
-    grid-template-columns: calc(100% * 2 / 3);
+    grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
     gap: var(--grid-gap);
   }
 
@@ -25,5 +25,7 @@
   }
 
   @media (max-width: 44rem) {
+    .wf-content-33 .content-3-container--alt { grid-template-columns: 1fr; }
     .wf-content-33 .content-33-data-item__number-wrapper { flex-direction: column; }
   }
+  .wf-content-33 .content-3-container--alt > :only-child { grid-column: 1 / -1; }

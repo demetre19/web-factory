@@ -1,6 +1,6 @@
   .wf-linktree-7 .bm-linktree-7__container {
     display: grid;
-    grid-template-columns: calc(100% * 3 / 1);
+    grid-template-columns: minmax(0, 1fr) minmax(0, 3fr);
     gap: var(--grid-gap);
   }
 
@@ -22,6 +22,8 @@
   }
 
   @media (max-width: 44rem) {
+    .wf-linktree-7 .bm-linktree-7__container { grid-template-columns: 1fr; }
     .wf-linktree-7 .bm-linktree-7-bio { flex-direction: column; }
     .wf-linktree-7 .bm-social-share { flex-direction: column; }
   }
+  .wf-linktree-7 .bm-linktree-7__container > :only-child { grid-column: 1 / -1; }

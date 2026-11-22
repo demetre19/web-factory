@@ -599,6 +599,43 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
   .row.between:has(.nav-links), .row.between:has(.burger),
   .row.between:has(.nav-desk) { flex-wrap: nowrap; }
   .row.between:has(.burger) > * { min-width: 0; }
+  /* the lanes keep a gap and only the link lane gives — the brand
+     and CTA lanes never shrink under the links (H.1 overlap) */
+  .row.between:has(.burger), .row.between:has(.nav-desk),
+  .row.between:has(.nav-links) { gap: var(--space-s); }
+  .row:has(> .nav-cta), .row:has(> .theme-toggle),
+  .row.between > .row:has(.wf-cta-button) { flex-wrap: nowrap;
+              gap: var(--space-xs); }
+  @media (min-width: 60rem) {
+    .row.between:has(.burger) > :first-child,
+    .row.between:has(.nav-desk) > :first-child,
+    .row.between:has(.burger) > :has(.nav-cta):not(:has(.nav-links,
+                .nav-desk)),
+    .row.between > .row:has(.wf-cta-button),
+    .row:has(> .nav-cta), .row:has(> .theme-toggle) { flex: none; }
+  }
+  .nav-links ul, .nav-desk ul { flex-wrap: nowrap; }
+  .nav-link { white-space: nowrap; }
+  /* a two-tier bank header (links in a topbar, brand + CTA in the
+     row below) folds into ONE desktop row: brand · links · CTA (H.1).
+     :has() never nests, so the tiers are read by position */
+  @media (min-width: 60rem) {
+    .sec-inner:has(> :first-child > :is(.nav-links,
+        .nav-priority)):has(> :first-child + .row .brand-mark) {
+        display: flex; align-items: center;
+        justify-content: space-between; gap: var(--space-s); }
+    .sec-inner:has(> :first-child > :is(.nav-links,
+        .nav-priority)) > :first-child + .row { display: contents; }
+    .sec-inner:has(> :first-child > :is(.nav-links,
+        .nav-priority)) > :first-child + .row > :first-child { order: -1; }
+    .sec-inner:has(> :first-child > :is(.nav-links,
+        .nav-priority)) > :first-child + .row > :not(:first-child) {
+        order: 1; }
+    /* a stacked (column) bank bar lays its lanes in one row */
+    .sec-inner > .row.between:has(> * .brand-mark, > .brand-mark):has(
+        .nav-links, .nav-priority, .nav-desk) { flex-direction: row;
+        align-items: center; }
+  }
   div:has(> .burger), div:has(> .nav-links + .burger),
   div:has(> .nav-desk + .burger) { display: flex;
               align-items: center; margin-inline-start: auto; }
@@ -684,10 +721,15 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
               align-items: center; flex: 0 1 auto; min-width: 0; }
     .nav-priority ul { flex-wrap: nowrap; gap: var(--space-s); }
     .nav-more { display: inline-flex; }
+    /* the bar's link lane and its "More" sit on one line */
+    :has(> .nav-desk + .nav-more), :has(> .nav-priority + .nav-more) {
+              display: flex; align-items: center; gap: var(--space-s); }
     /* a mega nav never unrolls inline — the priority row + More own
        the desktop bar; the panel still opens as a flyout */
-    .nav-links.nav-mega { display: none; }
-    .nav-links.nav-mega.open { display: flex; }
+    .nav-links.nav-links.nav-mega:not(.open),
+    .nav-links.nav-links[data-over]:not(.open) { display: none; }
+    .nav-links.nav-mega.open, .nav-links[data-over].open {
+              display: flex; }
   }
   /* the generic overlay family — modals, popups, form dialogs
      (N.flyout): a centred .flyout panel over the same scrim, a

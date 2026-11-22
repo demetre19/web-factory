@@ -1,7 +1,7 @@
   .wf-shop-hero-4 .shop-hero-4__top-container {
     display: grid;
     gap: var(--space-m);
-    grid-template-columns: calc(100% * 3 / 1);
+    grid-template-columns: minmax(0, 1fr) minmax(0, 3fr);
   }
 
   .wf-shop-hero-4 .shop-hero-4__nav-items {
@@ -33,5 +33,7 @@
   }
 
   @media (max-width: 44rem) {
+    .wf-shop-hero-4 .shop-hero-4__top-container { grid-template-columns: 1fr; }
     .wf-shop-hero-4 .shop-hero-4__nav-content { flex-direction: column; }
   }
+  .wf-shop-hero-4 .shop-hero-4__top-container > :only-child { grid-column: 1 / -1; }

@@ -1,7 +1,7 @@
   .wf-hero-73 .bm-hero-73__container {
     display: grid;
     gap: var(--space-m);
-    grid-template-columns: calc(100% * 2 / 1);
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
   }
 
   .wf-hero-73 .bm-hero-73__content {
@@ -24,5 +24,7 @@
   }
 
   @media (max-width: 44rem) {
+    .wf-hero-73 .bm-hero-73__container { grid-template-columns: 1fr; }
     .wf-hero-73 .cta-combo { flex-direction: column; }
   }
+  .wf-hero-73 .bm-hero-73__container > :only-child { grid-column: 1 / -1; }

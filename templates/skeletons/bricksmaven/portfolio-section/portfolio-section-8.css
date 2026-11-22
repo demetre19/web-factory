@@ -32,9 +32,14 @@
   .wf-portfolio-section-8 .portfolio-section-8-card {
     display: grid;
     gap: var(--space-m);
-    grid-template-columns: calc(100% * 2 / 1);
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
   }
 
   .wf-portfolio-section-8 .portfolio-section-8-card__intro {
     row-gap: calc(var(--flow-spacing) / 2);
   }
+
+  @media (max-width: 44rem) {
+    .wf-portfolio-section-8 .portfolio-section-8-card { grid-template-columns: 1fr; }
+  }
+  .wf-portfolio-section-8 .portfolio-section-8-card > :only-child { grid-column: 1 / -1; }

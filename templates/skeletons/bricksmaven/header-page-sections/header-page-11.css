@@ -1,7 +1,7 @@
   .wf-header-page-11 .bm-header-page-11__container {
     display: grid;
     gap: var(--space-m);
-    grid-template-columns: calc(100% * 2 / 1);
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
   }
 
   .wf-header-page-11 .bm-header-page-11__intro {
@@ -16,3 +16,8 @@
     display: flex;
     column-gap: var(--flow-spacing);
   }
+
+  @media (max-width: 44rem) {
+    .wf-header-page-11 .bm-header-page-11__container { grid-template-columns: 1fr; }
+  }
+  .wf-header-page-11 .bm-header-page-11__container > :only-child { grid-column: 1 / -1; }

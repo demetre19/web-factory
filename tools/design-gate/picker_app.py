@@ -65,8 +65,8 @@ ELEMENT_GALLERIES = [
          {'label': None, 'element': 'modals',
           'comps': ['modal-form', 'form-panel'], 'suffix': '-open'}]},
     {'id': 'footers', 'title': 'Footers · bank', 'icon': 'bars',
-     'desc': 'Reference footer topologies from the genmenu bank — '
-             'rendered as-banked (reference fidelity), not vibe-bound.',
+     'desc': 'Reference footer designs — shown exactly as stored '
+             'in the bank, not recoloured to the vibe.',
      'groups': []},
     {'id': 'pricing', 'title': 'Pricing · bank', 'icon': 'doc',
      'desc': 'Reference pricing topologies — tiers, single, table.',
@@ -139,28 +139,29 @@ _BANK_DIRS['fx'] = ()  # resolved below — every fx-* exemplar dir
 
 PAGE_BOARDS = [
     {'id': 'home', 'title': 'Home', 'icon': 'home',
-     'desc': 'Layout options (w3) and look options (w4) for the '
-             'emitted page — card pick posts a signed approval'},
+     'desc': 'Home page layouts — each option retrieves its own header, '
+             'hero topology and section compositions from the bank, '
+             'ranked by fit to the vibe genes and diversified; the w3/w4 '
+             'cards of the emitted page follow. Pick signs the home '
+             'composition'},
     {'id': 'service', 'title': 'Service', 'icon': 'doc',
-     'desc': 'Section composition for the service page — this '
-             'pipeline emits one page, so the previews render the '
-             'live page\'s sections; a pick signs the composition '
-             'applied to that plan'},
+     'desc': 'Service page layouts — hero, benefits, process, scope, '
+             'pricing, proof, FAQ, CTA; each option a different bank '
+             'hero topology + section set bound to this service\'s own '
+             'copy. Pick signs the service composition'},
     {'id': 'location', 'title': 'Location', 'icon': 'pin',
-     'desc': 'Section composition for the location page — this '
-             'pipeline emits one page, so the previews render the '
-             'live page\'s sections; a pick signs the composition '
-             'applied to that plan'},
+     'desc': 'Location page layouts — area hero, coverage/suburbs, local '
+             'proof, services, FAQ, contact; location content only '
+             '(lorem where the plan has none). Pick signs the location '
+             'composition'},
     {'id': 'contact', 'title': 'Contact', 'icon': 'mail',
-     'desc': 'Section composition for the contact page — this '
-             'pipeline emits one page, so the previews render the '
-             'live page\'s sections; a pick signs the composition '
-             'applied to that plan'},
+     'desc': 'Contact page layouts — page hero, form + details, map/area, '
+             'hours, FAQ; contact content only (lorem where the plan has '
+             'none). Pick signs the contact composition'},
     {'id': 'blog', 'title': 'Blog', 'icon': 'news',
-     'desc': 'Section composition for the blog page — this '
-             'pipeline emits one page, so the previews render the '
-             'live page\'s sections; a pick signs the composition '
-             'applied to that plan'},
+     'desc': 'Blog page layouts — page hero, featured post, listing, '
+             'categories, newsletter; guide links from the plan, lorem '
+             'elsewhere. Pick signs the blog composition'},
 ]
 
 # galleries whose cards pick an element (element → comp ids)
@@ -773,8 +774,9 @@ _CHROME_CSS = (
     'currentColor 0 2px,transparent 2px 6px)}')
 
 
-def _doc(head, battr, inner, extra='', css=''):
-    style = '<style>' + _CHROME_CSS + (css or '') + '</style>'
+def _doc(head, battr, inner, extra='', css='', chrome=True):
+    style = ('<style>' + (_CHROME_CSS if chrome else '') +
+             (css or '') + '</style>')
     return ('<!doctype html><html lang="en"><head>' + head + style +
             '</head><body' + (battr or '') + '>' + inner + extra +
             '</body></html>')
@@ -864,17 +866,19 @@ body{margin:0;font-family:var(--font-body,ui-sans-serif,system-ui)}
 .tscols{display:grid;grid-template-columns:1fr 1fr;gap:28px}
 .tscol>h4{font:600 11px ui-monospace,monospace;margin:0 0 6px;
      color:var(--text-muted,#888)}
-.tsrow{display:grid;grid-template-columns:108px 1fr;gap:12px;
-     align-items:baseline;padding:7px 0;
+.tsrow{display:grid;grid-template-columns:108px minmax(0,1fr);
+     gap:12px;align-items:baseline;padding:7px 0;
      border-bottom:1px dashed var(--border,#ddd)}
 .tsmeta{font:600 11px ui-monospace,monospace;
-     color:var(--text-muted,#888)}
+     color:var(--text-muted,#888);min-width:0}
 .tsmeta i{display:block;font-style:normal;opacity:.75}
-.tsspec{overflow-wrap:break-word;
+.tsspec{overflow-wrap:break-word;max-width:100%;min-width:0;
      font-family:var(--font-display,var(--font-body,ui-sans-serif))}
 .tsnum{font:11px ui-monospace,monospace;
      color:var(--text-muted,#888)}
 @media (max-width:840px){.tscols{grid-template-columns:1fr}}
+@media (max-width:560px){.tsrow{grid-template-columns:1fr;gap:2px;
+     padding:10px 0}.tsmeta{display:flex;gap:8px}.tsmeta i{display:inline}}
 """
 
 
@@ -941,7 +945,7 @@ def emit_typescale_doc(pd, name='current', bundle=None):
             os.path.getmtime(fp) >= os.path.getmtime(tp):
         try:
             with open(fp, encoding='utf-8', errors='replace') as rf:
-                stale = 'wf:ts:v1' not in rf.read(4096)
+                stale = 'wf:ts:v2' not in rf.read(4096)
         except OSError:
             stale = True
     if stale:
@@ -969,7 +973,7 @@ def emit_typescale_doc(pd, name='current', bundle=None):
         css = ((_fam_css(bundle) if bundle else '') + _TYPESCRIPT_CSS)
         os.makedirs(outdir, exist_ok=True)
         with open(fp, 'w', encoding='utf-8') as fh:
-            fh.write('<!--wf:ts:v1-->' + _doc(head, battr, body,
+            fh.write('<!--wf:ts:v2-->' + _doc(head, battr, body,
                                               css=css))
     return 'preview/typescale/' + name + '.html'
 
@@ -1584,57 +1588,6 @@ def emit_section_fragments(pd):
     return spec, depth
 
 
-def emit_layout_previews(pd):
-    """preview/layouts/<opt>.html — each LAYOUT-OPTIONS d-option
-    rendered as the real stacked page: every block's chosen comp in
-    plan order (the section's own emitted block where the option
-    keeps it, else the comp's skeleton bound to that block's slots).
-    Returns {option_id: dist-relative path}."""
-    lo = _json_at(pd, 'LAYOUT-OPTIONS.json') or {}
-    options = lo.get('options') or []
-    blocks, rows = _comp_blocks(pd)
-    if not options or not rows:
-        return {}
-    head, battr = rows[0][4], rows[0][5]
-    outdir = os.path.join(pd, 'site', 'dist', 'preview', 'layouts')
-    os.makedirs(outdir, exist_ok=True)
-    dist = os.path.join(pd, 'site', 'dist')
-    out = {}
-    for o in options:
-        oid = o.get('id')
-        comp_map = o.get('compositions') or {}
-        parts = []
-        for sec, bid, comp, block, h2, b2 in rows:
-            want = comp_map.get(bid, comp)
-            if want == comp:
-                parts.append(block)
-                continue
-            # HARD RULE: previews show emitted output, never an
-            # interpretation — reuse the comp's real emitted fragment
-            # (the same HTML the pipeline wrote for another page);
-            # _slot_frag is the last resort when no artifact exists
-            frag = blocks.get(want)
-            if frag:
-                parts.append(frag[0])
-                continue
-            inner, _unmap = _slot_frag(want, _copy_slot(pd, bid))
-            if inner is None:
-                continue
-            parts.append(
-                '<section class="sec-band surface-base density-regular"'
-                ' data-sec="' + str(sec) + '" data-comp="' + str(want) +
-                '"><div class="sec-inner">' + inner +
-                '</div></section>')
-        if not parts:
-            continue
-        fp = os.path.join(outdir, str(oid) + '.html')
-        with open(fp, 'w', encoding='utf-8') as fh:
-            fh.write(_doc(head, battr, '\n'.join(parts),
-                          css=_LOREM_CSS))
-        out[oid] = os.path.relpath(fp, dist)
-    return out
-
-
 # ------------------------------------------------------------------
 # option sets — the same blocks /approve accepts (F-27)
 # ------------------------------------------------------------------
@@ -1691,46 +1644,68 @@ def _picker_cards(ctx, pd):
     return cards
 
 
-def _composition_board(pd, layout_prevs=None):
-    """The layout vocabulary boards: per-option rendered previews
-    (stacked section fragments in plan order) with the b-rows matrix
-    demoted to secondary detail."""
-    lo = _json_at(pd, 'LAYOUT-OPTIONS.json')
-    if not lo:
-        return None
-    dist = os.path.join(pd, 'site', 'dist')
-    opts = []
-    for o in lo.get('options') or []:
-        oid = o.get('id')
-        # the fully-built option page wins when the emit produced
-        # one (real imagery/copy); the stacked fragment doc is the
-        # fallback for options without a build
-        built = os.path.join(dist, 'preview',
-                             'lo-' + str(oid), 'index.html')
-        if os.path.isfile(built):
-            prev = built
-        else:
-            rel = (layout_prevs or {}).get(oid)
-            prev = os.path.join(dist, rel) if rel else None
-        comps = o.get('compositions') or {}
-        opts.append({
-            'id': oid, 'name': o.get('label') or oid,
-            'score': o.get('score'),
-            'preview': ('/built/' + urllib.parse.quote(prev))
-                       if prev else None,
-            'tags': ['layout'] + sorted(set(comps.values())),
-            'element': 'layout', 'variant': o.get('id'),
-            'desc': 'rendered on the home page — the only page '
-                    'with a build · ' +
-                    ' · '.join(k + ' ' + v for k, v in
-                              list(comps.items())[:4]) +
-                    (' …' if len(comps) > 4 else ''),
-            'compositions': comps})
-    return {'allowed': {k: list(dict.fromkeys(v or []))
-                        for k, v in
-                        (lo.get('allowed') or {}).items()},
-            'options': opts,
-            'pick': lo.get('pick')}
+def _page_boards(pd):
+    """{board: {'cards', 'compositions'}} — page_boards.py's per-page-
+    type options (PAGE-BOARDS.json), each previewed as its built page
+    (preview_build.emit_page_boards, rebuilt lazily when the inputs
+    moved). A pick signs element layout:<board>."""
+    import page_boards as PBD
+    import preview_build
+    ctx = G.Ctx(pd)
+    doc = PBD.ensure(pd)
+    bsite = os.path.join(pd, 'boards', 'site')
+    try:
+        stamp = open(os.path.join(bsite, '.inputs_sha')).read().strip()
+    except OSError:
+        stamp = ''
+    opts = [o['id'] for b in doc['boards'].values() for o in b['options']]
+    pages = {o: os.path.join(bsite, 'dist', 'preview', 'lo-' + o,
+                             'index.html') for o in opts}
+    err = None
+    if stamp != PBD.render_sha(ctx, doc) or not all(
+            os.path.isfile(p) for p in pages.values()):
+        try:
+            preview_build.emit_page_boards(ctx)
+            doc = PBD.ensure(pd)
+            pages = {o['id']: os.path.join(
+                bsite, 'dist', 'preview', 'lo-' + o['id'], 'index.html')
+                for b in doc['boards'].values() for o in b['options']}
+        except SystemExit as e:
+            err = str(e)
+    picks = {p.get('element'): p.get('variant')
+             for p in (_json_at(pd, 'ELEMENT-PICKS.json') or {})
+             .get('picks', [])}
+    out = {}
+    for board, b in doc['boards'].items():
+        cards = []
+        for o in b['options']:
+            fp = pages.get(o['id'])
+            comps = o.get('compositions') or {}
+            cards.append({
+                'id': o['id'], 'name': o.get('label') or o['id'],
+                'score': o.get('fit'),
+                'preview': ('/built/' + urllib.parse.quote(fp))
+                           if fp and os.path.isfile(fp) else None,
+                'tags': ['layout', board, o['hero']['topology_id'],
+                         o.get('header') or ''],
+                'element': 'layout:' + board, 'variant': o['id'],
+                'desc': ' · '.join(f'{r} {c}' for r, c in comps.items()),
+                'compositions': comps})
+        out[board] = {
+            'cards': cards,
+            'error': err,
+            'compositions': {
+                'allowed': {p['role']: p['candidates']
+                            for p in b['plan']},
+                'options': [{'id': o['id'], 'label': o.get('label'),
+                             'compositions': o['compositions']}
+                            for o in b['options']],
+                'pick': picks.get('layout:' + board),
+                'page_type': b.get('page_type'),
+                'lorem_slots': b.get('lorem_slots'),
+                'sources': {r: c.get('sources')
+                            for r, c in (b.get('content') or {}).items()}}}
+    return out
 
 
 # ------------------------------------------------------------------
@@ -2034,17 +2009,17 @@ def app_data(pipeline):
                 'row swaps that section\'s composition/topology '
                 'in place; ✓ signs the row\'s choice.',
         'scrub': scrub, 'cards': []}
-    layout_prevs = emit_layout_previews(pd)
-    comp = _composition_board(pd, layout_prevs)
+    pboards = _page_boards(pd)
     for b in PAGE_BOARDS:
+        pb = pboards.get(b['id']) or {}
+        bcards = list(pb.get('cards') or [])
         if b['id'] == 'home':
-            boards[b['id']] = dict(
-                b, cards=(cards['layouts'] + cards['looks'] +
-                          cards['fine']))
-        else:
-            boards[b['id']] = dict(
-                b, cards=(comp or {}).get('options') or [],
-                compositions=comp)
+            # the emitted page's w3/w4 approval cards follow the home
+            # layout options
+            bcards += cards['layouts'] + cards['looks'] + cards['fine']
+        boards[b['id']] = dict(b, cards=bcards,
+                               compositions=pb.get('compositions'),
+                               error=pb.get('error'))
 
     knobs = (tokens.get('knobs') or {}) if isinstance(
         tokens, dict) else {}
@@ -2059,7 +2034,12 @@ def app_data(pipeline):
         if k in genotype:
             chips.append({'k': k, 'v': genotype[k]})
 
-    picked = {w: (gates.get(w) or {}).get('pick') for w in ('w3', 'w4')}
+    # a wave pick counts only when the gate verified the signed
+    # operator record — write_gate stores `design` even when the
+    # wave fails or approval is absent
+    picked = {w: ((gates.get(w) or {}).get('design')
+                  if (gates.get(w) or {}).get('approved') else None)
+              for w in ('w3', 'w4')}
     return {'pipeline': pd,
             'picked_elements': epicks,
             'bank_depth': bank_depth,
@@ -2139,17 +2119,328 @@ _GENMENU = os.path.join(_SKEL_ROOT, 'genmenu')
 # makes the stage the containing block for `position:fixed` children
 # (cursor trails, pinned demos) so they fill the stage, not the frame.
 _BANK_STAGE_CSS = (
-    'html,body{height:100%}'
-    'body{display:flex;align-items:center;justify-content:center;'
-    'background:#e8e9ec;margin:0;padding:18px;box-sizing:border-box}'
+    'html,body{min-height:100%}'
+    'body{display:flex;flex-direction:column;align-items:center;'
+    'justify-content:center;background:#e8e9ec;margin:0;'
+    'padding:18px;box-sizing:border-box;gap:12px}'
+    # E1 — the stage frames the fragment, it never restyles it:
+    # transparent surface (the fragment's own bg-* / surface tokens
+    # show), content-sized with token padding so nothing touches the
+    # frame edge and no dead band stacks around the widget
     '.wf-stage{position:relative;overflow:auto;'
     'transform:translateZ(0);display:flex;'
-    'border-radius:14px;background:#fff;'
+    'border-radius:14px;'
     'box-shadow:0 10px 34px rgba(15,18,30,.16);'
-    'width:min(100%,640px);height:min(70vh,460px)}'
+    'width:min(100%,1100px);max-width:100%;max-height:78vh;'
+    'padding:clamp(16px,3vw,32px);box-sizing:border-box}'
     '.wf-stage>*{margin:auto;flex:none}'
     '.wf-stage.mob{width:min(360px,96%);height:min(660px,86vh);'
-    'border-radius:24px}')
+    'border-radius:24px}'
+    # E1 — section/page-scale fragments never sit in the compact
+    # stage (the 640x460 box clipped mega footers and tier pages):
+    # full viewport width, content height, the fragment's own
+    # surface edge-to-edge
+    '.wf-page{position:relative;width:100%;min-height:100vh}'
+    '.wf-fx-bar{display:flex;gap:8px}'
+    '.wf-fx-bar button{font:600 12px/1 system-ui,sans-serif;'
+    'padding:8px 12px;border-radius:8px;'
+    'border:1px solid #d5d7dc;background:#fff;'
+    'color:#333;cursor:pointer}'
+    '.wf-fx-bar button[aria-pressed="true"]{'
+    'background:#1c1f26;color:#fff;border-color:#1c1f26}'
+    # an explicit motion toggle is the ONLY reduced-motion switch in
+    # preview docs (the emit pass strips the fragments\' own
+    # prefers-reduced-motion freezes — E1 live-play contract)
+    'body[data-motion="off"] .wf-stage *,'
+    'body[data-motion="off"] .wf-page *{'
+    'animation-play-state:paused!important;'
+    'transition:none!important}')
+
+
+# E1 — fragment interactions are authored against a REAL surface:
+# hover/click handlers listen on the fragment tree, scroll-driven
+# fx read the stage's scroll metrics (mapped by the shim above).
+# The driver replays that reality: one scroll sweep, a synthetic
+# pointer pass over the deepest interactive node, and a loop that
+# restarts finite animations so one-shot sequences never sit
+# frozen in their end state. Replay re-runs the same pass.
+_FX_DRIVER = (
+    '<script>(function(){'
+    'var st=document.querySelector(".wf-stage");'
+    'var pg=document.querySelector(".wf-page");'
+    'var sc=st||pg;if(!sc)return;'
+    'function scrollTo_(y){if(st)st.scrollTop=y;'
+    'else window.scrollTo(0,y)}'
+    'function scrollMax(){if(st)return st.scrollHeight-st.clientHeight;'
+    'return Math.max(0,document.documentElement.scrollHeight'
+    '-window.innerHeight)}'
+    'function anim(){return document.getAnimations?'
+    'document.getAnimations():[]}'
+    'function play(){anim().forEach(function(a){'
+    'try{a.cancel();a.play()}catch(e){}})}'
+    'function drive(){'
+    'var top=scrollMax();'
+    'if(top>8){'
+    'var t0=performance.now();'
+    '(function sweep(t){var k=Math.min(1,(t-t0)/2400);'
+    'scrollTo_(top*(k<.5?2*k*k:1-Math.pow(-2*k+2,2)/2));'
+    'if(k<1)requestAnimationFrame(sweep)})(t0);}'
+    'var hit=sc.querySelector("button,a,[role=button],summary,'
+    'input,select,[data-hover],[tabindex]");'
+    'if(hit){["pointerover","mouseover","pointerdown","pointerup",'
+    '"click","pointerout"].forEach(function(n,i){'
+    'setTimeout(function(){try{hit.dispatchEvent('
+    'new MouseEvent(n,{bubbles:true}))}catch(e){'
+    'hit.dispatchEvent(new Event(n,{bubbles:true}))}},'
+    '2600+i*140)})}}'
+    'var loop=setInterval(function(){'
+    'if(document.body.dataset.motion==="off")return;'
+    'var a=anim().filter(function(x){'
+    'return x.playState==="finished"||x.playState==="idle"});'
+    'var all=anim();'
+    'if(a.length&&a.length===all.length){play()}'
+    '},1500);'
+    'setTimeout(drive,900);'
+    'var r=document.querySelector(".wf-replay");'
+    'if(r)r.addEventListener("click",function(){'
+    'scrollTo_(0);play();drive()});'
+    'var m=document.querySelector(".wf-motion");'
+    'if(m)m.addEventListener("click",function(){'
+    'var off=document.body.dataset.motion==="off";'
+    'document.body.dataset.motion=off?"on":"off";'
+    'm.setAttribute("aria-pressed",off?"false":"true");'
+    'if(off)anim().forEach(function(a){try{a.play()}catch(e){}})'
+    '})'
+    '})();</script>')
+
+
+def _css_esc(name):
+    return re.sub(r'([^a-zA-Z0-9_-])', r'\\\1', name)
+
+
+def _util_rule(tok):
+    """tailwind v4-dialect utility → a css declaration for the
+    vendored v3 compiler's gaps (shadow-xs, w-13, ease-[…],
+    duration-250 …). Returns 'prop:value' or None (font families
+    resolve by name only — unresolvable)."""
+    # variant prefix = up to the last ':' before the first '['
+    bi = tok.find('[')
+    base = tok[tok.rfind(':', 0, bi if bi >= 0 else len(tok)) + 1:] \
+        if bi >= 0 else tok.split(':')[-1]
+    base = base.split('/')[0] if '/[' not in base else base
+    v = base[base.index('[') + 1:-1].replace('_', ' ') \
+        if base.endswith(']') and '[' in base else None
+    if base.startswith('[') and ':' in base[1:-1]:
+        prop, val = base[1:-1].split(':', 1)
+        return f'{prop}:{val.replace("_", " ")}'
+    SP = 0.25  # rem per spacing unit
+    m = re.fullmatch(
+        r'(w|h|size|min-w|max-w|min-h|max-h|p|px|py|pt|pb|pl|pr|'
+        r'm|mx|my|mt|mb|ml|mr|inset|inset-x|inset-y|top|right|'
+        r'bottom|left|gap|gap-x|gap-y|space-x|space-y|basis)-'
+        r'(\d+(?:\.\d+)?)', base)
+    if m:
+        rem = float(m.group(2)) * SP
+        prop = {
+            'w': 'width', 'h': 'height', 'size': 'width;height',
+            'min-w': 'min-width', 'max-w': 'max-width',
+            'min-h': 'min-height', 'max-h': 'max-height',
+            'p': 'padding', 'px': 'padding-inline',
+            'py': 'padding-block', 'pt': 'padding-top',
+            'pb': 'padding-bottom', 'pl': 'padding-left',
+            'pr': 'padding-right', 'm': 'margin',
+            'mx': 'margin-inline', 'my': 'margin-block',
+            'mt': 'margin-top', 'mb': 'margin-bottom',
+            'ml': 'margin-left', 'mr': 'margin-right',
+            'inset': 'inset', 'inset-x': 'inset-inline',
+            'inset-y': 'inset-block', 'top': 'top',
+            'right': 'right', 'bottom': 'bottom', 'left': 'left',
+            'gap': 'gap', 'gap-x': 'column-gap',
+            'gap-y': 'row-gap', 'basis': 'flex-basis',
+        }[m.group(1)]
+        if m.group(1) == 'size':
+            return f'width:{rem}rem;height:{rem}rem'
+        if m.group(1) in ('space-x', 'space-y'):
+            a = 'left' if m.group(1).endswith('x') else 'top'
+            return (f'>*+*{{margin-{a}:{rem}rem}}')
+        return f'{prop}:{rem}rem'
+    if base.startswith('ease-['):
+        return f'transition-timing-function:{v}'
+    if base.startswith(('duration-', 'delay-')):
+        n = base.split('-', 1)[1]
+        ms = v or (n if n.isdigit() else None)
+        if ms:
+            prop = ('transition-duration' if base[0] == 'd' and
+                    base[1] == 'u' else 'transition-delay')
+            return f'{prop}:{ms}ms'
+    if base.startswith('shadow-['):
+        return f'box-shadow:{v}'
+    named = {
+        'shadow-xs': 'box-shadow:0 1px 2px 0 rgb(0 0 0/.05)',
+        'shadow-sm': 'box-shadow:0 1px 3px 0 rgb(0 0 0/.1),'
+                     '0 1px 2px -1px rgb(0 0 0/.1)',
+        'rounded-xs': 'border-radius:.125rem',
+        'rounded-xxs': 'border-radius:.0625rem',
+        'will-change-transform': 'will-change:transform',
+        'will-change-opacity': 'will-change:opacity',
+        'will-change-scroll': 'will-change:scroll-position',
+        'will-change-contents': 'will-change:contents',
+        'will-change-auto': 'will-change:auto',
+        'transition-colors': 'transition-property:color,'
+                             'background-color,border-color',
+        'transition-transform': 'transition-property:transform',
+        'transition-all': 'transition-property:all',
+        'transition-shadow': 'transition-property:box-shadow',
+        'transition-opacity': 'transition-property:opacity',
+    }
+    if base in named:
+        return named[base]
+    if base.startswith('transition-['):
+        return f'transition-property:{v}'
+    if base.startswith('will-change-['):
+        return f'will-change:{v}'
+    if base.startswith('content-['):
+        return f'content:{v}'
+    if base.startswith('animate-['):
+        return f'animation:{v}'
+    for pre, prop in (
+            ('bg-[', 'background-color'), ('text-[', 'color'),
+            ('border-[', 'border-color'), ('ring-[', 'box-shadow'),
+            ('fill-[', 'fill'), ('stroke-[', 'stroke'),
+            ('accent-[', 'accent-color'),
+            ('min-h-[', 'min-height'), ('min-w-[', 'min-width'),
+            ('max-h-[', 'max-height'), ('max-w-[', 'max-width'),
+            ('w-[', 'width'), ('h-[', 'height'), ('inset-[', 'inset'),
+            ('top-[', 'top'), ('bottom-[', 'bottom'),
+            ('left-[', 'left'), ('right-[', 'right'),
+            ('grid-cols-[', 'grid-template-columns'),
+            ('grid-rows-[', 'grid-template-rows'),
+            ('blur-[', 'filter:blur('), ('z-[', 'z-index'),
+            ('opacity-[', 'opacity'), ('scale-[', 'transform:scale('),
+            ('rotate-[', 'transform:rotate('),
+            ('tracking-[', 'letter-spacing'),
+            ('leading-[', 'line-height'),
+            ('cursor-[', 'cursor'), ('aspect-[', 'aspect-ratio'),
+            ('origin-[', 'transform-origin'),
+            ('outline-[', 'outline-color'),
+            ('decoration-[', 'text-decoration-color'),
+            ('caret-[', 'caret-color')):
+        if base.startswith(pre) and v:
+            if pre == 'text-[' and re.fullmatch(r'[\d.]+(px|rem|em)', v):
+                prop = 'font-size'
+            if pre in ('blur-[', 'scale-[', 'rotate-['):
+                return f'{prop}{v})'
+            if pre == 'ring-[':
+                return f'box-shadow:0 0 0 3px {v}'
+            return f'{prop}:{v}'
+    return None
+
+
+def _bank_fallback_css():
+    """every class token the bank uses that the compiled
+    bank-preview.css doesn't carry → a generated fallback rule.
+    Fragment <style> blocks are checked too (amb15-mote & co. are
+    fragment-local, never missing)."""
+    css_path = os.path.join(_GENMENU, 'bank-preview.css')
+    css = open(css_path, errors='replace').read() \
+        if os.path.isfile(css_path) else ''
+    frag_styles = []
+    toks = set()
+    for r, _ds, fns in os.walk(_GENMENU):
+        for fn in fns:
+            if not fn.endswith('.html'):
+                continue
+            blob = open(os.path.join(r, fn), encoding='utf-8',
+                        errors='replace').read()
+            frag_styles += re.findall(
+                r'<style[^>]*>(.*?)</style>', blob, re.S | re.I)
+            for cm in re.finditer(r'class="([^"]+)"', blob):
+                toks.update(html.unescape(cm.group(1)).split())
+    rules = []
+    for tok in sorted(toks):
+        if tok.startswith(('wf-', 'lucide')):
+            continue
+        bi = tok.find('[')
+        base = tok[tok.rfind(':', 0, bi if bi >= 0 else
+                            len(tok)) + 1:]
+        sel = '.' + _css_esc(tok)
+        if sel in css or ('.' + _css_esc(base)) in css or \
+                ('.' + _css_esc(base.split('/')[0])) in css:
+            continue
+        cix = tok.rfind(':', 0, bi) if bi >= 0 else \
+            (tok.rfind(':') if ':' in tok else -1)
+        var = tok[:cix] if cix > 0 else ''
+        decl = _util_rule(tok)
+        if not decl:
+            continue
+        sel = '.' + _css_esc(tok)
+        if var in ('sm', 'md', 'lg', 'xl', '2xl'):
+            bp = {'sm': 640, 'md': 768, 'lg': 1024,
+                  'xl': 1280, '2xl': 1536}[var]
+            rules.append(f'@media(min-width:{bp}px)'
+                         f'{{{sel}{{{decl}}}}}')
+        elif var == 'hover':
+            rules.append(f'{sel}:hover{{{decl}}}')
+        elif var == 'dark':
+            rules.append(f'[data-theme="dark"] {sel}{{{decl}}}')
+        elif var in ('before', 'after'):
+            rules.append(f'{sel}::{var}{{{decl}}}')
+        elif not var:
+            rules.append(f'{sel}{{{decl}}}')
+        # pseudo-el/other variants unhandled → skip silently
+    return ''.join(rules)
+
+
+def _bank_scale(frag):
+    """E1 — widget vs page scale, derived from the fragment's own
+    root: anything that isn't clearly a small widget is page-scale
+    and renders edge-to-edge (the compact stage clips section-scale
+    fragments — footers, tiers, heroes). Widget cues: a fixed narrow
+    width/max-w, an inline root, or a span."""
+    m = re.search(r'<([a-zA-Z0-9-]+)([^>]*)>', frag)
+    if not m:
+        return 'widget'
+    tag, attrs = m.group(1).lower(), m.group(2)
+    cm = re.search(r'class="([^"]+)"', attrs)
+    cls = cm.group(1) if cm else ''
+    mw = re.search(r'(?:max-w|w|size)-\[(\d+)px\]', cls)
+    if mw and int(mw.group(1)) < 640:
+        return 'widget'
+    if re.search(r'max-w-(xs|sm|md|prose)\b', cls):
+        return 'widget'
+    if re.search(r'\b(w-fit|inline-flex|inline-block|'
+                 r'inline-grid)\b', cls) or tag == 'span':
+        return 'widget'
+    return 'page'
+
+
+def _fx_strip_freeze(frag):
+    """E1 — a preview doc must PLAY the effect: the banked
+    fragment's prefers-reduced-motion media blocks freeze it in
+    its end state when the preview runs under reduced-motion.
+    Strip those blocks at emit (the bank file keeps them); the
+    emitted doc's own motion toggle is the a11y switch."""
+    out = []
+    i = 0
+    pat = re.compile(r'@media\s*\([^{)]*prefers-reduced-motion')
+    while True:
+        m = pat.search(frag, i)
+        if not m:
+            out.append(frag[i:])
+            break
+        out.append(frag[i:m.start()])
+        # balance braces from the media block's opening {
+        j = frag.index('{', m.end())
+        depth = 1
+        j += 1
+        while depth and j < len(frag):
+            if frag[j] == '{':
+                depth += 1
+            elif frag[j] == '}':
+                depth -= 1
+            j += 1
+        i = j
+    return ''.join(out)
 
 
 def _genmenu_tags():
@@ -2273,6 +2564,37 @@ def emit_bank_previews(pd):
         os.path.isdir(os.path.join(_GENMENU, d))))
     tags = _genmenu_tags()
     css_src = os.path.join(_GENMENU, 'bank-preview.css')
+    # E1 — the committed css must cover the CURRENT bank: an exemplar
+    # banked after the last compile loses its arbitrary-value surface
+    # (bg-[#…] etc.), so its white text renders on the stage's
+    # near-white in light mode. mtime can't see that (a checkout
+    # bumps everything together) — hash every banked source; a stamp
+    # mismatch means the css predates the bank and must recompile:
+    # vendored tailwind, deterministic, no network.
+    bh = hashlib.sha256()
+    for r, _ds, fns in os.walk(_GENMENU):
+        for fn in sorted(fns):
+            if fn.endswith(('.html', '.tsx')):
+                fp_ = os.path.join(r, fn)
+                try:
+                    bh.update(os.path.relpath(fp_, _GENMENU).encode())
+                    bh.update(open(fp_, 'rb').read())
+                except OSError:
+                    pass
+    stamp_fp = os.path.join(css_src + '.sha256')
+    stamp = (open(stamp_fp).read() if os.path.isfile(stamp_fp)
+             else '')
+    if stamp != bh.hexdigest():
+        try:
+            sys.path.insert(0, HERE)
+            import genmenu_bank
+            if genmenu_bank.preview_css() == 0:
+                with open(stamp_fp, 'w') as fh:
+                    fh.write(bh.hexdigest())
+                print('  bank-preview.css recompiled '
+                      '(bank content changed)')
+        except Exception as e:
+            print(f'  ! bank-preview.css recompile skipped: {e}')
     outdir = os.path.join(pd, 'site', 'dist', 'preview', 'bank')
     os.makedirs(outdir, exist_ok=True)
     css_dst = os.path.join(outdir, 'bank-preview.css')
@@ -2283,12 +2605,19 @@ def emit_bank_previews(pd):
             blob = fi.read()
         with open(css_dst, 'wb') as fo:
             fo.write(blob)
+    extra = _bank_fallback_css()
+    extra_dst = os.path.join(outdir, 'bank-preview-extra.css')
+    with open(extra_dst, 'w') as fh:
+        fh.write('/* generated fallback utilities — vendored '
+                 'tailwind v3 dialect gaps */\n' + extra)
     head = ('<meta charset="utf-8"><meta name="viewport" '
             'content="width=device-width,initial-scale=1">'
             '<link rel="stylesheet" href="/built/' +
             urllib.parse.quote(os.path.join(
                 pd, 'site', 'dist', 'preview', 'bank',
-                'bank-preview.css')) + '">')
+                'bank-preview.css')) + '">'
+            '<link rel="stylesheet" href="/built/' +
+            urllib.parse.quote(extra_dst) + '">')
     out = {}
     for gid, dirs in _BANK_DIRS.items():
         cards = []
@@ -2307,17 +2636,52 @@ def emit_bank_previews(pd):
                     os.path.getmtime(fp) > os.path.getmtime(dst) or \
                     (os.path.isfile(css_dst) and
                      os.path.getmtime(css_dst) >
-                     os.path.getmtime(dst))
+                     os.path.getmtime(dst)) or \
+                    '<!--wf:bank:v4-->' not in open(
+                        dst, encoding='utf-8',
+                        errors='replace').read(64)
                 if stale:
                     frag = open(fp, encoding='utf-8').read()
+                    # E4 — banked fragments may keep the source app's
+                    # /src/assets/… refs; that tree is never shipped,
+                    # so every fx load 404s the image. Bind them to
+                    # the pipeline's emitted placeholder figure.
+                    frag = re.sub(
+                        r'/src/assets/[^\s"\'()]+',
+                        '/media/placeholder.svg', frag)
+                    fx = cls.startswith(('fx-', 'imgfx-', 'mobfx-'))
+                    if fx:
+                        frag = _fx_strip_freeze(frag)
                     mob = gid == 'menu' or cls.startswith('mob')
-                    stage = ('<div class="wf-stage' +
-                             (' mob' if mob else '') + '">' + frag +
-                             '</div>')
+                    page = (not mob) and _bank_scale(frag) == 'page'
+                    if page:
+                        stage = ('<div class="wf-page">' + frag +
+                                 '</div>')
+                    else:
+                        stage = ('<div class="wf-stage' +
+                                 (' mob' if mob else '') + '">' +
+                                 frag + '</div>')
+                    # E1 — fx cards carry the demo chrome (replay +
+                    # motion toggle) and the interaction driver; the
+                    # burger icon css is nav-only chrome, never fx
+                    if fx:
+                        stage += ('<div class="wf-fx-bar">'
+                                  '<button class="wf-replay" '
+                                  'type="button">Replay</button>'
+                                  '<button class="wf-motion" '
+                                  'type="button" aria-pressed="false">'
+                                  'Reduce motion</button></div>')
+                    css_ = _BANK_STAGE_CSS + \
+                        ('body{padding:0}' if page else '')
                     with open(dst, 'w', encoding='utf-8') as fh:
-                        fh.write(_doc(head, '', stage,
-                                      extra=_STAGE_SCROLL_SHIM,
-                                      css=_BANK_STAGE_CSS))
+                        fh.write('<!--wf:bank:v4-->' +
+                                 _doc(head, '', stage,
+                                      extra=(_STAGE_SCROLL_SHIM
+                                             if not page else '') +
+                                      (_FX_DRIVER if fx else ''),
+                                      css=css_,
+                                      chrome=gid == 'menu' or
+                                      cls.startswith('nav-')))
                 row = tags.get(cls + '/' + slug) or {}
                 ctags = [cls, 'bank'] + \
                     list(row.get('style') or []) + \
@@ -2905,9 +3269,28 @@ def record_element_pick(pipeline, element, variant, bundle=None):
             {d for dirs in _BANK_DIRS.values() for d in dirs}
     fxel = re.fullmatch(
         r'fx:(default|sec:[\w-]{1,40}|[\w-]{1,40})', element or '')
-    if element not in valid and not fxel and not re.fullmatch(
-            r'sec:[\w-]{1,40}', element or ''):
+    lay = re.fullmatch(r'layout:(home|service|location|contact|blog)',
+                       element or '')
+    if element not in valid and not fxel and not lay and not \
+            re.fullmatch(r'sec:[\w-]{1,40}', element or ''):
         return 1, f'unknown element gallery {element}'
+    if lay:
+        # a page-board pick signs THAT page type's composition — the
+        # bundle is the option's own record, never the client's
+        doc = _json_at(G.Ctx(pipeline).dir, 'PAGE-BOARDS.json') or {}
+        opt = next((o for o in ((doc.get('boards') or {})
+                                .get(lay.group(1)) or {})
+                    .get('options') or [] if o.get('id') == variant),
+                   None)
+        if not opt:
+            return 1, (f'{variant} is not a {lay.group(1)} option in '
+                       'PAGE-BOARDS.json')
+        bundle = {'page_type': doc['boards'][lay.group(1)]
+                  .get('page_type'),
+                  'compositions': opt.get('compositions'),
+                  'recipes': opt.get('recipes'),
+                  'hero': opt.get('hero'),
+                  'inputs_sha': doc.get('inputs_sha')}
     if fxel:
         # decoration is opt-in: only when the design's motion
         # vector is non-zero — a static design never gets fx
@@ -2935,7 +3318,13 @@ def record_element_pick(pipeline, element, variant, bundle=None):
         now = datetime.datetime.now().isoformat(timespec='seconds')
         for p in data.get('picks', []):
             if p.get('element') == element:
-                if p.get('variant') == variant:
+                # a regenerated board option keeps its id but not its
+                # composition — re-sign when the bundle moved
+                def _comp(bd):
+                    return {k: v for k, v in (bd or {}).items()
+                            if k != 'inputs_sha'}
+                if p.get('variant') == variant and not (
+                        lay and _comp(p.get('bundle')) != _comp(bundle)):
                     return 0, (f'{element} already is {variant} — '
                                'still signed')
                 old_v = p.get('variant')
@@ -2951,7 +3340,8 @@ def record_element_pick(pipeline, element, variant, bundle=None):
                                   G.op_key(create=True))
                 with open(fp, 'w') as fh:
                     json.dump(data, fh, indent=1, sort_keys=True)
-                return 0, (f'{element} {old_v} → {variant} '
+                return 0, ('Vibe baked' if element == 'vibe'
+                           else f'{element} {old_v} → {variant} '
                            '(superseded, signed into ELEMENT-PICKS.json)')
         rec = {'element': element, 'variant': variant, 'ts': now}
         if isinstance(bundle, dict):
@@ -2960,7 +3350,9 @@ def record_element_pick(pipeline, element, variant, bundle=None):
         data.setdefault('picks', []).append(rec)
         with open(fp, 'w') as fh:
             json.dump(data, fh, indent=1, sort_keys=True)
-    return 0, f'{element} → {variant} (signed into ELEMENT-PICKS.json)'
+    return 0, ('Vibe baked' if element == 'vibe'
+               else f'{element} → {variant} '
+               '(signed into ELEMENT-PICKS.json)')
 
 
 # ------------------------------------------------------------------
@@ -3115,11 +3507,69 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
 .ritem svg{width:15px;height:15px;flex:none;opacity:.85}
 .ritem .cnt{margin-left:auto;font:600 11px var(--mono);
      color:var(--muted)}
+.railbank{margin:2px 0}
+.railbank summary{display:flex;align-items:center;gap:10px;
+     padding:8px 10px;border-radius:var(--r-sm);cursor:pointer;
+     font:600 12.5px var(--font);color:var(--muted);list-style:none}
+.railbank summary::-webkit-details-marker{display:none}
+.railbank summary svg{width:15px;height:15px;flex:none;opacity:.85}
+.railbank summary:hover{background:var(--panel-2)}
+.railbank summary .cnt{margin-left:auto;font:600 11px var(--mono)}
+.railbank[open] summary{color:var(--ink)}
+.railbank .ritem{padding-left:26px}
 
 /* --- board --- */
-#board{overflow-y:auto;padding:22px 26px 60px;
+#board{overflow-y:auto;overflow-x:hidden;padding:22px 26px 108px;
      container-type:inline-size;container-name:board}
 #board>*{max-width:1600px;margin-left:auto;margin-right:auto}
+#board>#stepper{max-width:none;position:sticky;top:-22px;z-index:15;
+  display:flex;align-items:center;gap:6px;padding:9px 22px;
+  margin:-22px -26px 16px;background:var(--bg-2);
+  border-bottom:1px solid var(--line);overflow-x:auto}
+.stplab{font:700 11px var(--font);color:var(--muted);
+  letter-spacing:.08em;text-transform:uppercase;white-space:nowrap}
+.stp{display:flex;align-items:center;gap:7px;border:0;background:none;
+  color:var(--muted);cursor:pointer;padding:5px 8px;border-radius:7px;
+  white-space:nowrap;font:600 12px var(--font);flex:none}
+.stp .n{width:18px;height:18px;border-radius:50%;display:grid;
+  place-items:center;font:700 10px var(--mono);
+  border:1.5px solid var(--line);flex:none}
+.stp.done{color:var(--ink)}
+.stp.done .n{background:var(--ok,#1a7f37);border-color:transparent;
+  color:#fff}
+.stp.on{color:var(--ink);background:var(--panel)}
+.stp.on .n{border-color:var(--accent);color:var(--accent)}
+.stp .sub{font-weight:500;font-size:11px;color:var(--muted);
+  max-width:130px;overflow:hidden;text-overflow:ellipsis}
+.stp.done .sub{color:var(--ok,#1a7f37)}
+.stparr{color:var(--line);flex:none}
+.nextstep{display:block;margin:26px auto 10px;padding:10px 22px;
+  border:1px solid var(--line);border-radius:999px;background:var(--panel);
+  color:var(--ink);font:650 13px var(--font);cursor:pointer}
+.nextstep:hover{border-color:var(--accent);color:var(--accent)}
+#selbar{display:none}
+@media(min-width:768px){
+  #selbar{position:fixed;left:0;right:0;bottom:0;z-index:40;
+    display:flex;align-items:center;gap:8px;padding:8px 18px;
+    overflow:hidden;white-space:nowrap;
+    background:var(--panel);border-top:1px solid var(--line)}}
+@media(min-width:1025px){#selbar{left:232px}}
+.sblab{font:700 11px var(--font);color:var(--muted);
+  letter-spacing:.08em;text-transform:uppercase;flex:0 0 auto}
+.sbchip{display:flex;align-items:center;gap:6px;border:1px solid var(--line);
+  background:var(--bg-2);color:var(--muted);border-radius:999px;
+  padding:6px 13px;font:500 12px var(--font);cursor:pointer;
+  flex:0 1 auto;min-width:0;max-width:190px;overflow:hidden;
+  text-overflow:ellipsis}
+.sbchip.has{color:var(--ink);border-color:var(--accent)}
+.sbchip b{font-weight:650;color:var(--muted);flex:0 0 auto}
+.sbchip.has b{color:var(--accent)}
+.sbchip.sbr{flex:0 0 auto;max-width:none}
+.sbchip.sbnext{background:transparent;border-color:var(--accent);
+  color:var(--accent)}
+.sbsp{flex:1 0 8px;min-width:8px}
+.sbr{background:var(--accent);color:var(--accent-ink);
+  border-color:transparent;font-weight:650}
 #scrim{display:none}
 #board h1{margin:0;font-size:19px;font-weight:650}
 #board .desc{color:var(--muted);font-size:13px;margin:5px 0 18px}
@@ -3157,7 +3607,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
 .crow .pick{margin-left:auto}
 .card.picked{border-color:var(--ok)}
 .card .ch{display:flex;align-items:center;gap:8px;
-     padding:10px 12px;border-bottom:1px solid var(--line)}
+     padding:10px 12px;border-bottom:1px solid var(--line);
+     min-width:0;max-width:100%;box-sizing:border-box}
 .card .ch .nm{font-weight:650;font-size:13px;flex:1;
  min-width:0;overflow:hidden;text-overflow:ellipsis;
  white-space:nowrap}
@@ -3168,7 +3619,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
      padding:1px 5px}
 .card .ch .score{margin-left:auto;font:600 11px var(--mono);
      color:var(--muted)}
-.card .cb{position:relative;background:var(--bg);min-height:64px}
+.card .cb{position:relative;background:var(--bg);min-height:64px;
+     max-width:100%;box-sizing:border-box}
 .card .cb:has(iframe)::before{content:'';position:absolute;inset:0;
      background:linear-gradient(100deg,var(--bg) 30%,var(--bg-2) 50%,var(--bg) 70%);
      background-size:200% 100%;animation:cbsk 1.3s linear infinite}
@@ -3193,7 +3645,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
 .card .vp button.on{color:var(--accent);border-color:var(--accent)}
 .card .cf{display:flex;align-items:center;justify-content:flex-start;
      gap:10px;padding:10px 12px;border-top:1px solid var(--line);
-     min-height:44px}
+     min-height:44px;min-width:0;max-width:100%;
+     box-sizing:border-box;flex-wrap:wrap}
 .card .cb{min-height:300px}
 .card .tags{display:flex;gap:5px;flex-wrap:wrap}
 .tag{font:600 11px var(--mono);color:var(--muted);
@@ -3430,12 +3883,12 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
   display:flex;flex-direction:column}
 #xpBar{display:flex;align-items:center;gap:8px;padding:9px 14px;
   background:var(--panel);border-bottom:1px solid var(--line);
-  flex:none;flex-wrap:wrap}
+  flex:none;flex-wrap:wrap;row-gap:6px}
 #xpBar .xdev{flex:none}
 .xttl{font:600 12.5px var(--font);color:var(--ink);max-width:26%;
   overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .xdev{display:flex;border:1px solid var(--line);border-radius:7px;
-  overflow:hidden;margin-left:auto}
+  overflow:hidden;margin-left:auto;flex:none}
 .xdev button{border:0;background:none;color:var(--muted);cursor:pointer;
   font:600 11px var(--mono);padding:5px 10px}
 .xdev button.on{background:var(--accent);color:var(--accent-ink)}
@@ -3518,6 +3971,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
   <nav id="rail"></nav>
   <div id="scrim"></div>
   <main id="board"></main>
+  <div id="selbar"></div>
 </div>
 <div id="toast"></div>
 <script>
@@ -3531,9 +3985,14 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
 
   function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,
     function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
-  function toast(t){var e=document.getElementById('toast');
+  var _tq=[],_tBusy=false;
+  function toast(t){_tq.push(t);if(!_tBusy)_tNext()}
+  function _tNext(){var t=_tq.shift();
+    if(t==null){_tBusy=false;return}
+    _tBusy=true;var e=document.getElementById('toast');
     e.textContent=t;e.classList.add('show');
-    setTimeout(function(){e.classList.remove('show')},2600)}
+    setTimeout(function(){e.classList.remove('show');
+      setTimeout(_tNext,140)},2400)}
   function api(path,body){
     return fetch(path,{method:'POST',
       headers:{'Content-Type':'application/json',
@@ -3590,6 +4049,17 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
   document.getElementById('scrim').onclick=function(){
     document.getElementById('rail').classList.remove('open');
     document.getElementById('scrim').classList.remove('open')};
+  document.addEventListener('keydown',function(e){
+    if(e.key==='Escape'){
+      var r=document.getElementById('rail');
+      if(r.classList.contains('open')){
+        r.classList.remove('open');
+        document.getElementById('scrim').classList.remove('open')}
+      var dp=document.getElementById('dnaPop');
+      if(dp&&dp.open)dp.open=false}});
+  document.addEventListener('click',function(e){
+    var dp=document.getElementById('dnaPop');
+    if(dp&&dp.open&&!dp.contains(e.target))dp.open=false});
 
   var ICON={
     home:'<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M2 7l6-5 6 5v6a1 1 0 01-1 1H3a1 1 0 01-1-1z"/></svg>',
@@ -3628,8 +4098,18 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
     LAYOUT_TABS.forEach(function(k){
       if(DATA.boards[k])item('b',DATA.boards[k])});
     h+='<div class="railgrp">3 · Sections · Elements</div>';
+    var banked=[];
     Object.keys(DATA.galleries).forEach(function(k){
-      if(k!=='fx')item('g',DATA.galleries[k])});
+      if(k==='fx')return;
+      var g=DATA.galleries[k];
+      if(/\u00b7\s*bank/.test(g.title||''))banked.push(g);
+      else item('g',g)});
+    if(banked.length){
+      h+='<details class="railbank"><summary>'+ICON.bars+
+         'Bank (reference)<span class="cnt">'+banked.length+
+         '</span></summary>';
+      banked.forEach(function(g){item('g',g)});
+      h+='</details>'}
     h+='<div class="railgrp">4 · Effects</div>';
     if(DATA.galleries.fx)item('g',DATA.galleries.fx);
     h+='<div class="railgrp">5 · Systems</div>';
@@ -3646,12 +4126,86 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
        '<span>URL · HTML</span></button>';
     el.innerHTML=h;
     el.querySelectorAll('.ritem').forEach(function(b){
-      b.onclick=function(){CUR=b.dataset.k;FILT={};SEL=0;ROW=0;
-        if(innerWidth<=1024){
-          document.getElementById('rail').classList.remove('open');
-          document.getElementById('scrim').classList.remove('open')}
-        rail();board()}});
+      b.onclick=function(){gotoBoard(b.dataset.k)}});
   }
+
+  function gotoBoard(k){CUR=k;FILT={};SEL=0;ROW=0;
+    if(innerWidth<=1024){
+      document.getElementById('rail').classList.remove('open');
+      document.getElementById('scrim').classList.remove('open')}
+    rail();board()}
+
+  // spec §1 flow — Vibe → Type → Layout → Sections → Effects → Review
+  var STEPS=[
+    {id:'vibe',label:'Vibe',board:'vibe'},
+    {id:'type',label:'Type',board:'typescale'},
+    {id:'layout',label:'Layout',board:'home'},
+    {id:'sections',label:'Sections',board:'page'},
+    {id:'effects',label:'Effects',board:'fx'},
+    {id:'review',label:'Review & save',board:'saved'}];
+  var NEXTSTEP={vibe:['typescale','Type'],typescale:['home','Layout'],
+    home:['page','Sections'],service:['page','Sections'],
+    location:['page','Sections'],contact:['page','Sections'],
+    blog:['page','Sections'],page:['fx','Effects'],
+    fx:['saved','Review & save']};
+  var SELCHIPS=[
+    {k:'vibe',label:'vibe',board:'vibe'},
+    {k:'layout',label:'layout',board:'home'},
+    {k:'header',label:'header',board:'chrome'},
+    {k:'footer',label:'footer',board:'chrome'},
+    {k:'menu',label:'menu',board:'menu'},
+    {k:'fx:default',label:'effect',board:'fx'}];
+  function _boardExists(b){
+    return b==='saved'||b==='remix'||!!((DATA.boards||{})[b]||
+      (DATA.galleries||{})[b])}
+  function stepDone(s){var p=(DATA&&DATA.picked_elements)||{};
+    if(s==='vibe')return (BAKED||p.vibe)?(VSRC||BAKED||p.vibe):null;
+    if(s==='type')return p.type||null;
+    // the signed w3 pick lives in the wave gates, not
+    // ELEMENT-PICKS — derive it so a reload shows the choice
+    if(s==='layout')return p.layout||
+      ((DATA.waves||{}).picked||{}).w3||null;
+    if(s==='sections'){var n=Object.keys(p).filter(function(k){
+      return k.indexOf('sec:')===0}).length;
+      return n?n+' signed':null}
+    if(s==='effects'){var f=p['fx:default'];
+      return f&&f!=='none'?f:null}
+    return null}
+  function stepperHtml(){
+    var h='<span class="stplab">pick the look</span>';
+    STEPS.forEach(function(s,i){
+      if(!_boardExists(s.board))return;
+      var dn=stepDone(s.id),cur=(CUR===s.board||
+        (s.id==='layout'&&LAYOUT_TABS.indexOf(CUR)>=0&&
+         CUR!=='page'));
+      h+='<span class="stparr">→</span>'+
+         '<button class="stp'+(dn?' done':'')+(cur?' on':'')+
+         '" data-b="'+s.board+'"><span class="n">'+(dn?'✓':(i+1))+
+         '</span>'+s.label+
+         (dn?'<span class="sub">'+esc(String(dn))+'</span>':'')+
+         '</button>'});
+    return h}
+  function selbarHtml(){
+    var p=(DATA&&DATA.picked_elements)||{},
+        h='<span class="sblab">picked</span>';
+    SELCHIPS.forEach(function(c){
+      var v=c.k==='vibe'?(VSRC||BAKED||p.vibe):
+        c.k==='layout'?(p.layout||
+          ((DATA.waves||{}).picked||{}).w3):p[c.k];
+      if(!v||v==='none'||v==='baseline')v=null;
+      h+='<button class="sbchip'+(v?' has':'')+'" data-b="'+c.board+
+         '"><b>'+c.label+'</b> '+esc(v?String(v).replace(/^atlas:/,''):'—')+
+         '</button>'});
+    h+='<span class="sbsp"></span>';
+    var nx=NEXTSTEP[CUR];
+    if(nx&&_boardExists(nx[0]))
+      h+='<button class="sbchip sbr sbnext" data-b="'+nx[0]+
+         '">Next: '+esc(nx[1])+' →</button>';
+    h+='<button class="sbchip sbr" data-b="saved">Review &amp; save →</button>';
+    return h}
+  function wireFlow(){
+    document.querySelectorAll('#stepper .stp,#selbar .sbchip')
+      .forEach(function(b){b.onclick=function(){gotoBoard(b.dataset.b)}})}
 
   function topchips(){
     var d=DATA.design,h='';
@@ -3667,12 +4221,22 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
 
   // AND picker — chips are conjunctive facets: every selected tag
   // must be present on a card (e.g. light AND professional)
+  var FTAG_LABEL={
+    'fv1':'variant 1 · fine-tuned','fv2':'variant 2 · fine-tuned',
+    'fv3':'variant 3 · fine-tuned',
+    'v1':'variant 1','v2':'variant 2','v3':'variant 3',
+    'index-led':'index layout','prose-led':'editorial layout',
+    'copy default':'standard layout','best-predicted':'recommended',
+    'bank-option':'bank only — not emitted','bank':'in bank',
+    'derived':'from this design','web':'from the web'};
   function filters(tags){
-    var n=Object.keys(FILT).length;
+    var n=Object.keys(FILT).length,seen={};
     var h='<button class="fchip'+(!n?' on':'')+'" data-f="" '+
          'title="clear all filters">clear all</button>';
     tags.forEach(function(t){
-      h+='<button class="fchip'+(FILT[t]?' on':'')+'" data-f="'+esc(t)+'">'+esc(t)+'</button>'});
+      var lab=FTAG_LABEL[t]||t;
+      if(seen[t])return;seen[t]=1;
+      h+='<button class="fchip'+(FILT[t]?' on':'')+'" data-f="'+esc(t)+'">'+esc(lab)+'</button>'});
     return h;
   }
 
@@ -3717,10 +4281,15 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
         ((ca.light||{}).fails||[]).concat((ca.dark||{}).fails||[]).join('; ')
         ||'WCAG AA min ratio')+'">AA '+mn.join('/')+(bad?' ✗':'')+'</span>'}
     h+='</div><div class="cf"><div class="tags">'+
-       tags.map(function(t){return '<span class="tag">'+esc(t)+'</span>'}).join('')+
+       tags.filter(function(t){var tl=String(t).toLowerCase();
+         return tl!==String(c.name||'').toLowerCase()&&
+                tl!==String(c.id||'').toLowerCase()})
+        .map(function(t){return '<span class="tag">'+
+          esc(FTAG_LABEL[t]||t)+'</span>'}).join('')+
        '</div>';
     // first-class effect control — the per-element decorator, labeled
-    if(!c.bank&&c.element&&c.element!=='vibe'&&c.element!=='layout'&&
+    if(!c.bank&&c.element&&c.element!=='vibe'&&
+       String(c.element).indexOf('layout')!==0&&
        c.element!=='fx:default'){
       var fel='fx:'+c.element,fcur=DATA.picked_elements[fel]||'none',
           fopts=fxOpts(fel);
@@ -3767,7 +4336,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
        '<span class="vchips">'+(gkeys.length?gkeys.map(function(k){
          return '<span class="chip on" data-ax="'+k+'">'+esc(k)+':'+
                 esc(VGENES[k])+' ×</span>'}).join(''):
-        '<span class="chip">baseline</span>')+'</span>'+
+        '<span class="chip">baseline genes</span>')+'</span>'+
        '<button class="xp" id="vXp" title="expand" data-x="'+
        esc(VRES&&VRES.preview||'')+'">⤢</button>'+
        '<button class="pick" id="vBake">Bake</button></div></div>';
@@ -3902,6 +4471,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
         VSRC=cards[+b.dataset.i].name||'';
         VGENES=Object.assign({},cards[+b.dataset.i].genes||{});
         vibePane(el,o);
+        var vp=el.querySelector('.vprev');
+        if(vp)vp.scrollIntoView({block:'nearest'});
         resolveVibe(el,o)}});
     el.querySelectorAll('.cf .pick:not(#vBake)').forEach(function(b){
       b.onclick=function(){
@@ -4153,7 +4724,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
   function wireSaved(){
     var q=document.getElementById('ssq');
     if(q)q.oninput=function(){SSQ=q.value.toLowerCase();
-      var el=document.getElementById('board');
+      var el=document.getElementById('pane')||
+        document.getElementById('board');
       var keep=q.selectionStart;
       el.innerHTML='<h1>Saved systems</h1>'+savedView();wireSaved();
       var q2=document.getElementById('ssq');
@@ -4163,7 +4735,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
         if(!t)SSF={};
         else if(SSF[t])delete SSF[t];
         else{SSF={};SSF[t]=1}
-        var el=document.getElementById('board');
+        var el=document.getElementById('pane')||
+          document.getElementById('board');
         el.innerHTML='<h1>Saved systems</h1>'+savedView();wireSaved()}});
     var save=document.getElementById('sysSave');
     if(save)save.onclick=function(){
@@ -4599,6 +5172,18 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
   function board(){
     var el=document.getElementById('board');
     el.dataset.pane=CUR;
+    el.innerHTML='<div id="stepper">'+stepperHtml()+'</div>'+
+      '<div id="pane"></div>';
+    var el0=document.getElementById('selbar');
+    if(el0)el0.innerHTML=selbarHtml();
+    el=el.querySelector('#pane');
+    var nx=NEXTSTEP[CUR];
+    if(nx&&_boardExists(nx[0])){
+      var nb=document.createElement('button');
+      nb.className='nextstep';nb.textContent='Next: '+nx[1]+' →';
+      nb.onclick=function(){gotoBoard(nx[0])};
+      el.after(nb)}
+    wireFlow();
     if(CUR==='ingest'){ingestPane(el);return}
     if(CUR==='remix'){remixPane(el);return}
     if(CUR==='saved'){
@@ -4673,8 +5258,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
         m[g.element]=1;return m},{}):{}).forEach(function(e){
         bl+=bk[e]||0});
       if(bl)h+='<div class="desc" style="opacity:.7">emitted '+
-        o.emitted_n+' · raw skeleton backlog ~'+bl+
-        ' (awaiting vectorisation)</div>';}
+        o.emitted_n+' · '+bl+' more in the bank</div>';}
     h+='<div class="filters">'+filters(tags)+'</div>'+
        '<div class="grid'+(CUR==='fx'?' fxgrid':'')+'">';
     var lastGrp=null,shown2=0;
@@ -4830,9 +5414,43 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
         api('/approve',{wave:b.dataset.wave,pipeline:PIPELINE,
           nonce:n.nonce,design:b.dataset.d}).then(function(j){
           stat.className='pstat '+(j.ok?'ok':'bad');
-          stat.textContent=j.message||(j.ok?'recorded':'refused');
+          // ORDER refusals name the earliest wave to re-gate:
+          // "re-gate wN", "ORDER: wN has not passed — run it first",
+          // "wN inputs changed since it passed"
+          var rw=!j.ok&&(j.message||'').match(
+            /re-gate (w\d+)|ORDER: (w\d+)|(w\d+) has not passed/);
+          if(rw){var wv=rw[1]||rw[2]||rw[3];
+            stat.textContent='earlier wave '+wv+
+              ' isn’t clean — re-gate it, then pick again. ';
+            var rb=document.createElement('button');
+            rb.className='abtn';rb.textContent='Re-gate '+wv;
+            rb.onclick=function(){rb.disabled=true;
+              api('/regate',{wave:wv,pipeline:PIPELINE})
+                .then(function(g){
+                  var msg=g.ok?g.message:(g.reason||g.message);
+                  toast(msg);rb.disabled=false;
+                  if(g.ok)stat.textContent=wv+
+                    ' clean — pick again';
+                  else{stat.textContent=msg+' ';
+                    // keep the re-gate control alive — a pause
+                    // (pick gate) or a new failure still needs it
+                    stat.appendChild(rb)}
+                })};
+            stat.appendChild(rb);
+          }else stat.textContent=(j.message||(j.ok?'recorded':'refused'))
+            .replace(/^approve REFUSED:? ?/,'');
           if(j.ok){b.textContent='picked ✓';
             b.closest('.card').classList.add('picked');
+            // reflect the signed approval in the flow UI: a w3
+            // pick IS the layout pick, w4 the page-design pick
+            DATA.picked_elements=DATA.picked_elements||{};
+            if(b.dataset.wave==='w3')
+              DATA.picked_elements.layout=b.dataset.d;
+            var st=document.getElementById('stepper');
+            if(st)st.innerHTML=stepperHtml();
+            var sb=document.getElementById('selbar');
+            if(sb)sb.innerHTML=selbarHtml();
+            wireFlow();
             toast(j.message)}else b.disabled=false})})
     }else{
       api('/element-pick',{pipeline:PIPELINE,

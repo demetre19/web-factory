@@ -6,7 +6,7 @@
   .wf-product-list-3 .product-list-3__content {
     display: grid;
     gap: var(--space-m);
-    grid-template-columns: calc(100% * 2 / 1);
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
   }
 
   .wf-product-list-3 .product-list-3-card__heading {
@@ -44,5 +44,7 @@
   }
 
   @media (max-width: 44rem) {
+    .wf-product-list-3 .product-list-3__content { grid-template-columns: 1fr; }
     .wf-product-list-3 .product-list-notice-rect__sale-badge { flex-direction: column; }
   }
+  .wf-product-list-3 .product-list-3__content > :only-child { grid-column: 1 / -1; }
