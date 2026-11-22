@@ -1,0 +1,107 @@
+{
+ "label": "hyperui/application/toggles/02-base-with-icon",
+ "source": "hyperui",
+ "sourceUrl": "",
+ "version": "1",
+ "topology_id": "band-strip",
+ "element_sig": {
+  "form": 1,
+  "icn": 2
+ },
+ "tree": [
+  {
+   "name": "label",
+   "tag": "label",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "group",
+    "relative",
+    "block",
+    "h-8",
+    "w-14",
+    "rounded-full",
+    "bg-gray-300",
+    "transition-colors"
+   ],
+   "depth": 0
+  },
+  {
+   "name": "input",
+   "tag": "input",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "peer",
+    "sr-only"
+   ],
+   "depth": 1
+  },
+  {
+   "name": "span",
+   "tag": "span",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "absolute",
+    "inset-y-0",
+    "start-0",
+    "m-1",
+    "grid",
+    "size-6",
+    "place-content-center",
+    "rounded-full"
+   ],
+   "depth": 1
+  },
+  {
+   "name": "svg",
+   "tag": "svg",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "size-4"
+   ],
+   "depth": 2
+  },
+  {
+   "name": "svg",
+   "tag": "svg",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "size-4"
+   ],
+   "depth": 2
+  }
+ ],
+ "classes": [
+  "*:last:hidden",
+  "[-webkit-tap-highlight-color:transparent]",
+  "absolute",
+  "bg-gray-300",
+  "bg-white",
+  "block",
+  "grid",
+  "group",
+  "h-8",
+  "has-checked:bg-green-500",
+  "inset-y-0",
+  "m-1",
+  "peer",
+  "peer-checked:*:first:hidden",
+  "peer-checked:*:last:block",
+  "peer-checked:start-6",
+  "place-content-center",
+  "relative",
+  "rounded-full",
+  "size-4",
+  "size-6",
+  "sr-only",
+  "start-0",
+  "text-gray-700",
+  "transition-[inset-inline-start]",
+  "transition-colors",
+  "w-14"
+ ]
+}

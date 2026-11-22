@@ -1,0 +1,416 @@
+{
+ "label": "shadcn/components/combobox/skeleton",
+ "source": "shadcn",
+ "sourceUrl": "",
+ "version": "1",
+ "topology_id": "band-strip",
+ "element_sig": {
+  "btn": 5,
+  "icn": 5,
+  "form": 2
+ },
+ "tree": [
+  {
+   "name": "span",
+   "tag": "span",
+   "label": null,
+   "loop": false,
+   "classes": [],
+   "depth": 0
+  },
+  {
+   "name": "button",
+   "tag": "button",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "[&_svg:not([class*='size-'])]:size-4",
+    "{class}"
+   ],
+   "depth": 0
+  },
+  {
+   "name": "svg",
+   "tag": "svg",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "pointer-events-none",
+    "size-4",
+    "text-muted-foreground"
+   ],
+   "depth": 1
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "w-auto",
+    "{class}",
+    "group/input-group",
+    "relative",
+    "flex",
+    "w-full",
+    "items-center",
+    "rounded-md"
+   ],
+   "depth": 0
+  },
+  {
+   "name": "input",
+   "tag": "input",
+   "label": null,
+   "loop": false,
+   "classes": [],
+   "depth": 0
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "flex",
+    "h-auto",
+    "cursor-text",
+    "items-center",
+    "justify-center",
+    "gap-2",
+    "py-1.5",
+    "text-sm"
+   ],
+   "depth": 1
+  },
+  {
+   "name": "button",
+   "tag": "button",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "group-has-data-[slot=combobox-clear]/input-group:hidden",
+    "data-pressed:bg-transparent",
+    "flex",
+    "items-center",
+    "gap-2",
+    "text-sm",
+    "shadow-none",
+    "h-6"
+   ],
+   "depth": 1
+  },
+  {
+   "name": "button",
+   "tag": "button",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "[&_svg:not([class*='size-'])]:size-4",
+    "{class}"
+   ],
+   "depth": 1
+  },
+  {
+   "name": "svg",
+   "tag": "svg",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "pointer-events-none",
+    "size-4",
+    "text-muted-foreground"
+   ],
+   "depth": 2
+  },
+  {
+   "name": "button",
+   "tag": "button",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "{class}"
+   ],
+   "depth": 1
+  },
+  {
+   "name": "svg",
+   "tag": "svg",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "pointer-events-none"
+   ],
+   "depth": 2
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "isolate",
+    "z-50"
+   ],
+   "depth": 1
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "group/combobox-content",
+    "relative",
+    "max-h-96",
+    "w-(--anchor-width)",
+    "max-w-(--available-width)",
+    "min-w-[calc(var(--anchor-width)+--spacing(7))]",
+    "origin-(--transform-origin)",
+    "overflow-hidden"
+   ],
+   "depth": 2
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "max-h-[min(calc(--spacing(96)---spacing(9)),calc(var(--available-height)---spacing(9)))]",
+    "scroll-py-1",
+    "overflow-y-auto",
+    "p-1",
+    "data-empty:p-0",
+    "{class}"
+   ],
+   "depth": 1
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "relative",
+    "flex",
+    "w-full",
+    "cursor-default",
+    "items-center",
+    "gap-2",
+    "rounded-sm",
+    "py-1.5"
+   ],
+   "depth": 1
+  },
+  {
+   "name": "span",
+   "tag": "span",
+   "label": null,
+   "loop": false,
+   "classes": [],
+   "depth": 2
+  },
+  {
+   "name": "svg",
+   "tag": "svg",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "pointer-events-none",
+    "size-4",
+    "pointer-coarse:size-5"
+   ],
+   "depth": 3
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "{class}"
+   ],
+   "depth": 1
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "px-2",
+    "py-1.5",
+    "text-xs",
+    "text-muted-foreground",
+    "pointer-coarse:px-3",
+    "pointer-coarse:py-2",
+    "pointer-coarse:text-sm",
+    "{class}"
+   ],
+   "depth": 1
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "hidden",
+    "w-full",
+    "justify-center",
+    "py-2",
+    "text-center",
+    "text-sm",
+    "text-muted-foreground",
+    "group-data-empty/combobox-content:flex"
+   ],
+   "depth": 1
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "-mx-1",
+    "my-1",
+    "h-px",
+    "bg-border",
+    "{class}"
+   ],
+   "depth": 1
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "flex",
+    "min-h-9",
+    "flex-wrap",
+    "items-center",
+    "gap-1.5",
+    "rounded-md",
+    "border",
+    "border-input"
+   ],
+   "depth": 1
+  },
+  {
+   "name": "span",
+   "tag": "span",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "flex",
+    "h-[calc(--spacing(5.5))]",
+    "w-fit",
+    "items-center",
+    "justify-center",
+    "gap-1",
+    "rounded-sm",
+    "bg-muted"
+   ],
+   "depth": 1
+  },
+  {
+   "name": "button",
+   "tag": "button",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "-ml-1",
+    "opacity-50",
+    "hover:opacity-100"
+   ],
+   "depth": 2
+  },
+  {
+   "name": "svg",
+   "tag": "svg",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "pointer-events-none"
+   ],
+   "depth": 3
+  },
+  {
+   "name": "input",
+   "tag": "input",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "min-w-16",
+    "flex-1",
+    "outline-none",
+    "{class}"
+   ],
+   "depth": 1
+  }
+ ],
+ "classes": [
+  "*:data-[slot=input-group]:bg-input/30",
+  "*:data-[slot=input-group]:border-input/30",
+  "*:data-[slot=input-group]:h-8",
+  "*:data-[slot=input-group]:m-1",
+  "*:data-[slot=input-group]:mb-0",
+  "*:data-[slot=input-group]:shadow-none",
+  "-ml-1",
+  "-mx-1",
+  "[&>kbd]:rounded-[calc(var(--radius)-5px)]",
+  "[&>svg:not([class*='size-'])]:size-3.5",
+  "[&>svg:not([class*='size-'])]:size-4",
+  "[&_svg:not([class*='size-'])]:size-4",
+  "[&_svg]:pointer-events-none",
+  "[&_svg]:shrink-0",
+  "aria-invalid:border-destructive",
+  "aria-invalid:ring-destructive/20",
+  "bg-border",
+  "bg-clip-padding",
+  "bg-muted",
+  "bg-popover",
+  "bg-primary",
+  "bg-transparent",
+  "border",
+  "border-input",
+  "cursor-default",
+  "cursor-text",
+  "dark:aria-invalid:ring-destructive/40",
+  "dark:bg-input/30",
+  "dark:has-[[data-slot][aria-invalid=true]]:ring-destructive/40",
+  "dark:has-aria-invalid:border-destructive/50",
+  "dark:has-aria-invalid:ring-destructive/40",
+  "data-[chips=true]:min-w-(--anchor-width)",
+  "data-[disabled]:opacity-50",
+  "data-[disabled]:pointer-events-none",
+  "data-[side=bottom]:slide-in-from-top-2",
+  "data-[side=left]:slide-in-from-right-2",
+  "data-[side=right]:slide-in-from-left-2",
+  "data-[side=top]:slide-in-from-bottom-2",
+  "data-closed:animate-out",
+  "data-closed:fade-out-0",
+  "data-closed:zoom-out-95",
+  "data-empty:p-0",
+  "data-highlighted:bg-accent",
+  "data-highlighted:text-accent-foreground",
+  "data-open:animate-in",
+  "data-open:fade-in-0",
+  "data-open:zoom-in-95",
+  "data-pressed:bg-transparent",
+  "disabled:opacity-50",
+  "disabled:pointer-events-none",
+  "duration-100",
+  "flex",
+  "flex-1",
+  "flex-wrap",
+  "focus-visible:border-ring",
+  "focus-visible:ring-[3px]",
+  "focus-visible:ring-ring/50",
+  "focus-within:border-ring",
+  "focus-within:ring-[3px]",
+  "focus-within:ring-ring/50"
+ ]
+}

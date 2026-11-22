@@ -1,0 +1,265 @@
+{
+ "label": "shadcn/components/alert-dialog/skeleton",
+ "source": "shadcn",
+ "sourceUrl": "",
+ "version": "1",
+ "topology_id": "content",
+ "element_sig": {
+  "btn": 5,
+  "h": 1,
+  "p": 1
+ },
+ "tree": [
+  {
+   "name": "button",
+   "tag": "button",
+   "label": null,
+   "loop": false,
+   "classes": [],
+   "depth": 0
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "fixed",
+    "inset-0",
+    "z-50",
+    "bg-black/50",
+    "data-[state=closed]:animate-out",
+    "data-[state=closed]:fade-out-0",
+    "data-[state=open]:animate-in",
+    "data-[state=open]:fade-in-0"
+   ],
+   "depth": 0
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "fixed",
+    "inset-0",
+    "z-50",
+    "bg-black/50",
+    "data-[state=closed]:animate-out",
+    "data-[state=closed]:fade-out-0",
+    "data-[state=open]:animate-in",
+    "data-[state=open]:fade-in-0"
+   ],
+   "depth": 0
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "group/alert-dialog-content",
+    "fixed",
+    "top-[50%]",
+    "left-[50%]",
+    "z-50",
+    "grid",
+    "w-full",
+    "max-w-[calc(100%-2rem)]"
+   ],
+   "depth": 0
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "grid",
+    "grid-rows-[auto_1fr]",
+    "place-items-center",
+    "gap-1.5",
+    "text-center",
+    "has-data-[slot=alert-dialog-media]:grid-rows-[auto_auto_1fr]",
+    "has-data-[slot=alert-dialog-media]:gap-x-6",
+    "sm:group-data-[size=default]/alert-dialog-content:place-items-start"
+   ],
+   "depth": 0
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "flex",
+    "flex-col-reverse",
+    "gap-2",
+    "group-data-[size=sm]/alert-dialog-content:grid",
+    "group-data-[size=sm]/alert-dialog-content:grid-cols-2",
+    "sm:flex-row",
+    "sm:justify-end",
+    "{class}"
+   ],
+   "depth": 0
+  },
+  {
+   "name": "h2",
+   "tag": "h2",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "text-lg",
+    "font-semibold",
+    "sm:group-data-[size=default]/alert-dialog-content:group-has-data-[slot=alert-dialog-media]/alert-dialog-content:col-start-2",
+    "{class}"
+   ],
+   "depth": 0
+  },
+  {
+   "name": "p",
+   "tag": "p",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "text-sm",
+    "text-muted-foreground",
+    "{class}"
+   ],
+   "depth": 0
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "mb-2",
+    "inline-flex",
+    "size-16",
+    "items-center",
+    "justify-center",
+    "rounded-md",
+    "bg-muted",
+    "sm:group-data-[size=default]/alert-dialog-content:row-span-2"
+   ],
+   "depth": 0
+  },
+  {
+   "name": "button",
+   "tag": "button",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "inline-flex",
+    "shrink-0",
+    "items-center",
+    "justify-center",
+    "gap-2",
+    "rounded-md",
+    "text-sm",
+    "font-medium"
+   ],
+   "depth": 0
+  },
+  {
+   "name": "button",
+   "tag": "button",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "{class}"
+   ],
+   "depth": 0
+  },
+  {
+   "name": "button",
+   "tag": "button",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "inline-flex",
+    "shrink-0",
+    "items-center",
+    "justify-center",
+    "gap-2",
+    "rounded-md",
+    "text-sm",
+    "font-medium"
+   ],
+   "depth": 0
+  },
+  {
+   "name": "button",
+   "tag": "button",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "{class}"
+   ],
+   "depth": 0
+  }
+ ],
+ "classes": [
+  "*:[svg:not([class*='size-'])]:size-8",
+  "[&_svg:not([class*='size-'])]:size-4",
+  "[&_svg]:pointer-events-none",
+  "[&_svg]:shrink-0",
+  "aria-invalid:border-destructive",
+  "aria-invalid:ring-destructive/20",
+  "bg-background",
+  "bg-black/50",
+  "bg-muted",
+  "bg-primary",
+  "border",
+  "dark:aria-invalid:ring-destructive/40",
+  "data-[size=default]:sm:max-w-lg",
+  "data-[size=sm]:max-w-xs",
+  "data-[state=closed]:animate-out",
+  "data-[state=closed]:fade-out-0",
+  "data-[state=closed]:zoom-out-95",
+  "data-[state=open]:animate-in",
+  "data-[state=open]:fade-in-0",
+  "data-[state=open]:zoom-in-95",
+  "disabled:opacity-50",
+  "disabled:pointer-events-none",
+  "duration-200",
+  "fixed",
+  "flex",
+  "flex-col-reverse",
+  "focus-visible:border-ring",
+  "focus-visible:ring-[3px]",
+  "focus-visible:ring-ring/50",
+  "font-medium",
+  "font-semibold",
+  "gap-1.5",
+  "gap-2",
+  "gap-4",
+  "grid",
+  "grid-rows-[auto_1fr]",
+  "group-data-[size=sm]/alert-dialog-content:grid",
+  "group-data-[size=sm]/alert-dialog-content:grid-cols-2",
+  "group/alert-dialog-content",
+  "h-9",
+  "has-[>svg]:px-3",
+  "has-data-[slot=alert-dialog-media]:gap-x-6",
+  "has-data-[slot=alert-dialog-media]:grid-rows-[auto_auto_1fr]",
+  "hover:bg-primary/90",
+  "inline-flex",
+  "inset-0",
+  "items-center",
+  "justify-center",
+  "left-[50%]",
+  "max-w-[calc(100%-2rem)]",
+  "mb-2",
+  "outline-none",
+  "p-6",
+  "place-items-center",
+  "px-4",
+  "py-2",
+  "rounded-lg",
+  "rounded-md",
+  "shadow-lg",
+  "shrink-0"
+ ]
+}
