@@ -25,7 +25,8 @@ per-section topology scrubbing inline on the full page) →
 sections/elements (galleries). Every preview is static HTML —
 variants differ by a CSS-var override bundle, never by a rebuild.
 """
-import datetime, html.parser, json, os, re, sys, urllib.parse
+import datetime, html.parser, json, os, re, sys, \
+    threading, urllib.parse
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
@@ -633,6 +634,13 @@ def emit_vibe_previews(pd):
 # ------------------------------------------------------------------
 _COPY_KEYS = ('answer', 'before', 'items', 'list_ordered', 'qa',
               'links', 'after')
+class _Raw(str):
+    """Value-level "already markup" marker for machinery-built
+    sentinels — a `_raw` dict key could be forged via COPY.json into
+    an escaping bypass; a str subclass cannot cross JSON, so only
+    values WE construct skip escaping."""
+
+
 _L = ('<em class="wf-lorem" data-slot="{s}">Lorem ipsum — '
       'unmapped {s}</em>')
 _LOREM_CSS = ('.wf-lorem{display:inline-block;outline:1px dashed '
@@ -648,6 +656,12 @@ def _inline(s):
     t = re.sub(r'\[([^\]]+)\]\(([^)\s]+)\)',
                r'<a href="\2">\1</a>', t)
     return t
+
+
+def _val(v):
+    """bind a slot value: machinery _Raw passes through untouched,
+    anything JSON-decoded is escaped via _inline"""
+    return str(v) if isinstance(v, _Raw) else _inline(v)
 
 
 def _copy_slot(pd, bid):
@@ -723,14 +737,14 @@ def _slot_frag(comp, slot):
         h += ''.join(f'<p class="mt-stack text-fluid-0">'
                      f'{_inline(p)}</p>' for p in before)
         h += '</div>'
-        its = items or [{'term': _L.format(s='items[]'),
-                         'text': _L.format(s='items[]'), '_raw': 1}
+        its = items or [{'term': _Raw(_L.format(s='items[]')),
+                         'text': _Raw(_L.format(s='items[]'))}
                         for _i in range(3)]
         if not items:
             unmapped.append('items')
         h += '<dl class="mt-stack grid-auto text-fluid-0">' + \
-            ''.join(f'<dt><strong>{i["term"] if i.get("_raw") else _inline(i.get("term") or i.get("title") or "")}</strong></dt>'
-                    f'<dd>{i["text"] if i.get("_raw") else _inline(i.get("text") or "")}</dd>'
+            ''.join(f'<dt><strong>{_val(i.get("term") or i.get("title") or "")}</strong></dt>'
+                    f'<dd>{_val(i.get("text") or "")}</dd>'
                     for i in its) + '</dl>'
         h += '<div class="max-w-prose">' + \
             ''.join(f'<p class="mt-stack text-fluid-0">'
@@ -784,17 +798,15 @@ def _slot_frag(comp, slot):
         h += '</div>'
         h += ''.join(f'<p class="mt-stack max-w-prose text-fluid-0">'
                      f'{_inline(p)}</p>' for p in before)
-        its = items or [{'quote': _L.format(s='items[].quote'),
-                         'who': _L.format(s='items[].who'), '_raw': 1}]
+        its = items or [{'quote': _Raw(_L.format(s='items[].quote')),
+                         'who': _Raw(_L.format(s='items[].who'))}]
         if not items:
             unmapped.append('items')
         h += '<ul class="mt-sec grid-auto list-plain">' + \
             ''.join('<li class="card"><p class="t0 quote">“' +
-                    (i['quote'] if i.get('_raw') else
-                     _inline(i.get('quote') or i.get('text') or '')) +
+                    _val(i.get('quote') or i.get('text') or '') +
                     '”</p><div class="quote-foot"><span>' +
-                    (i['who'] if i.get('_raw') else
-                     _inline(i.get('who') or '')) +
+                    _val(i.get('who') or '') +
                     ((' · ' + _inline(i['source']))
                      if i.get('source') else '') +
                     '</span></div></li>' for i in its) + '</ul>'
@@ -808,17 +820,17 @@ def _slot_frag(comp, slot):
             h += f'<p class="lede">{_inline(sub)}</p>'
         h += ''.join(f'<p class="t0 sub-p">{_inline(p)}</p>'
                      for p in before) + '</div>'
-        its = items or [{'term': _L.format(s='items[]'),
-                         'text': _L.format(s='items[]'), '_raw': 1}
+        its = items or [{'term': _Raw(_L.format(s='items[]')),
+                         'text': _Raw(_L.format(s='items[]'))}
                         for _i in range(3)]
         if not items:
             unmapped.append('items')
         h += '<ul class="mt-sec grid-auto list-plain">' + \
             ''.join(f'<li class="card"><span class="num">'
                     f'{n + 1:02d}</span><h3 class="t0 sub-h">'
-                    f'{i["term"] if i.get("_raw") else _inline(i.get("term") or i.get("title") or "")}'
+                    f'{_val(i.get("term") or i.get("title") or "")}'
                     f'</h3><p class="t0 sub-p">'
-                    f'{i["text"] if i.get("_raw") else _inline(i.get("text") or "")}</p></li>'
+                    f'{_val(i.get("text") or "")}</p></li>'
                     for n, i in enumerate(its)) + '</ul>'
         h += ''.join(f'<p class="mt-stack max-w-prose text-fluid-0">'
                      f'{_inline(p)}</p>' for p in after) + '</div>'
@@ -829,8 +841,8 @@ def _slot_frag(comp, slot):
             h += f'<p class="lede">{_inline(sub)}</p>'
         h += ''.join(f'<p class="t0 sub-p">{_inline(p)}</p>'
                      for p in before) + '</div>'
-        its = items or [{'term': _L.format(s='items[]'),
-                         'text': _L.format(s='items[]'), '_raw': 1}
+        its = items or [{'term': _Raw(_L.format(s='items[]')),
+                         'text': _Raw(_L.format(s='items[]'))}
                         for _i in range(3)]
         if not items:
             unmapped.append('items')
@@ -838,9 +850,9 @@ def _slot_frag(comp, slot):
             ''.join(f'<li class="flow-row"><span class="num '
                     f'num-prom">{n + 1:02d}</span><div>'
                     f'<h3 class="t0 sub-h">'
-                    f'{i["term"] if i.get("_raw") else _inline(i.get("term") or i.get("title") or "")}'
+                    f'{_val(i.get("term") or i.get("title") or "")}'
                     f'</h3><p class="t0 sub-p sub-flow">'
-                    f'{i["text"] if i.get("_raw") else _inline(i.get("text") or "")}</p></div></li>'
+                    f'{_val(i.get("text") or "")}</p></div></li>'
                     for n, i in enumerate(its)) + '</ol>'
         h += ''.join(f'<p class="t0 sub-p">{_inline(t)}</p>'
                      for t in links)
@@ -852,17 +864,17 @@ def _slot_frag(comp, slot):
         if sub:
             h += f'<p class="mt-stack max-w-prose text-fluid-0">' \
                  f'{_inline(sub)}</p>'
-        its = items or [{'term': _L.format(s='items[]'),
-                         'text': _L.format(s='items[]'), '_raw': 1}
+        its = items or [{'term': _Raw(_L.format(s='items[]')),
+                         'text': _Raw(_L.format(s='items[]'))}
                         for _i in range(3)]
         if not items:
             unmapped.append('items')
         h += '<div class="mt-fluid-l grid gap-stack ' \
              'md:grid-cols-2">' + \
             ''.join(f'<div class="card"><h3 class="t0 sub-h">'
-                    f'{i["term"] if i.get("_raw") else _inline(i.get("term") or i.get("title") or "")}'
+                    f'{_val(i.get("term") or i.get("title") or "")}'
                     f'</h3><p class="mt-fluid-s text-fluid-0">'
-                    f'{i["text"] if i.get("_raw") else _inline(i.get("text") or "")}</p></div>'
+                    f'{_val(i.get("text") or "")}</p></div>'
                     for i in its) + '</div>'
         for seq in (before, after):
             h += ''.join(f'<p class="mt-stack max-w-prose text-fluid-0">'
@@ -927,14 +939,14 @@ def _slot_frag(comp, slot):
                      for p in before) + '</div>'
         qas = slot.get('qa') or []
         if not qas:
-            qas = [{'q': _L.format(s='qa[]'), 'a': _L.format(s='qa[]'),
-                    '_raw': 1}]
+            qas = [{'q': _Raw(_L.format(s='qa[]')),
+                    'a': _Raw(_L.format(s='qa[]'))}]
             unmapped.append('qa')
         h += '<div class="mt-sec">' + \
             ''.join(f'<details class="faq-item"><summary '
-                    f'class="faq-q">{q["q"] if q.get("_raw") else _inline(q.get("q") or "")}'
+                    f'class="faq-q">{_val(q.get("q") or "")}'
                     f'</summary><p class="t0 faq-a">'
-                    f'{q["a"] if q.get("_raw") else _inline(q.get("a") or "")}</p></details>'
+                    f'{_val(q.get("a") or "")}</p></details>'
                     for q in qas) + '</div>'
         h += ''.join(f'<p class="t0 sub-p">{_inline(t)}</p>'
                      for t in links)
@@ -979,7 +991,7 @@ def _slot_frag(comp, slot):
         if sub:
             h += f'<p class="lede">{_inline(sub)}</p>'
         h += '</div>'
-        its = items or [{'term': _L.format(s='fields[]'), '_raw': 1}]
+        its = items or [{'term': _Raw(_L.format(s='fields[]'))}]
         if not items:
             unmapped.append('fields')
         h += ('<div class="flyout open" role="dialog" aria-modal="true">'
@@ -987,7 +999,7 @@ def _slot_frag(comp, slot):
               'aria-label="Close">&times;</button>'
               f'<h3 class="text-fluid-1">{head}</h3><form novalidate>' +
               ''.join(f'<label class="text-fluid-0">'
-                      f'{i["term"] if i.get("_raw") else _inline(i.get("term") or i.get("title") or "")}'
+                      f'{_val(i.get("term") or i.get("title") or "")}'
                       f'<input name="f{n}" type="text" /></label>'
                       for n, i in enumerate(its)) +
               f'<button class="wf-cta-button" type="submit">'
@@ -1576,6 +1588,11 @@ def list_systems(pd):
     return out
 
 
+# pick/nonce registries are read-modify-write files — the threaded
+# server can interleave two picks and lose one, so writes serialise
+_PICKS_LOCK = threading.Lock()
+
+
 def record_element_pick(pipeline, element, variant):
     """Signed element decision — ELEMENT-PICKS.json in the pipeline
     dir. Same service-side signing as candidate decisions; the file
@@ -1591,21 +1608,22 @@ def record_element_pick(pipeline, element, variant):
     ctx = G.Ctx(pipeline)
     pd = ctx.dir
     fp = os.path.join(pd, 'ELEMENT-PICKS.json')
-    data = _json_at(pd, 'ELEMENT-PICKS.json') or {
-        'generated_by': 'approve_service.py',
-        'picks': []}
-    for p in data.get('picks', []):
-        if p.get('element') == element:
-            return 1, (f'{element} already picked '
-                       f'({p.get("variant")}) — one decision per '
-                       'gallery')
-    rec = {'element': element, 'variant': variant,
-           'ts': datetime.datetime.now().isoformat(
-               timespec='seconds')}
-    rec['sig'] = G._sig(rec, G.op_key(create=True))
-    data.setdefault('picks', []).append(rec)
-    with open(fp, 'w') as fh:
-        json.dump(data, fh, indent=1, sort_keys=True)
+    with _PICKS_LOCK:
+        data = _json_at(pd, 'ELEMENT-PICKS.json') or {
+            'generated_by': 'approve_service.py',
+            'picks': []}
+        for p in data.get('picks', []):
+            if p.get('element') == element:
+                return 1, (f'{element} already picked '
+                           f'({p.get("variant")}) — one decision per '
+                           'gallery')
+        rec = {'element': element, 'variant': variant,
+               'ts': datetime.datetime.now().isoformat(
+                   timespec='seconds')}
+        rec['sig'] = G._sig(rec, G.op_key(create=True))
+        data.setdefault('picks', []).append(rec)
+        with open(fp, 'w') as fh:
+            json.dump(data, fh, indent=1, sort_keys=True)
     return 0, f'{element} → {variant} (signed into ELEMENT-PICKS.json)'
 
 
