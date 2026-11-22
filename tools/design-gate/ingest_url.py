@@ -309,10 +309,25 @@ def _dna_draft(colors, fonts, radii, spacing, body=None):
                len(space_s) / 2) else 'regular')
     # ink/surface take the page's own computed roles first — the
     # top colour buckets mix text and fills, so dark[0] was often
-    # the background and light[0] was empty on dark sites
+    # the background and light[0] was empty on dark sites; a
+    # transparent body paint is no role at all
+    def _solid(v):
+        v = (v or '').strip()
+        if not v or v == 'transparent':
+            return ''
+        m = re.match(r'rgba\([^)]+\)', v)
+        if m:
+            try:
+                if float(m.group(1).split(',')[-1].strip()) == 0:
+                    return ''
+            except ValueError:
+                return ''
+        return v
     return {'palette': palette,
-            'ink': body.get('color') or (dark[0] if dark else ''),
-            'surface': body.get('bg') or (light[0] if light else ''),
+            'ink': _solid(body.get('color')) or
+                   (dark[0] if dark else ''),
+            'surface': _solid(body.get('bg')) or
+                       (light[0] if light else ''),
             'accent_guess': accent,
             'radius_px_median': radius,
             'density_guess': density,
