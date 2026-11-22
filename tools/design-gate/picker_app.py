@@ -1723,6 +1723,47 @@ def _hex_mix(a, b, amt):
         for x, y in zip(ta, tb))
 
 
+_FONT_NAME = re.compile(r'[^A-Za-z0-9 ._-]+')
+
+
+def _clean_fonts(fams):
+    # donor font families are untrusted page CSS - strict charset so
+    # they can never break out of the style block
+    out = []
+    for f in fams or []:
+        f = _FONT_NAME.sub('', str(f)).strip(' ._-')[:48]
+        if f and f not in out:
+            out.append(f)
+    return out[:3]
+
+
+def _to_hex(v):
+    # normalize a color token to #rrggbb (accepts #hex, rgb/rgba);
+    # unparseable -> None
+    if not isinstance(v, str):
+        return None
+    v = v.strip()
+    h = v.lstrip('#')
+    if len(h) == 3:
+        h = ''.join(c * 2 for c in h)
+    if len(h) == 6:
+        try:
+            int(h, 16)
+            return '#' + h.lower()
+        except ValueError:
+            return None
+    m = re.match(r'rgba?\(\s*([0-9.]+)[,\s]+([0-9.]+)[,\s]+'
+                 r'([0-9.]+)', v)
+    if m:
+        try:
+            return '#%02x%02x%02x' % tuple(
+                max(0, min(255, int(round(float(x)))))
+                for x in m.groups())
+        except ValueError:
+            return None
+    return None
+
+
 def _hex_lum(hexs):
     h = (hexs or '').lstrip('#')
     if len(h) == 3:
@@ -1772,15 +1813,18 @@ def donor_vector(draft):
     machinery renders any design wearing the donor unchanged."""
     d = draft or {}
     ty = d.get('type') or {}
-    fams = [f for f in (ty.get('families') or []) if isinstance(f, str)]
-    ink = d.get('ink') or '#17171a'
-    surface = d.get('surface') or '#ffffff'
-    accent = d.get('accent_guess') or d.get('accent') or '#17171a'
+    fams = _clean_fonts(
+        [f for f in (ty.get('families') or []) if isinstance(f, str)])
+    ink = _to_hex(d.get('ink')) or '#17171a'
+    surface = _to_hex(d.get('surface')) or '#ffffff'
+    accent = (_to_hex(d.get('accent_guess')) or
+              _to_hex(d.get('accent')) or '#17171a')
     radius = d.get('radius_px_median')
     rpx = ('%gpx' % radius) if isinstance(radius, (int, float)) else ''
     density = d.get('density_guess') or 'regular'
-    palette = [c for c in (d.get('palette') or [])
-               if isinstance(c, str)] or [ink, surface, accent]
+    palette = [c for c in (_to_hex(c) for c in
+               (d.get('palette') or [])) if c] or \
+        [ink, surface, accent]
     dark = _hex_lum(surface) < 0.45
     acc_ink = ink if _cr(ink, accent) >= _cr(surface, accent) \
         else surface
@@ -1820,7 +1864,7 @@ def donor_family(pd, fam):
     staged DNA-DRAFTS bundle; None when absent."""
     if not (fam or '').startswith('donor-') or not pd:
         return None
-    slug = re.sub(r'[^a-z0-9-]+', '', fam[6:].lower())
+    slug = re.sub(r'[^a-z0-9_-]+', '', fam[6:].lower())
     rec = _json_at(pd, 'DNA-DRAFTS', slug + '.json') or {}
     f = rec.get('family')
     return dict(f) if isinstance(f, dict) and f.get('css') is not None \
@@ -2614,10 +2658,11 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
       api('/ingest-donor',{pipeline:PIPELINE,name:nm,data:INGEST})
         .then(function(r){
           toast(r.message||'saved');
-          if(r.dna_slug){
+          var slug=(r.donor&&r.donor.dna_slug)||r.dna_slug;
+          if(slug){
             // 'wear it' — bake the donor's staged DNA into every
             // preview frame (still staged; nothing touches a BRIEF)
-            BAKED=r.dna_slug;DATA.picked_elements.vibe=BAKED;
+            BAKED=slug;DATA.picked_elements.vibe=BAKED;
             toast('donor DNA staged — previews now wear it')}})};
   }
 
