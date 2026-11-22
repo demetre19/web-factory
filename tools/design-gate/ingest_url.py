@@ -315,7 +315,7 @@ def _dna_draft(colors, fonts, radii, spacing, body=None):
         v = (v or '').strip()
         if not v or v == 'transparent':
             return ''
-        m = re.match(r'rgba\([^)]+\)', v)
+        m = re.match(r'rgba\(([^)]+)\)', v)
         if m:
             try:
                 if float(m.group(1).split(',')[-1].strip()) == 0:
