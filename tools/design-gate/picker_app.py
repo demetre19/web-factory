@@ -537,6 +537,23 @@ def emit_element_previews(pd):
                        'document.querySelector('
                        '".nav-links");if(n)n.classList.'
                        'add("open");})()</script>')
+            # desktop surface — the nav as a bar, drawer never forced
+            # open: burger hidden, links inline (menu board at D)
+            _MENU_DESK = ('.burger,.nav-close{display:none !important}'
+                          '.nav-links{position:static !important;'
+                          'display:flex !important;transform:none '
+                          '!important;visibility:visible !important;'
+                          'opacity:1 !important;width:auto '
+                          '!important;max-height:none !important;'
+                          'inset:auto !important;border:0 !important;'
+                          'box-shadow:none !important;padding:0 '
+                          '!important;background:transparent '
+                          '!important}')
+            fp = os.path.join(outdir, comp + '-menu-desktop.html')
+            with open(fp, 'w', encoding='utf-8') as fh:
+                fh.write(_doc(head, battr, block, '', _MENU_DESK))
+            emitted[comp + '-menu-desktop'] = \
+                f'preview/elements/{comp}-menu-desktop.html'
             for topo, gcss in _MENU_TOPOS.items():
                 fp = os.path.join(
                     outdir, comp + '-menu' + ('-' + topo if topo else '')
@@ -2522,6 +2539,39 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
     ov.querySelector('#xpX').onclick=close;
     ov.onclick=function(e){if(e.target===ov)close()}}
 
+  // viewport fit — desktop (vw=100%) renders iframes at 1280px and
+  // scales them into the card; M/T keep the real small widths.
+  // Menu cards swap to the -menu-desktop fragment at desktop.
+  function fitIframes(){
+    var vw=document.documentElement.style.getPropertyValue('--vw')
+        ||'100%';
+    document.querySelectorAll('.card .cb iframe').forEach(function(f){
+      var u=(f.dataset.src||f.src.split('?')[0]);
+      if(vw==='100%'&&/-menu(-[a-z-]+)?\.html/.test(u))
+        u=u.replace(/-menu(-[a-z-]+)?\.html/,'-menu-desktop.html');
+      else if(vw!=='100%'&&u.indexOf('-menu-desktop.html')>0)
+        u=u.replace('-menu-desktop.html','-menu.html');
+      var cur=(f.dataset.src||'').split('?')[0];
+      if(u!==cur){f.dataset.src=u;
+        f.src=u+(document.documentElement.dataset.theme==='dark'
+          ?'?theme=dark':'')}
+      var cb=f.parentElement;
+      if(vw==='100%'){
+        var W=1280,s=Math.min(1,cb.clientWidth/W)||1;
+        f.style.width=W+'px';
+        f.style.transform='scale('+s+')';
+        f.style.transformOrigin='0 0';
+        try{var hh=f.contentDocument.body.scrollHeight;
+          if(hh>0){f.style.height=hh+'px';
+            cb.style.height=(hh*s)+'px'}}catch(e){}
+      }else{
+        f.style.width='';f.style.transform='';f.style.height='';
+        cb.style.height=''}
+    })}
+
+  document.querySelectorAll('#vwCtl button').forEach(function(b){
+    b.addEventListener('click',function(){setTimeout(fitIframes,80)})});
+
   function board(){
     var el=document.getElementById('board');
     if(CUR==='ingest'){ingestPane(el);return}
@@ -2588,6 +2638,9 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
       b.onclick=function(){doPick(b)}});
     el.querySelectorAll('.xp').forEach(function(b){
       b.onclick=function(e){e.stopPropagation();expand(b.dataset.x)}});
+    el.querySelectorAll('.cb iframe').forEach(function(f){
+      f.addEventListener('load',function(){setTimeout(fitIframes,90)})});
+    setTimeout(fitIframes,150);
     applyTheme(document.documentElement.dataset.theme);
   }
 
