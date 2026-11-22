@@ -337,7 +337,9 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
   .skip-link:focus { left: var(--space-xs); }
   .logo { font-weight: 700; }
   .helper { font-size: var(--text-s); }
-  .wf-cta-button { display: inline-block;
+  .wf-cta-button { display: inline-flex;
+                   align-items: center; justify-content: center;
+                   text-align: center;
                    padding: var(--btn-padding-block) var(--btn-padding-inline);
                    border-radius: var(--r-card);
                    background: var(--action-primary);
@@ -518,10 +520,25 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
   .nav-links { display: none; gap: var(--space-s);
                align-items: center; flex: 0 1 auto; min-width: 0; }
   .nav-links ul { flex-wrap: nowrap; gap: var(--space-s); }
+  /* the desktop bar shows the group's links inline — the wrapper
+     only materialises as a titled stack inside the open drawer */
+  .nav-links .nav-group { display: contents; }
   /* the brand mark and the primary links hold one line — a nav that
      wraps reads as two bars (L.1 axis); links shrink to --fs--1 so a
-     long label list still fits between brand and CTA */
-  .bm-header-1__brand { white-space: nowrap; }
+     long label list still fits between brand and CTA. The whole bar
+     stays one row at every width: brand ellipsises under pressure,
+     the burger pins to its lane's far end, nothing wraps (H.1) */
+  .bm-header-1__brand, .brand-mark, .logo { white-space: nowrap;
+              overflow: hidden; text-overflow: ellipsis; }
+  .row.between:has(.nav-links), .row.between:has(.burger),
+  .row.between:has(.nav-desk) { flex-wrap: nowrap; }
+  .row.between:has(.burger) > * { min-width: 0; }
+  div:has(> .burger), div:has(> .nav-links + .burger),
+  div:has(> .nav-desk + .burger) { display: flex;
+              align-items: center; }
+  .burger { flex: 0 0 auto; margin-inline-start: auto; }
+  .nav-links, .nav-desk { flex-shrink: 1; min-width: 0;
+              overflow: hidden; }
   /* 4 full-length labels can't fit under ~60rem — the burger takes
      over below that instead of overflowing the page */
   @media (min-width: 60rem) { .nav-links { display: flex; } }
@@ -540,7 +557,9 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
      rows separated by hairlines, reading as sections not a bare
      list (N.flyout) */
   .nav-links.open .nav-group { display: flex; flex-direction: column;
-              align-items: flex-start; gap: var(--space-xs); }
+              align-items: stretch; gap: var(--space-xs);
+              width: 100%; }
+  .nav-links.open .nav-group ul { width: 100%; }
   .nav-links.open .nav-group + .nav-group,
   .nav-links.open .nav-group + * { padding-block-start: var(--space-s);
               border-block-start: 1px solid var(--border-default); }
@@ -548,6 +567,57 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
               white-space: normal; color: var(--text-primary);
               text-decoration: none; display: inline-flex;
               align-items: center; gap: var(--space-s); }
+  /* drawer furniture — search, group heads, row numerals — exists
+     only inside the open flyout; the desktop bar stays brand + links
+     + CTA (N.flyout) */
+  .nav-search, .nav-group-head, .nav-num { display: none; }
+  .nav-links.open .nav-search { display: block; }
+  .nav-links.open .nav-search-input { width: 100%;
+              padding: var(--space-xs) var(--space-s);
+              font: inherit; color: var(--text-primary);
+              background: var(--bg-elevated);
+              border: 1px solid var(--border-default);
+              border-radius: var(--r-card); }
+  .nav-links.open .nav-group-head { display: block;
+              font-size: var(--fs--1); letter-spacing: .08em;
+              text-transform: uppercase;
+              color: var(--text-secondary); margin: 0 0 var(--space-xs); }
+  .nav-links.open .nav-num { display: inline;
+              margin-inline-start: auto;
+              font-size: var(--fs--1);
+              color: var(--text-secondary); font-variant-numeric:
+              tabular-nums; }
+  .nav-links.open .nav-link { display: flex; width: 100%;
+              align-items: center; gap: var(--space-s);
+              padding-block: var(--space-xs);
+              border-block-end: 1px solid var(--border-default); }
+  /* nav selection (N.select): >6 links switch to the hybrid —
+     .nav-priority keeps the first four inline on desktop, the full
+     set opens behind a quiet "More" trigger as a wider .nav-mega
+     panel whose links group into columns. Below the bar breakpoint
+     the burger still owns the drawer (the panel just widens). */
+  .nav-links .nav-mega-cols { display: contents; }
+  .nav-links.open .nav-mega-cols { display: grid;
+              grid-template-columns: repeat(auto-fit,
+                  minmax(13rem, 1fr));
+              gap: var(--space-m) var(--space-l); width: 100%; }
+  .nav-links.open.nav-mega { width: min(46rem, 94vw); }
+  .nav-priority { display: none; }
+  .nav-more { display: none; align-items: center;
+              min-height: var(--tap); background: none; border: 0;
+              padding: 0; font: inherit;
+              color: var(--text-secondary); cursor: pointer; }
+  .nav-more:hover { color: var(--text-primary); }
+  @media (min-width: 60rem) {
+    .nav-priority { display: flex; gap: var(--space-s);
+              align-items: center; flex: 0 1 auto; min-width: 0; }
+    .nav-priority ul { flex-wrap: nowrap; gap: var(--space-s); }
+    .nav-more { display: inline-flex; }
+    /* a mega nav never unrolls inline — the priority row + More own
+       the desktop bar; the panel still opens as a flyout */
+    .nav-links.nav-mega { display: none; }
+    .nav-links.nav-mega.open { display: flex; }
+  }
   /* the generic overlay family — modals, popups, form dialogs
      (N.flyout): a centred .flyout panel over the same scrim, a
      .flyout-open trigger in flow, a .flyout-close affordance */

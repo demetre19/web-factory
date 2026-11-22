@@ -688,15 +688,15 @@ def translate(payload, stem):
                     else 'flyout-close'
                 _lbl = 'Close menu' if cat == 'header' else 'Close'
                 return (f'{pad}<button class="{_cls}" type="button" '
-                        f'aria-label="{_lbl}">&times;</button>\n')
+                        f'aria-label="{_lbl}">×</button>\n')
             if cat == 'header':
                 return (f'{pad}{{list.length > 0 && '
                         f'<button class="burger" type="button" '
                         f'aria-label="Menu"><span aria-hidden="true">'
-                        f'&equiv;</span></button>}}\n')
+                        f'≡</span></button>}}\n')
             return (f'{pad}<button class="flyout-open" type="button" '
                     f'aria-label="Open panel"><span '
-                    f'aria-hidden="true">&equiv;</span></button>\n')
+                    f'aria-hidden="true">≡</span></button>\n')
         if name == 'offcanvas':
             _ot = set()
             _subtree_names(el_id, _ot)
@@ -712,7 +712,7 @@ def translate(payload, stem):
                 close = ('' if 'toggle' in _ot else
                          f'{pad}  <button class="nav-close" '
                          'type="button" aria-label="Close menu">'
-                         '&times;</button>\n')
+                         '×</button>\n')
                 ncls = (c + ' nav-links nav-flyout') if c \
                     else 'nav-links nav-flyout'
                 out = (f'{pad}{{list.length > 0 && <nav class="{ncls}"'
@@ -724,15 +724,15 @@ def translate(payload, stem):
                 if not seen.get('nav_cta'):
                     seen['nav_cta'] = True
                     out += (f'{pad}{{act.label && '
-                            f'<p class="mt-fluid-m">'
-                            f'<a class="wf-cta-button nav-cta" '
+                            f'<p class="nav-cta mt-fluid-m">'
+                            f'<a class="wf-cta-button" '
                             f'href={{act.href}}>{{act.label}}'
                             f'</a></p>}}\n')
                 return out
             close = ('' if 'toggle' in _ot else
                      f'{pad}  <button class="flyout-close" '
                      'type="button" aria-label="Close">'
-                     '&times;</button>\n')
+                     '×</button>\n')
             return (f'{pad}<div class="flyout" role="dialog" '
                     f'aria-modal="true">\n{close}{inner}'
                     f'{pad}</div>\n')
@@ -762,21 +762,72 @@ def translate(payload, stem):
                     out += (f'{pad}{{list.length > 0 && '
                             f'<button class="burger" type="button" '
                             f'aria-label="Menu"><span aria-hidden='
-                            f'"true">&equiv;</span></button>}}\n')
+                            f'"true">≡</span></button>}}\n')
                 return out
             ncls = (c + ' nav-links') if c else 'nav-links'
-            return (f'{pad}{{list.length > 0 && <nav class="{ncls}" '
-                    f'aria-label="Primary"><button class="nav-close" '
-                    f'type="button" aria-label="Close menu">'
-                    f'&times;</button><ul class="row gap-fluid-m '
-                    f'list-plain">'
-                    f'{{(list || []).map((it) => <li>'
+            # the open drawer binds the exemplar's structure —
+            # close, search block, a titled link group, numbered
+            # rows — not a bare <ul> (N.flyout). Drawer furniture
+            # hides on desktop (.nav-group is display:contents
+            # there, so the same links keep the bar's row shape).
+            # Nav selection rule (N.select): ≤6 items keep the inline
+            # row + flyout; more items switch to the hybrid — the
+            # first four links stay inline on desktop (.nav-priority),
+            # the full set opens as a mega panel behind a "More"
+            # trigger (.nav-links.nav-mega), burger still pinned in
+            # its lane for small widths.
+            _links = (f'{{grp.map((it, i) => <li>'
+                      f'<a class="nav-link" href={{it.href}}>'
+                      f'<span>{{it.label || it.term || it.title || '
+                      f'it.text}}</span>'
+                      f'<span class="nav-num" aria-hidden="true">'
+                      f'{{String((gi > 0 ? Math.ceil(list.length / 2) '
+                      f': 0) + i + 1).padStart(2, \'0\')}}</span>'
+                      f'</a></li>)}}')
+            _search = (f'<form class="nav-search" role="search">'
+                       f'<input class="nav-search-input" type="search" '
+                       f'placeholder="Search" aria-label="Search site" />'
+                       f'</form>')
+            _close = (f'<button class="nav-close" type="button" '
+                      f'aria-label="Close menu">×</button>')
+            return (f'{pad}{{list.length > 0 && list.length < 7 && '
+                    f'<nav class="{ncls}" '
+                    f'aria-label="Primary">{_close}{_search}'
+                    f'<div class="nav-mega-cols">'
+                    f'<div class="nav-group">'
+                    f'<p class="nav-group-head">Menu</p>'
+                    f'<ul class="row gap-fluid-m list-plain">'
+                    + _links.replace('{grp.map', '{list.map')
+                    .replace('gi > 0 ? Math.ceil(list.length / 2) : 0',
+                             '0')
+                    + f'</ul></div></div></nav>}}\n'
+                    f'{pad}{{list.length > 6 && <nav '
+                    f'class="{ncls} nav-mega" '
+                    f'aria-label="Primary">{_close}{_search}'
+                    f'<div class="nav-mega-cols">'
+                    f'{{[list.slice(0, Math.ceil(list.length / 2)), '
+                    f'list.slice(Math.ceil(list.length / 2))]'
+                    f'.map((grp, gi) => ('
+                    f'<div class="nav-group">'
+                    f'<p class="nav-group-head">'
+                    f'{{\'Menu \' + (gi + 1)}}</p>'
+                    f'<ul class="row gap-fluid-m list-plain">'
+                    + _links
+                    + f'</ul></div>))}}'
+                    f'</div></nav>}}\n'
+                    f'{pad}{{list.length > 6 && <Fragment><nav '
+                    f'class="nav-priority" aria-label="Primary">'
+                    f'<ul class="row gap-fluid-m list-plain">'
+                    f'{{list.slice(0, 4).map((it) => <li>'
                     f'<a class="nav-link" href={{it.href}}>'
-                    f'{{it.label || it.term || it.title || it.text}}</a>'
-                    f'</li>)}}</ul></nav>}}\n'
+                    f'{{it.label || it.term || it.title || it.text}}'
+                    f'</a></li>)}}</ul></nav>'
+                    f'<button class="nav-more" type="button" '
+                    f'aria-label="More links">More</button>'
+                    f'</Fragment>}}\n'
                     f'{pad}{{list.length > 0 && <button class="burger" '
                     f'type="button" aria-label="Menu">'
-                    f'<span aria-hidden="true">&equiv;</span>'
+                    f'<span aria-hidden="true">≡</span>'
                     f'</button>}}\n')
         if name == 'text-link' and not ivar:
             # a header's lone text-link IS the nav CTA slot (PS.7's
@@ -787,8 +838,8 @@ def translate(payload, stem):
                 if seen.get('nav_cta'):
                     return ''
                 seen['nav_cta'] = True
-                return (f'{pad}{{act.label && <p class="mt-fluid-m">'
-                        f'<a class="wf-cta-button nav-cta" '
+                return (f'{pad}{{act.label && <p class="nav-cta mt-fluid-m">'
+                        f'<a class="wf-cta-button" '
                         f'href={{act.href}}>'
                         f'{{act.label}}</a></p>}}\n')
             return ''

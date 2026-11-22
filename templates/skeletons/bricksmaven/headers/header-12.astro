@@ -59,11 +59,11 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
                 {(it.label || it.term || it.anchor) && it.text && <p class="text-fluid-0">{it.text}</p>}
               ))}</div>
           </div>}
-          {list.length > 0 && <button class="burger" type="button" aria-label="Menu"><span aria-hidden="true">&#9776;</span></button>}
+          {list.length > 0 && <button class="burger" type="button" aria-label="Menu"><span aria-hidden="true">≡</span></button>}
         </div>
       </div>
       {act.label &&       <div>
-        {act.label && <p class="mt-fluid-m"><a class="wf-cta-button nav-cta" href={act.href}>{act.label}</a></p>}
+        {act.label && <p class="nav-cta mt-fluid-m"><a class="wf-cta-button" href={act.href}>{act.label}</a></p>}
       </div>
       }
     </div>
