@@ -1003,16 +1003,51 @@ def _boards_site(ctx):
     return bctx
 
 
-def emit_page_boards(ctx, doc=None, tries=40):
+def _record_probe(ctx, doc, pr):
+    """PAGE-BOARDS.json['probe'] — per board: first-screen clusters
+    (FS_SAME), h1 / nav / 390 tallies, hero media coverage."""
+    out = {}
+    for board, b in doc['boards'].items():
+        ids = [o['id'] for o in b['options'] if o['id'] in pr]
+        cl = _fs_clusters([(i, pr[i]['thumb']) for i in ids])
+        out[board] = {
+            'options': len(ids), 'fs_clusters': len(cl),
+            'fs_cluster_sizes': sorted((len(c) for c in cl),
+                                       reverse=True),
+            'h1_exactly_one': sum(len(pr[i]['h1']) == 1 for i in ids),
+            'overflow_390': sum(bool(pr[i]['o390']) for i in ids),
+            'hero_media': sum(pr[i]['media'] > 0 for i in ids),
+            'nav_ok': sum(bool(pr[i]['hdr']) for i in ids)}
+    doc['probe'] = out
+    p = os.path.join(ctx.dir, 'PAGE-BOARDS.json')
+    with open(p, 'w', encoding='utf-8') as fh:
+        fh.write(json.dumps(doc, indent=1, ensure_ascii=False) + '\n')
+
+
+def emit_page_boards(ctx, doc=None, tries=40, probe=True):
     """Build every board option; a composition whose skeleton fails
     to render is recorded in PAGE-BOARDS.json['excluded'] and the
     options regenerate without it (never a silently broken card)."""
+    import copy as _copy
     import page_boards as PBD
     doc = doc or PBD.ensure(ctx.dir)
     for _i in range(tries):
         res, comps = _emit_page_boards(ctx, doc)
         if isinstance(res, dict):
-            return res
+            if not probe:
+                return res
+            bctx = _copy.copy(ctx)
+            bctx.site = os.path.join(ctx.dir, 'boards', 'site')
+            pr = _probe_boards(bctx, list(res))
+            bad = _probe_faults(doc, pr)
+            if not bad:
+                _record_probe(ctx, doc, pr)
+                return res
+            print(f'preview_build: boards probe excludes {len(bad)} '
+                  f'comp(s): ' + '; '.join(f'{c} ({w})' for c, w in
+                                           sorted(bad.items())))
+            doc = PBD.ensure(ctx.dir, exclude=bad)
+            continue
         bad = _broken_comps(os.path.join(ctx.dir, 'boards', 'site'),
                             res, comps)
         if not bad:
@@ -1020,6 +1055,152 @@ def emit_page_boards(ctx, doc=None, tries=40):
         doc = PBD.ensure(ctx.dir, exclude=bad)
     raise SystemExit('preview_build: boards — too many unrenderable '
                      'compositions')
+
+
+# render probe over every built board option — the nav spec (#104:
+# one desktop row, links ≥15px, burger hidden ≥60rem, no search field
+# in the bar), exactly one h1, no 390px overflow, and a 1280×900
+# first-screen thumbnail for the variety metric
+_PROBE_1280 = r"""() => {
+ const vis = e => { const r = e.getBoundingClientRect(), s = getComputedStyle(e);
+   return r.width > 1 && r.height > 1 && s.visibility !== 'hidden' && s.display !== 'none' && +s.opacity > 0; };
+ const h1s = [...document.querySelectorAll('h1')].filter(vis)
+   .map(h => { const s = h.closest('[data-comp]'); return s ? s.dataset.comp : ''; });
+ const hdr = document.querySelector('[data-sec="header"]');
+ const out = {h1: h1s, hdr: null, media: 0};
+ const hero = document.querySelector('[data-sec="hero"]');
+ if (hero) out.media = Math.max(0, ...[...hero.querySelectorAll('img,iframe,video')].filter(vis)
+   .map(i => { const r = i.getBoundingClientRect(); return Math.round(Math.max(0, Math.min(r.bottom, 900) - Math.max(r.top, 0)) * r.width); }));
+ if (hdr) {
+   const items = [...hdr.querySelectorAll('a,button,input,img,svg')].filter(vis);
+   const tops = [];
+   items.forEach(e => { const r = e.getBoundingClientRect(), c = r.top + r.height / 2;
+     if (!tops.some(t => Math.abs(t - c) < 24)) tops.push(c); });
+   const links = [...hdr.querySelectorAll('a')].filter(vis)
+     .filter(a => !a.querySelector('img,svg') && a.textContent.trim() && !a.closest('.nav-cta,.wf-cta-button') && !a.classList.contains('wf-cta-button'));
+   const b = [...hdr.querySelectorAll('.burger')].some(vis);
+   const inp = [...hdr.querySelectorAll('input,[role=search]')].some(vis);
+   const txt = links.map(a => a.textContent.trim());
+   const boxes = [...hdr.querySelectorAll('a,button,.logo,img')].filter(vis)
+     .filter(e => !e.parentElement.closest('a,button,.logo')).map(e => e.getBoundingClientRect());
+   let overlap = 0;
+   boxes.forEach((a, i) => boxes.slice(i + 1).forEach(b => {
+     const w = Math.min(a.right, b.right) - Math.max(a.left, b.left), h = Math.min(a.bottom, b.bottom) - Math.max(a.top, b.top);
+     if (w > 4 && h > 4) overlap++; }));
+   out.hdr = {overlap, rows: tops.length, minfs: links.length ? Math.min(...links.map(a => parseFloat(getComputedStyle(a).fontSize))) : 0,
+              burger: b, search: inp, dup: txt.length - new Set(txt).size, links: links.length};
+ }
+ return out; }"""
+_PROBE_390 = r"""() => { const W = document.documentElement.clientWidth;
+ if (document.documentElement.scrollWidth <= W + 1) return null;
+ let worst = null, wr = W + 1;
+ for (const e of document.querySelectorAll('body *')) { const r = e.getBoundingClientRect();
+   if (r.right > wr && r.width > 0) { wr = r.right; const s = e.closest('[data-comp]'); worst = s ? s.dataset.comp : e.tagName; } }
+ return worst; }"""
+_THUMB = r"""async (u) => { const im = new Image(); im.src = u; await im.decode();
+ const c = document.createElement('canvas'); c.width = 32; c.height = 23;
+ const x = c.getContext('2d'); x.drawImage(im, 0, 0, 32, 23);
+ return Array.from(x.getImageData(0, 0, 32, 23).data).filter((_, i) => i % 4 !== 3); }"""
+# two first screens are one cluster when their 32×23 RGB thumbnails
+# differ by < 4% mean absolute channel delta (leader clustering)
+FS_SAME = 0.04
+
+
+_HERO_SURFACES = ('base', 'inverse', 'muted', 'brand')
+
+
+def _fs_clusters(thumbs):
+    leaders = []
+    for oid, t in thumbs:
+        for ld in leaders:
+            if sum(abs(a - b) for a, b in zip(t, ld[1])) / (
+                    255.0 * max(1, len(t))) < FS_SAME:
+                ld[2].append(oid)
+                break
+        else:
+            leaders.append([oid, t, [oid]])
+    return [ld[2] for ld in leaders]
+
+
+def _probe_boards(bctx, oids):
+    """{oid: metrics} over the built boards dist (local http, headless
+    chromium at 1280×900 and 390×844)."""
+    import base64
+    import functools
+    import http.server
+    import threading
+    from playwright.sync_api import sync_playwright
+
+    class _Q(http.server.SimpleHTTPRequestHandler):
+        def log_message(self, *a):
+            pass
+    srv = http.server.ThreadingHTTPServer(
+        ('127.0.0.1', 0), functools.partial(
+            _Q, directory=os.path.join(bctx.site, 'dist')))
+    threading.Thread(target=srv.serve_forever, daemon=True).start()
+    base = f'http://127.0.0.1:{srv.server_address[1]}/preview/'
+    res = {}
+    try:
+        with sync_playwright() as pw:
+            br = pw.chromium.launch()
+            pg = br.new_page(viewport={'width': 1280, 'height': 900})
+            pm = br.new_page(viewport={'width': 390, 'height': 844})
+            pt = br.new_page()
+            for oid in oids:
+                pg.goto(base + f'lo-{oid}/', wait_until='load')
+                try:
+                    pg.wait_for_function(
+                        "[...document.images].filter(i => i.getBoundingClientRect().top < 900).every(i => i.complete)",
+                        timeout=4000)
+                except Exception:
+                    pass
+                r = pg.evaluate(_PROBE_1280)
+                shot = base64.b64encode(pg.screenshot(
+                    type='jpeg', quality=70)).decode()
+                r['thumb'] = pt.evaluate(
+                    _THUMB, 'data:image/jpeg;base64,' + shot)
+                pm.goto(base + f'lo-{oid}/', wait_until='load')
+                r['o390'] = pm.evaluate(_PROBE_390)
+                res[oid] = r
+            br.close()
+    finally:
+        srv.shutdown()
+    return res
+
+
+def _probe_faults(doc, probe):
+    """{comp: reason} the probe pins on a composition: a header that
+    breaks the nav spec, a comp that overflows 390px, a hero with no
+    h1 / a non-hero band minting a second one."""
+    bad = {}
+    for b in doc['boards'].values():
+        for o in b['options']:
+            r = probe.get(o['id'])
+            if not r:
+                continue
+            comps = o['compositions']
+            h = r.get('hdr')
+            if h and comps.get('header'):
+                why = [w for w, f in (
+                    (f"rows={h['rows']}", h['rows'] > 1),
+                    (f"links {h['minfs']:.0f}px", 0 < h['minfs'] < 15),
+                    ('no desktop links', h['links'] == 0),
+                    ('burger shown ≥60rem', h['burger']),
+                    ('search field in bar', h['search']),
+                    ('duplicated links', h['dup'] > 0),
+                    ('items overlap', h.get('overlap', 0) > 0)) if f]
+                if why:
+                    bad.setdefault(comps['header'],
+                                   'navprobe@1280: ' + ', '.join(why))
+            if r.get('o390') and r['o390'] in comps.values():
+                bad.setdefault(r['o390'], 'overflows 390px')
+            h1 = r.get('h1') or []
+            if not h1 and comps.get('hero'):
+                bad.setdefault(comps['hero'], 'renders no h1')
+            for c in h1:
+                if c and c != comps.get('hero'):
+                    bad.setdefault(c, 'mints a second h1')
+    return bad
 
 
 def _emit_page_boards(ctx, doc):
@@ -1068,7 +1249,12 @@ def _emit_page_boards(ctx, doc):
                 extra = bnd.get('row') or {}
                 cc = dict(tc)
                 surface = 'base'
-                if tk == 'act':
+                if role == 'hero':
+                    # the hero band rotates with the option — a light,
+                    # inverse, brand or muted first screen, never 30
+                    # cream bands with different markup inside
+                    surface = _HERO_SURFACES[oi % len(_HERO_SURFACES)]
+                elif tk == 'act':
                     surface = 'brand'
                 elif tk == 'content':
                     alt += 1
