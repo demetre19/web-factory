@@ -3418,6 +3418,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
     el.querySelectorAll('.vload').forEach(function(b){
       b.onclick=function(){
         VGENES=Object.assign({},cards[+b.dataset.i].genes||{});
+        vibePane(el,o);
         resolveVibe(el,o)}});
     el.querySelectorAll('.cf .pick:not(#vBake)').forEach(function(b){
       b.onclick=function(){
