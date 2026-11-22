@@ -201,7 +201,7 @@ def bank_item(c, img_dir):
         json.dump(spec, f, indent=1)
     return {'file': f'mobbin/{fam}/{name}.topo.json',
             'topology_id': topo_id, 'name': name, 'family': fam,
-            'c': c, 'is_new': is_new}
+            'c': c, 'spec': spec, 'is_new': is_new}
 
 
 def index_row(r):
@@ -225,8 +225,18 @@ def main():
                     p = os.path.join(root, fn)
                     s = json.load(open(p))
                     fam = os.path.relpath(root, MOBBIN)
-                    rows.append((p, s, fam))
+                    name = fn[:-len('.spec.json')]
+                    tp = os.path.join(root, f'{name}.topo.json')
+                    topo = json.load(open(tp)) \
+                        if os.path.exists(tp) else {}
+                    rows.append({
+                        'file': f'mobbin/{fam}/{name}.topo.json',
+                        'topology_id': topo.get('topology_id', ''),
+                        'name': name, 'family': fam,
+                        'c': s, 'spec': s,
+                        'is_new': s.get('is_new_topology', False)})
         _write_indexes(rows)
+        print(f'retagged {len(rows)} exemplars')
         return
     manifest_p, img_dir = sys.argv[1], sys.argv[2]
     limit = int(sys.argv[sys.argv.index('--limit') + 1]) \
