@@ -2514,12 +2514,18 @@ def app_data(pipeline):
             'saved_systems': list_systems(pd),
             'remix_sources': dna_sources(pd),
             'remix_groups': REMIX_GROUPS,
-            'site_index': (
-                '/built/' + urllib.parse.quote(
-                    pd + '/site/dist/index.html')
-                if os.path.isfile(
-                    os.path.join(pd, 'site', 'dist', 'index.html'))
-                else None),
+            # the real emitted page — dist/index.html is only the
+            # canonical redirect stub; the page lives under its slug
+            'site_index': next(
+                ('/built/' + urllib.parse.quote(p)
+                 for p in (
+                     *[os.path.join(pd, 'site', 'dist', s, 'index.html')
+                       for s in (ctx.pages() or {})],
+                     os.path.join(pd, 'site', 'dist', 'index.html'))
+                 if os.path.isfile(p)
+                 and 'http-equiv="refresh"' not in open(
+                     p, encoding='utf-8', errors='replace').read(400)),
+                None),
             'contrast': contrast,
             'design': {
                 'site': dna.get('site') or pd.rsplit('/', 3)[-3],
