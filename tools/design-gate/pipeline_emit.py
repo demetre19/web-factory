@@ -597,12 +597,12 @@ def _design_system(ctx, tokens, comps):
                         f'<span class="ds-label">--{var}</span>'))
     parts.append('<h2>Section conventions</h2>' + ''.join(sec))
     # ---- radius / elevation / motion ---------------------------------
+    _radius_px = re.sub(r'(\d)px', r'\1 px',
+                        str(knobs.get('radius.personality')))
     rem = [spec('radius', 'radius.personality', '--radius',
                 'ds-radius', 'var(--radius)',
                 '<span class="ds-radius"></span>'
-                '<span class="ds-label">--radius · '
-                f'{re.sub(r"(\d)px", r"\1 px",
-                         str(knobs.get("radius.personality")))}'
+                '<span class="ds-label">--radius · ' + _radius_px +
                 '</span>')]
     for name in ('shadow-card', 'shadow-pop'):
         rem.append(spec('elevation', name, f'--{name}',
