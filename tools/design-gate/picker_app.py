@@ -782,12 +782,23 @@ _CHROME_CSS = (
     'currentColor 0 2px,transparent 2px 6px)}')
 
 
+# live preview docs are inspect-only: in-card iframes are interactive
+# (they scroll), but any link click would navigate the frame to a
+# bare /built/… page or a 404 and blank the card. Anchor clicks keep
+# firing for the doc's own JS (menu toggles etc.) — only the default
+# navigation is cancelled, capture phase so per-doc handlers run first.
+_NO_NAV = ('<script>document.addEventListener("click",function(e){'
+           'var a=e.target&&e.target.closest&&e.target.closest("a");'
+           'if(a&&a.getAttribute("href"))e.preventDefault()},true);'
+           '</script>')
+
+
 def _doc(head, battr, inner, extra='', css='', chrome=True):
     style = ('<style>' + (_CHROME_CSS if chrome else '') +
              (css or '') + '</style>')
     return ('<!doctype html><html lang="en"><head>' + head + style +
             '</head><body' + (battr or '') + '>' + inner + extra +
-            '</body></html>')
+            _NO_NAV + '</body></html>')
 
 
 def _fam_css(f):
@@ -816,7 +827,8 @@ def emit_vibe_doc(pd, fam, bundle):
     # (e.g. the C.1 pairing) changes the resolved palette and the
     # cached doc must re-emit, so a version stamp alone is not enough
     css = _fam_css(bundle)
-    mark = 'wf:vibe:v6:' + hashlib.sha256(
+    # v7: preview docs cancel anchor navigation (_NO_NAV in _doc)
+    mark = 'wf:vibe:v7:' + hashlib.sha256(
         css.encode()).hexdigest()[:8]
     stale = True
     if os.path.isfile(fp):
@@ -973,7 +985,7 @@ def emit_typescale_doc(pd, name='current', bundle=None, tok=None):
         # candidate ladders re-emit only when their own spec changed
         try:
             with open(fp, encoding='utf-8', errors='replace') as rf:
-                stale = ('wf:ts:v1' not in rf.read(4096)) if \
+                stale = ('wf:ts:v3' not in rf.read(4096)) if \
                     os.path.isfile(fp) else True
         except OSError:
             stale = True
@@ -981,7 +993,7 @@ def emit_typescale_doc(pd, name='current', bundle=None, tok=None):
             os.path.getmtime(fp) >= os.path.getmtime(tp):
         try:
             with open(fp, encoding='utf-8', errors='replace') as rf:
-                stale = 'wf:ts:v2' not in rf.read(4096)
+                stale = 'wf:ts:v3' not in rf.read(4096)
         except OSError:
             stale = True
     if stale:
@@ -1009,7 +1021,8 @@ def emit_typescale_doc(pd, name='current', bundle=None, tok=None):
         css = ((_fam_css(bundle) if bundle else '') + _TYPESCRIPT_CSS)
         os.makedirs(outdir, exist_ok=True)
         with open(fp, 'w', encoding='utf-8') as fh:
-            fh.write('<!--wf:ts:v2-->' + _doc(head, battr, body,
+            # v3: preview docs cancel anchor navigation (_NO_NAV)
+            fh.write('<!--wf:ts:v3-->' + _doc(head, battr, body,
                                               css=css))
     return 'preview/typescale/' + name + '.html'
 
@@ -6433,6 +6446,15 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
       tif.addEventListener('load',function(){
         setTimeout(tsPushVars,80);setTimeout(tsFitFrame,80)});
       tsFitFrame();
+      if(!wireTsEd._rz){
+        wireTsEd._rz=1;
+        window.addEventListener('resize',function(){
+          var n=window.innerWidth<=480?320:1280;
+          if(n!==_tsVp){_tsVp=n;
+            ed.querySelectorAll('#ts-vpbar .tsvpb').forEach(function(x){
+              x.classList.toggle('on',+x.dataset.v===_tsVp)});
+            tsRenderSpecimen()}
+          tsFitFrame()})}
       // the specimen is the doc for the SIGNED vibe — VRES may be a
       // pending (unsaved) resolve from the vibe board, so use it as
       // a fast first paint but always re-resolve the signed genes
