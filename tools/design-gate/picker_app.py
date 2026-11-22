@@ -3170,7 +3170,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
 .card .ch .score{margin-left:auto;font:600 11px var(--mono);
      color:var(--muted)}
 .card .cb{position:relative;background:var(--bg);min-height:64px}
-.card .cb::before{content:'';position:absolute;inset:0;
+.card .cb:has(iframe)::before{content:'';position:absolute;inset:0;
      background:linear-gradient(100deg,var(--bg) 30%,var(--bg-2) 50%,var(--bg) 70%);
      background-size:200% 100%;animation:cbsk 1.3s linear infinite}
 @keyframes cbsk{to{background-position:-200% 0}}
@@ -3262,7 +3262,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
 .vprev{border:1px solid var(--line);border-radius:12px;
   overflow:hidden;margin:12px 0 20px;background:var(--panel)}
 .vprev .cb{height:70vh;position:relative;overflow:hidden}
-.vprev .cb::before{content:'';position:absolute;inset:0;
+.vprev .cb:has(iframe)::before{content:'';position:absolute;inset:0;
   background:linear-gradient(100deg,var(--bg) 30%,var(--bg-2) 50%,var(--bg) 70%);
   background-size:200% 100%;animation:cbsk 1.3s linear infinite}
 .vprev .cb.done::before,.vprev .cb.err::before{display:none}
@@ -4545,6 +4545,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
       if(!cb)return;
       f.addEventListener('load',function(){
         try{if(!f.contentDocument||
+             f.contentDocument.contentType!=='text/html'||
              !f.contentDocument.body||
              !f.contentDocument.body.children.length){
           cb.classList.add('err');
