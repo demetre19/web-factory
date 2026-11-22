@@ -47,6 +47,8 @@ PACK_META = {
     "proofatlas": ("proof-testimonial", "proof", ["social proof"], "social proof"),
     "meridian": ("data-display", "element", ["data"], "data display"),
     "hero": ("hero-section", "hero", ["hero"], "hero"),
+    "folio": ("card-block", "element", ["card"], "card"),
+    "formspecimen": ("form-block", "form", ["form"], "form"),
 }
 
 # component-name prefix -> (baseline, section_class, category, query) override

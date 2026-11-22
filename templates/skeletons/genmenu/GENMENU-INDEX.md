@@ -1,6 +1,6 @@
 # GENMENU-INDEX — AI-Studio-generated exemplars
 
-340 exemplars generated with Google AI Studio / Claude (operator-supplied
+380 exemplars generated with Google AI Studio / Claude (operator-supplied
 React + Tailwind sources), SSR-rendered to static open-state fragments and
 vectorised by `tools/design-gate/genmenu_bank.py` (deterministic — no paid
 calls).
@@ -40,8 +40,10 @@ calls).
 | `hero-centered/` | hero-centered | 6 | hero-architecture |
 | `hero-split/` | hero-split | 3 | hero-architecture |
 | `hero-media-bg/` | hero-media-bg | 11 | hero-architecture |
+| `card-block/` | card-block | 20 | folio-twenty |
+| `form-block/` | form-block | 20 | formspecimen |
 
-Counts are per `tags.json` (340 rows). `nav-bottom-sheet` and `nav-top-sheet`
+Counts are per `tags.json` (380 rows). `nav-bottom-sheet` and `nav-top-sheet`
 are NEW topology ids — web Mobbin returned no exemplars for these classes
 (iOS-heavy classes). `footer-*`, `pricing-*`, `auth-form`, `empty-state` and
 `modal-*` classes are new to this corpus (generator families, distinct from
