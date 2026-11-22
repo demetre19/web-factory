@@ -1,0 +1,70 @@
+---
+/**
+ * cutout-hero-split — gold exemplar (SB.5). Split hero where the
+ * media is a background-removed object (machinery / equipment /
+ * person cutout) floating on the design's surface, never a framed
+ * photo: object-fit: contain + drop-shadow, no card, no radius.
+ * `image` is a transparent PNG the cutout stage produces; when no
+ * asset exists yet the .cutout-ph placeholder holds the slot so the
+ * composition still renders (G.1).
+ */
+import { Image } from 'astro:assets';
+import { inline, mediaFor } from '../_shared/inline';
+import type { CopySlot, MediaInput } from '../_shared/inline';
+interface Props {
+  heading?: string;
+  fs?: string;
+  body?: string;
+  eyebrow?: string;
+  cta?: { label: string; href: string };
+  items?: { term?: string; title?: string; text?: string;
+             label?: string; href?: string }[];
+  image?: MediaInput;
+  h1?: boolean;
+  brand?: string;
+  copy?: CopySlot;
+}
+const {
+  heading = 'Section heading', fs = '', body = '', eyebrow = '',
+  cta, items = [], image, h1, brand, copy,
+} = Astro.props;
+const cp: CopySlot = copy || {};
+const head = cp.heading || heading;
+const answer = cp.answer || '';
+const sub = answer || fs || body;
+const list = (cp.items && cp.items.length ? cp.items : items) || [];
+const m = mediaFor(image, head);
+---
+<div class="split">
+  <div class="stack">
+    {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+    {h1
+      ? <h1 class="t0 h-display text-fluid-5">{head}</h1>
+      : <h2 class="t0 h-section text-fluid-3">{head}</h2>}
+    {sub && <p class="t0 lede" set:html={inline(sub)} />}
+    {list.length > 0 && (
+      <ul class="t0 sub-p list-items">
+        {list.map((it) => (
+          <li><strong set:html={inline(it.term || it.title)} />{' – '}<span set:html={inline(it.text)} /></li>
+        ))}
+      </ul>
+    )}
+    {cta && (
+      <div class="cta-row mt-act">
+        <a class="wf-cta-button" href={cta.href}>{cta.label}</a>
+      </div>
+    )}
+  </div>
+  <div class="cutout-slot">
+    {m
+      ? (m.mod
+          ? <Image class="cutout" src={m.mod} alt={m.alt || head}
+                   widths={[480, 960]} sizes="(min-width: 60rem) 45vw, 92vw" />
+          : <img class="cutout" src={m.src} alt={m.alt || head}
+                 width="960" height="960" />)
+      : <div class="cutout-ph" role="img"
+             aria-label={head}>
+          <span class="cutout-ph-label">cutout asset pending</span>
+        </div>}
+  </div>
+</div>

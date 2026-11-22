@@ -1,0 +1,58 @@
+---
+/**
+ * cutout-cta-band — gold exemplar (SB.5). Dark conversion band with
+ * a background-removed object floating on the band surface (the
+ * object anchors the ask — equipment for industrial, product for
+ * catalog). `image` is a transparent PNG from the cutout stage; the
+ * .cutout-ph placeholder holds the slot when no asset exists (G.1).
+ */
+import { Image } from 'astro:assets';
+import { inline, mediaFor } from '../_shared/inline';
+import type { CopySlot, MediaInput } from '../_shared/inline';
+interface Props {
+  heading?: string;
+  fs?: string;
+  body?: string;
+  eyebrow?: string;
+  cta?: { label: string; href: string };
+  image?: MediaInput;
+  h1?: boolean;
+  brand?: string;
+  copy?: CopySlot;
+}
+const {
+  heading = 'Section heading', fs = '', body = '', eyebrow = '',
+  cta, image, h1, brand, copy,
+} = Astro.props;
+const cp: CopySlot = copy || {};
+const head = cp.heading || heading;
+const answer = cp.answer || '';
+const sub = answer || fs || body;
+const m = mediaFor(image, head);
+---
+<div class="split cta-band">
+  <div class="stack">
+    {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+    {h1
+      ? <h1 class="t0 h-display text-fluid-4">{head}</h1>
+      : <h2 class="t0 h-section text-fluid-3">{head}</h2>}
+    {sub && <p class="t0 lede" set:html={inline(sub)} />}
+    {cta && (
+      <div class="cta-row mt-act">
+        <a class="wf-cta-button" href={cta.href}>{cta.label}</a>
+      </div>
+    )}
+  </div>
+  <div class="cutout-slot">
+    {m
+      ? (m.mod
+          ? <Image class="cutout" src={m.mod} alt={m.alt || head}
+                   widths={[360, 720]} sizes="(min-width: 60rem) 32vw, 70vw" />
+          : <img class="cutout" src={m.src} alt={m.alt || head}
+                 width="720" height="720" />)
+      : <div class="cutout-ph" role="img"
+             aria-label={head}>
+          <span class="cutout-ph-label">cutout asset pending</span>
+        </div>}
+  </div>
+</div>

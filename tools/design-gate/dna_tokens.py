@@ -71,26 +71,26 @@ _TIER_SMART = {'space-s': 'space-m-to-s', 'space-m': 'space-l-to-m',
 def fluid_settings(knobs):
     """knobs → the clamp.py settings record for a site with no live
     ACSS file (provenance: inferred). Desktop text = type.base on
-    type.ratio; mobile text = ACSS 16px on a ratio pulled 40% toward
-    1 (1.333 → 1.2, ACSS's own mobile/desktop pair); headings run on
-    the ACSS heading defaults (1.2 mobile / 1.333 desktop) unless the
-    DNA ratio is steeper; space base by density tier; section adjust
-    by whitespace band; gutter = ACSS default."""
+    type.ratio; mobile text sits the ACSS -2px below the knob (its
+    own 16/18 pair) so every base still differs at card widths;
+    mobile ratio pulled 40% toward 1 (1.333 → 1.2, ACSS's own pair).
+    Headings run the DNA ratio directly — the knob, not the ACSS
+    default, so a quiet family renders flatter headings than a loud
+    one (D: knob deltas must LAND). Space base by density tier;
+    section adjust by whitespace band; gutter = ACSS default."""
     import clamp
     base = float(knobs.get('type.base', 18))
     ratio = float(knobs.get('type.ratio', 1.333))
     mob_ratio = round(1 + (ratio - 1) * 0.6, 4)
-    d = clamp.DEFAULTS
-    h_desk = max(ratio, d['heading_scale_desk'])
-    h_mob = max(mob_ratio, d['heading_scale_mob'])
     sp = _DENSITY_SPACE.get(knobs.get('space.density_scale'),
                             (24.0, 30.0))
     sec = _BAND_SECTION.get(knobs.get('grid.gutter'), (3.0, 4.0))
     return clamp.settings({
-        'text_base_mob': min(16.0, base), 'text_base_desk': base,
+        'text_base_mob': max(14.0, base - 2.0), 'text_base_desk': base,
         'text_scale_mob': mob_ratio, 'text_scale_desk': ratio,
-        'heading_base_mob': min(16.0, base), 'heading_base_desk': base,
-        'heading_scale_mob': h_mob, 'heading_scale_desk': h_desk,
+        'heading_base_mob': max(14.0, base - 2.0),
+        'heading_base_desk': base,
+        'heading_scale_mob': mob_ratio, 'heading_scale_desk': ratio,
         'space_base_mob': sp[0], 'space_base_desk': sp[1],
         'section_adjust_mob': sec[0], 'section_adjust_desk': sec[1],
         'grid_gap': _TIER_SMART.get(

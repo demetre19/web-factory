@@ -58,6 +58,9 @@ ROLE = {
     'split-media': ('detail', 'media', 'col-1-edge', 'stacked'),
     'link-grid': ('detail', 'links', 'col-1-edge', '1-col'),
     'comparison': ('detail', 'items', 'col-1-edge', '1-col'),
+    'cutout-hero-split': ('promise', 'media', 'col-1-edge', 'stacked'),
+    'cutout-catalog-grid': ('detail', 'items', 'col-1-edge', '1-col'),
+    'cutout-cta-band': ('act', 'media', 'col-1-edge', 'stacked'),
     'stat-band': ('proof', 'items', 'col-1-edge', '1-col'),
     'proof-band': ('proof', 'proof', 'col-1-edge', '1-col'),
     'quote-grid': ('proof', 'items', 'col-1-edge', '1-col'),
@@ -78,11 +81,12 @@ INTENT_COMP = {
 # are an empty grid or a lone orphan card (L.15) — the honest render
 # is the prose column the copy actually carries.
 ITEM_COMPS = {'cards-n', 'text-index', 'stat-band', 'link-grid',
-              'comparison', 'sequence', 'proof-band', 'quote-grid'}
+              'comparison', 'sequence', 'proof-band', 'quote-grid',
+              'cutout-catalog-grid'}
 # comps that accept a term-projected item list (ordered-step and
 # quote shapes need their own slots, not terms)
 PROJ_COMPS = {'cards-n', 'text-index', 'stat-band', 'link-grid',
-              'comparison'}
+              'comparison', 'cutout-catalog-grid'}
 
 # CONTENT/<collection>/<slug>.md → PS page type (J.6 picks the layout
 # family from it). A services stub is a service page on the
@@ -252,7 +256,8 @@ def shape(b, has_media):
                          or re.search(r'\bsteps?\b', b['h2'], re.I)):
         return ['sequence', 'cards-n']
     if n_items >= 4:
-        return ['cards-n', 'editorial', 'text-index']
+        return ['cards-n', 'cutout-catalog-grid', 'editorial',
+                'text-index']
     if n_items:
         return ['editorial', 'cards-n']
     # prose-only answer — the default comp is intent-fit, 'editorial'

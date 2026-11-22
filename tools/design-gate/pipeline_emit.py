@@ -51,6 +51,7 @@ sys.path.insert(0, HERE)
 
 import gate          # noqa: E402  (the ONE judge — producers call it)
 import emit_global   # noqa: E402  (the canonical emit recipes)
+import recraft       # noqa: E402  (F — generated placeholder media)
 
 TEMPLATES = os.path.join(REPO, 'templates')
 STARTER = os.path.join(TEMPLATES, 'astro')
@@ -377,6 +378,20 @@ def _instance_body(ctx, contract, row, copy=None):
                               str(img.get('src') or '').lstrip('/'))
         img['ratio'] = emit_global.media_ratio_for(
             _asset, contract.get('media_ratio'))
+    if img is None:
+        # F — an empty media slot gets a generated placeholder
+        # (recraft): deterministic per comp+row, cutout comps get an
+        # isolation-ready subject; stubs to the section's own
+        # placeholder when OPENROUTER_API_KEY is unset. The file lands
+        # in public/media and mirrors into src/assets/media below, so
+        # mediaFor resolves it like any brief asset.
+        gen = recraft.fill(
+            comp + '-' + str(row.get('id') or row.get('slot') or ''),
+            'cutout' if comp.startswith('cutout-') else 'default',
+            os.path.join(ctx.site, 'public', 'media'))
+        if gen:
+            img = {'src': '/media/' + os.path.basename(gen),
+                   'alt': str(row.get('heading') or comp)}
     for k, src in (('cta', c.get('cta') or row.get('cta')),
                    ('eyebrow', row.get('eyebrow')),
                    ('items', row.get('items')),
