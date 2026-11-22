@@ -1,6 +1,6 @@
 # GENMENU-INDEX — AI-Studio-generated exemplars
 
-560 exemplars generated with Google AI Studio / Claude (operator-supplied
+580 exemplars generated with Google AI Studio / Claude (operator-supplied
 React + Tailwind sources), SSR-rendered to static open-state fragments and
 vectorised by `tools/design-gate/genmenu_bank.py` (deterministic — no paid
 calls).
@@ -70,8 +70,13 @@ calls).
 | `comparison-pros-cons/` | comparison-pros-cons | 3 | comparekit |
 | `comparison-before-after/` | comparison-before-after | 2 | comparekit |
 | `comparison-cards/` | comparison-cards | 1 | comparekit |
+| `ui-control/` | ui-control | 12 | control-foundry |
+| `ui-control-link/` | ui-control-link | 3 | control-foundry |
+| `ui-control-group/` | ui-control-group | 2 | control-foundry |
+| `ui-control-menu/` | ui-control-menu | 2 | control-foundry |
+| `ui-control-states/` | ui-control-states | 1 | control-foundry |
 
-Counts are per `tags.json` (560 rows). `nav-bottom-sheet` and `nav-top-sheet`
+Counts are per `tags.json` (580 rows). `nav-bottom-sheet` and `nav-top-sheet`
 are NEW topology ids — web Mobbin returned no exemplars for these classes
 (iOS-heavy classes). `footer-*`, `pricing-*`, `auth-form`, `empty-state`,
 `modal-*`, `comparison-*`, `data-table-expandable`, `ui-*`, `nav-micro`,
