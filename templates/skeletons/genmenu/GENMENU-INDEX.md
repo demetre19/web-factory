@@ -1,6 +1,6 @@
 # GENMENU-INDEX — AI-Studio-generated exemplars
 
-600 exemplars generated with Google AI Studio / Claude (operator-supplied
+700 exemplars generated with Google AI Studio / Claude (operator-supplied
 React + Tailwind sources), SSR-rendered to static open-state fragments and
 vectorised by `tools/design-gate/genmenu_bank.py` (deterministic — no paid
 calls).
@@ -80,8 +80,25 @@ calls).
 | `media-live/` | media-live | 3 | kinema-kit |
 | `media-testimonial/` | media-testimonial | 1 | kinema-kit |
 | `media-playlist/` | media-playlist | 1 | kinema-kit |
+| `fx-hover/` | fx-hover | 15 | kinetic |
+| `fx-motion/` | fx-motion | 5 | kinetic |
+| `ui-badge/` | ui-badge | 11 | badge-foundry |
+| `ui-badge-chip/` | ui-badge-chip | 1 | badge-foundry |
+| `ui-badge-pulse/` | ui-badge-pulse | 1 | badge-foundry |
+| `ui-badge-ribbon/` | ui-badge-ribbon | 7 | badge-foundry |
+| `bg-gradient/` | bg-gradient | 9 | surface-foundry |
+| `bg-pattern/` | bg-pattern | 3 | surface-foundry |
+| `bg-shape/` | bg-shape | 6 | surface-foundry |
+| `bg-surface/` | bg-surface | 2 | surface-foundry |
+| `deco-callout/` | deco-callout | 3 | folio-ornamenta |
+| `deco-content/` | deco-content | 11 | folio-ornamenta |
+| `deco-inline/` | deco-inline | 2 | folio-ornamenta |
+| `deco-quote/` | deco-quote | 4 | folio-ornamenta |
+| `deco-divider/` | deco-divider | 9 | folio-ornaments |
+| `deco-frame/` | deco-frame | 5 | folio-ornaments |
+| `deco-ornament/` | deco-ornament | 6 | folio-ornaments |
 
-Counts are per `tags.json` (600 rows). `nav-bottom-sheet` and `nav-top-sheet`
+Counts are per `tags.json` (700 rows). `nav-bottom-sheet` and `nav-top-sheet`
 are NEW topology ids — web Mobbin returned no exemplars for these classes
 (iOS-heavy classes). `footer-*`, `pricing-*`, `auth-form`, `empty-state`,
 `modal-*`, `comparison-*`, `data-table-expandable`, `ui-*`, `nav-micro`,

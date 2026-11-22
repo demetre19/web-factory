@@ -59,6 +59,13 @@ PACK_META = {
     "wayfinding": ("wayfinding", "navigation", ["navigation"], "wayfinding"),
     "control": ("ui-control", "element", ["control"], "button control"),
     "kinema": ("media-video", "element", ["media"], "video embed"),
+    "kinetic": ("fx-motion", "decoration", ["micro interaction"], "motion effect"),
+    "badge": ("ui-badge", "decoration", ["badge"], "badge"),
+    "surface": ("bg-surface", "decoration", ["background"], "background"),
+    "ornaments": ("deco-ornament", "decoration", ["ornament"], "ornament"),
+    "ornamenta": ("deco-content", "decoration", ["decoration"], "decoration"),
+    "folio-ornamenta": ("deco-content", "decoration", ["decoration"], "decoration"),
+    "folio-ornaments": ("deco-ornament", "decoration", ["ornament"], "ornament"),
 }
 
 # component-name prefix -> (baseline, section_class, category, query) override
@@ -290,6 +297,55 @@ def sniff_topology(html_text: str, baseline: str) -> tuple[str, str]:
         if 'role="menu"' in c or "menu" in low:
             return "ui-menu", "medium"
         return "ui-micro", "medium"
+    if baseline == "fx-motion":
+        low = c.lower()
+        if "keyframes" in c or "animate-" in low or "animation" in low:
+            if "marquee" in low or "ticker" in low:
+                return "fx-marquee", "medium"
+            if "counter" in low or "count" in low:
+                return "fx-counter", "medium"
+            if "shine" in low or "sweep" in low or "shimmer" in low:
+                return "fx-shine", "medium"
+            if "typewriter" in low or "typing" in low:
+                return "fx-type", "medium"
+            return "fx-motion", "medium"
+        if "translate" in low or "hover:" in low:
+            return "fx-hover", "medium"
+        return "fx-motion", "low"
+    if baseline == "ui-badge":
+        low = c.lower()
+        if "ribbon" in low or "corner" in low or "rotate" in low:
+            return "ui-badge-ribbon", "medium"
+        if "pulse" in low or "animate-" in low:
+            return "ui-badge-pulse", "medium"
+        if "tag" in low or "chip" in low:
+            return "ui-badge-chip", "medium"
+        return "ui-badge", "medium"
+    if baseline == "bg-surface":
+        low = c.lower()
+        if "linear-gradient" in c or "bg-gradient" in low or "radial" in low:
+            return "bg-gradient", "medium"
+        if "grid" in low or "pattern" in low or "dotted" in low or "dot" in low:
+            return "bg-pattern", "medium"
+        if "svg" in c.lower() or "blob" in low or "wave" in low or "curve" in low:
+            return "bg-shape", "medium"
+        return "bg-surface", "low"
+    if baseline == "deco-ornament":
+        low = c.lower()
+        if "divide" in low or "hr" in low or "rule" in low or "border-y" in low:
+            return "deco-divider", "medium"
+        if "frame" in low or "border-2" in low or "corner" in low or "ring" in low:
+            return "deco-frame", "medium"
+        return "deco-ornament", "low"
+    if baseline == "deco-content":
+        low = c.lower()
+        if "blockquote" in low or "quote" in low:
+            return "deco-quote", "medium"
+        if "callout" in low or "tip" in low or "note" in low or "aside" in low:
+            return "deco-callout", "medium"
+        if "kbd" in low or "code" in low or "footnote" in low:
+            return "deco-inline", "medium"
+        return "deco-content", "low"
     if baseline == "media-video":
         low = c.lower()
         if "playlist" in low or "episode" in low:
@@ -524,7 +580,8 @@ def main() -> int:
     if not (args.render_dir and args.tsx_dir and args.pack):
         ap.error("render_dir, tsx_dir and --pack are required")
 
-    baseline, section_class, category, query_word = PACK_META[args.pack.split("-")[0]]
+    _meta_key = args.pack if args.pack in PACK_META else args.pack.split("-")[0]
+    baseline, section_class, category, query_word = PACK_META[_meta_key]
     rendered = sorted(args.render_dir.glob("*.html"))
     if not rendered:
         print(f"no .html in {args.render_dir}", file=sys.stderr)
