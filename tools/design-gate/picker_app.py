@@ -2473,8 +2473,7 @@ _SHELL = r"""<!doctype html>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>web-factory · picker</title>
 <script>try{document.documentElement.dataset.theme=
- localStorage.getItem('wfapp-theme')||
- (matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light')
+ localStorage.getItem('wfapp-theme')||'light'
 }catch(e){document.documentElement.dataset.theme='light'}</script>
 <style>
 :root{
@@ -2639,7 +2638,10 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
 .card.picked{border-color:var(--ok)}
 .card .ch{display:flex;align-items:center;gap:8px;
      padding:10px 12px;border-bottom:1px solid var(--line)}
-.card .ch .nm{font-weight:650;font-size:13px}
+.card .ch .nm{font-weight:650;font-size:13px;flex:1;
+ min-width:0;overflow:hidden;text-overflow:ellipsis;
+ white-space:nowrap}
+.card .ch .vsw{flex:none}
 .card .ch .id{font:600 10px var(--mono);color:var(--accent);
      border:1px solid var(--accent);border-radius:4px;
      padding:1px 5px}
@@ -2698,6 +2700,18 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
 .vax input{flex:1;accent-color:var(--ink)}
 .vaxa{min-width:64px;font:600 10.5px var(--mono);color:var(--ink)}
 .vchips{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}
+.vmoods{display:flex;flex-wrap:wrap;gap:6px;padding:4px 0 10px}
+.vmood{font:600 11px var(--mono);padding:4px 12px;
+ border-radius:99px;border:1px solid var(--line);
+ background:var(--panel);color:var(--muted);cursor:pointer}
+.vmood:hover{border-color:var(--accent);color:var(--accent)}
+.vadv{margin:2px 0 4px}
+.vadv>summary{cursor:pointer;font:600 11px var(--mono);
+ letter-spacing:.08em;text-transform:uppercase;
+ color:var(--muted);padding:4px 0;list-style:none}
+.vadv>summary::-webkit-details-marker{display:none}
+.vadv>summary::before{content:'\25B8 ';color:var(--accent)}
+.vadv[open]>summary::before{content:'\25BE '}
 .chip{font:600 11px var(--mono);border:1px solid var(--line);
   border-radius:999px;padding:4px 10px;color:var(--muted);cursor:pointer}
 .chip.on{color:var(--ink);border-color:var(--ink)}
@@ -2894,10 +2908,6 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
   document.getElementById('themeBtn').onclick=function(){
     setTheme(document.documentElement.dataset.theme==='dark'
       ?'light':'dark')};
-  try{matchMedia('(prefers-color-scheme: dark)').addEventListener(
-    'change',function(e){
-      if(!localStorage.getItem('wfapp-theme'))
-        applyTheme(e.matches?'dark':'light')})}catch(e){}
 
   // one global preview breakpoint — M/T/D, every frame at once;
   // sliding indicator tracks the active segment
@@ -3052,6 +3062,13 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
   function vibePane(el,o){
     var axes=o.axes||[],cards=o.cards||[];
     var h='<h1>Vibe space</h1><div class="desc">'+esc(o.desc||'')+'</div>';
+    h+='<div class="vmoods">'+
+       ['happy·playful','professional·editorial','bold·brutal',
+        'calm·paper','playful·neon','luxe·luxe','noir·noir'
+       ].map(function(m){var p=m.split('·');
+         return '<button class="vmood" data-cl="'+p[1]+'">'+p[0]+
+                '</button>'}).join('')+'</div>';
+    h+='<details class="vadv"><summary>advanced tweaks</summary>';
     h+='<div class="vtweak">';
     var grp=null;
     axes.forEach(function(a){
@@ -3064,7 +3081,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
          '" data-n="'+a.alleles.length+'">'+
          '<span class="vaxa">'+(cur?esc(cur):'—')+'</span></div>';
     });
-    h+='</div>';
+    h+='</div></details>';
     var gkeys=Object.keys(VGENES);
     h+='<div class="vchips">'+(gkeys.length?gkeys.map(function(k){
       return '<span class="chip on" data-ax="'+k+'">'+esc(k)+':'+
@@ -3134,7 +3151,14 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
         bundle:{genes:VGENES,tokens:VRES&&VRES.tokens,
           resolved:VRES&&VRES.resolved}}).then(
         function(j){toast(j.message||(j.ok?'baked':'refused'));
-          if(j.ok){BAKED=v;DATA.picked_elements.vibe=v}})};
+          if(j.ok){BAKED=v;DATA.picked_elements.vibe=v;
+            setTheme((VRES&&VRES.theme)||'light')}})};
+    el.querySelectorAll('.vmood').forEach(function(m){
+      m.onclick=function(){
+        var first=(o.cards||[]).filter(function(cc){
+          return cc.grp===m.dataset.cl})[0];
+        VGENES=Object.assign({},first?first.genes||{}:{});
+        resolveVibe(el,o)}});
     el.querySelectorAll('.vload').forEach(function(b){
       b.onclick=function(){
         VGENES=Object.assign({},cards[+b.dataset.i].genes||{});
@@ -3146,7 +3170,9 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
           variant:v,
           bundle:{genes:c.genes}}).then(function(j){
           toast(j.message||(j.ok?'baked':'refused'));
-          if(j.ok){BAKED=v;DATA.picked_elements.vibe=v}})}});
+          if(j.ok){BAKED=v;DATA.picked_elements.vibe=v;
+            setTheme((c.tags||[]).indexOf('dark')>=0
+              ?'dark':'light')}})}});
     setTheme(document.documentElement.dataset.theme);
     setTimeout(fitIframes,150);
   }
