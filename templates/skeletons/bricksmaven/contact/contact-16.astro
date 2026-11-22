@@ -1,6 +1,6 @@
 ---
 /**
- * bm-contact-16 — TRANSLATED Bricksmaven skeleton.
+ * wf-contact-16 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (contact-16.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -52,9 +52,9 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
 
 <div class="wf-contact-16">
   <div class="sec-inner">
-    <div class="contact-16-container">
-      <div class="contact-16-content">
-        <div class="intro contact-16-content__intro">
+    <div class="wf-contact-16-container">
+      <div class="wf-contact-16-content">
+        <div class="intro wf-contact-16-content__intro">
           {head && <h2 class="text-fluid-2">{head}</h2>}
           {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
                   </div>
@@ -62,9 +62,9 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
 {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
         </div>}
 
-        {list.length > 0 && <div class="contact-16-content__list-ul">{(list || []).map((it) => (
-              <div class="contact-16-content__list-item card">
-                <div class="contact-16-content__list-detail">
+        {list.length > 0 && <div class="wf-contact-16-content__list-ul">{(list || []).map((it) => (
+              <div class="wf-contact-16-content__list-item card">
+                <div class="wf-contact-16-content__list-detail">
                   <h3 class="text-fluid-1">{it.term || it.title}</h3>
                   <p class="text-fluid-0">{it.text}</p>
                 </div>

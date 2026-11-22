@@ -1,6 +1,6 @@
 ---
 /**
- * bm-how-it-works-17 — TRANSLATED Bricksmaven skeleton.
+ * wf-how-it-works-17 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (how-it-works-17.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -47,7 +47,7 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
 
 <div class="wf-how-it-works-17">
   <div class="sec-inner">
-    <div class="hworks-17-container">
+    <div class="wf-hworks-17-container">
       <div class="intro intro--left">
         {head && <h2 class="text-fluid-2">{head}</h2>}
         {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
@@ -56,8 +56,8 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
 {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
       </div>}
 
-      {list.length > 0 && <div class="hworks-17-list">{(list || []).map((it) => (
-            <div class="hworks-17-card card">
+      {list.length > 0 && <div class="wf-hworks-17-list">{(list || []).map((it) => (
+            <div class="wf-hworks-17-card card">
               {it.icon && <IconChip name={it.icon} />}
               <h3 class="text-fluid-1">{it.term || it.title}</h3>
               <p class="text-fluid-0">{it.text}</p>

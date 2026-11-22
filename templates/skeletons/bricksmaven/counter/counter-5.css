@@ -4,25 +4,25 @@
     row-gap: var(--space-s);
   }
 
-  .wf-counter-5 .counter-5-grid-ul {
+  .wf-counter-5 .wf-counter-5-grid-ul {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
     gap: var(--space-m);
   }
 
-  .wf-counter-5 .counter-5-introduction {
+  .wf-counter-5 .wf-counter-5-introduction {
     display: flex;
     flex-direction: column;
     row-gap: var(--flow-spacing);
   }
 
-  .wf-counter-5 .counter-5-card {
+  .wf-counter-5 .wf-counter-5-card {
     display: flex;
     flex-direction: column;
     row-gap: var(--flow-spacing);
   }
 
-  .wf-counter-5 .counter-5-card__icon-counter {
+  .wf-counter-5 .wf-counter-5-card__icon-counter {
     display: flex;
     flex-direction: column;
     row-gap: calc(var(--flow-spacing) / 2);

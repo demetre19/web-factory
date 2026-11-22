@@ -1,6 +1,6 @@
 ---
 /**
- * bm-testimonial-11 — TRANSLATED Bricksmaven skeleton.
+ * wf-testimonial-11 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (testimonial-11.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -53,15 +53,15 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
 
 <div class="wf-testimonial-11">
   <div class="sec-inner">
-    <div class="testimonial-11-container">
+    <div class="wf-testimonial-11-container">
       {head &&       <div>
         {head && <h2 class="text-fluid-2">{head}</h2>}
       </div>
       }
-      <div class="testimonial-11-content">
+      <div class="wf-testimonial-11-content">
         {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
         {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
-        {image &&         <div class="testimonial-11-content__profile">
+        {image &&         <div class="wf-testimonial-11-content__profile">
           {image &&           <div>
             {image && image.src && <figure class="ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
           </div>

@@ -1,40 +1,40 @@
-  .wf-feature-30 .feature-30-container {
+  .wf-feature-30 .wf-feature-30-container {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
     gap: var(--space-m);
   }
 
-  .wf-feature-30 .feature-30__content {
+  .wf-feature-30 .wf-feature-30__content {
     display: flex;
     flex-direction: column;
     row-gap: var(--space-s);
   }
 
-  .wf-feature-30 .feature-30__feature-wrapper {
+  .wf-feature-30 .wf-feature-30__feature-wrapper {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
     gap: var(--grid-gap);
   }
 
-  .wf-feature-30 .feature-30__feature-content {
+  .wf-feature-30 .wf-feature-30__feature-content {
     display: flex;
     flex-direction: column;
     row-gap: var(--space-m);
   }
 
-  .wf-feature-30 .feature-30-list-ul {
+  .wf-feature-30 .wf-feature-30-list-ul {
     display: flex;
     flex-direction: column;
     row-gap: var(--flow-spacing);
   }
 
-  .wf-feature-30 .feature-30-list-card {
+  .wf-feature-30 .wf-feature-30-list-card {
     display: flex;
     flex-direction: column;
     row-gap: var(--space-s);
   }
 
   @media (max-width: 44rem) {
-    .wf-feature-30 .feature-30-container { grid-template-columns: 1fr; }
+    .wf-feature-30 .wf-feature-30-container { grid-template-columns: 1fr; }
   }
-  .wf-feature-30 .feature-30-container > :only-child { grid-column: 1 / -1; }
+  .wf-feature-30 .wf-feature-30-container > :only-child { grid-column: 1 / -1; }

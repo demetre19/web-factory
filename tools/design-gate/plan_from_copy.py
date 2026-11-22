@@ -34,6 +34,24 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 import site_folder as SF  # noqa: E402
 import gate  # noqa: E402
+import emit_global  # noqa: E402
+
+
+def _asset_ratio(site_dir, src, fallback='4:3'):
+    """The declared media_ratio/image ratio for a bound asset — the
+    raster's own dims snapped to the contract vocabulary when the
+    file is on disk, so the plan row, the locked card and the
+    emitted data-ratio all say the same thing (P.4/P.7)."""
+    if not src:
+        return fallback
+    s = str(src).lstrip('/')
+    base = os.path.basename(s)
+    for p in (os.path.join(site_dir, 'assets', s),
+              os.path.join(site_dir, 'assets', 'media', base),
+              os.path.join(site_dir, s)):
+        if os.path.isfile(p):
+            return emit_global.media_ratio_for(p, fallback)
+    return fallback
 
 TOOL = 'plan_from_copy.py'
 
@@ -671,11 +689,14 @@ def build(pdir, option=None):
     if media_left:
         hm = media_left.pop(0)
         rows[-1]['image'] = {'src': hm['src'], 'alt': hm['alt'],
-                             'ratio': '4:3'}
+                             'ratio': _asset_ratio(
+                                 site_dir, hm.get('src'))}
         # a media-backed hero covers its band — the photo's own
-        # aspect is the ratio; a contained hero keeps 4:3
+        # aspect is the ratio; a contained hero keeps the asset's
         rows[-1]['media_ratio'] = (
-            'none' if hero_comp == 'hero-act-merge' else '4:3')
+            'none' if hero_comp == 'hero-act-merge'
+            else _asset_ratio(site_dir, hm.get('src'),
+                              rows[-1].get('media_ratio') or '4:3'))
     for i, (bid, comp) in enumerate(seq):
         b = by[bid]
         comp = eff_comp(b, comp, allowed[bid], len(media_left))
@@ -709,7 +730,8 @@ def build(pdir, option=None):
             m = media_left.pop(0)
             row['image'] = {'src': m.get('src') or m.get('file'),
                             'alt': m.get('alt', '')}
-            row['media_ratio'] = '4:3'
+            row['media_ratio'] = _asset_ratio(
+                site_dir, m.get('src') or m.get('file'))
         # a run of >2 short micro answers is one organism (the reader
         # meets a family of quick answers, not three unrelated rows)
         run3 = (prev == comp == nxt) or (
@@ -760,7 +782,8 @@ def build(pdir, option=None):
                      else next(cyc))
                 r['image'] = {'src': m.get('src') or m.get('file'),
                               'alt': m.get('alt', '')}
-                r['media_ratio'] = '4:3'
+                r['media_ratio'] = _asset_ratio(
+                    site_dir, m.get('src') or m.get('file'))
 
     rhetoric = []
     for r in rows:

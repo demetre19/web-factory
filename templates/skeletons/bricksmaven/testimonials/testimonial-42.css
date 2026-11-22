@@ -1,46 +1,46 @@
-  .wf-testimonial-42 .bm-testimonial-42__container {
+  .wf-testimonial-42 .wf-testimonial-42__container {
     display: grid;
     grid-template-columns: calc(100% * 2 / 1);
     gap: var(--space-m);
   }
 
-  .wf-testimonial-42 .bm-testimonial-42__content {
+  .wf-testimonial-42 .wf-testimonial-42__content {
     row-gap: var(--flow-spacing);
   }
 
-  .wf-testimonial-42 .bm-testimonial-42__testimonial-list {
+  .wf-testimonial-42 .wf-testimonial-42__testimonial-list {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
     gap: var(--space-m);
   }
 
-  .wf-testimonial-42 .bm-testimonial-42__testimonial-column {
+  .wf-testimonial-42 .wf-testimonial-42__testimonial-column {
     row-gap: var(--flow-spacing);
   }
 
-  .wf-testimonial-42 .testimonial-36-card {
+  .wf-testimonial-42 .wf-testimonial-36-card {
     display: flex;
     flex-direction: column;
     row-gap: var(--flow-spacing);
   }
 
-  .wf-testimonial-42 .testimonial-36-card__head {
+  .wf-testimonial-42 .wf-testimonial-36-card__head {
     flex-direction: row;
     column-gap: calc(var(--flow-spacing) / 2);
   }
 
-  .wf-testimonial-42 .testimonial-36-card__avatar {
+  .wf-testimonial-42 .wf-testimonial-36-card__avatar {
     display: flex;
     gap: var(--space-s);
   }
 
-  .wf-testimonial-42 .testimonial-36-card__client-data {
+  .wf-testimonial-42 .wf-testimonial-36-card__client-data {
     display: flex;
     flex-direction: column;
     gap: var(--space-s);
   }
 
   @media (max-width: 44rem) {
-    .wf-testimonial-42 .testimonial-36-card__head { flex-direction: column; }
-    .wf-testimonial-42 .testimonial-36-card__avatar { flex-direction: column; }
+    .wf-testimonial-42 .wf-testimonial-36-card__head { flex-direction: column; }
+    .wf-testimonial-42 .wf-testimonial-36-card__avatar { flex-direction: column; }
   }

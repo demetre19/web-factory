@@ -1,6 +1,6 @@
 ---
 /**
- * bm-remove-this-div — TRANSLATED Bricksmaven skeleton.
+ * wf-remove-this-div — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (remove-this-div.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -54,17 +54,17 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
 <div class="wf-remove-this-div">
   <div>
     <div class="sec-inner">
-      <div class="bm-contact-27__container">
-        <div class="bm-contact-27__intro">
-          {head &&           <div class="bm-contact-27__head">
+      <div class="wf-contact-27__container">
+        <div class="wf-contact-27__intro">
+          {head &&           <div class="wf-contact-27__head">
             {head && <h2 class="text-fluid-2">{head}</h2>}
           </div>
           }
   {sub && <p class="mt-stack lede" set:html={inline(sub)} />}
   {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
-          {list.length > 0 && <div class="bm-contact-27__contact-details">
+          {list.length > 0 && <div class="wf-contact-27__contact-details">
             <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
-                <div class="bm-contact-27__detail-wrapper card">
+                <div class="wf-contact-27__detail-wrapper card">
                   <h3 class="text-fluid-1"><a class="text-fluid-0" href={it.href}>{it.icon && <IconChip name={it.icon} />} {it.label || it.term || it.anchor || it.text}</a></h3>
                   {(it.label || it.term || it.anchor) && it.text && <p class="text-fluid-0">{it.text}</p>}
                 </div>
@@ -74,7 +74,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
       </div>
     </div>
     <div class="sec-inner">
-      <div class="bm-contact-27-container-sub">
+      <div class="wf-contact-27-container-sub">
         <div>
           <form novalidate>
           </form>

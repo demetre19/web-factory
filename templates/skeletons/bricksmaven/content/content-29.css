@@ -1,10 +1,10 @@
-  .wf-content-29 .content-29-container {
+  .wf-content-29 .wf-content-29-container {
     display: grid;
     grid-template-columns: calc(100% * 3 / 2);
     gap: calc(var(--space-m) * 2);
   }
 
-  .wf-content-29 .content-29__content {
+  .wf-content-29 .wf-content-29__content {
     row-gap: calc(var(--flow-spacing) * 2);
   }
 
@@ -20,40 +20,40 @@
     gap: var(--space-s);
   }
 
-  .wf-content-29 .content-29__2col {
+  .wf-content-29 .wf-content-29__2col {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
     gap: var(--space-m);
   }
 
-  .wf-content-29 .content-29__list-cta {
+  .wf-content-29 .wf-content-29__list-cta {
     row-gap: var(--flow-spacing);
   }
 
-  .wf-content-29 .bm-list {
+  .wf-content-29 .wf-list {
     display: flex;
     flex-direction: column;
     gap: var(--space-s);
   }
 
-  .wf-content-29 .bm-list__item {
+  .wf-content-29 .wf-list__item {
     flex-direction: row;
     display: flex;
     column-gap: var(--flow-spacing);
   }
 
-  .wf-content-29 .content-29-list-item {
+  .wf-content-29 .wf-content-29-list-item {
     display: flex;
     flex-direction: row;
     column-gap: var(--flow-spacing);
     flex-wrap: nowrap;
   }
 
-  .wf-content-29 .content-29-list-item__data {
+  .wf-content-29 .wf-content-29-list-item__data {
     row-gap: calc(var(--flow-spacing) / 4);
   }
 
   @media (max-width: 44rem) {
-    .wf-content-29 .bm-list__item { flex-direction: column; }
-    .wf-content-29 .content-29-list-item { flex-direction: column; }
+    .wf-content-29 .wf-list__item { flex-direction: column; }
+    .wf-content-29 .wf-content-29-list-item { flex-direction: column; }
   }

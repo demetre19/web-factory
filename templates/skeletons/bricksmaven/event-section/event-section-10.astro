@@ -1,6 +1,6 @@
 ---
 /**
- * bm-event-section-10 — TRANSLATED Bricksmaven skeleton.
+ * wf-event-section-10 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (event-section-10.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -55,9 +55,9 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
   <div class={image && image.src ? 'split' : undefined}>
     <div class="stack">
   <div class="sec-inner">
-    <div class="bm-event-section-10__container">
-      <div class="bm-event-section-10__intro">
-        <div class="bm-event-section-10__column">
+    <div class="wf-event-section-10__container">
+      <div class="wf-event-section-10__intro">
+        <div class="wf-event-section-10__column">
           {head && <h2 class="text-fluid-2">{head}</h2>}
           {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
                   </div>
@@ -75,8 +75,8 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
           {list.length > 0 && <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
               <div class="card">
                 <div>
-                  <div class="bm-event-section-10-card__head">
-                    <div class="bm-event-section-10-card__meta">
+                  <div class="wf-event-section-10-card__head">
+                    <div class="wf-event-section-10-card__meta">
                       <div>
                         {it.icon && <IconChip name={it.icon} />}
                         <div class="stack">
@@ -84,16 +84,16 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
                           {it.text && (it.term || it.title) && <p class="text-fluid-0">{it.text}</p>}
                         </div>
                       </div>
-                      <div class="bm-event-meta-info">
+                      <div class="wf-event-meta-info">
                         <p class="text-fluid-0">{it.text}</p>
                       </div>
-                      <div class="bm-event-meta-info">
+                      <div class="wf-event-meta-info">
                         <p class="text-fluid-0">{it.text}</p>
                       </div>
                     </div>
                     <h3 class="text-fluid-1">{it.term || it.title}</h3>
                   </div>
-                  <div class="bm-event-section-10-card__footer">
+                  <div class="wf-event-section-10-card__footer">
                     <p class="text-fluid-0">{it.text}</p>
                   </div>
                 </div>

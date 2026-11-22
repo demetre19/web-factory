@@ -1,10 +1,10 @@
-  .wf-login-1 .login-1__container {
+  .wf-login-1 .wf-login-1__container {
     display: grid;
     gap: var(--space-m);
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
   }
 
-  .wf-login-1 .login-1__content {
+  .wf-login-1 .wf-login-1__content {
     row-gap: var(--flow-spacing);
   }
 
@@ -18,16 +18,16 @@
     column-gap: var(--flow-spacing);
   }
 
-  .wf-login-1 .login-1__logged-in-heading-wrapper {
+  .wf-login-1 .wf-login-1__logged-in-heading-wrapper {
     row-gap: var(--flow-spacing);
   }
 
-  .wf-login-1 .bm-login-1__media {
+  .wf-login-1 .wf-login-1__media {
     display: flex;
     gap: var(--space-s);
   }
 
   @media (max-width: 44rem) {
     .wf-login-1 .login-footer { flex-direction: column; }
-    .wf-login-1 .bm-login-1__media { flex-direction: column; }
+    .wf-login-1 .wf-login-1__media { flex-direction: column; }
   }

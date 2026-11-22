@@ -1,6 +1,6 @@
 ---
 /**
- * bm-how-it-works-19 — TRANSLATED Bricksmaven skeleton.
+ * wf-how-it-works-19 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (how-it-works-19.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -53,7 +53,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
 
 <div class="wf-how-it-works-19">
   <div class="sec-inner">
-    <div class="hworks-19-container">
+    <div class="wf-hworks-19-container">
       <div class="intro">
         {head && <h2 class="text-fluid-2">{head}</h2>}
         {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
@@ -62,11 +62,11 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
 {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
       </div>}
 
-      <div class="hworks-19__content">
+      <div class="wf-hworks-19__content">
         {list.length > 0 && <div>
           <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
-              <div class="hworks-19-card card">
-                <div class="hworks-19-card__content">
+              <div class="wf-hworks-19-card card">
+                <div class="wf-hworks-19-card__content">
                   {it.icon && <IconChip name={it.icon} />}
                   <h3 class="text-fluid-1">{it.term || it.title}</h3>
                   <p class="text-fluid-0">{it.text}</p>

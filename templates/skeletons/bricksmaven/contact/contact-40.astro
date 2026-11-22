@@ -1,6 +1,6 @@
 ---
 /**
- * bm-contact-40 — TRANSLATED Bricksmaven skeleton.
+ * wf-contact-40 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (contact-40.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -53,16 +53,16 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
 
 <div class="wf-contact-40">
   <div class="sec-inner">
-    <div class="bm-contact-40__container">
-      <div class="bm-contact-40__content">
+    <div class="wf-contact-40__container">
+      <div class="wf-contact-40__content">
         {head && <h2 class="text-fluid-2">{head}</h2>}
   {sub && <p class="mt-stack lede" set:html={inline(sub)} />}
   {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
         <div class="grid-auto gap-fluid-l">
           {image && image.src && <figure class="ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
-          {list.length > 0 && <div class="bm-contact-40-contact-list">{(list || []).map((it) => (
-                <div class="bm-contact-40-contact-item card">
-                  <div class="bm-contact-40-contact-item__content">
+          {list.length > 0 && <div class="wf-contact-40-contact-list">{(list || []).map((it) => (
+                <div class="wf-contact-40-contact-item card">
+                  <div class="wf-contact-40-contact-item__content">
                     {it.icon && <IconChip name={it.icon} />}
                     <div class="stack">
                       <h3 class="text-fluid-1">{it.term || it.title || it.text}</h3>
@@ -82,9 +82,9 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
     {links.length > 0 &&     <div>
       {links.length > 0 &&       <div>
         {links.length > 0 && <div class="grid-auto gap-fluid-m">{(links || []).map((it) => (
-            <div class="bm-hero-86-card card">
-              <div class="bm-hero-86-card__content">
-                <div class="bm-hero-86-card__top">
+            <div class="wf-hero-86-card card">
+              <div class="wf-hero-86-card__content">
+                <div class="wf-hero-86-card__top">
                   {it.icon && <IconChip name={it.icon} />}
                   <div class="stack">
                     <h3 class="text-fluid-1">{it.term || it.title || it.text}</h3>

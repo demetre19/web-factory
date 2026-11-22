@@ -1,6 +1,6 @@
 ---
 /**
- * bm-event-section-2 — TRANSLATED Bricksmaven skeleton.
+ * wf-event-section-2 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (event-section-2.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -54,28 +54,28 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
   <div class={image && image.src ? 'split' : undefined}>
     <div class="stack">
   <div class="sec-inner">
-    <div class="bm-event-section-2__container">
-      <div class="bm-event-section__intro">
+    <div class="wf-event-section-2__container">
+      <div class="wf-event-section__intro">
         {head && <h2 class="text-fluid-2">{head}</h2>}
   {sub && <p class="mt-stack lede" set:html={inline(sub)} />}
   {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
         {act.label && <p class="mt-fluid-m"><a class="wf-cta-button" href={act.href}>{act.label}</a></p>}
       </div>
-      {list.length > 0 && <div class="bm-event-section-2-grid-ul">
+      {list.length > 0 && <div class="wf-event-section-2-grid-ul">
         <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
-            <div class="bm-event-section-2-card card">
-              <div class="bm-event-section-2-card__content">
-                <div class="bm-event-section-2-card__header">
+            <div class="wf-event-section-2-card card">
+              <div class="wf-event-section-2-card__content">
+                <div class="wf-event-section-2-card__header">
                   <div>
                     <h3 class="text-fluid-1">{it.term || it.title}</h3>
                   </div>
-                  <div class="bm-event-section-2-card__price-wrapper">
+                  <div class="wf-event-section-2-card__price-wrapper">
                     <p class="text-fluid-0">{it.text}</p>
                   </div>
                 </div>
-                <div class="bm-event-section-2-card__mid">
-                  <div class="bm-event-section-2-card__date">
-                    <div class="bm-event-section-2-card__date-time">
+                <div class="wf-event-section-2-card__mid">
+                  <div class="wf-event-section-2-card__date">
+                    <div class="wf-event-section-2-card__date-time">
                       <div>
                         <p class="text-fluid-0">{it.text}</p>
                       </div>
@@ -84,7 +84,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
                       </div>
                     </div>
                   </div>
-                  <div class="bm-event-section-2-card__location">
+                  <div class="wf-event-section-2-card__location">
                     <p class="text-fluid-0">{it.text}</p>
                   </div>
                 </div>

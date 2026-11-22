@@ -1,24 +1,24 @@
-  .wf-item-zkzgec .gallery-8-container {
+  .wf-item-zkzgec .wf-gallery-8-container {
     display: flex;
     flex-direction: column;
     column-gap: var(--space-xl);
     row-gap: var(--space-xl);
   }
 
-  .wf-item-zkzgec .gallery-8-row {
+  .wf-item-zkzgec .wf-gallery-8-row {
     display: flex;
     column-gap: var(--space-s);
     row-gap: var(--space-s);
     flex-direction: column;
   }
 
-  .wf-item-zkzgec .gallery-8-card {
+  .wf-item-zkzgec .wf-gallery-8-card {
     display: grid;
     grid-template-columns: 2fr 1fr;
     gap: var(--space-m);
   }
 
-  .wf-item-zkzgec .gallery-8-col {
+  .wf-item-zkzgec .wf-gallery-8-col {
     display: flex;
     flex-direction: column;
     column-gap: var(--space-l);
@@ -26,6 +26,6 @@
   }
 
   @media (max-width: 44rem) {
-    .wf-item-zkzgec .gallery-8-card { grid-template-columns: 1fr; }
+    .wf-item-zkzgec .wf-gallery-8-card { grid-template-columns: 1fr; }
   }
-  .wf-item-zkzgec .gallery-8-card > :only-child { grid-column: 1 / -1; }
+  .wf-item-zkzgec .wf-gallery-8-card > :only-child { grid-column: 1 / -1; }

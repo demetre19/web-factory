@@ -1,6 +1,6 @@
 ---
 /**
- * bm-item-adwtpt — TRANSLATED Bricksmaven skeleton.
+ * wf-item-adwtpt — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (item-adwtpt.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -47,11 +47,11 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
 
 <div class="wf-item-adwtpt">
   <div class="sec-inner">
-    <div class="cta-6-container">
+    <div class="wf-cta-6-container">
       {head && <h2 class="text-fluid-2">{head}</h2>}
   {sub && <p class="mt-stack lede" set:html={inline(sub)} />}
   {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
-      {act.label &&       <div class="hero-1__cta">
+      {act.label &&       <div class="wf-hero-1__cta">
         {act.label && <p class="mt-fluid-m"><a class="wf-cta-button" href={act.href}>{act.label}</a></p>}
       </div>
       }

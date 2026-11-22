@@ -1,6 +1,6 @@
 ---
 /**
- * bm-blog-archive-6 — TRANSLATED Bricksmaven skeleton.
+ * wf-blog-archive-6 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (blog-archive-6.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -55,13 +55,13 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
   <div class={image && image.src ? 'split' : undefined}>
     <div class="stack">
   <div class="sec-inner">
-    <div class="blog-archive-6-container">
-      <div class="blog-archive-6-head">
-        {head &&         <div class="blog-archive-6-head__intro">
+    <div class="wf-blog-archive-6-container">
+      <div class="wf-blog-archive-6-head">
+        {head &&         <div class="wf-blog-archive-6-head__intro">
           {head && <h2 class="text-fluid-2">{head}</h2>}
         </div>
         }
-        <div class="blog-archive-6-head__search-wrapper">
+        <div class="wf-blog-archive-6-head__search-wrapper">
           {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
                   </div>
         {before.length > 0 && <div class="flow mt-stack">
@@ -69,11 +69,11 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
         </div>}
 
       </div>
-      {list.length > 0 &&       <div class="blog-archive-6-body">
-        {list.length > 0 && <div class="blog-archive-6-wrapper">
+      {list.length > 0 &&       <div class="wf-blog-archive-6-body">
+        {list.length > 0 && <div class="wf-blog-archive-6-wrapper">
           <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
-              <div class="blog-archive-6-card card">
-                <div class="blog-archive-6-card__meta">
+              <div class="wf-blog-archive-6-card card">
+                <div class="wf-blog-archive-6-card__meta">
                   {it.icon && <IconChip name={it.icon} />}
                   <div class="stack">
                     <h3 class="text-fluid-1">{it.term || it.title || it.text}</h3>

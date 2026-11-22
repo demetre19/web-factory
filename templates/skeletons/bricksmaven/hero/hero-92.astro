@@ -1,6 +1,6 @@
 ---
 /**
- * bm-hero-92 — TRANSLATED Bricksmaven skeleton.
+ * wf-hero-92 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (hero-92.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -53,9 +53,9 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
 
 <div class="wf-hero-92">
   <div class="sec-inner">
-    <div class="bm-hero-92__container">
-      <div class="bm-hero-92__intro">
-        <div class="bm-hero-92__top">
+    <div class="wf-hero-92__container">
+      <div class="wf-hero-92__intro">
+        <div class="wf-hero-92__top">
           {head && <h1 class="text-fluid-4">{head}</h1>}
           {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
                   </div>
@@ -64,13 +64,13 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
         </div>}
 
         <div>
-          <div class="bm-hero-90-slide">
+          <div class="wf-hero-90-slide">
             {image &&             <div class="grid-auto gap-fluid-l">
               {image && image.src && <figure class="ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
             </div>
             }
-            {image &&             <div class="bm-hero-90-testimonial">
-              {image &&               <div class="bm-hero-90-testimonial__client-meta grid-auto gap-fluid-l">
+            {image &&             <div class="wf-hero-90-testimonial">
+              {image &&               <div class="wf-hero-90-testimonial__client-meta grid-auto gap-fluid-l">
                 {image && image.src && <figure class="ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
               </div>
               }

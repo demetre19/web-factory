@@ -1,6 +1,6 @@
 ---
 /**
- * bm-how-it-works-11 — TRANSLATED Bricksmaven skeleton.
+ * wf-how-it-works-11 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (how-it-works-11.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -53,7 +53,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
 
 <div class="wf-how-it-works-11">
   <div class="sec-inner">
-    <div class="hworks-11-container">
+    <div class="wf-hworks-11-container">
       <div class="intro">
         {head && <h2 class="text-fluid-2">{head}</h2>}
         {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
@@ -63,8 +63,8 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
       </div>}
 
       <div>
-        {list.length > 0 && <div class="hworks-11-grid-list">{(list || []).map((it) => (
-              <div class="hworks-11-card card">
+        {list.length > 0 && <div class="wf-hworks-11-grid-list">{(list || []).map((it) => (
+              <div class="wf-hworks-11-card card">
                 {it.icon && <IconChip name={it.icon} />}
                 <h3 class="text-fluid-1">{it.term || it.title}</h3>
                 <p class="text-fluid-0">{it.text}</p>

@@ -1,6 +1,6 @@
 ---
 /**
- * bm-team-16 — TRANSLATED Bricksmaven skeleton.
+ * wf-team-16 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (team-16.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -55,7 +55,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
   <div class={image && image.src ? 'split' : undefined}>
     <div class="stack">
   <div class="sec-inner">
-    <div class="bm-team-16__container">
+    <div class="wf-team-16__container">
       <div class="intro intro--split">
         {head &&         <div class="intro__left-column">
           {head && <h2 class="text-fluid-2">{head}</h2>}
@@ -69,13 +69,13 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
         </div>}
 
       </div>
-      {list.length > 0 && <div class="bm-team-16-team-ul">{(list || []).map((it) => (
-            <div class="bm-team-16-team-card card">
-              <div class="bm-team-16-team-card__top">
+      {list.length > 0 && <div class="wf-team-16-team-ul">{(list || []).map((it) => (
+            <div class="wf-team-16-team-card card">
+              <div class="wf-team-16-team-card__top">
                 <h3 class="text-fluid-1">{it.term || it.title}</h3>
                 <p class="text-fluid-0">{it.text}</p>
               </div>
-              <div class="bm-team-16-team-card__footer">
+              <div class="wf-team-16-team-card__footer">
                 <h3 class="text-fluid-1"><a class="text-fluid-0" href={it.href}>{it.icon && <IconChip name={it.icon} />} {it.label || it.term || it.anchor || it.text}</a></h3>
                 {(it.label || it.term || it.anchor) && it.text && <p class="text-fluid-0">{it.text}</p>}
               </div>

@@ -1,6 +1,6 @@
 ---
 /**
- * bm-testimonial-55 — TRANSLATED Bricksmaven skeleton.
+ * wf-testimonial-55 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (testimonial-55.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -53,7 +53,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
 
 <div class="wf-testimonial-55">
   <div class="sec-inner">
-    <div class="bm-testimonial-56__container">
+    <div class="wf-testimonial-56__container">
       <div class="intro intro--split">
         {head &&         <div class="intro__left-column">
           {head && <h2 class="text-fluid-2">{head}</h2>}
@@ -67,15 +67,15 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
         </div>}
 
       </div>
-      {list.length > 0 && <div class="bm-testimonial-56-list">{(list || []).map((it) => (
+      {list.length > 0 && <div class="wf-testimonial-56-list">{(list || []).map((it) => (
             <div class="card">
-              <div class="bm-testimonial-56-card__content">
+              <div class="wf-testimonial-56-card__content">
                 {it.icon && <IconChip name={it.icon} />}
                 <div class="stack">
                   <h3 class="text-fluid-1">{it.term || it.title || it.text}</h3>
                   {it.text && (it.term || it.title) && <p class="text-fluid-0">{it.text}</p>}
                 </div>
-                <div class="bm-testimonial-56-card__user-data">
+                <div class="wf-testimonial-56-card__user-data">
                   <p class="text-fluid-0">{it.text}</p>
                   <p class="text-fluid-0">{it.text}</p>
                 </div>

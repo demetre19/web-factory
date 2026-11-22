@@ -1,6 +1,6 @@
 ---
 /**
- * bm-remove-this-div — TRANSLATED Bricksmaven skeleton.
+ * wf-remove-this-div — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (remove-this-div.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -54,7 +54,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
 <div class="wf-remove-this-div">
   <div>
     <div class="sec-inner">
-      <div class="feature-40__container">
+      <div class="wf-feature-40__container">
         <div class="intro">
           {head && <h2 class="text-fluid-2">{head}</h2>}
           {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
@@ -65,8 +65,8 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
 
       </div>
     </div>
-    <div class="feature-40__list-container">
-      {list.length > 0 && <div class="feature-40-feature-nav">
+    <div class="wf-feature-40__list-container">
+      {list.length > 0 && <div class="wf-feature-40-feature-nav">
         <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
             <div class="card">
               <h3 class="text-fluid-1"><a class="text-fluid-0" href={it.href}>{it.icon && <IconChip name={it.icon} />} {it.label || it.term || it.anchor || it.text}</a></h3>
@@ -75,8 +75,8 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
           ))}</div>
       </div>}
       <div class="sec-inner">
-        <div class="feature-40__feature-container">
-          {act.label &&           <div class="feature-40__list-content">
+        <div class="wf-feature-40__feature-container">
+          {act.label &&           <div class="wf-feature-40__list-content">
             {act.label && <p class="mt-fluid-m"><a class="wf-cta-button" href={act.href}>{act.label}</a></p>}
           </div>
           }
@@ -85,21 +85,21 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
           </div>
           }
         </div>
-        {image &&         <div class="feature-40__feature-container">
+        {image &&         <div class="wf-feature-40__feature-container">
           {image &&           <div>
             {image && image.src && <figure class="ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
           </div>
           }
         </div>
         }
-        {image &&         <div class="feature-40__feature-container">
+        {image &&         <div class="wf-feature-40__feature-container">
           {image &&           <div>
             {image && image.src && <figure class="ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
           </div>
           }
         </div>
         }
-        {image &&         <div class="feature-40__feature-container">
+        {image &&         <div class="wf-feature-40__feature-container">
           {image &&           <div>
             {image && image.src && <figure class="ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
           </div>

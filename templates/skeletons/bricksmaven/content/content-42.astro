@@ -1,6 +1,6 @@
 ---
 /**
- * bm-content-42 — TRANSLATED Bricksmaven skeleton.
+ * wf-content-42 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (content-42.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -54,8 +54,8 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
 <div class="wf-content-42">
   <div class="sec-inner">
     <div>
-      <div class="bm-content-42__main">
-        <div class="bm-content-42__content">
+      <div class="wf-content-42__main">
+        <div class="wf-content-42__content">
           <div>
             {head && <h2 class="text-fluid-2">{head}</h2>}
             {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
@@ -66,8 +66,8 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
 
           {list.length > 0 && <div>
             <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
-                <div class="bm-content-42-data-list card">
-                  <div class="bm-content-42-data-list__numbers">
+                <div class="wf-content-42-data-list card">
+                  <div class="wf-content-42-data-list__numbers">
                     {it.icon && <IconChip name={it.icon} />}
                     <div class="stack">
                       <h3 class="text-fluid-1">{it.term || it.title || it.text}</h3>

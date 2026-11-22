@@ -1,6 +1,6 @@
 ---
 /**
- * bm-hero-32 — TRANSLATED Bricksmaven skeleton.
+ * wf-hero-32 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (hero-32.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -53,7 +53,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
 
 <div class="wf-hero-32">
   <div class="sec-inner">
-    <div class="hero-32-container grid-auto gap-fluid-l">
+    <div class="wf-hero-32-container grid-auto gap-fluid-l">
       <div>
         <div class="intro intro--left">
           {head && <h1 class="text-fluid-4">{head}</h1>}
@@ -65,7 +65,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
           }
         </div>
       </div>
-      <div class="hero-32__media-wrapper">
+      <div class="wf-hero-32__media-wrapper">
         {image &&         <div>
           {image && image.src && <figure class="ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
         </div>

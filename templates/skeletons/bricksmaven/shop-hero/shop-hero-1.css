@@ -4,12 +4,12 @@
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
   }
 
-  .wf-shop-hero-1 .shop-hero-1-card {
+  .wf-shop-hero-1 .wf-shop-hero-1-card {
     display: flex;
     gap: var(--space-s);
   }
 
-  .wf-shop-hero-1 .shop-hero-1-card__top {
+  .wf-shop-hero-1 .wf-shop-hero-1-card__top {
     display: flex;
     flex-direction: column;
     row-gap: var(--flow-spacing);
@@ -20,20 +20,20 @@
     column-gap: var(--flow-spacing);
   }
 
-  .wf-shop-hero-1 .shop-hero-1-usp {
+  .wf-shop-hero-1 .wf-shop-hero-1-usp {
     display: grid;
     gap: var(--space-m);
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
   }
 
-  .wf-shop-hero-1 .shop-hero-1-usp-card {
+  .wf-shop-hero-1 .wf-shop-hero-1-usp-card {
     display: flex;
     flex-direction: row;
     column-gap: calc(var(--flow-spacing) / 2);
   }
 
   @media (max-width: 44rem) {
-    .wf-shop-hero-1 .shop-hero-1-card { flex-direction: column; }
+    .wf-shop-hero-1 .wf-shop-hero-1-card { flex-direction: column; }
     .wf-shop-hero-1 .cta-combo { flex-direction: column; }
-    .wf-shop-hero-1 .shop-hero-1-usp-card { flex-direction: column; }
+    .wf-shop-hero-1 .wf-shop-hero-1-usp-card { flex-direction: column; }
   }

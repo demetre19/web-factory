@@ -1,4 +1,4 @@
-  .wf-grid-24 .grid-24-container {
+  .wf-grid-24 .wf-grid-24-container {
     row-gap: var(--space-s);
   }
 
@@ -8,13 +8,13 @@
     row-gap: var(--space-s);
   }
 
-  .wf-grid-24 .grid-24-list {
+  .wf-grid-24 .wf-grid-24-list {
     display: grid;
     gap: var(--space-m);
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
   }
 
-  .wf-grid-24 .grid-24-card {
+  .wf-grid-24 .wf-grid-24-card {
     display: flex;
     flex-direction: column;
     row-gap: calc(var(--flow-spacing) / 1.2);

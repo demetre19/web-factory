@@ -1,14 +1,14 @@
-  .wf-hero-95 .bm-hero-95__container {
+  .wf-hero-95 .wf-hero-95__container {
     display: grid;
     gap: calc(var(--space-m) * 2);
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
   }
 
-  .wf-hero-95 .bm-hero-95__content {
+  .wf-hero-95 .wf-hero-95__content {
     row-gap: var(--flow-spacing);
   }
 
-  .wf-hero-95 .bm-hero-95__top {
+  .wf-hero-95 .wf-hero-95__top {
     row-gap: calc(var(--flow-spacing) / 2);
   }
 
@@ -17,11 +17,11 @@
     column-gap: calc(var(--flow-spacing) / 2);
   }
 
-  .wf-hero-95 .bm-hero-95-review {
+  .wf-hero-95 .wf-hero-95-review {
     row-gap: calc(var(--flow-spacing) / 2);
   }
 
-  .wf-hero-95 .bm-hero-95-review__client-review {
+  .wf-hero-95 .wf-hero-95-review__client-review {
     display: flex;
     flex-wrap: nowrap;
     column-gap: calc(var(--flow-spacing) / 2);
@@ -29,5 +29,5 @@
 
   @media (max-width: 44rem) {
     .wf-hero-95 .cta-combo { flex-direction: column; }
-    .wf-hero-95 .bm-hero-95-review__client-review { flex-direction: column; }
+    .wf-hero-95 .wf-hero-95-review__client-review { flex-direction: column; }
   }

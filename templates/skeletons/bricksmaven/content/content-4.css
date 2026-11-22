@@ -1,15 +1,15 @@
-  .wf-content-4 .content-4-container {
+  .wf-content-4 .wf-content-4-container {
     display: flex;
     row-gap: var(--space-l);
   }
 
-  .wf-content-4 .content-4__box {
+  .wf-content-4 .wf-content-4__box {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
     gap: var(--grid-gap);
   }
 
-  .wf-content-4 .content-4__intro {
+  .wf-content-4 .wf-content-4__intro {
     row-gap: var(--space-xs);
   }
 
@@ -19,6 +19,6 @@
   }
 
   @media (max-width: 44rem) {
-    .wf-content-4 .content-4-container { flex-direction: column; }
+    .wf-content-4 .wf-content-4-container { flex-direction: column; }
     .wf-content-4 .cta-combo { flex-direction: column; }
   }

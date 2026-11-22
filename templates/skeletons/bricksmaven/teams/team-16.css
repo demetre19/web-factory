@@ -1,4 +1,4 @@
-  .wf-team-16 .bm-team-16__container {
+  .wf-team-16 .wf-team-16__container {
     row-gap: var(--space-s);
   }
 
@@ -23,29 +23,29 @@
     row-gap: var(--flow-spacing);
   }
 
-  .wf-team-16 .bm-team-16-team-ul {
+  .wf-team-16 .wf-team-16-team-ul {
     display: grid;
     gap: var(--space-m);
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
   }
 
-  .wf-team-16 .bm-team-16-team-card {
+  .wf-team-16 .wf-team-16-team-card {
     row-gap: var(--flow-spacing);
   }
 
-  .wf-team-16 .bm-team-16-team-card__top {
+  .wf-team-16 .wf-team-16-team-card__top {
     display: flex;
     flex-direction: column;
     gap: var(--space-s);
   }
 
-  .wf-team-16 .bm-team-16-team-card__footer {
+  .wf-team-16 .wf-team-16-team-card__footer {
     display: flex;
     flex-direction: row;
     gap: var(--space-s);
   }
 
-  .wf-team-16 .bm-social-share {
+  .wf-team-16 .wf-social-share {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
@@ -53,6 +53,6 @@
   }
 
   @media (max-width: 44rem) {
-    .wf-team-16 .bm-team-16-team-card__footer { flex-direction: column; }
-    .wf-team-16 .bm-social-share { flex-direction: column; }
+    .wf-team-16 .wf-team-16-team-card__footer { flex-direction: column; }
+    .wf-team-16 .wf-social-share { flex-direction: column; }
   }

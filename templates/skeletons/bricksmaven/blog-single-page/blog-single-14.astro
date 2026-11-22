@@ -1,6 +1,6 @@
 ---
 /**
- * bm-blog-single-14 — TRANSLATED Bricksmaven skeleton.
+ * wf-blog-single-14 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (blog-single-14.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -56,8 +56,8 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
   {sub && <p class="mt-stack lede" set:html={inline(sub)} />}
   {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
   <div class="sec-inner">
-    <div class="bm-blog-single-14__container">
-      {image &&       <div class="bm-blog-single-14__intro">
+    <div class="wf-blog-single-14__container">
+      {image &&       <div class="wf-blog-single-14__intro">
         {image &&         <div>
           {image &&           <div class="blog-single-2__meta">
             {image &&             <div class="blog-single-2__author">
@@ -73,7 +73,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
         }
       </div>
       }
-      {image &&       <div class="bm-blog-single-14__content grid-auto gap-fluid-l">
+      {image &&       <div class="wf-blog-single-14__content grid-auto gap-fluid-l">
         {image && image.src && <figure class="ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
       </div>
       }

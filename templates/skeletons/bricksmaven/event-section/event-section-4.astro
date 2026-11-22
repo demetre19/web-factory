@@ -1,6 +1,6 @@
 ---
 /**
- * bm-event-section-4 — TRANSLATED Bricksmaven skeleton.
+ * wf-event-section-4 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (event-section-4.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -55,35 +55,35 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
   <div class={image && image.src ? 'split' : undefined}>
     <div class="stack">
   <div class="sec-inner">
-    <div class="bm-event-section-4__container">
-      <div class="bm-event-section__intro">
+    <div class="wf-event-section-4__container">
+      <div class="wf-event-section__intro">
         {head && <h2 class="text-fluid-2">{head}</h2>}
   {sub && <p class="mt-stack lede" set:html={inline(sub)} />}
   {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
         {act.label && <p class="mt-fluid-m"><a class="wf-cta-button" href={act.href}>{act.label}</a></p>}
       </div>
-      {list.length > 0 && <div class="bm-event-section-4-list">
+      {list.length > 0 && <div class="wf-event-section-4-list">
         <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
-            <div class="bm-event-section-4-card card">
-              <div class="bm-event-section-4-card__content">
-                <div class="bm-event-meta-info">
+            <div class="wf-event-section-4-card card">
+              <div class="wf-event-section-4-card__content">
+                <div class="wf-event-meta-info">
                   {it.icon && <IconChip name={it.icon} />}
                   <div class="stack">
                     <h3 class="text-fluid-1">{it.term || it.title || it.text}</h3>
                     {it.text && (it.term || it.title) && <p class="text-fluid-0">{it.text}</p>}
                   </div>
                 </div>
-                <div class="bm-event-section-4-card__heading-wrapper">
+                <div class="wf-event-section-4-card__heading-wrapper">
                   <h3 class="text-fluid-1">{it.term || it.title}</h3>
                   <p class="text-fluid-0">{it.text}</p>
                 </div>
-                <div class="bm-event-section-4-card__speaker-wrapper">
+                <div class="wf-event-section-4-card__speaker-wrapper">
                   <p class="text-fluid-0">{it.text}</p>
                 </div>
               </div>
               <div class="grid-auto gap-fluid-l">
                 <div>
-                  <div class="bm-event-meta-info">
+                  <div class="wf-event-meta-info">
                     {it.icon && <IconChip name={it.icon} />}
                     <div class="stack">
                       <h3 class="text-fluid-1">{it.term || it.title || it.text}</h3>

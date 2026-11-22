@@ -1,6 +1,6 @@
 ---
 /**
- * bm-item-tfnggb — TRANSLATED Bricksmaven skeleton.
+ * wf-item-tfnggb — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (item-tfnggb.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -55,19 +55,19 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
   <div class={image && image.src ? 'split' : undefined}>
     <div class="stack">
   <div class="sec-inner">
-    <div class="cta-12-container">
-      <div class="cta-12-main-cta">
+    <div class="wf-cta-12-container">
+      <div class="wf-cta-12-main-cta">
         {head && <h2 class="text-fluid-2">{head}</h2>}
         {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
         {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
         {act.label && <p class="mt-fluid-m"><a class="wf-cta-button" href={act.href}>{act.label}</a></p>}
       </div>
-      {list.length > 0 && <div class="cta-12-sales-card-wrapper">{(list || []).map((it) => (
-            <div class="cta-12-sales-card card">
+      {list.length > 0 && <div class="wf-cta-12-sales-card-wrapper">{(list || []).map((it) => (
+            <div class="wf-cta-12-sales-card card">
               {it.icon && <IconChip name={it.icon} />}
               <h3 class="text-fluid-1">{it.term || it.title}</h3>
               <p class="text-fluid-0">{it.text}</p>
-              <div class="cta-12-sales-card__footer">
+              <div class="wf-cta-12-sales-card__footer">
                 <p class="text-fluid-0">{it.text}</p>
                 <p class="text-fluid-0">{it.text}</p>
               </div>

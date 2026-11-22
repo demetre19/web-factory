@@ -1,6 +1,6 @@
 ---
 /**
- * bm-content-36 — TRANSLATED Bricksmaven skeleton.
+ * wf-content-36 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (content-36.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -55,7 +55,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
   <div class={image && image.src ? 'split' : undefined}>
     <div class="stack">
   <div class="sec-inner">
-    <div class="content-36__container">
+    <div class="wf-content-36__container">
       <div class="intro intro--split">
         {head &&         <div class="intro__left-column">
           {head && <h2 class="text-fluid-2">{head}</h2>}
@@ -67,9 +67,9 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
           {act.label && <p class="mt-fluid-m"><a class="wf-cta-button" href={act.href}>{act.label}</a></p>}
         </div>
       </div>
-      {list.length > 0 && <div class="content-36__2col-wrapper">{(list || []).map((it) => (
-            <div class="content-36-card card">
-              <div class="content-36-card__intro">
+      {list.length > 0 && <div class="wf-content-36__2col-wrapper">{(list || []).map((it) => (
+            <div class="wf-content-36-card card">
+              <div class="wf-content-36-card__intro">
                 {it.icon && <IconChip name={it.icon} />}
                 <h3 class="text-fluid-1">{it.term || it.title}</h3>
                 <p class="text-fluid-0">{it.text}</p>

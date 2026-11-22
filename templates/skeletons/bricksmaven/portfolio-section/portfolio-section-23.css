@@ -1,4 +1,4 @@
-  .wf-portfolio-section-23 .bm-portfolio-section-23__container {
+  .wf-portfolio-section-23 .wf-portfolio-section-23__container {
     row-gap: var(--space-s);
   }
 
@@ -23,24 +23,24 @@
     row-gap: var(--flow-spacing);
   }
 
-  .wf-portfolio-section-23 .bm-portfolio-section-23-list {
+  .wf-portfolio-section-23 .wf-portfolio-section-23-list {
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
     row-gap: var(--flow-spacing);
   }
 
-  .wf-portfolio-section-23 .bm-portfolio-section-23-card {
+  .wf-portfolio-section-23 .wf-portfolio-section-23-card {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
     gap: var(--space-m);
   }
 
-  .wf-portfolio-section-23 .bm-portfolio-section-23-card__content {
+  .wf-portfolio-section-23 .wf-portfolio-section-23-card__content {
     row-gap: var(--flow-spacing);
   }
 
-  .wf-portfolio-section-23 .bm-portfolio-section-23-term-list {
+  .wf-portfolio-section-23 .wf-portfolio-section-23-term-list {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -48,24 +48,24 @@
     row-gap: var(--flow-spacing);
   }
 
-  .wf-portfolio-section-23 .bm-portfolio-section-23-card__inner {
+  .wf-portfolio-section-23 .wf-portfolio-section-23-card__inner {
     row-gap: var(--flow-spacing);
   }
 
-  .wf-portfolio-section-23 .bm-portfolio-section-23-card__head {
+  .wf-portfolio-section-23 .wf-portfolio-section-23-card__head {
     display: flex;
     flex-wrap: nowrap;
     flex-direction: row;
     column-gap: var(--flow-spacing);
   }
 
-  .wf-portfolio-section-23 .bm-portfolio-section-23-card__icon-wrapper {
+  .wf-portfolio-section-23 .wf-portfolio-section-23-card__icon-wrapper {
     display: flex;
     gap: var(--space-s);
   }
 
   @media (max-width: 44rem) {
-    .wf-portfolio-section-23 .bm-portfolio-section-23-term-list { flex-direction: column; }
-    .wf-portfolio-section-23 .bm-portfolio-section-23-card__head { flex-direction: column; }
-    .wf-portfolio-section-23 .bm-portfolio-section-23-card__icon-wrapper { flex-direction: column; }
+    .wf-portfolio-section-23 .wf-portfolio-section-23-term-list { flex-direction: column; }
+    .wf-portfolio-section-23 .wf-portfolio-section-23-card__head { flex-direction: column; }
+    .wf-portfolio-section-23 .wf-portfolio-section-23-card__icon-wrapper { flex-direction: column; }
   }

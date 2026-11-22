@@ -1,6 +1,6 @@
 ---
 /**
- * bm-feature-47 — TRANSLATED Bricksmaven skeleton.
+ * wf-feature-47 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (feature-47.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -53,24 +53,24 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
 <div class="wf-feature-47">
   <div class="sec-inner">
     <div class="grid-auto gap-fluid-l">
-      <div class="bm-feature-47__head">
+      <div class="wf-feature-47__head">
         {head && <h2 class="text-fluid-2">{head}</h2>}
         {act.label && <p class="mt-fluid-m"><a class="wf-cta-button" href={act.href}>{act.label}</a></p>}
       </div>
       {image && image.src && <figure class="media-bg" aria-hidden="true"><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[960, 1440, 1920]} sizes="100vw" width={1600} height={900} loading="eager" fetchpriority="high" /></figure>}
     </div>
     <div>
-      <div class="bm-feature-47__services">
-        <div class="bm-feature-47__content">
+      <div class="wf-feature-47__services">
+        <div class="wf-feature-47__content">
           {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
                   </div>
         {before.length > 0 && <div class="flow mt-stack">
 {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
         </div>}
 
-        {list.length > 0 && <div class="bm-feature-47-grid-ul">{(list || []).map((it) => (
-              <div class="bm-content-26-card card">
-                <div class="bm-content-26-card__content">
+        {list.length > 0 && <div class="wf-feature-47-grid-ul">{(list || []).map((it) => (
+              <div class="wf-content-26-card card">
+                <div class="wf-content-26-card__content">
                   <h4 class="text-fluid-1">{it.term || it.title}</h4>
                   <p class="text-fluid-0">{it.text}</p>
                 </div>

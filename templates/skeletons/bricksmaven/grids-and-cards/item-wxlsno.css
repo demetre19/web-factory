@@ -1,16 +1,16 @@
-  .wf-item-wxlsno .gridcard-10-grid-ul {
+  .wf-item-wxlsno .wf-gridcard-10-grid-ul {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: var(--space-m);
   }
 
-  .wf-item-wxlsno .gridcard-10-card {
+  .wf-item-wxlsno .wf-gridcard-10-card {
     display: flex;
     flex-direction: column;
     row-gap: var(--space-s);
   }
 
   @media (max-width: 44rem) {
-    .wf-item-wxlsno .gridcard-10-grid-ul { grid-template-columns: 1fr; }
+    .wf-item-wxlsno .wf-gridcard-10-grid-ul { grid-template-columns: 1fr; }
   }
-  .wf-item-wxlsno .gridcard-10-grid-ul > :only-child { grid-column: 1 / -1; }
+  .wf-item-wxlsno .wf-gridcard-10-grid-ul > :only-child { grid-column: 1 / -1; }

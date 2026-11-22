@@ -1,24 +1,24 @@
-  .wf-footer-18 .bm-footer-18__container {
+  .wf-footer-18 .wf-footer-18__container {
     row-gap: var(--space-s);
   }
 
-  .wf-footer-18 .bm-footer-18__newsletter-block {
+  .wf-footer-18 .wf-footer-18__newsletter-block {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
     gap: var(--space-m);
   }
 
-  .wf-footer-18 .bm-footer-18__newsletter-intro {
+  .wf-footer-18 .wf-footer-18__newsletter-intro {
     row-gap: var(--flow-spacing);
   }
 
-  .wf-footer-18 .bm-footer-18__content {
+  .wf-footer-18 .wf-footer-18__content {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
     gap: var(--grid-gap);
   }
 
-  .wf-footer-18 .bm-footer-18__left {
+  .wf-footer-18 .wf-footer-18__left {
     row-gap: var(--flow-spacing);
   }
 
@@ -28,7 +28,7 @@
     gap: var(--space-m);
   }
 
-  .wf-footer-18 .bm-footer-nav-wrapper--grid-3 {
+  .wf-footer-18 .wf-footer-nav-wrapper--grid-3 {
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
   }
 
@@ -44,24 +44,24 @@
     row-gap: var(--flow-spacing);
   }
 
-  .wf-footer-18 .bm-footer-18__footer {
+  .wf-footer-18 .wf-footer-18__footer {
     display: grid;
     gap: var(--space-m);
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
   }
 
-  .wf-footer-18 .bm-social-share {
+  .wf-footer-18 .wf-social-share {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
     column-gap: var(--flow-spacing);
   }
 
-  .wf-footer-18 .bm-footer-18__copyright-wrapper {
+  .wf-footer-18 .wf-footer-18__copyright-wrapper {
     flex-direction: row;
   }
 
   @media (max-width: 44rem) {
-    .wf-footer-18 .bm-social-share { flex-direction: column; }
-    .wf-footer-18 .bm-footer-18__copyright-wrapper { flex-direction: column; }
+    .wf-footer-18 .wf-social-share { flex-direction: column; }
+    .wf-footer-18 .wf-footer-18__copyright-wrapper { flex-direction: column; }
   }

@@ -1,6 +1,6 @@
 ---
 /**
- * bm-newsletter-10 — TRANSLATED Bricksmaven skeleton.
+ * wf-newsletter-10 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (newsletter-10.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -54,8 +54,8 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
 <div class="wf-newsletter-10">
   <div class="sec-inner">
     {image && image.src && <figure class="ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
-    <div class="newsletter-10-container">
-      <div class="newsletter-10__intro">
+    <div class="wf-newsletter-10-container">
+      <div class="wf-newsletter-10__intro">
         {head && <h2 class="text-fluid-2">{head}</h2>}
         {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
               </div>
@@ -63,9 +63,9 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
 {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
       </div>}
 
-      <div class="newsletter-10__form-container">
-        <div class="bm-form">
-          <form class="bm-form-widget" novalidate>
+      <div class="wf-newsletter-10__form-container">
+        <div class="wf-form">
+          <form class="wf-form-widget" novalidate>
           </form>
         </div>
       </div>

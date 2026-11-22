@@ -1,28 +1,28 @@
-  .wf-call-to-action-10 .cta-10-container {
+  .wf-call-to-action-10 .wf-cta-10-container {
     display: grid;
     gap: var(--space-m);
     grid-template-columns: 1fr 1fr;
   }
 
-  .wf-call-to-action-10 .cta-10-content {
+  .wf-call-to-action-10 .wf-cta-10-content {
     display: flex;
     row-gap: var(--space-m);
     flex-direction: column;
   }
 
-  .wf-call-to-action-10 .cta-10-heading {
+  .wf-call-to-action-10 .wf-cta-10-heading {
     display: flex;
     flex-direction: column;
     gap: var(--space-s);
   }
 
-  .wf-call-to-action-10 .hero-1__cta {
+  .wf-call-to-action-10 .wf-hero-1__cta {
     display: flex;
     column-gap: var(--space-xs);
   }
 
   @media (max-width: 44rem) {
-    .wf-call-to-action-10 .cta-10-container { grid-template-columns: 1fr; }
-    .wf-call-to-action-10 .hero-1__cta { flex-direction: column; }
+    .wf-call-to-action-10 .wf-cta-10-container { grid-template-columns: 1fr; }
+    .wf-call-to-action-10 .wf-hero-1__cta { flex-direction: column; }
   }
-  .wf-call-to-action-10 .cta-10-container > :only-child { grid-column: 1 / -1; }
+  .wf-call-to-action-10 .wf-cta-10-container > :only-child { grid-column: 1 / -1; }

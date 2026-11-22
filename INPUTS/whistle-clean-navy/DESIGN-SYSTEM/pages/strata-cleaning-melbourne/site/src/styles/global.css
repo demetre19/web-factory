@@ -56,6 +56,11 @@
   --space-l: clamp(1.9995rem, calc(1.355vw + 1.7285rem), 2.8125rem);
   --space-xl: clamp(2.6653rem, calc(2.589vw + 2.1475rem), 4.2188rem);
   --space-xxl: clamp(3.5529rem, calc(4.6254vw + 2.6278rem), 6.3281rem);
+  --space-s-to-xs: clamp(0.8442rem, calc(0.6764vw + 0.7089rem), 1.25rem);
+  --space-m-to-s: clamp(1.1253rem, calc(1.2495vw + 0.8754rem), 1.875rem);
+  --space-l-to-m: clamp(1.5rem, calc(2.1875vw + 1.0625rem), 2.8125rem);
+  --space-xl-to-l: clamp(1.9995rem, calc(3.6987vw + 1.2597rem), 4.2188rem);
+  --space-xxl-to-xl: clamp(2.6653rem, calc(6.1047vw + 1.4444rem), 6.3281rem);
   --section-space-xs: clamp(2.5325rem, calc(1.3347vw + 2.2656rem), 3.3333rem);
   --section-space-s: clamp(3.3758rem, calc(2.7069vw + 2.8345rem), 5rem);
   --section-space-m: clamp(4.5rem, calc(5vw + 3.5rem), 7.5rem);
@@ -65,7 +70,10 @@
   --gutter: clamp(1rem, calc(6.6667vw - 0.3333rem), 5rem);
   --grid-gap: var(--space-m);
   --content-gap: var(--space-m);
+  --elements-gap: var(--space-m);
   --container-gap: var(--space-xl);
+  --list-item-spacing: var(--space-s);
+  --measure: 64ch;
   --btn-padding-block: 0.75em;
   --btn-padding-inline: 1.5em;
   --radius: 0.625rem;
@@ -223,7 +231,7 @@ h1, h2, h3, h4, h5, h6, p, ul, ol, li, figure, blockquote { margin: 0; }
   /* ACSS list vocab (U.10): markers' indent and item rhythm bind the
      spacing scale — no list-* tokens are emitted by clamp */
   --list-indent-spacing: var(--space-l);
-  --list-spacing: var(--space-s);
+  --list-spacing: var(--list-item-spacing);
 
   /* ACSS names only (U.10). The ACSS size family (--text-*, --h1..6,
      --space-*, --section-space-*, --gutter, --grid-gap, --content-gap,
@@ -249,7 +257,8 @@ h1, h2, h3, h4, h5, h6, p, ul, ol, li, figure, blockquote { margin: 0; }
   --content-width: 80rem;
   --content-width-safe: min(var(--content-width),
                             calc(100% - var(--gutter) * 2));
-  --measure: 60ch;
+  /* --measure is emitted by emit_tokens (clamp.aliases — it tracks
+     type.base so families differ on line length too) */
   --r-card: var(--primitive-radius);
   --tap: 3rem;
   --font-display: var(--primitive-font-display);
@@ -386,6 +395,14 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
      renders as cards touching. */
   [class*="-grid-ul"], [class*="-grid"], ul[class*="grid"] {
       gap: var(--grid-gap); }
+  /* wrapped-sibling floor (smart spacing): a container of wrapped
+     elements — cards/panels/tiles/collection items — always resolves
+     a nonzero --elements-gap. Prose is exempt by selector scope:
+     .flow paragraphs and .list-items text runs bind --flow-spacing
+     margins only, never a sibling gap. */
+  [class*="-cards"], [class*="-tiles"], [class*="-panels"],
+  .card-grid, ul.list-plain,
+  [class*="-items"]:not(.list-items) { gap: var(--elements-gap); }
   /* logo-wall: a row of marks at one optical height — client artwork
      keeps its colours, the row sets scale and rhythm */
   .logo-row { display: flex; flex-wrap: wrap; align-items: center;
@@ -508,7 +525,9 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
   .skip-link:focus { left: var(--space-xs); }
   .logo { font-weight: 700; }
   .helper { font-size: var(--text-s); }
-  .wf-cta-button { display: inline-block;
+  .wf-cta-button { display: inline-flex;
+                   align-items: center; justify-content: center;
+                   text-align: center;
                    padding: var(--btn-padding-block) var(--btn-padding-inline);
                    border-radius: var(--r-card);
                    background: var(--action-primary);
@@ -523,10 +542,18 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
   .burger { display: inline-flex; min-height: var(--tap);
             min-width: var(--tap); align-items: center;
             justify-content: center;
-            background: var(--bg-surface); color: var(--text-primary);
-            border: 1px solid var(--border-default);
-            border-radius: var(--r-card); font-size: var(--fs-1);
-            font-weight: 600; cursor: pointer; }
+            /* a ghost icon pinned to the row's far end — never a
+               filled chip, never a second CTA (N.burger) */
+            margin-inline-start: auto;
+            background: transparent; color: var(--text-primary);
+            border: 1px solid var(--border-subtle,
+                var(--border-default));
+            border-radius: var(--r-card); font-size: 0;
+            cursor: pointer; }
+  .burger > * { font-size: 0; }
+  .burger::after { content: ""; width: 20px; height: 14px;
+            background: repeating-linear-gradient(to bottom,
+                currentColor 0 2px, transparent 2px 6px); }
   .row.between { position: relative; }
   /* the open mobile menu is a flyout sheet, not a dropdown: a
      right-side panel over a scrim, a close control, vertical links,
@@ -541,20 +568,56 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
             border-inline-start: 1px solid var(--border-default);
             box-shadow: var(--shadow-pop); overflow-y: auto; }
   .nav-links.open ul { flex-direction: column; flex-wrap: nowrap;
-            align-items: flex-start; gap: var(--space-xs); }
+            align-items: stretch; gap: var(--space-xs); width: 100%; }
   .nav-links.open .nav-link { font-size: var(--fs-1);
+            display: flex; align-items: center;
+            /* ~3rem rows: fs-1 line + space-s padding, tap-sized
+               without declaring a height (A.1) */
+            padding-block: var(--space-s);
             white-space: normal; }
+  /* under 30rem the sheet is the whole viewport — a docked rail
+     leaves no room for a strip of page behind it */
+  @media (max-width: 30rem) {
+    .nav-links.open { width: 100vw; inset-inline: 0;
+            border-inline-start: 0; }
+    body:has(.nav-links.open) .nav-cta { width: 100vw;
+            inset-inline: 0; border-inline-start: 0; }
+  }
   .nav-close { display: none; }
   .nav-links.open .nav-close { display: inline-flex;
             align-self: flex-end; min-height: var(--tap);
             min-width: var(--tap); align-items: center;
-            justify-content: center; background: none; border: 0;
+            justify-content: center; background: none !important;
+            border: 0 !important;
             color: var(--text-secondary); font-size: var(--fs-2);
             line-height: 1; cursor: pointer; }
+  /* the sheet's top row: brand left, ghost close right — one row,
+     never a floating X (N.flyout) */
+  .nav-sheet-head { display: none; }
+  .nav-links.open .nav-sheet-head { display: flex;
+            align-items: center; justify-content: space-between;
+            gap: var(--space-m);
+            padding-block-end: var(--space-s);
+            border-block-end: 1px solid
+                var(--border-subtle, var(--border-default)); }
+  .nav-links.open .nav-sheet-head .nav-sheet-brand {
+            font-weight: 700; }
+  .nav-links.open .nav-sheet-head .nav-close {
+            align-self: center; margin-inline-start: auto; }
+  /* exactly one close — an exemplar's own mid-sheet X is dropped in
+     favour of the head-row ghost close (N.flyout) */
+  .nav-links.open .nav-close:not(.nav-sheet-head .nav-close) {
+            display: none; }
   body:has(.nav-links.open)::after { content: ""; position: fixed;
             inset: 0; background: color-mix(in oklch,
                 var(--text-primary) 45%, transparent);
             z-index: var(--primitive-z-sticky); }
+  /* the scrim paints after the header at equal z — lift the whole
+     header context (sheet + docked CTA ride inside it) above the
+     scrim, and park the floating call button while open (N.flyout) */
+  header[data-sec="nav"]:has(.nav-links.open) {
+          z-index: calc(var(--primitive-z-sticky) + 2); }
+  body:has(.nav-links.open) .call-bar { display: none; }
   body:has(.nav-links.open) .nav-cta { display: block;
             position: fixed; inset-inline-end: 0; inset-block-end: 0;
             width: min(20rem, 85vw); margin: 0;
@@ -564,14 +627,27 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
   body:has(.nav-links.open) .nav-cta .wf-cta-button,
   body:has(.nav-links.open) .nav-cta { display: block; }
   body:has(.nav-links.open) .nav-cta > .wf-cta-button {
-            display: flex; justify-content: center; }
+            display: flex; justify-content: center; width: 100%; }
+  body:has(.nav-links.open) .nav-cta a {
+            display: flex; justify-content: center; width: 100%; }
   /* header CTA: below the nav breakpoint it rides inside the flyout;
      burger, links and CTA share one breakpoint (60rem — the
      .nav-links one below) or a dead zone opens where the header
      shows brand alone */
   .nav-cta { display: none; }
+  @media (max-width: 60rem) {
+    /* an empty CTA lane beside the burger must not hold flex space —
+       hide a wrapper whose only element is the hidden .nav-cta, so
+       the burger pins to the row's far end (N.flyout) */
+    header[data-sec="nav"] div:has(> .nav-cta:only-child) {
+            display: none; }
+  }
   @media (min-width: 60rem) {
-    .burger { display: none; }
+    /* a stray CTA class on the trigger must not resurrect it: the
+       doubled class keeps this rule ahead of ANY later
+       .wf-cta-button{display:*} line at equal order (specificity
+       decides, never position) */
+    .burger, .burger.wf-cta-button { display: none; }
     .nav-cta { display: inline-block; }
   }
   /* ---- composition vocabulary ------------------------------- */
@@ -686,16 +762,156 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
   .link-quiet { color: var(--text-secondary); text-decoration: none;
                 font-size: var(--fs-0); }
   .link-quiet:hover { color: var(--text-primary); }
-  .nav-links { display: none; gap: var(--space-s);
+  /* the header bar is sticky chrome — it keeps a hairline at rest
+     and lifts a shadow once the page scrolls under it */
+  header[data-sec="nav"] { position: sticky; top: 0;
+              z-index: var(--primitive-z-sticky);
+              border-block-end: 1px solid var(--border-subtle,
+                  var(--border-default)); }
+  header[data-sec="nav"].scrolled { box-shadow: var(--shadow-card); }
+  .nav-links { display: none; gap: var(--space-m);
                align-items: center; flex: 0 1 auto; min-width: 0; }
-  .nav-links ul { flex-wrap: nowrap; gap: var(--space-s); }
+  .nav-links ul { flex-wrap: nowrap; gap: var(--space-m);
+              align-items: center; }
+  /* the desktop bar shows the group's links inline — the wrapper
+     only materialises as a titled stack inside the open drawer */
+  .nav-links .nav-group { display: contents; }
   /* the brand mark and the primary links hold one line — a nav that
      wraps reads as two bars (L.1 axis); links shrink to --fs--1 so a
-     long label list still fits between brand and CTA */
-  .bm-header-1__brand { white-space: nowrap; }
+     long label list still fits between brand and CTA. The whole bar
+     stays one row at every width: brand ellipsises under pressure,
+     the burger pins to its lane's far end, nothing wraps (H.1) */
+  .wf-header-1__brand, .brand-mark, .logo { white-space: nowrap;
+              overflow: hidden; text-overflow: ellipsis; }
+  .row.between:has(.nav-links), .row.between:has(.burger),
+  .row.between:has(.nav-desk) { flex-wrap: nowrap; }
+  .row.between:has(.burger) > * { min-width: 0; }
+  div:has(> .burger), div:has(> .nav-links + .burger),
+  div:has(> .nav-desk + .burger) { display: flex;
+              align-items: center; margin-inline-start: auto; }
+  /* the burger's lane pins to the row's far end — a space-between
+     container centres its middle item, so the wrapper (not just the
+     button) takes the auto margin (H.1) */
+  .burger { flex: 0 0 auto; margin-inline-start: auto; }
+  .nav-links, .nav-desk { flex-shrink: 1; min-width: 0;
+              overflow: hidden; }
   /* 4 full-length labels can't fit under ~60rem — the burger takes
      over below that instead of overflowing the page */
   @media (min-width: 60rem) { .nav-links { display: flex; } }
+  /* a flyout nav splits the two .nav-links roles: .nav-desk is the
+     desktop link row (hidden under the burger breakpoint); the
+     .nav-flyout panel is the ONLY nav-links — hidden at every width
+     until .open, so it never doubles as a second desktop row
+     (N.flyout) */
+  .nav-desk { display: none; gap: var(--space-m);
+              align-items: center; flex: 0 1 auto; min-width: 0; }
+  .nav-desk ul { flex-wrap: nowrap; gap: var(--space-m);
+              align-items: center; }
+  .nav-links.nav-flyout { display: none; }
+  .nav-links.open.nav-flyout { display: flex; }
+  @media (min-width: 60rem) { .nav-desk { display: flex; } }
+  /* grouped link sections inside the open panel: a titled stack of
+     rows separated by hairlines, reading as sections not a bare
+     list (N.flyout) */
+  .nav-links.open .nav-group { display: flex; flex-direction: column;
+              align-items: stretch; gap: var(--space-xs);
+              width: 100%; }
+  .nav-links.open .nav-group ul { width: 100%; }
+  .nav-links.open .nav-group + .nav-group,
+  .nav-links.open .nav-group + * { padding-block-start: var(--space-s);
+              border-block-start: 1px solid var(--border-default); }
+  .nav-links.open .nav-group a { font-size: var(--fs-1);
+              white-space: normal; color: var(--text-primary);
+              text-decoration: none; display: inline-flex;
+              align-items: center; gap: var(--space-s);
+              padding-block: var(--space-s); }
+  /* drawer furniture — search, group heads, row numerals — exists
+     only inside the open flyout; the desktop bar stays brand + links
+     + CTA (N.flyout) */
+  .nav-search, .nav-group-head, .nav-num { display: none; }
+  .nav-links.open .nav-search { display: block; }
+  .nav-links.open .nav-search-input { width: 100%;
+              padding: var(--space-xs) var(--space-s);
+              font: inherit; color: var(--text-primary);
+              background: var(--bg-elevated);
+              border: 1px solid var(--border-default);
+              border-radius: var(--r-card); }
+  .nav-links.open .nav-group-head { display: block;
+              font-size: var(--fs--1); letter-spacing: .08em;
+              text-transform: uppercase;
+              color: var(--text-secondary); margin: 0 0 var(--space-xs); }
+  .nav-links.open .nav-num { display: inline;
+              margin-inline-start: auto;
+              font-size: var(--fs--1);
+              color: var(--text-secondary); font-variant-numeric:
+              tabular-nums; }
+  .nav-links.open .nav-link { display: flex; width: 100%;
+              align-items: center; gap: var(--space-s);
+              padding-block: var(--space-s);
+              border-block-end: 1px solid var(--border-default); }
+  /* nav selection (N.select): >6 links switch to the hybrid —
+     .nav-priority keeps the first four inline on desktop, the full
+     set opens behind a quiet "More" trigger as a wider .nav-mega
+     panel whose links group into columns. Below the bar breakpoint
+     the burger still owns the drawer (the panel just widens). */
+  .nav-links .nav-mega-cols { display: contents; }
+  .nav-links.open .nav-mega-cols { display: grid;
+              grid-template-columns: repeat(auto-fit,
+                  minmax(13rem, 1fr));
+              gap: var(--space-m) var(--space-l); width: 100%; }
+  .nav-links.open.nav-mega { width: min(46rem, 94vw); }
+  .nav-priority { display: none; }
+  .nav-more { display: none; align-items: center;
+              min-height: var(--tap); background: none; border: 0;
+              padding: 0; font: inherit;
+              color: var(--text-secondary); cursor: pointer; }
+  .nav-more:hover { color: var(--text-primary); }
+  @media (min-width: 60rem) {
+    .nav-priority { display: flex; gap: var(--space-s);
+              align-items: center; flex: 0 1 auto; min-width: 0; }
+    .nav-priority ul { flex-wrap: nowrap; gap: var(--space-s); }
+    .nav-more { display: inline-flex; }
+    /* a mega nav never unrolls inline — the priority row + More own
+       the desktop bar; the panel still opens as a flyout */
+    .nav-links.nav-mega { display: none; }
+    .nav-links.nav-mega.open { display: flex; }
+  }
+  /* the generic overlay family — modals, popups, form dialogs
+     (N.flyout): a centred .flyout panel over the same scrim, a
+     .flyout-open trigger in flow, a .flyout-close affordance */
+  .flyout { display: none; }
+  .flyout.open { display: flex; flex-direction: column;
+              gap: var(--space-m); position: fixed;
+              inset-block-start: 50%; inset-inline-start: 50%;
+              transform: translate(-50%, -50%);
+              width: min(28rem, calc(100vw - 2 * var(--gutter)));
+              max-height: 85vh; overflow-y: auto;
+              z-index: calc(var(--primitive-z-sticky) + 1);
+              background: var(--bg-canvas); color: var(--text-primary);
+              padding: var(--space-m);
+              border: 1px solid var(--border-default);
+              border-radius: var(--r-card);
+              box-shadow: var(--shadow-pop); }
+  .flyout-open { display: inline-flex; min-height: var(--tap);
+              min-width: var(--tap); align-items: center;
+              justify-content: center;
+              background: var(--bg-surface); color: var(--text-primary);
+              border: 1px solid var(--border-default);
+              border-radius: var(--r-card); font-size: var(--fs-1);
+              font-weight: 600; cursor: pointer; }
+  .flyout-open.wf-cta-button { border: 0;
+              background: var(--action-primary);
+              color: var(--action-primary-ink); }
+  .flyout-close { display: inline-flex; align-self: flex-end;
+              min-height: var(--tap); min-width: var(--tap);
+              align-items: center; justify-content: center;
+              background: none; border: 0;
+              color: var(--text-secondary); font-size: var(--fs-2);
+              line-height: 1; cursor: pointer; }
+  body:has(.flyout.open)::after { content: ""; position: fixed;
+              inset: 0; background: color-mix(in oklch,
+                  var(--text-primary) 45%, transparent);
+              z-index: var(--primitive-z-sticky); }
   .wf-cta-button { font-size: var(--fs--1); }
   /* the mobile call action is a compact floating button, not a bar
      that slices across mid-scroll content: a brand pill bottom-right
@@ -717,12 +933,25 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
     .wf-cta-button { font-size: inherit; }
     .call-bar { display: none; }
     body { padding-block-end: 0; } }
-  .nav-link { color: var(--text-secondary); text-decoration: none;
-              font-size: var(--fs--1); font-weight: 500;
+  .wf-cta-button.alt { background: var(--bg-elevated);
+              color: var(--text-primary);
+              border: 1px solid var(--border-default);
+              box-shadow: var(--shadow-card); }
+  .wf-cta-button.alt:hover { box-shadow: var(--shadow-pop); }
+  .nav-link { color: var(--text-primary); text-decoration: none;
+              font-size: var(--fs-0); font-weight: 500;
               /* one line per link — a link that wraps reads as two
                  nav bars even when the ul itself cannot wrap */
               white-space: nowrap; }
-  .nav-link:hover { color: var(--text-primary); }
+  .nav-link:hover { color: var(--action-primary);
+              text-decoration: underline;
+              text-underline-offset: .2em; }
+  .nav-link[aria-current], .nav-link.active {
+              color: var(--action-primary); }
+  /* the header CTA fits the bar — compact padding and nav font,
+     never the hero-sized call */
+  .nav-cta .wf-cta-button { padding: .5em .75em;
+              font-size: var(--fs-0); min-height: 0; }
   .brand-mark { font-weight: 650; letter-spacing: -.02em;
                 font-size: var(--fs-1); color: var(--text-primary);
                 text-decoration: none; }
@@ -801,6 +1030,27 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
                 justify-self: end; width: 100%; }
   .sub-flow { margin: var(--space-xs) 0 0; }
   .measure-28 { max-width: 28ch; }
+  /* G cutout-media: a background-removed object floats on the
+     section surface — contain, no frame, no radius, the shadow is
+     a drop-shadow (follows the alpha edge) bound to the elevation
+     rung so it composites in light + dark alike. The placeholder
+     holds the same slot until the cutout stage delivers a PNG. */
+  .cutout-slot { display: flex; align-items: center;
+                 justify-content: center; min-width: 0; }
+  .cutout { object-fit: contain; max-height: 100%;
+            width: auto; height: auto; max-width: 100%;
+            filter: drop-shadow(0 var(--space-xs) var(--space-s)
+                    color-mix(in oklch, var(--text-primary) 28%,
+                              transparent)); }
+  .cta-band .cutout { max-height: 18rem; }
+  .cutout-ph { aspect-ratio: 1 / 1; width: 100%; max-width: 24rem;
+               display: grid; place-items: center;
+               border: 1px dashed var(--border-default);
+               border-radius: var(--r-card);
+               background: var(--bg-elevated);
+               color: var(--text-secondary);
+               font-size: var(--fs--1); }
+  .cutout-card .cutout-ph { max-width: 100%; }
   /* surface/density classes are the shell's rhythm signature — the
      L.14/L.7 gate reads them off the built <section> tag. */
   .surface-base { --sec-bg: var(--bg-canvas); --sec-fg: var(--text-primary); }
@@ -890,11 +1140,16 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
   .ds-sp-section-space-xs { block-size: var(--section-space-xs); }
   .ds-sp-section-space-xxl { block-size: var(--section-space-xxl); }
   .ds-sp-space-l { block-size: var(--space-l); }
+  .ds-sp-space-l-to-m { block-size: var(--space-l-to-m); }
   .ds-sp-space-m { block-size: var(--space-m); }
+  .ds-sp-space-m-to-s { block-size: var(--space-m-to-s); }
   .ds-sp-space-s { block-size: var(--space-s); }
+  .ds-sp-space-s-to-xs { block-size: var(--space-s-to-xs); }
   .ds-sp-space-xl { block-size: var(--space-xl); }
+  .ds-sp-space-xl-to-l { block-size: var(--space-xl-to-l); }
   .ds-sp-space-xs { block-size: var(--space-xs); }
   .ds-sp-space-xxl { block-size: var(--space-xxl); }
+  .ds-sp-space-xxl-to-xl { block-size: var(--space-xxl-to-xl); }
   .ds-tx-text-l { font-size: var(--text-l); }
   .ds-tx-text-m { font-size: var(--text-m); }
   .ds-tx-text-s { font-size: var(--text-s); }
@@ -906,25 +1161,25 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
 
 @layer components {
 /* bricksmaven/grids-and-cards/grid-1 */
-  .wf-grid-1 .gridcard-1-grid-ul {
+  .wf-grid-1 .wf-gridcard-1-grid-ul {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: var(--grid-gap);
   }
 
-  .wf-grid-1 .gridcard-1-card {
+  .wf-grid-1 .wf-gridcard-1-card {
     display: flex;
     flex-direction: column;
     row-gap: var(--space-xs);
   }
 
   @media (max-width: 44rem) {
-    .wf-grid-1 .gridcard-1-grid-ul { grid-template-columns: 1fr; }
+    .wf-grid-1 .wf-gridcard-1-grid-ul { grid-template-columns: 1fr; }
   }
-  .wf-grid-1 .gridcard-1-grid-ul > :only-child { grid-column: 1 / -1; }
+  .wf-grid-1 .wf-gridcard-1-grid-ul > :only-child { grid-column: 1 / -1; }
 
 /* bricksmaven/comparison/comparison-1 */
-  .wf-comparison-1 .bm-conparison-1__container {
+  .wf-comparison-1 .wf-conparison-1__container {
     row-gap: var(--space-s);
   }
 
@@ -934,34 +1189,34 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
     row-gap: var(--flow-spacing);
   }
 
-  .wf-comparison-1 .bm-conparison-1-list {
+  .wf-comparison-1 .wf-conparison-1-list {
     display: grid;
     gap: var(--space-m);
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
   }
 
-  .wf-comparison-1 .bm-conparison-1-card {
+  .wf-comparison-1 .wf-conparison-1-card {
     row-gap: var(--flow-spacing);
   }
 
-  .wf-comparison-1 .bm-conparison-status {
+  .wf-comparison-1 .wf-conparison-status {
     display: flex;
     gap: var(--space-s);
   }
 
-  .wf-comparison-1 .bm-list {
+  .wf-comparison-1 .wf-list {
     display: flex;
     flex-direction: column;
     row-gap: var(--flow-spacing);
   }
 
-  .wf-comparison-1 .bm-list-item {
+  .wf-comparison-1 .wf-list-item {
     flex-direction: row;
     display: flex;
     column-gap: var(--flow-spacing);
   }
 
-  .wf-comparison-1 .bm-conparison-1__footer {
+  .wf-comparison-1 .wf-conparison-1__footer {
     row-gap: var(--flow-spacing);
   }
 
@@ -971,9 +1226,91 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
   }
 
   @media (max-width: 44rem) {
-    .wf-comparison-1 .bm-conparison-status { flex-direction: column; }
-    .wf-comparison-1 .bm-list-item { flex-direction: column; }
+    .wf-comparison-1 .wf-conparison-status { flex-direction: column; }
+    .wf-comparison-1 .wf-list-item { flex-direction: column; }
     .wf-comparison-1 .cta-combo { flex-direction: column; }
+  }
+
+/* bricksmaven/content/content-1 */
+  .wf-content-1 .wf-content-1-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
+    gap: var(--space-xl);
+  }
+
+  .wf-content-1 .wf-content-1__box {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-m);
+  }
+
+  .wf-content-1 .cta-combo {
+    display: flex;
+    column-gap: var(--space-xs);
+  }
+
+  @media (max-width: 44rem) {
+    .wf-content-1 .cta-combo { flex-direction: column; }
+  }
+
+/* bricksmaven/headers/header-21 */
+  .wf-header-21 .wf-header-21__container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: var(--space-s);
+  }
+
+  .wf-header-21 .wf-header-21__cta {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    column-gap: calc(var(--flow-spacing) / 4);
+  }
+
+  .wf-header-21 .wf-off-canvas-6__content {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-s);
+  }
+
+  .wf-header-21 .wf-off-canvas-nav-ul {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: column;
+    row-gap: calc(var(--flow-spacing) * 2);
+  }
+
+  .wf-header-21 .wf-off-canvas-6__contact-footer {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--flow-spacing);
+  }
+
+  .wf-header-21 .wf-off-canvas-contact {
+    row-gap: calc(var(--flow-spacing) / 1.8);
+  }
+
+  .wf-header-21 .wf-off-canvas-contact-item {
+    display: flex;
+    flex-direction: row;
+    column-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .wf-header-21 .wf-off-canvas-6__socials {
+    row-gap: var(--flow-spacing);
+  }
+
+  .wf-header-21 .wf-social-share {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    column-gap: var(--flow-spacing);
+  }
+
+  .wf-header-21 .wf-social-share--column {
+    flex-direction: column;
+    row-gap: var(--flow-spacing);
   }
 
 /* bricksmaven/footer/footer-1 */
@@ -981,7 +1318,7 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
     row-gap: var(--space-s);
   }
 
-  .wf-footer-1 .footer-1-container {
+  .wf-footer-1 .wf-footer-1-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
     gap: var(--space-m);
@@ -1011,13 +1348,13 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
     row-gap: var(--flow-spacing);
   }
 
-  .wf-footer-1 .footer-1-bottom {
+  .wf-footer-1 .wf-footer-1-bottom {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
     gap: var(--grid-gap);
   }
 
-  .wf-footer-1 .footer-1-bottom__left {
+  .wf-footer-1 .wf-footer-1-bottom__left {
     display: flex;
     column-gap: var(--space-s);
   }
@@ -1027,81 +1364,84 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
     column-gap: var(--flow-spacing);
   }
 
-  .wf-footer-1 .footer-1-bottom__right {
+  .wf-footer-1 .wf-footer-1-bottom__right {
     display: flex;
     flex-direction: column;
     gap: var(--space-s);
   }
 
   @media (max-width: 44rem) {
-    .wf-footer-1 .footer-1-bottom__left { flex-direction: column; }
+    .wf-footer-1 .wf-footer-1-bottom__left { flex-direction: column; }
     .wf-footer-1 .footer-legal-nav { flex-direction: column; }
   }
 
 /* bricksmaven/call-to-action/call-to-action-10 */
-  .wf-call-to-action-10 .cta-10-container {
+  .wf-call-to-action-10 .wf-cta-10-container {
     display: grid;
     gap: var(--space-m);
     grid-template-columns: 1fr 1fr;
   }
 
-  .wf-call-to-action-10 .cta-10-content {
+  .wf-call-to-action-10 .wf-cta-10-content {
     display: flex;
     row-gap: var(--space-m);
     flex-direction: column;
   }
 
-  .wf-call-to-action-10 .cta-10-heading {
+  .wf-call-to-action-10 .wf-cta-10-heading {
     display: flex;
     flex-direction: column;
     gap: var(--space-s);
   }
 
-  .wf-call-to-action-10 .hero-1__cta {
+  .wf-call-to-action-10 .wf-hero-1__cta {
     display: flex;
     column-gap: var(--space-xs);
   }
 
   @media (max-width: 44rem) {
-    .wf-call-to-action-10 .cta-10-container { grid-template-columns: 1fr; }
-    .wf-call-to-action-10 .hero-1__cta { flex-direction: column; }
+    .wf-call-to-action-10 .wf-cta-10-container { grid-template-columns: 1fr; }
+    .wf-call-to-action-10 .wf-hero-1__cta { flex-direction: column; }
   }
-  .wf-call-to-action-10 .cta-10-container > :only-child { grid-column: 1 / -1; }
+  .wf-call-to-action-10 .wf-cta-10-container > :only-child { grid-column: 1 / -1; }
 
 /* bricksmaven/grids-and-cards/grid-2 */
-  .wf-grid-2 .gridcard-2-grid-ul {
+  .wf-grid-2 .wf-gridcard-2-grid-ul {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
     gap: var(--grid-gap);
   }
 
-  .wf-grid-2 .gridcard-2-card {
+  .wf-grid-2 .wf-gridcard-2-card {
     display: flex;
     flex-direction: column;
     row-gap: var(--space-xs);
   }
 
-/* bricksmaven/headers/header-1 */
-  .wf-header-1 .bm-header-1__container {
+/* bricksmaven/testimonials/testimonial-1 */
+  .wf-testimonial-1 .wf-testimonial-1-content {
     display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
     gap: var(--space-s);
   }
 
-  .wf-header-1 .bm-header-1__cta {
+  .wf-testimonial-1 .wf-testimonial-1-slides-item {
     display: flex;
-    gap: var(--space-s);
+    flex-direction: column;
+    row-gap: var(--space-m);
+  }
+
+  @media (max-width: 44rem) {
+    .wf-testimonial-1 .wf-testimonial-1-content { flex-direction: column; }
   }
 
 /* bricksmaven/how-it-works/how-it-works-1 */
-  .wf-how-it-works-1 .hworks-1-container {
+  .wf-how-it-works-1 .wf-hworks-1-container {
     grid-template-columns: 1fr 3fr;
     display: grid;
     gap: var(--space-s);
   }
 
-  .wf-how-it-works-1 .hworks-1-intro {
+  .wf-how-it-works-1 .wf-hworks-1-intro {
     display: flex;
     flex-direction: column;
     row-gap: var(--space-s);
@@ -1126,10 +1466,10 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
   }
 
   @media (max-width: 44rem) {
-    .wf-how-it-works-1 .hworks-1-container { grid-template-columns: 1fr; }
+    .wf-how-it-works-1 .wf-hworks-1-container { grid-template-columns: 1fr; }
     .wf-how-it-works-1 .hworks-card { flex-direction: column; }
   }
-  .wf-how-it-works-1 .hworks-1-container > :only-child { grid-column: 1 / -1; }
+  .wf-how-it-works-1 .wf-hworks-1-container > :only-child { grid-column: 1 / -1; }
 
 /* bricksmaven/feature/feature-1 */
   .wf-feature-1 .feature-1 {
@@ -1142,36 +1482,36 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
     row-gap: var(--space-s);
   }
 
-  .wf-feature-1 .feature-1-ul {
+  .wf-feature-1 .wf-feature-1-ul {
     row-gap: var(--space-xl);
   }
 
-  .wf-feature-1 .feature-1-li {
+  .wf-feature-1 .wf-feature-1-li {
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
     display: grid;
     gap: var(--space-m);
   }
 
-  .wf-feature-1 .feature-1-li__content {
+  .wf-feature-1 .wf-feature-1-li__content {
     display: flex;
     flex-direction: column;
     row-gap: var(--space-xs);
   }
 
-  .wf-feature-1 .bm-list {
+  .wf-feature-1 .wf-list {
     display: flex;
     flex-direction: column;
     gap: var(--space-s);
   }
 
-  .wf-feature-1 .bm-list__item {
+  .wf-feature-1 .wf-list__item {
     flex-direction: row;
     display: flex;
     column-gap: var(--flow-spacing);
   }
 
   @media (max-width: 44rem) {
-    .wf-feature-1 .bm-list__item { flex-direction: column; }
+    .wf-feature-1 .wf-list__item { flex-direction: column; }
   }
 
 /* bricksmaven/hero/hero-1 */
@@ -1180,30 +1520,30 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
     gap: var(--space-s);
   }
 
-  .wf-hero-1 .hero-1-container {
+  .wf-hero-1 .wf-hero-1-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
     gap: var(--space-m);
   }
 
-  .wf-hero-1 .hero-1__content {
+  .wf-hero-1 .wf-hero-1__content {
     display: flex;
     flex-direction: column;
     row-gap: var(--space-m);
   }
 
-  .wf-hero-1 .hero-1__cta {
+  .wf-hero-1 .wf-hero-1__cta {
     display: flex;
     column-gap: var(--space-xs);
   }
 
-  .wf-hero-1 .hero-1__content-trust {
+  .wf-hero-1 .wf-hero-1__content-trust {
     display: flex;
     flex-direction: column;
     row-gap: var(--space-s);
   }
 
-  .wf-hero-1 .hero-1-logo-ul {
+  .wf-hero-1 .wf-hero-1-logo-ul {
     display: flex;
     flex-direction: row;
     column-gap: var(--space-m);
@@ -1211,12 +1551,12 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
 
   @media (max-width: 44rem) {
     .wf-hero-1 .hero-1 { flex-direction: column; }
-    .wf-hero-1 .hero-1__cta { flex-direction: column; }
-    .wf-hero-1 .hero-1-logo-ul { flex-direction: column; }
+    .wf-hero-1 .wf-hero-1__cta { flex-direction: column; }
+    .wf-hero-1 .wf-hero-1-logo-ul { flex-direction: column; }
   }
 
 /* bricksmaven/counter/counter-1 */
-  .wf-counter-1 .counter-1-container {
+  .wf-counter-1 .wf-counter-1-container {
     display: flex;
     row-gap: var(--space-s);
   }
@@ -1227,40 +1567,40 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
     row-gap: var(--space-s);
   }
 
-  .wf-counter-1 .counter-1-content {
+  .wf-counter-1 .wf-counter-1-content {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
     gap: var(--space-m);
   }
 
-  .wf-counter-1 .counter-1-box {
+  .wf-counter-1 .wf-counter-1-box {
     display: flex;
     flex-direction: column;
     row-gap: var(--flow-spacing);
   }
 
-  .wf-counter-1 .counter-1-grid-ul {
+  .wf-counter-1 .wf-counter-1-grid-ul {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
     gap: var(--space-m);
   }
 
-  .wf-counter-1 .counter-1-card {
+  .wf-counter-1 .wf-counter-1-card {
     display: flex;
     flex-direction: column;
     row-gap: var(--flow-spacing);
   }
 
-  .wf-counter-1 .counter-1-card__intro {
+  .wf-counter-1 .wf-counter-1-card__intro {
     display: flex;
     flex-direction: column;
     row-gap: calc(var(--flow-spacing) / 2);
   }
 
   @media (max-width: 44rem) {
-    .wf-counter-1 .counter-1-content { grid-template-columns: 1fr; }
-    .wf-counter-1 .counter-1-container { flex-direction: column; }
+    .wf-counter-1 .wf-counter-1-content { grid-template-columns: 1fr; }
+    .wf-counter-1 .wf-counter-1-container { flex-direction: column; }
   }
-  .wf-counter-1 .counter-1-content > :only-child { grid-column: 1 / -1; }
+  .wf-counter-1 .wf-counter-1-content > :only-child { grid-column: 1 / -1; }
 
 }

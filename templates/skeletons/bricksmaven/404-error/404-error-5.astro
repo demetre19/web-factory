@@ -1,6 +1,6 @@
 ---
 /**
- * bm-404-error-5 — TRANSLATED Bricksmaven skeleton.
+ * wf-404-error-5 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (404-error-5.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -46,9 +46,9 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
 
 <div class="wf-404-error-5">
   <div class="sec-inner">
-    <div class="error-5-container">
-      <div class="error-5-wrapper">
-        <div class="error-5-box">
+    <div class="wf-error-5-container">
+      <div class="wf-error-5-wrapper">
+        <div class="wf-error-5-box">
           {head && <h1 class="text-fluid-4">{head}</h1>}
           {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
                   </div>
@@ -58,8 +58,8 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
 
         {act.label && <p class="mt-fluid-m"><a class="wf-cta-button" href={act.href}>{act.label}</a></p>}
       </div>
-      {list.length > 0 && <div class="error-5-grid-ul">{(list || []).map((it) => (
-            <div class="error-5-list-card card">
+      {list.length > 0 && <div class="wf-error-5-grid-ul">{(list || []).map((it) => (
+            <div class="wf-error-5-list-card card">
               <div>
                 <h3 class="text-fluid-1">{it.term || it.title}</h3>
                 <p class="text-fluid-0">{it.text}</p>

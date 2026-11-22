@@ -1,6 +1,6 @@
 ---
 /**
- * bm-item-qjbljr — TRANSLATED Bricksmaven skeleton.
+ * wf-item-qjbljr — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (item-qjbljr.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -47,14 +47,14 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
 
 <div class="wf-item-qjbljr">
   <div class="sec-inner">
-    <div class="contact-6-container">
-      <div class="contact-6-details">
+    <div class="wf-contact-6-container">
+      <div class="wf-contact-6-details">
         {head && <h2 class="text-fluid-2">{head}</h2>}
   {sub && <p class="mt-stack lede" set:html={inline(sub)} />}
   {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
-        {list.length > 0 && <div class="contact-6-ul-list">
+        {list.length > 0 && <div class="wf-contact-6-ul-list">
           <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
-              <div class="contact-6-list card">
+              <div class="wf-contact-6-list card">
                 {it.icon && <IconChip name={it.icon} />}
                 <div class="stack">
                   <h3 class="text-fluid-1">{it.term || it.title || it.text}</h3>
@@ -64,7 +64,7 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
             ))}</div>
         </div>}
       </div>
-      <div class="contact-6-form">
+      <div class="wf-contact-6-form">
         <form novalidate>
         </form>
       </div>

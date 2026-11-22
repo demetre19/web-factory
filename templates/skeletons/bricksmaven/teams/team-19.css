@@ -1,4 +1,4 @@
-  .wf-team-19 .bm-team-19__container {
+  .wf-team-19 .wf-team-19__container {
     row-gap: var(--space-s);
   }
 
@@ -14,23 +14,23 @@
     gap: var(--space-s);
   }
 
-  .wf-team-19 .bm-team-19-team-list {
+  .wf-team-19 .wf-team-19-team-list {
     display: grid;
     gap: var(--space-m);
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
   }
 
-  .wf-team-19 .bm-team-19-card {
+  .wf-team-19 .wf-team-19-card {
     display: grid;
     gap: var(--space-m);
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
   }
 
-  .wf-team-19 .bm-team-19-card__content {
+  .wf-team-19 .wf-team-19-card__content {
     row-gap: var(--flow-spacing);
   }
 
-  .wf-team-19 .bm-social-share {
+  .wf-team-19 .wf-social-share {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
@@ -38,5 +38,5 @@
   }
 
   @media (max-width: 44rem) {
-    .wf-team-19 .bm-social-share { flex-direction: column; }
+    .wf-team-19 .wf-social-share { flex-direction: column; }
   }

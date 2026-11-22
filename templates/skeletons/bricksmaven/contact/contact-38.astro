@@ -1,6 +1,6 @@
 ---
 /**
- * bm-contact-38 — TRANSLATED Bricksmaven skeleton.
+ * wf-contact-38 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (contact-38.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -47,13 +47,13 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
 
 <div class="wf-contact-38">
   <div class="sec-inner">
-    <div class="bm-contact-38__container">
-      <div class="bm-contact-38__intro">
+    <div class="wf-contact-38__container">
+      <div class="wf-contact-38__intro">
         {head && <h1 class="text-fluid-4">{head}</h1>}
   {sub && <p class="mt-stack lede" set:html={inline(sub)} />}
   {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
-        {list.length > 0 && <div class="bm-content-column-wrapper">{(list || []).map((it) => (
-              <div class="bm-content-column card">
+        {list.length > 0 && <div class="wf-content-column-wrapper">{(list || []).map((it) => (
+              <div class="wf-content-column card">
                 {it.icon && <IconChip name={it.icon} />}
                 <div class="stack">
                   <h3 class="text-fluid-1">{it.term || it.title || it.text}</h3>
@@ -62,9 +62,9 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
               </div>
             ))}</div>}
       </div>
-      {links.length > 0 &&       <div class="bm-contact-38-contact-data">
+      {links.length > 0 &&       <div class="wf-contact-38-contact-data">
         {links.length > 0 && <div class="grid-auto gap-fluid-m">{(links || []).map((it) => (
-            <div class="bm-contact-38-card card">
+            <div class="wf-contact-38-card card">
               {it.icon && <IconChip name={it.icon} />}
               <h3 class="text-fluid-1">{it.term || it.title}</h3>
               <p class="text-fluid-0">{it.text}</p>

@@ -1,6 +1,6 @@
 ---
 /**
- * bm-hero-72 — TRANSLATED Bricksmaven skeleton.
+ * wf-hero-72 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (hero-72.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -54,13 +54,13 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
 <div class="wf-hero-72">
   <div class="sec-inner">
     <div>
-      <div class="bm-hero-72__hero grid-auto gap-fluid-l">
-        <div class="bm-hero-72__content">
+      <div class="wf-hero-72__hero grid-auto gap-fluid-l">
+        <div class="wf-hero-72__content">
           {head && <h1 class="text-fluid-4">{head}</h1>}
           {act.label && <p class="mt-fluid-m"><a class="wf-cta-button" href={act.href}>{act.label}</a></p>}
         </div>
         {image && image.src && <figure class="ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
-        <div class="bm-hero-72__overlay">
+        <div class="wf-hero-72__overlay">
           {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
                   </div>
         {before.length > 0 && <div class="flow mt-stack">
@@ -71,7 +71,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
     </div>
     {image &&     <div>
       {image &&       <div>
-        {image &&         <div class="logo-12-list">
+        {image &&         <div class="wf-logo-12-list">
           {image &&           <div>
             {image && image.src && <figure class="ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
           </div>

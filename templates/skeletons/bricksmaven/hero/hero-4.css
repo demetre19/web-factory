@@ -1,10 +1,10 @@
-  .wf-hero-4 .hero-4__container {
+  .wf-hero-4 .wf-hero-4__container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
     gap: var(--grid-gap);
   }
 
-  .wf-hero-4 .hero-4__content {
+  .wf-hero-4 .wf-hero-4__content {
     display: flex;
     flex-direction: column;
     row-gap: var(--space-m);

@@ -1,6 +1,6 @@
 ---
 /**
- * bm-item-zxbuin — TRANSLATED Bricksmaven skeleton.
+ * wf-item-zxbuin — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (item-zxbuin.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -53,16 +53,16 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
 
 <div class="wf-item-zxbuin">
   <div class="sec-inner">
-    <div class="contact-3-container">
-      {list.length > 0 && <div class="contact-3-grid-ul">{(list || []).map((it) => (
-            <div class="contact-3-card card">
+    <div class="wf-contact-3-container">
+      {list.length > 0 && <div class="wf-contact-3-grid-ul">{(list || []).map((it) => (
+            <div class="wf-contact-3-card card">
               {it.icon && <IconChip name={it.icon} />}
               <h3 class="text-fluid-1">{it.term || it.title}</h3>
               <p class="text-fluid-0">{it.text}</p>
             </div>
           ))}</div>}
-      <div class="contact-3-footer">
-        <div class="contact-3-form">
+      <div class="wf-contact-3-footer">
+        <div class="wf-contact-3-form">
           {head && <h2 class="text-fluid-2">{head}</h2>}
           {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
           {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}

@@ -1,4 +1,4 @@
-  .wf-contact-5 .contact-5-container {
+  .wf-contact-5 .wf-contact-5-container {
     display: grid;
     gap: var(--section-space-xxl);
     grid-template-columns: 2fr 3fr;
@@ -22,7 +22,7 @@
   }
 
   @media (max-width: 44rem) {
-    .wf-contact-5 .contact-5-container { grid-template-columns: 1fr; }
+    .wf-contact-5 .wf-contact-5-container { grid-template-columns: 1fr; }
     .wf-contact-5 .cta-combo { flex-direction: column; }
   }
-  .wf-contact-5 .contact-5-container > :only-child { grid-column: 1 / -1; }
+  .wf-contact-5 .wf-contact-5-container > :only-child { grid-column: 1 / -1; }

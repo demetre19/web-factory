@@ -1,6 +1,6 @@
 ---
 /**
- * bm-testimonial-28 — TRANSLATED Bricksmaven skeleton.
+ * wf-testimonial-28 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (testimonial-28.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -55,9 +55,9 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
   <div class={image && image.src ? 'split' : undefined}>
     <div class="stack">
   <div class="sec-inner">
-    <div class="testimonial-28-container">
-      <div class="testimonial-28-content">
-        <div class="testimonial-28-content__wrapper">
+    <div class="wf-testimonial-28-container">
+      <div class="wf-testimonial-28-content">
+        <div class="wf-testimonial-28-content__wrapper">
           {head && <h2 class="text-fluid-2">{head}</h2>}
   {sub && <p class="mt-stack lede" set:html={inline(sub)} />}
   {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
@@ -76,8 +76,8 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
           {links.length > 0 &&           <div>
             {links.length > 0 && <div class="grid-auto gap-fluid-m">{(links || []).map((it) => (
                 <div class="card">
-                  <div class="testimonial-28-content__profile">
-                    <div class="testimonial-28-content__meta">
+                  <div class="wf-testimonial-28-content__profile">
+                    <div class="wf-testimonial-28-content__meta">
                       {it.icon && <IconChip name={it.icon} />}
                       <h4 class="text-fluid-1">{it.term || it.title}</h4>
                       <p class="text-fluid-0">{it.text}</p>

@@ -1,6 +1,6 @@
 ---
 /**
- * bm-hero-43 — TRANSLATED Bricksmaven skeleton.
+ * wf-hero-43 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (hero-43.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -53,14 +53,14 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
 
 <div class="wf-hero-43">
   <div class="sec-inner">
-    {head &&     <div class="hero-43-container-top">
+    {head &&     <div class="wf-hero-43-container-top">
       {head &&       <div>
         {head && <h1 class="text-fluid-4">{head}</h1>}
       </div>
       }
     </div>
     }
-    <div class="hero-43-container-footer">
+    <div class="wf-hero-43-container-footer">
       {image &&       <div>
         {image && image.src && <figure class="ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
       </div>
@@ -72,8 +72,8 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
 {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
       </div>}
 
-      {act.label &&       <div class="hero-43__cta">
-        {act.label &&         <div class="hero-43__cta-wrapper">
+      {act.label &&       <div class="wf-hero-43__cta">
+        {act.label &&         <div class="wf-hero-43__cta-wrapper">
           {act.label && <p class="mt-fluid-m"><a class="wf-cta-button" href={act.href}>{act.label}</a></p>}
         </div>
         }

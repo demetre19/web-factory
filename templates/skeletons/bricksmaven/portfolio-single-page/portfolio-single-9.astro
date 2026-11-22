@@ -1,6 +1,6 @@
 ---
 /**
- * bm-portfolio-single-9 — TRANSLATED Bricksmaven skeleton.
+ * wf-portfolio-single-9 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (portfolio-single-9.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -54,7 +54,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
 <div class="wf-portfolio-single-9">
   <div class="sec-inner">
     <div class="grid-auto gap-fluid-l">
-      <div class="bm-portfolio-single-9__content">
+      <div class="wf-portfolio-single-9__content">
         {head && <h1 class="text-fluid-4">{head}</h1>}
         {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
               </div>
@@ -65,7 +65,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
       {image && image.src && <figure class="media-bg" aria-hidden="true"><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[960, 1440, 1920]} sizes="100vw" width={1600} height={900} loading="eager" fetchpriority="high" /></figure>}
     </div>
     <div>
-      <div class="bm-portfolio-single-media-list-2col">
+      <div class="wf-portfolio-single-media-list-2col">
         {image &&         <div>
           {image && image.src && <figure class="ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
         </div>
@@ -77,16 +77,16 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
       </div>
     </div>
     <div class="grid-auto gap-fluid-l">
-      {act.label &&       <div class="bm-contact-widget-9">
+      {act.label &&       <div class="wf-contact-widget-9">
         {act.label && <p class="mt-fluid-m"><a class="wf-cta-button" href={act.href}>{act.label}</a></p>}
       </div>
       }
       {image && image.src && <figure class="media-bg" aria-hidden="true"><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[960, 1440, 1920]} sizes="100vw" width={1600} height={900} loading="eager" fetchpriority="high" /></figure>}
     </div>
-    {links.length > 0 &&     <div class="bm-portfolio-single-9__footer-container">
-      {links.length > 0 && <div class="bm-portfolio-7-related-list">{(links || []).map((it) => (
-            <div class="bm-portfolio-7-related-card card">
-              <div class="bm-portfolio-7-related-card__content">
+    {links.length > 0 &&     <div class="wf-portfolio-single-9__footer-container">
+      {links.length > 0 && <div class="wf-portfolio-7-related-list">{(links || []).map((it) => (
+            <div class="wf-portfolio-7-related-card card">
+              <div class="wf-portfolio-7-related-card__content">
                 {it.icon && <IconChip name={it.icon} />}
                 <h3 class="text-fluid-1">{it.term || it.title}</h3>
                 <h3 class="text-fluid-1"><a class="text-fluid-0" href={it.href}>{it.icon && <IconChip name={it.icon} />} {it.label || it.term || it.anchor || it.text}</a></h3>

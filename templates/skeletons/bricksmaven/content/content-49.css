@@ -1,4 +1,4 @@
-  .wf-content-49 .bm-content-49__container {
+  .wf-content-49 .wf-content-49__container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
     gap: var(--space-m);
@@ -21,11 +21,11 @@
     column-gap: var(--flow-spacing);
   }
 
-  .wf-content-49 .bm-content-49__content {
+  .wf-content-49 .wf-content-49__content {
     row-gap: var(--flow-spacing);
   }
 
-  .wf-content-49 .bm-content-49__media {
+  .wf-content-49 .wf-content-49__media {
     column-gap: var(--flow-spacing);
     row-gap: var(--flow-spacing);
     flex-direction: row;
@@ -35,5 +35,5 @@
 
   @media (max-width: 44rem) {
     .wf-content-49 .cta-combo { flex-direction: column; }
-    .wf-content-49 .bm-content-49__media { flex-direction: column; }
+    .wf-content-49 .wf-content-49__media { flex-direction: column; }
   }

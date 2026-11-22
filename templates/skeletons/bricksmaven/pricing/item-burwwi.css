@@ -1,4 +1,4 @@
-  .wf-item-burwwi .pricing-9-container {
+  .wf-item-burwwi .wf-pricing-9-container {
     display: flex;
     row-gap: var(--space-l);
   }
@@ -14,25 +14,25 @@
     column-gap: var(--space-xs);
   }
 
-  .wf-item-burwwi .pricing-9-content {
+  .wf-item-burwwi .wf-pricing-9-content {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
     gap: var(--space-s);
   }
 
-  .wf-item-burwwi .pricing-9-card {
+  .wf-item-burwwi .wf-pricing-9-card {
     flex-direction: column;
     display: flex;
     gap: var(--space-s);
   }
 
-  .wf-item-burwwi .pricing-9-card__box {
+  .wf-item-burwwi .wf-pricing-9-card__box {
     display: flex;
     row-gap: var(--space-s);
     flex-direction: column;
   }
 
   @media (max-width: 44rem) {
-    .wf-item-burwwi .pricing-9-container { flex-direction: column; }
+    .wf-item-burwwi .wf-pricing-9-container { flex-direction: column; }
     .wf-item-burwwi .cta-combo { flex-direction: column; }
   }

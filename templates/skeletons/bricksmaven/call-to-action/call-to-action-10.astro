@@ -1,6 +1,6 @@
 ---
 /**
- * bm-call-to-action-10 — TRANSLATED Bricksmaven skeleton.
+ * wf-call-to-action-10 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (call-to-action-10.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -53,21 +53,21 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
 
 <div class="wf-call-to-action-10">
   <div class="sec-inner">
-    <div class="cta-10-container">
-      <div class="cta-10-content">
-        {head &&         <div class="cta-10-heading">
+    <div class="wf-cta-10-container">
+      <div class="wf-cta-10-content">
+        {head &&         <div class="wf-cta-10-heading">
           {head && <h2 class="text-fluid-2">{head}</h2>}
         </div>
         }
   {sub && <p class="mt-stack lede" set:html={inline(sub)} />}
   {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
-        {act.label &&         <div class="hero-1__cta">
+        {act.label &&         <div class="wf-hero-1__cta">
           {act.label && <p class="mt-fluid-m"><a class="wf-cta-button" href={act.href}>{act.label}</a></p>}
         </div>
         }
       </div>
       {image &&       <div>
-        {image && image.src && <figure class="ratio-portrait" aria-label={image.alt || null}><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
+        {image && image.src && <figure class="ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
       </div>
       }
     </div>

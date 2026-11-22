@@ -4,7 +4,7 @@
  */
 
 /**
- * bm-shop-header-1 — TRANSLATED Bricksmaven skeleton.
+ * wf-shop-header-1 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (shop-header-1.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -53,7 +53,7 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
   {sub && <p class="mt-stack lede" set:html={inline(sub)} />}
   {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
   <div class="sec-inner">
-    <div class="bm-shop-header-1__container">
+    <div class="wf-shop-header-1__container">
       <div>
         <span class="logo brand-mark">{brand}</span>
       </div>
@@ -61,8 +61,8 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
         {list.length > 0 && <nav class="nav-links" aria-label="Primary"><button class="nav-close" type="button" aria-label="Close menu">&times;</button><ul class="row gap-fluid-m list-plain">{(list || []).map((it) => <li><a class="nav-link" href={it.href}>{it.label || it.term || it.title || it.text}</a></li>)}</ul></nav>}
         {list.length > 0 && <button class="burger" type="button" aria-label="Menu"><span aria-hidden="true">&#9776;</span></button>}
       </div>
-      {act.label &&       <div class="bm-shop-header-1__end">
-        {act.label &&         <div class="bm-shop-header-1__login-wrapper">
+      {act.label &&       <div class="wf-shop-header-1__end">
+        {act.label &&         <div class="wf-shop-header-1__login-wrapper">
           {act.label && <p class="mt-fluid-m"><a class="wf-cta-button" href={act.href}>{act.label}</a></p>}
         </div>
         }

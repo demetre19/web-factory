@@ -1,6 +1,6 @@
 ---
 /**
- * bm-comparison-1 — TRANSLATED Bricksmaven skeleton.
+ * wf-comparison-1 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (comparison-1.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -55,7 +55,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
   <div class={image && image.src ? 'split' : undefined}>
     <div class="stack">
   <div class="sec-inner">
-    <div class="bm-conparison-1__container">
+    <div class="wf-conparison-1__container">
       <div class="intro">
         {head && <h2 class="text-fluid-2">{head}</h2>}
         {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
@@ -64,18 +64,18 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
 {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
       </div>}
 
-      {list.length > 0 && <div class="bm-conparison-1-list">{(list || []).map((it) => (
-            <div class="bm-conparison-1-card card">
-              <div class="bm-conparison-status">
+      {list.length > 0 && <div class="wf-conparison-1-list">{(list || []).map((it) => (
+            <div class="wf-conparison-1-card card">
+              <div class="wf-conparison-status">
                 {it.icon && <IconChip name={it.icon} />}
                 <div class="stack">
                   <h3 class="text-fluid-1">{it.term || it.title || it.text}</h3>
                   {it.text && (it.term || it.title) && <p class="text-fluid-0">{it.text}</p>}
                 </div>
               </div>
-              {(it.items || []).length > 0 && <div class="bm-list">
+              {(it.items || []).length > 0 && <div class="wf-list">
                 <div class="grid-auto gap-fluid-m">{((it.items || []) || []).map((it2) => (
-                    <div class="bm-list-item card">
+                    <div class="wf-list-item card">
                       {it2.icon && <IconChip name={it2.icon} />}
                       <div class="stack">
                         <h3 class="text-fluid-1">{it2.term || it2.title || it2.text}</h3>
@@ -86,7 +86,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
               </div>}
             </div>
           ))}</div>}
-      {act.label &&       <div class="bm-conparison-1__footer">
+      {act.label &&       <div class="wf-conparison-1__footer">
         {act.label &&         <div class="cta-combo">
           {act.label && <p class="mt-fluid-m"><a class="wf-cta-button" href={act.href}>{act.label}</a></p>}
         </div>
@@ -96,7 +96,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
     </div>
   </div>
     </div>
-    {image && image.src && <div class="media-round" data-ratio={image.ratio || null} aria-label={image.alt || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div>}
+    {image && image.src && <div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div>}
   </div>
   {qas.length > 0 && <dl class="mt-stack">{qas.map((qa) => <><dt class="text-fluid-0" set:html={inline(qa.q)} /><dd class="text-fluid-0" set:html={inline(qa.a)} /></>)}</dl>}
   {links.length > 0 && <div class="flow mt-stack">{links.map((l) => <p class="text-fluid-0" set:html={inline(l.text || `[${l.anchor}](${l.href})`)} />)}</div>}
