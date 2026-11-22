@@ -3336,6 +3336,11 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
   #top{gap:6px}
   #top .who{max-width:130px;text-overflow:ellipsis}
   #vwCtl{display:none}
+  .saves{flex-wrap:wrap}
+  .saves input{flex:1 1 140px;min-width:0}
+  .ssq{flex:1 1 100%;min-width:0}
+  .ssrow{grid-template-columns:minmax(0,1fr) auto auto;gap:8px 10px}
+  .ssrow .ssm{display:none}
 }
 .rmgrid{display:flex;flex-direction:column;gap:14px;max-width:920px}
 .rmslot{display:grid;grid-template-columns:20px minmax(0,1fr) 30px minmax(90px,170px) 46px;
@@ -3570,9 +3575,9 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
     el.innerHTML=h;
     el.querySelectorAll('.ritem').forEach(function(b){
       b.onclick=function(){CUR=b.dataset.k;FILT={};SEL=0;ROW=0;
-        if(innerWidth<761)
+        if(innerWidth<=1024){
           document.getElementById('rail').classList.remove('open');
-          document.getElementById('scrim').classList.remove('open');
+          document.getElementById('scrim').classList.remove('open')}
         rail();board()}});
   }
 
