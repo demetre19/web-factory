@@ -34,7 +34,7 @@ import gate          # noqa: E402
 BASE_THRESHOLDS = {
     'image_coverage':      {'fail': 0.03, 'warn': 0.06},
     'section_count':       {'fail': 4,    'warn': 6},
-    'contrast_min_ratio':  {'fail': 3.0,  'warn': 4.5},
+    'contrast_min_ratio':  {'fail': 4.5,  'warn': 7.0},
     'tap_target_min_px':   {'fail': 12,   'warn': 24},
     'cta_count':           {'fail': 1,    'warn': 2},
     'proof_surfaces':      {'fail': 0,    'warn': 1},

@@ -117,12 +117,28 @@ VIBE_FAMILIES = {
     'baseline': {
         'name': 'Baseline', 'genes': ['as-designed', 'dna-true'],
         'desc': "the pipeline's own DNA — no overrides",
-        'css': '', 'css_dark': '', 'theme': None},
+        'css': '', 'css_dark': '', 'shape': '', 'theme': None},
     'noir': {
         'name': 'Noir', 'genes': ['dark-first', 'flat', 'sharp'],
         'desc': 'dark-dominant, zero radius, cyan accent',
+        'shape': '.wf-hero-1 .hero-1-container{position:relative;'
+                 'display:grid;place-items:center;min-height:64vh}'
+                 '.wf-hero-1 figure.ratio-portrait{position:absolute;'
+                 'inset:0;margin:0;width:100%}'
+                 '.wf-hero-1 figure.ratio-portrait .media-round{'
+                 'height:100%;width:100%;border-radius:0}'
+                 '.wf-hero-1 figure.ratio-portrait img{height:100%;'
+                 'width:100%;object-fit:cover}'
+                 '.wf-hero-1 .hero-1__content{position:relative;'
+                 'z-index:1;'
+                 'padding:var(--space-l);width:100%;text-align:center;'
+                 'background:linear-gradient(0deg,rgb(0 0 0/.78),'
+                 'rgb(0 0 0/.30))}'
+                 '.wf-hero-1 .hero-1__content :where(h1,p){color:#fff}'
+                 '.wf-hero-1 .hero-1__cta p{display:flex;'
+                 'justify-content:center}',
         'css': '--radius:0;--primitive-radius:0;--r-card:0;'
-               '--action-primary:#22D3EE;--action-primary-hover:#0891B2;'
+               '--action-primary:#0E7490;--action-primary-hover:#155E75;'
                '--shadow-card:none;--shadow-pop:none;',
         'css_dark': '--bg-canvas:#0B0B0D;--bg-surface:#131316;'
                     '--bg-elevated:#1B1B1F;--border-default:#2A2A30;'
@@ -134,6 +150,11 @@ VIBE_FAMILIES = {
     'paper': {
         'name': 'Paper', 'genes': ['serif', 'spacious', 'quiet'],
         'desc': 'serif display, one rung more air, forest accent',
+        'shape': '.wf-hero-1 .hero-1-container{display:block}'
+                 '.wf-hero-1 figure{display:none}'
+                 '.wf-hero-1 .hero-1__content{max-width:46rem}'
+                 '.card{box-shadow:none;border-top:1px solid '
+                 'var(--border-default)}',
         'css': '--primitive-font-display:Georgia,"Times New Roman",'
                'serif;--font-display:Georgia,"Times New Roman",serif;'
                '--flow-spacing:var(--space-l);--grid-gap:var(--space-l);'
@@ -160,6 +181,12 @@ VIBE_FAMILIES = {
     'gloss': {
         'name': 'Gloss', 'genes': ['rounded', 'elevated', 'vivid'],
         'desc': 'big radius, real shadows, violet accent',
+        'shape': '.wf-hero-1 .hero-1-container{display:flex;'
+                 'flex-direction:row-reverse;align-items:center;'
+                 'gap:var(--space-l)}'
+                 '.wf-hero-1 figure{flex:1}'
+                 '.wf-hero-1 .hero-1__content{flex:1}'
+                 '.wf-hero-1 .media-round{border-radius:2rem}',
         'css': '--radius:1.125rem;--primitive-radius:1.125rem;'
                '--r-card:1.125rem;--action-primary:#7C3AED;'
                '--action-primary-hover:#6D28D9;'
@@ -178,6 +205,11 @@ VIBE_FAMILIES = {
     'tight': {
         'name': 'Tight', 'genes': ['dense', 'compact', 'small-type'],
         'desc': 'one rung tighter, hairline radius, restrained',
+        'shape': '.wf-hero-1 .hero-1-container{display:grid;'
+                 'grid-template-columns:3fr 1fr;gap:var(--space-m);'
+                 'align-items:center}'
+                 '.counter-1-grid-ul,.gridcard-1-grid-ul{'
+                 'grid-template-columns:repeat(4,1fr)!important}',
         'css': '--radius:2px;--primitive-radius:2px;--r-card:2px;'
                '--flow-spacing:var(--space-s);--grid-gap:var(--space-s);'
                '--content-gap:var(--space-s);'
@@ -197,6 +229,13 @@ VIBE_FAMILIES = {
     'warm': {
         'name': 'Warm', 'genes': ['terracotta', 'soft', 'inviting'],
         'desc': 'warm neutrals + terracotta accent, both modes',
+        'shape': '.wf-hero-1 .hero-1-container{display:block;'
+                 'text-align:center}'
+                 '.wf-hero-1 figure{max-width:34rem;'
+                 'margin:var(--space-l) auto 0}'
+                 '.wf-hero-1 .hero-1__cta p{display:flex;'
+                 'justify-content:center}'
+                 '.wf-hero-1 .media-round{border-radius:1.5rem}',
         'css': '--bg-canvas:#FBF6F0;--bg-surface:#F4EDE4;'
                '--bg-elevated:#EBE2D6;--border-default:#E0D4C4;'
                '--text-primary:#38302A;--text-secondary:#7A6C5E;'
@@ -213,6 +252,13 @@ VIBE_FAMILIES = {
     'mono': {
         'name': 'Mono', 'genes': ['grayscale', 'flat', 'system'],
         'desc': 'accent removed, hairline grid, system type',
+        'shape': '.wf-hero-1 .hero-1-container{display:block}'
+                 '.wf-hero-1 figure{display:none}'
+                 '.wf-hero-1 h1{text-transform:uppercase;'
+                 'letter-spacing:-.02em;border-bottom:3px solid '
+                 'var(--text-primary);padding-bottom:.4rem}'
+                 '.card{border:1px solid var(--border-default);'
+                 'box-shadow:none}',
         'css': '--primitive-font-display:ui-sans-serif,system-ui,'
                'sans-serif;--font-display:ui-sans-serif,system-ui,'
                'sans-serif;--primitive-font-body:ui-sans-serif,'
@@ -235,6 +281,13 @@ VIBE_FAMILIES = {
     'editorial': {
         'name': 'Editorial', 'genes': ['big-type', 'serif', 'red'],
         'desc': 'oversized serif display, crimson accent',
+        'shape': '.wf-hero-1 .hero-1-container{display:grid;'
+                 'grid-template-columns:1.6fr 1fr;'
+                 'gap:var(--space-l);align-items:end}'
+                 '.wf-hero-1 h1{border-left:6px solid '
+                 'var(--action-primary);padding-left:.5em}'
+                 '.counter-1-card,.gridcard-1-card{border-top:2px '
+                 'solid var(--border-default);box-shadow:none}',
         'css': '--primitive-font-display:Georgia,"Times New Roman",'
                'serif;--font-display:Georgia,"Times New Roman",serif;'
                '--h1:calc(var(--text-xxl)*1.9);'
@@ -512,11 +565,37 @@ def _topo_variants(block, comp):
     return out
 
 
+# the menu trigger is a designed affordance, not a text pill — the
+# bank's .burger renders "Menu" text; this turns it into a hamburger
+# icon button bound to tokens, applied to every emitted preview doc
+_CHROME_CSS = (
+    '.burger{display:inline-flex;align-items:center;'
+    'justify-content:center;width:44px;height:44px;min-width:44px;'
+    'min-height:44px;padding:0!important;font-size:0!important;'
+    'border:1px solid var(--border-default);'
+    'border-radius:var(--radius,10px);background:var(--bg-elevated);'
+    'color:var(--text-primary);box-shadow:none!important;'
+    'cursor:pointer}'
+    '.burger::after{content:"";width:20px;height:14px;'
+    'background:repeating-linear-gradient(to bottom,'
+    'currentColor 0 2px,transparent 2px 6px)}')
+
+
 def _doc(head, battr, inner, extra='', css=''):
-    style = ('<style>' + css + '</style>') if css else ''
+    style = '<style>' + _CHROME_CSS + (css or '') + '</style>'
     return ('<!doctype html><html lang="en"><head>' + head + style +
             '</head><body' + (battr or '') + '>' + inner + extra +
             '</body></html>')
+
+
+def _fam_css(f):
+    """a family's full bundle: :root overrides + dark overrides +
+    the structural 'shape' layer (per-family hero topology /
+    arrangement, derived since the bank has one hero skeleton)."""
+    return ('' if not f['css'] else
+            ':root{' + f['css'] + '}'
+            '[data-theme="dark"]{' + f['css_dark'] + '}'
+            + (f.get('shape') or ''))
 
 
 def emit_vibe_previews(pd):
@@ -534,9 +613,7 @@ def emit_vibe_previews(pd):
     os.makedirs(outdir, exist_ok=True)
     emitted = {}
     for fam, f in VIBE_FAMILIES.items():
-        css = ('' if not f['css'] else
-               ':root{' + f['css'] + '}'
-               '[data-theme="dark"]{' + f['css_dark'] + '}')
+        css = _fam_css(f)
         theme = ('<script>document.documentElement.dataset.theme='
                  '"dark";document.documentElement.classList.add('
                  '"dark")</script>' if f['theme'] == 'dark' else '')
@@ -1063,6 +1140,124 @@ def _composition_board(pd):
 # ------------------------------------------------------------------
 # the /app-data payload
 # ------------------------------------------------------------------
+# ------------------------------------------------------------------
+# WCAG 2.1 contrast audit — the app-side complement to measure.py's
+# contrast_min_ratio DOM scan: computed per vibe family x mode from
+# the var bundles so a failing family is flagged before it is baked.
+# thresholds: 4.5 normal text, 3.0 UI/large (CTA ink on accent)
+# ------------------------------------------------------------------
+_CONTRAST_ROLES = ('text-primary', 'text-secondary', 'bg-canvas',
+                   'bg-surface', 'bg-elevated', 'action-primary',
+                   'action-primary-ink')
+_CONTRAST_PAIRS = (
+    ('text-primary', 'bg-canvas', 4.5),
+    ('text-secondary', 'bg-canvas', 4.5),
+    ('text-primary', 'bg-surface', 4.5),
+    ('text-primary', 'bg-elevated', 4.5),
+    ('action-primary', 'bg-canvas', 4.5),
+    ('action-primary-ink', 'action-primary', 3.0))
+
+
+def _rgb(v):
+    v = (v or '').strip()
+    m = re.match(r'#([0-9a-fA-F]{3,8})$', v)
+    if m:
+        h = m.group(1)
+        if len(h) in (3, 4):
+            h = ''.join(c * 2 for c in h[:3])
+        return tuple(int(h[i:i + 2], 16) for i in (0, 2, 4))
+    m = re.match(r'rgba?\(([^)]+)\)', v)
+    if m:
+        p = [x.strip() for x in m.group(1).split(',')]
+        try:
+            return tuple(int(float(x)) for x in p[:3])
+        except ValueError:
+            return None
+    return None
+
+
+def _ratio(fg, bg):
+    def lum(c):
+        def f(x):
+            x /= 255.0
+            return x / 12.92 if x <= 0.03928 \
+                else ((x + .055) / 1.055) ** 2.4
+        return .2126 * f(c[0]) + .7152 * f(c[1]) + .0722 * f(c[2])
+    a, b = lum(fg), lum(bg)
+    return (max(a, b) + .05) / (min(a, b) + .05)
+
+
+def _site_roles(pd):
+    """semantic role literals from the built _astro css,
+    {mode: {role: value}} — var() chains resolved inside the block."""
+    adir = os.path.join(pd, 'site', 'dist', '_astro')
+    css = ''
+    if os.path.isdir(adir):
+        for fn in os.listdir(adir):
+            if fn.endswith('.css'):
+                try:
+                    with open(os.path.join(adir, fn)) as fh:
+                        css += fh.read()
+                except OSError:
+                    pass
+    out = {}
+    for mode, pat in (('light', r':root\s*\{'),
+                      ('dark', r'\[data-theme=dark\]\s*\{')):
+        decls = {}
+        for m in re.finditer(pat + r'([^}]*)\}', css):
+            decls.update(dict(re.findall(r'--([\w-]+)\s*:\s*([^;]+);',
+                                         m.group(1))))
+        row = {}
+        for role in _CONTRAST_ROLES:
+            v, seen = decls.get(role), 0
+            while v and v.strip().startswith('var(') and seen < 6:
+                seen += 1
+                r2 = re.match(r'var\(--([\w-]+)', v.strip())
+                v = decls.get(r2.group(1)) if r2 else None
+            # color-mix(in oklch, A tint%, B amt%): resolve the
+            # dominant var — the mix only tints ~5%, close enough
+            # for an audit flag
+            while v and v.strip().startswith('color-mix(') and seen < 12:
+                seen += 1
+                r2 = re.search(r'var\(--([\w-]+)', v)
+                v = decls.get(r2.group(1)) if r2 else None
+                while v and v.strip().startswith('var(') and seen < 12:
+                    seen += 1
+                    r2 = re.match(r'var\(--([\w-]+)', v.strip())
+                    v = decls.get(r2.group(1)) if r2 else None
+            if v:
+                row[role] = v.strip()
+        out[mode] = row
+    return out
+
+
+def contrast_audit(pd):
+    """{fam: {mode: {min, fails[]}}} — every family's effective role
+    literals (site baseline + family overrides) checked per pair."""
+    base = _site_roles(pd)
+    out = {}
+    for fam, f in VIBE_FAMILIES.items():
+        row = {}
+        for mode, key in (('light', 'css'), ('dark', 'css_dark')):
+            over = dict(re.findall(r'--([\w-]+)\s*:\s*([^;]+);',
+                                   f.get(key) or ''))
+            roles = dict(base.get(mode) or {})
+            roles.update(over)
+            fails, mn = [], 99.0
+            for fg, bg, th in _CONTRAST_PAIRS:
+                a, b = _rgb(roles.get(fg)), _rgb(roles.get(bg))
+                if not a or not b:
+                    continue
+                r = _ratio(a, b)
+                mn = min(mn, r)
+                if r < th:
+                    fails.append(f'{fg}/{bg} {r:.1f}<{th:g}')
+            row[mode] = {'min': round(mn, 2) if mn < 99 else None,
+                         'fails': fails}
+        out[fam] = row
+    return out
+
+
 def app_data(pipeline):
     ctx = G.Ctx(pipeline)
     pd = ctx.dir
@@ -1070,6 +1265,7 @@ def app_data(pipeline):
         return None, f'pipeline {pipeline} not found'
     emitted = emit_element_previews(pd)
     vibes_emitted = emit_vibe_previews(pd)
+    contrast = contrast_audit(pd)
     scrub, bank_depth = emit_section_fragments(pd)
     cards = _picker_cards(ctx, pd)
     epicks = {p.get('element'): p.get('variant')
@@ -1155,6 +1351,7 @@ def app_data(pipeline):
                         if t in _VIBE_MOODS.get(fam, ())],
                    'genes': f['genes'],
                    'desc': f['desc'], 'element': 'vibe',
+                   'contrast': contrast.get(fam),
                    'variant': fam}
                   for fam, f in VIBE_FAMILIES.items()]}
     # step 2 — LAYOUT: whole-page scrub over section topologies,
@@ -1193,6 +1390,7 @@ def app_data(pipeline):
             'bank_depth': bank_depth,
             'palette': _palette(galleries),
             'saved_systems': list_systems(pd),
+            'contrast': contrast,
             'design': {
                 'site': dna.get('site') or pd.rsplit('/', 3)[-3],
                 'brand': (brief.get('brand') or {}).get('name'),
@@ -1255,10 +1453,11 @@ def _palette(galleries):
             'skeleton_backlog': backlog}
 
 
-def save_system(pipeline, name):
+def save_system(pipeline, name, mode=None):
     """Persist the current combination — vibe + element + section
-    picks — as a named design-system file under SAVED-SYSTEMS/ in
-    the pipeline dir, in the set format (DNA-bound, reloadable)."""
+    picks + the chosen default mode — as a named design-system file
+    under SAVED-SYSTEMS/ in the pipeline dir, in the set format
+    (DNA-bound, reloadable)."""
     slug = re.sub(r'[^a-z0-9-]+', '-', (name or '').lower()) \
         .strip('-')[:48]
     if not slug:
@@ -1280,6 +1479,7 @@ def save_system(pipeline, name):
            'dna': {'site': dna.get('site'),
                    'vertical_profile': dna.get('vertical_profile'),
                    'genotype': dna.get('genotype')},
+           'default_mode': mode or 'light',
            'picks': picks,
            'created': datetime.datetime.now().isoformat(
                timespec='seconds')}
@@ -1300,6 +1500,7 @@ def list_systems(pd):
             d = _json_at(sdir, fn) or {}
             out.append({'slug': fn[:-5], 'name': d.get('name'),
                         'vibe': d.get('vibe'), 'genes': d.get('genes'),
+                        'default_mode': d.get('default_mode'),
                         'picks': [{'element': p.get('element'),
                                    'variant': p.get('variant')}
                                   for p in d.get('picks', [])],
@@ -1344,11 +1545,15 @@ def record_element_pick(pipeline, element, variant):
 # the shell — emitted, token-driven, dark default
 # ------------------------------------------------------------------
 _SHELL = r"""<!doctype html>
-<html lang="en" data-theme="dark">
+<html lang="en" data-theme="light">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>web-factory · picker</title>
+<script>try{document.documentElement.dataset.theme=
+ localStorage.getItem('wfapp-theme')||
+ (matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light')
+}catch(e){document.documentElement.dataset.theme='light'}</script>
 <style>
 :root{
   --font:ui-sans-serif,system-ui,'Segoe UI',Roboto,sans-serif;
@@ -1398,6 +1603,17 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
      color:var(--ink);border-radius:999px;padding:6px 12px;
      font:600 12px var(--font);cursor:pointer}
 #themeBtn:hover{border-color:var(--line-2)}
+#vwCtl{display:flex;border:1px solid var(--line);border-radius:999px;
+     overflow:hidden}
+#vwCtl button{border:0;background:var(--panel);color:var(--muted);
+     padding:6px 10px;font:600 11px var(--font);cursor:pointer}
+#vwCtl button.on{background:var(--accent);color:var(--accent-ink)}
+.card .cb iframe,.srow iframe{max-width:var(--vw,100%);
+     margin-inline:auto}
+.aa{display:inline-block;padding:2px 8px;border-radius:999px;
+    font:600 10.5px var(--mono);border:1px solid var(--line);
+    color:var(--muted);background:var(--panel)}
+.aa.bad{color:var(--bad);border-color:var(--bad)}
 
 /* --- rail --- */
 #rail{background:var(--bg-2);border-right:1px solid var(--line);
@@ -1449,7 +1665,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
      color:var(--muted)}
 .card .cb{position:relative;background:var(--bg);min-height:64px}
 .card .cb iframe{display:block;width:100%;height:430px;border:0}
-.card.mobile .cb iframe{max-width:340px;margin:0 auto;
+.card.mobile .cb iframe{max-width:var(--vw,340px);margin:0 auto;
      border-left:1px solid var(--line);
      border-right:1px solid var(--line)}
 .card .cb .noprev{display:grid;place-items:center;height:120px;
@@ -1531,6 +1747,9 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
     <div class="who"><span id="whoName">picker</span>
       <small id="whoSub">design-file not loaded</small></div>
     <div class="sp"></div>
+    <div id="vwCtl" title="preview breakpoint — applies to every preview">
+      <button data-w="340px">M</button><button data-w="700px">T</button>
+      <button data-w="100%" class="on">D</button></div>
     <div id="topChips"></div>
     <button id="themeBtn" type="button">light</button>
   </div>
@@ -1565,20 +1784,33 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
       ?u.replace('/built/','/frame/'+BAKED+'/'):u;
   }
 
-  // theme
-  function setTheme(m){
+  // theme — explicit choice (stored) beats the OS setting;
+  // without one the app follows prefers-color-scheme, light by default
+  function applyTheme(m){
     document.documentElement.dataset.theme=m;
     document.getElementById('themeBtn').textContent =
       m==='dark'?'light':'dark';
-    try{localStorage.setItem('wfapp-theme',m)}catch(e){}
     // propagate into live previews — built pages honour ?theme=
     document.querySelectorAll('.card iframe[data-src],.srow iframe').forEach(
-      function(f){var u=f.dataset.src.split('?')[0];
+      function(f){var u=(f.dataset.src||f.src).split('?')[0];
         f.src=u+(m==='dark'?'?theme=dark':'')});
   }
+  function setTheme(m){applyTheme(m);
+    try{localStorage.setItem('wfapp-theme',m)}catch(e){}}
   document.getElementById('themeBtn').onclick=function(){
     setTheme(document.documentElement.dataset.theme==='dark'
       ?'light':'dark')};
+  try{matchMedia('(prefers-color-scheme: dark)').addEventListener(
+    'change',function(e){
+      if(!localStorage.getItem('wfapp-theme'))
+        applyTheme(e.matches?'dark':'light')})}catch(e){}
+
+  // one global preview breakpoint — M/T/D, every frame at once
+  document.querySelectorAll('#vwCtl button').forEach(function(b){
+    b.onclick=function(){
+      document.querySelectorAll('#vwCtl button').forEach(
+        function(x){x.classList.toggle('on',x===b)});
+      document.documentElement.style.setProperty('--vw',b.dataset.w)}});
 
   var ICON={
     home:'<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M2 7l6-5 6 5v6a1 1 0 01-1 1H3a1 1 0 01-1-1z"/></svg>',
@@ -1662,14 +1894,19 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
       // vibe cards carry their own family bundle — never reframe
       // them through the baked vibe
       var src=c.element==='vibe'?c.preview:frame(c.preview);
-      h+='<div class="vp"><button data-w="340">M</button>'+
-         '<button data-w="700">T</button><button class="on" data-w="">D</button></div>'+
-         '<iframe data-src="'+esc(src)+'" src="'+esc(src)+
+      h+='<iframe data-src="'+esc(src)+'" src="'+esc(src)+
          '" loading="lazy" title="'+esc(c.name)+'"></iframe>';
     }else{
       h+='<div class="noprev">in the bank — not emitted by this '+
          'plan\'s build yet</div>';}
     if(c.desc)h+='<div class="desc">'+esc(c.desc)+'</div>';
+    if(c.contrast){var ca=c.contrast||{},bad=false,mn=[];
+      ['light','dark'].forEach(function(md){var v=ca[md]||{};
+        if(v.min!=null){mn.push(v.min);
+          if((v.fails||[]).length)bad=true}});
+      if(mn.length)h+='<span class="aa'+(bad?' bad':'')+'" title="'+esc(
+        ((ca.light||{}).fails||[]).concat((ca.dark||{}).fails||[]).join('; ')
+        ||'WCAG AA min ratio')+'">AA '+mn.join('/')+(bad?' ✗':'')+'</span>'}
     h+='</div><div class="cf"><div class="tags">'+
        tags.map(function(t){return '<span class="tag">'+esc(t)+'</span>'}).join('')+
        '</div>';
@@ -1755,6 +1992,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
          '<span class="nm">'+esc(s.name||s.slug)+'</span>'+
          '<span class="score">'+esc(s.vibe||'')+'</span></div>'+
          '<div class="cb"><div class="desc">'+
+         (s.default_mode?'default '+esc(s.default_mode)+' · ':'')+
          (s.picks||[]).map(function(p){
            return esc(p.element)+' → '+esc(p.variant)}).join(' · ')+
          '</div></div><div class="cf">'+
@@ -1767,7 +2005,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
     var save=document.getElementById('sysSave');
     if(save)save.onclick=function(){
       var nm=document.getElementById('sysName').value;
-      api('/save-system',{pipeline:PIPELINE,name:nm}).then(function(j){
+      api('/save-system',{pipeline:PIPELINE,name:nm,
+        mode:document.documentElement.dataset.theme}).then(function(j){
         toast(j.message||(j.ok?'saved':'refused'));
         if(j.ok){DATA.saved_systems=(DATA.saved_systems||[]).concat([{
           slug:(nm||'').toLowerCase().replace(/[^a-z0-9-]+/g,'-').
@@ -1845,15 +2084,9 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
       b.onclick=function(){var t=b.dataset.f;
         if(!t)FILT={};else if(FILT[t])delete FILT[t];
         else FILT[t]=1;board()}});
-    el.querySelectorAll('.card .vp button').forEach(function(b){
-      b.onclick=function(){
-        b.parentElement.querySelectorAll('button').forEach(
-          function(x){x.classList.toggle('on',x===b)});
-        var f=b.closest('.cb').querySelector('iframe');
-        f.style.maxWidth=b.dataset.w?b.dataset.w+'px':'100%'}});
     el.querySelectorAll('.pick').forEach(function(b){
       b.onclick=function(){doPick(b)}});
-    setTheme(document.documentElement.dataset.theme);
+    applyTheme(document.documentElement.dataset.theme);
   }
 
   // keyboard scrub — ←/→ moves card selection on boards,
@@ -1907,8 +2140,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
   // boot
   fetch('/page-token').then(function(r){return r.json()}).then(function(t){
     window.__wfTok=t.token;
-    try{var m=localStorage.getItem('wfapp-theme');
-      if(m)setTheme(m==='dark'?'dark':'light')}catch(e){}
+    applyTheme(document.documentElement.dataset.theme||'light');
     if(!PIPELINE){
       document.getElementById('board').innerHTML=
         '<h1>picker</h1><div class="desc">open with '+

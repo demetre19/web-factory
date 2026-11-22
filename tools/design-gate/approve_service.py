@@ -728,8 +728,7 @@ def _handler():
                     return
                 txt = open(fp, encoding='utf-8',
                            errors='replace').read()
-                css = (':root{' + F['css'] + '}'
-                       '[data-theme="dark"]{' + F['css_dark'] + '}')
+                css = picker_app._fam_css(F)
                 if (F.get('theme') == 'dark' and
                         'theme=' not in q.query):
                     txt = re.sub(
@@ -833,7 +832,8 @@ def _handler():
             elif self.path == '/save-system':
                 import picker_app
                 code, txt = picker_app.save_system(
-                    body.get('pipeline', ''), body.get('name', ''))
+                    body.get('pipeline', ''), body.get('name', ''),
+                    body.get('mode'))
                 self._send(200 if code == 0 else 400,
                            {'ok': code == 0, 'message': txt})
             elif self.path == '/confirm':
