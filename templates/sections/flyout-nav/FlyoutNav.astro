@@ -45,7 +45,7 @@ const logoSvg = logoName ? logos[`../assets/${logoName}`] : null;
     <button class="burger" type="button" aria-label="Menu"><span aria-hidden="true">&equiv;</span></button>
   </div>
   <nav class="nav-links nav-flyout" aria-label="Menu">
-    <button class="nav-close" type="button" aria-label="Close menu">&times;</button>
+    <div class="nav-sheet-head"><span class="logo nav-sheet-brand">{brand}</span><button class="nav-close" type="button" aria-label="Close menu">&times;</button></div>
     <ul class="nav-group list-plain">
       {items.map((it) => (
         <li><a class="nav-link" href={it.href || '#'}>{it.label}</a></li>

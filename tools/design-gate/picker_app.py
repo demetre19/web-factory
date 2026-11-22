@@ -1726,7 +1726,7 @@ _CONTRAST_PAIRS = (
     ('text-primary', 'bg-surface', 4.5),
     ('text-primary', 'bg-elevated', 4.5),
     ('action-primary', 'bg-canvas', 4.5),
-    ('action-primary-ink', 'action-primary', 3.0))
+    ('action-primary-ink', 'action-primary', 4.5))
 
 
 def _rgb(v):

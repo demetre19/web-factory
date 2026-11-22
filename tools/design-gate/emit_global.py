@@ -347,7 +347,25 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
                    color: var(--action-primary-ink);
                    font-weight: 600; text-decoration: none;
                    white-space: nowrap;
-                   min-height: var(--tap); }
+                   min-height: var(--tap);
+                   transition: background-color .15s ease,
+                       box-shadow .15s ease; }
+  .wf-cta-button:hover {
+                   background: var(--action-primary-hover,
+                       var(--action-primary)); }
+  .wf-cta-button:focus-visible {
+                   outline: 2px solid var(--action-primary);
+                   outline-offset: 2px; }
+  /* the ghost: secondary action on the surface, bordered like the
+     field — never a second filled block (N.cta) */
+  .wf-cta-button.ghost {
+                   background: transparent;
+                   color: var(--text-primary);
+                   border: 1px solid var(--border-default);
+                   box-shadow: none; }
+  .wf-cta-button.ghost:hover {
+                   background: var(--bg-elevated);
+                   box-shadow: var(--shadow-card); }
   /* burger IS the mobile nav trigger: an icon button top-right,
      visible below the nav breakpoint, hidden where .nav-links flows
      inline (R.1 mobile-first). It is a quiet icon — never a second
@@ -417,9 +435,11 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
             font-weight: 700; }
   .nav-links.open .nav-sheet-head .nav-close {
             align-self: center; margin-inline-start: auto; }
-  /* exactly one close — an exemplar's own mid-sheet X is dropped in
-     favour of the head-row ghost close (N.flyout) */
-  .nav-links.open .nav-close:not(.nav-sheet-head .nav-close) {
+  /* exactly one close where a head row exists — an exemplar's own
+     mid-sheet X is dropped in favour of the head-row ghost close;
+     a drawer with no head keeps its close (N.flyout) */
+  .nav-links.open:has(.nav-sheet-head)
+      .nav-close:not(.nav-sheet-head .nav-close) {
             display: none; }
   body:has(.nav-links.open)::after { content: ""; position: fixed;
             inset: 0; background: color-mix(in oklch,
@@ -806,7 +826,7 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
   /* the header CTA fits the bar — compact padding and nav font,
      never the hero-sized call */
   .nav-cta .wf-cta-button { padding: .5em .75em;
-              font-size: var(--fs-0); min-height: 0; }
+              font-size: var(--fs--1); min-height: 0; }
   .brand-mark { font-weight: 650; letter-spacing: -.02em;
                 font-size: var(--fs-1); color: var(--text-primary);
                 text-decoration: none; }
