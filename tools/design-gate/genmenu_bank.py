@@ -38,7 +38,9 @@ PACK_META = {
     "navmenu": ("nav-dropdown-menu", "navigation", ["navigation"], "menu"),
     "modalnav": ("nav-modal", "navigation", ["navigation"], "menu"),
     "footercraft": ("footer-columns", "footer", ["footer"], "footer"),
+    "footers": ("footer-columns", "footer", ["footer"], "footer"),
     "pricing": ("pricing-tiers", "pricing", ["pricing"], "pricing"),
+    "elements": ("ui-element", "element", ["element"], "ui element"),
     "modal": ("modal-dialog", "modal", ["modal"], "modal"),
     "patternfolio": (None, "screen", ["screen"], "screen"),
 }
@@ -337,14 +339,15 @@ def main() -> int:
         outdir.mkdir(parents=True, exist_ok=True)
         (outdir / f"{slug}.html").write_text(html_text)
         comp_source = None
-        tsx = list(args.tsx_dir.rglob(f"{comp}.tsx"))
+        tsx = [p for ext in ("tsx", "jsx")
+               for p in args.tsx_dir.rglob(f"{comp}.{ext}")]
         if tsx:
-            comp_source = f"{slug}.tsx"
+            comp_source = f"{slug}.{tsx[0].suffix[1:]}"
             (outdir / comp_source).write_text(tsx[0].read_text())
         else:
             pat = re.compile(
                 rf"export\s+(?:async\s+)?(?:function|const)\s+{re.escape(comp)}\b")
-            for p in sorted(args.tsx_dir.rglob("*.tsx")):
+            for p in sorted(args.tsx_dir.rglob("*.[tj]sx")):
                 try:
                     if pat.search(p.read_text()):
                         name = batch_src.setdefault(
