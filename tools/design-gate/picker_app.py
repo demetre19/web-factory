@@ -3611,13 +3611,26 @@ def record_element_pick(pipeline, element, variant, bundle=None):
         now = datetime.datetime.now().isoformat(timespec='seconds')
         for p in data.get('picks', []):
             if p.get('element') == element:
-                # a regenerated board option keeps its id but not its
-                # composition — re-sign when the bundle moved
+                # a regenerated board option keeps its id but not
+                # its composition; a re-bake moves the base a type
+                # pick was merged over — re-sign when the bundle
+                # moved (inputs_sha is volatile, compare without it)
                 def _comp(bd):
                     return {k: v for k, v in (bd or {}).items()
                             if k != 'inputs_sha'}
-                if p.get('variant') == variant and not (
-                        lay and _comp(p.get('bundle')) != _comp(bundle)):
+                if p.get('variant') == variant:
+                    if isinstance(bundle, dict) and \
+                            _comp(p.get('bundle')) != _comp(bundle):
+                        p['bundle'] = bundle
+                        p['ts'] = now
+                        p['sig'] = G._sig(
+                            {k: v for k, v in p.items()
+                             if k != 'sig'}, G.op_key(create=True))
+                        with open(fp, 'w') as fh:
+                            json.dump(data, fh, indent=1,
+                                      sort_keys=True)
+                        return 0, (f'{element} {variant} re-signed '
+                                   'over the current vibe')
                     return 0, (f'{element} already is {variant} — '
                                'still signed')
                 old_v = p.get('variant')
