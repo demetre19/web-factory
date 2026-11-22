@@ -536,7 +536,10 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
   .row.between:has(.burger) > * { min-width: 0; }
   div:has(> .burger), div:has(> .nav-links + .burger),
   div:has(> .nav-desk + .burger) { display: flex;
-              align-items: center; }
+              align-items: center; margin-inline-start: auto; }
+  /* the burger's lane pins to the row's far end — a space-between
+     container centres its middle item, so the wrapper (not just the
+     button) takes the auto margin (H.1) */
   .burger { flex: 0 0 auto; margin-inline-start: auto; }
   .nav-links, .nav-desk { flex-shrink: 1; min-width: 0;
               overflow: hidden; }
