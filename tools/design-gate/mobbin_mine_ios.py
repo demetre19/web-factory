@@ -137,8 +137,10 @@ def main():
                 spec_stub(family, scr, img.name, mode), indent=2) + '\n')
             n += 1
         print(f'  {family}: {n} exemplars', flush=True)
-    index = {f: sorted(p.name[:-10] for p in (BANK / f).glob('*.topo.json'))
-             for f in results}
+    # index everything ios-* on disk — a partial run must not drop
+    # families banked by earlier runs
+    index = {d.name: sorted(p.name[:-10] for p in d.glob('*.topo.json'))
+             for d in sorted(BANK.glob('ios-*')) if d.is_dir()}
     tags = {}
     tp = BANK / 'mobbin-tags.json'
     if tp.exists():
