@@ -2432,8 +2432,12 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
       ev.preventDefault();return;
     }
     var n=(o.cards||[]).length;if(!n)return;
-    SEL=(SEL+d+n)%n;
     var cs=document.querySelectorAll('#board .card');
+    var vis=Array.prototype.map.call(cs,
+      function(c){return +c.dataset.idx});
+    var at=vis.indexOf(SEL);
+    at=(at<0?0:at)+d;at=(at+vis.length)%vis.length;
+    SEL=vis.length?vis[at]:SEL;
     cs.forEach(function(c){
       c.classList.toggle('sel',+c.dataset.idx===SEL)});
     var selEl=document.querySelector(
