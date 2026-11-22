@@ -58,6 +58,7 @@ PACK_META = {
     "microcraft": ("ui-micro", "element", ["micro interaction"], "micro interaction"),
     "wayfinding": ("wayfinding", "navigation", ["navigation"], "wayfinding"),
     "control": ("ui-control", "element", ["control"], "button control"),
+    "kinema": ("media-video", "element", ["media"], "video embed"),
 }
 
 # component-name prefix -> (baseline, section_class, category, query) override
@@ -289,6 +290,19 @@ def sniff_topology(html_text: str, baseline: str) -> tuple[str, str]:
         if 'role="menu"' in c or "menu" in low:
             return "ui-menu", "medium"
         return "ui-micro", "medium"
+    if baseline == "media-video":
+        low = c.lower()
+        if "playlist" in low or "episode" in low:
+            return "media-playlist", "medium"
+        if "testimonial" in low:
+            return "media-testimonial", "medium"
+        if "podcast" in low or "audio" in low:
+            return "media-audio", "medium"
+        if "live" in low or "webinar" in low:
+            return "media-live", "medium"
+        if "play" in low or "<video" in c:
+            return "media-video", "medium"
+        return "media-embed", "medium"
     if baseline == "ui-control":
         low = c.lower()
         if 'role="menu"' in c or 'role="listbox"' in c or "dropdown" in low:
