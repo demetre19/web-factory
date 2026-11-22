@@ -98,6 +98,29 @@ ELEMENT_GALLERIES = [
 
 # genmenu bank exemplars surfaced as scrubbable cards — gallery id
 # → the topology dirs whose .html fragments render as-banked
+# scroll-driven exemplars bind window scroll + read window.scrollY /
+# documentElement.scrollTop — inside a stage the document never
+# scrolls (the stage div does), so those demos would freeze. The shim
+# maps the window scroll metrics onto the stage and forwards a scroll
+# event per frame so handlers fire as if the page scrolled.
+_STAGE_SCROLL_SHIM = (
+    '<script>(function(){var s=document.querySelector(".wf-stage");'
+    'if(!s)return;try{'
+    'var de=document.documentElement;'
+    'Object.defineProperty(window,"scrollY",{get:function(){'
+    'return s.scrollTop}});'
+    'Object.defineProperty(window,"pageYOffset",{get:function(){'
+    'return s.scrollTop}});'
+    'Object.defineProperty(window,"scrollX",{get:function(){'
+    'return s.scrollLeft}});'
+    'Object.defineProperty(de,"scrollTop",{get:function(){'
+    'return s.scrollTop},set:function(v){s.scrollTop=v},'
+    'configurable:true});'
+    'Object.defineProperty(de,"scrollHeight",{get:function(){'
+    'return s.scrollHeight},configurable:true});'
+    's.addEventListener("scroll",function(){window.dispatchEvent('
+    'new Event("scroll"))},{passive:true})}catch(e){}})();</script>')
+
 _BANK_DIRS = {
     'menu': ('nav-dock-left-drawer', 'nav-top-sheet',
              'nav-bottom-sheet', 'nav-dropdown-menu',
@@ -2108,6 +2131,7 @@ def emit_bank_previews(pd):
                              '</div>')
                     with open(dst, 'w', encoding='utf-8') as fh:
                         fh.write(_doc(head, '', stage,
+                                      extra=_STAGE_SCROLL_SHIM,
                                       css=_BANK_STAGE_CSS))
                 row = tags.get(cls + '/' + slug) or {}
                 ctags = [cls, 'bank'] + \
@@ -2894,7 +2918,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
      border-radius:var(--r);overflow:hidden;display:grid;
      grid-template-columns:minmax(0,1fr) 300px;
      grid-template-rows:1fr auto}
-.card .cb{grid-row:1/3;grid-column:1;border-right:1px solid var(--line)}
+.card .cb{grid-row:1/3;grid-column:1;border-right:1px solid var(--line);
+     min-width:0;overflow:hidden}
 .card .ch{grid-row:1;grid-column:2;align-content:start;flex-wrap:wrap}
 .card .cf{grid-row:2;grid-column:2;flex-direction:column;
      align-items:stretch;border-top:0;justify-content:flex-end}
