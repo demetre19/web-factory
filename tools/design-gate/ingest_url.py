@@ -378,10 +378,41 @@ print(json.dumps({'html': html, 'computed': comp}))
 """
 
 
+_RENDER_PY_EXE = None
+
+
+def _render_python():
+    """Python that has playwright — the repo venv first, then the
+    system python3.12/python3 (sessions whose snapshot lacks .venv
+    still render; E3)."""
+    global _RENDER_PY_EXE
+    if _RENDER_PY_EXE is not None:
+        return _RENDER_PY_EXE
+    cands = [VENV_PY]
+    import shutil
+    for name in ('python3.12', 'python3'):
+        p = shutil.which(name)
+        # dedupe by executable PATH, not realpath: a symlinked venv
+        # python shares its binary with system python but keeps its own
+        # site-packages (its playwright probe must run separately)
+        if p and os.path.abspath(p) not in \
+                {os.path.abspath(c) for c in cands}:
+            cands.append(p)
+    for c in cands:
+        if not os.path.isfile(c):
+            continue
+        r = subprocess.run([c, '-c', 'import playwright'],
+                           capture_output=True, timeout=20)
+        if r.returncode == 0:
+            _RENDER_PY_EXE = c
+            return c
+    raise RuntimeError('no python with playwright found '
+                       f'(tried: {", ".join(cands)})')
+
+
 def fetch_rendered(url: str):
-    if not os.path.isfile(VENV_PY):
-        raise RuntimeError(f'venv playwright missing: {VENV_PY}')
-    r = subprocess.run([VENV_PY, '-c', _RENDER_PY, url],
+    exe = _render_python()
+    r = subprocess.run([exe, '-c', _RENDER_PY, url],
                        capture_output=True, text=True, timeout=120)
     if r.returncode:
         raise RuntimeError('render failed: ' + (r.stderr or '')[-300:])
@@ -394,7 +425,11 @@ def fetch_rendered(url: str):
 def ingest(url=None, html=None, css_text=''):
     computed = {}
     if url:
-        rendered = fetch_rendered(url)
+        try:
+            rendered = fetch_rendered(url)
+        except Exception as e:
+            return {'ok': False, 'message': str(e),
+                    'error': str(e)}
         html = rendered.get('html') or ''
         computed = rendered.get('computed') or {}
     html = html or ''

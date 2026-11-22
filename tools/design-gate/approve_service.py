@@ -950,10 +950,13 @@ def _handler():
                            {'ok': code == 0, 'message': txt})
             elif self.path == '/ingest':
                 import picker_app
-                res = picker_app.run_ingest(
-                    body.get('pipeline', ''),
-                    body.get('url', ''), body.get('html', ''),
-                    body.get('css', ''))
+                try:
+                    res = picker_app.run_ingest(
+                        body.get('pipeline', ''),
+                        body.get('url', ''), body.get('html', ''),
+                        body.get('css', ''))
+                except Exception as e:
+                    res = {'ok': False, 'message': str(e)}
                 self._send(200, res)
             elif self.path == '/ingest-donor':
                 import picker_app
