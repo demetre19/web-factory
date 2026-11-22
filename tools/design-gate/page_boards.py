@@ -986,6 +986,14 @@ def render_sha(ctx, doc):
     for r in sorted(recipes):
         files += glob.glob(os.path.join(REPO, 'templates', 'skeletons',
                                         r + '.*'))
+    # the Header·Footer board's lo-chrome-<comp> pages copy each
+    # allowed nav/footer class's gold exemplar
+    allowed = (_json(os.path.join(ctx.dir, 'LAYOUT-OPTIONS.json'))
+               or {}).get('allowed') or {}
+    for comp in set((allowed.get('nav') or [])
+                    + (allowed.get('footer') or [])):
+        files += glob.glob(os.path.join(REPO, 'templates', 'sections',
+                                        comp, '*.astro'))
     for f in sorted(set(files)):
         h.update(f.encode())
         h.update(_sha(f).encode())
