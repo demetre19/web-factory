@@ -3417,6 +3417,10 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
   var(--line);border-radius:7px;color:var(--ink);padding:7px 11px;
   font-size:13px}
 .rmsave span{font:500 12px var(--font);color:var(--muted)}
+.rmph{display:flex;align-items:center;justify-content:space-between;
+  padding:6px 10px;border-bottom:1px solid var(--line);
+  font:600 11px var(--mono);color:var(--muted)}
+.rmph .xp{margin-left:0}
 .rmprev{margin-top:14px;border:1px solid var(--line);
      border-radius:var(--r);overflow:hidden;height:520px}
 .rmprev iframe{width:100%;height:100%;border:0;background:#fff;
@@ -3426,6 +3430,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
   border-radius:6px;padding:0 7px;height:20px;line-height:1;
   font-size:11px;cursor:pointer;margin-left:auto}
 .xp:hover{background:var(--panel-2)}
+.srow .xp{margin-left:0;align-self:center}
 #xpOv{position:fixed;inset:0;z-index:60;background:rgba(0,0,0,.72);
   display:flex;flex-direction:column}
 #xpBar{display:flex;align-items:center;gap:8px;padding:9px 14px;
@@ -3445,9 +3450,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
 .xpPrim{background:var(--accent);color:var(--accent-ink);border:0;
   border-radius:7px;padding:6px 14px;cursor:pointer;
   font:600 12px var(--font)}
-.xstage{flex:1;overflow:auto;display:flex;justify-content:center;
-  padding:14px}
-.xframe{height:calc(100vh - 76px);flex:none}
+.xstage{flex:1;overflow:auto;padding:14px}
+.xframe{height:calc(100vh - 76px);margin:0 auto}
 .xframe iframe{width:100%;height:100%;border:0;border-radius:8px;
   background:#fff}
 @media(max-width:640px){
@@ -3764,6 +3768,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
          return '<span class="chip on" data-ax="'+k+'">'+esc(k)+':'+
                 esc(VGENES[k])+' ×</span>'}).join(''):
         '<span class="chip">baseline</span>')+'</span>'+
+       '<button class="xp" id="vXp" title="expand" data-x="'+
+       esc(VRES&&VRES.preview||'')+'">⤢</button>'+
        '<button class="pick" id="vBake">Bake</button></div></div>';
     h+='<div class="vmoods">'+
        ['happy·playful','professional·editorial','bold·brutal',
@@ -3799,6 +3805,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
          '<div class="cf">'+
          '<button class="abtn vload" data-i="'+i+
          '">load genes</button>'+
+         (c.preview?'<button class="xp" title="expand" data-x="'+
+          esc(c.preview)+'">⤢</button>':'')+
          '<button class="pick" data-i="'+i+'">Bake</button></div></div>';
     });
     h+='</div>';
@@ -3905,6 +3913,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
           if(j.ok){BAKED=v;DATA.picked_elements.vibe=v;
             setTheme((c.tags||[]).indexOf('dark')>=0
               ?'dark':'light')}})}});
+    wireXp(el);
     wireFrames(el);
     setTheme(document.documentElement.dataset.theme);
     setTimeout(fitIframes,150);
@@ -3919,6 +3928,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
     api('/vibe-resolve',{pipeline:PIPELINE,genes:VGENES}).then(
       function(j){
         if(j.preview){VRES=j;
+          var vx=document.getElementById('vXp');
+          if(vx)vx.dataset.x=j.preview;
           var cb=document.getElementById('vprevCb');
           if(cb){cb.innerHTML='<iframe src="'+esc(j.preview)+
             '"></iframe>';
@@ -3971,6 +3982,9 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
          '<div class="snav"><button data-d="-1">‹</button>'+
          '<button data-d="1">›</button></div>'+
          '<button class="spick" title="sign this row\'s choice">✓</button>'+
+         '<button class="xp" title="expand" data-x="'+
+         esc(frame('/built/'+encodeURI(DATA.pipeline+'/site/dist/'+alt.preview)))+
+         '">⤢</button>'+
          '<button class="fxbtn'+((DATA.picked_elements['fx:sec:'+r.sec]&&
           DATA.picked_elements['fx:sec:'+r.sec]!=='none')?' on':'')+
          '" data-fx="fx:sec:'+r.sec+
@@ -4318,7 +4332,9 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
           if(f&&page){f.onload=function(){
               setTimeout(fitIframes,80)};
             f.src=page.replace('/built/',
-            '/frame/'+j.slug+'/')}})},140)}
+            '/frame/'+j.slug+'/');
+            var rx=document.getElementById('rmXp');
+            if(rx)rx.dataset.x=f.src}})},140)}
 
     var h='<h1>Remix — DNA mixer</h1>'+
       '<div class="desc">Blend up to three DNA sources — this '+
@@ -4354,7 +4370,10 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
     h+='</div><div class="rmsave"><input id="rmName" placeholder='+
        '"remix-name"><button id="rmSave" class="abtn">'+
        'Sign remix system</button><span id="rmStatus"></span></div>'+
-       '<div class="rmprev"><iframe id="rmFrame"></iframe></div></div>';
+       '<div class="rmprev"><div class="rmph"><span>remix '+
+       'preview</span><button class="xp" id="rmXp" title="expand" '+
+       'data-x="">⤢</button></div>'+
+       '<iframe id="rmFrame"></iframe></div></div>';
     el.innerHTML=h;
 
     function favSync(i){
@@ -4438,7 +4457,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
   function wireXp(scope){
     scope.querySelectorAll('.xp').forEach(function(b){
       b.onclick=function(e){e.stopPropagation();
-        expand(b.dataset.x,xpOpts(b))}})}
+        if(b.dataset.x)expand(b.dataset.x,xpOpts(b));
+        else toast('nothing to preview yet')}})}
   function expand(u,opts){
     opts=opts||{};
     var prevFocus=document.activeElement;
@@ -4467,7 +4487,6 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
     var fr=ov.querySelector('.xframe'),im=fr.querySelector('iframe');
     function setW(w){
       fr.style.width=w+'px';
-      fr.style.maxWidth='calc(100vw - 28px)';
       ov.querySelectorAll('.xdev button').forEach(function(b){
         b.classList.toggle('on',+b.dataset.w===w)})}
     setW(1280);
