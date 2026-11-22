@@ -189,13 +189,12 @@ def run(families, dry):
         kitdir = os.path.join(SKEL, kit)
         if not os.path.isdir(kitdir):
             continue
-        for family in sorted(os.listdir(kitdir)):
-            famdir = os.path.join(kitdir, family)
-            if not os.path.isdir(famdir):
+        for famdir, _dirs, files in os.walk(kitdir):
+            family = os.path.relpath(famdir, kitdir)
+            if family == '.' or \
+                    (families and family not in families):
                 continue
-            if families and family not in families:
-                continue
-            for fn in sorted(os.listdir(famdir)):
+            for fn in sorted(files):
                 if not fn.endswith('.html'):
                     continue
                 rel = f'{kit}/{family}/{fn}'
@@ -213,8 +212,9 @@ def run(families, dry):
                     os.path.join(famdir, fn), kit, family)[0]
                 with open(tp_abs, 'w') as f:
                     json.dump(out, f, indent=1)
+                sid = f'{kit}-{family.replace("/", "-")}-{fn[:-5]}'
                 index.append({
-                    'source_id': f'{kit}-{fn[:-5]}',
+                    'source_id': sid,
                     'title': fn[:-5], 'framework': 'tailwind',
                     'type': 'component',
                     'topology_id': topo, 'nesting_depth': 4,
@@ -228,7 +228,7 @@ def run(families, dry):
                     famdir, fn[:-5] + '.spec.json')
                 spec = json.load(open(spec_p)) \
                     if os.path.exists(spec_p) else {}
-                tags[f'{kit}-{fn[:-5]}'] = {
+                tags[sid] = {
                     'file': rel[:-len('.html')],
                     'family': f'{kit}/{family}',
                     'site_name': spec.get('name', fn[:-5]),

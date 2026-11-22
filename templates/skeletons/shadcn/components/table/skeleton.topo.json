@@ -1,0 +1,163 @@
+{
+ "label": "shadcn/components/table/skeleton",
+ "source": "shadcn",
+ "sourceUrl": "",
+ "version": "1",
+ "topology_id": "table-cell",
+ "element_sig": {
+  "table": 1
+ },
+ "tree": [
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "relative",
+    "w-full",
+    "overflow-x-auto"
+   ],
+   "depth": 0
+  },
+  {
+   "name": "table",
+   "tag": "table",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "w-full",
+    "caption-bottom",
+    "text-sm",
+    "{class}"
+   ],
+   "depth": 1
+  },
+  {
+   "name": "thead",
+   "tag": "thead",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "[&_tr]:border-b",
+    "{class}"
+   ],
+   "depth": 0
+  },
+  {
+   "name": "tbody",
+   "tag": "tbody",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "[&_tr:last-child]:border-0",
+    "{class}"
+   ],
+   "depth": 0
+  },
+  {
+   "name": "tfoot",
+   "tag": "tfoot",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "border-t",
+    "bg-muted/50",
+    "font-medium",
+    "[&>tr]:last:border-b-0",
+    "{class}"
+   ],
+   "depth": 0
+  },
+  {
+   "name": "tr",
+   "tag": "tr",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "border-b",
+    "transition-colors",
+    "hover:bg-muted/50",
+    "has-aria-expanded:bg-muted/50",
+    "data-[state=selected]:bg-muted",
+    "{class}"
+   ],
+   "depth": 0
+  },
+  {
+   "name": "th",
+   "tag": "th",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "h-10",
+    "px-2",
+    "text-left",
+    "align-middle",
+    "font-medium",
+    "whitespace-nowrap",
+    "text-foreground",
+    "[&:has([role=checkbox])]:pr-0"
+   ],
+   "depth": 0
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-2",
+    "align-middle",
+    "whitespace-nowrap",
+    "[&:has([role=checkbox])]:pr-0",
+    "[&>[role=checkbox]]:translate-y-[2px]",
+    "{class}"
+   ],
+   "depth": 0
+  },
+  {
+   "name": "caption",
+   "tag": "caption",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "mt-4",
+    "text-sm",
+    "text-muted-foreground",
+    "{class}"
+   ],
+   "depth": 0
+  }
+ ],
+ "classes": [
+  "[&:has([role=checkbox])]:pr-0",
+  "[&>[role=checkbox]]:translate-y-[2px]",
+  "[&>tr]:last:border-b-0",
+  "[&_tr:last-child]:border-0",
+  "[&_tr]:border-b",
+  "align-middle",
+  "bg-muted/50",
+  "border-b",
+  "border-t",
+  "caption-bottom",
+  "data-[state=selected]:bg-muted",
+  "font-medium",
+  "h-10",
+  "has-aria-expanded:bg-muted/50",
+  "hover:bg-muted/50",
+  "mt-4",
+  "overflow-x-auto",
+  "p-2",
+  "px-2",
+  "relative",
+  "text-foreground",
+  "text-left",
+  "text-muted-foreground",
+  "text-sm",
+  "transition-colors",
+  "w-full",
+  "whitespace-nowrap",
+  "{class}"
+ ]
+}

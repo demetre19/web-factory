@@ -1,0 +1,316 @@
+{
+ "label": "shadcn/components/dropdown-menu/skeleton",
+ "source": "shadcn",
+ "sourceUrl": "",
+ "version": "1",
+ "topology_id": "band-strip",
+ "element_sig": {
+  "btn": 1,
+  "icn": 3
+ },
+ "tree": [
+  {
+   "name": "button",
+   "tag": "button",
+   "label": null,
+   "loop": false,
+   "classes": [],
+   "depth": 0
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "z-50",
+    "max-h-(--radix-dropdown-menu-content-available-height)",
+    "min-w-[8rem]",
+    "origin-(--radix-dropdown-menu-content-transform-origin)",
+    "overflow-x-hidden",
+    "overflow-y-auto",
+    "rounded-md",
+    "border"
+   ],
+   "depth": 0
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [],
+   "depth": 0
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "relative",
+    "flex",
+    "cursor-default",
+    "items-center",
+    "gap-2",
+    "rounded-sm",
+    "px-2",
+    "py-1.5"
+   ],
+   "depth": 0
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "relative",
+    "flex",
+    "cursor-default",
+    "items-center",
+    "gap-2",
+    "rounded-sm",
+    "py-1.5",
+    "pr-2"
+   ],
+   "depth": 0
+  },
+  {
+   "name": "span",
+   "tag": "span",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "pointer-events-none",
+    "absolute",
+    "left-2",
+    "flex",
+    "size-3.5",
+    "items-center",
+    "justify-center"
+   ],
+   "depth": 1
+  },
+  {
+   "name": "span",
+   "tag": "span",
+   "label": null,
+   "loop": false,
+   "classes": [],
+   "depth": 2
+  },
+  {
+   "name": "svg",
+   "tag": "svg",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "size-4"
+   ],
+   "depth": 3
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "relative",
+    "flex",
+    "cursor-default",
+    "items-center",
+    "gap-2",
+    "rounded-sm",
+    "py-1.5",
+    "pr-2"
+   ],
+   "depth": 0
+  },
+  {
+   "name": "span",
+   "tag": "span",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "pointer-events-none",
+    "absolute",
+    "left-2",
+    "flex",
+    "size-3.5",
+    "items-center",
+    "justify-center"
+   ],
+   "depth": 1
+  },
+  {
+   "name": "span",
+   "tag": "span",
+   "label": null,
+   "loop": false,
+   "classes": [],
+   "depth": 2
+  },
+  {
+   "name": "svg",
+   "tag": "svg",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "size-2",
+    "fill-current"
+   ],
+   "depth": 3
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "px-2",
+    "py-1.5",
+    "text-sm",
+    "font-medium",
+    "data-[inset]:pl-8",
+    "{class}"
+   ],
+   "depth": 0
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "-mx-1",
+    "my-1",
+    "h-px",
+    "bg-border",
+    "{class}"
+   ],
+   "depth": 0
+  },
+  {
+   "name": "span",
+   "tag": "span",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "ml-auto",
+    "text-xs",
+    "tracking-widest",
+    "text-muted-foreground",
+    "{class}"
+   ],
+   "depth": 0
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "flex",
+    "cursor-default",
+    "items-center",
+    "gap-2",
+    "rounded-sm",
+    "px-2",
+    "py-1.5",
+    "text-sm"
+   ],
+   "depth": 0
+  },
+  {
+   "name": "svg",
+   "tag": "svg",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "ml-auto",
+    "size-4"
+   ],
+   "depth": 1
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "z-50",
+    "min-w-[8rem]",
+    "origin-(--radix-dropdown-menu-content-transform-origin)",
+    "overflow-hidden",
+    "rounded-md",
+    "border",
+    "bg-popover",
+    "p-1"
+   ],
+   "depth": 0
+  }
+ ],
+ "classes": [
+  "-mx-1",
+  "[&_svg:not([class*='size-'])]:size-4",
+  "[&_svg:not([class*='text-'])]:text-muted-foreground",
+  "[&_svg]:pointer-events-none",
+  "[&_svg]:shrink-0",
+  "absolute",
+  "bg-border",
+  "bg-popover",
+  "border",
+  "cursor-default",
+  "dark:data-[variant=destructive]:focus:bg-destructive/20",
+  "data-[disabled]:opacity-50",
+  "data-[disabled]:pointer-events-none",
+  "data-[inset]:pl-8",
+  "data-[side=bottom]:slide-in-from-top-2",
+  "data-[side=left]:slide-in-from-right-2",
+  "data-[side=right]:slide-in-from-left-2",
+  "data-[side=top]:slide-in-from-bottom-2",
+  "data-[state=closed]:animate-out",
+  "data-[state=closed]:fade-out-0",
+  "data-[state=closed]:zoom-out-95",
+  "data-[state=open]:animate-in",
+  "data-[state=open]:bg-accent",
+  "data-[state=open]:fade-in-0",
+  "data-[state=open]:text-accent-foreground",
+  "data-[state=open]:zoom-in-95",
+  "data-[variant=destructive]:*:[svg]:text-destructive!",
+  "data-[variant=destructive]:focus:bg-destructive/10",
+  "data-[variant=destructive]:focus:text-destructive",
+  "data-[variant=destructive]:text-destructive",
+  "fill-current",
+  "flex",
+  "focus:bg-accent",
+  "focus:text-accent-foreground",
+  "font-medium",
+  "gap-2",
+  "h-px",
+  "items-center",
+  "justify-center",
+  "left-2",
+  "max-h-(--radix-dropdown-menu-content-available-height)",
+  "min-w-[8rem]",
+  "ml-auto",
+  "my-1",
+  "origin-(--radix-dropdown-menu-content-transform-origin)",
+  "outline-hidden",
+  "overflow-hidden",
+  "overflow-x-hidden",
+  "overflow-y-auto",
+  "p-1",
+  "pl-8",
+  "pointer-events-none",
+  "pr-2",
+  "px-2",
+  "py-1.5",
+  "relative",
+  "rounded-md",
+  "rounded-sm",
+  "select-none",
+  "shadow-lg"
+ ]
+}
