@@ -3004,7 +3004,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
      display:grid;place-items:center;font:700 13px var(--mono)}
 #top .who{font-weight:650;font-size:14px}
 #top .who small{display:block;font-weight:500;color:var(--muted);
-     font-size:11px}
+     font-size:12px}
 #top .sp{flex:1}
 .chip{display:inline-flex;align-items:center;gap:6px;
      padding:3px 10px;border:1px solid var(--line);
@@ -3108,7 +3108,9 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
      color:var(--muted)}
 
 /* --- board --- */
-#board{overflow-y:auto;padding:22px 26px 60px}
+#board{overflow-y:auto;padding:22px 26px 60px;
+     container-type:inline-size;container-name:board}
+#board>*{max-width:1600px;margin-left:auto;margin-right:auto}
 #scrim{display:none}
 #board h1{margin:0;font-size:19px;font-weight:650}
 #board .desc{color:var(--muted);font-size:13px;margin:5px 0 18px}
@@ -3126,6 +3128,14 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
 .fchip.on{background:var(--accent);border-color:var(--accent);
      color:var(--accent-ink)}
 .grid{display:grid;gap:18px;grid-template-columns:1fr}
+@container board (min-width:1100px){
+  .grid{grid-template-columns:1fr 1fr}}
+.card.fxw{grid-column:1/-1}
+.grid.fxgrid{grid-template-columns:repeat(auto-fill,minmax(460px,1fr))}
+.grid.fxgrid .card{grid-template-columns:minmax(0,1fr) 240px}
+.card.mini .cb{min-height:0}
+.card.mini .cb.done,.card.mini .cb.err{height:auto}
+.card.mini iframe{height:clamp(240px,30vw,380px)!important}
 .card{background:var(--panel);border:1px solid var(--line);
      border-radius:var(--r);overflow:hidden;display:grid;
      grid-template-columns:minmax(0,1fr) 280px;
@@ -3160,14 +3170,22 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
 .card .ch .score{margin-left:auto;font:600 11px var(--mono);
      color:var(--muted)}
 .card .cb{position:relative;background:var(--bg);min-height:64px}
-.card .cb iframe{display:block;width:100%;height:480px;border:0}
+.card .cb::before{content:'';position:absolute;inset:0;
+     background:linear-gradient(100deg,var(--bg) 30%,var(--bg-2) 50%,var(--bg) 70%);
+     background-size:200% 100%;animation:cbsk 1.3s linear infinite}
+@keyframes cbsk{to{background-position:-200% 0}}
+.card .cb.done::before,.card .cb.err::before{display:none}
+.card .cb iframe{display:block;width:100%;height:480px;border:0;
+     position:relative;background:var(--bg)}
 .card.mobile .cb iframe{max-width:var(--vw,340px);margin:0 auto;
      border-left:1px solid var(--line);
      border-right:1px solid var(--line)}
-.card.mobile{max-width:calc(var(--vw,340px) + 26px);
-     justify-self:center;width:100%}
+.card.mobile{justify-self:stretch;width:100%}
 .card .cb .noprev{display:grid;place-items:center;height:120px;
      color:var(--muted);font-size:12px;padding:0 16px;text-align:center}
+.perr{position:absolute;inset:0;display:grid;place-items:center;
+     color:var(--bad,#b4453f);font-size:12px;padding:0 16px;
+     text-align:center;background:var(--bg)}
 .card .vp{position:absolute;top:8px;right:8px;display:flex;gap:4px;
      z-index:2}
 .card .vp button{border:1px solid var(--line);
@@ -3241,10 +3259,14 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
      justify-content:center;gap:10px;padding:10px 12px;
      border-top:1px solid var(--line);min-height:44px}
 #board[data-pane=vibe] .card .cf .crow{margin-top:0}
-.vprev{max-width:760px;border:1px solid var(--line);border-radius:12px;
+.vprev{border:1px solid var(--line);border-radius:12px;
   overflow:hidden;margin:12px 0 20px;background:var(--panel)}
-.vprev .cb{height:340px;position:relative;overflow:hidden}
-.vprev iframe{width:100%;height:100%;border:0}
+.vprev .cb{height:70vh;position:relative;overflow:hidden}
+.vprev .cb::before{content:'';position:absolute;inset:0;
+  background:linear-gradient(100deg,var(--bg) 30%,var(--bg-2) 50%,var(--bg) 70%);
+  background-size:200% 100%;animation:cbsk 1.3s linear infinite}
+.vprev .cb.done::before,.vprev .cb.err::before{display:none}
+.vprev iframe{width:100%;height:100%;border:0;position:relative}
 .vprev .cf{display:flex;align-items:center;justify-content:space-between;
   padding:10px 14px;border-top:1px solid var(--line)}
 .vname{font:650 12.5px var(--font);color:var(--ink)}
@@ -3604,9 +3626,14 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
     return h;
   }
 
+  // page-scale fx (targets 'page'/'any' on a full-bleed family)
+  // span the whole grid row; widget fx share the 2-col compact grid
+  var FXWIDE=/fx-(ambient|particles|parallax|pinned|progress|reveal|timeline|compare|cursor|scroll|marquee|atmosphere)|mob-chrome/;
+  function fxWide(c){
+    return c.element==='fx:default'&&FXWIDE.test(c.grp||'')}
   function card(c,idx){
     var tags=c.tags||[],cls='card'+(c.mobile?' mobile':'')+
-        (c.live?' live':'');
+        (c.live?' live':'')+(fxWide(c)?' fxw':'');
     var isPicked=c.element&&(DATA.picked_elements||{})[c.element]===
       c.variant;
     if(c.element==='vibe'&&BAKED===c.variant)isPicked=true;
@@ -3675,38 +3702,11 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
       if(seen[v])return 0;seen[v]=1;return 1})}
 
   // vibe space: gene sliders + preset atlas + signed gene bundle
-  var VGENES={},VQ='',VRES=null,VMOOD='',VADV=true,VSRC='';
+  var VGENES={},VQ='',VRES=null,VMOOD='',VADV=false,VSRC='';
   function vibePane(el,o){
     var axes=o.axes||[],cards=o.cards||[];
     var h='<h1>Vibe space</h1><div class="desc">'+esc(o.desc||'')+'</div>';
-    h+='<div class="vmoods">'+
-       ['happy·playful','professional·editorial','bold·brutal',
-        'calm·paper','playful·neon','luxe·luxe','noir·noir'
-       ].map(function(m){var p=m.split('·');
-         return '<button class="vmood'+(VMOOD===p[1]?' on':'')+
-                '" data-cl="'+p[1]+'">'+p[0]+'</button>'}).join('')+
-                '</div>';
-    h+='<details class="vadv"'+(VADV?' open':'')+
-       '><summary>advanced tweaks</summary>';
-    h+='<div class="vtweak">';
-    var grp=null;
-    axes.forEach(function(a){
-      if(a.group!==grp){grp=a.group;
-        h+='<div class="vgrp">'+esc(grp)+'</div>'}
-      var cur=VGENES[a.axis],ix=cur?a.alleles.indexOf(cur):0;
-      h+='<div class="vax"><span class="vaxn" title="'+esc(a.axis)+
-         '">'+esc(a.axis)+'</span>'+
-         '<input type="range" min="0" max="'+(a.alleles.length-1)+
-         '" value="'+Math.max(0,ix)+'" data-ax="'+a.axis+
-         '" data-n="'+a.alleles.length+'">'+
-         '<span class="vaxa">'+esc(cur||'baseline')+'</span></div>';
-    });
-    h+='</div></details>';
     var gkeys=Object.keys(VGENES);
-    h+='<div class="vchips">'+(gkeys.length?gkeys.map(function(k){
-      return '<span class="chip on" data-ax="'+k+'">'+esc(k)+':'+
-             esc(VGENES[k])+' ×</span>'}).join(''):
-      '<span class="chip">baseline genes — move a slider</span>')+'</div>';
     h+='<div class="vprev"><div class="cb" id="vprevCb">'+
        (VRES&&VRES.preview?
         '<iframe src="'+esc(VRES.preview)+'" loading="lazy"></iframe>':
@@ -3714,7 +3714,18 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
         'slider — the resolved vibe renders here</div>')+'</div>'+
        '<div class="cf"><span class="vname">'+
        esc(VSRC||'computed vibe')+'</span>'+
+       '<span class="vchips">'+(gkeys.length?gkeys.map(function(k){
+         return '<span class="chip on" data-ax="'+k+'">'+esc(k)+':'+
+                esc(VGENES[k])+' ×</span>'}).join(''):
+        '<span class="chip">baseline</span>')+'</span>'+
        '<button class="pick" id="vBake">Bake</button></div></div>';
+    h+='<div class="vmoods">'+
+       ['happy·playful','professional·editorial','bold·brutal',
+        'calm·paper','playful·neon','luxe·luxe','noir·noir'
+       ].map(function(m){var p=m.split('·');
+         return '<button class="vmood'+(VMOOD===p[1]?' on':'')+
+                '" data-cl="'+p[1]+'">'+p[0]+'</button>'}).join('')+
+                '</div>';
     h+='<div class="filters">'+filters(o.clusters||[])+'</div>';
     h+='<input class="vq" id="vq" placeholder="search presets…" '+
        'value="'+esc(VQ)+'">';
@@ -3747,6 +3758,22 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
     h+='</div>';
     if(!shown)h+='<div class="empty">no presets match the current '+
       'search/filter — <button class="abtn" id="vclr">clear '+('filters')+'</button></div>';
+    h+='<details class="vadv"'+(VADV?' open':'')+
+       '><summary>advanced tweaks</summary>';
+    h+='<div class="vtweak">';
+    var grp=null;
+    axes.forEach(function(a){
+      if(a.group!==grp){grp=a.group;
+        h+='<div class="vgrp">'+esc(grp)+'</div>'}
+      var cur=VGENES[a.axis],ix=cur?a.alleles.indexOf(cur):0;
+      h+='<div class="vax"><span class="vaxn" title="'+esc(a.axis)+
+         '">'+esc(a.axis)+'</span>'+
+         '<input type="range" min="0" max="'+(a.alleles.length-1)+
+         '" value="'+Math.max(0,ix)+'" data-ax="'+a.axis+
+         '" data-n="'+a.alleles.length+'">'+
+         '<span class="vaxa">'+esc(cur||'baseline')+'</span></div>';
+    });
+    h+='</div></details>';
     el.innerHTML=h;
     // wire: sliders → resolve; chips → clear axis; bake → sign bundle
     el.querySelectorAll('.vax input').forEach(function(r){
@@ -3832,6 +3859,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
           if(j.ok){BAKED=v;DATA.picked_elements.vibe=v;
             setTheme((c.tags||[]).indexOf('dark')>=0
               ?'dark':'light')}})}});
+    wireFrames(el);
     setTheme(document.documentElement.dataset.theme);
     setTimeout(fitIframes,150);
     if(!VRES)resolveVibe(el,o);   // baseline vibe on first open
@@ -3848,9 +3876,12 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
           var cb=document.getElementById('vprevCb');
           if(cb){cb.innerHTML='<iframe src="'+esc(j.preview)+
             '"></iframe>';
+            cb.classList.remove('done','err');
             var vf=cb.querySelector('iframe');
-            if(vf)vf.addEventListener('load',function(){
-              setTimeout(fitIframes,60)});
+            if(vf){vf.addEventListener('load',function(){
+              cb.classList.add('done');setTimeout(fitIframes,60)});
+              vf.addEventListener('error',function(){
+                cb.classList.add('err')})}
             setTimeout(fitIframes,80)};
           var tsf=document.querySelector('.tsfr');
           if(tsf&&j.typescale)tsf.src=j.typescale+
@@ -4368,9 +4399,11 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
         f.style.transformOrigin='0 0';
         try{var hh=f.contentDocument.body.scrollHeight;
           if(hh>0){f.style.height=hh+'px';
-            if(!fixedBox){cb.style.height=(hh*s)+'px';
-              // short content (nav/footer strips) must not sit atop
-              // the 300px min-height placeholder box
+            if(!fixedBox){
+              // 16:10 preview, capped 560px; short strips keep
+              // their content height
+              var cap=Math.min(cb.clientWidth/1.6,560);
+              cb.style.height=Math.min(hh*s,cap)+'px';
               cb.style.minHeight='0'}}}catch(e){}
       }else{
         f.style.maxWidth='';f.style.width='';f.style.transform='';
@@ -4443,8 +4476,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
         s.onchange=function(){fxPick(s.dataset.fx,s.value)}});
       el.querySelectorAll('.xp').forEach(function(b){
         b.onclick=function(e){e.stopPropagation();expand(b.dataset.x)}});
-      el.querySelectorAll('.cb iframe').forEach(function(f){
-        f.addEventListener('load',function(){setTimeout(fitIframes,90)})});
+      wireFrames(el);
       setTimeout(fitIframes,150);
       applyTheme(document.documentElement.dataset.theme);
       return}
@@ -4458,7 +4490,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
       if(bl)h+='<div class="desc" style="opacity:.7">emitted '+
         o.emitted_n+' · raw skeleton backlog ~'+bl+
         ' (awaiting vectorisation)</div>';}
-    h+='<div class="filters">'+filters(tags)+'</div><div class="grid">';
+    h+='<div class="filters">'+filters(tags)+'</div>'+
+       '<div class="grid'+(CUR==='fx'?' fxgrid':'')+'">';
     var lastGrp=null,shown2=0;
     var gridCards=(o.cards||[]).slice();
     // emitted options first — bank-only (no preview) rows sink,
@@ -4498,11 +4531,47 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
       s.onchange=function(){fxPick(s.dataset.fx,s.value)}});
     el.querySelectorAll('.xp').forEach(function(b){
       b.onclick=function(e){e.stopPropagation();expand(b.dataset.x)}});
-    el.querySelectorAll('.cb iframe').forEach(function(f){
-      f.addEventListener('load',function(){setTimeout(fitIframes,90)})});
+    wireFrames(el);
     setTimeout(fitIframes,150);
     applyTheme(document.documentElement.dataset.theme);
   }
+
+  // skeleton → done/error lifecycle for every preview frame in
+  // a rendered pane (grid cards, vibe, remix, scrub rows)
+  function wireFrames(scope){
+    scope.querySelectorAll('.cb iframe,.srow iframe').forEach(
+      function(f){
+      var cb=f.closest('.cb');
+      if(!cb)return;
+      f.addEventListener('load',function(){
+        try{if(!f.contentDocument||
+             !f.contentDocument.body||
+             !f.contentDocument.body.children.length){
+          cb.classList.add('err');
+          if(!cb.querySelector('.perr')){
+            var d=document.createElement('div');
+            d.className='perr';
+            d.textContent='preview failed to load — '+
+              (f.dataset.src||f.src).split('/').pop();
+            cb.appendChild(d)}
+          return}}catch(e){}
+        cb.classList.add('done');
+        // small centred-widget demos get a compact box instead of
+        // a tall empty panel — measured from real content bounds
+        try{var cd=f.contentDocument,
+            H=cd.documentElement.clientHeight||f.clientHeight||0,
+            maxH=0,maxB=0;
+          cd.querySelectorAll('body *').forEach(function(n){
+            var r=n.getBoundingClientRect();
+            if(r.width>4&&r.height>4&&r.height<H*0.92){
+              maxH=Math.max(maxH,r.height);
+              maxB=Math.max(maxB,r.bottom)}});
+          if(H&&(maxH<H*0.55||maxB<H*0.6)){
+            var crd=f.closest('.card');
+            if(crd)crd.classList.add('mini')}}catch(e){}
+        setTimeout(fitIframes,90)});
+      f.addEventListener('error',function(){
+        cb.classList.add('err')})})}
 
   // signed per-element effect pick — shared by the labeled
   // select and the ◆ chooser
