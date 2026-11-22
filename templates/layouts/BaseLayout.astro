@@ -61,12 +61,27 @@ import '../styles/global.css';
   window.addEventListener('DOMContentLoaded', function () {
     markHead();
     // nav triggers that arrived without the attribute default to
-    // collapsed — the toggle flips it from there
+    // collapsed — the toggle flips it from there. E-M4: every
+    // trigger names the panel it controls; the first .nav-links on
+    // the page is the sheet it opens.
+    var navPanel = document.querySelector('.nav-links');
+    if (navPanel && !navPanel.id) navPanel.id = 'wf-nav-links';
     document.querySelectorAll('.burger').forEach(function (b) {
       if (!b.hasAttribute('aria-expanded')) {
         b.setAttribute('aria-expanded', 'false');
       }
+      if (navPanel && !b.hasAttribute('aria-controls')) {
+        b.setAttribute('aria-controls', navPanel.id);
+      }
     });
+    // preview surfaces request the open state through the real
+    // toggle path — the sheet opens exactly as a burger click opens
+    // it (E-M3, no synthetic markup). No open state at/above the
+    // nav breakpoint — the menu-desktop doc must stay a closed bar.
+    if (new URLSearchParams(location.search).get('menu') === 'open' &&
+        window.matchMedia('(max-width: 59.99rem)').matches) {
+      setNav(true);
+    }
   });
   markHead();
   var setNav = function (open, opts) {
@@ -74,6 +89,11 @@ import '../styles/global.css';
     // markup exists (first paint defers to DOMContentLoaded)
     var nl = document.querySelector('.nav-links');
     if (!nl) return;
+    // the sheet only exists under the nav breakpoint — refuse to
+    // pin a panel (and lock scroll) on the desktop bar
+    if (open && !window.matchMedia('(max-width: 59.99rem)').matches) {
+      return;
+    }
     nl.classList.toggle('open', open);
     document.body.style.overflow = open ? 'hidden' : '';
     var b = document.querySelector('.burger');

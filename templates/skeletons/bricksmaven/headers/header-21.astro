@@ -79,7 +79,6 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
       }
       <div class="wf-header-21__cta row between">
         <div class="row between">
-          {list.length > 0 && <button class="burger" type="button" aria-label="Menu"><span aria-hidden="true">≡</span></button>}
           {list.length > 0 && <nav class="nav-links nav-flyout" aria-label="Primary">
             <div class="nav-sheet-head"><span class="logo nav-sheet-brand">{brand}</span><button class="nav-close" type="button" aria-label="Close menu">×</button></div>
             <div class="wf-off-canvas-6__content">
@@ -114,6 +113,7 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
           {act.label && <p class="nav-cta"><a class="wf-cta-button" href={act.href}>{act.label}</a></p>}
         </div>
       </div>
-    </div>
+              {list.length > 0 && <button class="burger" type="button" aria-label="Menu"><span aria-hidden="true">≡</span></button>}
+</div>
   </div>
 </div>

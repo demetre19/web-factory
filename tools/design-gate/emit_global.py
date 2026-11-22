@@ -389,6 +389,14 @@ input, textarea { border: 1px solid var(--input-border); padding: var(--input-py
   /* the open mobile menu is a flyout sheet, not a dropdown: a
      right-side panel over a scrim, a close control, vertical links,
      and the header CTA docked at the panel's foot (N.flyout) */
+  /* the whole open-sheet contract exists only under the nav
+     breakpoint — at ≥60rem .nav-links flows inline and a stray
+     .open (a ?menu=open URL loaded wide, say) must not pin a fixed
+     panel or lock scroll (audit: menu-desktop doc at 1280) */
+  .nav-close { display: none; }
+  .nav-sheet-head { display: none; }
+  .nav-sheet-cta { display: none; }
+  @media (max-width: 59.99rem) {
   .nav-links.open { display: flex; flex-direction: column;
             gap: var(--space-l);
             position: fixed; inset-block: 0; inset-inline-end: 0;
@@ -406,13 +414,6 @@ input, textarea { border: 1px solid var(--input-border); padding: var(--input-py
                without declaring a height (A.1) */
             padding-block: var(--space-s);
             white-space: normal; }
-  /* under 30rem the sheet is the whole viewport — a docked rail
-     leaves no room for a strip of page behind it */
-  @media (max-width: 30rem) {
-    .nav-links.open { width: 100vw; inset-inline: 0;
-            border-inline-start: 0; }
-  }
-  .nav-close { display: none; }
   .nav-links.open .nav-close { display: inline-flex;
             align-self: flex-end; min-height: var(--tap);
             min-width: var(--tap); align-items: center;
@@ -420,9 +421,6 @@ input, textarea { border: 1px solid var(--input-border); padding: var(--input-py
             border: 0 !important;
             color: var(--text-secondary); font-size: var(--fs-2);
             line-height: 1; cursor: pointer; }
-  /* the sheet's top row: brand left, ghost close right — one row,
-     never a floating X (N.flyout) */
-  .nav-sheet-head { display: none; }
   .nav-links.open .nav-sheet-head { display: flex;
             align-items: center; justify-content: space-between;
             gap: var(--space-m);
@@ -453,24 +451,47 @@ input, textarea { border: 1px solid var(--input-border); padding: var(--input-py
      hidden under the breakpoint, so .nav-sheet-cta — a child of the
      sheet, docked at its foot — shows the plan action instead
      (N.flyout). Full width within the sheet's own padding. */
-  .nav-sheet-cta { display: none; }
   .nav-links.open .nav-sheet-cta { display: block;
             margin-block-start: auto; margin-inline: 0;
             padding-block-start: var(--space-m); width: 100%; }
   .nav-links.open .nav-sheet-cta > .wf-cta-button,
   .nav-links.open .nav-sheet-cta a {
             display: flex; justify-content: center; width: 100%; }
+  }
+  /* under 30rem the sheet is the whole viewport — a docked rail
+     leaves no room for a strip of page behind it */
+  @media (max-width: 30rem) {
+    .nav-links.open { width: 100vw; inset-inline: 0;
+            border-inline-start: 0; }
+  }
   /* header CTA: below the nav breakpoint it rides inside the flyout;
      burger, links and CTA share one breakpoint (60rem — the
      .nav-links one below) or a dead zone opens where the header
      shows brand alone */
   .nav-cta { display: none; }
-  @media (max-width: 60rem) {
+  /* the header CTA is a compact pill — 40–44px tall (never the
+     --tap-sized hero button). F113-1/audit: ≥15px label, ≤44px */
+  .nav-cta .wf-cta-button, .nav-cta > a {
+            min-height: 2.5rem;
+            padding-block: .5em;
+            font-size: var(--fs-0); }
+  /* 59.99 not 60 — at exactly 60rem both media queries matched and
+     the burger showed beside the inline links (audit) */
+  @media (max-width: 59.99rem) {
     /* an empty CTA lane beside the burger must not hold flex space —
        hide a wrapper whose only element is the hidden .nav-cta, so
-       the burger pins to the row's far end (N.flyout) */
-    header[data-sec="nav"] div:has(> .nav-cta:only-child) {
-            display: none; }
+       the burger pins to the row's far end (N.flyout). Unscoped:
+       specimen/spec docs carry the same empty lane */
+    div:has(> .nav-cta:only-child) { display: none; }
+    /* E-M2 — the trigger docks to the row's far inline end at every
+       width under the breakpoint, whatever lanes precede it */
+    .burger { margin-inline-start: auto; }
+    /* the bar row is only as far in from the edge as the page
+       gutter — the fluid gutter grows to ~59px at 959px, dragging
+       the burger's right edge off the corner. Cap the header's
+       gutter under the breakpoint so the trigger stays ≤24px from
+       the edge (audit: 35–59px at 600–959) */
+    header > .sec-inner { padding-inline: min(var(--gutter), 1rem); }
   }
   @media (min-width: 60rem) {
     /* a stray CTA class on the trigger must not resurrect it: the
@@ -827,9 +848,15 @@ input, textarea { border: 1px solid var(--input-border); padding: var(--input-py
   .nav-link[aria-current], .nav-link.active {
               color: var(--action-primary); }
   /* the header CTA fits the bar — compact padding and nav font,
-     never the hero-sized call */
+     never the hero-sized call — but still tap-sized and legible
+     (≥15px label, ≥40px tall) */
   .nav-cta .wf-cta-button { padding: .5em .75em;
-              font-size: var(--fs--1); min-height: 0; }
+              font-size: var(--fs-0); min-height: 2.5rem;
+              /* E-M6 — a nowrap phone label overflowed the bar at
+                 1024; the compact pill wraps instead of pushing the
+                 header past the viewport */
+              white-space: normal; text-align: center;
+              min-width: 0; }
   .brand-mark { font-weight: 650; letter-spacing: -.02em;
                 font-size: var(--fs-1); color: var(--text-primary);
                 text-decoration: none; }
