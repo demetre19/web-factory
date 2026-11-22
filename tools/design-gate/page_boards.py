@@ -510,7 +510,10 @@ def bind(ctx, board, prog, copy):
     {slot: source}}} — role-bound content, lorem where nothing
     role-appropriate exists. Real COPY prose only on the real board."""
     facts = _facts(ctx, copy)
-    real = PC.page_type_of(copy) == BOARD_TYPE[board] if copy else False
+    # home is the emitted page itself; any other board binds COPY prose
+    # only when the copy's page type is that board's type
+    real = bool(copy) and (board == 'home' or
+                           PC.page_type_of(copy) == BOARD_TYPE[board])
     slug = gate.page_path(ctx)[1]
     rows = [r for _, r in ctx.rows(slug)]
     taken, out = set(), {}
@@ -562,7 +565,7 @@ def bind(ctx, board, prog, copy):
                     src['qa'] = f'COPY.json#{ref}'
         for slot, key in (FACT_SLOTS.get((board, role)) or {}).items():
             val = facts.get(key)
-            if not val:
+            if not val or str(src.get(slot, '')).startswith('COPY.json'):
                 continue
             if slot == 'heading':
                 blk['h2'] = val
