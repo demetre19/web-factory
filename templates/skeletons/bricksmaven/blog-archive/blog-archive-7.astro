@@ -76,7 +76,7 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
       }
   {sub && <p class="mt-stack lede" set:html={inline(sub)} />}
   {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
-      {list.length > 0 &&       <div class="blog-archive-7-body">
+      <div class="blog-archive-7-body">
         {list.length > 0 && <div class="blog-archive-7-wrapper">{(list || []).map((it) => (
               <div class="blog-archive-7-card card">
                 <div class="blog-archive-7-card__category">
@@ -90,8 +90,8 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
                 {it.meta && <p class="meta text-fluid--1">{it.meta}</p>}
               </div>
             ))}</div>}
+        <nav class="pagination row gap-fluid-s" aria-label="Pagination"><a href="?page=1" aria-current="page">1</a><a href="?page=2">2</a><a href="?page=3">3</a><a href="?page=2" rel="next">Next</a></nav>
       </div>
-      }
     </div>
   </div>
     </div>

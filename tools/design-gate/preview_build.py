@@ -616,7 +616,7 @@ def emit_layouts(ctx):
                            'preview-bank.css'), bank_css)
     slug = gate.page_path(ctx)[1]
     rows_by_sec = {r.get('name'): r for _, r in ctx.rows(slug)}
-    brief_media = list((gate._brief(ctx).get('media') or []))
+    brief_media = _site_media(ctx)
     for oid, label, score, override in options:
         # a comp override must render the way the real projection would
         # (L.3): the hero already spent media[0] (V.1), then every
@@ -1028,6 +1028,32 @@ const sharp = require(process.argv[1] + '/node_modules/sharp');
 """
 
 
+_MEDIA_EXT = ('.jpg', '.jpeg', '.png', '.webp', '.avif')
+
+
+def _site_media(ctx):
+    """The brief's media list — or, when the brief files none, the
+    photos the site already ships in public/media (src /media/<name>,
+    the path the shell serves), so a media topology never renders an
+    empty slot while the site has imagery."""
+    media = []
+    try:
+        media = list(gate._brief(ctx).get('media') or [])
+    except Exception:
+        pass
+    if media:
+        return media
+    d = os.path.join(ctx.site, 'public', 'media')
+    brand = (gate._brief(ctx).get('brand') or {}) if os.path.isdir(d) \
+        else {}
+    name = brand.get('name') if isinstance(brand, dict) else brand
+    return [{'src': f'/media/{f}',
+             'alt': f"{name or 'Site'} — "
+                    f"{os.path.splitext(f)[0].replace('-', ' ')}"}
+            for f in sorted(os.listdir(d)) if os.path.isdir(d) and
+            f.lower().endswith(_MEDIA_EXT)] if os.path.isdir(d) else []
+
+
 def _distinct_media(bctx, media):
     """The brief's media with near-identical photos folded to their
     first entry (8×8 average hash, Hamming ≤ 4) — one photo filed
@@ -1084,6 +1110,7 @@ def emit_page_boards(ctx, doc=None, tries=40):
 
 
 _HERO_SURFACES = ('base', 'inverse', 'muted', 'brand')
+_HERO_DENSITY = ('regular', 'spacious', 'compact')
 
 
 def _emit_page_boards(ctx, doc):
@@ -1101,12 +1128,7 @@ def _emit_page_boards(ctx, doc):
     if 'content' not in tpls:
         raise SystemExit('preview_build: no content contract to clone')
     bctx = _boards_site(ctx)
-    media = []
-    try:
-        media = list(gate._brief(ctx).get('media') or [])
-    except Exception:
-        pass
-    media = _distinct_media(bctx, media)
+    media = _distinct_media(bctx, _site_media(ctx))
     comps, pages = {}, {}
     for board, b in doc['boards'].items():
         prog = b['plan']
@@ -1116,6 +1138,13 @@ def _emit_page_boards(ctx, doc):
                            if v.get('block')]}
         for oi, o in enumerate(b['options']):
             oid = o['id']
+            # the hero band's surface × height (density rung) is a
+            # 12-way grid the options walk in order: no more than
+            # ceil(n/12) options of a board ever share a first-screen
+            # band, whatever topology they retrieved
+            _band = oi % (len(_HERO_SURFACES) * len(_HERO_DENSITY))
+            hero_surface = _HERO_SURFACES[_band % len(_HERO_SURFACES)]
+            hero_density = _HERO_DENSITY[_band // len(_HERO_SURFACES)]
             rows, alt = [], 0
             for ri, p in enumerate(prog):
                 role = p['role']
@@ -1137,12 +1166,24 @@ def _emit_page_boards(ctx, doc):
                     # the hero band rotates with the option — a light,
                     # inverse, brand or muted first screen, never 30
                     # cream bands with different markup inside
-                    surface = _HERO_SURFACES[oi % len(_HERO_SURFACES)]
+                    surface = hero_surface
+                    cc['density'] = hero_density
                 elif tk == 'act':
                     surface = 'brand'
                 elif tk == 'content':
                     alt += 1
-                    surface = 'muted' if alt % 2 else 'base'
+                    # the content rhythm's phase flips every 4
+                    # options: the band under a short page-header
+                    # hero (blog, contact) is part of the first screen
+                    surface = 'muted' if (alt + oi // len(
+                        _HERO_SURFACES)) % 2 else 'base'
+                    if alt == 1:
+                        # …so that first band walks its own surface
+                        # ring, never the hero's
+                        ring = [x for x in ('base', 'muted', 'inverse')
+                                if x != hero_surface]
+                        surface = ring[(oi // len(_HERO_SURFACES))
+                                       % len(ring)]
                 content = dict(tc.get('content') or {})
                 content.update(heading=None, fs=None, body=None,
                                h1=role == 'hero',

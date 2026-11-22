@@ -817,7 +817,7 @@ def emit_vibe_doc(pd, fam, bundle):
     # (e.g. the C.1 pairing) changes the resolved palette and the
     # cached doc must re-emit, so a version stamp alone is not enough
     css = _fam_css(bundle)
-    mark = 'wf:vibe:v5:' + hashlib.sha256(
+    mark = 'wf:vibe:v6:' + hashlib.sha256(
         css.encode()).hexdigest()[:8]
     stale = True
     if os.path.isfile(fp):
@@ -832,9 +832,22 @@ def emit_vibe_doc(pd, fam, bundle):
                  '"dark";document.documentElement.classList.add('
                  '"dark")</script>'
                  if bundle.get('theme') == 'dark' else '')
+        # the type board's in-situ specimen iframes this doc and
+        # posts live ladder-var overrides (and a theme flip) — the
+        # hook tracks which vars it set so the next message clears
+        # instead of stacking, and 'vibe default' restores the doc
+        hook = ('<script>addEventListener("message",function(e){'
+                'var d=e.data||{};if(d.wfVars){var r=document.'
+                'documentElement.style;(window.__wfk||[]).forEach('
+                'function(k){r.removeProperty(k)});window.__wfk=[];'
+                'for(var k in d.wfVars){r.setProperty(k,d.wfVars[k]);'
+                'window.__wfk.push(k)}}if(d.wfTheme){document.'
+                'documentElement.dataset.theme=d.wfTheme;document.'
+                'documentElement.classList.toggle("dark",'
+                'd.wfTheme==="dark")}})</script>')
         with open(fp, 'w', encoding='utf-8') as fh:
             fh.write('<!--' + mark + '-->' + _doc(head, battr, body,
-                                                 theme, css))
+                                                 theme + hook, css))
     return 'preview/vibes/' + fam + '.html'
 
 
@@ -1345,6 +1358,14 @@ def type_ladder(pipeline, spec):
     varz = {'--' + k: v for k, v in rungs.items()}
     varz['--display-weight'] = str(clean['hweight'])
     varz['--lh-0'] = '%g' % clean['lheight']
+    if clean['head_face'] in _FACE_STACKS:
+        varz['--primitive-font-display'] = \
+            _FACE_STACKS[clean['head_face']]
+        varz['--font-display'] = _FACE_STACKS[clean['head_face']]
+        if clean['head_face'] == 'mixed':
+            # the allele pairs serif heads with a sans body
+            varz['--primitive-font-body'] = _FACE_STACKS['sans']
+            varz['--font-body'] = _FACE_STACKS['sans']
     if clean['body_face'] in _FACE_STACKS:
         varz['--primitive-font-body'] = \
             _FACE_STACKS[clean['body_face']]
@@ -4548,6 +4569,13 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
   margin:14px 0}
 .tsprev .tscol{background:var(--bg-2);border:1px solid var(--line);
   border-radius:10px;padding:12px 14px;min-width:0;overflow:hidden}
+#ts-th{margin-left:auto}
+.tsframe{border:1px solid var(--line);border-radius:10px;
+  overflow:hidden;background:#fff;position:relative;min-height:120px}
+.tsframe iframe{border:0;display:block;transform-origin:top left}
+.tslab{font:600 10.5px var(--mono);color:var(--muted);
+  text-transform:uppercase;letter-spacing:.06em;margin:12px 0 4px}
+.tslad{max-height:190px;overflow:auto}
 .tsprev .tscol h4{margin:0 0 8px;font:600 11px var(--mono);
   color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
 .tsr{display:flex;align-items:baseline;gap:10px;min-width:0;
@@ -5382,6 +5410,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
           if(tsf&&j.typescale)tsf.src=j.typescale+
             (document.documentElement.dataset.theme==='dark'
              ?'?theme=dark':'');
+          var tsi=document.getElementById('ts-iframe');
+          if(tsi&&j.preview)tsSetDoc(j.preview);
           var vn=document.querySelector('.vname');
           if(vn)vn.textContent=VSRC||'computed vibe';
           var gm={};(j.genes||[]).forEach(function(g){
@@ -6220,7 +6250,13 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
           return '<button type="button" class="tsvpb'+
             (v[0]===_tsVp?' on':'')+'" data-v="'+v[0]+'">'+
             v[1]+' '+v[0]+'</button>'}).join('')+
-        '</div><div id="ts-spec"></div></div></div>'+
+        '<button type="button" class="tsvpb" id="ts-th" '+
+        'title="flip the specimen\u2019s theme">\u25d0 theme</button>'+
+        '</div>'+
+        '<div class="tsframe" id="ts-frame">'+
+        '<iframe id="ts-iframe" loading="lazy"></iframe></div>'+
+        '<div class="tslab">scale ladder \u2014 px at this width</div>'+
+        '<div id="ts-spec" class="tslad"></div></div></div>'+
       '<pre class="tsvars" id="ts-vars"></pre>'+
       '<div class="crow"><button class="pick" id="ts-use">'+
       'Use this</button><button class="tsc" id="ts-copy">'+
@@ -6280,6 +6316,31 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
       if(x.dataset.f==='h')x.style.fontWeight=spec.hweight||700;
       else x.style.lineHeight=spec.lheight||1.55})}
 
+  var _tsTh='';
+  function tsSetDoc(u){
+    var f=document.getElementById('ts-iframe');
+    if(!f||!u)return;
+    f.src=u+(u.indexOf('?')>=0?'&':'?')+'theme='+
+      (_tsTh||document.documentElement.dataset.theme||'light')}
+
+  function tsPushVars(){
+    // live ladder overrides into the in-situ doc — the doc's own
+    // hook clears keys it set last time, so 'vibe default' faces
+    // (absent from _tsVars) restore the resolved vibe
+    var f=document.getElementById('ts-iframe');
+    if(f&&f.contentWindow&&_tsVars)
+      f.contentWindow.postMessage({wfVars:_tsVars},'*')}
+
+  function tsFitFrame(){
+    // M/T/D = TRUE iframe width so clamp() and the doc's own media
+    // queries run at that breakpoint; scaled down to fit the panel
+    var fr=document.getElementById('ts-frame'),
+        f=document.getElementById('ts-iframe');
+    if(!fr||!f)return;
+    var w=fr.clientWidth||1,s=Math.min(1,w/_tsVp);
+    f.style.width=_tsVp+'px';f.style.height=(600/s)+'px';
+    f.style.transform='scale('+s+')';fr.style.height='600px'}
+
   function tsRefresh(){
     var vm=tsValidate(),st=document.getElementById('ts-stat');
     if(vm){if(st){st.className='pstat bad';st.textContent=vm}return}
@@ -6288,7 +6349,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
         if(!j||!j.ok){var st=document.getElementById('ts-stat');
           if(st)st.textContent=(j&&j.error)||'preview failed';return}
         _tsPx=j.px||{};_tsVars=j.vars||{};
-        tsRenderSpecimen();
+        tsRenderSpecimen();tsPushVars();
         var v=document.getElementById('ts-vars');
         if(v)v.textContent=Object.keys(_tsVars).map(function(k){
           return k+': '+_tsVars[k]+';'}).join('\n')})}
@@ -6320,12 +6381,31 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
             var f=(p.genes||{})['display-face'];
             if(f)tsSet('ts-hf',f)}}
         clearTimeout(_tsT);_tsT=setTimeout(tsRefresh,220)})});
-    ed.querySelectorAll('#ts-vpbar .tsvpb').forEach(function(b){
-      b.onclick=function(){
+    ed.querySelectorAll('#ts-vpbar .tsvpb:not(#ts-th)').forEach(
+      function(b){b.onclick=function(){
         _tsVp=+b.dataset.v;
         ed.querySelectorAll('#ts-vpbar .tsvpb').forEach(function(x){
           x.classList.toggle('on',x===b)});
-        tsRenderSpecimen()}});
+        tsRenderSpecimen();tsFitFrame()}});
+    var th=document.getElementById('ts-th');
+    if(th)th.onclick=function(){
+      _tsTh=((_tsTh||document.documentElement.dataset.theme||'light')
+             ==='dark')?'light':'dark';
+      var f=document.getElementById('ts-iframe');
+      if(f&&f.contentWindow)
+        f.contentWindow.postMessage({wfTheme:_tsTh},'*')};
+    var tif=document.getElementById('ts-iframe');
+    if(tif){
+      tif.addEventListener('load',function(){
+        setTimeout(tsPushVars,80);setTimeout(tsFitFrame,80)});
+      tsFitFrame();
+      // the specimen is the doc for the SIGNED vibe — VRES may be a
+      // pending (unsaved) resolve from the vibe board, so use it as
+      // a fast first paint but always re-resolve the signed genes
+      if(VRES&&VRES.preview)tsSetDoc(VRES.preview);
+      api('/vibe-resolve',{pipeline:PIPELINE,
+        genes:DATA.vibe_genes||{}}).then(function(j){
+        if(j&&j.preview)tsSetDoc(j.preview)})}
     var cp=document.getElementById('ts-copy');
     if(cp)cp.onclick=function(){
       var v=document.getElementById('ts-vars');

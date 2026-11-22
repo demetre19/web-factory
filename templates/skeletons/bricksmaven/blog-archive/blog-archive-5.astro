@@ -80,7 +80,7 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
         </div>}
 
       </div>
-      {list.length > 0 &&       <div class="blog-archive-5-body">
+      <div class="blog-archive-5-body">
         {list.length > 0 && <div class="blog-archive-5-wrapper">{(list || []).map((it) => (
               <div class="blog-archive-5-card card">
                 {it.icon && <IconChip name={it.icon} />}
@@ -97,8 +97,8 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
                 </div>
               </div>
             ))}</div>}
+        <nav class="pagination row gap-fluid-s" aria-label="Pagination"><a href="?page=1" aria-current="page">1</a><a href="?page=2">2</a><a href="?page=3">3</a><a href="?page=2" rel="next">Next</a></nav>
       </div>
-      }
     </div>
   </div>
     </div>

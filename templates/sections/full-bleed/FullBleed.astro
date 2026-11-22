@@ -20,6 +20,7 @@ const {
 } = Astro.props;
 ---
 
+{image && <div class="media-bg"><img src={image.src} alt={image.alt} /></div>}
 <div class="text-center">
   {h1 ? <h1 class="text-fluid-4">{heading}</h1> : <h2 class="text-fluid-3">{heading}</h2>}
   {fs && <p class="mx-auto mt-stack max-w-prose text-fluid-1">{fs}</p>}
