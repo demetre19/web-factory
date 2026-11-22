@@ -99,7 +99,15 @@ import '../styles/global.css';
     }
     nl.classList.toggle('open', open);
     document.body.style.overflow = open && small ? 'hidden' : '';
-    var b = document.querySelector('.burger, .nav-more');
+    // the visible trigger owns aria-expanded + Esc focus — on
+    // overflow headers .nav-more precedes .burger in the DOM, so
+    // querySelector alone can bind a hidden control
+    var b = null;
+    var bs = document.querySelectorAll('.burger, .nav-more');
+    for (var i = 0; i < bs.length; i++) {
+      if (bs[i].offsetParent) { b = bs[i]; break; }
+    }
+    if (!b) b = bs[0];
     if (b) {
       b.setAttribute('aria-expanded', open ? 'true' : 'false');
       if (!open && opts && opts.refocus) b.focus();
