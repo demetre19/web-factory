@@ -841,8 +841,7 @@ def _handler():
                     # serve it unframed instead of a 404
                     self.send_response(302)
                     self.send_header(
-                        'Location',
-                        '/built/' + urllib.parse.quote(qpath))
+                        'Location', '/built/' + qpath)
                     self.send_header('Content-Length', '0')
                     self.end_headers()
                     return
