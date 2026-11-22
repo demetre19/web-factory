@@ -808,9 +808,15 @@ def _png_gray(path):
     never depends on numpy/PIL being installed."""
     try:
         from PIL import Image
-        im = Image.open(path).convert('L').resize(
-            (_FS_GW, _FS_GH))
-        return list(im.getdata())
+        im = Image.open(path).convert('L')
+        w, h = im.size
+        px = im.load()
+        # identical sample grid as the stdlib fallback below —
+        # resize() would interpolate, so the kept set would depend
+        # on whether Pillow happens to be installed
+        return [px[x, y]
+                for y in range(0, h, max(1, h // _FS_GH))
+                for x in range(0, w, max(1, w // _FS_GW))]
     except ImportError:
         pass
     import struct, zlib
@@ -876,8 +882,12 @@ def _png_gray(path):
             elif bpp >= 3:
                 r, g, b = row[i], row[i + 1], row[i + 2]
             else:
-                r = g = b = row[i]
-            out.append((r * 299 + g * 587 + b * 114) // 1000)
+                out.append(row[i])
+                continue
+            # identical to PIL's RGB->L conversion, so the two paths
+            # sample the same values
+            out.append(
+                (r * 19595 + g * 38470 + b * 7471 + 0x8000) >> 16)
     return out
 
 
