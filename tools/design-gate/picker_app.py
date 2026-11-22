@@ -3382,7 +3382,11 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
       ch.onclick=function(){delete VGENES[ch.dataset.ax];
         vibePane(el,o)}});
     el.querySelectorAll('.fchip').forEach(function(b){
-      b.onclick=function(ev){doFilt(b.dataset.t,ev);
+      b.onclick=function(ev){var t=b.dataset.f;
+        if(!t)FILT={};
+        else if(ev.shiftKey||ev.metaKey||ev.ctrlKey){
+          if(FILT[t])delete FILT[t];else FILT[t]=1}
+        else{var was=FILT[t];FILT={};if(!was)FILT[t]=1}
         vibePane(el,o)}});
     el.querySelector('#vq').oninput=function(e){
       VQ=e.target.value.toLowerCase();
