@@ -403,7 +403,11 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
      shows brand alone */
   .nav-cta { display: none; }
   @media (min-width: 60rem) {
-    .burger { display: none; }
+    /* a stray CTA class on the trigger must not resurrect it: the
+       doubled class keeps this rule ahead of ANY later
+       .wf-cta-button{display:*} line at equal order (specificity
+       decides, never position) */
+    .burger, .burger.wf-cta-button { display: none; }
     .nav-cta { display: inline-block; }
   }
   /* ---- composition vocabulary ------------------------------- */
@@ -679,8 +683,13 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
     .wf-cta-button { font-size: inherit; }
     .call-bar { display: none; }
     body { padding-block-end: 0; } }
-  .nav-link { color: var(--text-secondary); text-decoration: none;
-              font-size: var(--fs--1); font-weight: 500;
+  .wf-cta-button.alt { background: var(--bg-elevated);
+              color: var(--text-primary);
+              border: 1px solid var(--border-default);
+              box-shadow: var(--shadow-card); }
+  .wf-cta-button.alt:hover { box-shadow: var(--shadow-pop); }
+  .nav-link { color: var(--text-primary); text-decoration: none;
+              font-size: var(--fs-0); font-weight: 500;
               /* one line per link — a link that wraps reads as two
                  nav bars even when the ul itself cannot wrap */
               white-space: nowrap; }
