@@ -3432,12 +3432,12 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
   display:flex;flex-direction:column}
 #xpBar{display:flex;align-items:center;gap:8px;padding:9px 14px;
   background:var(--panel);border-bottom:1px solid var(--line);
-  flex:none;flex-wrap:wrap}
+  flex:none;flex-wrap:wrap;row-gap:6px}
 #xpBar .xdev{flex:none}
 .xttl{font:600 12.5px var(--font);color:var(--ink);max-width:26%;
   overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .xdev{display:flex;border:1px solid var(--line);border-radius:7px;
-  overflow:hidden;margin-left:auto}
+  overflow:hidden;margin-left:auto;flex:none}
 .xdev button{border:0;background:none;color:var(--muted);cursor:pointer;
   font:600 11px var(--mono);padding:5px 10px}
 .xdev button.on{background:var(--accent);color:var(--accent-ink)}
@@ -3688,7 +3688,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
   var FTAG_LABEL={
     'fv1':'variant 1','fv2':'variant 2','fv3':'variant 3',
     'v1':'variant 1','v2':'variant 2','v3':'variant 3',
-    'bank-option':'in bank','bank':'in bank',
+    'bank-option':'bank only — not emitted','bank':'in bank',
     'derived':'from this design','web':'from the web'};
   function filters(tags){
     var n=Object.keys(FILT).length,seen={};
