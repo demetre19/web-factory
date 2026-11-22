@@ -57,6 +57,7 @@ PACK_META = {
     "plate": ("media-block", "element", ["media"], "media display"),
     "microcraft": ("ui-micro", "element", ["micro interaction"], "micro interaction"),
     "wayfinding": ("wayfinding", "navigation", ["navigation"], "wayfinding"),
+    "control": ("ui-control", "element", ["control"], "button control"),
 }
 
 # component-name prefix -> (baseline, section_class, category, query) override
@@ -288,6 +289,17 @@ def sniff_topology(html_text: str, baseline: str) -> tuple[str, str]:
         if 'role="menu"' in c or "menu" in low:
             return "ui-menu", "medium"
         return "ui-micro", "medium"
+    if baseline == "ui-control":
+        low = c.lower()
+        if 'role="menu"' in c or 'role="listbox"' in c or "dropdown" in low:
+            return "ui-control-menu", "medium"
+        if "disabled" in c or "cursor-not-allowed" in c:
+            return "ui-control-states", "medium"
+        if 'role="group"' in c or "segmented" in low:
+            return "ui-control-group", "medium"
+        if "<a " in c and "<button" not in c:
+            return "ui-control-link", "medium"
+        return "ui-control", "medium"
     if baseline == "wayfinding":
         low = c.lower()
         if "breadcrumb" in low:
