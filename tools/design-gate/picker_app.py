@@ -1320,16 +1320,28 @@ def _composition_board(pd, layout_prevs=None):
     dist = os.path.join(pd, 'site', 'dist')
     opts = []
     for o in lo.get('options') or []:
-        rel = (layout_prevs or {}).get(o.get('id'))
+        oid = o.get('id')
+        # the fully-built option page wins when the emit produced
+        # one (real imagery/copy); the stacked fragment doc is the
+        # fallback for options without a build
+        built = os.path.join(dist, 'preview',
+                             'lo-' + str(oid), 'index.html')
+        if os.path.isfile(built):
+            prev = built
+        else:
+            rel = (layout_prevs or {}).get(oid)
+            prev = os.path.join(dist, rel) if rel else None
         comps = o.get('compositions') or {}
         opts.append({
-            'id': o.get('id'), 'name': o.get('label') or o.get('id'),
+            'id': oid, 'name': o.get('label') or oid,
             'score': o.get('score'),
-            'preview': ('/built/' + urllib.parse.quote(
-                os.path.join(dist, rel))) if rel else None,
+            'preview': ('/built/' + urllib.parse.quote(prev))
+                       if prev else None,
             'tags': ['layout'] + sorted(set(comps.values())),
             'element': 'layout', 'variant': o.get('id'),
-            'desc': ' · '.join(k + ' ' + v for k, v in
+            'desc': 'rendered on the home page — the only page '
+                    'with a build · ' +
+                    ' · '.join(k + ' ' + v for k, v in
                               list(comps.items())[:4]) +
                     (' …' if len(comps) > 4 else ''),
             'compositions': comps})
@@ -1874,7 +1886,8 @@ def record_element_pick(pipeline, element, variant):
     is the element-choice registry the plan consumes later."""
     valid = {grp['element'] for g in ELEMENT_GALLERIES
              for grp in g['groups']} | {'vibe', 'header', 'footer',
-                                        'mobile-menu', 'modals'} | \
+                                        'mobile-menu', 'modals',
+                                        'layout'} | \
             {d for dirs in _BANK_DIRS.values() for d in dirs}
     if element not in valid and not re.fullmatch(
             r'sec:[\w-]{1,40}', element or ''):
