@@ -2596,6 +2596,12 @@ _BANK_STAGE_CSS = (
     # frame edge and no dead band stacks around the widget
     '.wf-stage{position:relative;overflow:auto;'
     'transform:translateZ(0);display:flex;'
+    # safe centering: children smaller than the frame center as
+    # before, but an oversized fragment (mob-chrome is a 712px
+    # surface in a 360px phone frame) left/top-anchors instead of
+    # losing its start edge outside the scrollable area (audit
+    # F-6 — 44 docs clipped)
+    'justify-content:safe center;align-items:safe center;'
     'border-radius:14px;'
     'box-shadow:0 10px 34px rgba(15,18,30,.16);'
     # content-sized both axes — a fragment wider than its siblings'
@@ -2916,7 +2922,73 @@ def _bank_fallback_css():
         elif not var:
             rules.append(f'{sel}{{{decl}}}')
         # pseudo-el/other variants unhandled → skip silently
+    # ?theme=dark — fragments authored light-only keep pale surfaces
+    # + dark text unless a dark: utility overrides them. The map
+    # binds the common light tokens to the frame's dark roles; the
+    # :where() wrapper keeps the rule at 0-1-0 specificity so an
+    # authored .dark:.utility (0-2-0) always wins (audit F-5)
+    for tok in sorted(toks):
+        if ':' in tok or '[' in tok:
+            continue
+        decl = _bank_dark_map(tok)
+        if not decl:
+            continue
+        sel = ':where(.' + _css_esc(tok) + ')'
+        if tok.startswith('divide-'):
+            # tailwind divide-color styles the children's shared
+            # borders — the utility itself paints nothing
+            sel += '>*+*'
+        rules.append('[data-theme="dark"] ' + sel +
+                     '{' + decl + '}')
     return ''.join(rules)
+
+
+# light-utility → dark-role bindings for fragments that ship no
+# dark: variant — surfaces drop to the frame's dark palette, dark
+# text lifts to light, hairlines dim. Families: slate/gray/neutral/
+# zinc/stone + white/black; /NN alpha modifiers keep their alpha.
+_DARK_FAMILIES = ('slate', 'gray', 'neutral', 'zinc', 'stone')
+_DARK_BG = {'50': (22, 26, 34), '100': (29, 34, 44),
+            '200': (38, 45, 58)}
+_DARK_TEXT_HI = '#e8eaef'
+_DARK_TEXT_MID = '#9aa2b1'
+_DARK_LINE = '#2a2f3a'
+
+
+def _bank_dark_map(tok):
+    """the dark-role decl for a light-only utility token, or None."""
+    m = re.fullmatch(
+        r'(bg|text|border|divide)-(white|black|' +
+        '|'.join(_DARK_FAMILIES) +
+        r')(?:-(\d{2,3}))?(?:/(\d{1,3}))?', tok)
+    if not m:
+        return None
+    prop, name, shade, alpha = m.groups()
+    a = int(alpha) / 100 if alpha else 1
+
+    def rgba(rgb):
+        if a >= 1:
+            return '#%02x%02x%02x' % rgb
+        return 'rgba(%d,%d,%d,%.2f)' % (rgb + (a,))
+
+    if prop == 'bg':
+        if name == 'white':
+            return 'background-color:' + rgba((22, 26, 34))
+        rgb = _DARK_BG.get(shade or '')
+        return ('background-color:' + rgba(rgb)) if rgb else None
+    if prop == 'text':
+        if name == 'black' or shade in ('950', '900', '800', '700'):
+            return 'color:' + _DARK_TEXT_HI
+        if shade in ('600', '500'):
+            return 'color:' + _DARK_TEXT_MID
+        return None
+    # border / divide — light hairlines go dark-line; a bare
+    # border-<family> (no shade) is usually a light rule. divide-*
+    # reaches the children's borders via the caller's >*+* selector
+    if name in ('white', 'black') or (shade or '100') in \
+            ('50', '100', '200', '300'):
+        return 'border-color:' + _DARK_LINE
+    return None
 
 
 def _bank_scale(frag):
@@ -4657,7 +4729,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
       <path d="M2.5 4.5h11M2.5 8h11M2.5 11.5h11"/></svg></button>
     <div class="mark">wf</div>
     <div class="who"><span id="whoName">picker</span>
-      <small id="whoSub">design-file not loaded</small></div>
+      <small id="whoSub">emitting previews…</small></div>
     <div class="sp"></div>
     <div id="vwCtl" title="preview breakpoint — applies to every preview">
       <span class="vind" aria-hidden="true"></span>
@@ -6621,13 +6693,22 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
       if(d.error&&!d._warming){
         document.getElementById('board').innerHTML=
           '<div class="empty">'+esc(d.error)+'</div>';return}
-      DATA=d;CUR='vibe';
+      DATA=d;
+      // a warm swap must not yank the user back to the vibe board
+      // or drop their scroll — only the first load picks the tab
+      if(CUR==null)CUR='vibe';
       DATA.vibe_genes=d.vibe_genes||{};
       // a signed type pick rebinds previews under its resolved
       // bundle — it carries the vibe genes + its own overrides
       BAKED=(d.picked_elements||{}).type||
         (d.picked_elements||{}).vibe||'';
+      var bEl=document.getElementById('board'),
+          bst=bEl?bEl.scrollTop:0;
       topchips();rail();board();
+      if(bEl)bEl.scrollTop=bst;
+      if(d._warming)
+        document.getElementById('whoSub').textContent=
+          'refreshing previews…';
       // a last-good payload marked _warming is swapped for the
       // fresh emit when the background warm finishes — the
       // re-render also re-points any iframe that raced the emit
