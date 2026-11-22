@@ -3364,6 +3364,18 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
   .ssrow{grid-template-columns:minmax(0,1fr) auto auto;gap:8px 10px}
   .ssrow .ssm{display:none}
 }
+@media(max-width:560px){
+  .grid.fxgrid{grid-template-columns:1fr}
+  .card,.grid.fxgrid .card{grid-template-columns:minmax(0,1fr);
+    grid-template-rows:auto auto auto}
+  .card .cf{grid-row:3;grid-column:1;border-top:1px solid var(--line);
+    flex-direction:row;flex-wrap:wrap}
+  .card .cf .crow{margin-top:0}
+  .compwrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .fxlab{display:grid;gap:4px}
+  .fxsel{width:100%}
+}
+.compwrap{overflow-x:auto}
 .rmgrid{display:flex;flex-direction:column;gap:14px;max-width:920px}
 .rmslot{display:grid;grid-template-columns:20px minmax(0,1fr) 30px minmax(90px,170px) 46px;
      gap:10px;align-items:center}
@@ -4004,7 +4016,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
     var opts=cb.options||[],secs=Object.keys(cb.allowed||{});
     var h='<div class="desc" style="margin-top:4px">picked option: <b>'+
       esc(cb.pick||'—')+'</b></div>';
-    h+='<table class="comptab"><tr><th>section</th>';
+    h+='<div class="compwrap"><table class="comptab"><tr><th>section</th>';
     opts.forEach(function(o){h+='<th>'+esc(o.id)+' · '+esc(o.label||'')+'</th>'});
     h+='<th>allowed</th></tr>';
     secs.forEach(function(s){
@@ -4014,7 +4026,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
         h+='<td>'+(v?'<span class="o'+(cb.pick===o.id?' pickd':'')+'">'+esc(v)+'</span>':'—')+'</td>'});
       h+='<td>'+((cb.allowed[s]||[]).map(function(a){
         return '<span class="o">'+esc(a)+'</span>'}).join(''))+'</td></tr>'});
-    return h+'</table>';
+    return h+'</table></div>';
   }
 
   // saved design systems — persist + reload the combination
