@@ -177,7 +177,7 @@ def component_roots(roots: list[dict], prefix: str) -> list[dict] | None:
     return hits or None
 
 
-def restrict_tree(t: Tree, roots: list[dict]) -> None:
+def restrict_tree(t: Tree, roots: list[dict], prefix: str) -> None:
     """Re-scope sig/classes/panel to the given subtrees (drop scaffolding)."""
     t.roots = roots
     t.sig = {}
@@ -202,6 +202,28 @@ def restrict_tree(t: Tree, roots: list[dict]) -> None:
 
     for r in roots:
         walk(r, 0)
+
+    if not t.panel_classes:
+        # No semantic surface tag — judge mode on the component's own
+        # surface root, never the shared toast boilerplate, a dim
+        # scrim, or every class in the subtree.
+        boiler = prefix + "toast"
+
+        def has_surface_id(n: dict) -> bool:
+            return (n["id"].startswith(prefix)
+                    and not n["id"].startswith(boiler)
+                    or any(has_surface_id(c) for c in n["children"]))
+
+        def is_scrim(n: dict) -> bool:
+            cls = " ".join(n["_cls_all"])
+            return "inset-0" in cls and re.search(r"bg-\S+/\d", cls)
+
+        surf = next(
+            (n for n in roots if has_surface_id(n) and not is_scrim(n)),
+            None)
+        if surf is None:
+            surf = next((n for n in roots if not is_scrim(n)), roots[0])
+        t.panel_classes = surf["_cls_all"]
 
 
 def sniff_topology(html_text: str, baseline: str) -> tuple[str, str]:
@@ -801,7 +823,7 @@ def main() -> int:
         # (id-marked component elements), scope the signature to it.
         roots = component_roots(t.roots, f"{_meta_key}-")
         if roots is not None:
-            restrict_tree(t, roots)
+            restrict_tree(t, roots, f"{_meta_key}-")
         spec = bank_item(slug, args.pack, comp, html_text, topo_class, conf, t,
                          outdir, sc, cat, qw, comp_source, is_new_topo)
         rows.append({"slug": slug, "topology_class": topo_class,
