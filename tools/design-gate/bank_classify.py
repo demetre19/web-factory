@@ -355,12 +355,9 @@ def _prices(key):
 def _agreement(run):
     per_axis = {}
     ids = {v['id'] for v in run.values()}
-    lite = {k: v for k, v in run.items() if v['model'] == MODEL_LITE}
-    flash = {k: v for k, v in run.items()
-             if v['model'] == MODEL_FLASH}
     for i in ids:
-        a = lite.get(i, {}).get('labels', {})
-        b = flash.get(i, {}).get('labels', {})
+        a = run.get(i + '|' + MODEL_LITE, {}).get('labels', {})
+        b = run.get(i + '|' + MODEL_FLASH, {}).get('labels', {})
         for ax in set(a) | set(b):
             va = a.get(ax, {}).get('allele') or \
                 tuple(a.get(ax, {}).get('alleles', []))
@@ -467,3 +464,318 @@ def test_run():
 
 if '--test' in sys.argv:
     test_run()
+
+
+# -------------------------------------------------------------------
+# --test2 mode — FREE model lanes + embedding/rerank retrieval probes.
+# Decisions API (pplx-decider-*:free), free vision chat models, and
+# nvidia nemotron embed/rerank. Falls back to paid gemini per the
+# operator's fallback directive; every fallback is logged.
+# -------------------------------------------------------------------
+DECIDER_FLASH = 'perplexity/pplx-decider-flash-v1.3:free'
+DECIDER = 'perplexity/pplx-decider-v1.3:free'
+FREE_VISION = ['google/gemma-4-31b-it:free',
+               'nvidia/nemotron-3.5-super-vl:free',
+               'nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free']
+EMBED_MODEL = 'nvidia/nemotron-3.5-embed-8b:free'
+EMBED_FALLBACK = 'nvidia/nemotron-3.5-embed-1b:free'
+RERANK_MODEL = 'nvidia/nemotron-3.5-rerank-8b:free'
+DECISIONS_API = 'https://openrouter.ai/api/alpha/decisions'
+EMBED_API = 'https://openrouter.ai/api/v1/embeddings'
+RERANK_API = 'https://openrouter.ai/api/v1/rerank'
+CREDITS_API = 'https://openrouter.ai/api/v1/credits'
+PAID_FALLBACK = MODEL_LITE  # gemini-2.5-flash-lite per operator order
+
+FALLBACKS = []  # logged {lane_model, reason, count, fell_back_to}
+
+
+def _credits(key):
+    try:
+        req = urllib.request.Request(
+            CREDITS_API, headers={'Authorization': f'Bearer {key}'})
+        with urllib.request.urlopen(req, timeout=20) as r:
+            d = json.loads(r.read())['data']
+        return round(d['total_credits'] - d['total_usage'], 2)
+    except Exception:
+        return None
+
+
+def _post(key, url, body, timeout=120):
+    req = urllib.request.Request(
+        url, data=json.dumps(body).encode(),
+        headers={'Authorization': f'Bearer {key}',
+                 'Content-Type': 'application/json'})
+    with urllib.request.urlopen(req, timeout=timeout) as r:
+        return json.loads(r.read())
+
+
+def _questions(spec):
+    q = {}
+    for name, vocab in spec.items():
+        if name == 'fx-classes-present':
+            vocab = ['none', 'animate', 'transition', 'hover-fx',
+                     'mixed']
+        q[name] = {
+            'type': 'choice',
+            'instructions':
+                f'Pick the value of the design axis "{name}".',
+            'criteria': {v: v.replace('-', ' ') for v in vocab}}
+    return q
+
+
+def _decider_call(key, model, img_b64, mime, struct_text, spec):
+    body = {
+        'model': model,
+        'state': {
+            'text': 'Web-design exemplar markup:\n' +
+                    struct_text[:2500],
+            'image_url': f'data:{mime};base64,{img_b64}'},
+        'questions': _questions(spec)}
+    return _post(key, DECISIONS_API, body)
+
+
+def _decider_labels(answers):
+    out = {}
+    for ax, a in answers.items():
+        if a.get('type') == 'choice':
+            out[ax] = {'allele': a['choice'],
+                       'confidence': round(a.get('confidence', 0), 3),
+                       'p': {k: round(v, 3) for k, v in
+                             a.get('probabilities', {}).items()}}
+    return out
+
+
+def _png_b64(path):
+    """Any image → PNG bytes b64 (webp rejected upstream)."""
+    from PIL import Image
+    import io
+    im = Image.open(path).convert('RGB')
+    buf = io.BytesIO()
+    im.save(buf, 'PNG')
+    return base64.b64encode(buf.getvalue()).decode()
+
+
+def test_run2():
+    key = os.environ.get('OPENROUTER_API_KEY')
+    if not key:
+        sys.exit('OPENROUTER_API_KEY not set')
+    os.makedirs(TEST_DIR, exist_ok=True)
+    os.makedirs(os.path.join(TEST_DIR, 'shots'), exist_ok=True)
+    spec = _axis_spec()
+    prompt = _test_prompt(spec)
+    items = _test_items()
+    bal = _credits(key)
+    print(f'balance: ${bal}')
+    FALLBACKS.clear()
+
+    # prep images once: genmenu → playwright PNG; mobbin → PIL PNG
+    imgs = {}
+    from playwright.sync_api import sync_playwright
+    pw_ctx = sync_playwright().start()
+    pw = pw_ctx.chromium.launch()
+    for it in items:
+        png = os.path.join(TEST_DIR, 'shots', it['id'] + '.png')
+        if it['kind'] == 'genmenu' and not os.path.exists(png):
+            _render(it['path'], png, pw)
+        elif it['kind'] == 'mobbin':
+            if not os.path.exists(png):
+                open(png, 'wb').write(
+                    base64.b64decode(_png_b64(it['path'])))
+        imgs[it['id']] = png
+    pw.close()
+    pw_ctx.stop()
+
+    def chat_lane(model):
+        paid = False
+        for it in items:
+            fp = os.path.join(
+                TEST_DIR, it['id'] + '.' +
+                model.split('/')[-1].replace(':', '_') + '.json')
+            if os.path.exists(fp):
+                continue
+            struct = open(it['path'], 'rb').read().decode(
+                'utf-8', 'replace') if it['kind'] == 'genmenu' else \
+                open(it['path'].replace('.webp', '.topo.json')
+                     ).read() if os.path.exists(
+                    it['path'].replace('.webp', '.topo.json')) else ''
+            try:
+                d = _test_call(key, model, imgs[it['id']],
+                               'image/png', struct, prompt)
+                labels = json.loads(
+                    d['choices'][0]['message']['content'])
+                u = d.get('usage') or {}
+            except Exception as e:
+                err = str(e)
+                FALLBACKS.append({
+                    'lane_model': model, 'reason': err[:120],
+                    'count': 1, 'fell_back_to': PAID_FALLBACK})
+                paid = True
+                try:
+                    d = _test_call(key, PAID_FALLBACK, imgs[it['id']],
+                                   'image/png', struct, prompt)
+                    labels = json.loads(
+                        d['choices'][0]['message']['content'])
+                    u = d.get('usage') or {}
+                except Exception as e2:
+                    labels, u = {'_error': str(e2)}, {}
+            res = {'id': it['id'], 'kind': it['kind'],
+                   'model': model,
+                   'labels': labels,
+                   'via_fallback': paid,
+                   'usage': {'in': u.get('prompt_tokens', 0),
+                             'out': u.get('completion_tokens', 0)}}
+            json.dump(res, open(fp, 'w'), indent=1)
+            print('chat', it['id'], model.split('/')[-1],
+                  'fallback' if paid else 'ok')
+
+    def decider_lane(model):
+        for it in items:
+            fp = os.path.join(
+                TEST_DIR, it['id'] + '.' +
+                model.split('/')[-1].replace(':', '_') + '.json')
+            if os.path.exists(fp):
+                continue
+            struct = open(it['path'], 'rb').read().decode(
+                'utf-8', 'replace') if it['kind'] == 'genmenu' else \
+                open(it['path'].replace('.webp', '.topo.json')
+                     ).read() if os.path.exists(
+                    it['path'].replace('.webp', '.topo.json')) else ''
+            b64 = base64.b64encode(
+                open(imgs[it['id']], 'rb').read()).decode()
+            try:
+                d = _decider_call(key, model, b64, 'image/png',
+                                  struct, spec)
+                labels = _decider_labels(d.get('answers', {}))
+                u = d.get('usage') or {}
+            except Exception as e:
+                FALLBACKS.append({
+                    'lane_model': model, 'reason': str(e)[:120],
+                    'count': 1, 'fell_back_to': PAID_FALLBACK})
+                try:
+                    d = _test_call(key, PAID_FALLBACK,
+                                   imgs[it['id']], 'image/png',
+                                   struct, prompt)
+                    labels = json.loads(
+                        d['choices'][0]['message']['content'])
+                    u = d.get('usage') or {}
+                except Exception as e2:
+                    labels, u = {'_error': str(e2)}, {}
+            res = {'id': it['id'], 'kind': it['kind'],
+                   'model': model, 'labels': labels,
+                   'usage': {'in': u.get('input_tokens',
+                                         u.get('prompt_tokens', 0)),
+                             'out': u.get('output_tokens',
+                                          u.get('completion_tokens',
+                                                0))}}
+            json.dump(res, open(fp, 'w'), indent=1)
+            print('decider', it['id'], model.split('/')[-1])
+
+    decider_lane(DECIDER_FLASH)
+    decider_lane(DECIDER)
+    for m in FREE_VISION:
+        b = _credits(key)
+        if b is not None and b < 0.5:
+            print('BUDGET STOP: balance', b)
+            break
+        chat_lane(m)
+
+    json.dump(FALLBACKS,
+              open(os.path.join(TEST_DIR, 'FALLBACKS.json'), 'w'),
+              indent=1)
+    print('balance end:', _credits(key),
+          '| fallbacks:', len(FALLBACKS))
+
+
+def test_embed():
+    """Embedding NN probe + rerank stage-2 on ~10 exemplars."""
+    key = os.environ.get('OPENROUTER_API_KEY')
+    if not key:
+        sys.exit('OPENROUTER_API_KEY not set')
+    import math
+    from playwright.sync_api import sync_playwright
+    items = _test_items()[:10]
+    queries = _test_items()[10:12]
+    pw_ctx = sync_playwright().start()
+    pw = pw_ctx.chromium.launch()
+
+    def png_for(it):
+        p = os.path.join(TEST_DIR, 'shots', it['id'] + '.png')
+        if it['kind'] == 'genmenu' and not os.path.exists(p):
+            _render(it['path'], p, pw)
+        elif it['kind'] == 'mobbin' and not os.path.exists(p):
+            open(p, 'wb').write(
+                base64.b64decode(_png_b64(it['path'])))
+        return p
+    pw.close()
+    pw_ctx.stop()
+    # need browser before png_for — render first, then embed
+    pw_ctx = sync_playwright().start()
+    pw = pw_ctx.chromium.launch()
+    bank = [png_for(it) for it in items]
+    qpng = [png_for(it) for it in queries]
+    pw.close()
+    pw_ctx.stop()
+
+    def embed(paths):
+        model = EMBED_MODEL
+        for attempt in (0, 1):
+            try:
+                body = {'model': model, 'input': [
+                    'data:image/png;base64,' + base64.b64encode(
+                        open(p, 'rb').read()).decode()
+                    for p in paths]}
+                d = _post(key, EMBED_API, body)
+                return [x['embedding'] for x in d['data']], model
+            except Exception as e:
+                FALLBACKS.append({'lane_model': model,
+                                  'reason': str(e)[:120],
+                                  'count': 1,
+                                  'fell_back_to': EMBED_FALLBACK})
+                model = EMBED_FALLBACK
+        return None, None
+    vecs, emodel = embed(bank)
+    qvecs, _ = embed(qpng)
+
+    def cos(a, b):
+        d = sum(x * y for x, y in zip(a, b))
+        na = math.sqrt(sum(x * x for x in a))
+        nb = math.sqrt(sum(x * x for x in b))
+        return d / (na * nb) if na and nb else 0
+    out = {'embed_model': emodel, 'bank': [it['id'] for it in items],
+           'queries': []}
+    for qi, qv in enumerate(qvecs):
+        sims = sorted(
+            ((cos(qv, v), items[i]['id']) for i, v in
+             enumerate(vecs)), reverse=True)
+        topk = sims[:5]
+        # rerank stage: query png vs doc pngs
+        docs = ['data:image/png;base64,' + base64.b64encode(
+            open(bank[items.index(
+                next(x for x in items if x['id'] == sid))],
+                'rb').read()).decode() for sid, _ in
+            ((s, i) for s, i in sims[:8])]
+        try:
+            rb = {'model': RERANK_MODEL,
+                  'query': 'data:image/png;base64,' +
+                  base64.b64encode(
+                      open(qpng[qi], 'rb').read()).decode(),
+                  'documents': docs}
+            rd = _post(key, RERANK_API, rb)
+            rorder = [rd['results'][j]['index']
+                      for j in range(len(rd['results']))]
+            rerr = None
+        except Exception as e:
+            rorder, rerr = None, str(e)[:120]
+        out['queries'].append({
+            'query': queries[qi]['id'],
+            'cosine_top5': [[s, i] for s, i in topk],
+            'rerank_order_top8': rorder, 'rerank_error': rerr})
+    json.dump(out, open(os.path.join(TEST_DIR, 'EMBED.json'), 'w'),
+              indent=1)
+    print(json.dumps(out['queries'], indent=1)[:2000])
+
+
+if '--test2' in sys.argv:
+    test_run2()
+if '--test-embed' in sys.argv:
+    test_embed()
