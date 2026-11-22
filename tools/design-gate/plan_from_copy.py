@@ -606,7 +606,7 @@ def build(pdir, option=None):
             if proj:
                 row['items'] = proj
                 row['columns'] = cols_for(len(proj))
-            elif comp == 'cards-n':
+            elif comp in {'cards-n', 'cutout-catalog-grid'}:
                 row['columns'] = cols_for(len(b['items']))
         if comp == 'split-media' and media_left:
             m = media_left.pop(0)

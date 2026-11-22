@@ -33,6 +33,9 @@ const head = cp.heading || heading;
 const answer = cp.answer || '';
 const sub = answer || fs || body;
 const list = (cp.items && cp.items.length ? cp.items : items) || [];
+const before = cp.before || [];
+const links = cp.links || [];
+const after = cp.after || [];
 const m = mediaFor(image, head);
 ---
 <div class="split">
@@ -42,6 +45,9 @@ const m = mediaFor(image, head);
       ? <h1 class="t0 h-display text-fluid-5">{head}</h1>
       : <h2 class="t0 h-section text-fluid-3">{head}</h2>}
     {sub && <p class="t0 lede" set:html={inline(sub)} />}
+    {before.map((p) => (
+      <p class="t0 sub-p" set:html={inline(p)} />
+    ))}
     {list.length > 0 && (
       <ul class="t0 sub-p list-items">
         {list.map((it) => (
@@ -49,6 +55,12 @@ const m = mediaFor(image, head);
         ))}
       </ul>
     )}
+    {links.map((l) => (
+      <p class="t0 sub-p" set:html={inline(l.text || '')} />
+    ))}
+    {after.map((p) => (
+      <p class="t0 sub-p" set:html={inline(p)} />
+    ))}
     {cta && (
       <div class="cta-row mt-act">
         <a class="wf-cta-button" href={cta.href}>{cta.label}</a>
