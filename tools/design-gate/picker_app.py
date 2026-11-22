@@ -4320,7 +4320,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
   function wireSaved(){
     var q=document.getElementById('ssq');
     if(q)q.oninput=function(){SSQ=q.value.toLowerCase();
-      var el=document.getElementById('board');
+      var el=document.getElementById('pane')||
+        document.getElementById('board');
       var keep=q.selectionStart;
       el.innerHTML='<h1>Saved systems</h1>'+savedView();wireSaved();
       var q2=document.getElementById('ssq');
@@ -4330,7 +4331,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
         if(!t)SSF={};
         else if(SSF[t])delete SSF[t];
         else{SSF={};SSF[t]=1}
-        var el=document.getElementById('board');
+        var el=document.getElementById('pane')||
+          document.getElementById('board');
         el.innerHTML='<h1>Saved systems</h1>'+savedView();wireSaved()}});
     var save=document.getElementById('sysSave');
     if(save)save.onclick=function(){
@@ -5032,6 +5034,11 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
             .replace(/^approve REFUSED:? ?/,'');
           if(j.ok){b.textContent='picked ✓';
             b.closest('.card').classList.add('picked');
+            // reflect the signed approval in the flow UI: a w3
+            // pick IS the layout pick, w4 the page-design pick
+            DATA.picked_elements=DATA.picked_elements||{};
+            if(b.dataset.wave==='w3')
+              DATA.picked_elements.layout=b.dataset.d;
             var st=document.getElementById('stepper');
             if(st)st.innerHTML=stepperHtml();
             var sb=document.getElementById('selbar');
