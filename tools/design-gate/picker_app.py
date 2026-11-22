@@ -626,6 +626,84 @@ def _topo_variants(block, comp):
                     '[data-comp="' + comp + '"] *{direction:ltr}'))
         out.append(('text-wide', block,
                     'figure{display:none!important}'))
+    if 'flow-list' in block:
+        # sequence topology: spine / rail / badge variants over the
+        # real emitted flow-list markup — structural CSS only
+        out.append(('timeline-spine', block,
+                    '.flow-list{list-style:none;position:relative;'
+                    'padding-left:2.2em}'
+                    '.flow-list::before{content:"";position:absolute;'
+                    'left:.8em;top:.4em;bottom:.4em;width:2px;'
+                    'background:var(--border-default,#888)}'
+                    '.flow-row{position:relative}'
+                    '.flow-row .num{position:absolute;left:-2.2em;'
+                    'top:.15em;width:1.6em;height:1.6em;border-radius:50%;'
+                    'background:var(--action-primary,#555);'
+                    'color:var(--bg-base,#fff);display:inline-flex;'
+                    'align-items:center;justify-content:center;'
+                    'font-size:.72em;line-height:1}'))
+        out.append(('numbered-rail', block,
+                    '.flow-list{list-style:none;display:grid;'
+                    'grid-template-columns:repeat(auto-fit,'
+                    'minmax(200px,1fr));gap:1.2em;padding-left:0}'
+                    '.flow-row{display:grid;'
+                    'grid-template-rows:auto 1fr;border-top:3px solid '
+                    'var(--action-primary,#555);padding-top:.6em}'
+                    '.flow-row .num{font-size:2.4em;font-weight:800;'
+                    'line-height:1;color:var(--action-primary,#555);'
+                    'display:block;margin-bottom:.25em}'))
+        out.append(('icon-badge', block,
+                    '.flow-list{list-style:none;padding-left:0;'
+                    'display:grid;gap:.9em}'
+                    '.flow-row{display:flex;align-items:flex-start;'
+                    'gap:.8em;background:var(--bg-elevated,#f2f2f2);'
+                    'border:1px solid var(--border-default,#ddd);'
+                    'border-radius:12px;padding:.9em}'
+                    '.flow-row .num{flex:none;width:2em;height:2em;'
+                    'border-radius:10px;background:var(--action-primary,'
+                    '#555);color:var(--bg-base,#fff);display:'
+                    'inline-flex;align-items:center;justify-content:'
+                    'center;font-weight:700}'))
+    if 'hworks-grid-ul' in block:
+        # the emitted how-it-works recipe: same steps, three real
+        # shapes — spine / numbered rail / badge wall
+        out.append(('timeline-spine', block,
+                    '.hworks-grid-ul{display:grid!important;'
+                    'grid-template-columns:1fr!important;gap:1em;'
+                    'position:relative;padding-left:2.4em}'
+                    '.hworks-grid-ul::before{content:"";position:'
+                    'absolute;left:.9em;top:.5em;bottom:.5em;width:2px;'
+                    'background:var(--border-default,#999)}'
+                    '.hworks-card{position:relative}'
+                    '.hworks-card .icon-chip{position:absolute;'
+                    'left:-2.4em;top:.6em;width:1.8em;height:1.8em;'
+                    'border-radius:50%;background:var(--action-primary,'
+                    '#555)!important;color:var(--bg-base,#fff);'
+                    'display:flex;align-items:center;'
+                    'justify-content:center}'))
+        out.append(('numbered-rail', block,
+                    '.hworks-grid-ul{counter-reset:wstep;display:grid!'
+                    'important;grid-template-columns:repeat(auto-fit,'
+                    'minmax(200px,1fr))!important;gap:1em}'
+                    '.hworks-card{border-top:3px solid '
+                    'var(--action-primary,#555);position:relative}'
+                    '.hworks-card::before{counter-increment:wstep;'
+                    'content:counter(wstep,decimal-leading-zero);'
+                    'display:block;font-size:2em;font-weight:800;'
+                    'line-height:1;color:var(--action-primary,#555);'
+                    'padding:.4em 0 .2em}'))
+        out.append(('icon-badge', block,
+                    '.hworks-card{border-radius:14px!important;'
+                    'box-shadow:0 4px 18px rgba(0,0,0,.10);'
+                    'text-align:center}'
+                    '.hworks-card .icon-chip{width:3em!important;'
+                    'height:3em!important;border-radius:14px;'
+                    'margin:.6em auto .3em;display:flex;'
+                    'align-items:center;justify-content:center;'
+                    'background:var(--action-primary,#555)!important;'
+                    'color:var(--bg-base,#fff)}'
+                    '.hworks-card .icon-chip svg{width:1.6em;'
+                    'height:1.6em}'))
     return out
 
 
@@ -674,7 +752,14 @@ def emit_vibe_doc(pd, fam, bundle):
         if comp in blocks:
             body += blocks[comp][0]
     fp = os.path.join(outdir, fam + '.html')
-    if not os.path.isfile(fp):
+    stale = True
+    if os.path.isfile(fp):
+        try:
+            with open(fp, encoding='utf-8', errors='replace') as rf:
+                stale = 'wf:vibe:v3' not in rf.read(4096)
+        except OSError:
+            stale = True
+    if stale:
         os.makedirs(outdir, exist_ok=True)
         css = _fam_css(bundle)
         theme = ('<script>document.documentElement.dataset.theme='
