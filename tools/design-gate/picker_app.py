@@ -2928,8 +2928,11 @@ def record_element_pick(pipeline, element, variant, bundle=None):
             if p.get('element') == element:
                 # a regenerated board option keeps its id but not its
                 # composition — re-sign when the bundle moved
+                def _comp(bd):
+                    return {k: v for k, v in (bd or {}).items()
+                            if k != 'inputs_sha'}
                 if p.get('variant') == variant and not (
-                        lay and p.get('bundle') != bundle):
+                        lay and _comp(p.get('bundle')) != _comp(bundle)):
                     return 0, (f'{element} already is {variant} — '
                                'still signed')
                 old_v = p.get('variant')
