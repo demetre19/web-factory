@@ -2724,25 +2724,52 @@ _FORM_DRIVER = (
 def _infer_form_type(attrs):
     """a name/id/placeholder hint → the input's semantic type —
     banked exemplars ship bare <input> so the browser never
-    validates; the emit pass supplies the type."""
+    validates; the emit pass supplies the type. Word-boundary
+    cues — 'Patel' must not read as 'tel' — and a field that
+    names two channels ("email or phone") stays plain text so it
+    accepts either."""
     hint = ' '.join(re.findall(
         r'(?:name|id|placeholder|aria-label)\s*=\s*["\']([^"\']+)',
         attrs)).lower()
+    emailish = re.search(r'\be-?mail\b', hint)
+    phoneish = re.search(r'\b(?:tel|phone|mobile|cell|sms)\b|'
+                         r'\+?\d[\d\s().-]{6,}\d', hint)
+    if emailish and phoneish:
+        return 'text'
+    if emailish:
+        return 'email'
+    if phoneish:
+        return 'tel'
     for pat, ty in (
-            (r'e-?mail', 'email'),
-            (r'tel|phone|mobile', 'tel'),
-            (r'url|website|link', 'url'),
-            (r'pass(word|code)?', 'password'),
-            (r'date|dob|birth', 'date'),
-            (r'zip|post(code|al)?|qty|quant|num|amount|price|count|'
-             r'card|cvc|cvv', 'text')):
+            (r'\b(?:url|website)\b', 'url'),
+            (r'\bpass(?:word|code)?\b', 'password'),
+            (r'\b(?:date|dob|birth)\b', 'date'),
+            (r'\b(?:zip|post(?:code|al)?|qty|quant|num|amount|price|'
+             r'count|card|cvc|cvv)\b', 'text')):
         if re.search(pat, hint):
             return ty
     return 'text'
 
 
+# not fill-in controls — a required checkbox forces it checked
+# (breaks multi-select groups and consent demos); file/range carry
+# their own values
 _FORM_SKIP_TYPES = {'hidden', 'submit', 'button', 'image', 'file',
-                    'range', 'reset'}
+                    'range', 'reset', 'checkbox', 'radio', 'color'}
+
+# hint words that mark a control optional — 'required' on these
+# would block a valid demo submit (apt, delivery notes, …)
+_FORM_OPTIONAL = re.compile(
+    r'\b(?:optional|apartment|apt|suite|unit|floor|'
+    r'instructions?|notes?|comments?|company|middle|nickname|'
+    r'referral|coupon|promo|vat|tax)\b', re.I)
+
+
+def _form_required(attrs):
+    hint = ' '.join(re.findall(
+        r'(?:name|id|placeholder|aria-label)\s*=\s*["\']([^"\']+)',
+        attrs))
+    return not _FORM_OPTIONAL.search(hint)
 
 
 def _bank_form_attrs(frag):
@@ -2771,13 +2798,18 @@ def _bank_form_attrs(frag):
                 if tm:
                     at = at[:tm.start()] + at[tm.end():]
                 at = ' type="%s"' % ty + at
+            elif _infer_form_type(at) == 'text':
+                # dual-purpose banked type ("phone or email" shipped
+                # as type="email") rejects the other channel — drop
+                # back to text so either answer validates
+                at = at[:tm.start()] + ' type="text"' + at[tm.end():]
         at = at.rstrip()
         close = '/'
         if at.endswith('/'):
             at = at[:-1].rstrip()
         else:
             close = ''
-        if 'required' not in at:
+        if 'required' not in at and _form_required(at):
             at += ' required'
         return '<%s%s%s>' % (tag, at, close)
 
@@ -3038,7 +3070,7 @@ def emit_bank_previews(pd):
                     (os.path.isfile(css_dst) and
                      os.path.getmtime(css_dst) >
                      os.path.getmtime(dst)) or \
-                    '<!--wf:bank:v7-->' not in open(
+                    '<!--wf:bank:v10-->' not in open(
                         dst, encoding='utf-8',
                         errors='replace').read(64)
                 if stale:
@@ -3078,7 +3110,7 @@ def emit_bank_previews(pd):
                     css_ = _BANK_STAGE_CSS + \
                         ('body{padding:0}' if page else '')
                     with open(dst, 'w', encoding='utf-8') as fh:
-                        fh.write('<!--wf:bank:v7-->' +
+                        fh.write('<!--wf:bank:v10-->' +
                                  _doc(head, '', stage,
                                       extra=(_STAGE_SCROLL_SHIM
                                              if not page else '') +
