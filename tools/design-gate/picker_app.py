@@ -2435,7 +2435,8 @@ def record_element_pick(pipeline, element, variant, bundle=None):
                                         'mobile-menu', 'modals',
                                         'layout'} | \
             {d for dirs in _BANK_DIRS.values() for d in dirs}
-    fxel = re.fullmatch(r'fx:(default|[\w-]{1,40})', element or '')
+    fxel = re.fullmatch(
+        r'fx:(default|sec:[\w-]{1,40}|[\w-]{1,40})', element or '')
     if element not in valid and not fxel and not re.fullmatch(
             r'sec:[\w-]{1,40}', element or ''):
         return 1, f'unknown element gallery {element}'
@@ -3639,6 +3640,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
       el.innerHTML=h+oh;
       el.querySelectorAll('.pick').forEach(function(b){
         b.onclick=function(){doPick(b)}});
+      el.querySelectorAll('.fxbtn').forEach(function(b){
+        b.onclick=function(e){e.stopPropagation();fxToggle(b)}});
       el.querySelectorAll('.xp').forEach(function(b){
         b.onclick=function(e){e.stopPropagation();expand(b.dataset.x)}});
       el.querySelectorAll('.fxbtn').forEach(function(b){
