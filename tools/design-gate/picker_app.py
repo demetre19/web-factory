@@ -3961,11 +3961,13 @@ _BANK_MENU_DRV = (
     'b.setAttribute("aria-expanded",o?"true":"false")});'
     'if(o){d.querySelectorAll("[data-wf-panel]").forEach(function(p){'
     'var q=p.getBoundingClientRect();'
-    # only panels rendered fully off-viewport are hidden by a
-    # translate — clearing transform would break translate-based
-    # centering, so clear it just for the off-canvas ones
-    'if(q.right<0||q.bottom<0||q.left>innerWidth||q.top>innerHeight)'
-    'p.style.transform="none"})}else{'
+    # only panels rendered off-viewport are hidden by a translate —
+    # clearing transform would break translate-based centering, so
+    # clear it just for the off-canvas ones (8px edge tolerance:
+    # a bottom sheet's translateY(100%) lands its top exactly on
+    # the viewport edge)
+    'if(q.right<=8||q.bottom<=8||q.left>=innerWidth-8||'
+    'q.top>=innerHeight-8)p.style.transform="none"})}else{'
     'd.querySelectorAll("[data-wf-panel]").forEach(function(p){'
     'p.style.transform=""})}'
     'if(d.body)d.body.style.overflow=o?"hidden":""}'
