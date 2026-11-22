@@ -723,7 +723,9 @@ def emit_layouts(ctx):
                     r2['media_ratio'] = 'none'
                     cc['media_ratio'] = 'none'
             surf = override.get(f"{c['section']}@surface")
-            if surf and cc.get('surface') != 'media':
+            # a media-band comp owns its band; any other comp takes the
+            # option's surface, even over a media-band plan default
+            if surf and cc.get('composition') not in PC.MEDIA_BAND_HEROES:
                 cc['surface'] = r2['surface'] = surf
             ov_rows.append((cc, r2))
         # and after the split-media rows, the same media-pane rows
