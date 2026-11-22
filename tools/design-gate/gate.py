@@ -9224,8 +9224,10 @@ def _rendered_light_paint(ctx, canvas):
             'with sync_playwright() as p:\n'
             ' b=p.chromium.launch()\n'
             ' ctx=b.new_context(color_scheme="dark")\n'
-            ' pg=ctx.new_page();pg.goto(url)\n'
+            ' pg=ctx.new_page();resp=pg.goto(url)\n'
             ' print(json.dumps({'
+            '"ok":bool(resp and resp.ok),'
+            '"sheets":pg.evaluate("document.styleSheets.length"),'
             '"theme":pg.evaluate("document.documentElement.'
             'dataset.theme||\'\'"),'
             '"bg":pg.evaluate("getComputedStyle(document.body).'
@@ -9245,6 +9247,9 @@ def _rendered_light_paint(ctx, canvas):
         got = json.loads(r.stdout.strip().split('\n')[-1])
     except Exception:
         return []
+    if not got.get('ok') or not got.get('sheets'):
+        return []                     # nav/serving flake under load —
+                                      # not a paint measurement
     f = []
     if got.get('theme') not in ('', 'light'):
         f.append(f"T.2 rendered page opens data-theme="
@@ -11037,8 +11042,8 @@ ARTIFACTS = {
     'w3': ['preview/layouts.html'],
     'w4': ['preview/variants.html', 'preview/fine.html'],
     'w5': ['preview/system.html'],
-    'w7': ['SPEC.md', 'ASSEMBLED.md'],
-    'w8': ['SCORECARD.json', 'REVIEW.json'],
+    'w7': ['SPEC.md', 'ASSEMBLED.md', 'MEASURE.json'],
+    'w8': ['SCORECARD.json', 'REVIEW.json', 'JUDGE.json'],
 }
 
 
@@ -13813,6 +13818,82 @@ def check_quality_floor(ctx):
     return f
 
 
+def check_measured_evidence(ctx):
+    """J.11 — w8 rules on the MEASURED page, not declared scores:
+    MEASURE.json (measure.py, w7) must exist, bind the current dist,
+    bind the evidence shots it verified, and carry a viewport record
+    for every plan page."""
+    rj = ctx.read('MEASURE.json')
+    if rj is None:
+        return ['J.11 MEASURE.json missing — `measure.py` (w7) '
+                'produces it from the built page']
+    try:
+        m = json.loads(rj)
+    except Exception as e:
+        return [f'J.11 MEASURE.json unparseable: {e}']
+    f = []
+    if m.get('dist_sha256') != _dist_sha(ctx):
+        f.append('J.11 MEASURE.json dist_sha256 != current dist — '
+                 'the measurement is not bound to this build')
+    shots = os.path.join(ctx.dir, 'shots')
+    if m.get('shots_sha256') is not None:
+        h = hashlib.sha256()
+        for fn in sorted(os.listdir(shots)) if os.path.isdir(shots) \
+                else []:
+            if not fn.endswith('.png'):
+                continue
+            h.update(fn.encode())
+            h.update(open(os.path.join(shots, fn), 'rb').read())
+        if os.path.isdir(shots) and h.hexdigest()[:16] != \
+                m['shots_sha256']:
+            f.append('J.11 MEASURE.json shots_sha256 != shots/ — '
+                     'the evidence drifted after measurement')
+    pages = m.get('pages') or {}
+    for slug in ctx.pages():
+        if slug not in pages:
+            f.append(f"J.11 MEASURE.json has no record for page "
+                     f"{slug!r} — every plan page is measured")
+    for slug, pg in pages.items():
+        if not (pg.get('viewports') or {}):
+            f.append(f'J.11 page {slug} carries no viewport records')
+    return f
+
+
+def check_judged_verdict(ctx):
+    """J.12 — the w8 verdict is JUDGED on evidence: JUDGE.json
+    (judge.py, w8) must exist, bind this dist and the MEASURE.json on
+    disk, and reach verdict pass — every fail finding is a gate
+    failure; warns stay on record for the reviewer."""
+    rj = ctx.read('JUDGE.json')
+    if rj is None:
+        return ['J.12 JUDGE.json missing — `judge.py` (w8) produces '
+                'the evidence verdict']
+    try:
+        j = json.loads(rj)
+    except Exception as e:
+        return [f'J.12 JUDGE.json unparseable: {e}']
+    f = []
+    if j.get('dist_sha256') != _dist_sha(ctx):
+        f.append('J.12 JUDGE.json dist_sha256 != current dist — '
+                 'the judgment is not bound to this build')
+    raw = ctx.read('MEASURE.json')
+    if j.get('measure_sha256') and raw is not None:
+        cur = hashlib.sha256(raw.encode()).hexdigest()[:16]
+        if cur != j['measure_sha256']:
+            f.append('J.12 JUDGE.json measure_sha256 != MEASURE.json — '
+                     'the verdict did not read this measurement')
+    for fi in j.get('findings') or []:
+        if fi.get('severity') == 'fail':
+            f.append(f"J.12 {fi.get('page', '?')} "
+                     f"{fi.get('metric')} {fi.get('value')} "
+                     f"{fi.get('op')} {fi.get('threshold')} — "
+                     'measured fail finding')
+    if j.get('verdict') != 'pass':
+        f.append(f"J.12 verdict {j.get('verdict')!r} — the measured "
+                 'page fails its vertical canon')
+    return f
+
+
 def check_present_order(ctx):
     """J.2 PRESENT-ORDER — RULES → BUILD → JUDGE → RECHECK → present.
     Every picker option needs BOTH receipts: the compliance receipt
@@ -15032,6 +15113,8 @@ WARN_CHECKS = {'w7': [check_serial_build_warn]}
 
 WAVE_CHECKS['w7'].append(check_parallel_build)
 WAVE_CHECKS['w8'].append(check_bounded_review)
+WAVE_CHECKS['w8'].append(check_measured_evidence)
+WAVE_CHECKS['w8'].append(check_judged_verdict)
 
 # VG.7 — picker UX is structural: tabbed options, render first,
 # machinery collapsed below. Verified wherever a picker exists
@@ -15077,7 +15160,7 @@ WAVE_INPUTS = {
     'w6': ['DESIGN-PLAN.md', 'COMPONENTS.md',
            'site/src/pages/system.astro'],
     'w7': ['DESIGN-PLAN.md'],
-    'w8': ['REVIEW.json'],
+    'w8': ['REVIEW.json', 'MEASURE.json', 'JUDGE.json'],
 }
 for _w in list(WAVE_CHECKS):
     WAVE_CHECKS[_w].append(check_checklist)

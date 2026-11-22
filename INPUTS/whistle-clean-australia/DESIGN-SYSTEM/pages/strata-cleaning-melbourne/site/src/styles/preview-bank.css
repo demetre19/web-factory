@@ -69,6 +69,28 @@
     .wf-comparison-1 .cta-combo { flex-direction: column; }
   }
 
+/* bricksmaven/content/content-1 */
+  .wf-content-1 .content-1-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
+    gap: var(--space-xl);
+  }
+
+  .wf-content-1 .content-1__box {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-m);
+  }
+
+  .wf-content-1 .cta-combo {
+    display: flex;
+    column-gap: var(--space-xs);
+  }
+
+  @media (max-width: 44rem) {
+    .wf-content-1 .cta-combo { flex-direction: column; }
+  }
+
 /* bricksmaven/footer/footer-1 */
   .wf-footer-1 .footer-1 {
     row-gap: var(--space-s);
@@ -211,6 +233,22 @@
   .wf-header-1 .bm-header-1__cta {
     display: flex;
     gap: var(--space-s);
+  }
+
+/* bricksmaven/testimonials/testimonial-1 */
+  .wf-testimonial-1 .testimonial-1-content {
+    display: flex;
+    gap: var(--space-s);
+  }
+
+  .wf-testimonial-1 .testimonial-1-slides-item {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-m);
+  }
+
+  @media (max-width: 44rem) {
+    .wf-testimonial-1 .testimonial-1-content { flex-direction: column; }
   }
 
 /* bricksmaven/how-it-works/how-it-works-1 */

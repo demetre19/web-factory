@@ -144,6 +144,9 @@
   "check_interaction_states": [
    "I.9"
   ],
+  "check_judged_verdict": [
+   "J.12"
+  ],
   "check_landmarks": [
    "PS.9"
   ],
@@ -183,6 +186,9 @@
    "W.3",
    "L.3",
    "R.5"
+  ],
+  "check_measured_evidence": [
+   "J.11"
   ],
   "check_meta": [
    "P.16"
@@ -893,6 +899,20 @@
    "threshold": "the composition carrying the promise is not allowed by the genotype's layout-archetype",
    "tier": "invariant",
    "wave": "w3"
+  },
+  "J.11": {
+   "check": "check_measured_evidence",
+   "mode": "script",
+   "threshold": "MEASURE.json missing/unparseable, dist_sha256 or shots_sha256 not bound to the current build, or a plan page unmeasured",
+   "tier": "invariant",
+   "wave": "w8"
+  },
+  "J.12": {
+   "check": "check_judged_verdict",
+   "mode": "script",
+   "threshold": "JUDGE.json missing/unbound, or verdict != pass (any fail finding: image_coverage below floor, no proof surface, dead-space run > 1.5 viewports, hierarchy skip, contrast < 3.0, tap target < 12px)",
+   "tier": "invariant",
+   "wave": "w8"
   },
   "J.2": {
    "check": "check_present_order",

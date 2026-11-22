@@ -70,6 +70,8 @@ closed set.
 | I.9 | Interaction states | structural | script | `check_interaction_states` | interactive class without hover/focus-visible/disabled styles | w7 |
 | J.1 | Every option clears the quality floor | invariant | script | `check_quality_floor` | option unjudged, any dimension <50, composite <60, judged_by != configured reviewer_model, or quality_retry >1 | w7 |
 | J.10 | HERO-COMPOSITION | invariant | script | `check_hero_composition` | the composition carrying the promise is not allowed by the genotype's layout-archetype | w3 |
+| J.11 | MEASURED-EVIDENCE | invariant | script | `check_measured_evidence` | MEASURE.json missing/unparseable, dist_sha256 or shots_sha256 not bound to the current build, or a plan page unmeasured | w8 |
+| J.12 | JUDGED-VERDICT | invariant | script | `check_judged_verdict` | JUDGE.json missing/unbound, or verdict != pass (any fail finding: image_coverage below floor, no proof surface, dead-space run > 1.5 viewports, hierarchy skip, contrast < 3.0, tap target < 12px) | w8 |
 | J.2 | PRESENT-ORDER | invariant | script | `check_present_order` | picker option without quality receipt, or rules_pass_hash != judgment_pass_hash | w7 |
 | J.3 | PRE-BUILD VALIDATION | invariant | script | `check_prebuild_receipt` | pickers without PREBUILD.json; recipe_id not in topology bank; unjustified exception; missing field; plan_vector_dist <0.3 | w4 |
 | J.4 | BLOCK-TRACE | invariant | script | `check_block_trace` | rendered block without data-recipe, recipe not in bank, missing receipt row, empty field, or receipt/render recipe mismatch | w7 |
@@ -240,5 +242,11 @@ closed set.
 | W.7 | Links & navigation | stylistic | reviewer | `link-scent` | links front-loaded, scent preserved | w8 |
 | W.8 | Concision | stylistic | script | `check_system_enums` | reading_level ≤grade-8 | w5 |
 | W.9 | Localization-ready copy | stylistic | reviewer | `i18n-copy` | no concat, no idioms | w8 |
+| Q.1 |  | structural | script | `check_faq_collapsed` | faq-item emitted with `open` | w7 |
+| Q.2 |  | structural | script | `check_card_hierarchy` | card without heading before body | w7 |
+| Q.3 |  | structural | script | `check_icon_ring` | bare svg icon inside card/flow-row | w7 |
+| Q.4 |  | structural | script | `check_gap_floor` | sibling container with zero gap | w7 |
+| Q.5 |  | structural | script | `check_type_scale_min` | heading level not smaller than previous | w7 |
+| Q.6 |  | structural | script | `check_contrast_pairs` | element fg/bg below floor | w7 |
 
-231 rules — script 200, reviewer 30, operator 1; invariant 92, structural 56, stylistic 83.
+239 rules — script 208, reviewer 30, operator 1; invariant 94, structural 62, stylistic 83.

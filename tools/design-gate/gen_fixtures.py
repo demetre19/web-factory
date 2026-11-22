@@ -1213,6 +1213,10 @@ MUT = {
       '<style>p{text-align:justify}.x{transition-duration:600ms}'
       'h2{text-transform:uppercase}</style><h2>A BOLD ALL CAPS TITLE '
       'HEADING</h2>')),
+ 'check_measured_evidence': mut(
+     ('DEL','shots/1280-light-home.png')),
+ 'check_judged_verdict': mut(
+     ('REPL','JUDGE.json','"verdict": "pass"','"verdict": "fail"')),
  'check_tile_page_parity': mut(
      ('REPL','site/dist/home/index.html',
       'class="sec-band surface-base density-spacious"',
@@ -1746,6 +1750,40 @@ def main():
     for _gone in _skip:
         shutil.rmtree(os.path.join(base_dir, _gone),
                       ignore_errors=True)
+    # MEASURE.json / JUDGE.json — emitted through the real tool
+    # doc-builders (measure.doc + judge.judge_doc) so the fixture can
+    # never drift from the producer schema; only the per-viewport
+    # numbers are seeded, all clear of the J.12 floors.
+    import measure as _meas
+    import judge as _judge
+    _mctx = gate.Ctx(base_dir)
+    _mctx.wave = 'w7'
+    _vp = {w: {'page_height_px': 9200, 'viewport_px': 1100,
+               'media_area_px': 1200000, 'image_coverage': 0.14,
+               'media_kinds': {'img': 1100000, 'svg': 100000},
+               'section_count': 9,
+               'contrast_min_ratio': 7.2, 'contrast_min_context': 'p',
+               'tap_target_min_px': 28.0, 'tap_target_context': 'a nav',
+               'cta_count': 4, 'proof_surfaces': 2,
+               'proof_context': ['proof'],
+               'dead_space': {'max_run_px': 220,
+                              'max_run_viewports': 0.2,
+                              'ratio': 0.024, 'at_y_px': 3200},
+               'hierarchy_violations': []}
+           for w in ('1280', '768', '360')}
+    _pages = {'home': {'viewports': _vp,
+                       'contrast_dark': {'ratio': 7.1,
+                                         'context': 'p'},
+                       'pixel': {}}}
+    _m = _meas.doc(_mctx, _pages)
+    BASE['MEASURE.json'] = json.dumps(_m, indent=1, sort_keys=True)
+    _j = _judge.judge_doc(_m, _mctx)
+    _j['measure_sha256'] = hashlib.sha256(
+        BASE['MEASURE.json'].encode()).hexdigest()[:16]
+    BASE['JUDGE.json'] = json.dumps(_j, indent=1, sort_keys=True)
+    for _rel in ('MEASURE.json', 'JUDGE.json'):
+        with open(os.path.join(base_dir, _rel), 'w') as _fh:
+            _fh.write(BASE[_rel])
     _g = json.loads(BASE.get('GATES.json', '{"artifacts":{}}'))
     _g.setdefault('artifacts', {})
     _g.setdefault('w3', {'pass': True})

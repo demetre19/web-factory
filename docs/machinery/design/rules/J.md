@@ -291,6 +291,63 @@ composition their act allows.
 promise-carrying row whose composition is outside its archetype's set
 FAILs.
 
+### J.11 MEASURED-EVIDENCE — the page is measured, not declared
+
+Typed review scores are a claim, not a fact: a page with one image
+and no proof surface used to pass w7/w8 on a declared 81. The
+measurement stage (`tools/design-gate/measure.py`, w7, after the
+evidence shots) reads the BUILT page instead — dist markup served
+over http, rendered by Playwright at every `SHOT_WIDTHS` viewport in
+light + dark — and writes `MEASURE.json`: rendered image coverage
+(px of img/svg/canvas/video ÷ viewport × page height), section
+count, minimum WCAG contrast ratio, minimum tap target px, CTA
+count, proof/testimonial surfaces, the largest dead-space vertical
+run (px, viewports, share of page — DOM union plus a pixel decode of
+the evidence shots), and heading-hierarchy skips (a block's first
+heading below h2, or a level jumped under it).
+
+`MEASURE.json` binds the build it measured (`dist_sha256`) and the
+shots it verified (`shots_sha256`) — a rebuilt dist or re-shot
+evidence invalidates the measurement.
+
+**Enforcement** — script `check_measured_evidence` (w8): the file
+must exist, parse, bind the current dist + shots, and carry a
+viewport record per plan page.
+
+### J.12 JUDGED-VERDICT — pass/fail comes from the metrics
+
+`tools/design-gate/judge.py` (w8) turns `MEASURE.json` into
+`JUDGE.json`: each metric against the threshold its vertical
+documents below, emit `fail` or `warn` findings, `verdict: fail`
+when any fail finding exists. The w8 gate consumes the verdict — the
+page is judged on EVIDENCE, never on declared scores.
+
+Two severities per metric: `warn` is the canon value a healthy page
+reaches (recorded for the reviewer); `fail` is the degenerate floor
+that blocks the wave.
+
+| metric | base fail | base warn | services fail | services warn |
+|---|---|---|---|---|
+| image_coverage | <0.03 | <0.06 | <0.06 | <0.10 |
+| section_count | <4 | <6 | <4 | <8 |
+| contrast_min_ratio | <3.0 | <4.5 | <3.0 | <4.5 |
+| tap_target_min_px | <12 | <24 | <12 | <24 |
+| cta_count | <1 | <2 | <1 | <2 |
+| proof_surfaces | not required | <1 | <1 | <2 |
+| dead_space_vps | >1.5 | >1.0 | >1.5 | >1.0 |
+| dead_space_ratio | >0.40 | >0.30 | >0.40 | >0.30 |
+| hierarchy_violations | >0 | >0 | >0 | >0 |
+
+Services canon comes from the audited reference set (image coverage
+≥ ~0.10 — the live reference site measures 0.129 — plus ≥1 proof
+surface and no dead-space run over ~1.5 viewports). Other verticals
+inherit base floors until the corpus carries per-vertical data. The
+vertical resolves from `DNA.json`'s `vertical_profile`.
+
+**Enforcement** — script `check_judged_verdict` (w8): JUDGE.json
+must exist, bind this dist + the on-disk MEASURE.json, and reach
+`verdict: pass`; every fail finding is a gate failure.
+
 
 ## Enforcement
 
