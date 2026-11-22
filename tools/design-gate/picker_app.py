@@ -2877,11 +2877,24 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
      color:var(--muted);font:600 11.5px var(--font);cursor:pointer}
 .fchip.on{background:var(--accent);border-color:var(--accent);
      color:var(--accent-ink)}
-.grid{display:grid;gap:16px;
-     grid-template-columns:repeat(auto-fill,minmax(560px,1fr))}
+.grid{display:grid;gap:18px;grid-template-columns:1fr}
 .card{background:var(--panel);border:1px solid var(--line);
-     border-radius:var(--r);overflow:hidden;display:flex;
-     flex-direction:column}
+     border-radius:var(--r);overflow:hidden;display:grid;
+     grid-template-columns:minmax(0,1fr) 300px;
+     grid-template-rows:1fr auto}
+.card .cb{grid-row:1/3;grid-column:1;border-right:1px solid var(--line)}
+.card .ch{grid-row:1;grid-column:2;align-content:start;flex-wrap:wrap}
+.card .cf{grid-row:2;grid-column:2;flex-direction:column;
+     align-items:stretch;border-top:0;justify-content:flex-end}
+.card.mobile{display:flex;flex-direction:column}
+.card.mobile .cb{border-right:0}
+.fxlab{display:flex;align-items:center;gap:8px;font:600 10px var(--mono);
+     color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.fxsel{flex:1;min-width:0;background:var(--bg2);border:1px solid var(--line);
+     border-radius:7px;color:var(--ink);font:12px var(--font);
+     padding:6px 8px;cursor:pointer}
+.crow{display:flex;align-items:center;gap:10px}
+.crow .pick{margin-left:auto}
 .card.picked{border-color:var(--ok)}
 .card .ch{display:flex;align-items:center;gap:8px;
      padding:10px 12px;border-bottom:1px solid var(--line)}
@@ -2938,14 +2951,17 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
 .comptab td .o.pickd{background:var(--accent);color:var(--accent-ink);
      border-color:var(--accent)}
 .empty{color:var(--muted);font-size:13px;padding:28px 4px}.vtweak{display:grid;grid-template-columns:repeat(auto-fill,
-  minmax(200px,1fr));gap:8px 18px;margin:16px 0;padding:14px 16px;
+  minmax(248px,1fr));gap:8px 18px;margin:16px 0;padding:14px 16px;
   border:1px solid var(--line);border-radius:12px;background:var(--bg-2)}
 .vgrp{grid-column:1/-1;font:700 10.5px var(--font);color:var(--muted);
   letter-spacing:.08em;text-transform:uppercase;margin-top:4px}
-.vax{display:flex;align-items:center;gap:8px;font:500 11.5px var(--font)}
-.vaxn{min-width:88px;color:var(--ink-dim)}
-.vax input{flex:1;accent-color:var(--ink)}
-.vaxa{min-width:64px;font:600 10.5px var(--mono);color:var(--ink)}
+.vax{display:flex;align-items:center;gap:8px;font:500 11.5px var(--font);
+  min-width:0;overflow:hidden}
+.vaxn{flex:0 0 96px;min-width:0;overflow:hidden;
+  text-overflow:ellipsis;white-space:nowrap;color:var(--ink-dim)}
+.vax input{flex:1;min-width:40px;accent-color:var(--ink)}
+.vaxa{flex:0 0 64px;overflow:hidden;text-overflow:ellipsis;
+  white-space:nowrap;font:600 10.5px var(--mono);color:var(--ink)}
 .vchips{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}
 .vmoods{display:flex;flex-wrap:wrap;gap:6px;padding:4px 0 10px}
 .vmood{font:600 11px var(--mono);padding:4px 12px;
@@ -3045,6 +3061,10 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
   #top .who small{display:none}
   #dnaPop .panel{right:-40px}
   .grid{grid-template-columns:1fr}
+  .card{grid-template-columns:1fr;grid-template-rows:auto auto auto}
+  .card .cb{grid-row:auto;grid-column:1;border-right:0;
+     border-bottom:1px solid var(--line)}
+  .card .ch,.card .cf{grid-column:1;grid-row:auto}
   .ingrow{grid-template-columns:1fr}
   .srow .srh{flex-wrap:wrap}
 }
@@ -3232,20 +3252,21 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
       if(DATA.boards[k])item('b',DATA.boards[k])});
     h+='<div class="railgrp">3 · Sections · Elements</div>';
     Object.keys(DATA.galleries).forEach(function(k){
-      item('g',DATA.galleries[k])});
-    h+='<div class="railgrp">Ingest</div>';
-    h+='<button class="ritem'+(CUR==='ingest'?' on':'')+
-       '" data-k="ingest" data-t="b">'+ICON.news+
-       '<span>URL · HTML</span></button>';
-    h+='<div class="railgrp">Remix</div>';
+      if(k!=='fx')item('g',DATA.galleries[k])});
+    h+='<div class="railgrp">4 · Effects</div>';
+    if(DATA.galleries.fx)item('g',DATA.galleries.fx);
+    h+='<div class="railgrp">5 · Systems</div>';
     h+='<button class="ritem'+(CUR==='remix'?' on':'')+
        '" data-k="remix" data-t="b">'+ICON.mix+
        '<span>DNA mixer</span></button>';
-    h+='<div class="railgrp">Saved</div>';
     h+='<button class="ritem'+(CUR==='saved'?' on':'')+
        '" data-k="saved" data-t="b">'+ICON.doc+
        '<span>Systems</span><span class="cnt">'+
        ((DATA.saved_systems||[]).length||'')+'</span></button>';
+    h+='<div class="railgrp">6 · Tools</div>';
+    h+='<button class="ritem'+(CUR==='ingest'?' on':'')+
+       '" data-k="ingest" data-t="b">'+ICON.news+
+       '<span>URL · HTML</span></button>';
     el.innerHTML=h;
     el.querySelectorAll('.ritem').forEach(function(b){
       b.onclick=function(){CUR=b.dataset.k;FILT={};SEL=0;ROW=0;
@@ -3315,23 +3336,37 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
     h+='</div><div class="cf"><div class="tags">'+
        tags.map(function(t){return '<span class="tag">'+esc(t)+'</span>'}).join('')+
        '</div>';
+    // first-class effect control — the per-element decorator, labeled
+    if(!c.bank&&c.element&&c.element!=='vibe'&&c.element!=='layout'&&
+       c.element!=='fx:default'){
+      var fel='fx:'+c.element,fcur=DATA.picked_elements[fel]||'none',
+          fopts=fxOpts(fel);
+      if(fopts.length)
+        h+='<label class="fxlab">apply effect'+
+           '<select class="fxsel" data-fx="'+esc(fel)+'">'+
+           '<option value="none"'+(fcur==='none'?' selected':'')+
+           '>none</option>'+
+           fopts.map(function(v){return '<option value="'+esc(v)+'"'+
+             (v===fcur?' selected':'')+'>'+esc(v)+'</option>'}).join('')+
+           '</select></label>';}
+    h+='<div class="crow">';
     if(c.wave){
       h+='<button class="pick" data-wave="'+c.wave+'" data-d="'+esc(c.id)+'">Pick</button>';
     }else if(c.element){
       h+='<button class="pick" data-elem="'+c.element+'" data-var="'+esc(c.variant)+'">'+
-         (c.element==='vibe'?'Bake':'Pick')+'</button>';
-      if(!c.bank&&c.element!=='vibe'&&c.element!=='layout'&&
-         c.element!=='fx:default'){
-        var fel='fx:'+c.element,fcur=DATA.picked_elements[fel];
-        h+='<button class="fxbtn'+(fcur&&fcur!=='none'?' on':'')+
-           '" data-fx="'+fel+'" title="decorate with the default '+
-           'effect (motion-gated)">&#9670;'+
-           (fcur&&fcur!=='none'?' '+esc(fcur):'')+'</button>';}
+         (c.element==='vibe'?'Bake':c.element==='fx:default'?
+          'Set site effect':'Pick')+'</button>';
     }
     h+='<span class="pstat'+(isPicked?' ok':'')+'">'+
-       (isPicked?'picked ✓':'')+'</span></div></div>';
+       (isPicked?'picked ✓':'')+'</span></div></div></div>';
     return h;
   }
+
+  // the fx variants a given element's bucket advertises, deduped
+  function fxOpts(element){
+    var fxmap=DATA.fxmap||{},b=fxBucket(element),seen={};
+    return ((fxmap[b]||[]).concat(fxmap.any||[])).filter(function(v){
+      if(seen[v])return 0;seen[v]=1;return 1})}
 
   // vibe space: gene sliders + preset atlas + signed gene bundle
   var VGENES={},VQ='',VRES=null;
@@ -3366,7 +3401,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
     h+='<div class="vprev"><div class="cb" id="vprevCb">'+
        (VRES&&VRES.preview?
         '<iframe src="'+esc(VRES.preview)+'" loading="lazy"></iframe>':
-        '<div class="noprev">resolved vibe preview</div>')+'</div>'+
+        '<div class="noprev">pick a mood, a preset, or move a '+
+        'slider — the resolved vibe renders here</div>')+'</div>'+
        '<div class="cf"><span class="vname">'+
        esc((VRES&&VRES.name)||'computed vibe')+'</span>'+
        '<button class="pick" id="vBake">Bake</button></div></div>';
@@ -3416,7 +3452,15 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
         if(!t)FILT={};
         else if(ev.shiftKey||ev.metaKey||ev.ctrlKey){
           if(FILT[t])delete FILT[t];else FILT[t]=1}
-        else{var was=FILT[t];FILT={};if(!was)FILT[t]=1}
+        else{var was=FILT[t];FILT={};if(!was)FILT[t]=1;
+          // a cluster chip is a vibe pick, not just a filter:
+          // load that cluster's preset genes + re-emit the preview
+          if(!was){
+            var first=(cards||[]).filter(function(cc){
+              return cc.grp===t})[0];
+            if(first&&first.genes){
+              VGENES=Object.assign({},first.genes);
+              vibePane(el,o);resolveVibe(el,o);return}}}
         vibePane(el,o)}});
     el.querySelector('#vq').oninput=function(e){
       VQ=e.target.value.toLowerCase();
@@ -3913,10 +3957,10 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
         b.onclick=function(){doPick(b)}});
       el.querySelectorAll('.fxbtn').forEach(function(b){
         b.onclick=function(e){e.stopPropagation();fxToggle(b)}});
+      el.querySelectorAll('.fxsel').forEach(function(s){
+        s.onchange=function(){fxPick(s.dataset.fx,s.value)}});
       el.querySelectorAll('.xp').forEach(function(b){
         b.onclick=function(e){e.stopPropagation();expand(b.dataset.x)}});
-      el.querySelectorAll('.fxbtn').forEach(function(b){
-        b.onclick=function(e){e.stopPropagation();fxToggle(b)}});
       el.querySelectorAll('.cb iframe').forEach(function(f){
         f.addEventListener('load',function(){setTimeout(fitIframes,90)})});
       setTimeout(fitIframes,150);
@@ -3953,6 +3997,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
         board()}});
     el.querySelectorAll('.pick').forEach(function(b){
       b.onclick=function(){doPick(b)}});
+    el.querySelectorAll('.fxsel').forEach(function(s){
+      s.onchange=function(){fxPick(s.dataset.fx,s.value)}});
     el.querySelectorAll('.xp').forEach(function(b){
       b.onclick=function(e){e.stopPropagation();expand(b.dataset.x)}});
     el.querySelectorAll('.cb iframe').forEach(function(f){
@@ -3960,6 +4006,15 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
     setTimeout(fitIframes,150);
     applyTheme(document.documentElement.dataset.theme);
   }
+
+  // signed per-element effect pick — shared by the labeled
+  // select and the ◆ chooser
+  function fxPick(el,v){
+    api('/element-pick',{pipeline:PIPELINE,element:el,
+      variant:v}).then(function(j){
+      if(j.ok){if(v==='none')delete DATA.picked_elements[el];
+        else DATA.picked_elements[el]=v;board()}
+      else toast(j.message||'refused')})}
 
   // keyboard scrub — ←/→ moves card selection on boards,
   // swaps the current row's alternative on the scrub board
