@@ -49,6 +49,10 @@ thank-you-page timeline ui-elements'''.split()
 
 DATA_RX = re.compile(r'data-value="((?:[^"\\]|\\.)*)"')
 LABEL_RX = re.compile(r'[^a-z0-9]+')
+# Bricks builder scaffolding stems ("remove this div" placeholders)
+# are not sections — page_boards._SCAFFOLD keeps the same list
+SCAFFOLD_RX = re.compile(
+    r'remove-this|take-out|remove-contents|delete-me')
 
 
 def _slabel(label):
@@ -164,7 +168,11 @@ def harvest(cats):
             time.sleep(0.3)
         print(f'{cat}: {n_cat} new '
               f'({sum(1 for s in seen if s[0] == cat)} banked)')
-    # index = fresh scan of everything banked, not just this run
+    write_index()
+
+
+def write_index():
+    """index.json = fresh scan of everything banked (no network)."""
     idx = []
     for cat in sorted(os.listdir(OUT)):
         cd = os.path.join(OUT, cat)
@@ -172,8 +180,10 @@ def harvest(cats):
             continue
         for fn in sorted(os.listdir(cd)):
             if not fn.endswith('.json') or fn == 'index.json' \
-                    or fn.endswith('.topo.json'):
-                continue
+                    or '.topo.' in fn or '.classify.' in fn:
+                continue          # sidecars index the payload, not
+            if SCAFFOLD_RX.search(fn[:-5]):
+                continue     # builder scaffolding, not a section
             try:
                 d = json.load(open(os.path.join(cd, fn)))
                 idx.append({'label': (d.get('content') or [{}])[0]
@@ -199,5 +209,8 @@ def _write(path, text):
 
 
 if __name__ == '__main__':
-    cats = [a for a in sys.argv[1:] if not a.startswith('-')]
-    harvest(cats or CATEGORIES)
+    if '--index' in sys.argv:
+        write_index()          # rescan banked payloads, no login
+    else:
+        cats = [a for a in sys.argv[1:] if not a.startswith('-')]
+        harvest(cats or CATEGORIES)

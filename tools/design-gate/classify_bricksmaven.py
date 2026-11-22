@@ -205,7 +205,11 @@ def main():
             continue
         for fn in sorted(os.listdir(catdir)):
             if not fn.endswith('.json') or fn == 'index.json' \
-                    or fn.endswith('.topo.json'):
+                    or '.topo.' in fn or '.classify.' in fn:
+                continue          # sidecars, not payloads
+            # Bricks builder scaffolding stems are not sections
+            if re.search(r'remove-this|take-out|remove-contents'
+                         r'|delete-me', fn[:-5]):
                 continue
             p = os.path.join(catdir, fn)
             topo = classify(p)
