@@ -1087,25 +1087,45 @@ def _preview_bank_dir():
     return hits[0] if hits else None
 
 
-def _doc_shot(doc_path, shots_dir, pw_browser):
-    """Render an emitted preview doc to a cached png: /built/ css
-    links are inlined so set_content needs no server."""
-    out = os.path.join(
+def _shot_key(doc_path, shots_dir):
+    return os.path.join(
         shots_dir,
         os.path.basename(os.path.dirname(doc_path)) + '-' +
         os.path.basename(doc_path)[:-5] + '.png')
-    if os.path.exists(out):
+
+
+def _doc_shot(doc_path, shots_dir, pw_browser):
+    """Render an emitted preview doc to a cached png: /built/ css
+    links are inlined so set_content needs no server. The shot is
+    valid only while the doc + both stylesheets keep their mtimes
+    (stamp sidecar) — a changed appearance must re-render or stale
+    pixels would mis-dedupe. A doc that emit deleted still hashes
+    from its last cached shot so a stale dup_of can clear."""
+    out = _shot_key(doc_path, shots_dir)
+    doc_dir = os.path.dirname(os.path.abspath(doc_path))
+    bank_dir = os.path.dirname(doc_dir)
+    css_a = os.path.join(bank_dir, 'bank-preview.css')
+    css_b = os.path.join(bank_dir, 'bank-preview-extra.css')
+    if not os.path.isfile(doc_path):
+        return out if os.path.isfile(out) else None
+    try:
+        want = ':'.join(str(int(os.path.getmtime(p)))
+                        for p in (doc_path, css_a, css_b))
+    except OSError:
+        want = ''
+    stamp = out + '.stamp'
+    if os.path.isfile(out) and os.path.isfile(stamp) and \
+            open(stamp).read() == want:
         return out
     import re as _re
     import urllib.parse as _up
     html = open(doc_path, encoding='utf-8', errors='replace').read()
-    doc_dir = os.path.dirname(os.path.abspath(doc_path))
 
     def _inline(m):
         href = _up.unquote(m.group(2))
         base = 'bank-preview-extra.css' if 'extra' in href \
             else 'bank-preview.css'
-        fp = os.path.join(os.path.dirname(doc_dir), base)
+        fp = os.path.join(bank_dir, base)
         try:
             return '<style>' + open(
                 fp, encoding='utf-8', errors='replace').read() + \
@@ -1122,6 +1142,7 @@ def _doc_shot(doc_path, shots_dir, pw_browser):
         pg.screenshot(path=out)
     finally:
         pg.close()
+    open(stamp, 'w').write(want)
     return out
 
 
@@ -1143,16 +1164,27 @@ def dedupe_run(max_hdist=40):
             if not os.path.isdir(cdir):
                 continue
             canon = []
-            for fn in sorted(os.listdir(cdir)):
-                if not fn.endswith('.html'):
-                    continue
-                slug = fn[:-5]
-                out = os.path.join(
-                    GENMENU, cls, slug + '.classify.json')
+            # union of emitted docs and banked exemplars: a dup's doc
+            # was deleted by emit, so iterate the exemplar set too —
+            # its cached shot still evaluates and a stale mark clears
+            gdir = os.path.join(GENMENU, cls)
+            if not os.path.isdir(gdir):
+                continue
+            slugs = sorted(
+                {fn[:-5] for fn in os.listdir(cdir)
+                 if fn.endswith('.html')} |
+                ({fn[:-5] for fn in os.listdir(gdir)
+                  if fn.endswith('.html')}
+                 if os.path.isdir(gdir) else set()))
+            for slug in slugs:
+                out = os.path.join(gdir, slug + '.classify.json')
                 try:
                     png = _doc_shot(
-                        os.path.join(cdir, fn), shots_dir, br)
+                        os.path.join(cdir, slug + '.html'),
+                        shots_dir, br)
                 except Exception:
+                    continue
+                if not png:
                     continue
                 h = _dhash(png)
                 dup_of = sim = None
