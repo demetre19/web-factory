@@ -489,21 +489,32 @@ def _instance(ctx, contract, row, copy=None):
                     gate.camel(contract['section']) + '.astro'), txt)
 
 
-def _system(ctx, comps):
+def _system(ctx, comps, contracts, by_name, copy):
     """VG.1 — the system tile renders every composition + the toggle.
     It bypasses BaseLayout, so it imports the shared layer itself
-    (same F3 fix: applyBaseStyles:false ships no CSS otherwise)."""
+    (same F3 fix: applyBaseStyles:false ships no CSS otherwise).
+    Each specimen renders through the ONE instance serializer with
+    the comp's own contract + plan row — a bare <Comp /> falls back
+    to skeleton defaults and shows orphan strings ('Brand', 'Section
+    heading') instead of the plan's bound copy."""
     imps = '\n'.join(
         f"import {gate.camel(c)} from '../components/{c}.astro';"
         for c in comps)
-    tags = ''.join(f'<div data-comp="{c}"><{gate.camel(c)} /></div>'
-                   for c in comps)
+    by_comp = {}
+    for c in contracts:
+        by_comp.setdefault(str(c.get('composition')), c)
+    tags = []
+    for comp in comps:
+        c = by_comp.get(comp) or {'composition': comp, 'content': {}}
+        row = by_name.get(str(c.get('section'))) or {}
+        _comp, _camel, frag = _instance_body(ctx, c, row, copy)
+        tags.append(f'<div data-comp="{comp}">' + frag + '</div>')
     _w(os.path.join(ctx.site, 'src', 'pages', 'system.astro'),
        '---\n'
        "import '../styles/global.css';\n"
        + imps + '\n---\n'
        '<button data-theme-toggle aria-label="Light or dark">'
-       'Light/Dark</button>\n' + tags + '\n')
+       'Light/Dark</button>\n' + ''.join(tags) + '\n')
 
 
 def _design_system(ctx, tokens, comps):
@@ -1068,7 +1079,7 @@ def main(argv):
     print(f'  {len(comps)} components + {len(contracts)} instances')
 
     # VG.1 — system tile + comp map
-    _system(ctx, comps)
+    _system(ctx, comps, contracts, by_name, copy)
     _design_system(ctx, tokens, comps)              # DS.1-3
     _w(os.path.join(ctx.dir, 'COMPONENTS.md'),
        '# COMPONENTS\n' + ''.join(
