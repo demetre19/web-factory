@@ -1523,6 +1523,24 @@ class _Raw(str):
     values WE construct skip escaping."""
 
 
+def _enum_stat(answer):
+    """A proof stat the block's own answer carries: the count of the
+    parts it enumerates after its dash ("… – visit logs, photo records
+    and a supervisor sign-off" → 3 · visit logs · photo records ·
+    supervisor sign-off). None when the answer lists no parts."""
+    tail = re.split(r'\s[–—-]\s', re.sub(r'\*+', '', str(answer or '')),
+                    maxsplit=1)[1:]
+    if not tail:
+        return None
+    clause = re.split(r'[.;:]| the | that | which ', tail[0])[0]
+    parts = [re.sub(r'^(a|an|the)\s+', '', x.strip())
+             for x in re.split(r',\s*(?:and\s+)?|\s+and\s+', clause)]
+    parts = [x for x in parts if x and len(x.split()) <= 4]
+    if not 2 <= len(parts) <= 6:
+        return None
+    return {'value': str(len(parts)), 'label': ' · '.join(parts)}
+
+
 _L = ('<em class="wf-lorem" data-slot="{s}">Lorem ipsum — '
       'unmapped {s}</em>')
 _SEQ_CSS = ('.wf-seq{list-style:none;padding-left:0;counter-reset:'
@@ -1691,7 +1709,8 @@ def _slot_frag(comp, slot):
             ''.join(f'<p class="mt-stack text-fluid-0">'
                     f'{_inline(p)}</p>' for p in after) + '</div></div>'
     elif comp == 'proof-band':
-        stat = next((i for i in items if i.get('value')), None)
+        stat = next((i for i in items if i.get('value')), None) \
+            or _enum_stat(sub)
         voice = next((i for i in items if i.get('quote')), None)
         quote = voice['quote'] if voice else (before[0] if before else '')
         rest = before if voice else before[1:]
