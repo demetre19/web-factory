@@ -428,6 +428,12 @@ def eff_comp(b, comp, allowed_for_b, n_media):
     if comp == 'split-media' and n_media <= 0:
         return next((c for c in allowed_for_b if c != 'split-media'),
                     'editorial')
+    if comp.startswith('cutout-') and not any(
+            isinstance(i, dict) and i.get('image') for i in b['items']):
+        # a cutout grid with no item cutouts renders 'cutout pending'
+        # placeholders — fall to the next non-cutout alternate
+        return next((c for c in allowed_for_b
+                     if not c.startswith('cutout-')), 'editorial')
     if comp in ITEM_COMPS and not (b['items'] or b['links'] or b['qa']) \
             and len(_term_items(b)) < 2:
         return 'editorial'
