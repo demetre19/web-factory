@@ -534,9 +534,9 @@ def build(pdir, option=None):
         nav_items.append({'label': l['anchor'], 'href': l['href']})
     hero_cta = (copy.get('closing') or {}).get('cta')
     rows.append(base_row(
-        'nav', 'nav-bar', speech_act=['chrome'], category='headers',
+        'nav', 'flyout-nav', speech_act=['chrome'], category='headers',
         surface='base', density='compact', emphasis='nav',
-        align='center-axis', stack='text-first', collapse='wrap',
+        align='center-axis', stack='text-first', collapse='burger',
         media_ratio='none', disclosure='open', intent='chrome',
         items=nav_items,
         cta={'label': phone, 'href': tel}))
@@ -605,11 +605,17 @@ def build(pdir, option=None):
         rows.append(row)
     clo = copy.get('closing') or {}
     if clo:
+        # a folded disclosure-tier ends the page on a trigger, not a
+        # form: the end-act is a modal-form (.flyout dialog the CTA
+        # opens — N.flyout) instead of an open form-panel
+        folded = geno.get('disclosure-tier') == 'folded'
         rows.append(base_row(
-            'end-act', 'form-panel', speech_act=['act'],
+            'end-act', 'modal-form' if folded else 'form-panel',
+            speech_act=['act'],
             category='contact', surface='brand', density='spacious',
             emphasis='action', align='col-1-edge', stack='text-first',
-            collapse='stacked', media_ratio='none', disclosure='open',
+            collapse='stacked', media_ratio='none',
+            disclosure='collapsed' if folded else 'open',
             intent='cta', content_ids=['c-close'], copy_ref='closing',
             cta=clo['cta']))
     rows.append(base_row(

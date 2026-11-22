@@ -408,6 +408,16 @@ def translate(payload, stem):
 
     cat = stem.split('-')[0]
 
+    # overlay family (N.flyout): a Bricks `offcanvas` element is the
+    # flyout surface — in a header it IS the mobile menu (fixed
+    # panel + scrim + close + docked CTA, the .nav-links contract);
+    # elsewhere it is the generic .flyout dialog. `toggle` elements
+    # are its chrome: burger in the bar, close inside the panel,
+    # .flyout-open on other categories.
+    _names = {e.get('name') for e in payload.get('content') or []}
+    has_offcanvas = 'offcanvas' in _names
+    has_toggle = 'toggle' in _names
+
     def cls(el, depth=1, card=False):
         """Skeleton layout classes + the DNA's role class.
 
@@ -443,10 +453,13 @@ def translate(payload, stem):
             if len(kids) >= 2 and any(k.get('name') == 'image'
                                       for k in kids):
                 role = 'grid-auto gap-fluid-l'
-            # chrome reads as a bar, not a stack
-            if cat == 'header' and len(kids) >= 2:
+            # chrome reads as a bar, not a stack — except inside a
+            # flyout panel, whose children stack vertically
+            if cat == 'header' and len(kids) >= 2 and \
+                    not seen.get('in_flyout'):
                 role = 'row between'
-            if cat == 'footer' and len(kids) >= 2:
+            if cat == 'footer' and len(kids) >= 2 and \
+                    not seen.get('in_flyout'):
                 role = 'row between'
         return ' '.join(x for x in (skel, role) if x)
 
@@ -666,6 +679,63 @@ def translate(payload, stem):
                     f'{pad}{{({ivar}.label || {ivar}.term || '
                     f'{ivar}.anchor) && {ivar}.text && '
                     f'<p class="text-fluid-0">{{{ivar}.text}}</p>}}\n')
+        if name == 'toggle':
+            # chrome control, never copy: inside a flyout panel it
+            # is the close affordance; in a header bar it is the
+            # burger (N.flyout); elsewhere it opens .flyout.
+            if seen.get('in_flyout'):
+                _cls = 'nav-close' if cat == 'header' \
+                    else 'flyout-close'
+                _lbl = 'Close menu' if cat == 'header' else 'Close'
+                return (f'{pad}<button class="{_cls}" type="button" '
+                        f'aria-label="{_lbl}">&times;</button>\n')
+            if cat == 'header':
+                return (f'{pad}{{list.length > 0 && '
+                        f'<button class="burger" type="button" '
+                        f'aria-label="Menu"><span aria-hidden="true">'
+                        f'&equiv;</span></button>}}\n')
+            return (f'{pad}<button class="flyout-open" type="button" '
+                    f'aria-label="Open panel"><span '
+                    f'aria-hidden="true">&equiv;</span></button>\n')
+        if name == 'offcanvas':
+            _ot = set()
+            _subtree_names(el_id, _ot)
+            # collections inside the panel bind `list` first (the
+            # same items the desktop row shows — flyout mirrors the
+            # bar), then `links` for the secondary groups
+            seen['in_flyout'] = True
+            inner = ''.join(render(c, depth + 1, ivar,
+                                   in_card=in_card)
+                            for c in children)
+            seen.pop('in_flyout', None)
+            if cat == 'header':
+                close = ('' if 'toggle' in _ot else
+                         f'{pad}  <button class="nav-close" '
+                         'type="button" aria-label="Close menu">'
+                         '&times;</button>\n')
+                ncls = (c + ' nav-links nav-flyout') if c \
+                    else 'nav-links nav-flyout'
+                out = (f'{pad}{{list.length > 0 && <nav class="{ncls}"'
+                       f' aria-label="Primary">\n{close}{inner}'
+                       f'{pad}}}\n')
+                # the header CTA rides in the bar on desktop and
+                # docks at the panel's foot when the flyout opens —
+                # the bar-level .nav-cta the global rule pins
+                if not seen.get('nav_cta'):
+                    seen['nav_cta'] = True
+                    out += (f'{pad}{{act.label && '
+                            f'<p class="mt-fluid-m">'
+                            f'<a class="wf-cta-button nav-cta" '
+                            f'href={{act.href}}>{{act.label}}'
+                            f'</a></p>}}\n')
+                return out
+            close = ('' if 'toggle' in _ot else
+                     f'{pad}  <button class="flyout-close" '
+                     'type="button" aria-label="Close">'
+                     '&times;</button>\n')
+            return (f'{pad}<div class="flyout" role="dialog" '
+                    f'aria-modal="true">\n{close}{inner}'
+                    f'{pad}</div>\n')
         if name == 'nav-menu':
             # a wp nav-menu placeholder binds the plan's nav links —
             # .nav-links/.burger carry the machinery's mobile-nav
@@ -674,6 +744,26 @@ def translate(payload, stem):
             # chrome, never copy)
             if not seen.get('top_list'):
                 seen['top_list'] = True
+            if has_offcanvas:
+                # the payload's offcanvas IS the mobile surface —
+                # this menu is the desktop row (.nav-desk hides
+                # under the burger breakpoint). The burger comes
+                # from the payload's toggle; when the payload has
+                # none the machinery emits it here (N.flyout).
+                ncls = (c + ' nav-desk') if c else 'nav-desk'
+                out = (f'{pad}{{list.length > 0 && <nav class="{ncls}"'
+                       f' aria-label="Primary"><ul class="row '
+                       f'gap-fluid-m list-plain">'
+                       f'{{(list || []).map((it) => <li>'
+                       f'<a class="nav-link" href={{it.href}}>'
+                       f'{{it.label || it.term || it.title || '
+                       f'it.text}}</a></li>)}}</ul></nav>}}\n')
+                if not has_toggle:
+                    out += (f'{pad}{{list.length > 0 && '
+                            f'<button class="burger" type="button" '
+                            f'aria-label="Menu"><span aria-hidden='
+                            f'"true">&equiv;</span></button>}}\n')
+                return out
             ncls = (c + ' nav-links') if c else 'nav-links'
             return (f'{pad}{{list.length > 0 && <nav class="{ncls}" '
                     f'aria-label="Primary"><button class="nav-close" '
@@ -686,13 +776,17 @@ def translate(payload, stem):
                     f'</li>)}}</ul></nav>}}\n'
                     f'{pad}{{list.length > 0 && <button class="burger" '
                     f'type="button" aria-label="Menu">'
-                    f'<span aria-hidden="true">&#9776;</span>'
+                    f'<span aria-hidden="true">&equiv;</span>'
                     f'</button>}}\n')
         if name == 'text-link' and not ivar:
             # a header's lone text-link IS the nav CTA slot (PS.7's
-            # one primary action); elsewhere the wireframe label is
-            # copy the plan supplies — the slot emits nothing
+            # one primary action — exactly one binds per component);
+            # elsewhere the wireframe label is copy the plan supplies
+            # — the slot emits nothing
             if cat == 'header':
+                if seen.get('nav_cta'):
+                    return ''
+                seen['nav_cta'] = True
                 return (f'{pad}{{act.label && <p class="mt-fluid-m">'
                         f'<a class="wf-cta-button nav-cta" '
                         f'href={{act.href}}>'
@@ -815,6 +909,12 @@ def translate(payload, stem):
                 for p, v in (rules.get(gc_names.get(_i)) or []))
             if ivar:
                 coll, var = f'({ivar}.items || [])', ivar + '2'
+            elif seen.get('in_flyout'):
+                if seen.get('flyout_list'):
+                    coll, var = 'links', 'it'
+                else:
+                    seen['flyout_list'] = True
+                    coll, var = 'list', 'it'
             elif seen.get('top_list'):
                 coll, var = 'links', 'it'
             else:
@@ -836,7 +936,8 @@ def translate(payload, stem):
                            + f'{pad}    ))}}'
                            f'</div>}}\n')
                 else:
-                    _wrap = ('row gap-fluid-m'
+                    _wrap = ('nav-group' if seen.get('in_flyout')
+                             else 'row gap-fluid-m'
                              if cat in ('header', 'footer')
                              else 'grid-auto gap-fluid-m')
                     # the guard wraps the whole element — an empty list
@@ -868,6 +969,15 @@ def translate(payload, stem):
                 # leaves no dead column in the DOM (L.15)
                 if ivar:
                     coll, var = f'({ivar}.items || [])', ivar + '2'
+                elif seen.get('in_flyout'):
+                    # inside a flyout panel the first collection is
+                    # the nav items again; later ones (contact,
+                    # socials) bind `links` as .nav-group sections
+                    if seen.get('flyout_list'):
+                        coll, var = 'links', 'it'
+                    else:
+                        seen['flyout_list'] = True
+                        coll, var = 'list', 'it'
                 elif seen.get('top_list'):
                     # a second top-level collection (footers carry a
                     # legal nav beside the menu) binds the copy slot's
@@ -877,7 +987,9 @@ def translate(payload, stem):
                 else:
                     seen['top_list'] = True
                     coll, var = 'list', 'it'
-                _wrap = ('row gap-fluid-m' if cat in ('header', 'footer')
+                _wrap = ('nav-group' if seen.get('in_flyout')
+                         else 'row gap-fluid-m'
+                         if cat in ('header', 'footer')
                          else 'grid-auto gap-fluid-m')
                 _itnames = set()
                 _subtree_names(run[0], _itnames)
