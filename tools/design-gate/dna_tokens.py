@@ -175,11 +175,12 @@ def _dominant(dist):
     return next(iter(dist)) if dist else None
 
 
-def sample_genotype(genes, seed=0, burst=2, temp=1.0, rng=None):
+def sample_genotype(genes, seed=0, burst=2, temp=1.0, rng=None,
+                    pool=None):
     """Profile allele distribution → seeded genotype. Dominant
-    allele per gene; `burst` stylistic genes moved to a
-    temperature-sampled tail allele (genome.py mutate semantics).
-    Returns (genotype, wild_genes, rng)."""
+    allele per gene; `burst` genes from `pool` (default: STYLISTIC)
+    moved to a temperature-sampled tail allele (genome.py mutate
+    semantics). Returns (genotype, wild_genes, rng)."""
     rng = rng or random.Random(seed)
     geno = {g: _dominant(genes.get(g) or {})
             for g in genome.GENE_NAMES}
@@ -187,9 +188,10 @@ def sample_genotype(genes, seed=0, burst=2, temp=1.0, rng=None):
         if a is None:
             geno[g] = genome.ALLELES[g][0]
     wild = []
-    n = max(0, min(2, burst))
+    pool = pool if pool is not None else genome.STYLISTIC
+    n = max(0, min(len(pool), burst))
     for g in rng.sample([g for g in genome.GENE_NAMES
-                         if g in genome.STYLISTIC], n):
+                         if g in pool], n):
         dist = genes.get(g) or {}
         ranked = sorted(dist.items(), key=lambda kv: kv[1])
         tail = [a for a, p in ranked
@@ -208,7 +210,7 @@ def mutate_genotype(geno, genes, seed=0, burst=1, temp=0.7):
     rng = random.Random(seed)
     out = dict(geno)
     moves, wild = [], []
-    n = max(0, min(2, burst))
+    n = max(0, min(len(genome.STYLISTIC), burst))
     for g in rng.sample([g for g in genome.GENE_NAMES
                          if g in genome.STYLISTIC], n):
         dist = genes.get(g) or {}
@@ -412,7 +414,7 @@ def from_genotype(geno, site_type, declared, seed=0):
 
 
 def derive(site_type, seed=0, declared=None, burst=2, temp=1.0,
-           force_genes=None):
+           force_genes=None, pool=None):
     """site_type + seed → the full derived DNA record.
 
     declared = {'vibe', 'site_type', 'recipe', 'copy', 'cta',
@@ -423,7 +425,7 @@ def derive(site_type, seed=0, declared=None, burst=2, temp=1.0,
     prof = profile(site_type)
     genes = prof['genes']
     geno, wild, _ = sample_genotype(genes, seed=seed, burst=burst,
-                                    temp=temp)
+                                    temp=temp, pool=pool)
     moves = {}
     for g, a in (force_genes or {}).items():
         if a in genome.ALLELES.get(g, ()):

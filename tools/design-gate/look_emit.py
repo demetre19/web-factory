@@ -84,6 +84,12 @@ def _deltas(base, plan, knobs):
         v = _step_enum(spec, cur, n) if kind == 'enum' \
             else _step_num(spec, cur, n)
         if v is None or str(v) == str(cur):
+            # the declared direction leaves the domain or restates the
+            # baseline — the knob still has to move, so try the other
+            # direction before dropping the delta
+            v = _step_enum(spec, cur, -n) if kind == 'enum' \
+                else _step_num(spec, cur, -n)
+        if v is None or str(v) == str(cur):
             continue
         ok, _why = gate._knob_ok(k, v, knobs)
         if not ok:

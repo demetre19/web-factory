@@ -10,10 +10,10 @@
 | mobbin-29337e63-1f63-4b05-bdfd-672cd2a1f5ed | section | home · stacked-hero · hero CTA restraint | w1 |
 | mobbin-2e940216-b7d4-4f36-b724-c4541c373706 | section | home · stacked-hero · eyebrow-to-headline spacing | w1 |
 | mobbin-d197d73b-531a-430f-bf7e-827e232e458e | section | home · stacked-hero · sub-headline measure | w1 |
-| mobbin-7ab58ecd-a823-4995-8ef4-f7e9bc06a48f | section | home · nav-bar · sticky bar with phone CTA | w1 |
-| mobbin-8fe7fadd-1c8b-4a4a-b171-4e7470e0f640 | section | home · nav-bar · nav CTA emphasis | w1 |
-| mobbin-fc167e3e-e2f2-4340-bfcf-52cc593edfbb | section | home · nav-bar · logo scale | w1 |
-| mobbin-2f083c6a-8cf1-40af-823b-bee1ce8f419a | section | home · nav-bar · compact density | w1 |
+| mobbin-7ab58ecd-a823-4995-8ef4-f7e9bc06a48f | section | home · flyout-nav · sticky bar with phone CTA | w1 |
+| mobbin-8fe7fadd-1c8b-4a4a-b171-4e7470e0f640 | section | home · flyout-nav · nav CTA emphasis | w1 |
+| mobbin-fc167e3e-e2f2-4340-bfcf-52cc593edfbb | section | home · flyout-nav · logo scale | w1 |
+| mobbin-2f083c6a-8cf1-40af-823b-bee1ce8f419a | section | home · flyout-nav · compact density | w1 |
 | mobbin-7d7a13f3-e182-41ae-9e65-6b795304c753 | section | home · cards-n · card density | w1 |
 | mobbin-94f21145-f757-4e59-90dd-a5eaf49b5bd0 | section | home · cards-n · card radius | w1 |
 | mobbin-6aa10dc8-88e4-45d3-bfdb-632f5f688f20 | section | home · cards-n · three-up grid rhythm | w1 |

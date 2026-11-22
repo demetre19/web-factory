@@ -69,11 +69,28 @@ import '../styles/global.css';
         nl.classList.remove('open');
       }
     }
+    // the generic overlay family (.flyout — modals/popups/dialogs)
+    // rides the same contract: trigger toggles, close control and
+    // scrim clicks dismiss (N.flyout)
+    var fo = document.querySelector('.flyout');
+    if (fo) {
+      if (e.target && e.target.closest && e.target.closest('.flyout-open')) {
+        fo.classList.toggle('open');
+      } else if (fo.classList.contains('open')) {
+        var inFo = e.target && e.target.closest &&
+                   e.target.closest('.flyout');
+        if (!inFo || e.target.closest('.flyout-close')) {
+          fo.classList.remove('open');
+        }
+      }
+    }
   });
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape') {
       var nl = document.querySelector('.nav-links');
       if (nl) nl.classList.remove('open');
+      var fo = document.querySelector('.flyout');
+      if (fo) fo.classList.remove('open');
     }
   });
 })();

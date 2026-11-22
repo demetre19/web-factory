@@ -4,7 +4,7 @@ import '../../styles/global.css';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Section from '../../components/Section.astro';
 import '../../styles/preview-bank.css';
-import NavBar from '../../components/nav-bar.astro';
+import FlyoutNav from '../../components/flyout-nav.astro';
 import HeroActMerge from '../../components/hero-act-merge.astro';
 import Editorial from '../../components/editorial.astro';
 import CardsN from '../../components/cards-n.astro';
@@ -21,9 +21,9 @@ import FooterBar from '../../components/footer-bar.astro';
 
 <BaseLayout title="Whistle Clean" description="Strata Cleaning Melbourne \u2013 common-area cleaning for strata buildings \u2013 foyers, lifts, carparks and amenities. Eco products, audited visits." slug="strata-cleaning-melbourne">
 <div data-variant-scope="v2" style="--btn-padding-ratio:2.0;--btn-size:m;--color-accent-usage:cta-only;--color-neutral-tint:0.05;--color-surface-contrast:0.08;--display-weight:800;--elevation-level:1;--grid-gutter:space-l;--image-treatment:editorial-crop;--motion-engine:css;--motion-level:subtle;--radius-personality:0.625rem;--space-density-step:space-m;--space-section-py-compact:section-space-s;--space-section-py-regular:section-space-m;--space-section-py-spacious:section-space-l;--text-l:clamp(1.2391rem, calc(0.5591vw + 1.1273rem), 1.5746rem);--text-xl:clamp(1.5354rem, calc(1.1141vw + 1.3126rem), 2.2039rem);--text-xxl:clamp(1.9026rem, calc(1.9701vw + 1.5086rem), 3.0847rem);--tracking-display:-0.015em;--type-base-px:17;--type-display-weight:800;--type-ratio:1.3125;--type-tracking-display:-0.015;--width-inner-rung:60">
-<Section sec="nav" comp="nav-bar" wf-ref="preview/layouts.html#d1:nav" ratio="none" disclosure="open" surface="base" density="compact" intent="chrome" recipe="bricksmaven/headers/header-1" mode="bar" tag="header">
-  <!-- section contract: composition=nav-bar section=nav surface=base density=compact speech_act=chrome -->
-  <NavBar cta={({"label": "+61 3 7003 2223", "href": "tel:+61370032223"})} items={([{"label": "all commercial cleaning services", "href": "/cleaning-services/"}, {"label": "body corporate cleaning", "href": "/cleaning-services/body-corporate-cleaning-melbourne/"}, {"label": "strata window cleaning", "href": "/cleaning-services/strata-window-cleaning-melbourne/"}, {"label": "strata floor scrubbing", "href": "/cleaning-services/strata-floor-scrubbing-melbourne/"}])} brand="Whistle Clean" logo="/logo.svg" />
+<Section sec="nav" comp="flyout-nav" wf-ref="preview/layouts.html#d1:nav" ratio="none" disclosure="open" surface="base" density="compact" intent="chrome" recipe="bricksmaven/headers/header-21" mode="bar" tag="header">
+  <!-- section contract: composition=flyout-nav section=nav surface=base density=compact speech_act=chrome -->
+  <FlyoutNav cta={({"label": "+61 3 7003 2223", "href": "tel:+61370032223"})} items={([{"label": "all commercial cleaning services", "href": "/cleaning-services/"}, {"label": "body corporate cleaning", "href": "/cleaning-services/body-corporate-cleaning-melbourne/"}, {"label": "strata window cleaning", "href": "/cleaning-services/strata-window-cleaning-melbourne/"}, {"label": "strata floor scrubbing", "href": "/cleaning-services/strata-floor-scrubbing-melbourne/"}])} brand="Whistle Clean" logo="/logo.svg" />
 </Section>
 <Section sec="hero" comp="hero-act-merge" wf-ref="preview/layouts.html#d1:hero" ratio="none" disclosure="open" surface="media" density="regular" intent="promise+act" content="c-h1" recipe="bricksmaven/hero/hero-99" mode="band">
   <!-- section contract: composition=hero-act-merge section=hero surface=media density=regular speech_act=promise -->

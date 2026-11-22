@@ -1,0 +1,44 @@
+---
+/**
+ * modal-form — gold exemplar (SB.5). The folded end-act: the band
+ * carries the closing pitch and one primary trigger; the form rides
+ * in the .flyout dialog it opens (scrim + centred panel +
+ * .flyout-close — N.flyout), toggled by the BaseLayout contract.
+ * Renders inside Section.astro: no <section>, no outer
+ * padding/background/max-width (SB.2).
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  fields?: { label?: string; name?: string; type?: string }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta,
+  fields = [],
+} = Astro.props;
+---
+<div class="stack">
+  <div class="sec-head">
+    <h2 class="text-fluid-3">{heading}</h2>
+    {fs && <p class="lede">{fs}</p>}
+  </div>
+  {cta && <p class="mt-fluid-m"><button class="wf-cta-button flyout-open" type="button">{cta.label}</button></p>}
+  <div class="flyout" role="dialog" aria-modal="true" aria-label={heading}>
+    <button class="flyout-close" type="button" aria-label="Close">&times;</button>
+    <h3 class="text-fluid-1">{heading}</h3>
+    <form novalidate>
+      {fields.length > 0 ? fields.map((f) => (
+        <label class="text-fluid-0">{f.label}
+          <input name={f.name || f.label} type={f.type || 'text'} />
+        </label>
+      )) : (
+        <label class="text-fluid-0">Name<input name="name" type="text" autocomplete="name" /></label>
+        <label class="text-fluid-0">Phone<input name="phone" type="tel" autocomplete="tel" /></label>
+      )}
+      {cta && <button class="wf-cta-button" type="submit">{cta.label}</button>}
+    </form>
+  </div>
+</div>

@@ -65,12 +65,15 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
     </div>
     <div class="sec-inner">
       <div class="bm-product-archive-4__container">
-        {list.length > 0 &&         <div class="bm-product-archive-4__product-filters">
-          {list.length > 0 &&           <div class="bm-product-archive-filter-wrapper bm-product-archive-filter-wrapper--alt">
-            {list.length > 0 &&             <div>
-              {list.length > 0 &&               <div class="bm-product-archive-off-canvas__content">
+        <div class="bm-product-archive-4__product-filters">
+          <div class="bm-product-archive-filter-wrapper bm-product-archive-filter-wrapper--alt">
+            <div class="bm-product-archive-filter-wrapper__toggle-button">
+              <button class="flyout-open" type="button" aria-label="Open panel"><span aria-hidden="true">&#9776;</span></button>
+            </div>
+            <div class="flyout" role="dialog" aria-modal="true">
+              <div class="bm-product-archive-off-canvas__content">
                 {list.length > 0 &&                 <div class="bm-product-archive-2__filter-container">
-                  {list.length > 0 && <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
+                  {list.length > 0 && <div class="nav-group">{(list || []).map((it) => (
                       <div class="bm-product-archive__filter-row card">
                         {it.icon && <IconChip name={it.icon} />}
                         <h4 class="text-fluid-1">{it.term || it.title}</h4>
@@ -78,14 +81,11 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
                     ))}</div>}
                 </div>
                 }
+                <button class="flyout-close" type="button" aria-label="Close">&times;</button>
               </div>
-              }
             </div>
-            }
           </div>
-          }
         </div>
-        }
         {image &&         <div class="bm-product-archive__product-list">
           {image &&           <div class="product-list-1-card grid-auto gap-fluid-l">
             {image && image.src && <figure class="product-list-1-card__image ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}

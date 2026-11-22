@@ -681,6 +681,65 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
   /* 4 full-length labels can't fit under ~60rem — the burger takes
      over below that instead of overflowing the page */
   @media (min-width: 60rem) { .nav-links { display: flex; } }
+  /* a flyout nav splits the two .nav-links roles: .nav-desk is the
+     desktop link row (hidden under the burger breakpoint); the
+     .nav-flyout panel is the ONLY nav-links — hidden at every width
+     until .open, so it never doubles as a second desktop row
+     (N.flyout) */
+  .nav-desk { display: none; gap: var(--space-s);
+              align-items: center; flex: 0 1 auto; min-width: 0; }
+  .nav-desk ul { flex-wrap: nowrap; gap: var(--space-s); }
+  .nav-links.nav-flyout { display: none; }
+  .nav-links.open.nav-flyout { display: flex; }
+  @media (min-width: 60rem) { .nav-desk { display: flex; } }
+  /* grouped link sections inside the open panel: a titled stack of
+     rows separated by hairlines, reading as sections not a bare
+     list (N.flyout) */
+  .nav-links.open .nav-group { display: flex; flex-direction: column;
+              align-items: flex-start; gap: var(--space-xs); }
+  .nav-links.open .nav-group + .nav-group,
+  .nav-links.open .nav-group + * { padding-block-start: var(--space-s);
+              border-block-start: 1px solid var(--border-default); }
+  .nav-links.open .nav-group a { font-size: var(--fs-1);
+              white-space: normal; color: var(--text-primary);
+              text-decoration: none; display: inline-flex;
+              align-items: center; gap: var(--space-s); }
+  /* the generic overlay family — modals, popups, form dialogs
+     (N.flyout): a centred .flyout panel over the same scrim, a
+     .flyout-open trigger in flow, a .flyout-close affordance */
+  .flyout { display: none; }
+  .flyout.open { display: flex; flex-direction: column;
+              gap: var(--space-m); position: fixed;
+              inset-block-start: 50%; inset-inline-start: 50%;
+              transform: translate(-50%, -50%);
+              width: min(28rem, calc(100vw - 2 * var(--gutter)));
+              max-height: 85vh; overflow-y: auto;
+              z-index: calc(var(--primitive-z-sticky) + 1);
+              background: var(--bg-canvas); color: var(--text-primary);
+              padding: var(--space-m);
+              border: 1px solid var(--border-default);
+              border-radius: var(--r-card);
+              box-shadow: var(--shadow-pop); }
+  .flyout-open { display: inline-flex; min-height: var(--tap);
+              min-width: var(--tap); align-items: center;
+              justify-content: center;
+              background: var(--bg-surface); color: var(--text-primary);
+              border: 1px solid var(--border-default);
+              border-radius: var(--r-card); font-size: var(--fs-1);
+              font-weight: 600; cursor: pointer; }
+  .flyout-open.wf-cta-button { border: 0;
+              background: var(--action-primary);
+              color: var(--action-primary-ink); }
+  .flyout-close { display: inline-flex; align-self: flex-end;
+              min-height: var(--tap); min-width: var(--tap);
+              align-items: center; justify-content: center;
+              background: none; border: 0;
+              color: var(--text-secondary); font-size: var(--fs-2);
+              line-height: 1; cursor: pointer; }
+  body:has(.flyout.open)::after { content: ""; position: fixed;
+              inset: 0; background: color-mix(in oklch,
+                  var(--text-primary) 45%, transparent);
+              z-index: var(--primitive-z-sticky); }
   .wf-cta-button { font-size: var(--fs--1); }
   /* the mobile call action is a compact floating button, not a bar
      that slices across mid-scroll content: a brand pill bottom-right

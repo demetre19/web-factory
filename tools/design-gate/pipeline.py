@@ -139,7 +139,9 @@ def _record(d, wave, label, argv, inputs, writes, before, after, rc):
 
 def _run_step(d, wave, step, env):
     """Run one producer step and record its receipt. Returns rc."""
-    label, argv, inputs, writes = step
+    label, argv, inputs, writes = step[:4]
+    if len(step) > 4:
+        env = dict(env, **step[4])     # per-step env overrides
     before = _manifest(d)
     r = subprocess.run(argv, env=env)
     after = _manifest(d)
@@ -279,7 +281,11 @@ def _steps(pdir, wave, build, site_dir):
                   os.path.join(pdir, 'LAYOUT-OPTIONS.json'),
                   os.path.join(pdir, 'TOKENS.json'),
                   os.path.join(pdir, 'COPY.json')],
-                 ['preview/layouts.html', 'site/dist/']),
+                 ['preview/layouts.html', 'site/dist/'],
+                 # w2 already built the identical preview pages —
+                 # re-emitting the sources is free, the astro build
+                 # would reproduce byte-identical dist output
+                 {'WF_DEFER_BUILD': '1'}),
                 ('section contracts',
                  [PY, T('gate.py'), 'contracts', pdir],
                  [os.path.join(pdir, 'DESIGN-PLAN.md')],
@@ -297,7 +303,11 @@ def _steps(pdir, wave, build, site_dir):
                   os.path.join(pdir, 'VARIANT-GATES.json'),
                   os.path.join(pdir, 'TOKENS.json'),
                   os.path.join(pdir, 'COPY.json')],
-                 ['preview/variants.html', 'site/dist/']),
+                 ['preview/variants.html', 'site/dist/'],
+                 # the fine round's build renders EVERY preview page
+                 # (variants' look-*.astro included) — deferring this
+                 # emit's own build dedupes a second full astro pass
+                 {'WF_DEFER_BUILD': '1'}),
                 ('fine picker', asm + ['--fine'],
                  [os.path.join(pdir, 'DESIGN-PLAN.md'),
                   os.path.join(pdir, 'TOKENS.json'),
@@ -482,11 +492,39 @@ def _project_layout(d, wave, env):
                    env)
     if rc != 0:
         return rc
+    rc = _run_step(d, wave,
+                   ('section contracts',
+                    [PY, T('gate.py'), 'contracts', d],
+                    [os.path.join(d, 'DESIGN-PLAN.md')],
+                    ['sections/']),
+                   env)
+    if rc != 0:
+        return rc
+    # the look pickers belong downstream of the layout pick — a
+    # re-projection makes the old ones stale (their iframes point at
+    # pages the projected plan won't rebuild until w4). Drop them;
+    # w4 re-emits them under the projected plan.
+    for stale in ('preview/variants.html', 'preview/fine.html'):
+        try:
+            os.remove(os.path.join(d, stale))
+        except OSError:
+            pass
+    pdir = os.path.join(d, 'site', 'src', 'pages', 'preview')
+    if os.path.isdir(pdir):
+        for fn in os.listdir(pdir):
+            if fn.startswith('look-') and fn.endswith('.astro'):
+                os.remove(os.path.join(pdir, fn))
+    # the lo-* preview pages were emitted under the pre-projection
+    # plan — re-emit under the projected rows so the picker's pages
+    # and a producer replay build the same bytes (X.1)
     return _run_step(d, wave,
-                     ('section contracts',
-                      [PY, T('gate.py'), 'contracts', d],
-                      [os.path.join(d, 'DESIGN-PLAN.md')],
-                      ['sections/']),
+                     ('layouts picker',
+                      [PY, T('assemble.py'), d, '--layouts'],
+                      [os.path.join(d, 'DESIGN-PLAN.md'),
+                       os.path.join(d, 'LAYOUT-OPTIONS.json'),
+                       os.path.join(d, 'TOKENS.json'),
+                       os.path.join(d, 'COPY.json')],
+                      ['preview/layouts.html', 'site/dist/']),
                      env)
 
 
@@ -574,7 +612,7 @@ def _regate_drifted(pdir, site_dir, wave, env):
     if wave not in ORDER:
         return None                 # the site wave has no ancestors
     prior = ORDER[:ORDER.index(wave)]
-    drifted = []
+    drifted, evolving = [], []
     for w in prior:
         d = site_dir if w == SITE_WAVE else pdir
         ctx = G.Ctx(d)
@@ -584,12 +622,38 @@ def _regate_drifted(pdir, site_dir, wave, env):
         if not e or not e.get('pass'):
             continue
         rec = e.get('inputs_sha256')
-        if rec and rec != G.input_hashes_for(ctx, w):
-            drifted.append(w)
-    if not drifted:
+        cur = rec and G.input_hashes_for(ctx, w)
+        if rec and rec != cur:
+            if G.inputs_drifted(rec, cur):
+                drifted.append(w)
+            else:
+                evolving.append(w)
+    if not drifted and not evolving:
         return None
-    print(f'  {wave}: earlier inputs drifted — re-gating '
-          f'{", ".join(drifted)} (producers do not re-run)')
+    # evolving-input drift only (the machinery legitimately rewrites
+    # those files — P.22 sanctions it): the recorded verdict still
+    # covers the wave, so refresh the evidence that cites current
+    # bytes (stale artifact receipts + checklist + the approval's
+    # input binding) and skip the gate re-run itself
+    for w in evolving:
+        d = site_dir if w == SITE_WAVE else pdir
+        if w in APPROVABLE and _verified(d, w) and \
+                not _current(d, w):
+            if not _confirm(d, w):
+                return (f'{w} pick not re-bound to the current '
+                        'inputs; check the pick surface is up')
+        ectx = G.Ctx(d)
+        ectx.wave = w
+        for rel in G.clear_stale_receipts(ectx):
+            G.write_receipt(ectx, rel)
+        _checklist(d, w, env)
+    if evolving:
+        print(f'  {wave}: machinery-evolved inputs only '
+              f'({", ".join(sorted(G.EVOLVING_INPUTS))}) — '
+              f're-bound {", ".join(evolving)} without re-gate')
+    if drifted:
+        print(f'  {wave}: earlier inputs drifted — re-gating '
+              f'{", ".join(drifted)} (producers do not re-run)')
     for w in drifted:
         d = site_dir if w == SITE_WAVE else pdir
         if w in APPROVABLE and _verified(d, w) and \
@@ -686,7 +750,19 @@ def run(pdir, frm=None, to=None, no_stop=False, wait=False,
                         arts.pop(rel)
                 json.dump(g, open(gp, 'w'), indent=2, sort_keys=True)
         except ValueError:
-            pass                    # wave outside ORDER (site wave)
+            # the site wave sits outside ORDER — its own record still
+            # goes stale on a DNA change (DM.6 compares its recorded
+            # map to the live one), so drop it when re-gating it
+            if wave == SITE_WAVE:
+                gp = os.path.join(d, 'GATES.json')
+                try:
+                    g = json.load(open(gp)) if os.path.isfile(gp) \
+                        else {}
+                    if g.pop(SITE_WAVE, None) is not None:
+                        json.dump(g, open(gp, 'w'), indent=2,
+                                  sort_keys=True)
+                except Exception:
+                    pass
         print(f'=== {wave} ===')
         for step in _steps(d, wave, build, site_dir):
             rc = _run_step(d, wave, step, env)
@@ -750,6 +826,57 @@ def run(pdir, frm=None, to=None, no_stop=False, wait=False,
             # without one. The run pauses here until the pick lands.
             if _pick_gate(d, wave, wait) == 'paused':
                 return 0
+            if wave == 'w4' and _pick(d, wave):
+                # P.18 — the fine round nudges the look the operator
+                # JUST picked; it cannot be emitted before the pick
+                # exists (it was, and a replay nudging the recorded
+                # pick then produced different fv pages). Emit it
+                # now, refresh the checklist evidence, re-gate.
+                rc = _run_step(
+                    d, wave,
+                    ('fine picker',
+                     [PY, T('assemble.py'), d, '--fine'],
+                     [os.path.join(d, 'DESIGN-PLAN.md'),
+                      os.path.join(d, 'TOKENS.json'),
+                      os.path.join(d, 'COPY.json')],
+                     ['preview/fine.html', 'site/dist/']),
+                    env)
+                if rc != 0:
+                    print(f'w4 BLOCKED — fine picker exited {rc}')
+                    if not no_stop:
+                        return 1
+                    continue
+                if _checklist(d, wave, env) != 0:
+                    print(f'{wave} BLOCKED — checklist producer '
+                          'failed')
+                    if not no_stop:
+                        return 1
+                    continue
+                # the fine emit rewrote an input the pick was bound
+                # to — re-bind the SAME pick to the post-emit bytes
+                # (same /confirm the w3 projection path runs)
+                if not _current(d, wave) and not _confirm(d, wave):
+                    print('w4 BLOCKED — pick not re-bound to the '
+                          'post-fine inputs; check the pick '
+                          'surface is up')
+                    if not no_stop:
+                        return 1
+                    continue
+                blk = _regate_drifted(pdir, site_dir, wave, env)
+                if blk:
+                    print(f'{wave} BLOCKED — {blk}')
+                    if not no_stop:
+                        return 1
+                    continue
+                rc = _gate(d, wave, _pick(d, wave),
+                           dict(env, WF_GATE_STAGE='post-pick'))
+                if rc != 0:
+                    print(f'w4 BLOCKED — post-pick gate exited {rc}')
+                    if not no_stop:
+                        return 1
+                    continue
+                print(f'{wave} CLEAR')
+                continue
             if wave == 'w3' and not projected:
                 # the pick landed — project it through the producer
                 # (never by hand), re-bind the same pick to the

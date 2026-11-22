@@ -80,7 +80,8 @@
   --motion-med: 250ms;
   --motion-distance: 4px;
   --motion-engine: css;
-  --image-position: 35%;
+  --image-fx: contrast(1.08) saturate(1.1);
+  --image-position: 50%;
   --primitive-z-base: 0;
   --primitive-z-sticky: 10;
   --primitive-z-overlay: 50;
@@ -103,8 +104,8 @@
   --border-focus: var(--action-primary);
   --bg-subtle: color-mix(in oklch, var(--bg-surface) 50%, var(--bg-canvas));
   --action-primary-hover: color-mix(in oklch, var(--action-primary) 88%, black);
-  --shadow-card: 0 1px 2px color-mix(in oklch, var(--shadow-ink, black) 6%, transparent), 0 2px 4px color-mix(in oklch, var(--shadow-ink, black) 5%, transparent);
-  --shadow-pop: 0 2px 8px color-mix(in oklch, var(--shadow-ink, black) 11%, transparent), 0 6px 20px color-mix(in oklch, var(--shadow-ink, black) 10%, transparent);
+  --shadow-card: none;
+  --shadow-pop: none;
 }
 
 [data-theme=dark] {
@@ -119,8 +120,8 @@
   --bg-inverse: #F4F2EE;
   --text-inverse-src: #2F3644;
   --shadow-ink: black;
-  --shadow-card: 0 1px 2px color-mix(in oklch, var(--shadow-ink) 30%, transparent), 0 2px 4px color-mix(in oklch, var(--shadow-ink) 25%, transparent);
-  --shadow-pop: 0 2px 8px color-mix(in oklch, var(--shadow-ink) 35%, transparent), 0 6px 20px color-mix(in oklch, var(--shadow-ink) 30%, transparent);
+  --shadow-card: none;
+  --shadow-pop: none;
   --text-muted: color-mix(in oklch, var(--text-secondary) 80%, var(--bg-canvas));
   --text-inverse: var(--text-inverse-src);
   --border-strong: color-mix(in oklch, var(--border-default) 130%, var(--text-primary));
@@ -153,7 +154,7 @@
 @layer base {
   :root {
     --display-weight: 700;
-    --tracking-display: -0.005em;
+    --tracking-display: -0.040em;
   }
   *, *::before, *::after { box-sizing: border-box; }
   html { -webkit-text-size-adjust: 100%; }
@@ -922,26 +923,57 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
   }
   .wf-grid-1 .gridcard-1-grid-ul > :only-child { grid-column: 1 / -1; }
 
-/* bricksmaven/content/content-1 */
-  .wf-content-1 .content-1-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
-    gap: var(--space-xl);
+/* bricksmaven/comparison/comparison-1 */
+  .wf-comparison-1 .bm-conparison-1__container {
+    row-gap: var(--space-s);
   }
 
-  .wf-content-1 .content-1__box {
+  .wf-comparison-1 .intro {
+    flex-direction: column;
+    display: flex;
+    row-gap: var(--flow-spacing);
+  }
+
+  .wf-comparison-1 .bm-conparison-1-list {
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
+  }
+
+  .wf-comparison-1 .bm-conparison-1-card {
+    row-gap: var(--flow-spacing);
+  }
+
+  .wf-comparison-1 .bm-conparison-status {
+    display: flex;
+    gap: var(--space-s);
+  }
+
+  .wf-comparison-1 .bm-list {
     display: flex;
     flex-direction: column;
-    row-gap: var(--space-m);
+    row-gap: var(--flow-spacing);
   }
 
-  .wf-content-1 .cta-combo {
+  .wf-comparison-1 .bm-list-item {
+    flex-direction: row;
     display: flex;
-    column-gap: var(--space-xs);
+    column-gap: var(--flow-spacing);
+  }
+
+  .wf-comparison-1 .bm-conparison-1__footer {
+    row-gap: var(--flow-spacing);
+  }
+
+  .wf-comparison-1 .cta-combo {
+    display: flex;
+    column-gap: var(--flow-spacing);
   }
 
   @media (max-width: 44rem) {
-    .wf-content-1 .cta-combo { flex-direction: column; }
+    .wf-comparison-1 .bm-conparison-status { flex-direction: column; }
+    .wf-comparison-1 .bm-list-item { flex-direction: column; }
+    .wf-comparison-1 .cta-combo { flex-direction: column; }
   }
 
 /* bricksmaven/footer/footer-1 */
@@ -1036,30 +1068,17 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
   }
   .wf-call-to-action-10 .cta-10-container > :only-child { grid-column: 1 / -1; }
 
-/* bricksmaven/hero/hero-99 */
-  .wf-hero-99 .bm-hero-99__content {
+/* bricksmaven/grids-and-cards/grid-2 */
+  .wf-grid-2 .gridcard-2-grid-ul {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
+    gap: var(--grid-gap);
+  }
+
+  .wf-grid-2 .gridcard-2-card {
     display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    gap: var(--space-s);
-  }
-
-  .wf-hero-99 .bm-hero-99__column {
-    row-gap: var(--flow-spacing);
-  }
-
-  .wf-hero-99 .cta-combo {
-    display: flex;
-    column-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .wf-hero-99 .bm-hero-99__media {
-    row-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  @media (max-width: 44rem) {
-    .wf-hero-99 .bm-hero-99__content { flex-direction: column; }
-    .wf-hero-99 .cta-combo { flex-direction: column; }
+    flex-direction: column;
+    row-gap: var(--space-xs);
   }
 
 /* bricksmaven/headers/header-1 */
@@ -1155,6 +1174,47 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
     .wf-feature-1 .bm-list__item { flex-direction: column; }
   }
 
+/* bricksmaven/hero/hero-1 */
+  .wf-hero-1 .hero-1 {
+    display: flex;
+    gap: var(--space-s);
+  }
+
+  .wf-hero-1 .hero-1-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
+    gap: var(--space-m);
+  }
+
+  .wf-hero-1 .hero-1__content {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-m);
+  }
+
+  .wf-hero-1 .hero-1__cta {
+    display: flex;
+    column-gap: var(--space-xs);
+  }
+
+  .wf-hero-1 .hero-1__content-trust {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-s);
+  }
+
+  .wf-hero-1 .hero-1-logo-ul {
+    display: flex;
+    flex-direction: row;
+    column-gap: var(--space-m);
+  }
+
+  @media (max-width: 44rem) {
+    .wf-hero-1 .hero-1 { flex-direction: column; }
+    .wf-hero-1 .hero-1__cta { flex-direction: column; }
+    .wf-hero-1 .hero-1-logo-ul { flex-direction: column; }
+  }
+
 /* bricksmaven/counter/counter-1 */
   .wf-counter-1 .counter-1-container {
     display: flex;
@@ -1202,18 +1262,5 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
     .wf-counter-1 .counter-1-container { flex-direction: column; }
   }
   .wf-counter-1 .counter-1-content > :only-child { grid-column: 1 / -1; }
-
-/* bricksmaven/table-of-content/table-of-content-2 */
-  .wf-table-of-content-2 .table-of-content-2__intro {
-    flex-direction: row;
-  }
-
-  .wf-table-of-content-2 .table-of-content-2-ol {
-    row-gap: var(--flow-spacing);
-  }
-
-  @media (max-width: 44rem) {
-    .wf-table-of-content-2 .table-of-content-2__intro { flex-direction: column; }
-  }
 
 }

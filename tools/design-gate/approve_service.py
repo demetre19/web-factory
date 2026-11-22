@@ -393,6 +393,20 @@ def record_candidate_decision(site, decision, pipeline=None):
                 c.get('url') or c.get('site') or c.get('id')) == site:
             hit = c
             break
+    if hit is None and pipeline:
+        # the registry emits only the picker's top slice — a decision
+        # landing on a deeper bank candidate materializes its row on
+        # demand instead of being refused (candidates_emit keeps the
+        # full bank index out of CANDIDATES.json)
+        import candidates_emit
+        row = candidates_emit.materialize(
+            candidates_emit._sources_root(), site)
+        if row is not None:
+            if isinstance(data, list):
+                data.append(row)
+            else:
+                data.setdefault('candidates', []).append(row)
+            hit = row
     if hit is None:
         return 1, f'{site} is not a registered candidate'
     if hit.get('status') not in (None, 'pending'):

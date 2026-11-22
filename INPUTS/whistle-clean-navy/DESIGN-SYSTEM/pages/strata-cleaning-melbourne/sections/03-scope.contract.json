@@ -16,13 +16,16 @@
       "avatar",
       "bar-min",
       "between",
+      "bm-conparison-1-card",
+      "bm-conparison-1-list",
+      "bm-conparison-1__container",
+      "bm-conparison-1__footer",
+      "bm-conparison-status",
       "bm-header-1__brand",
       "bm-header-1__container",
       "bm-header-1__cta",
-      "bm-hero-99__column",
-      "bm-hero-99__content",
-      "bm-hero-99__media",
       "bm-list",
+      "bm-list-item",
       "bm-list__item",
       "brand-logo",
       "brand-mark",
@@ -34,8 +37,6 @@
       "card-grid",
       "card-media",
       "center",
-      "content-1-container",
-      "content-1__box",
       "counter-1-box",
       "counter-1-card",
       "counter-1-card__intro",
@@ -123,9 +124,16 @@
       "grid-auto",
       "gridcard-1-card",
       "gridcard-1-grid-ul",
+      "gridcard-2-card",
+      "gridcard-2-grid-ul",
       "h-display",
       "h-section",
       "helper",
+      "hero-1",
+      "hero-1-container",
+      "hero-1-logo-ul",
+      "hero-1__content",
+      "hero-1__content-trust",
       "hero-1__cta",
       "hworks-1-container",
       "hworks-1-intro",
@@ -201,8 +209,6 @@
       "surface-media",
       "surface-muted",
       "t0",
-      "table-of-content-2-ol",
-      "table-of-content-2__intro",
       "text-fluid--1",
       "text-fluid-0",
       "text-fluid-1",
@@ -213,16 +219,16 @@
       "variant-stage",
       "variant-switcher",
       "wf-call-to-action-10",
-      "wf-content-1",
+      "wf-comparison-1",
       "wf-counter-1",
       "wf-cta-button",
       "wf-feature-1",
       "wf-footer-1",
       "wf-grid-1",
+      "wf-grid-2",
       "wf-header-1",
-      "wf-hero-99",
-      "wf-how-it-works-1",
-      "wf-table-of-content-2"
+      "wf-hero-1",
+      "wf-how-it-works-1"
     ],
     "utilities": "tailwind utilities derived from TOKENS.json"
   },
@@ -247,55 +253,55 @@
   "disclosure": "open",
   "dna": {
     "genotype": {
-      "columns": "2",
-      "cta-rank": "none",
-      "cta-restraint": "single-primary",
-      "density-tier": "regular",
-      "disclosure-tier": "open",
+      "columns": "1",
+      "cta-rank": "hero",
+      "cta-restraint": "multi",
+      "density-tier": "compact",
+      "disclosure-tier": "carousel",
       "display-face": "sans",
       "form-presence": "none",
-      "gallery-mode": "single-hero",
-      "heading-form": "claim",
-      "image-led-ratio": "text-led",
-      "image-style": "editorial",
-      "layout-archetype": "stacked-center",
-      "media-treatment": "none",
+      "gallery-mode": "grid",
+      "heading-form": "query",
+      "image-led-ratio": "balanced",
+      "image-style": "luxury",
+      "layout-archetype": "horizontal-band",
+      "media-treatment": "photo",
       "mood-energy": "calm",
       "mood-register": "approachable",
       "motion-tier": "subtle",
       "nav-pattern": "bar",
       "ornament": "none",
-      "page-macro-structure": "promise-detail-act",
-      "proof-type": "none",
+      "page-macro-structure": "promise-proof-how-act",
+      "proof-type": "testimonials",
       "radius-personality": "soft",
       "seam-shape": "flat",
-      "surface-rhythm": "one-contrast-moment",
-      "trend": "none",
-      "type-contrast": "medium",
-      "whitespace-band": "airy"
+      "surface-rhythm": "dark-dominant",
+      "trend": "resonant-stark",
+      "type-contrast": "high",
+      "whitespace-band": "tight"
     },
     "knobs": {
-      "btn.padding_ratio": 2.0,
-      "btn.size": "m",
-      "color.accent_usage": "cta-only",
+      "btn.padding_ratio": 1.5,
+      "btn.size": "s",
+      "color.accent_usage": "cta+motif+links",
       "color.neutral_tint": 0.05,
       "color.surface_contrast": 0.08,
-      "elevation.level": 1,
-      "grid.gutter": "space-l",
-      "image.treatment": "editorial-crop",
+      "elevation.level": 0,
+      "grid.gutter": "space-s",
+      "image.treatment": "cinematic",
       "motion.engine": "css",
       "motion.level": "subtle",
       "radius.personality": "10px",
-      "space.density_scale": "space-m",
+      "space.density_scale": "space-s",
       "space.section_py": {
         "compact": "section-space-s",
         "regular": "section-space-m",
         "spacious": "section-space-l"
       },
-      "type.base": 17,
+      "type.base": 16,
       "type.display_weight": 700,
-      "type.ratio": 1.25,
-      "type.tracking_display": -0.005,
+      "type.ratio": 1.375,
+      "type.tracking_display": -0.04,
       "width.inner_rung": "60"
     },
     "profile": "profile-services",
@@ -308,7 +314,7 @@
       {
         "density": "regular",
         "section": "hero",
-        "surface": "media"
+        "surface": "base"
       },
       {
         "density": "regular",
@@ -331,7 +337,7 @@
         "surface": "base"
       },
       {
-        "density": "compact",
+        "density": "regular",
         "section": "pricing",
         "surface": "muted"
       },
@@ -346,7 +352,7 @@
         "surface": "muted"
       },
       {
-        "density": "compact",
+        "density": "regular",
         "section": "coverage",
         "surface": "base"
       },
@@ -367,7 +373,7 @@
       }
     ]
   },
-  "dna_hash": "f33934ff1986c1a9",
+  "dna_hash": "f0dddea6ee69d352",
   "emphasis": "items",
   "exemplar": "templates/sections/cards-n/CardsN.astro",
   "file": "sections/03-scope.contract.json",
@@ -380,7 +386,7 @@
       "surface": "muted"
     },
     "prev": {
-      "composition": "text-index",
+      "composition": "split-media",
       "surface": "muted"
     }
   },
@@ -410,7 +416,7 @@
     "detail"
   ],
   "stack": "text-first",
-  "structure_hash": "4c5521650ad31413",
+  "structure_hash": "d3ed08e26ece8af9",
   "surface": "base",
-  "wf_ref": "preview/layouts.html#d3:scope"
+  "wf_ref": "preview/layouts.html#d5:scope"
 }

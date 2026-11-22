@@ -66,7 +66,8 @@
   --motion-med: 250ms;
   --motion-distance: 4px;
   --motion-engine: css;
-  --image-position: 35%;
+  --image-fx: contrast(1.08) saturate(1.1);
+  --image-position: 50%;
   --primitive-z-base: 0;
   --primitive-z-sticky: 10;
   --primitive-z-overlay: 50;
@@ -89,8 +90,8 @@
   --border-focus: var(--action-primary);
   --bg-subtle: color-mix(in oklch, var(--bg-surface) 50%, var(--bg-canvas));
   --action-primary-hover: color-mix(in oklch, var(--action-primary) 88%, black);
-  --shadow-card: 0 1px 2px color-mix(in oklch, var(--shadow-ink, black) 6%, transparent), 0 2px 4px color-mix(in oklch, var(--shadow-ink, black) 5%, transparent);
-  --shadow-pop: 0 2px 8px color-mix(in oklch, var(--shadow-ink, black) 11%, transparent), 0 6px 20px color-mix(in oklch, var(--shadow-ink, black) 10%, transparent);
+  --shadow-card: none;
+  --shadow-pop: none;
 }
 
 [data-theme=dark] {
@@ -105,8 +106,8 @@
   --bg-inverse: #F4F2EE;
   --text-inverse-src: #2F3644;
   --shadow-ink: black;
-  --shadow-card: 0 1px 2px color-mix(in oklch, var(--shadow-ink) 30%, transparent), 0 2px 4px color-mix(in oklch, var(--shadow-ink) 25%, transparent);
-  --shadow-pop: 0 2px 8px color-mix(in oklch, var(--shadow-ink) 35%, transparent), 0 6px 20px color-mix(in oklch, var(--shadow-ink) 30%, transparent);
+  --shadow-card: none;
+  --shadow-pop: none;
   --text-muted: color-mix(in oklch, var(--text-secondary) 80%, var(--bg-canvas));
   --text-inverse: var(--text-inverse-src);
   --border-strong: color-mix(in oklch, var(--border-default) 130%, var(--text-primary));
@@ -139,7 +140,7 @@
 @layer base {
   :root {
     --display-weight: 700;
-    --tracking-display: -0.005em;
+    --tracking-display: -0.040em;
   }
   *, *::before, *::after { box-sizing: border-box; }
   html { -webkit-text-size-adjust: 100%; }
