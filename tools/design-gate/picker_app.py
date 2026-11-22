@@ -3946,7 +3946,14 @@ class _BankBind(html.parser.HTMLParser):
 # toggle a click takes (audit: cards must render the real open
 # state; docs must load closed with correct aria)
 _BANK_MENU_CSS = (
-    'html:not(.wf-menu-open) [data-wf-panel]{display:none !important}')
+    'html:not(.wf-menu-open) [data-wf-panel]{display:none !important}'
+    # bank panels hide with inline opacity/transform/visibility —
+    # display:block alone leaves them invisible once open, so the
+    # open state must clear every hiding mechanism the bank ships
+    'html.wf-menu-open [data-wf-panel]{opacity:1 !important;'
+    'visibility:visible !important;transform:none !important;'
+    'pointer-events:auto !important;left:auto !important;'
+    'right:auto !important;top:auto !important}')
 _BANK_MENU_DRV = (
     '<script>(function(){var d=document,r=d.documentElement;'
     'function so(o){r.classList.toggle("wf-menu-open",o);'
@@ -4008,14 +4015,19 @@ def _site_chrome(pd):
     """(nav_meta, footer_meta) bound once from the emitted page's
     own chrome blocks — brand, IA links, CTA, drawer heads; footers
     also carry the site's copyright line + blurb."""
-    if pd in _CHROME_CACHE:
-        return _CHROME_CACHE[pd]
     dist = os.path.join(pd, 'site', 'dist')
     doc = ''
     cands = sorted(os.path.join(dist, d, 'index.html')
                    for d in os.listdir(dist)
                    if os.path.isdir(os.path.join(dist, d)))
     cands.append(os.path.join(dist, 'index.html'))
+    # a rebuild rewrites the docs — the bound brand/links/copy must
+    # follow them, not the first build the process saw
+    sig = max((os.path.getmtime(f) for f in cands
+               if os.path.isfile(f)), default=0)
+    hit = _CHROME_CACHE.get(pd)
+    if hit and hit[0] == sig:
+        return hit[1]
     hdr = ftr = None
     for fp in cands:
         if not os.path.isfile(fp):
@@ -4044,8 +4056,8 @@ def _site_chrome(pd):
         foot_meta = foot_meta[:3] + (
             ['Services', 'Company', 'Resources', 'Contact'],) + \
             foot_meta[4:]
-    _CHROME_CACHE[pd] = (nav_meta, foot_meta)
-    return _CHROME_CACHE[pd]
+    _CHROME_CACHE[pd] = (sig, (nav_meta, foot_meta))
+    return _CHROME_CACHE[pd][1]
 
 
 def _bank_bind(frag, meta):
@@ -5972,7 +5984,15 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
       b.onclick=function(){gotoBoard(b.dataset.k)}});
   }
 
-  function gotoBoard(k){CUR=k;FILT={};SEL=0;ROW=0;
+  function gotoBoard(k){
+    // the merged chrome gallery is gone — the header/footer chips
+    // land on the first per-type board of their kind instead
+    if(k==='chrome-h'||k==='chrome-f'){
+      var pre=k==='chrome-h'?'nav-':'footer-';
+      k=Object.keys(DATA.galleries||{}).filter(function(g){
+        return g.indexOf(pre)===0&&DATA.galleries[g].hf_type
+      }).sort()[0]||k}
+    CUR=k;FILT={};SEL=0;ROW=0;
     if(innerWidth<=1024){
       document.getElementById('rail').classList.remove('open');
       document.getElementById('scrim').classList.remove('open')}
@@ -5995,8 +6015,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
     {k:'vibe',label:'vibe',board:'vibe'},
     {k:'type',label:'type',board:'typescale'},
     {k:'layout',label:'layout',board:'home'},
-    {k:'header',label:'header',board:'chrome'},
-    {k:'footer',label:'footer',board:'chrome'},
+    {k:'header',label:'header',board:'chrome-h'},
+    {k:'footer',label:'footer',board:'chrome-f'},
     {k:'menu',label:'menu',board:'menu'},
     {k:'fx:default',label:'effect',board:'fx'}];
   function _boardExists(b){
