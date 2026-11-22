@@ -1177,6 +1177,13 @@ def _emit_page_boards(ctx, doc):
                     # hero (blog, contact) is part of the first screen
                     surface = 'muted' if (alt + oi // len(
                         _HERO_SURFACES)) % 2 else 'base'
+                    if alt == 1:
+                        # …so that first band walks its own surface
+                        # ring, never the hero's
+                        ring = [x for x in ('base', 'muted', 'inverse')
+                                if x != hero_surface]
+                        surface = ring[(oi // len(_HERO_SURFACES))
+                                       % len(ring)]
                 content = dict(tc.get('content') or {})
                 content.update(heading=None, fs=None, body=None,
                                h1=role == 'hero',
