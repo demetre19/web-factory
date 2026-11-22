@@ -97,21 +97,39 @@ def _rewrite_assets(fp, txt):
     dist_root = fp.split('/site/', 1)[0] + '/site/dist'
     base_dir = os.path.dirname(fp)
 
-    def fix(m):
-        url = m.group(2)
+    def map_url(url):
         if re.match(r'^(https?:|//|data:|#|/built/|/frame/|mailto:|'
                     r'tel:|javascript:)', url):
-            return m.group(0)
-        if url.startswith('/'):
-            tgt = os.path.normpath(dist_root + url)
-        else:
-            tgt = os.path.normpath(os.path.join(base_dir, url))
+            return url
+        tgt = (os.path.normpath(dist_root + url)
+               if url.startswith('/') else
+               os.path.normpath(os.path.join(base_dir, url)))
         if '/site/' not in tgt:
-            return m.group(0)
-        return (m.group(1) + '/built/' + urllib.parse.quote(tgt)
-                + m.group(3))
+            return url
+        if os.path.isdir(tgt):
+            tgt = tgt.rstrip('/') + '/index.html'
+        return '/built/' + urllib.parse.quote(tgt)
 
-    return re.sub(r'(href="|src="|poster=")([^"#]+)(")', fix, txt)
+    def fix(m):
+        url = m.group(2)
+        mapped = map_url(url)
+        if mapped == url:
+            return m.group(0)
+        return m.group(1) + mapped + m.group(3)
+
+    txt = re.sub(r'(href="|src="|poster=")([^"#]+)(")', fix, txt)
+
+    def fix_srcset(m):
+        out = []
+        for cand in m.group(2).split(','):
+            cand = cand.strip()
+            if not cand:
+                continue
+            u, _, desc = cand.partition(' ')
+            out.append(map_url(u) + ((' ' + desc) if desc else ''))
+        return m.group(1) + ', '.join(out) + m.group(3)
+
+    return re.sub(r'(srcset=")([^"]+)(")', fix_srcset, txt)
 
 
 def _ensure_preview(fp):
