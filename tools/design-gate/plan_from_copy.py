@@ -637,9 +637,19 @@ def build(pdir, option=None):
     # the hero rotation is anchored on the signed pick: the picked
     # option keeps the plan-default hero (re-projecting never swaps
     # the shipped hero), every other option opens on the next comp
-    # in the pool — d1..d5 differ above the fold
+    # in the pool — d1..d5 differ above the fold. The anchor is
+    # recorded and reused: approving another option later re-projects
+    # the SAME table, so the approved page wears the hero it previewed
     pick = option or recorded_pick(pdir) or 'd1'
-    p_at = next((i for i, o in enumerate(opts) if o[0] == pick), 0)
+    try:
+        prior = json.load(open(os.path.join(pdir, 'LAYOUT-OPTIONS.json'),
+                               encoding='utf-8'))
+    except Exception:
+        prior = {}
+    ids = [o[0] for o in opts]
+    anchor = (prior.get('hero_anchor') if prior.get('hero_anchor') in ids
+              else pick if pick in ids else ids[0] if ids else pick)
+    p_at = ids.index(anchor) if anchor in ids else 0
     # the unpicked options' hero bands rotate surface too (strongest
     # contrast first) — a comp that owns its band (a media hero)
     # keeps it, the pick keeps the plan's
@@ -717,7 +727,8 @@ def build(pdir, option=None):
     rows.append(base_row(
         'hero', hero_comp, label='Hero', speech_act=['promise'],
         category='hero',
-        surface='media' if hero_comp == 'hero-act-merge' else 'base',
+        surface=('media' if hero_comp in MEDIA_BAND_HEROES else
+                 (chosen.get('surfaces') or {}).get('hero') or 'base'),
         density='regular', emphasis='headline',
         align='center-axis', stack='text-first', collapse='stacked',
         media_ratio='none', disclosure='open', intent='hero',
@@ -926,6 +937,7 @@ def build(pdir, option=None):
     # Contact/Blog boards stop rendering one article's body copy.
     import board_copy
     lay = {'generated_by': TOOL, 'copy_sha256': copy_sha, 'pick': pick,
+           'hero_anchor': anchor,
            'allowed': allowed, 'options': table,
            # human row titles — the picker's scrub rows display these,
            # never the machine name (which is a slug, sometimes rule
