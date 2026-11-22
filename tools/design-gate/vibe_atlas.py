@@ -132,9 +132,13 @@ _ALLELE = {
                    '--r-card:1.25rem'},),
     },
     'surface-rhythm': {
-        'single-surface': ({'S': '.sec-band{background:'
+        'single-surface': ({'S': '.sec-band:not([data-surface='
+                            '"brand"]):not([data-surface='
+                            '"inverse"]){background:'
                             'var(--bg-canvas)!important}'},),
-        'alternating': ({'S': '.sec-band:nth-of-type(2n){background:'
+        'alternating': ({'S': '.sec-band:nth-of-type(2n):not('
+                         '[data-surface="brand"]):not('
+                         '[data-surface="inverse"]){background:'
                          'var(--bg-surface)}'},),
         'one-contrast-moment': ({'S': '.wf-hero-1{background:'
                                  'var(--ink,var(--text-primary));'
@@ -276,6 +280,13 @@ def resolve(genes):
                 d_vars.update(_pairs(d['D']))
             if d.get('S'):
                 shapes.append(d['S'])
+    # C.1 on-accent pairing — alleles may set --action-primary
+    # without an ink that reaches 4.5:1 on it (the L side never
+    # declared one, so light accents rendered white-on-light)
+    pair_surface(l_vars)
+    pair_surface(d_vars, '#0E1416')
+    pair_ink(l_vars)
+    pair_ink(d_vars)
     name = ' + '.join(f'{ax}:{al}' for ax, al in g.items()) or 'baseline'
     return {'name': name, 'genes': [f'{ax}:{al}' for ax, al in
                                     g.items()],
@@ -292,6 +303,94 @@ def _pairs(css):
             k, v = decl.split(':', 1)
             out[k.strip()] = v.strip()
     return out
+
+
+def _hex_rgb(v):
+    v = str(v or '').strip().lstrip('#')
+    if len(v) == 3:
+        v = ''.join(c * 2 for c in v)
+    try:
+        return tuple(int(v[i:i + 2], 16) / 255 for i in (0, 2, 4))
+    except (ValueError, IndexError):
+        return None
+
+
+def _lum(rgb):
+    f = lambda c: c / 12.92 if c <= .03928 else (
+        (c + .055) / 1.055) ** 2.4
+    return .2126 * f(rgb[0]) + .7152 * f(rgb[1]) + .0722 * f(rgb[2])
+
+
+def _contrast(a, b):
+    ra, rb = _hex_rgb(a), _hex_rgb(b)
+    if ra is None or rb is None:
+        return None
+    l1, l2 = _lum(ra), _lum(rb)
+    if l1 < l2:
+        l1, l2 = l2, l1
+    return (l1 + .05) / (l2 + .05)
+
+
+def _hex(rgb):
+    return '#%02X%02X%02X' % tuple(
+        max(0, min(255, round(c * 255))) for c in rgb)
+
+
+def pair_surface(v, canvas_fallback='#FFFFFF'):
+    """C.1 on-surface pairing: --action-primary must sit at >=4.5:1
+    on --bg-canvas — accent links, focus rings and the CTA edge all
+    ride on it. A failing accent is nudged toward its contrast pole
+    in small luminance steps, hue preserved. Mutates + returns v."""
+    ap, cv = _hex_rgb(v.get('--action-primary')), \
+        _hex_rgb(v.get('--bg-canvas') or canvas_fallback)
+    if ap is None or cv is None:
+        return v
+
+    def _r(rgb):
+        l1, l2 = _lum(rgb), _lum(cv)
+        if l1 < l2:
+            l1, l2 = l2, l1
+        return (l1 + .05) / (l2 + .05)
+    if _r(ap) >= 4.5:
+        return v
+    to_black = _lum(cv) > .35   # light canvas → darken the accent
+    for _i in range(32):
+        ap = [c * .94 for c in ap] if to_black else \
+             [c + (1 - c) * .06 for c in ap]
+        if _r(ap) >= 4.5:
+            break
+    v['--action-primary'] = _hex(ap)
+    return v
+
+
+def pair_ink(v):
+    """C.1 on-accent pairing: --action-primary-ink must sit at
+    >=4.5:1 on --action-primary or the CTA band renders
+    unreadable. When the var is absent or fails, derive it —
+    the theme's own ink first (on-surface pairing), then the
+    extreme ends — never touching the accent itself. Mutates
+    and returns the var dict."""
+    ap = v.get('--action-primary')
+    if _hex_rgb(ap) is None:
+        return v
+    cur = v.get('--action-primary-ink')
+    if cur and (_contrast(cur, ap) or 0) >= 4.5:
+        return v
+    darks = [v.get('--text-primary'), v.get('--ink'),
+             '#14181A', '#000000']
+    lights = ['#FFFFFF', v.get('--bg-canvas')]
+    dark_first = _lum(_hex_rgb(ap)) > .175
+    best, best_r = cur, (_contrast(cur, ap) or 0)
+    for c in (darks + lights) if dark_first else (lights + darks):
+        r = _contrast(c, ap) or 0
+        if r >= 4.5:
+            best, best_r = c, r
+            break
+        if r > best_r:
+            best, best_r = c, r
+    if best:
+        v['--action-primary-ink'] = best
+    return v
 
 
 def _vars(d):
