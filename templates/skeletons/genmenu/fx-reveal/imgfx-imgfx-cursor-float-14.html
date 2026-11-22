@@ -196,15 +196,21 @@
       preview.style.opacity = '0';
     }
 
+    function clampX(x) {
+      const w = preview.offsetWidth || 300;
+      return Math.max(8, Math.min(window.innerWidth - w - 8, x));
+    }
+
     document.querySelectorAll('.index-row').forEach((row) => {
       const idx = Number(row.dataset.idx || 0);
       row.addEventListener('pointerenter', (e) => {
-        currentX = e.clientX + 24;
+        const x = clampX(e.clientX + 24);
+        currentX = x;
         currentY = e.clientY - 140;
-        showPlate(idx, e.clientX + 24, e.clientY - 140);
+        showPlate(idx, x, e.clientY - 140);
       });
       row.addEventListener('pointermove', (e) => {
-        targetX = e.clientX + 24;
+        targetX = clampX(e.clientX + 24);
         targetY = Math.max(20, Math.min(window.innerHeight - 360, e.clientY - 160));
       });
       row.addEventListener('pointerleave', hidePlate);
