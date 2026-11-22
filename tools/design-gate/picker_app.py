@@ -1910,14 +1910,21 @@ def _css_vars(txt):
         r'(--[a-z0-9-]+)\s*:\s*([^;]+)', txt or ''))
 
 
+def _len_px(s):
+    """'10px'/'1.125rem'/'0.5em'/'10'/'0' -> px float; ''/other -> None.
+    Zero is a valid radius — returns 0.0, not None."""
+    m = re.match(r'^\s*(-?\d+(?:\.\d+)?)\s*(px|rem|em)?\s*$',
+                 s or '')
+    if not m:
+        return None
+    v = float(m.group(1))
+    return v * 16 if m.group(2) in ('rem', 'em') else v
+
+
 def _vibe_vector(fam):
     f = VIBE_FAMILIES.get(fam) or {}
     lv, dv = _css_vars(f.get('css')), _css_vars(f.get('css_dark'))
-    r = (lv.get('--radius') or lv.get('--r-card') or '').rstrip('px')
-    try:
-        rpx = float(r) if r else None
-    except ValueError:
-        rpx = None
+    rpx = _len_px(lv.get('--radius') or lv.get('--r-card') or '')
     gap = lv.get('--grid-gap') or ''
     den = ('tight' if 'space-s' in gap else
            'spacious' if 'space-l' in gap else 'regular')
@@ -1943,11 +1950,7 @@ def _design_vector(pd):
     lr = (roles.get('light') or {}).get('roles') or {}
     dr = (roles.get('dark') or {}).get('roles') or {}
     k = t.get('knobs') or {}
-    r = (k.get('radius.personality') or '').rstrip('px')
-    try:
-        rpx = float(r) if r else None
-    except ValueError:
-        rpx = None
+    rpx = _len_px(k.get('radius.personality') or '')
     ds = str(k.get('space.density_scale') or '')
     den = ('tight' if ds.endswith('-s') else
            'spacious' if ds.endswith('-l') else 'regular')
@@ -1966,6 +1969,9 @@ def source_vector(pd, sid):
     if sid == 'design':
         return _design_vector(pd)
     if (sid or '').startswith('vibe:'):
+        if sid[5:] == 'baseline':
+            # baseline is not a real source — it IS this design's DNA
+            return _design_vector(pd)
         return _vibe_vector(sid[5:])
     if (sid or '').startswith('donor:'):
         rec = _json_at(pd, 'DNA-DRAFTS', sid[6:] + '.json') or {}
@@ -2005,14 +2011,22 @@ def mix_vectors(vecs, shares, groups):
     out = {'ink': dom('ink'), 'surface': dom('surface'),
            'accent': dom('accent'),
            'type': {'families': (dt or {}).get('families') or []}}
-    rp = sum((v.get('radius_px') or 0) * s
-             for v, s in zip(vecs, shares))
-    out['radius_px'] = round(rp, 1) if rp else None
-    out['motion'] = round(sum((v.get('motion') or 0) * s
-                              for v, s in zip(vecs, shares)), 3)
-    dn = sum(_DENSITY_NUM.get(v.get('density'), 1) * s
-             for v, s in zip(vecs, shares))
-    out['density'] = _DENSITY_WORD.get(int(round(dn)), 'regular')
+    def wavg(key, conv=None, dec=1):
+        # lerp only over sources that actually carry the knob —
+        # a source lacking it must not silently vote zero
+        pairs = [((conv(v[key]) if conv else v[key]), s)
+                 for v, s in zip(vecs, shares)
+                 if v.get(key) is not None]
+        tot = sum(sh for _, sh in pairs)
+        return (round(sum(x * sh for x, sh in pairs) / tot, dec)
+                if pairs and tot else None)
+
+    # 0 is a real radius — keep it, don't fall back to 'no override'
+    out['radius_px'] = wavg('radius_px')
+    out['motion'] = wavg('motion', dec=3) or 0
+    dn = wavg('density', conv=lambda d: _DENSITY_NUM.get(d, 1))
+    out['density'] = (_DENSITY_WORD.get(int(round(dn)), 'regular')
+                      if dn is not None else 'regular')
     out['theme'] = dom('theme')
     for g, idx in (groups or {}).items():
         try:
@@ -2934,12 +2948,19 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
     var t=null;
 
     function spec(){
-      var ss=[];
-      slots.forEach(function(s0){
-        if(s0.id&&s0.sh>0)ss.push({id:s0.id,share:s0.sh/100})});
+      // a slot referenced by a group override stays a source even at
+      // 0% — it contributes that token group; remap override indices
+      // through compaction so letters match backend vecs[] order
+      var used={};
+      Object.keys(over).forEach(function(k){
+        if(over[k]!=='mix')used[over[k]]=1});
+      var ss=[],map={};
+      slots.forEach(function(s0,i){
+        if(s0.id&&(s0.sh>0||used[i])){
+          map[i]=ss.length;ss.push({id:s0.id,share:s0.sh/100})}});
       var g={};
       Object.keys(over).forEach(function(k){
-        if(over[k]!=='mix')g[k]=over[k]});
+        if(over[k]!=='mix'&&map[over[k]]!=null)g[k]=map[over[k]]});
       return {sources:ss,groups:g}}
 
     function go(){
