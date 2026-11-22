@@ -2098,6 +2098,7 @@ def emit_bank_previews(pd):
     for c in out.get('fx', []):
         c['element'] = 'fx:default'
         c['targets'] = _fx_targets(c['grp'].split(' · ')[-1])
+        c['live'] = True
         for t in c['targets']:
             fxmap.setdefault(t, []).append(c['variant'])
     return out, {k: sorted(v) for k, v in fxmap.items()}
@@ -2782,7 +2783,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
      border:1px solid var(--line);border-radius:12px;
      box-shadow:0 12px 32px rgba(0,0,0,.35)}
 #dnaPop .panel:empty{display:none}
-.card .cb iframe,.srow iframe{max-width:var(--vw,100%);
+.card .cb iframe,.srow iframe{pointer-events:none;
+ max-width:var(--vw,100%);
      margin-inline:auto}
 .aa{display:inline-block;padding:2px 8px;border-radius:999px;
     font:600 10.5px var(--mono);border:1px solid var(--line);
@@ -2929,6 +2931,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
 .vmood:hover{border-color:var(--accent);color:var(--accent)}
 .vmood.on{background:var(--accent);border-color:var(--accent);
  color:var(--btn-ink,#fff)}
+.card.live .cb iframe{pointer-events:auto}
+.vprev iframe{pointer-events:none}
 .vadv{margin:2px 0 4px}
 .vadv>summary{cursor:pointer;font:600 11px var(--mono);
  letter-spacing:.08em;text-transform:uppercase;
@@ -3251,7 +3255,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
   }
 
   function card(c,idx){
-    var tags=c.tags||[],cls='card'+(c.mobile?' mobile':'');
+    var tags=c.tags||[],cls='card'+(c.mobile?' mobile':'')+
+        (c.live?' live':'');
     var isPicked=c.element&&(DATA.picked_elements||{})[c.element]===
       c.variant;
     if(c.element==='vibe'&&BAKED===c.variant)isPicked=true;
