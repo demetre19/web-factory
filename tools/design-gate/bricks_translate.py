@@ -718,7 +718,7 @@ def translate(payload, stem):
                 _x = (f'<button class="nav-close" type="button" '
                       f'aria-label="Close menu">×</button>')
                 _head = (f'{pad}  <div class="nav-sheet-head">'
-                         f'<span class="logo brand-mark">'
+                         f'<span class="logo nav-sheet-brand">'
                          f'{{brand}}</span>{_x}</div>\n')
                 out = (f'{pad}{{list.length > 0 && <nav class="{ncls}"'
                        f' aria-label="Primary">\n{_head}{inner}'
@@ -796,7 +796,7 @@ def translate(payload, stem):
             _close = (f'<button class="nav-close" type="button" '
                       f'aria-label="Close menu">×</button>')
             _head = (f'<div class="nav-sheet-head">'
-                     f'<span class="logo brand-mark">{{brand}}</span>'
+                     f'<span class="logo nav-sheet-brand">{{brand}}</span>'
                      f'{_close}</div>')
             return (f'{pad}{{list.length > 0 && list.length < 7 && '
                     f'<nav class="{ncls}" '

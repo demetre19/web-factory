@@ -413,6 +413,8 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
             padding-block-end: var(--space-s);
             border-block-end: 1px solid
                 var(--border-subtle, var(--border-default)); }
+  .nav-links.open .nav-sheet-head .nav-sheet-brand {
+            font-weight: 700; }
   .nav-links.open .nav-sheet-head .nav-close {
             align-self: center; margin-inline-start: auto; }
   /* exactly one close — an exemplar's own mid-sheet X is dropped in
