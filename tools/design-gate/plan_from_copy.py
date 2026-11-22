@@ -93,6 +93,12 @@ COLL_TYPE = {
     'articles': 'guide', 'hubs': 'hub', 'hub': 'hub',
 }
 
+# comps whose skeleton renders the image prop as a media pane without
+# structurally requiring one — where unspent brief media lands after
+# the hero and the split-media rows (which need an image to render)
+# have been served.
+MEDIA_PANE_EXTRA = {'editorial', 'comparison', 'proof-band'}
+
 
 def page_type_of(copy):
     src = str(((copy.get('source') or {}).get('stub') or {})
@@ -626,6 +632,19 @@ def build(pdir, option=None):
         items=[{'label': l['anchor'], 'href': l['href']}
                for l in copy['links_out']]
         + ([{'label': phone, 'href': tel}] if phone else [])))
+
+    # unspent brief media lands on rows whose comp renders a media
+    # pane — a brief-declared photo is intake the page must carry,
+    # never an asset the emit drops (measured coverage, J.12)
+    if media_left:
+        for r in rows:
+            if not media_left:
+                break
+            if (r.get('composition') in MEDIA_PANE_EXTRA
+                    and not r.get('image')):
+                m = media_left.pop(0)
+                r['image'] = {'src': m['src'], 'alt': m['alt']}
+                r['media_ratio'] = '4:3'
 
     rhetoric = []
     for r in rows:
