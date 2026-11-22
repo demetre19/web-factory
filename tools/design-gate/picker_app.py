@@ -3109,6 +3109,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
 
 /* --- board --- */
 #board{overflow-y:auto;padding:22px 26px 60px}
+#scrim{display:none}
 #board h1{margin:0;font-size:19px;font-weight:650}
 #board .desc{color:var(--muted);font-size:13px;margin:5px 0 18px}
 .filters{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:18px}
