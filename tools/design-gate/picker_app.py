@@ -2779,10 +2779,11 @@ _FORM_OPTIONAL = re.compile(
     r'referral|coupon|promo|vat|tax)\b', re.I)
 
 
-def _form_required(attrs):
-    # the optional-word scan reads identity attrs only — placeholder
-    # copy like "leave us notes" must not un-require a real field
-    hint = ' '.join(re.findall(
+def _form_required(attrs, label=''):
+    # the optional-word scan reads identity attrs + the control's
+    # label text only — placeholder copy like "leave us notes" must
+    # not un-require a real field
+    hint = label + ' ' + ' '.join(re.findall(
         r'(?:name|id|aria-label)\s*=\s*["\']([^"\']+)',
         attrs))
     # 'you@company.com' must not read as a 'company' optional cue
@@ -2798,7 +2799,27 @@ def _bank_form_attrs(frag):
     mark fill-in controls required so the validation driver has
     something real to exercise."""
 
-    def _control(m):
+    # control id -> its <label> text: 'optional'/'notes' cues live
+    # there, not in attrs ('Apt, Suite, or Unit (Optional)')
+    def _labels(block):
+        lab = {}
+        for lm in re.finditer(
+                r'<label\b[^>]*>(.*?)</label>', block, re.I | re.S):
+            txt = re.sub(r'<[^>]*>', ' ', lm.group(1))
+            fm = re.search(r'\bfor\s*=\s*["\']([^"\']+)', lm.group(0),
+                           re.I)
+            if fm:
+                lab[fm.group(1)] = txt
+            else:
+                # wrapping label — associate to the control inside
+                for cm in re.finditer(
+                        r'<(?:input|textarea|select)\b[^>]*'
+                        r'\bid\s*=\s*["\']([^"\']+)', lm.group(1),
+                        re.I):
+                    lab[cm.group(1)] = txt
+        return lab
+
+    def _control(m, labels):
         tag, at = m.group(1).lower(), m.group(2) or ''
         # sr-only peers are css toggle hacks (drawer/accordion
         # switches), not fill-in fields — a required hidden checkbox
@@ -2837,17 +2858,22 @@ def _bank_form_attrs(frag):
             ' '.join(re.findall(
                 r'(?:name|id|placeholder|aria-label)'
                 r'\s*=\s*["\']([^"\']+)', at))))
+        # the optional-word scan sees the control's own label too
+        cid = re.search(r'\bid\s*=\s*["\']([^"\']+)', at)
+        ltxt = labels.get(cid.group(1), '') if cid else ''
         if 'required' not in at and (
-                emailish or _form_required(at)):
+                emailish or _form_required(at, ltxt)):
             at += ' required'
         return '<%s%s%s>' % (tag, at, close)
 
     def _form(m):
         block = re.sub(r'novalidate(="[^"]*")?', '', m.group(0),
                        flags=re.I)
+        labels = _labels(block)
         return re.sub(
             r'<(input|textarea|select)(\s[^<>]*)?>',
-            _control, block, flags=re.I | re.S)
+            lambda cm: _control(cm, labels), block,
+            flags=re.I | re.S)
 
     return re.sub(r'<form\b[^<>]*>.*?</form>', _form, frag,
                   flags=re.I | re.S)
