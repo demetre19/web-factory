@@ -3699,7 +3699,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
          '<input type="range" min="0" max="'+(a.alleles.length-1)+
          '" value="'+Math.max(0,ix)+'" data-ax="'+a.axis+
          '" data-n="'+a.alleles.length+'">'+
-         '<span class="vaxa">'+esc(cur||a.alleles[0])+'</span></div>';
+         '<span class="vaxa">'+esc(cur||'baseline')+'</span></div>';
     });
     h+='</div></details>';
     var gkeys=Object.keys(VGENES);
@@ -3781,10 +3781,24 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
     if(vd)vd.addEventListener('toggle',function(){VADV=vd.open});
     el.querySelector('#vq').oninput=function(e){
       VQ=e.target.value.toLowerCase();
+      var shown=0;
       el.querySelectorAll('.grid .card').forEach(function(cd){
         var c=cards[+cd.dataset.i],hay=(c.id+' '+c.name+' '+
-          (c.tags||[]).join(' ')).toLowerCase();
-        cd.style.display=(VQ&&!hay.includes(VQ))?'none':''})};
+          (c.tags||[]).join(' ')).toLowerCase(),
+            off=VQ&&!hay.includes(VQ);
+        cd.style.display=off?'none':'';
+        if(!off)shown++});
+      var em=el.querySelector('#vdyn');
+      if(!shown&&!em){
+        var d=document.createElement('div');
+        d.id='vdyn';d.className='empty';
+        d.style.gridColumn='1/-1';
+        d.innerHTML='no presets match the current search/filter — '+
+          '<button class="abtn" id="vclr">clear filters</button>';
+        el.querySelector('.grid').appendChild(d);
+        d.querySelector('#vclr').onclick=function(){
+          VQ='';FILT={};vibePane(el,o)}}
+      else if(shown&&em)em.remove()};
     el.querySelector('#vBake').onclick=function(){
       var v='genes:'+vhash(VGENES);
       api('/element-pick',{pipeline:PIPELINE,element:'vibe',
@@ -3849,10 +3863,11 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
           el.querySelectorAll('.vax input').forEach(function(r){
             var a=o.axes.find(function(x){
               return x.axis===r.dataset.ax});
-            var al=gm[a.axis]||a.alleles[0],
-                ix=a.alleles.indexOf(al);
-            if(ix>=0){r.value=ix;
-              r.parentElement.querySelector('.vaxa').textContent=al}});
+            var al=gm[a.axis],
+                ix=al?a.alleles.indexOf(al):-1;
+            if(ix>=0)r.value=ix;
+            r.parentElement.querySelector('.vaxa').textContent=
+              al||'baseline'});
           el.querySelector('.vchips').innerHTML=
             Object.keys(VGENES).map(function(k){
             return '<span class="chip on" data-ax="'+k+'">'+
