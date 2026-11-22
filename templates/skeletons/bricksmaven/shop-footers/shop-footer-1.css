@@ -20,7 +20,7 @@
 
   .wf-shop-footer-1 .wf-shop-footer-1__container {
     display: grid;
-    grid-template-columns: calc(100% * 3 / 1);
+    grid-template-columns: minmax(0, 1fr) minmax(0, 3fr);
     gap: var(--grid-gap);
   }
 
@@ -70,7 +70,9 @@
   }
 
   @media (max-width: 44rem) {
+    .wf-shop-footer-1 .wf-shop-footer-1__container { grid-template-columns: 1fr; }
     .wf-shop-footer-1 .wf-shop-footer-1__footer { flex-direction: column; }
     .wf-shop-footer-1 .wf-social-share { flex-direction: column; }
     .wf-shop-footer-1 .wf-payment-options { flex-direction: column; }
   }
+  .wf-shop-footer-1 .wf-shop-footer-1__container > :only-child { grid-column: 1 / -1; }

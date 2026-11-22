@@ -1,6 +1,6 @@
 ---
 /**
- * bm-hero-39 — TRANSLATED Bricksmaven skeleton.
+ * wf-hero-39 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (hero-39.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -67,8 +67,8 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
 
 <div class="wf-hero-39">
   <div class="sec-inner">
-    <div class="hero-39-container">
-      <div class="hero-39__content">
+    <div class="wf-hero-39-container">
+      <div class="wf-hero-39__content">
         <div class="intro intro--left">
           {head && (h1 ? <h1 class="text-fluid-4">{head}</h1> : <h2 class="text-fluid-2">{head}</h2>)}
           {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
@@ -80,9 +80,9 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
         </div>
       </div>
       <div class="grid-auto gap-fluid-l">
-        <div class="bm-form__inner">
+        <div class="wf-form__inner">
           <div>
-            <form class="bm-form-opt-in" novalidate>
+            <form class="wf-form-opt-in" novalidate>
               <label class="field flow"><span class="text-fluid--1">Name <span aria-hidden="true">*</span></span><input type="text" name="name" autocomplete="name" required aria-required="true" /></label>
               <label class="field flow"><span class="text-fluid--1">Email <span aria-hidden="true">*</span></span><input type="email" name="email" autocomplete="email" required aria-required="true" /></label>
               <label class="field flow"><span class="text-fluid--1">Message <span aria-hidden="true">*</span></span><textarea name="message" rows="4" required aria-required="true"></textarea></label>

@@ -1,7 +1,7 @@
   .wf-call-to-action-22 .wf-cta-22-widget {
     display: grid;
     gap: var(--space-m);
-    grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
+    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
   }
 
   .wf-call-to-action-22 .wf-cta-22-widget__content {
@@ -25,5 +25,7 @@
   }
 
   @media (max-width: 44rem) {
+    .wf-call-to-action-22 .wf-cta-22-widget { grid-template-columns: 1fr; }
     .wf-call-to-action-22 .wf-user-card { flex-direction: column; }
   }
+  .wf-call-to-action-22 .wf-cta-22-widget > :only-child { grid-column: 1 / -1; }

@@ -5,7 +5,7 @@
   .wf-cart-page-2 .cart-page-2__cart-container {
     display: grid;
     gap: var(--space-m);
-    grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
+    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
   }
 
   .wf-cart-page-2 .cart-page-2__card-container {
@@ -18,7 +18,7 @@
     row-gap: var(--flow-spacing);
     display: grid;
     gap: var(--space-m);
-    grid-template-columns: calc(100% * 2 / 1);
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
   }
 
   .wf-cart-page-2 .wf-cart-page-2-testimonial-card__client {
@@ -35,7 +35,10 @@
   }
 
   @media (max-width: 44rem) {
-    .wf-cart-page-2 .wf-cart-page-2-testimonial-card { flex-direction: column; }
+    .wf-cart-page-2 .cart-page-2__cart-container { grid-template-columns: 1fr; }
+    .wf-cart-page-2 .wf-cart-page-2-testimonial-card { grid-template-columns: 1fr; }
     .wf-cart-page-2 .wf-cart-page-2-testimonial-card__client { flex-direction: column; }
     .wf-cart-page-2 .cart-page-2__cart-totals-container { flex-direction: column; }
   }
+  .wf-cart-page-2 .cart-page-2__cart-container > :only-child { grid-column: 1 / -1; }
+  .wf-cart-page-2 .wf-cart-page-2-testimonial-card > :only-child { grid-column: 1 / -1; }

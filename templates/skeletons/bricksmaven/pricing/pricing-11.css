@@ -22,7 +22,7 @@
   .wf-pricing-11 .wf-pricing-11-card {
     display: grid;
     gap: calc(var(--space-m) * 2);
-    grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
+    grid-template-columns: minmax(0, 3fr) minmax(0, 1fr);
   }
 
   .wf-pricing-11 .wf-pricing-11-card__menu-item {
@@ -37,5 +37,7 @@
   }
 
   @media (max-width: 44rem) {
+    .wf-pricing-11 .wf-pricing-11-card { grid-template-columns: 1fr; }
     .wf-pricing-11 .wf-pricing-11-card__price-wrapper { flex-direction: column; }
   }
+  .wf-pricing-11 .wf-pricing-11-card > :only-child { grid-column: 1 / -1; }

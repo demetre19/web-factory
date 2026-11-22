@@ -83,17 +83,16 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
                     <p class="text-fluid-0">{it.text}</p>
                   </div>
                 </div>
-                <div class="wf-pricing-12-card__price-wrapper">
-                  <p class="text-fluid-0">{it.text}</p>
-                  <p class="text-fluid-0">{it.text}</p>
+                {it.tag &&                 <div class="wf-pricing-12-card__price-wrapper">
+                  {it.tag && <span class="tag text-fluid--1">{it.tag}</span>}
                 </div>
-                <p class="text-fluid-0">{it.text}</p>
+                }
               </div>
               <div class="wf-pricing-12-card__content">
-                <div>
-                  <h4 class="text-fluid-1">{it.term || it.title}</h4>
-                  <p class="text-fluid-0">{it.text}</p>
+                {it.meta &&                 <div>
+                  {it.meta && <p class="meta text-fluid--1">{it.meta}</p>}
                 </div>
+                }
                 {(it.items || []).length > 0 && <div class="wf-list">
                   <div class="grid-auto gap-fluid-m">{((it.items || []) || []).map((it2) => (
                       <div class="wf-list-item card">

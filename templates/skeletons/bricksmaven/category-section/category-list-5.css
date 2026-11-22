@@ -20,7 +20,7 @@
     flex-direction: row;
     column-gap: calc( var(--flow-spacing) / 2 );
     display: grid;
-    grid-template-columns: calc(100% * 3 / 2);
+    grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
   }
 
   .wf-category-list-5 .category-list-5__content {
@@ -42,5 +42,6 @@
   }
 
   @media (max-width: 44rem) {
-    .wf-category-list-5 .wf-category-list-5-card { flex-direction: column; }
+    .wf-category-list-5 .wf-category-list-5-card { grid-template-columns: 1fr; }
   }
+  .wf-category-list-5 .wf-category-list-5-card > :only-child { grid-column: 1 / -1; }

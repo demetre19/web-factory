@@ -22,7 +22,7 @@
   .wf-portofolio-single-7 .wf-portfolio-single-7__content-container {
     display: grid;
     gap: var(--space-m);
-    grid-template-columns: calc(100% * 2 / 1);
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
   }
 
   .wf-portofolio-single-7 .wf-portfolio-single-7__content {
@@ -69,7 +69,9 @@
   }
 
   @media (max-width: 44rem) {
+    .wf-portofolio-single-7 .wf-portfolio-single-7__content-container { grid-template-columns: 1fr; }
     .wf-portofolio-single-7 .wf-portfolio-single-meta-data-1--inline { flex-direction: column; }
     .wf-portofolio-single-7 .wf-contact-widget-7 { flex-direction: column; }
     .wf-portofolio-single-7 .wf-portfolio-section-9-card__footer { flex-direction: column; }
   }
+  .wf-portofolio-single-7 .wf-portfolio-single-7__content-container > :only-child { grid-column: 1 / -1; }

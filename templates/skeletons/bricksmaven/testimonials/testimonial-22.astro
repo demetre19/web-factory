@@ -90,10 +90,8 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
                       {it.text && (it.term || it.title) && <p class="text-fluid-0">{it.text}</p>}
                     </div>
                     <div class="wf-testimonial-22-content__box">
-                      <p class="text-fluid-0">{it.text}</p>
-                      {it.icon && <IconChip name={it.icon} />}
-                      <h4 class="text-fluid-1">{it.term || it.title}</h4>
-                      <p class="text-fluid-0">{it.text}</p>
+                      {it.tag && <span class="tag text-fluid--1">{it.tag}</span>}
+                      {it.meta && <p class="meta text-fluid--1">{it.meta}</p>}
                     </div>
                   </div>
                 </div>

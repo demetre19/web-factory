@@ -1,6 +1,6 @@
 ---
 /**
- * bm-contact-22 — TRANSLATED Bricksmaven skeleton.
+ * wf-contact-22 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (contact-22.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -67,9 +67,9 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
 
 <div class="wf-contact-22">
   <div class="sec-inner">
-    <div class="contact-22-container">
-      <div class="contact-22-content">
-        <div class="intro contact-22-content__intro">
+    <div class="wf-contact-22-container">
+      <div class="wf-contact-22-content">
+        <div class="intro wf-contact-22-content__intro">
           {head && (h1 ? <h1 class="text-fluid-4">{head}</h1> : <h2 class="text-fluid-2">{head}</h2>)}
           {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
                   </div>
@@ -78,7 +78,7 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
         </div>}
 
         <div>
-          <form class="contact-22-content__form-inner" novalidate>
+          <form class="wf-contact-22-content__form-inner" novalidate>
             <label class="field flow"><span class="text-fluid--1">Name <span aria-hidden="true">*</span></span><input type="text" name="name" autocomplete="name" required aria-required="true" /></label>
             <label class="field flow"><span class="text-fluid--1">Email <span aria-hidden="true">*</span></span><input type="email" name="email" autocomplete="email" required aria-required="true" /></label>
             <label class="field flow"><span class="text-fluid--1">Subject <span aria-hidden="true">*</span></span><input type="text" name="subject" required aria-required="true" /></label>

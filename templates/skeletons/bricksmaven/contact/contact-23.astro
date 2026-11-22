@@ -1,6 +1,6 @@
 ---
 /**
- * bm-contact-23 — TRANSLATED Bricksmaven skeleton.
+ * wf-contact-23 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (contact-23.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -59,9 +59,9 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
 
 <div class="wf-contact-23">
   <div class="sec-inner">
-    <div class="contact-23-container">
-      <div class="contact-23-content">
-        <div class="intro contact-23-content__intro">
+    <div class="wf-contact-23-container">
+      <div class="wf-contact-23-content">
+        <div class="intro wf-contact-23-content__intro">
           {head && (h1 ? <h1 class="text-fluid-4">{head}</h1> : <h2 class="text-fluid-2">{head}</h2>)}
           {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
                   </div>
@@ -69,9 +69,9 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
 {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
         </div>}
 
-        {list.length > 0 && <div class="contact-23-list-ul">{(list || []).map((it) => (
-              <div class="contact-23-list-item card">
-                <div class="contact-23-list-item__detail">
+        {list.length > 0 && <div class="wf-contact-23-list-ul">{(list || []).map((it) => (
+              <div class="wf-contact-23-list-item card">
+                <div class="wf-contact-23-list-item__detail">
                   <h3 class="text-fluid-1">{it.term || it.title}</h3>
                   <p class="text-fluid-0">{it.text}</p>
                 </div>
@@ -79,7 +79,7 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
             ))}</div>}
       </div>
       <div>
-        <form class="contact-23-form__inner" novalidate>
+        <form class="wf-contact-23-form__inner" novalidate>
           <label class="field flow"><span class="text-fluid--1">Name <span aria-hidden="true">*</span></span><input type="text" name="name" autocomplete="name" required aria-required="true" /></label>
           <label class="field flow"><span class="text-fluid--1">Email <span aria-hidden="true">*</span></span><input type="email" name="email" autocomplete="email" required aria-required="true" /></label>
           <label class="field flow"><span class="text-fluid--1">Subject <span aria-hidden="true">*</span></span><input type="text" name="subject" required aria-required="true" /></label>

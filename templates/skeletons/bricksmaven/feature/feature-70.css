@@ -1,7 +1,7 @@
   .wf-feature-70 .wf-feature-70__container {
     display: grid;
     gap: var(--space-m);
-    grid-template-columns: calc(100% * 2 / 1);
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
   }
 
   .wf-feature-70 .intro {
@@ -32,5 +32,7 @@
   }
 
   @media (max-width: 44rem) {
+    .wf-feature-70 .wf-feature-70__container { grid-template-columns: 1fr; }
     .wf-feature-70 .wf-feature-70-card { flex-direction: column; }
   }
+  .wf-feature-70 .wf-feature-70__container > :only-child { grid-column: 1 / -1; }

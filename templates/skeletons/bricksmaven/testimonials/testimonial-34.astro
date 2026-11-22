@@ -78,10 +78,10 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
                   <h3 class="text-fluid-1">{it.term || it.title || it.text}</h3>
                   {it.text && (it.term || it.title) && <p class="text-fluid-0">{it.text}</p>}
                 </div>
-                <div class="wf-testimonial-34-slide__client-data">
-                  <p class="text-fluid-0">{it.text}</p>
-                  <p class="text-fluid-0">{it.text}</p>
+                {it.tag &&                 <div class="wf-testimonial-34-slide__client-data">
+                  {it.tag && <span class="tag text-fluid--1">{it.tag}</span>}
                 </div>
+                }
               </div>
             ))}</div>}
         </div>

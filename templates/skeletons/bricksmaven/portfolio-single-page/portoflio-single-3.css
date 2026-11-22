@@ -23,7 +23,7 @@
   .wf-portoflio-single-3 .wf-portfolio-single-intro-inline {
     display: grid;
     gap: var(--space-m);
-    grid-template-columns: calc(100% * 2 / 1);
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
   }
 
   .wf-portoflio-single-3 .wf-2col-media {
@@ -33,7 +33,7 @@
   }
 
   .wf-portoflio-single-3 .wf-portfolio-single-intro-inline--alt {
-    grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
+    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
   }
 
   .wf-portoflio-single-3 .wf-portfolio-single__case-section-content-wrapper {
@@ -46,7 +46,7 @@
 
   .wf-portoflio-single-3 .wf-portfolio-single__solution-wrapper {
     display: grid;
-    grid-template-columns: calc(100% * 2 / 1);
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
     gap: var(--space-m);
   }
 
@@ -155,6 +155,9 @@
   }
 
   @media (max-width: 44rem) {
+    .wf-portoflio-single-3 .wf-portfolio-single-intro-inline { grid-template-columns: 1fr; }
+    .wf-portoflio-single-3 .wf-portfolio-single-intro-inline--alt { grid-template-columns: 1fr; }
+    .wf-portoflio-single-3 .wf-portfolio-single__solution-wrapper { grid-template-columns: 1fr; }
     .wf-portoflio-single-3 .wf-live-website-btn { flex-direction: column; }
     .wf-portoflio-single-3 .testimonial-list-card__profile { flex-direction: column; }
     .wf-portoflio-single-3 .wf-contact-widget-4__manager-data { flex-direction: column; }
@@ -162,3 +165,6 @@
     .wf-portoflio-single-3 .wf-contact-25-side-list-item__icon { flex-direction: column; }
     .wf-portoflio-single-3 .wf-portfolio-2-related-card__top { flex-direction: column; }
   }
+  .wf-portoflio-single-3 .wf-portfolio-single-intro-inline > :only-child { grid-column: 1 / -1; }
+  .wf-portoflio-single-3 .wf-portfolio-single-intro-inline--alt > :only-child { grid-column: 1 / -1; }
+  .wf-portoflio-single-3 .wf-portfolio-single__solution-wrapper > :only-child { grid-column: 1 / -1; }

@@ -1,6 +1,6 @@
   .wf-pricing-16 .wf-pricing-16__container {
     display: grid;
-    grid-template-columns: calc(100% * 2 / 1);
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
     gap: var(--space-m);
   }
 
@@ -42,6 +42,8 @@
   }
 
   @media (max-width: 44rem) {
+    .wf-pricing-16 .wf-pricing-16__container { grid-template-columns: 1fr; }
     .wf-pricing-16 .wf-pricing-13-card__icon-wrapper { flex-direction: column; }
     .wf-pricing-16 .wf-list-item { flex-direction: column; }
   }
+  .wf-pricing-16 .wf-pricing-16__container > :only-child { grid-column: 1 / -1; }

@@ -1,7 +1,7 @@
   .wf-career-2 .wf-career-2__container {
     display: grid;
     gap: var(--space-m);
-    grid-template-columns: calc(100% * 3 / 2);
+    grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
   }
 
   .wf-career-2 .intro {
@@ -23,7 +23,7 @@
   .wf-career-2 .wf-career-2-card {
     display: grid;
     gap: var(--space-m);
-    grid-template-columns: calc(100% * 2 / 1);
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
   }
 
   .wf-career-2 .wf-career-2-card__intro {
@@ -50,6 +50,10 @@
   }
 
   @media (max-width: 44rem) {
+    .wf-career-2 .wf-career-2__container { grid-template-columns: 1fr; }
+    .wf-career-2 .wf-career-2-card { grid-template-columns: 1fr; }
     .wf-career-2 .wf-career-meta-list { flex-direction: column; }
     .wf-career-2 .wf-career-meta-item { flex-direction: column; }
   }
+  .wf-career-2 .wf-career-2__container > :only-child { grid-column: 1 / -1; }
+  .wf-career-2 .wf-career-2-card > :only-child { grid-column: 1 / -1; }

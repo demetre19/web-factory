@@ -24,7 +24,7 @@
 
   .wf-pricing-24 .wf-pricing-24__content {
     display: grid;
-    grid-template-columns: calc(100% * 2 / 1);
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
     gap: var(--space-m);
   }
 
@@ -60,5 +60,7 @@
   }
 
   @media (max-width: 44rem) {
+    .wf-pricing-24 .wf-pricing-24__content { grid-template-columns: 1fr; }
     .wf-pricing-24 .wf-pricing-24-pricing-item__intro { flex-direction: column; }
   }
+  .wf-pricing-24 .wf-pricing-24__content > :only-child { grid-column: 1 / -1; }

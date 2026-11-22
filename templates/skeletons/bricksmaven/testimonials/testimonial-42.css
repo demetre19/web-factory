@@ -1,6 +1,6 @@
   .wf-testimonial-42 .wf-testimonial-42__container {
     display: grid;
-    grid-template-columns: calc(100% * 2 / 1);
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
     gap: var(--space-m);
   }
 
@@ -41,6 +41,8 @@
   }
 
   @media (max-width: 44rem) {
+    .wf-testimonial-42 .wf-testimonial-42__container { grid-template-columns: 1fr; }
     .wf-testimonial-42 .wf-testimonial-36-card__head { flex-direction: column; }
     .wf-testimonial-42 .wf-testimonial-36-card__avatar { flex-direction: column; }
   }
+  .wf-testimonial-42 .wf-testimonial-42__container > :only-child { grid-column: 1 / -1; }

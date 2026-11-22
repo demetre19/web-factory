@@ -31,7 +31,7 @@
   .wf-feature-9 .wf-feature-9-card {
     display: grid;
     gap: var(--space-m);
-    grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
+    grid-template-columns: minmax(0, 3fr) minmax(0, 1fr);
   }
 
   .wf-feature-9 .wf-feature-9-card__content {
@@ -39,5 +39,7 @@
   }
 
   @media (max-width: 44rem) {
+    .wf-feature-9 .wf-feature-9-card { grid-template-columns: 1fr; }
     .wf-feature-9 .wf-feature-9__cta-wrapper { flex-direction: column; }
   }
+  .wf-feature-9 .wf-feature-9-card > :only-child { grid-column: 1 / -1; }

@@ -7,7 +7,7 @@
 
   .wf-megamenu-5 .wf-megamenu-5__content {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
+    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
     gap: var(--grid-gap);
   }
 
@@ -60,8 +60,10 @@
   }
 
   @media (max-width: 44rem) {
+    .wf-megamenu-5 .wf-megamenu-5__content { grid-template-columns: 1fr; }
     .wf-megamenu-5 .wf-header-1__container { flex-direction: column; }
     .wf-megamenu-5 .megamenu-card-link-3 { flex-direction: column; }
     .wf-megamenu-5 .megamenu-card-link-3__icon-wrapper { flex-direction: column; }
     .wf-megamenu-5 .wf-header-1__cta { flex-direction: column; }
   }
+  .wf-megamenu-5 .wf-megamenu-5__content > :only-child { grid-column: 1 / -1; }

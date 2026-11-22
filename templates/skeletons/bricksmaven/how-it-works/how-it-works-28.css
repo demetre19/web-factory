@@ -1,7 +1,7 @@
   .wf-how-it-works-28 .wf-how-it-works-28__container {
     display: grid;
     gap: var(--space-m);
-    grid-template-columns: calc(100% * 3 / 1);
+    grid-template-columns: minmax(0, 1fr) minmax(0, 3fr);
   }
 
   .wf-how-it-works-28 .wf-how-it-works-28-list {
@@ -53,6 +53,8 @@
   }
 
   @media (max-width: 44rem) {
+    .wf-how-it-works-28 .wf-how-it-works-28__container { grid-template-columns: 1fr; }
     .wf-how-it-works-28 .wf-how-it-works-28-card__heading-cover { flex-direction: column; }
     .wf-how-it-works-28 .wf-how-it-works-28-nav-item { flex-direction: column; }
   }
+  .wf-how-it-works-28 .wf-how-it-works-28__container > :only-child { grid-column: 1 / -1; }

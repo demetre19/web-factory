@@ -1,7 +1,7 @@
   .wf-content-76 .wf-content-76__container {
     display: grid;
     gap: var(--space-m);
-    grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
+    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
   }
 
   .wf-content-76 .wf-content-76__content {
@@ -17,5 +17,7 @@
   }
 
   @media (max-width: 44rem) {
+    .wf-content-76 .wf-content-76__container { grid-template-columns: 1fr; }
     .wf-content-76 .wf-content-76-core-item { flex-direction: column; }
   }
+  .wf-content-76 .wf-content-76__container > :only-child { grid-column: 1 / -1; }

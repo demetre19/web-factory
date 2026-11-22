@@ -1,7 +1,7 @@
   .wf-hero-74 .wf-hero-74__container {
     display: grid;
     gap: var(--space-m);
-    grid-template-columns: calc(100% * 3 / 2);
+    grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
   }
 
   .wf-hero-74 .wf-hero-74__content {
@@ -47,7 +47,9 @@
   }
 
   @media (max-width: 44rem) {
+    .wf-hero-74 .wf-hero-74__container { grid-template-columns: 1fr; }
     .wf-hero-74 .wf-review-widget { flex-direction: column; }
     .wf-hero-74 .wf-team-list { flex-direction: column; }
     .wf-hero-74 .wf-testimonial-38-star-list { flex-direction: column; }
   }
+  .wf-hero-74 .wf-hero-74__container > :only-child { grid-column: 1 / -1; }

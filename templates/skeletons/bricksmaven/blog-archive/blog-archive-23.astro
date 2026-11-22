@@ -91,12 +91,13 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
                 <h3 class="text-fluid-1"><a class="text-fluid-0" href={it.href}>{it.icon && <IconChip name={it.icon} />} {it.label || it.term || it.anchor || it.text}</a></h3>
                 {(it.label || it.term || it.anchor) && it.text && <p class="text-fluid-0">{it.text}</p>}
               </div>
-              <div class="grid-auto gap-fluid-l">
-                <div class="wf-blog-archive-23-archive-card__meta-data">
-                  <p class="text-fluid-0">{it.text}</p>
-                  <p class="text-fluid-0">{it.text}</p>
+              {it.tag &&               <div class="grid-auto gap-fluid-l">
+                {it.tag &&                 <div class="wf-blog-archive-23-archive-card__meta-data">
+                  {it.tag && <span class="tag text-fluid--1">{it.tag}</span>}
                 </div>
+                }
               </div>
+              }
             </div>
           ))}</div>}
       <nav class="pagination row gap-fluid-s" aria-label="Pagination"><a href="?page=1" aria-current="page">1</a><a href="?page=2">2</a><a href="?page=3">3</a><a href="?page=2" rel="next">Next</a></nav>

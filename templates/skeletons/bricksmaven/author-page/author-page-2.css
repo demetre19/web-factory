@@ -5,7 +5,7 @@
   .wf-author-page-2 .wf-author-card-2__bottom {
     display: grid;
     gap: var(--space-m);
-    grid-template-columns: calc(100% * 2 / 1);
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
   }
 
   .wf-author-page-2 .wf-author-card-2__thumb {
@@ -33,7 +33,7 @@
   }
 
   .wf-author-page-2 .wf-blog-archive-6-card {
-    grid-template-columns: calc(100% * 2 / 1);
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
     display: grid;
     gap: var(--space-m);
   }
@@ -45,6 +45,10 @@
   }
 
   @media (max-width: 44rem) {
+    .wf-author-page-2 .wf-author-card-2__bottom { grid-template-columns: 1fr; }
+    .wf-author-page-2 .wf-blog-archive-6-card { grid-template-columns: 1fr; }
     .wf-author-page-2 .wf-author-card-2__thumb { flex-direction: column; }
     .wf-author-page-2 .wf-social-share { flex-direction: column; }
   }
+  .wf-author-page-2 .wf-author-card-2__bottom > :only-child { grid-column: 1 / -1; }
+  .wf-author-page-2 .wf-blog-archive-6-card > :only-child { grid-column: 1 / -1; }

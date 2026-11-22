@@ -20,7 +20,7 @@
 
   .wf-call-to-action-24 .wf-call-to-action-24-cta-card {
     display: grid;
-    grid-template-columns: calc(100% * 2 / 3);
+    grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
     gap: var(--grid-gap);
   }
 
@@ -31,5 +31,7 @@
   }
 
   @media (max-width: 44rem) {
+    .wf-call-to-action-24 .wf-call-to-action-24-cta-card { grid-template-columns: 1fr; }
     .wf-call-to-action-24 .wf-call-to-action-24-testimonial__customer-bio { flex-direction: column; }
   }
+  .wf-call-to-action-24 .wf-call-to-action-24-cta-card > :only-child { grid-column: 1 / -1; }

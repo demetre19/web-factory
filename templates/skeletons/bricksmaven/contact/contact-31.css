@@ -1,7 +1,7 @@
   .wf-contact-31 .wf-contact-31__container {
     display: grid;
     gap: calc(var(--space-m) * 4);
-    grid-template-columns: calc(100% * 2 / 3);
+    grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
   }
 
   .wf-contact-31 .wf-contact-31__content {
@@ -43,6 +43,8 @@
   }
 
   @media (max-width: 44rem) {
+    .wf-contact-31 .wf-contact-31__container { grid-template-columns: 1fr; }
     .wf-contact-31 .wf-social-share { flex-direction: column; }
     .wf-contact-31 .wf-contact-31__address { flex-direction: column; }
   }
+  .wf-contact-31 .wf-contact-31__container > :only-child { grid-column: 1 / -1; }

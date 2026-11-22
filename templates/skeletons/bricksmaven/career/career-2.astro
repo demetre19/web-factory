@@ -79,7 +79,7 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
                 </div>
               </div>
               <div class="wf-career-2-card__content">
-                <p class="text-fluid-0">{it.text}</p>
+                {it.tag && <span class="tag text-fluid--1">{it.tag}</span>}
                 {(it.items || []).length > 0 && <div class="wf-career-meta-list">
                   <div class="grid-auto gap-fluid-m">{((it.items || []) || []).map((it2) => (
                       <div class="wf-career-meta-item card">

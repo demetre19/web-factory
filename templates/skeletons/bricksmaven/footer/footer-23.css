@@ -1,7 +1,7 @@
   .wf-footer-23 .wf-footer-23__top-container {
     display: grid;
     gap: var(--space-m);
-    grid-template-columns: calc(100% * 2 / 1);
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
   }
 
   .wf-footer-23 .wf-footer-23__contact {
@@ -64,9 +64,11 @@
   }
 
   @media (max-width: 44rem) {
+    .wf-footer-23 .wf-footer-23__top-container { grid-template-columns: 1fr; }
     .wf-footer-23 .wf-footer-22-social-links { flex-direction: column; }
     .wf-footer-23 .wf-footer-23__footer-container { flex-direction: column; }
     .wf-footer-23 .footer-nav-legal { flex-direction: column; }
     .wf-footer-23 .footer-legal-nav { flex-direction: column; }
     .wf-footer-23 .footer-legal__li { flex-direction: column; }
   }
+  .wf-footer-23 .wf-footer-23__top-container > :only-child { grid-column: 1 / -1; }

@@ -89,9 +89,10 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
                   <div class="wf-comparison-3-card__content">
                     <h4 class="text-fluid-1">{it.term || it.title}</h4>
                     <p class="text-fluid-0">{it.text}</p>
-                    <div class="wf-comparison-3-card__micro-wrapper">
-                      <p class="text-fluid-0">{it.text}</p>
+                    {it.tag &&                     <div class="wf-comparison-3-card__micro-wrapper">
+                      {it.tag && <span class="tag text-fluid--1">{it.tag}</span>}
                     </div>
+                    }
                   </div>
                 </div>
               ))}</div>
