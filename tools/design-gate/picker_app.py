@@ -809,23 +809,28 @@ def emit_vibe_doc(pd, fam, bundle):
         if comp in blocks:
             body += blocks[comp][0]
     fp = os.path.join(outdir, fam + '.html')
+    # the marker carries a hash of the emitted css — a producer fix
+    # (e.g. the C.1 pairing) changes the resolved palette and the
+    # cached doc must re-emit, so a version stamp alone is not enough
+    css = _fam_css(bundle)
+    mark = 'wf:vibe:v5:' + hashlib.sha256(
+        css.encode()).hexdigest()[:8]
     stale = True
     if os.path.isfile(fp):
         try:
             with open(fp, encoding='utf-8', errors='replace') as rf:
-                stale = 'wf:vibe:v4' not in rf.read(4096)
+                stale = mark not in rf.read(4096)
         except OSError:
             stale = True
     if stale:
         os.makedirs(outdir, exist_ok=True)
-        css = _fam_css(bundle)
         theme = ('<script>document.documentElement.dataset.theme='
                  '"dark";document.documentElement.classList.add('
                  '"dark")</script>'
                  if bundle.get('theme') == 'dark' else '')
         with open(fp, 'w', encoding='utf-8') as fh:
-            fh.write('<!--wf:vibe:v4-->' + _doc(head, battr, body,
-                                                theme, css))
+            fh.write('<!--' + mark + '-->' + _doc(head, battr, body,
+                                                 theme, css))
     return 'preview/vibes/' + fam + '.html'
 
 
@@ -2078,7 +2083,7 @@ def _site_roles(pd):
                       ('dark', r'\[data-theme=dark\]\s*\{')):
         decls = {}
         for m in re.finditer(pat + r'([^}]*)\}', css):
-            decls.update(dict(re.findall(r'--([\w-]+)\s*:\s*([^;]+);',
+            decls.update(dict(re.findall(r'--([\w-]+)\s*:\s*([^;]+);?',
                                          m.group(1))))
         row = {}
         for role in _CONTRAST_ROLES:
@@ -2112,7 +2117,7 @@ def contrast_audit(pd):
     for fam, f in VIBE_FAMILIES.items():
         row = {}
         for mode, key in (('light', 'css'), ('dark', 'css_dark')):
-            over = dict(re.findall(r'--([\w-]+)\s*:\s*([^;]+);',
+            over = dict(re.findall(r'--([\w-]+)\s*:\s*([^;]+);?',
                                    f.get(key) or ''))
             roles = dict(base.get(mode) or {})
             roles.update(over)
