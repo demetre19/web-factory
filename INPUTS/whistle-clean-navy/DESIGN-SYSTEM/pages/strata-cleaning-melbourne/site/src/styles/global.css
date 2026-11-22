@@ -56,6 +56,11 @@
   --space-l: clamp(1.9995rem, calc(1.355vw + 1.7285rem), 2.8125rem);
   --space-xl: clamp(2.6653rem, calc(2.589vw + 2.1475rem), 4.2188rem);
   --space-xxl: clamp(3.5529rem, calc(4.6254vw + 2.6278rem), 6.3281rem);
+  --space-s-to-xs: clamp(0.8442rem, calc(0.6764vw + 0.7089rem), 1.25rem);
+  --space-m-to-s: clamp(1.1253rem, calc(1.2495vw + 0.8754rem), 1.875rem);
+  --space-l-to-m: clamp(1.5rem, calc(2.1875vw + 1.0625rem), 2.8125rem);
+  --space-xl-to-l: clamp(1.9995rem, calc(3.6987vw + 1.2597rem), 4.2188rem);
+  --space-xxl-to-xl: clamp(2.6653rem, calc(6.1047vw + 1.4444rem), 6.3281rem);
   --section-space-xs: clamp(2.5325rem, calc(1.3347vw + 2.2656rem), 3.3333rem);
   --section-space-s: clamp(3.3758rem, calc(2.7069vw + 2.8345rem), 5rem);
   --section-space-m: clamp(4.5rem, calc(5vw + 3.5rem), 7.5rem);
@@ -65,7 +70,10 @@
   --gutter: clamp(1rem, calc(6.6667vw - 0.3333rem), 5rem);
   --grid-gap: var(--space-m);
   --content-gap: var(--space-m);
+  --elements-gap: var(--space-m);
   --container-gap: var(--space-xl);
+  --list-item-spacing: var(--space-s);
+  --measure: 64ch;
   --btn-padding-block: 0.75em;
   --btn-padding-inline: 1.5em;
   --radius: 0.625rem;
@@ -223,7 +231,7 @@ h1, h2, h3, h4, h5, h6, p, ul, ol, li, figure, blockquote { margin: 0; }
   /* ACSS list vocab (U.10): markers' indent and item rhythm bind the
      spacing scale — no list-* tokens are emitted by clamp */
   --list-indent-spacing: var(--space-l);
-  --list-spacing: var(--space-s);
+  --list-spacing: var(--list-item-spacing);
 
   /* ACSS names only (U.10). The ACSS size family (--text-*, --h1..6,
      --space-*, --section-space-*, --gutter, --grid-gap, --content-gap,
@@ -249,7 +257,8 @@ h1, h2, h3, h4, h5, h6, p, ul, ol, li, figure, blockquote { margin: 0; }
   --content-width: 80rem;
   --content-width-safe: min(var(--content-width),
                             calc(100% - var(--gutter) * 2));
-  --measure: 60ch;
+  /* --measure is emitted by emit_tokens (clamp.aliases — it tracks
+     type.base so families differ on line length too) */
   --r-card: var(--primitive-radius);
   --tap: 3rem;
   --font-display: var(--primitive-font-display);
@@ -386,6 +395,14 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
      renders as cards touching. */
   [class*="-grid-ul"], [class*="-grid"], ul[class*="grid"] {
       gap: var(--grid-gap); }
+  /* wrapped-sibling floor (smart spacing): a container of wrapped
+     elements — cards/panels/tiles/collection items — always resolves
+     a nonzero --elements-gap. Prose is exempt by selector scope:
+     .flow paragraphs and .list-items text runs bind --flow-spacing
+     margins only, never a sibling gap. */
+  [class*="-cards"], [class*="-tiles"], [class*="-panels"],
+  .card-grid, ul.list-plain,
+  [class*="-items"]:not(.list-items) { gap: var(--elements-gap); }
   /* logo-wall: a row of marks at one optical height — client artwork
      keeps its colours, the row sets scale and rhythm */
   .logo-row { display: flex; flex-wrap: wrap; align-items: center;
@@ -508,7 +525,9 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
   .skip-link:focus { left: var(--space-xs); }
   .logo { font-weight: 700; }
   .helper { font-size: var(--text-s); }
-  .wf-cta-button { display: inline-block;
+  .wf-cta-button { display: inline-flex;
+                   align-items: center; justify-content: center;
+                   text-align: center;
                    padding: var(--btn-padding-block) var(--btn-padding-inline);
                    border-radius: var(--r-card);
                    background: var(--action-primary);
@@ -689,13 +708,143 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
   .nav-links { display: none; gap: var(--space-s);
                align-items: center; flex: 0 1 auto; min-width: 0; }
   .nav-links ul { flex-wrap: nowrap; gap: var(--space-s); }
+  /* the desktop bar shows the group's links inline — the wrapper
+     only materialises as a titled stack inside the open drawer */
+  .nav-links .nav-group { display: contents; }
   /* the brand mark and the primary links hold one line — a nav that
      wraps reads as two bars (L.1 axis); links shrink to --fs--1 so a
-     long label list still fits between brand and CTA */
-  .bm-header-1__brand { white-space: nowrap; }
+     long label list still fits between brand and CTA. The whole bar
+     stays one row at every width: brand ellipsises under pressure,
+     the burger pins to its lane's far end, nothing wraps (H.1) */
+  .bm-header-1__brand, .brand-mark, .logo { white-space: nowrap;
+              overflow: hidden; text-overflow: ellipsis; }
+  .row.between:has(.nav-links), .row.between:has(.burger),
+  .row.between:has(.nav-desk) { flex-wrap: nowrap; }
+  .row.between:has(.burger) > * { min-width: 0; }
+  div:has(> .burger), div:has(> .nav-links + .burger),
+  div:has(> .nav-desk + .burger) { display: flex;
+              align-items: center; margin-inline-start: auto; }
+  /* the burger's lane pins to the row's far end — a space-between
+     container centres its middle item, so the wrapper (not just the
+     button) takes the auto margin (H.1) */
+  .burger { flex: 0 0 auto; margin-inline-start: auto; }
+  .nav-links, .nav-desk { flex-shrink: 1; min-width: 0;
+              overflow: hidden; }
   /* 4 full-length labels can't fit under ~60rem — the burger takes
      over below that instead of overflowing the page */
   @media (min-width: 60rem) { .nav-links { display: flex; } }
+  /* a flyout nav splits the two .nav-links roles: .nav-desk is the
+     desktop link row (hidden under the burger breakpoint); the
+     .nav-flyout panel is the ONLY nav-links — hidden at every width
+     until .open, so it never doubles as a second desktop row
+     (N.flyout) */
+  .nav-desk { display: none; gap: var(--space-s);
+              align-items: center; flex: 0 1 auto; min-width: 0; }
+  .nav-desk ul { flex-wrap: nowrap; gap: var(--space-s); }
+  .nav-links.nav-flyout { display: none; }
+  .nav-links.open.nav-flyout { display: flex; }
+  @media (min-width: 60rem) { .nav-desk { display: flex; } }
+  /* grouped link sections inside the open panel: a titled stack of
+     rows separated by hairlines, reading as sections not a bare
+     list (N.flyout) */
+  .nav-links.open .nav-group { display: flex; flex-direction: column;
+              align-items: stretch; gap: var(--space-xs);
+              width: 100%; }
+  .nav-links.open .nav-group ul { width: 100%; }
+  .nav-links.open .nav-group + .nav-group,
+  .nav-links.open .nav-group + * { padding-block-start: var(--space-s);
+              border-block-start: 1px solid var(--border-default); }
+  .nav-links.open .nav-group a { font-size: var(--fs-1);
+              white-space: normal; color: var(--text-primary);
+              text-decoration: none; display: inline-flex;
+              align-items: center; gap: var(--space-s); }
+  /* drawer furniture — search, group heads, row numerals — exists
+     only inside the open flyout; the desktop bar stays brand + links
+     + CTA (N.flyout) */
+  .nav-search, .nav-group-head, .nav-num { display: none; }
+  .nav-links.open .nav-search { display: block; }
+  .nav-links.open .nav-search-input { width: 100%;
+              padding: var(--space-xs) var(--space-s);
+              font: inherit; color: var(--text-primary);
+              background: var(--bg-elevated);
+              border: 1px solid var(--border-default);
+              border-radius: var(--r-card); }
+  .nav-links.open .nav-group-head { display: block;
+              font-size: var(--fs--1); letter-spacing: .08em;
+              text-transform: uppercase;
+              color: var(--text-secondary); margin: 0 0 var(--space-xs); }
+  .nav-links.open .nav-num { display: inline;
+              margin-inline-start: auto;
+              font-size: var(--fs--1);
+              color: var(--text-secondary); font-variant-numeric:
+              tabular-nums; }
+  .nav-links.open .nav-link { display: flex; width: 100%;
+              align-items: center; gap: var(--space-s);
+              padding-block: var(--space-xs);
+              border-block-end: 1px solid var(--border-default); }
+  /* nav selection (N.select): >6 links switch to the hybrid —
+     .nav-priority keeps the first four inline on desktop, the full
+     set opens behind a quiet "More" trigger as a wider .nav-mega
+     panel whose links group into columns. Below the bar breakpoint
+     the burger still owns the drawer (the panel just widens). */
+  .nav-links .nav-mega-cols { display: contents; }
+  .nav-links.open .nav-mega-cols { display: grid;
+              grid-template-columns: repeat(auto-fit,
+                  minmax(13rem, 1fr));
+              gap: var(--space-m) var(--space-l); width: 100%; }
+  .nav-links.open.nav-mega { width: min(46rem, 94vw); }
+  .nav-priority { display: none; }
+  .nav-more { display: none; align-items: center;
+              min-height: var(--tap); background: none; border: 0;
+              padding: 0; font: inherit;
+              color: var(--text-secondary); cursor: pointer; }
+  .nav-more:hover { color: var(--text-primary); }
+  @media (min-width: 60rem) {
+    .nav-priority { display: flex; gap: var(--space-s);
+              align-items: center; flex: 0 1 auto; min-width: 0; }
+    .nav-priority ul { flex-wrap: nowrap; gap: var(--space-s); }
+    .nav-more { display: inline-flex; }
+    /* a mega nav never unrolls inline — the priority row + More own
+       the desktop bar; the panel still opens as a flyout */
+    .nav-links.nav-mega { display: none; }
+    .nav-links.nav-mega.open { display: flex; }
+  }
+  /* the generic overlay family — modals, popups, form dialogs
+     (N.flyout): a centred .flyout panel over the same scrim, a
+     .flyout-open trigger in flow, a .flyout-close affordance */
+  .flyout { display: none; }
+  .flyout.open { display: flex; flex-direction: column;
+              gap: var(--space-m); position: fixed;
+              inset-block-start: 50%; inset-inline-start: 50%;
+              transform: translate(-50%, -50%);
+              width: min(28rem, calc(100vw - 2 * var(--gutter)));
+              max-height: 85vh; overflow-y: auto;
+              z-index: calc(var(--primitive-z-sticky) + 1);
+              background: var(--bg-canvas); color: var(--text-primary);
+              padding: var(--space-m);
+              border: 1px solid var(--border-default);
+              border-radius: var(--r-card);
+              box-shadow: var(--shadow-pop); }
+  .flyout-open { display: inline-flex; min-height: var(--tap);
+              min-width: var(--tap); align-items: center;
+              justify-content: center;
+              background: var(--bg-surface); color: var(--text-primary);
+              border: 1px solid var(--border-default);
+              border-radius: var(--r-card); font-size: var(--fs-1);
+              font-weight: 600; cursor: pointer; }
+  .flyout-open.wf-cta-button { border: 0;
+              background: var(--action-primary);
+              color: var(--action-primary-ink); }
+  .flyout-close { display: inline-flex; align-self: flex-end;
+              min-height: var(--tap); min-width: var(--tap);
+              align-items: center; justify-content: center;
+              background: none; border: 0;
+              color: var(--text-secondary); font-size: var(--fs-2);
+              line-height: 1; cursor: pointer; }
+  body:has(.flyout.open)::after { content: ""; position: fixed;
+              inset: 0; background: color-mix(in oklch,
+                  var(--text-primary) 45%, transparent);
+              z-index: var(--primitive-z-sticky); }
   .wf-cta-button { font-size: var(--fs--1); }
   /* the mobile call action is a compact floating button, not a bar
      that slices across mid-scroll content: a brand pill bottom-right
@@ -801,6 +950,27 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
                 justify-self: end; width: 100%; }
   .sub-flow { margin: var(--space-xs) 0 0; }
   .measure-28 { max-width: 28ch; }
+  /* G cutout-media: a background-removed object floats on the
+     section surface — contain, no frame, no radius, the shadow is
+     a drop-shadow (follows the alpha edge) bound to the elevation
+     rung so it composites in light + dark alike. The placeholder
+     holds the same slot until the cutout stage delivers a PNG. */
+  .cutout-slot { display: flex; align-items: center;
+                 justify-content: center; min-width: 0; }
+  .cutout { object-fit: contain; max-height: 100%;
+            width: auto; height: auto; max-width: 100%;
+            filter: drop-shadow(0 var(--space-xs) var(--space-s)
+                    color-mix(in oklch, var(--text-primary) 28%,
+                              transparent)); }
+  .cta-band .cutout { max-height: 18rem; }
+  .cutout-ph { aspect-ratio: 1 / 1; width: 100%; max-width: 24rem;
+               display: grid; place-items: center;
+               border: 1px dashed var(--border-default);
+               border-radius: var(--r-card);
+               background: var(--bg-elevated);
+               color: var(--text-secondary);
+               font-size: var(--fs--1); }
+  .cutout-card .cutout-ph { max-width: 100%; }
   /* surface/density classes are the shell's rhythm signature — the
      L.14/L.7 gate reads them off the built <section> tag. */
   .surface-base { --sec-bg: var(--bg-canvas); --sec-fg: var(--text-primary); }
@@ -890,11 +1060,16 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
   .ds-sp-section-space-xs { block-size: var(--section-space-xs); }
   .ds-sp-section-space-xxl { block-size: var(--section-space-xxl); }
   .ds-sp-space-l { block-size: var(--space-l); }
+  .ds-sp-space-l-to-m { block-size: var(--space-l-to-m); }
   .ds-sp-space-m { block-size: var(--space-m); }
+  .ds-sp-space-m-to-s { block-size: var(--space-m-to-s); }
   .ds-sp-space-s { block-size: var(--space-s); }
+  .ds-sp-space-s-to-xs { block-size: var(--space-s-to-xs); }
   .ds-sp-space-xl { block-size: var(--space-xl); }
+  .ds-sp-space-xl-to-l { block-size: var(--space-xl-to-l); }
   .ds-sp-space-xs { block-size: var(--space-xs); }
   .ds-sp-space-xxl { block-size: var(--space-xxl); }
+  .ds-sp-space-xxl-to-xl { block-size: var(--space-xxl-to-xl); }
   .ds-tx-text-l { font-size: var(--text-l); }
   .ds-tx-text-m { font-size: var(--text-m); }
   .ds-tx-text-s { font-size: var(--text-s); }
