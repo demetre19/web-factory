@@ -23,7 +23,7 @@ only the reviewer writes REVIEW.json via `run.py sign-review` (P.8).
 Python 3 stdlib only.
 """
 import argparse, functools, glob as glob_mod, hashlib, hmac, \
-    html.parser, json, os, re, shutil, subprocess, sys
+    html.parser, json, os, re, shutil, subprocess, sys, threading
 
 _lc = functools.lru_cache
 
@@ -10859,6 +10859,9 @@ def read_nonce_ledger():
     return [e for e in d.get('events') or [] if isinstance(e, dict)]
 
 
+_NONCE_LOCK = threading.Lock()
+
+
 def append_nonce_event(**ev):
     """Service-side write only — gate.py consumers read, never append.
     Append-only + re-signed every write: a designer rewrite either
@@ -10866,18 +10869,19 @@ def append_nonce_event(**ev):
     reads empty → every approval unverifiable)."""
     p = _nonce_ledger_path()
     os.makedirs(os.path.dirname(p), exist_ok=True)
-    try:
-        d = json.load(open(p))
-        if not isinstance(d, dict) or \
-                not isinstance(d.get('events'), list):
+    with _NONCE_LOCK:
+        try:
+            d = json.load(open(p))
+            if not isinstance(d, dict) or \
+                    not isinstance(d.get('events'), list):
+                d = {'events': []}
+        except Exception:
             d = {'events': []}
-    except Exception:
-        d = {'events': []}
-    d['events'].append(dict(ev))
-    d['sig'] = _sig(d, op_key(create=True))
-    with open(p, 'w') as fh:
-        json.dump(d, fh)
-    os.chmod(p, 0o600)
+        d['events'].append(dict(ev))
+        d['sig'] = _sig(d, op_key(create=True))
+        with open(p, 'w') as fh:
+            json.dump(d, fh)
+        os.chmod(p, 0o600)
 
 
 def verify_consumed_nonce(nonce, wave, pipeline):
