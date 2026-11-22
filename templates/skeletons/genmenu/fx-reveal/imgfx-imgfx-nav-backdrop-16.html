@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>16 · Full-Screen Nav Backdrop Reveal — Atelier Reveal</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          }
+        }
+      }
+    };
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root { --ease-nav: cubic-bezier(0.16, 1, 0.3, 1); }
+    .backdrop-layer {
+      opacity: 0;
+      transform: scale(1.04);
+      transition: opacity 540ms var(--ease-nav), transform 680ms var(--ease-nav);
+      will-change: opacity, transform;
+    }
+    .backdrop-layer.is-active {
+      opacity: 1;
+      transform: scale(1);
+    }
+    .film-grain {
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.52'/%3E%3C/svg%3E");
+      mix-blend-mode: overlay;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .backdrop-layer { transition-duration: 0.01ms !important; transform: none !important; }
+    }
+  </style>
+<script src="/_aistudio-iframe.js?v=29045eb3"></script></head>
+<body class="min-h-screen bg-[#F5F4F0] text-[#141413] dark:bg-[#0D0E10] dark:text-[#F2EFEA] font-sans antialiased transition-colors duration-300 relative overflow-hidden">
+  <!-- Full-Screen Cross-Dissolving Backdrop Plates -->
+  <div id="backdropStage" aria-hidden="true" class="fixed inset-0 z-0 pointer-events-none">
+    <div data-bg="0" class="backdrop-layer is-active absolute inset-0" style="background: radial-gradient(90% 70% at 72% 25%, rgba(236,216,192,0.5) 0%, transparent 60%), linear-gradient(150deg, #16181c 0%, #3a444d 48%, #8f8a82 100%);"></div>
+    <div data-bg="1" class="backdrop-layer absolute inset-0" style="background: radial-gradient(90% 70% at 28% 24%, rgba(244,205,172,0.56) 0%, transparent 60%), linear-gradient(148deg, #211612 0%, #634030 48%, #ba876c 100%);"></div>
+    <div data-bg="2" class="backdrop-layer absolute inset-0" style="background: radial-gradient(90% 70% at 64% 30%, rgba(210,224,234,0.52) 0%, transparent 60%), linear-gradient(155deg, #10161c 0%, #2f4354 48%, #778d9f 100%);"></div>
+    <div data-bg="3" class="backdrop-layer absolute inset-0" style="background: radial-gradient(90% 70% at 45% 28%, rgba(226,232,216,0.5) 0%, transparent 60%), linear-gradient(156deg, #141915 0%, #3b473b 48%, #828e7e 100%);"></div>
+    <div class="film-grain absolute inset-0 opacity-40"></div>
+    <div class="absolute inset-0 bg-black/45 dark:bg-black/60"></div>
+  </div>
+
+  <header class="relative z-20 max-w-6xl mx-auto px-6 py-6 flex items-center justify-between border-b border-white/20 text-white">
+    <div class="flex items-baseline gap-4">
+      <span class="font-mono text-xs tracking-wider text-white/70">16 / 24</span>
+      <h1 class="font-serif text-2xl sm:text-3xl tracking-tight font-medium">Full-Screen Nav Backdrop Reveal</h1>
+    </div>
+    <button id="themeToggle" type="button" aria-label="Toggle light or dark theme" class="px-3.5 py-1.5 text-xs font-medium border border-white/25 rounded-md hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#C96D46] transition-colors">
+      <span id="themeLabel">Light Mode</span>
+    </button>
+  </header>
+
+  <main class="relative z-20 max-w-6xl mx-auto px-6 py-16 text-white">
+    <p class="max-w-lg text-sm text-white/75 mb-10">
+      Move across or focus each studio directory item to swap the full-viewport architectural backdrop underneath.
+    </p>
+
+    <nav aria-label="Studio Monograph Directory">
+      <ul class="space-y-4">
+        <li>
+          <a href="#dir-01" data-nav="0" aria-describedby="nav-note-0" class="nav-item inline-flex items-baseline gap-6 py-2 group focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#C96D46]">
+            <span class="font-mono text-xs text-white/60 group-hover:text-[#F09D78]">01</span>
+            <span class="font-serif text-4xl sm:text-6xl font-medium tracking-tight group-hover:translate-x-2 transition-transform duration-300">Residential Works</span>
+            <span id="nav-note-0" class="hidden md:inline font-mono text-xs text-white/60">Zurich · Kyoto · Marfa</span>
+          </a>
+        </li>
+        <li>
+          <a href="#dir-02" data-nav="1" aria-describedby="nav-note-1" class="nav-item inline-flex items-baseline gap-6 py-2 group focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#C96D46]">
+            <span class="font-mono text-xs text-white/60 group-hover:text-[#F09D78]">02</span>
+            <span class="font-serif text-4xl sm:text-6xl font-medium tracking-tight group-hover:translate-x-2 transition-transform duration-300">Cultural Pavilions</span>
+            <span id="nav-note-1" class="hidden md:inline font-mono text-xs text-white/60">Basel · Oslo · Venice</span>
+          </a>
+        </li>
+        <li>
+          <a href="#dir-03" data-nav="2" aria-describedby="nav-note-2" class="nav-item inline-flex items-baseline gap-6 py-2 group focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#C96D46]">
+            <span class="font-mono text-xs text-white/60 group-hover:text-[#F09D78]">03</span>
+            <span class="font-serif text-4xl sm:text-6xl font-medium tracking-tight group-hover:translate-x-2 transition-transform duration-300">Editorial Lookbooks</span>
+            <span id="nav-note-2" class="hidden md:inline font-mono text-xs text-white/60">Milan · Paris · London</span>
+          </a>
+        </li>
+        <li>
+          <a href="#dir-04" data-nav="3" aria-describedby="nav-note-3" class="nav-item inline-flex items-baseline gap-6 py-2 group focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#C96D46]">
+            <span class="font-mono text-xs text-white/60 group-hover:text-[#F09D78]">04</span>
+            <span class="font-serif text-4xl sm:text-6xl font-medium tracking-tight group-hover:translate-x-2 transition-transform duration-300">Material Archive</span>
+            <span id="nav-note-3" class="hidden md:inline font-mono text-xs text-white/60">Travertine · Cedar · Zinc</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </main>
+
+  <script>
+    const root = document.documentElement;
+    const toggle = document.getElementById('themeToggle');
+    const label = document.getElementById('themeLabel');
+    function applyTheme(mode) {
+      const dark = mode === 'dark';
+      root.classList.toggle('dark', dark);
+      label.textContent = dark ? 'Light Mode' : 'Dark Mode';
+    }
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('theme') === 'light') applyTheme('light');
+    toggle.addEventListener('click', () => applyTheme(root.classList.contains('dark') ? 'light' : 'dark'));
+    window.addEventListener('message', (e) => { if (e.data && e.data.type === 'set-theme') applyTheme(e.data.theme); });
+
+    const layers = document.querySelectorAll('.backdrop-layer');
+    function setBackdrop(idx) {
+      layers.forEach((l, i) => l.classList.toggle('is-active', i === idx));
+    }
+
+    document.querySelectorAll('.nav-item').forEach((item) => {
+      const idx = Number(item.dataset.nav || 0);
+      item.addEventListener('pointerenter', () => setBackdrop(idx));
+      item.addEventListener('focus', () => setBackdrop(idx));
+    });
+  </script>
+</body>
+</html>

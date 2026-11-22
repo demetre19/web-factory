@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>07 · Underline-Sweep Bottom Sheet — Atelier Reveal</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          }
+        }
+      }
+    };
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root { --ease-sheet: cubic-bezier(0.16, 1, 0.3, 1); }
+    .bottom-sheet {
+      transform: translateY(102%);
+      transition: transform 460ms var(--ease-sheet);
+      will-change: transform;
+    }
+    .sheet-card:hover .bottom-sheet,
+    .sheet-card:focus-within .bottom-sheet {
+      transform: translateY(0);
+    }
+    .underline-sweep {
+      transform: scaleX(0);
+      transform-origin: left center;
+      transition: transform 520ms var(--ease-sheet) 100ms;
+    }
+    .sheet-card:hover .underline-sweep,
+    .sheet-card:focus-within .underline-sweep {
+      transform: scaleX(1);
+    }
+    .sheet-arrow {
+      transition: transform 320ms var(--ease-sheet);
+    }
+    .sheet-card:hover .sheet-arrow,
+    .sheet-card:focus-within .sheet-arrow {
+      transform: translateX(4px);
+    }
+    .plate-sable {
+      background:
+        radial-gradient(95% 75% at 70% 28%, rgba(242, 224, 200, 0.68) 0%, transparent 58%),
+        linear-gradient(144deg, #211d1a 0%, #5c5045 45%, #9f9080 78%, #e2d9cd 100%);
+    }
+    .plate-chalk {
+      background:
+        radial-gradient(95% 75% at 30% 25%, rgba(235, 233, 225, 0.72) 0%, transparent 58%),
+        linear-gradient(155deg, #1b1d1e 0%, #4d5152 46%, #8d8e89 78%, #dcdad2 100%);
+    }
+    .film-grain {
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.52'/%3E%3C/svg%3E");
+      mix-blend-mode: overlay;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .bottom-sheet, .underline-sweep, .sheet-arrow { transition-duration: 0.01ms !important; transition-delay: 0ms !important; }
+    }
+  </style>
+<script src="/_aistudio-iframe.js?v=29045eb3"></script></head>
+<body class="min-h-screen bg-[#F6F4EF] text-[#151412] dark:bg-[#10100F] dark:text-[#F2EFE8] font-sans antialiased transition-colors duration-300">
+  <header class="max-w-5xl mx-auto px-6 py-6 flex items-center justify-between border-b border-black/10 dark:border-white/10">
+    <div class="flex items-baseline gap-4">
+      <span class="font-mono text-xs tracking-wider text-neutral-500 dark:text-neutral-400">07 / 24</span>
+      <h1 class="font-serif text-2xl sm:text-3xl tracking-tight font-medium">Underline-Sweep Bottom Sheet</h1>
+    </div>
+    <button id="themeToggle" type="button" aria-label="Toggle light or dark theme" class="px-3.5 py-1.5 text-xs font-medium border border-black/15 dark:border-white/15 rounded-md hover:bg-black/5 dark:hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#A8482B] transition-colors">
+      <span id="themeLabel">Dark Mode</span>
+    </button>
+  </header>
+
+  <main class="max-w-5xl mx-auto px-6 py-12">
+    <p class="max-w-2xl text-sm text-neutral-600 dark:text-neutral-400 mb-10 leading-relaxed">
+      An interior bottom sheet glides up inside the card frame on hover or keyboard focus, anchored by a hairline underline sweep displaying material disciplines and a directional link.
+    </p>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <!-- Card 1 -->
+      <article tabindex="0" role="region" aria-label="Sable Ceramic & Stone Vessels" aria-describedby="sheet-desc-1" class="sheet-card relative h-[440px] rounded-xl overflow-hidden border border-black/10 dark:border-white/10 plate-sable focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#A8482B] cursor-pointer">
+        <svg viewBox="0 0 500 440" preserveAspectRatio="xMidYMid slice" aria-hidden="true" class="absolute inset-0 w-full h-full">
+          <rect x="0" y="300" width="500" height="140" fill="#171412" fill-opacity="0.72" />
+          <path d="M185 300 C 175 230, 195 165, 225 140 L 275 140 C 305 165, 325 230, 315 300 Z" fill="#231d19" fill-opacity="0.82" />
+          <ellipse cx="250" cy="140" rx="25" ry="6" fill="#d9cbb9" fill-opacity="0.35" />
+        </svg>
+        <div aria-hidden="true" class="film-grain absolute inset-0 opacity-40 pointer-events-none"></div>
+
+        <div class="absolute top-6 left-6 right-6 flex justify-between text-[11px] font-mono text-white/85">
+          <span>ANTWERP · OBJECTS</span>
+          <span>2026</span>
+        </div>
+
+        <div id="sheet-desc-1" class="bottom-sheet absolute inset-x-4 bottom-4 rounded-lg bg-[#FAF8F4]/95 dark:bg-[#171614]/95 backdrop-blur-md p-6 border border-black/10 dark:border-white/10 shadow-lg">
+          <div class="flex items-center justify-between gap-4 mb-2">
+            <h2 class="font-serif text-2xl font-medium">Sable Stoneware Vessels</h2>
+            <a href="#sable" aria-label="Open Sable Stoneware Vessels study" class="sheet-arrow inline-flex items-center justify-center w-8 h-8 rounded-md border border-black/15 dark:border-white/15 text-sm font-mono hover:bg-black/5 dark:hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#A8482B]">
+              -&gt;
+            </a>
+          </div>
+          <div class="h-[1.5px] w-full bg-black/10 dark:bg-white/10 mb-3 overflow-hidden">
+            <div class="underline-sweep h-full w-full bg-[#A8482B] dark:bg-[#DF7E5E]"></div>
+          </div>
+          <div class="flex flex-wrap items-center gap-x-2.5 gap-y-1 text-xs text-neutral-600 dark:text-neutral-400">
+            <span>Wheel-Thrown Grogged Clay</span>
+            <span aria-hidden="true">·</span>
+            <span>Wood-Kiln Ash Glaze</span>
+            <span aria-hidden="true">·</span>
+            <span>Edition of 18</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 2 -->
+      <article tabindex="0" role="region" aria-label="Chalk Limestone Relief Panels" aria-describedby="sheet-desc-2" class="sheet-card relative h-[440px] rounded-xl overflow-hidden border border-black/10 dark:border-white/10 plate-chalk focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#A8482B] cursor-pointer">
+        <svg viewBox="0 0 500 440" preserveAspectRatio="xMidYMid slice" aria-hidden="true" class="absolute inset-0 w-full h-full">
+          <rect x="0" y="305" width="500" height="135" fill="#141617" fill-opacity="0.72" />
+          <rect x="115" y="95" width="125" height="210" fill="#ebe8df" fill-opacity="0.16" />
+          <rect x="260" y="95" width="125" height="210" fill="#181a1b" fill-opacity="0.48" />
+        </svg>
+        <div aria-hidden="true" class="film-grain absolute inset-0 opacity-40 pointer-events-none"></div>
+
+        <div class="absolute top-6 left-6 right-6 flex justify-between text-[11px] font-mono text-white/85">
+          <span>GENEVA · RELIEF</span>
+          <span>2026</span>
+        </div>
+
+        <div id="sheet-desc-2" class="bottom-sheet absolute inset-x-4 bottom-4 rounded-lg bg-[#FAF8F4]/95 dark:bg-[#171614]/95 backdrop-blur-md p-6 border border-black/10 dark:border-white/10 shadow-lg">
+          <div class="flex items-center justify-between gap-4 mb-2">
+            <h2 class="font-serif text-2xl font-medium">Chalk Limestone Relief</h2>
+            <a href="#chalk" aria-label="Open Chalk Limestone Relief study" class="sheet-arrow inline-flex items-center justify-center w-8 h-8 rounded-md border border-black/15 dark:border-white/15 text-sm font-mono hover:bg-black/5 dark:hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#A8482B]">
+              -&gt;
+            </a>
+          </div>
+          <div class="h-[1.5px] w-full bg-black/10 dark:bg-white/10 mb-3 overflow-hidden">
+            <div class="underline-sweep h-full w-full bg-[#A8482B] dark:bg-[#DF7E5E]"></div>
+          </div>
+          <div class="flex flex-wrap items-center gap-x-2.5 gap-y-1 text-xs text-neutral-600 dark:text-neutral-400">
+            <span>Honed Travertine</span>
+            <span aria-hidden="true">·</span>
+            <span>Raking Daylight</span>
+            <span aria-hidden="true">·</span>
+            <span>Gallery Wing II</span>
+          </div>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <script>
+    const root = document.documentElement;
+    const toggle = document.getElementById('themeToggle');
+    const label = document.getElementById('themeLabel');
+
+    function applyTheme(mode) {
+      const dark = mode === 'dark';
+      root.classList.toggle('dark', dark);
+      label.textContent = dark ? 'Light Mode' : 'Dark Mode';
+    }
+
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('theme') === 'dark') applyTheme('dark');
+
+    toggle.addEventListener('click', () => {
+      applyTheme(root.classList.contains('dark') ? 'light' : 'dark');
+    });
+
+    window.addEventListener('message', (e) => {
+      if (e.data && e.data.type === 'set-theme') applyTheme(e.data.theme);
+    });
+  </script>
+</body>
+</html>

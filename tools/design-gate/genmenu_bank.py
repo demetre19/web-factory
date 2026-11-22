@@ -75,6 +75,7 @@ PACK_META = {
     "springwork": ("fx-phys", "decoration", ["physics animation"], "physics effect"),
     "kinetik": ("fx-ktxt", "decoration", ["kinetic typography"], "text animation"),
     "morphology": ("fx-morph", "decoration", ["morphing ui"], "morph effect"),
+    "imgfx": ("fx-reveal", "decoration", ["image reveal"], "image reveal"),
 }
 
 # component-name prefix -> (baseline, section_class, category, query) override

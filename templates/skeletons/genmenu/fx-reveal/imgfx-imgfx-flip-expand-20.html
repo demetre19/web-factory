@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>20 · FLIP Lightbox Thumbnail Expand — Atelier Reveal</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          }
+        }
+      }
+    };
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    .film-grain {
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.52'/%3E%3C/svg%3E");
+      mix-blend-mode: overlay;
+    }
+  </style>
+<script src="/_aistudio-iframe.js?v=29045eb3"></script></head>
+<body class="min-h-screen bg-[#F6F4EF] text-[#151412] dark:bg-[#10100F] dark:text-[#F2EFE8] font-sans antialiased transition-colors duration-300">
+  <header class="max-w-5xl mx-auto px-6 py-6 flex items-center justify-between border-b border-black/10 dark:border-white/10">
+    <div class="flex items-baseline gap-4">
+      <span class="font-mono text-xs tracking-wider text-neutral-500 dark:text-neutral-400">20 / 24</span>
+      <h1 class="font-serif text-2xl sm:text-3xl tracking-tight font-medium">FLIP Lightbox Thumbnail Expand</h1>
+    </div>
+    <button id="themeToggle" type="button" aria-label="Toggle light or dark theme" class="px-3.5 py-1.5 text-xs font-medium border border-black/15 dark:border-white/15 rounded-md hover:bg-black/5 dark:hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#9E3E26] transition-colors">
+      <span id="themeLabel">Dark Mode</span>
+    </button>
+  </header>
+
+  <main class="max-w-5xl mx-auto px-6 py-12">
+    <p class="max-w-2xl text-sm text-neutral-600 dark:text-neutral-400 mb-10 leading-relaxed">
+      Click any medium-format contact sheet frame. Using FLIP geometry (First, Last, Invert, Play), the thumbnail springs directly from its grid coordinates into a full-bleed captioned lightbox.
+    </p>
+
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+      <button type="button" data-plate="0" aria-describedby="cap-0" class="thumb-btn group text-left rounded-xl overflow-hidden border border-black/10 dark:border-white/10 bg-[#EAE5DC] dark:bg-[#191816] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#9E3E26]">
+        <div class="plate-surface h-64 relative" style="background: radial-gradient(90% 70% at 68% 25%, rgba(246,224,193,0.72) 0%, transparent 58%), linear-gradient(148deg, #27231e 0%, #6d5d4e 48%, #d7cab9 100%);">
+          <div class="film-grain absolute inset-0 opacity-40"></div>
+        </div>
+        <div id="cap-0" class="p-4">
+          <span class="font-mono text-[11px] text-neutral-500 dark:text-neutral-400">FRAME 01 · LISBON</span>
+          <h2 class="font-serif text-xl font-medium mt-0.5">Alfama Limestone Stairs</h2>
+        </div>
+      </button>
+
+      <button type="button" data-plate="1" aria-describedby="cap-1" class="thumb-btn group text-left rounded-xl overflow-hidden border border-black/10 dark:border-white/10 bg-[#EAE5DC] dark:bg-[#191816] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#9E3E26]">
+        <div class="plate-surface h-64 relative" style="background: radial-gradient(90% 70% at 30% 24%, rgba(212,226,238,0.68) 0%, transparent 58%), linear-gradient(152deg, #161c22 0%, #3d4f5f 48%, #c7d4df 100%);">
+          <div class="film-grain absolute inset-0 opacity-40"></div>
+        </div>
+        <div id="cap-1" class="p-4">
+          <span class="font-mono text-[11px] text-neutral-500 dark:text-neutral-400">FRAME 02 · PORTO</span>
+          <h2 class="font-serif text-xl font-medium mt-0.5">Atlantic Mist Breakwater</h2>
+        </div>
+      </button>
+
+      <button type="button" data-plate="2" aria-describedby="cap-2" class="thumb-btn group text-left rounded-xl overflow-hidden border border-black/10 dark:border-white/10 bg-[#EAE5DC] dark:bg-[#191816] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#9E3E26]">
+        <div class="plate-surface h-64 relative" style="background: radial-gradient(90% 70% at 62% 28%, rgba(244,205,175,0.7) 0%, transparent 58%), linear-gradient(148deg, #241914 0%, #6c4738 48%, #dfbfa8 100%);">
+          <div class="film-grain absolute inset-0 opacity-40"></div>
+        </div>
+        <div id="cap-2" class="p-4">
+          <span class="font-mono text-[11px] text-neutral-500 dark:text-neutral-400">FRAME 03 · COMPORTA</span>
+          <h2 class="font-serif text-xl font-medium mt-0.5">Dune Timber Threshold</h2>
+        </div>
+      </button>
+    </div>
+  </main>
+
+  <!-- FLIP Lightbox Modal -->
+  <div id="lightbox" role="dialog" aria-modal="true" aria-labelledby="modalTitle" class="fixed inset-0 z-50 hidden items-center justify-center p-4 sm:p-10 bg-black/80 backdrop-blur-md">
+    <div id="modalFrame" class="relative w-full max-w-4xl h-[76vh] rounded-2xl overflow-hidden border border-white/15 shadow-2xl will-change-transform">
+      <div id="modalArt" class="absolute inset-0">
+        <div class="film-grain absolute inset-0 opacity-40"></div>
+      </div>
+      <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-black/25"></div>
+      <button id="closeModal" type="button" aria-label="Close lightbox" class="absolute top-5 right-5 w-10 h-10 rounded-full bg-black/55 text-white border border-white/25 hover:bg-black/80 font-mono text-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-white">
+        X
+      </button>
+      <div class="absolute bottom-8 left-8 right-8 text-white">
+        <span id="modalMeta" class="font-mono text-xs text-white/75">FRAME 01 · LISBON</span>
+        <h2 id="modalTitle" class="font-serif text-4xl font-medium mt-1">Alfama Limestone Stairs</h2>
+        <p id="modalCopy" class="text-sm text-white/80 max-w-xl mt-2">Medium-format 6x7 contact scan captured at golden hour with an 80mm planar lens.</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const root = document.documentElement;
+    const toggle = document.getElementById('themeToggle');
+    const label = document.getElementById('themeLabel');
+    function applyTheme(mode) {
+      const dark = mode === 'dark';
+      root.classList.toggle('dark', dark);
+      label.textContent = dark ? 'Light Mode' : 'Dark Mode';
+    }
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('theme') === 'dark') applyTheme('dark');
+    toggle.addEventListener('click', () => applyTheme(root.classList.contains('dark') ? 'light' : 'dark'));
+    window.addEventListener('message', (e) => { if (e.data && e.data.type === 'set-theme') applyTheme(e.data.theme); });
+
+    const platesData = [
+      {
+        meta: 'FRAME 01 · LISBON · 2026',
+        title: 'Alfama Limestone Stairs',
+        copy: 'Medium-format 6x7 contact scan captured at golden hour along sunlit riverfront stonework.',
+        bg: 'radial-gradient(90% 70% at 68% 25%, rgba(246,224,193,0.72) 0%, transparent 58%), linear-gradient(148deg, #27231e 0%, #6d5d4e 48%, #d7cab9 100%)'
+      },
+      {
+        meta: 'FRAME 02 · PORTO · 2026',
+        title: 'Atlantic Mist Breakwater',
+        copy: 'Long-exposure marine concrete study where tidal fog softens the horizon line.',
+        bg: 'radial-gradient(90% 70% at 30% 24%, rgba(212,226,238,0.68) 0%, transparent 58%), linear-gradient(152deg, #161c22 0%, #3d4f5f 48%, #c7d4df 100%)'
+      },
+      {
+        meta: 'FRAME 03 · COMPORTA · 2026',
+        title: 'Dune Timber Threshold',
+        copy: 'Weathered pine slats filtering coastal afternoon rays into a quiet studio vestibule.',
+        bg: 'radial-gradient(90% 70% at 62% 28%, rgba(244,205,175,0.7) 0%, transparent 58%), linear-gradient(148deg, #241914 0%, #6c4738 48%, #dfbfa8 100%)'
+      }
+    ];
+
+    const lightbox = document.getElementById('lightbox');
+    const modalFrame = document.getElementById('modalFrame');
+    const modalArt = document.getElementById('modalArt');
+    const modalMeta = document.getElementById('modalMeta');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalCopy = document.getElementById('modalCopy');
+    const closeModalBtn = document.getElementById('closeModal');
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let lastTrigger = null;
+
+    function openLightbox(btn) {
+      lastTrigger = btn;
+      const idx = Number(btn.dataset.plate || 0);
+      const data = platesData[idx];
+      const thumbEl = btn.querySelector('.plate-surface');
+      const firstRect = thumbEl.getBoundingClientRect();
+
+      modalArt.style.background = data.bg;
+      modalMeta.textContent = data.meta;
+      modalTitle.textContent = data.title;
+      modalCopy.textContent = data.copy;
+
+      lightbox.classList.remove('hidden');
+      lightbox.classList.add('flex');
+
+      if (!reduced) {
+        const lastRect = modalFrame.getBoundingClientRect();
+        const dx = (firstRect.left + firstRect.width / 2) - (lastRect.left + lastRect.width / 2);
+        const dy = (firstRect.top + firstRect.height / 2) - (lastRect.top + lastRect.height / 2);
+        const sx = firstRect.width / Math.max(1, lastRect.width);
+        const sy = firstRect.height / Math.max(1, lastRect.height);
+
+        modalFrame.animate([
+          { transform: `translate(${dx}px, ${dy}px) scale(${sx}, ${sy})`, opacity: 0.7 },
+          { transform: 'translate(0, 0) scale(1, 1)', opacity: 1 }
+        ], { duration: 480, easing: 'cubic-bezier(0.16, 1, 0.3, 1)' });
+      }
+      closeModalBtn.focus();
+    }
+
+    function closeLightbox() {
+      lightbox.classList.add('hidden');
+      lightbox.classList.remove('flex');
+      if (lastTrigger) lastTrigger.focus();
+    }
+
+    document.querySelectorAll('.thumb-btn').forEach((btn) => {
+      btn.addEventListener('click', () => openLightbox(btn));
+    });
+    closeModalBtn.addEventListener('click', closeLightbox);
+    lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLightbox(); });
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !lightbox.classList.contains('hidden')) closeLightbox();
+    });
+  </script>
+</body>
+</html>

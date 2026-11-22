@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>23 · Scroll-Velocity Skew Marquee — Atelier Reveal</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          }
+        }
+      }
+    };
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    .film-grain {
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.52'/%3E%3C/svg%3E");
+      mix-blend-mode: overlay;
+    }
+  </style>
+<script src="/_aistudio-iframe.js?v=29045eb3"></script></head>
+<body class="min-h-[160vh] bg-[#F5F3EE] text-[#151412] dark:bg-[#0E0E0D] dark:text-[#F2EFEA] font-sans antialiased transition-colors duration-300">
+  <header class="sticky top-0 z-30 bg-[#F5F3EE]/90 dark:bg-[#0E0E0D]/90 backdrop-blur-md border-b border-black/10 dark:border-white/10">
+    <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+      <div class="flex items-baseline gap-4">
+        <span class="font-mono text-xs tracking-wider text-neutral-500 dark:text-neutral-400">23 / 24</span>
+        <h1 class="font-serif text-2xl sm:text-3xl tracking-tight font-medium">Scroll-Velocity Skew Marquee</h1>
+      </div>
+      <button id="themeToggle" type="button" aria-label="Toggle light or dark theme" class="px-3.5 py-1.5 text-xs font-medium border border-black/15 dark:border-white/15 rounded-md hover:bg-black/5 dark:hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#C96A42] transition-colors">
+        <span id="themeLabel">Light Mode</span>
+      </button>
+    </div>
+  </header>
+
+  <main class="py-16">
+    <div class="max-w-6xl mx-auto px-6 mb-10 flex flex-wrap items-baseline justify-between gap-4">
+      <p class="max-w-xl text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed">
+        Scroll up and down—the runway contact reel accelerates and shears subtly in response to scroll velocity, then settles back to a steady drift. Hover or focus the reel to pause.
+      </p>
+      <span id="velBadge" class="font-mono text-xs text-neutral-500 dark:text-neutral-400">VELOCITY 1.0X · SKEW 0.0DEG</span>
+    </div>
+
+    <div id="marqueeWrap" tabindex="0" role="region" aria-label="AW26 Runway Contact Reel" class="overflow-hidden py-6 border-y border-black/10 dark:border-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#C96A42]">
+      <div id="marqueeTrack" class="flex gap-6 w-max will-change-transform"></div>
+    </div>
+  </main>
+
+  <script>
+    const root = document.documentElement;
+    const toggle = document.getElementById('themeToggle');
+    const label = document.getElementById('themeLabel');
+    function applyTheme(mode) {
+      const dark = mode === 'dark';
+      root.classList.toggle('dark', dark);
+      label.textContent = dark ? 'Light Mode' : 'Dark Mode';
+    }
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('theme') === 'light') applyTheme('light');
+    toggle.addEventListener('click', () => applyTheme(root.classList.contains('dark') ? 'light' : 'dark'));
+    window.addEventListener('message', (e) => { if (e.data && e.data.type === 'set-theme') applyTheme(e.data.theme); });
+
+    const slides = [
+      { code: 'LOOK 01 · PARIS', title: 'Wool Trench Coat', bg: 'radial-gradient(90% 70% at 65% 24%, rgba(244,214,185,0.68) 0%, transparent 58%), linear-gradient(150deg, #211a16 0%, #634d3e 48%, #d4beaa 100%)' },
+      { code: 'LOOK 02 · MILAN', title: 'Pleated Silk Column', bg: 'radial-gradient(90% 70% at 30% 24%, rgba(212,226,238,0.65) 0%, transparent 58%), linear-gradient(150deg, #141a20 0%, #3d4f60 48%, #c7d4df 100%)' },
+      { code: 'LOOK 03 · KYOTO', title: 'Indigo Dyed Linen', bg: 'radial-gradient(90% 70% at 60% 28%, rgba(226,232,216,0.6) 0%, transparent 58%), linear-gradient(152deg, #161b17 0%, #445143 48%, #c7cdc2 100%)' },
+      { code: 'LOOK 04 · LONDON', title: 'Brushed Cashmere', bg: 'radial-gradient(90% 70% at 45% 25%, rgba(242,202,172,0.66) 0%, transparent 58%), linear-gradient(148deg, #241714 0%, #6b4334 48%, #dfbfa8 100%)' },
+      { code: 'LOOK 05 · OSLO', title: 'Structured Felted Cape', bg: 'radial-gradient(90% 70% at 70% 24%, rgba(224,224,220,0.64) 0%, transparent 58%), linear-gradient(154deg, #181817 0%, #4b4944 48%, #d2cec5 100%)' }
+    ];
+
+    const track = document.getElementById('marqueeTrack');
+    const wrap = document.getElementById('marqueeWrap');
+    const velBadge = document.getElementById('velBadge');
+
+    // Render 2 identical sets for seamless infinite wrap
+    [...slides, ...slides].forEach((s) => {
+      const card = document.createElement('article');
+      card.className = 'w-64 sm:w-72 h-80 shrink-0 rounded-xl overflow-hidden border border-black/10 dark:border-white/10 relative';
+      card.style.background = s.bg;
+      card.innerHTML = `
+        <div class="film-grain absolute inset-0 opacity-40 pointer-events-none"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+        <div class="absolute bottom-5 left-5 right-5 text-white">
+          <span class="font-mono text-[11px] text-white/75">${s.code}</span>
+          <h2 class="font-serif text-2xl font-medium mt-0.5">${s.title}</h2>
+        </div>
+      `;
+      track.appendChild(card);
+    });
+
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let offset = 0;
+    let scrollVelocity = 0;
+    let lastScrollY = window.scrollY;
+    let paused = false;
+
+    wrap.addEventListener('pointerenter', () => { paused = true; });
+    wrap.addEventListener('pointerleave', () => { paused = false; });
+    wrap.addEventListener('focus', () => { paused = true; });
+    wrap.addEventListener('blur', () => { paused = false; });
+
+    window.addEventListener('scroll', () => {
+      const dy = window.scrollY - lastScrollY;
+      lastScrollY = window.scrollY;
+      scrollVelocity = Math.max(-22, Math.min(22, scrollVelocity + dy * 0.25));
+    }, { passive: true });
+
+    function tick() {
+      if (!reduced) {
+        const halfWidth = track.scrollWidth / 2;
+        if (!paused) {
+          offset -= 0.75 + Math.abs(scrollVelocity) * 0.22;
+        }
+        if (offset <= -halfWidth) offset += halfWidth;
+        const skew = Math.max(-6, Math.min(6, scrollVelocity * 0.24));
+        track.style.transform = `translate3d(${offset.toFixed(1)}px, 0, 0) skewX(${skew.toFixed(2)}deg)`;
+        const mult = (1 + Math.abs(scrollVelocity) * 0.15).toFixed(1);
+        velBadge.textContent = `VELOCITY ${mult}X · SKEW ${skew.toFixed(1)}DEG`;
+        scrollVelocity *= 0.92;
+      }
+      requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  </script>
+</body>
+</html>

@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>13 · Bipartite Scroll Curtain Reveal — Atelier Reveal</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          }
+        }
+      }
+    };
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root { --ease-curtain: cubic-bezier(0.16, 1, 0.3, 1); }
+    .curtain-left, .curtain-right {
+      transition: transform 680ms var(--ease-curtain);
+      will-change: transform;
+    }
+    .is-parted .curtain-left { transform: translateX(-102%); }
+    .is-parted .curtain-right { transform: translateX(102%); }
+    .curtain-content {
+      opacity: 0;
+      transform: scale(0.96);
+      transition: opacity 520ms var(--ease-curtain) 140ms, transform 560ms var(--ease-curtain) 140ms;
+    }
+    .is-parted .curtain-content { opacity: 1; transform: scale(1); }
+    .photo-silk {
+      background:
+        radial-gradient(95% 75% at 50% 30%, rgba(242, 224, 210, 0.56) 0%, transparent 58%),
+        linear-gradient(148deg, #211b19 0%, #5c4b44 46%, #9b887e 78%, #dcd2ca 100%);
+    }
+    .film-grain {
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.52'/%3E%3C/svg%3E");
+      mix-blend-mode: overlay;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .curtain-left, .curtain-right, .curtain-content { transition-duration: 0.01ms !important; transition-delay: 0ms !important; }
+    }
+  </style>
+<script src="/_aistudio-iframe.js?v=29045eb3"></script></head>
+<body class="bg-[#F6F4EF] text-[#151412] dark:bg-[#10100F] dark:text-[#F2EFE8] font-sans antialiased transition-colors duration-300">
+  <header class="sticky top-0 z-30 bg-[#F6F4EF]/90 dark:bg-[#10100F]/90 backdrop-blur-md border-b border-black/10 dark:border-white/10">
+    <div class="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between">
+      <div class="flex items-baseline gap-4">
+        <span class="font-mono text-xs tracking-wider text-neutral-500 dark:text-neutral-400">13 / 24</span>
+        <h1 class="font-serif text-2xl sm:text-3xl tracking-tight font-medium">Bipartite Scroll Curtain Reveal</h1>
+      </div>
+      <button id="themeToggle" type="button" aria-label="Toggle light or dark theme" class="px-3.5 py-1.5 text-xs font-medium border border-black/15 dark:border-white/15 rounded-md hover:bg-black/5 dark:hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#A1402B] transition-colors">
+        <span id="themeLabel">Dark Mode</span>
+      </button>
+    </div>
+  </header>
+
+  <main class="max-w-5xl mx-auto px-6 py-12">
+    <div class="flex flex-wrap items-center justify-between gap-4 mb-10">
+      <p class="max-w-xl text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed">
+        Scroll down to the studio manifesto stage—as it enters the viewport via <code class="font-mono text-xs">IntersectionObserver</code>, the twin photographic panels part left and right to reveal the dossier underneath.
+      </p>
+      <button id="replayBtn" type="button" class="px-4 py-2 text-xs font-semibold border border-black/15 dark:border-white/15 rounded-md hover:bg-black/5 dark:hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#A1402B]">
+        Replay Curtain
+      </button>
+    </div>
+
+    <div class="h-[45vh] flex flex-col items-center justify-center border border-dashed border-black/15 dark:border-white/15 rounded-2xl mb-12 text-center px-6">
+      <span class="font-mono text-xs uppercase tracking-widest text-neutral-500 dark:text-neutral-400 mb-2">Scroll Down To Trigger</span>
+      <p class="font-serif text-2xl text-neutral-700 dark:text-neutral-300">Atelier Silk &amp; Plinth — Milan 2026</p>
+    </div>
+
+    <section id="curtainStage" tabindex="0" aria-label="Milan Atelier Manifesto Stage" aria-describedby="manifesto-copy" class="relative h-[480px] rounded-2xl overflow-hidden bg-[#EAE5DC] dark:bg-[#191816] border border-black/10 dark:border-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#A1402B]">
+      <!-- Underlying Content -->
+      <div id="manifesto-copy" class="curtain-content relative z-10 h-full p-8 sm:p-16 flex flex-col justify-center items-center text-center max-w-2xl mx-auto">
+        <span class="font-mono text-xs uppercase tracking-[0.2em] text-[#A1402B] dark:text-[#DF7C62] mb-3">Milan · Brera District</span>
+        <h2 class="font-serif text-4xl sm:text-5xl font-medium tracking-tight mb-5">Drapery, Travertine &amp; Quiet Form</h2>
+        <p class="text-sm sm:text-base text-neutral-600 dark:text-neutral-300 leading-relaxed mb-7">
+          Our Autumn monograph pairs unbleached raw silk tailoring with hand-honed Roman travertine plinths photographed solely by north courtyard window light.
+        </p>
+        <a href="#milan-lookbook" class="px-5 py-2.5 text-xs font-semibold bg-[#151412] text-[#F6F4EF] dark:bg-[#F2EFE8] dark:text-[#10100F] rounded-md hover:opacity-90 transition-opacity focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#A1402B]">
+          Browse Lookbook Plates
+        </a>
+      </div>
+
+      <!-- Left Curtain Half -->
+      <div aria-hidden="true" class="curtain-left absolute inset-y-0 left-0 w-1/2 z-20 overflow-hidden border-r border-white/20 pointer-events-none">
+        <div class="w-[200%] h-full photo-silk relative">
+          <svg viewBox="0 0 900 480" preserveAspectRatio="xMidYMid slice" class="w-full h-full">
+            <path d="M220 480 C 260 300, 340 160, 450 90 C 560 160, 640 300, 680 480 Z" fill="#181311" fill-opacity="0.72" />
+          </svg>
+          <div class="film-grain absolute inset-0 opacity-40"></div>
+        </div>
+      </div>
+
+      <!-- Right Curtain Half -->
+      <div aria-hidden="true" class="curtain-right absolute inset-y-0 right-0 w-1/2 z-20 overflow-hidden border-l border-white/20 pointer-events-none">
+        <div class="w-[200%] -ml-[100%] h-full photo-silk relative">
+          <svg viewBox="0 0 900 480" preserveAspectRatio="xMidYMid slice" class="w-full h-full">
+            <path d="M220 480 C 260 300, 340 160, 450 90 C 560 160, 640 300, 680 480 Z" fill="#181311" fill-opacity="0.72" />
+          </svg>
+          <div class="film-grain absolute inset-0 opacity-40"></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="h-[25vh]"></div>
+  </main>
+
+  <script>
+    const root = document.documentElement;
+    const toggle = document.getElementById('themeToggle');
+    const label = document.getElementById('themeLabel');
+    function applyTheme(mode) {
+      const dark = mode === 'dark';
+      root.classList.toggle('dark', dark);
+      label.textContent = dark ? 'Light Mode' : 'Dark Mode';
+    }
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('theme') === 'dark') applyTheme('dark');
+    toggle.addEventListener('click', () => applyTheme(root.classList.contains('dark') ? 'light' : 'dark'));
+    window.addEventListener('message', (e) => { if (e.data && e.data.type === 'set-theme') applyTheme(e.data.theme); });
+
+    const stage = document.getElementById('curtainStage');
+    const replayBtn = document.getElementById('replayBtn');
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) stage.classList.add('is-parted');
+      });
+    }, { threshold: 0.35 });
+
+    observer.observe(stage);
+    stage.addEventListener('focus', () => stage.classList.add('is-parted'));
+
+    replayBtn.addEventListener('click', () => {
+      stage.classList.remove('is-parted');
+      setTimeout(() => stage.classList.add('is-parted'), 140);
+    });
+  </script>
+</body>
+</html>

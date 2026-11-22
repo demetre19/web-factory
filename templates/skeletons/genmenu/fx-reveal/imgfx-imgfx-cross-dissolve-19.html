@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>19 · Day-to-Night Cross-Dissolve Pair — Atelier Reveal</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          }
+        }
+      }
+    };
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root { --ease-dissolve: cubic-bezier(0.16, 1, 0.3, 1); }
+    .plate-b {
+      opacity: 0;
+      transition: opacity 580ms var(--ease-dissolve), transform 620ms var(--ease-dissolve);
+      transform: scale(1.02);
+      will-change: opacity, transform;
+    }
+    .dissolve-card:hover .plate-b,
+    .dissolve-card:focus-within .plate-b {
+      opacity: 1;
+      transform: scale(1);
+    }
+    .state-tag-a, .state-tag-b {
+      transition: opacity 320ms ease;
+    }
+    .dissolve-card:hover .state-tag-a,
+    .dissolve-card:focus-within .state-tag-a { opacity: 0; }
+    .dissolve-card:hover .state-tag-b,
+    .dissolve-card:focus-within .state-tag-b { opacity: 1; }
+    .day-limestone {
+      background:
+        radial-gradient(95% 75% at 72% 24%, rgba(250, 232, 205, 0.76) 0%, transparent 58%),
+        linear-gradient(150deg, #4b433a 0%, #9b8c79 46%, #e7ddd0 100%);
+    }
+    .night-tungsten {
+      background:
+        radial-gradient(85% 65% at 50% 62%, rgba(235, 165, 98, 0.52) 0%, transparent 60%),
+        linear-gradient(160deg, #0b0e14 0%, #192230 50%, #374152 100%);
+    }
+    .color-silk {
+      background:
+        radial-gradient(95% 75% at 32% 26%, rgba(242, 182, 148, 0.72) 0%, transparent 58%),
+        linear-gradient(148deg, #321e1a 0%, #8b4c39 48%, #e2b89b 100%);
+    }
+    .film-grain {
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.52'/%3E%3C/svg%3E");
+      mix-blend-mode: overlay;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .plate-b, .state-tag-a, .state-tag-b { transition-duration: 0.01ms !important; transform: none !important; }
+    }
+  </style>
+<script src="/_aistudio-iframe.js?v=29045eb3"></script></head>
+<body class="min-h-screen bg-[#F6F4EF] text-[#151412] dark:bg-[#10100F] dark:text-[#F2EFE8] font-sans antialiased transition-colors duration-300">
+  <header class="max-w-5xl mx-auto px-6 py-6 flex items-center justify-between border-b border-black/10 dark:border-white/10">
+    <div class="flex items-baseline gap-4">
+      <span class="font-mono text-xs tracking-wider text-neutral-500 dark:text-neutral-400">19 / 24</span>
+      <h1 class="font-serif text-2xl sm:text-3xl tracking-tight font-medium">Day-to-Night Cross-Dissolve Pair</h1>
+    </div>
+    <button id="themeToggle" type="button" aria-label="Toggle light or dark theme" class="px-3.5 py-1.5 text-xs font-medium border border-black/15 dark:border-white/15 rounded-md hover:bg-black/5 dark:hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#B65237] transition-colors">
+      <span id="themeLabel">Dark Mode</span>
+    </button>
+  </header>
+
+  <main class="max-w-5xl mx-auto px-6 py-12">
+    <p class="max-w-2xl text-sm text-neutral-600 dark:text-neutral-400 mb-10 leading-relaxed">
+      Hover or focus either architectural plate to cross-dissolve smoothly between complementary exposure pairs: sunlit limestone to nocturnal tungsten, and silver monochrome to warm color.
+    </p>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <!-- Pair 1: Day <-> Night -->
+      <article tabindex="0" role="region" aria-label="Palazzo Chiaro Day and Night Study" aria-describedby="dissolve-desc-1" class="dissolve-card relative h-[430px] rounded-xl overflow-hidden border border-black/10 dark:border-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#B65237] cursor-pointer">
+        <!-- Day State -->
+        <div class="absolute inset-0 day-limestone">
+          <svg viewBox="0 0 500 430" preserveAspectRatio="xMidYMid slice" aria-hidden="true" class="w-full h-full">
+            <rect x="0" y="300" width="500" height="130" fill="#2b241c" fill-opacity="0.52" />
+            <rect x="100" y="110" width="80" height="190" fill="#f7eedf" fill-opacity="0.28" />
+            <rect x="210" y="110" width="80" height="190" fill="#f7eedf" fill-opacity="0.28" />
+            <rect x="320" y="110" width="80" height="190" fill="#f7eedf" fill-opacity="0.28" />
+          </svg>
+        </div>
+
+        <!-- Night State -->
+        <div class="plate-b absolute inset-0 night-tungsten">
+          <svg viewBox="0 0 500 430" preserveAspectRatio="xMidYMid slice" aria-hidden="true" class="w-full h-full">
+            <rect x="0" y="300" width="500" height="130" fill="#090c11" fill-opacity="0.82" />
+            <rect x="100" y="110" width="80" height="190" fill="#f5be7c" fill-opacity="0.38" />
+            <rect x="210" y="110" width="80" height="190" fill="#f5be7c" fill-opacity="0.48" />
+            <rect x="320" y="110" width="80" height="190" fill="#f5be7c" fill-opacity="0.35" />
+          </svg>
+        </div>
+
+        <div aria-hidden="true" class="film-grain absolute inset-0 opacity-35 pointer-events-none"></div>
+        <div aria-hidden="true" class="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-black/20 pointer-events-none"></div>
+
+        <div class="absolute top-6 left-6 right-6 flex justify-between font-mono text-[11px] text-white">
+          <span class="state-tag-a">14:00 · DAYLIGHT LIMESTONE</span>
+          <span class="state-tag-b opacity-0 absolute left-6">21:30 · TUNGSTEN COLONNADE</span>
+          <span>VENICE</span>
+        </div>
+
+        <div id="dissolve-desc-1" class="absolute bottom-6 left-6 right-6 text-white">
+          <h2 class="font-serif text-3xl font-medium">Palazzo Chiaro Study</h2>
+          <p class="text-xs text-white/80 mt-1">Hover or focus to dissolve from afternoon glare to evening interior warmth.</p>
+        </div>
+      </article>
+
+      <!-- Pair 2: Monochrome <-> Color -->
+      <article tabindex="0" role="region" aria-label="Sienna Silk Monochrome and Color Study" aria-describedby="dissolve-desc-2" class="dissolve-card relative h-[430px] rounded-xl overflow-hidden border border-black/10 dark:border-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#B65237] cursor-pointer">
+        <!-- B/W State -->
+        <div class="absolute inset-0 color-silk filter grayscale contrast-125">
+          <svg viewBox="0 0 500 430" preserveAspectRatio="xMidYMid slice" aria-hidden="true" class="w-full h-full">
+            <path d="M135 430 C 165 250, 200 130, 250 100 C 300 130, 335 250, 365 430 Z" fill="#171412" fill-opacity="0.72" />
+          </svg>
+        </div>
+
+        <!-- Full Color State -->
+        <div class="plate-b absolute inset-0 color-silk">
+          <svg viewBox="0 0 500 430" preserveAspectRatio="xMidYMid slice" aria-hidden="true" class="w-full h-full">
+            <path d="M135 430 C 165 250, 200 130, 250 100 C 300 130, 335 250, 365 430 Z" fill="#281611" fill-opacity="0.68" />
+          </svg>
+        </div>
+
+        <div aria-hidden="true" class="film-grain absolute inset-0 opacity-35 pointer-events-none"></div>
+        <div aria-hidden="true" class="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-black/20 pointer-events-none"></div>
+
+        <div class="absolute top-6 left-6 right-6 flex justify-between font-mono text-[11px] text-white">
+          <span class="state-tag-a">SILVER GELATIN · B/W</span>
+          <span class="state-tag-b opacity-0 absolute left-6">EKTACHROME · WARM TERRACOTTA</span>
+          <span>MILAN</span>
+        </div>
+
+        <div id="dissolve-desc-2" class="absolute bottom-6 left-6 right-6 text-white">
+          <h2 class="font-serif text-3xl font-medium">Terracotta Drape Plate</h2>
+          <p class="text-xs text-white/80 mt-1">Hover or focus to dissolve from silver monochrome to color film stock.</p>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <script>
+    const root = document.documentElement;
+    const toggle = document.getElementById('themeToggle');
+    const label = document.getElementById('themeLabel');
+    function applyTheme(mode) {
+      const dark = mode === 'dark';
+      root.classList.toggle('dark', dark);
+      label.textContent = dark ? 'Light Mode' : 'Dark Mode';
+    }
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('theme') === 'dark') applyTheme('dark');
+    toggle.addEventListener('click', () => applyTheme(root.classList.contains('dark') ? 'light' : 'dark'));
+    window.addEventListener('message', (e) => { if (e.data && e.data.type === 'set-theme') applyTheme(e.data.theme); });
+  </script>
+</body>
+</html>

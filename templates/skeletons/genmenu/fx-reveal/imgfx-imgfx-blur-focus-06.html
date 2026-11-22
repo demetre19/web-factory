@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>06 · Atmospheric Blur-Out Reveal — Atelier Reveal</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          }
+        }
+      }
+    };
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root { --ease-blur: cubic-bezier(0.16, 1, 0.3, 1); }
+    .blur-media {
+      transition: filter 520ms var(--ease-blur), transform 560ms var(--ease-blur);
+      will-change: filter, transform;
+    }
+    .blur-card:hover .blur-media,
+    .blur-card:focus-within .blur-media {
+      filter: blur(12px) brightness(0.45) saturate(1.1);
+      transform: scale(1.06);
+    }
+    .crisp-layer {
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 420ms var(--ease-blur) 60ms, transform 460ms var(--ease-blur) 60ms;
+    }
+    .blur-card:hover .crisp-layer,
+    .blur-card:focus-within .crisp-layer {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .photo-lumen {
+      background:
+        radial-gradient(100% 80% at 75% 22%, rgba(230, 238, 245, 0.68) 0%, transparent 58%),
+        linear-gradient(150deg, #161e24 0%, #3d4f5d 44%, #7b8f9f 78%, #d2dce3 100%);
+    }
+    .photo-fjord {
+      background:
+        radial-gradient(95% 75% at 24% 28%, rgba(242, 224, 198, 0.6) 0%, transparent 60%),
+        linear-gradient(152deg, #171a1c 0%, #444d52 46%, #838a8c 78%, #d4d3cf 100%);
+    }
+    .film-grain {
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.52'/%3E%3C/svg%3E");
+      mix-blend-mode: overlay;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .blur-media, .crisp-layer { transition-duration: 0.01ms !important; transition-delay: 0ms !important; }
+    }
+  </style>
+<script src="/_aistudio-iframe.js?v=29045eb3"></script></head>
+<body class="min-h-screen bg-[#F5F4F1] text-[#151514] dark:bg-[#0D0E10] dark:text-[#F1EFEA] font-sans antialiased transition-colors duration-300">
+  <header class="max-w-5xl mx-auto px-6 py-6 flex items-center justify-between border-b border-black/10 dark:border-white/10">
+    <div class="flex items-baseline gap-4">
+      <span class="font-mono text-xs tracking-wider text-neutral-500 dark:text-neutral-400">06 / 24</span>
+      <h1 class="font-serif text-2xl sm:text-3xl tracking-tight font-medium">Atmospheric Blur-Out Reveal</h1>
+    </div>
+    <button id="themeToggle" type="button" aria-label="Toggle light or dark theme" class="px-3.5 py-1.5 text-xs font-medium border border-black/15 dark:border-white/15 rounded-md hover:bg-black/5 dark:hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#D88A4B] transition-colors">
+      <span id="themeLabel">Light Mode</span>
+    </button>
+  </header>
+
+  <main class="max-w-5xl mx-auto px-6 py-12">
+    <p class="max-w-2xl text-sm text-neutral-600 dark:text-neutral-400 mb-10 leading-relaxed">
+      Hovering or focusing throws the architectural photograph softly out of optical focus and deepens its luminance so crisp studio typography and controls emerge at high contrast.
+    </p>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <article tabindex="0" role="region" aria-label="Lumen Daylight Pavilion" aria-describedby="blur-info-1" class="blur-card relative h-[430px] rounded-xl overflow-hidden border border-black/10 dark:border-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#D88A4B] cursor-pointer">
+        <div class="blur-media absolute inset-0 photo-lumen">
+          <svg viewBox="0 0 500 430" preserveAspectRatio="xMidYMid slice" aria-hidden="true" class="w-full h-full">
+            <polygon points="0,300 500,210 500,430 0,430" fill="#101519" fill-opacity="0.72" />
+            <rect x="85" y="110" width="130" height="220" fill="#eaf1f6" fill-opacity="0.16" />
+            <rect x="245" y="90" width="165" height="240" fill="#eaf1f6" fill-opacity="0.1" />
+          </svg>
+          <div aria-hidden="true" class="film-grain absolute inset-0 opacity-35"></div>
+        </div>
+
+        <div class="absolute top-5 left-5 z-10 text-[11px] font-mono text-white/80 pointer-events-none">
+          <span>COPENHAGEN · 2025</span>
+        </div>
+
+        <div id="blur-info-1" class="crisp-layer relative z-20 h-full p-8 flex flex-col justify-center items-start text-white">
+          <span class="font-mono text-xs text-[#E8A26A] mb-2">Daylight Calibration</span>
+          <h2 class="font-serif text-3xl sm:text-4xl font-medium tracking-tight mb-3">Lumen Pavilion</h2>
+          <p class="text-sm text-white/85 leading-relaxed max-w-sm mb-6">
+            North-facing clerestory baffles bounce Baltic winter sky across acoustic birch ribs with zero direct glare.
+          </p>
+          <a href="#lumen-specs" class="px-4 py-2 text-xs font-semibold bg-white text-[#141413] rounded-md hover:bg-neutral-200 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-white">
+            Download Light Study
+          </a>
+        </div>
+      </article>
+
+      <article tabindex="0" role="region" aria-label="Fjord Concrete Boathouse" aria-describedby="blur-info-2" class="blur-card relative h-[430px] rounded-xl overflow-hidden border border-black/10 dark:border-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#D88A4B] cursor-pointer">
+        <div class="blur-media absolute inset-0 photo-fjord">
+          <svg viewBox="0 0 500 430" preserveAspectRatio="xMidYMid slice" aria-hidden="true" class="w-full h-full">
+            <rect x="0" y="290" width="500" height="140" fill="#121416" fill-opacity="0.74" />
+            <polygon points="110,290 250,145 390,290" fill="#1b1f22" fill-opacity="0.72" />
+            <line x1="0" y1="290" x2="500" y2="290" stroke="#f4e6d2" stroke-opacity="0.28" stroke-width="1" />
+          </svg>
+          <div aria-hidden="true" class="film-grain absolute inset-0 opacity-35"></div>
+        </div>
+
+        <div class="absolute top-5 left-5 z-10 text-[11px] font-mono text-white/80 pointer-events-none">
+          <span>BERGEN · 2026</span>
+        </div>
+
+        <div id="blur-info-2" class="crisp-layer relative z-20 h-full p-8 flex flex-col justify-center items-start text-white">
+          <span class="font-mono text-xs text-[#E8A26A] mb-2">Marine Concrete</span>
+          <h2 class="font-serif text-3xl sm:text-4xl font-medium tracking-tight mb-3">Fjord Boathouse</h2>
+          <p class="text-sm text-white/85 leading-relaxed max-w-sm mb-6">
+            Board-formed tidal retaining walls anchor a cantilevered cedar studio directly above deep-water granite ledges.
+          </p>
+          <a href="#fjord-specs" class="px-4 py-2 text-xs font-semibold bg-white text-[#141413] rounded-md hover:bg-neutral-200 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-white">
+            Inspect Section Drawings
+          </a>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <script>
+    const root = document.documentElement;
+    const toggle = document.getElementById('themeToggle');
+    const label = document.getElementById('themeLabel');
+
+    function applyTheme(mode) {
+      const dark = mode === 'dark';
+      root.classList.toggle('dark', dark);
+      label.textContent = dark ? 'Light Mode' : 'Dark Mode';
+    }
+
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('theme') === 'light') applyTheme('light');
+
+    toggle.addEventListener('click', () => {
+      applyTheme(root.classList.contains('dark') ? 'light' : 'dark');
+    });
+
+    window.addEventListener('message', (e) => {
+      if (e.data && e.data.type === 'set-theme') applyTheme(e.data.theme);
+    });
+  </script>
+</body>
+</html>

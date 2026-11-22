@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>03 · Aperture Mask Expand Card — Atelier Reveal</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          }
+        }
+      }
+    };
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root { --ease-aperture: cubic-bezier(0.16, 1, 0.3, 1); }
+    .masked-plate {
+      clip-path: circle(31% at 50% 42%);
+      transform: scale(1.06);
+      transition: clip-path 560ms var(--ease-aperture), transform 560ms var(--ease-aperture);
+      will-change: clip-path, transform;
+    }
+    .aperture-card:hover .masked-plate,
+    .aperture-card:focus-within .masked-plate {
+      clip-path: circle(78% at 50% 50%);
+      transform: scale(1);
+    }
+    .cta-panel {
+      opacity: 0;
+      transform: translateY(14px);
+      transition: opacity 380ms var(--ease-aperture) 120ms, transform 420ms var(--ease-aperture) 120ms;
+    }
+    .aperture-card:hover .cta-panel,
+    .aperture-card:focus-within .cta-panel {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .resting-label {
+      transition: opacity 280ms ease, transform 280ms ease;
+    }
+    .aperture-card:hover .resting-label,
+    .aperture-card:focus-within .resting-label {
+      opacity: 0;
+      transform: translateY(6px);
+    }
+    .photo-forest {
+      background:
+        radial-gradient(90% 80% at 50% 25%, rgba(235, 224, 198, 0.65) 0%, transparent 60%),
+        linear-gradient(150deg, #1b201b 0%, #434d3e 45%, #848673 78%, #d2cab8 100%);
+    }
+    .photo-atelier {
+      background:
+        radial-gradient(90% 80% at 48% 30%, rgba(244, 219, 196, 0.62) 0%, transparent 58%),
+        linear-gradient(160deg, #211c19 0%, #57453a 45%, #9b816e 76%, #dfd1c4 100%);
+    }
+    .film-grain {
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.52'/%3E%3C/svg%3E");
+      mix-blend-mode: overlay;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .masked-plate, .cta-panel, .resting-label { transition-duration: 0.01ms !important; transition-delay: 0ms !important; }
+    }
+  </style>
+<script src="/_aistudio-iframe.js?v=29045eb3"></script></head>
+<body class="min-h-screen bg-[#F7F5F0] text-[#171614] dark:bg-[#111110] dark:text-[#F2EFE8] font-sans antialiased transition-colors duration-300">
+  <header class="max-w-5xl mx-auto px-6 py-6 flex items-center justify-between border-b border-black/10 dark:border-white/10">
+    <div class="flex items-baseline gap-4">
+      <span class="font-mono text-xs tracking-wider text-neutral-500 dark:text-neutral-400">03 / 24</span>
+      <h1 class="font-serif text-2xl sm:text-3xl tracking-tight font-medium">Aperture Mask Expand Card</h1>
+    </div>
+    <button id="themeToggle" type="button" aria-label="Toggle light or dark theme" class="px-3.5 py-1.5 text-xs font-medium border border-black/15 dark:border-white/15 rounded-md hover:bg-black/5 dark:hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#8E4A32] transition-colors">
+      <span id="themeLabel">Dark Mode</span>
+    </button>
+  </header>
+
+  <main class="max-w-5xl mx-auto px-6 py-12">
+    <p class="max-w-2xl text-sm text-neutral-600 dark:text-neutral-400 mb-10 leading-relaxed">
+      An optical circular aperture frames only the focal core at rest. Hovering or focusing opens the iris to fill the entire card while the underlying action bar locks into place.
+    </p>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <!-- Card 1 -->
+      <article tabindex="0" role="region" aria-label="Kanso Timber Sanctuary" aria-describedby="aperture-desc-1" class="aperture-card relative h-[460px] rounded-2xl bg-[#EAE5DC] dark:bg-[#1A1917] border border-black/10 dark:border-white/10 overflow-hidden focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#8E4A32] cursor-pointer">
+        <!-- Resting Editorial Title Below Iris -->
+        <div class="resting-label absolute inset-x-0 bottom-7 px-8 text-center">
+          <p class="font-mono text-[11px] uppercase tracking-widest text-neutral-500 dark:text-neutral-400 mb-1">Plate 03 · Kyoto</p>
+          <h2 class="font-serif text-2xl font-medium">Kanso Cedar Pavilion</h2>
+        </div>
+
+        <!-- Expanding Masked Photograph -->
+        <div class="masked-plate absolute inset-0 photo-forest">
+          <svg viewBox="0 0 500 460" preserveAspectRatio="xMidYMid slice" aria-hidden="true" class="w-full h-full">
+            <rect x="0" y="310" width="500" height="150" fill="#171915" fill-opacity="0.72" />
+            <rect x="125" y="100" width="250" height="210" fill="#e9e1cf" fill-opacity="0.16" />
+            <line x1="250" y1="0" x2="250" y2="460" stroke="#181b16" stroke-opacity="0.55" stroke-width="8" />
+            <line x1="160" y1="100" x2="160" y2="310" stroke="#181b16" stroke-opacity="0.35" stroke-width="3" />
+            <line x1="340" y1="100" x2="340" y2="310" stroke="#181b16" stroke-opacity="0.35" stroke-width="3" />
+          </svg>
+          <div aria-hidden="true" class="film-grain absolute inset-0 opacity-35"></div>
+          <div aria-hidden="true" class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent"></div>
+        </div>
+
+        <!-- Underlying CTA Panel Revealed on Iris Open -->
+        <div id="aperture-desc-1" class="cta-panel relative z-10 h-full p-8 flex flex-col justify-end text-white">
+          <div class="flex items-end justify-between gap-4 border-t border-white/25 pt-5">
+            <div>
+              <p class="font-mono text-xs text-white/75 mb-1">2025 · Cypress &amp; Stone</p>
+              <h3 class="font-serif text-3xl font-medium">Kanso Cedar Pavilion</h3>
+            </div>
+            <a href="#explore-kanso" class="shrink-0 px-4 py-2 text-xs font-semibold bg-white text-[#171614] rounded-md hover:bg-neutral-200 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-white">
+              Open Study
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 2 -->
+      <article tabindex="0" role="region" aria-label="Sculpture Atelier Plaster Series" aria-describedby="aperture-desc-2" class="aperture-card relative h-[460px] rounded-2xl bg-[#EAE5DC] dark:bg-[#1A1917] border border-black/10 dark:border-white/10 overflow-hidden focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#8E4A32] cursor-pointer">
+        <div class="resting-label absolute inset-x-0 bottom-7 px-8 text-center">
+          <p class="font-mono text-[11px] uppercase tracking-widest text-neutral-500 dark:text-neutral-400 mb-1">Plate 04 · Paris</p>
+          <h2 class="font-serif text-2xl font-medium">Atelier Plaster Studies</h2>
+        </div>
+
+        <div class="masked-plate absolute inset-0 photo-atelier">
+          <svg viewBox="0 0 500 460" preserveAspectRatio="xMidYMid slice" aria-hidden="true" class="w-full h-full">
+            <rect x="0" y="325" width="500" height="135" fill="#1c1512" fill-opacity="0.72" />
+            <ellipse cx="250" cy="215" rx="68" ry="105" fill="#f3e5d7" fill-opacity="0.22" />
+            <rect x="202" y="290" width="96" height="120" fill="#2c211b" fill-opacity="0.6" />
+          </svg>
+          <div aria-hidden="true" class="film-grain absolute inset-0 opacity-35"></div>
+          <div aria-hidden="true" class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent"></div>
+        </div>
+
+        <div id="aperture-desc-2" class="cta-panel relative z-10 h-full p-8 flex flex-col justify-end text-white">
+          <div class="flex items-end justify-between gap-4 border-t border-white/25 pt-5">
+            <div>
+              <p class="font-mono text-xs text-white/75 mb-1">2026 · North Skylight</p>
+              <h3 class="font-serif text-3xl font-medium">Atelier Plaster Studies</h3>
+            </div>
+            <a href="#explore-plaster" class="shrink-0 px-4 py-2 text-xs font-semibold bg-white text-[#171614] rounded-md hover:bg-neutral-200 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-white">
+              Open Study
+            </a>
+          </div>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <script>
+    const root = document.documentElement;
+    const toggle = document.getElementById('themeToggle');
+    const label = document.getElementById('themeLabel');
+
+    function applyTheme(mode) {
+      const dark = mode === 'dark';
+      root.classList.toggle('dark', dark);
+      label.textContent = dark ? 'Light Mode' : 'Dark Mode';
+    }
+
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('theme') === 'dark') applyTheme('dark');
+
+    toggle.addEventListener('click', () => {
+      applyTheme(root.classList.contains('dark') ? 'light' : 'dark');
+    });
+
+    window.addEventListener('message', (e) => {
+      if (e.data && e.data.type === 'set-theme') applyTheme(e.data.theme);
+    });
+  </script>
+</body>
+</html>

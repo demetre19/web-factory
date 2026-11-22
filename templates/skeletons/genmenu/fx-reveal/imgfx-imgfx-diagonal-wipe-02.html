@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>02 · Diagonal Tint Wipe Card — Atelier Reveal</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          }
+        }
+      }
+    };
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root { --ease-wipe: cubic-bezier(0.16, 1, 0.3, 1); }
+    .tint-wipe {
+      clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+      transition: clip-path 580ms var(--ease-wipe), opacity 580ms var(--ease-wipe);
+      will-change: clip-path;
+    }
+    .wipe-card:hover .tint-wipe,
+    .wipe-card:focus-within .tint-wipe {
+      clip-path: polygon(100% 0, 100% 0, 100% 100%, 100% 0);
+      opacity: 0.12;
+    }
+    .hidden-layer {
+      opacity: 0;
+      transform: translate3d(-14px, 10px, 0);
+      transition: opacity 420ms var(--ease-wipe) 80ms, transform 460ms var(--ease-wipe) 80ms;
+    }
+    .wipe-card:hover .hidden-layer,
+    .wipe-card:focus-within .hidden-layer {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+    .photo-slate {
+      background:
+        radial-gradient(110% 80% at 30% 25%, rgba(215, 224, 232, 0.48) 0%, transparent 60%),
+        linear-gradient(135deg, #13171b 0%, #2b3540 45%, #5b6d7f 78%, #b8c2cc 100%);
+    }
+    .photo-amber {
+      background:
+        radial-gradient(95% 75% at 72% 22%, rgba(246, 207, 173, 0.56) 0%, transparent 58%),
+        linear-gradient(148deg, #1c1512 0%, #4b3429 48%, #8f634c 78%, #d7baa6 100%);
+    }
+    .film-grain {
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='0.55'/%3E%3C/svg%3E");
+      mix-blend-mode: overlay;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .tint-wipe, .hidden-layer { transition-duration: 0.01ms !important; transition-delay: 0ms !important; }
+    }
+  </style>
+<script src="/_aistudio-iframe.js?v=29045eb3"></script></head>
+<body class="min-h-screen bg-[#F5F4F0] text-[#141413] dark:bg-[#0E0F11] dark:text-[#F1EFEA] font-sans antialiased transition-colors duration-300">
+  <header class="max-w-5xl mx-auto px-6 py-6 flex items-center justify-between border-b border-black/10 dark:border-white/10">
+    <div class="flex items-baseline gap-4">
+      <span class="font-mono text-xs tracking-wider text-neutral-500 dark:text-neutral-400">02 / 24</span>
+      <h1 class="font-serif text-2xl sm:text-3xl tracking-tight font-medium">Diagonal Tint Wipe Card</h1>
+    </div>
+    <button id="themeToggle" type="button" aria-label="Toggle light or dark theme" class="px-3.5 py-1.5 text-xs font-medium border border-black/15 dark:border-white/15 rounded-md hover:bg-black/5 dark:hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#C96A42] transition-colors">
+      <span id="themeLabel">Light Mode</span>
+    </button>
+  </header>
+
+  <main class="max-w-5xl mx-auto px-6 py-12">
+    <p class="max-w-2xl text-sm text-neutral-600 dark:text-neutral-400 mb-10 leading-relaxed">
+      A dense architectural veil covers the plate at rest. On hover or keyboard focus, a diagonal <code class="font-mono text-xs">clip-path</code> shear sweeps across the frame to uncover the luminous interior study and technical specs.
+    </p>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <!-- Plate 1 -->
+      <article class="wipe-card group relative h-[440px] rounded-xl overflow-hidden border border-black/10 dark:border-white/10 photo-slate focus-within:ring-2 focus-within:ring-[#C96A42]" tabindex="0" role="region" aria-label="Maison Verrière Steel Mezzanine" aria-describedby="wipe-desc-1">
+        <!-- Base Photographic Artwork -->
+        <svg viewBox="0 0 600 440" preserveAspectRatio="xMidYMid slice" aria-hidden="true" class="absolute inset-0 w-full h-full">
+          <polygon points="0,310 600,190 600,440 0,440" fill="#0d1115" fill-opacity="0.72" />
+          <path d="M90 440 L90 110 L350 40 L350 440 Z" fill="#cfd8e0" fill-opacity="0.14" />
+          <line x1="90" y1="210" x2="480" y2="120" stroke="#e4ecf2" stroke-opacity="0.34" stroke-width="1.5" />
+          <rect x="210" y="160" width="95" height="170" fill="#10151b" fill-opacity="0.6" />
+        </svg>
+        <div aria-hidden="true" class="film-grain absolute inset-0 opacity-40 pointer-events-none"></div>
+
+        <!-- Scrim for revealed legibility -->
+        <div aria-hidden="true" class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-transparent"></div>
+
+        <!-- Hidden Text Layer Revealed Underneath -->
+        <div id="wipe-desc-1" class="hidden-layer relative z-10 h-full p-8 flex flex-col justify-between text-white">
+          <div class="flex items-center justify-between text-xs font-mono text-white/75">
+            <span>ARCHIVE · 2026</span>
+            <span>LYON, FR</span>
+          </div>
+          <div>
+            <p class="text-xs font-mono uppercase tracking-widest text-[#E49573] mb-2">Structural Glazing</p>
+            <h2 class="font-serif text-3xl font-medium tracking-tight mb-3">Maison Verrière Mezzanine</h2>
+            <p class="text-sm text-white/80 max-w-sm leading-relaxed mb-5">
+              Low-iron laminated skylight ribs filter afternoon glare across brushed zinc galleries and monolithic limestone plinths.
+            </p>
+            <a href="#dossier-lyon" class="inline-flex items-center gap-2 px-4 py-2 text-xs font-medium bg-white text-[#141413] rounded-md hover:bg-neutral-200 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
+              <span>Inspect Dossier</span>
+              <span aria-hidden="true">-&gt;</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Diagonal Wipe Overlay Tint -->
+        <div aria-hidden="true" class="tint-wipe absolute inset-0 z-20 bg-[#1B2128]/90 backdrop-blur-[1px] p-8 flex flex-col justify-between text-white pointer-events-none">
+          <span class="font-mono text-xs tracking-wider text-white/60">01 · HOVER TO REVEAL</span>
+          <div>
+            <h3 class="font-serif text-3xl text-white/95">Maison Verrière</h3>
+            <p class="text-xs font-mono text-white/60 mt-1">Steel &amp; Skylight Study · 2026</p>
+          </div>
+        </div>
+      </article>
+
+      <!-- Plate 2 -->
+      <article class="wipe-card group relative h-[440px] rounded-xl overflow-hidden border border-black/10 dark:border-white/10 photo-amber focus-within:ring-2 focus-within:ring-[#C96A42]" tabindex="0" role="region" aria-label="Sienna Gallery Terrace" aria-describedby="wipe-desc-2">
+        <svg viewBox="0 0 600 440" preserveAspectRatio="xMidYMid slice" aria-hidden="true" class="absolute inset-0 w-full h-full">
+          <rect x="0" y="295" width="600" height="145" fill="#17110e" fill-opacity="0.78" />
+          <circle cx="430" cy="120" r="88" fill="#f3cbb0" fill-opacity="0.24" />
+          <polygon points="120,295 270,130 420,295" fill="#2b1e18" fill-opacity="0.58" />
+          <line x1="0" y1="295" x2="600" y2="295" stroke="#f0d7c4" stroke-opacity="0.25" stroke-width="1" />
+        </svg>
+        <div aria-hidden="true" class="film-grain absolute inset-0 opacity-40 pointer-events-none"></div>
+        <div aria-hidden="true" class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-transparent"></div>
+
+        <div id="wipe-desc-2" class="hidden-layer relative z-10 h-full p-8 flex flex-col justify-between text-white">
+          <div class="flex items-center justify-between text-xs font-mono text-white/75">
+            <span>MONOLITH · 2026</span>
+            <span>SIENA, IT</span>
+          </div>
+          <div>
+            <p class="text-xs font-mono uppercase tracking-widest text-[#E49573] mb-2">Terracotta &amp; Plaster</p>
+            <h2 class="font-serif text-3xl font-medium tracking-tight mb-3">Sienna Vaulted Loggia</h2>
+            <p class="text-sm text-white/80 max-w-sm leading-relaxed mb-5">
+              Hand-troweled lime wash holds warm twilight reflections along a colonnade cast for quiet sculptural exhibitions.
+            </p>
+            <a href="#dossier-siena" class="inline-flex items-center gap-2 px-4 py-2 text-xs font-medium bg-white text-[#141413] rounded-md hover:bg-neutral-200 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
+              <span>View Exhibition</span>
+              <span aria-hidden="true">-&gt;</span>
+            </a>
+          </div>
+        </div>
+
+        <div aria-hidden="true" class="tint-wipe absolute inset-0 z-20 bg-[#271C17]/90 backdrop-blur-[1px] p-8 flex flex-col justify-between text-white pointer-events-none">
+          <span class="font-mono text-xs tracking-wider text-white/60">02 · HOVER TO REVEAL</span>
+          <div>
+            <h3 class="font-serif text-3xl text-white/95">Sienna Loggia</h3>
+            <p class="text-xs font-mono text-white/60 mt-1">Lime Plaster &amp; Dusk · 2026</p>
+          </div>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <script>
+    const root = document.documentElement;
+    const toggle = document.getElementById('themeToggle');
+    const label = document.getElementById('themeLabel');
+
+    function applyTheme(mode) {
+      const dark = mode === 'dark';
+      root.classList.toggle('dark', dark);
+      label.textContent = dark ? 'Light Mode' : 'Dark Mode';
+    }
+
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('theme') === 'light') applyTheme('light');
+
+    toggle.addEventListener('click', () => {
+      applyTheme(root.classList.contains('dark') ? 'light' : 'dark');
+    });
+
+    window.addEventListener('message', (e) => {
+      if (e.data && e.data.type === 'set-theme') applyTheme(e.data.theme);
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>08 · Ken-Burns Freeze & Glass Panel — Atelier Reveal</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          }
+        }
+      }
+    };
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root { --ease-glass: cubic-bezier(0.16, 1, 0.3, 1); }
+    @keyframes kenburns-pan {
+      0% { transform: scale(1.04) translate3d(0, 0, 0); }
+      50% { transform: scale(1.14) translate3d(-2.5%, -1.8%, 0); }
+      100% { transform: scale(1.04) translate3d(0, 0, 0); }
+    }
+    .kb-plate {
+      animation: kenburns-pan 18s ease-in-out infinite;
+      will-change: transform;
+    }
+    .kb-card:hover .kb-plate,
+    .kb-card:focus-within .kb-plate {
+      animation-play-state: paused;
+    }
+    .glass-panel {
+      opacity: 0;
+      transform: translateX(28px);
+      transition: transform 500ms var(--ease-glass), opacity 420ms var(--ease-glass);
+      will-change: transform, opacity;
+    }
+    .kb-card:hover .glass-panel,
+    .kb-card:focus-within .glass-panel {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    .photo-basalt {
+      background:
+        radial-gradient(110% 75% at 28% 24%, rgba(196, 212, 228, 0.45) 0%, transparent 56%),
+        radial-gradient(80% 60% at 82% 72%, rgba(214, 154, 114, 0.25) 0%, transparent 60%),
+        linear-gradient(148deg, #10151b 0%, #2b3844 46%, #596c7d 78%, #a6b4bf 100%);
+    }
+    .film-grain {
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.52'/%3E%3C/svg%3E");
+      mix-blend-mode: overlay;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .kb-plate { animation: none !important; transform: none !important; }
+      .glass-panel { transition-duration: 0.01ms !important; }
+    }
+  </style>
+<script src="/_aistudio-iframe.js?v=29045eb3"></script></head>
+<body class="min-h-screen bg-[#F4F3EE] text-[#151514] dark:bg-[#0D0E10] dark:text-[#F2EFEA] font-sans antialiased transition-colors duration-300">
+  <header class="max-w-5xl mx-auto px-6 py-6 flex items-center justify-between border-b border-black/10 dark:border-white/10">
+    <div class="flex items-baseline gap-4">
+      <span class="font-mono text-xs tracking-wider text-neutral-500 dark:text-neutral-400">08 / 24</span>
+      <h1 class="font-serif text-2xl sm:text-3xl tracking-tight font-medium">Ken-Burns Freeze &amp; Glass Panel</h1>
+    </div>
+    <button id="themeToggle" type="button" aria-label="Toggle light or dark theme" class="px-3.5 py-1.5 text-xs font-medium border border-black/15 dark:border-white/15 rounded-md hover:bg-black/5 dark:hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#C97B4B] transition-colors">
+      <span id="themeLabel">Light Mode</span>
+    </button>
+  </header>
+
+  <main class="max-w-5xl mx-auto px-6 py-12">
+    <p class="max-w-2xl text-sm text-neutral-600 dark:text-neutral-400 mb-10 leading-relaxed">
+      The wide landscape plate drifts in a continuous slow optical pan. Hovering or focusing freezes the motion mid-frame and slides a frosted architectural dossier panel in from the right edge.
+    </p>
+
+    <article tabindex="0" role="region" aria-label="Nordic Basalt Observatory" aria-describedby="kb-dossier" class="kb-card relative h-[480px] rounded-2xl overflow-hidden border border-black/10 dark:border-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#C97B4B] cursor-pointer">
+      <div class="kb-plate absolute inset-0 photo-basalt">
+        <svg viewBox="0 0 900 480" preserveAspectRatio="xMidYMid slice" aria-hidden="true" class="w-full h-full">
+          <polygon points="0,330 220,250 470,315 710,220 900,290 900,480 0,480" fill="#0d1115" fill-opacity="0.78" />
+          <rect x="520" y="180" width="160" height="82" fill="#151b22" fill-opacity="0.88" />
+          <rect x="540" y="196" width="120" height="24" fill="#f0c79e" fill-opacity="0.45" />
+          <path d="M0 370 Q 450 340 900 385 L 900 480 L 0 480 Z" fill="#090c0f" fill-opacity="0.75" />
+        </svg>
+        <div aria-hidden="true" class="film-grain absolute inset-0 opacity-40"></div>
+      </div>
+
+      <div class="absolute top-6 left-6 z-10 text-xs font-mono text-white/85 pointer-events-none">
+        <span>REYKJAVIK · 64.14° N</span>
+      </div>
+
+      <div id="kb-dossier" class="glass-panel absolute inset-y-5 right-5 w-[calc(100%-2.5rem)] sm:w-[340px] rounded-xl bg-black/55 backdrop-blur-xl border border-white/15 p-7 flex flex-col justify-between text-white">
+        <div>
+          <p class="font-mono text-[11px] uppercase tracking-widest text-[#E6A073] mb-2">Site Observatory</p>
+          <h2 class="font-serif text-3xl font-medium tracking-tight mb-3">Nordic Basalt Outpost</h2>
+          <p class="text-sm text-white/80 leading-relaxed">
+            Cantilevered weathering steel and black volcanic aggregate frame the winter horizon above Faxaflói Bay.
+          </p>
+        </div>
+
+        <div class="border-t border-white/15 pt-5 space-y-3">
+          <div class="flex justify-between text-xs font-mono text-white/75">
+            <span>ELEVATION</span>
+            <span>412 M ASL</span>
+          </div>
+          <div class="flex justify-between text-xs font-mono text-white/75">
+            <span>OPTICS</span>
+            <span>28MM F/2.8</span>
+          </div>
+          <a href="#observatory" class="mt-2 inline-flex w-full items-center justify-center px-4 py-2.5 text-xs font-semibold bg-white text-[#141413] rounded-md hover:bg-neutral-200 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-white">
+            Open Field Notes
+          </a>
+        </div>
+      </div>
+    </article>
+  </main>
+
+  <script>
+    const root = document.documentElement;
+    const toggle = document.getElementById('themeToggle');
+    const label = document.getElementById('themeLabel');
+
+    function applyTheme(mode) {
+      const dark = mode === 'dark';
+      root.classList.toggle('dark', dark);
+      label.textContent = dark ? 'Light Mode' : 'Dark Mode';
+    }
+
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('theme') === 'light') applyTheme('light');
+
+    toggle.addEventListener('click', () => {
+      applyTheme(root.classList.contains('dark') ? 'light' : 'dark');
+    });
+
+    window.addEventListener('message', (e) => {
+      if (e.data && e.data.type === 'set-theme') applyTheme(e.data.theme);
+    });
+  </script>
+</body>
+</html>

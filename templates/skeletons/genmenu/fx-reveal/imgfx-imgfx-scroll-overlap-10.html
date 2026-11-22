@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>10 · Full-Bleed Parallax Overlap — Atelier Reveal</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          }
+        }
+      }
+    };
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    .photo-desert {
+      background:
+        radial-gradient(95% 75% at 62% 28%, rgba(250, 212, 174, 0.78) 0%, rgba(201, 134, 92, 0.35) 45%, transparent 70%),
+        linear-gradient(175deg, #2d221c 0%, #7d5640 42%, #c99c7a 72%, #ecd5bf 100%);
+    }
+    .film-grain {
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.52'/%3E%3C/svg%3E");
+      mix-blend-mode: overlay;
+    }
+  </style>
+<script src="/_aistudio-iframe.js?v=29045eb3"></script></head>
+<body class="bg-[#F6F3EC] text-[#171513] dark:bg-[#11100F] dark:text-[#F2EFE8] font-sans antialiased transition-colors duration-300">
+  <header class="sticky top-0 z-30 bg-[#F6F3EC]/90 dark:bg-[#11100F]/90 backdrop-blur-md border-b border-black/10 dark:border-white/10">
+    <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+      <div class="flex items-baseline gap-4">
+        <span class="font-mono text-xs tracking-wider text-neutral-500 dark:text-neutral-400">10 / 24</span>
+        <h1 class="font-serif text-2xl sm:text-3xl tracking-tight font-medium">Full-Bleed Parallax Overlap</h1>
+      </div>
+      <button id="themeToggle" type="button" aria-label="Toggle light or dark theme" class="px-3.5 py-1.5 text-xs font-medium border border-black/15 dark:border-white/15 rounded-md hover:bg-black/5 dark:hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#B64F2C] transition-colors">
+        <span id="themeLabel">Dark Mode</span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <!-- Scroll Trigger Stage -->
+    <section id="stage" class="relative h-[155vh]">
+      <div class="sticky top-16 h-[78vh] w-full overflow-hidden flex items-center justify-center px-4 sm:px-8 pt-6">
+        <div id="heroPlate" class="relative w-full h-full rounded-2xl overflow-hidden photo-desert border border-black/10 dark:border-white/10 will-change-transform">
+          <svg viewBox="0 0 1200 700" preserveAspectRatio="xMidYMid slice" aria-hidden="true" class="w-full h-full">
+            <rect x="0" y="470" width="1200" height="230" fill="#211813" fill-opacity="0.72" />
+            <rect x="240" y="340" width="720" height="130" fill="#1b1410" fill-opacity="0.82" />
+            <rect x="330" y="366" width="540" height="46" fill="#f5d2b0" fill-opacity="0.45" />
+            <circle cx="820" cy="180" r="88" fill="#fae1c5" fill-opacity="0.34" />
+          </svg>
+          <div aria-hidden="true" class="film-grain absolute inset-0 opacity-40"></div>
+          <div aria-hidden="true" class="absolute inset-0 bg-gradient-to-t from-black/65 via-transparent to-black/20"></div>
+          <div class="absolute top-8 left-8 text-xs font-mono text-white/85">
+            <span>MARFA, TEXAS · DESERT HORIZON RESIDENCE</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Overlapping Editorial Panel -->
+      <article id="overlapCard" tabindex="0" aria-describedby="overlap-text" class="relative z-20 max-w-2xl mx-auto -mt-36 sm:-mt-44 px-8 py-10 sm:p-12 rounded-2xl bg-[#FAF8F4] dark:bg-[#191816] border border-black/10 dark:border-white/10 shadow-2xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#B64F2C] will-change-transform">
+        <span class="font-mono text-xs uppercase tracking-widest text-[#B64F2C] dark:text-[#E17D5A]">Field Monograph · 2026</span>
+        <h2 class="font-serif text-3xl sm:text-5xl font-medium tracking-tight mt-2 mb-5">Rammed Earth &amp; High Desert Sky</h2>
+        <div id="overlap-text" class="space-y-4 text-sm sm:text-base text-neutral-600 dark:text-neutral-300 leading-relaxed">
+          <p>
+            Scroll downward to watch the full-bleed architectural plate recede gently in scale while this editorial essay panel glides up to overlap the desert horizon.
+          </p>
+          <p>
+            Cast from local iron-rich caliche soil, the 52-meter horizontal roof plane absorbs late-afternoon ochre light before turning cool slate under Chihuahuan twilight.
+          </p>
+        </div>
+      </article>
+    </section>
+
+    <div class="max-w-2xl mx-auto px-6 pb-20 pt-8 text-xs font-mono text-neutral-500 dark:text-neutral-400 flex justify-between border-t border-black/10 dark:border-white/10">
+      <span>SCROLL PROGRESS LINKED</span>
+      <span>COMPOSITOR TRANSFORM ONLY</span>
+    </div>
+  </main>
+
+  <script>
+    const root = document.documentElement;
+    const toggle = document.getElementById('themeToggle');
+    const label = document.getElementById('themeLabel');
+    function applyTheme(mode) {
+      const dark = mode === 'dark';
+      root.classList.toggle('dark', dark);
+      label.textContent = dark ? 'Light Mode' : 'Dark Mode';
+    }
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('theme') === 'dark') applyTheme('dark');
+    toggle.addEventListener('click', () => applyTheme(root.classList.contains('dark') ? 'light' : 'dark'));
+    window.addEventListener('message', (e) => { if (e.data && e.data.type === 'set-theme') applyTheme(e.data.theme); });
+
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const stage = document.getElementById('stage');
+    const heroPlate = document.getElementById('heroPlate');
+    const overlapCard = document.getElementById('overlapCard');
+
+    function updateScroll() {
+      if (reducedMotion) return;
+      const rect = stage.getBoundingClientRect();
+      const total = Math.max(1, stage.offsetHeight - window.innerHeight);
+      const progress = Math.min(1, Math.max(0, -rect.top / total));
+      const scale = 1 - progress * 0.08;
+      const radius = 16 + progress * 10;
+      const lift = -progress * 48;
+      heroPlate.style.transform = `scale(${scale.toFixed(4)})`;
+      heroPlate.style.borderRadius = `${radius.toFixed(1)}px`;
+      overlapCard.style.transform = `translate3d(0, ${lift.toFixed(1)}px, 0)`;
+    }
+
+    window.addEventListener('scroll', () => requestAnimationFrame(updateScroll), { passive: true });
+    updateScroll();
+  </script>
+</body>
+</html>

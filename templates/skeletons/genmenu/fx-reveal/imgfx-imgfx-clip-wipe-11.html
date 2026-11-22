@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>11 · Scroll Clip-Path Inset Wipe — Atelier Reveal</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          }
+        }
+      }
+    };
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    .plate-a {
+      background:
+        radial-gradient(95% 80% at 32% 24%, rgba(214, 224, 234, 0.56) 0%, transparent 58%),
+        linear-gradient(155deg, #161a1e 0%, #3d4854 46%, #7d8b99 78%, #c7cfd7 100%);
+    }
+    .plate-b {
+      background:
+        radial-gradient(95% 80% at 72% 26%, rgba(246, 210, 178, 0.68) 0%, transparent 58%),
+        linear-gradient(148deg, #1f1713 0%, #5c3e30 46%, #a3745b 78%, #e2c8b4 100%);
+    }
+    .plate-c {
+      background:
+        radial-gradient(95% 80% at 50% 28%, rgba(226, 232, 220, 0.58) 0%, transparent 60%),
+        linear-gradient(156deg, #141915 0%, #384439 46%, #728070 78%, #c7cec2 100%);
+    }
+    .film-grain {
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.52'/%3E%3C/svg%3E");
+      mix-blend-mode: overlay;
+    }
+  </style>
+<script src="/_aistudio-iframe.js?v=29045eb3"></script></head>
+<body class="bg-[#F5F4F0] text-[#141413] dark:bg-[#0D0E10] dark:text-[#F2EFEA] font-sans antialiased transition-colors duration-300">
+  <header class="sticky top-0 z-40 bg-[#F5F4F0]/90 dark:bg-[#0D0E10]/90 backdrop-blur-md border-b border-black/10 dark:border-white/10">
+    <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+      <div class="flex items-baseline gap-4">
+        <span class="font-mono text-xs tracking-wider text-neutral-500 dark:text-neutral-400">11 / 24</span>
+        <h1 class="font-serif text-2xl sm:text-3xl tracking-tight font-medium">Scroll Clip-Path Inset Wipe</h1>
+      </div>
+      <button id="themeToggle" type="button" aria-label="Toggle light or dark theme" class="px-3.5 py-1.5 text-xs font-medium border border-black/15 dark:border-white/15 rounded-md hover:bg-black/5 dark:hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#D06B47] transition-colors">
+        <span id="themeLabel">Light Mode</span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <section id="clipStage" class="relative h-[260vh]">
+      <div class="sticky top-16 h-[calc(100vh-4rem)] w-full overflow-hidden">
+        <!-- Layer 1: Base -->
+        <article class="absolute inset-0 plate-a flex items-end p-8 sm:p-14">
+          <svg viewBox="0 0 1200 720" preserveAspectRatio="xMidYMid slice" aria-hidden="true" class="absolute inset-0 w-full h-full">
+            <polygon points="0,480 1200,340 1200,720 0,720" fill="#101418" fill-opacity="0.72" />
+            <rect x="180" y="160" width="260" height="320" fill="#d9e3ec" fill-opacity="0.14" />
+          </svg>
+          <div aria-hidden="true" class="film-grain absolute inset-0 opacity-40"></div>
+          <div class="relative z-10 max-w-xl text-white">
+            <span class="font-mono text-xs text-white/75">SEQUENCE 01 · TOKYO</span>
+            <h2 class="font-serif text-4xl sm:text-5xl font-medium mt-2">North Concrete Courtyard</h2>
+          </div>
+        </article>
+
+        <!-- Layer 2: Wipes in via inset() -->
+        <article id="wipeLayer2" class="absolute inset-0 plate-b flex items-end p-8 sm:p-14 will-change-[clip-path]" style="clip-path: inset(100% 0 0 0);">
+          <svg viewBox="0 0 1200 720" preserveAspectRatio="xMidYMid slice" aria-hidden="true" class="absolute inset-0 w-full h-full">
+            <rect x="0" y="450" width="1200" height="270" fill="#19110d" fill-opacity="0.74" />
+            <circle cx="880" cy="210" r="110" fill="#f7d5b7" fill-opacity="0.24" />
+          </svg>
+          <div aria-hidden="true" class="film-grain absolute inset-0 opacity-40"></div>
+          <div class="relative z-10 max-w-xl text-white">
+            <span class="font-mono text-xs text-[#F2A684]">SEQUENCE 02 · SUNSET</span>
+            <h2 class="font-serif text-4xl sm:text-5xl font-medium mt-2">Cedar &amp; Amber Gallery</h2>
+          </div>
+        </article>
+
+        <!-- Layer 3: Wipes in via inset() -->
+        <article id="wipeLayer3" class="absolute inset-0 plate-c flex items-end p-8 sm:p-14 will-change-[clip-path]" style="clip-path: inset(100% 0 0 0);">
+          <svg viewBox="0 0 1200 720" preserveAspectRatio="xMidYMid slice" aria-hidden="true" class="absolute inset-0 w-full h-full">
+            <polygon points="0,500 540,260 1200,440 1200,720 0,720" fill="#101511" fill-opacity="0.76" />
+            <rect x="480" y="130" width="240" height="280" fill="#e1e8db" fill-opacity="0.16" />
+          </svg>
+          <div aria-hidden="true" class="film-grain absolute inset-0 opacity-40"></div>
+          <div class="relative z-10 max-w-xl text-white">
+            <span class="font-mono text-xs text-[#C6D8BE]">SEQUENCE 03 · MOSS GARDEN</span>
+            <h2 class="font-serif text-4xl sm:text-5xl font-medium mt-2">Shoji Threshold Pavilion</h2>
+          </div>
+        </article>
+
+        <!-- Scroll Indicator -->
+        <div class="absolute top-6 right-6 z-20 px-3 py-1.5 rounded-md bg-black/50 backdrop-blur-md text-xs font-mono text-white">
+          <span id="wipePercent">CLIP 0%</span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const root = document.documentElement;
+    const toggle = document.getElementById('themeToggle');
+    const label = document.getElementById('themeLabel');
+    function applyTheme(mode) {
+      const dark = mode === 'dark';
+      root.classList.toggle('dark', dark);
+      label.textContent = dark ? 'Light Mode' : 'Dark Mode';
+    }
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('theme') === 'light') applyTheme('light');
+    toggle.addEventListener('click', () => applyTheme(root.classList.contains('dark') ? 'light' : 'dark'));
+    window.addEventListener('message', (e) => { if (e.data && e.data.type === 'set-theme') applyTheme(e.data.theme); });
+
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const clipStage = document.getElementById('clipStage');
+    const layer2 = document.getElementById('wipeLayer2');
+    const layer3 = document.getElementById('wipeLayer3');
+    const wipePercent = document.getElementById('wipePercent');
+
+    function updateClips() {
+      const rect = clipStage.getBoundingClientRect();
+      const total = Math.max(1, clipStage.offsetHeight - window.innerHeight);
+      const p = Math.min(1, Math.max(0, -rect.top / total));
+
+      if (reducedMotion) {
+        layer2.style.clipPath = p >= 0.33 ? 'inset(0% 0 0 0)' : 'inset(100% 0 0 0)';
+        layer3.style.clipPath = p >= 0.66 ? 'inset(0% 0 0 0)' : 'inset(100% 0 0 0)';
+      } else {
+        const p2 = Math.min(1, Math.max(0, p / 0.5));
+        const p3 = Math.min(1, Math.max(0, (p - 0.5) / 0.5));
+        layer2.style.clipPath = `inset(${((1 - p2) * 100).toFixed(2)}% 0 0 0)`;
+        layer3.style.clipPath = `inset(${((1 - p3) * 100).toFixed(2)}% 0 0 0)`;
+      }
+      wipePercent.textContent = `CLIP ${Math.round(p * 100)}%`;
+    }
+
+    window.addEventListener('scroll', () => requestAnimationFrame(updateClips), { passive: true });
+    updateClips();
+  </script>
+</body>
+</html>
