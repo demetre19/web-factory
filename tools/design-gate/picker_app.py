@@ -25,8 +25,8 @@ per-section topology scrubbing inline on the full page) →
 sections/elements (galleries). Every preview is static HTML —
 variants differ by a CSS-var override bundle, never by a rebuild.
 """
-import datetime, hashlib, html.parser, json, os, re, sys, \
-    threading, urllib.parse
+import datetime, hashlib, html.parser, json, os, re, subprocess, \
+    sys, tempfile, threading, urllib.parse
 from pathlib import Path
 
 try:
@@ -672,8 +672,10 @@ _SEC_SIBLINGS = {
     'pricing': ['comparison', 'pricing-table', 'stat-band'],
     'frequency': ['stat-band', 'cards-n', 'feature-grid'],
     'end-act': ['form-panel', 'banner-cta', 'cutout-cta-band',
-                'capture-form', 'newsletter-band'],
-    'footer': ['footer-bar', 'footer-shop', 'newsletter-band'],
+                'capture-form', 'newsletter-band', 'contact-panel',
+                'cards-n'],
+    'footer': ['footer-bar', 'footer-shop', 'newsletter-band',
+               'link-grid', 'cards-n'],
 }
 
 
@@ -701,7 +703,9 @@ def _real_topo_variants(pd, sec, comp, slot, head, battr, sdir, dist,
         if c == comp or c in have or len(out) >= cap:
             continue
         inner, unmap = _slot_frag(c, slot)
-        if inner is None:
+        if inner is None or unmap:
+            # no lorem: a sibling that can't bind this row's slots is
+            # dropped, not emitted with filler copy
             continue
         markup = (f'<section class="sec-band surface-base '
                   f'density-regular" data-sec="{sec}" '
@@ -715,9 +719,119 @@ def _real_topo_variants(pd, sec, comp, slot, head, battr, sdir, dist,
         out.append({'id': f'{comp}:{c}',
                     'preview': os.path.relpath(
                         os.path.join(sdir, fn), dist)})
-        if unmap:
-            out[-1]['unmapped'] = unmap
     return out
+
+
+# first-screen dedupe — the auditor measures the RENDERED first
+# screen (1280x720), not markup: a variant within Δ<6 of a kept
+# option is dropped. Renders are batched through one playwright
+# subprocess; when playwright can't run the dedupe is a no-op
+# rather than a fake.
+_FS_PY = (
+    "import json,sys,threading,functools\n"
+    "import http.server\n"
+    "files=json.loads(sys.argv[1]); root=sys.argv[2]; td=sys.argv[3]\n"
+    "h=functools.partial(http.server.SimpleHTTPRequestHandler,"
+    "directory=root)\n"
+    "srv=http.server.ThreadingHTTPServer(('127.0.0.1',0),h)\n"
+    "port=srv.server_address[1]\n"
+    "threading.Thread(target=srv.serve_forever,daemon=True).start()\n"
+    "from playwright.sync_api import sync_playwright\n"
+    "with sync_playwright() as p:\n"
+    " b=p.chromium.launch()\n"
+    " pg=b.new_page(viewport={'width':1280,'height':720})\n"
+    " for i,f in enumerate(files):\n"
+    "  pg.goto('http://127.0.0.1:%d/%s'%(port,f),"
+    "wait_until='load',timeout=30000)\n"
+    "  pg.wait_for_timeout(250)\n"
+    "  pg.screenshot(path=td+'/'+str(i)+'.png',"
+    "clip={'x':0,'y':0,'width':1280,'height':720})\n"
+    " b.close()\n"
+    "print('ok')\n")
+
+
+def _fs_render(files, dist):
+    """{path: grayscale ndarray} — the first 1280x720 of each doc,
+    rendered by one playwright subprocess (venv first, then ambient
+    python, the ingest contract). {} when no interpreter can run
+    playwright — dedupe then skips rather than faking a signature."""
+    pys = []
+    try:
+        import ingest_url
+        pys = ingest_url._render_pythons()
+    except Exception:
+        pass
+    if sys.executable not in pys:
+        pys.append(sys.executable)
+    for py in pys:
+        chk = subprocess.run([py, '-c', 'import playwright'],
+                             capture_output=True, timeout=30)
+        if chk.returncode:
+            continue
+        with tempfile.TemporaryDirectory() as td:
+            try:
+                r = subprocess.run(
+                    [py, '-c', _FS_PY, json.dumps(files), dist, td],
+                    capture_output=True, text=True, timeout=900)
+            except subprocess.TimeoutExpired:
+                continue
+            if r.returncode:
+                continue
+            out = {}
+            for i, fp in enumerate(files):
+                png = os.path.join(td, f'{i}.png')
+                if not os.path.isfile(png):
+                    continue
+                try:
+                    from PIL import Image
+                    import numpy as np
+                    out[fp] = np.asarray(
+                        Image.open(png).convert('L'), dtype=np.int16)
+                except ImportError:
+                    return {}
+            return out
+    return {}
+
+
+def _fs_delta(a, b):
+    """mean absolute pixel difference of the rendered first screen
+    (0–255 scale) — the rendered Δ the audit measures, not a markup
+    signature."""
+    import numpy as np
+    if a.shape != b.shape:
+        return 99.0
+    return float(np.abs(a - b).mean())
+
+
+def _fs_dedupe_rows(spec, dist):
+    """drop variant docs whose rendered first screen sits within
+    Δ<6 of an already-kept option in the same row (base comp or an
+    earlier variant). Pairwise greedy — genuine structural
+    alternatives survive; near-identical first screens don't."""
+    paths = [a['preview'] for r in spec for a in r['alts']]
+    imgs = _fs_render(paths, dist)
+    if not imgs:
+        return
+    for r in spec:
+        kept = []
+        for a in r['alts']:
+            fp = os.path.join(dist, a['preview'])
+            base = imgs.get(a['preview'])
+            if base is None:
+                kept.append(a)
+                continue
+            near = next(
+                (k for k in kept
+                 if imgs.get(k['preview']) is not None and
+                 _fs_delta(base, imgs[k['preview']]) < 6.0), None)
+            if near is not None and a is not r['alts'][0]:
+                try:
+                    os.remove(fp)
+                except OSError:
+                    pass
+                continue
+            kept.append(a)
+        r['alts'] = kept
 
 
 # the menu trigger is a designed affordance, not a text pill — the
@@ -1645,8 +1759,11 @@ def _copy_slot(pd, bid):
 def _block_slot(block):
     """minimal slot derived from the section's own emitted markup —
     rows whose block isn't a COPY.json b-row (hero/end-act/footer)
-    bind their real emitted copy instead of lorem: h1/h2 → heading,
-    first <p>s → before, <a>s → links, first <img> → media."""
+    bind their real emitted copy instead of lorem: h1/h2 (or the
+    brand mark / CTA label when a row has no heading element) →
+    heading, first <p>s → before, <a>s → links, <details> → qa,
+    <li>s → items, first <img> → media. Detail/list internals bind
+    to qa/items only — never again as paragraphs or links."""
     slot = {}
     if not block:
         return slot
@@ -1655,11 +1772,29 @@ def _block_slot(block):
         # or _inline re-escapes them into literal &amp;/&#39;
         return html.unescape(re.sub(
             r'\s+', ' ', re.sub(r'<[^>]+>', '', s)).strip())
-    m = re.search(r'<h[12][^>]*>(.*?)</h[12]>', block, re.S)
+    # <details>/<li> internals bind to qa/items below — strip them
+    # from the paragraph/link pools or answers render twice
+    naked = re.sub(r'<details[^>]*>.*?</details>', '', block,
+                   flags=re.S)
+    naked = re.sub(r'<(?:ul|ol)[^>]*>.*?</(?:ul|ol)>', '', naked,
+                   flags=re.S)
+    m = re.search(r'<h[12][^>]*>(.*?)</h[12]>', naked, re.S)
     if m:
         slot['heading'] = txt(m.group(1))
+    else:
+        # a row with no heading element still names itself: the
+        # brand mark (footer chrome) or the CTA label (act rows)
+        m = re.search(
+            r'class="[^"]*(?:brand-mark|logo)[^"]*"[^>]*>(.*?)<',
+            block, re.S) or re.search(
+            r'class="[^"]*wf-cta-button[^"]*"[^>]*>(.*?)</a>',
+            block, re.S)
+        if m:
+            t = txt(m.group(1))
+            if t and len(t) <= 60:
+                slot['heading'] = t[:1].upper() + t[1:]
     ps = [txt(p) for p in
-          re.findall(r'<p[^>]*>(.*?)</p>', block, re.S)]
+          re.findall(r'<p[^>]*>(.*?)</p>', naked, re.S)]
     ps = [p for p in ps if p]
     if ps:
         slot['before'] = ps[:3]
@@ -1667,7 +1802,7 @@ def _block_slot(block):
         slot['after'] = ps[3:]
     links = [{'text': t} for t in
              (txt(a) for a in re.findall(
-                 r'<a\b[^>]*>(.*?)</a>', block, re.S)) if t]
+                 r'<a\b[^>]*>(.*?)</a>', naked, re.S)) if t]
     if links:
         slot['links'] = links[:4]
     qas = [{'q': txt(m.group(1)), 'a': txt(m.group(2))}
@@ -1681,6 +1816,11 @@ def _block_slot(block):
     lis = [l for l in lis if l]
     if lis:
         slot['items'] = [{'term': l, 'text': ''} for l in lis]
+    elif links and re.match(r'\s*<footer', block):
+        # a footer's link columns ARE its content — card-list
+        # alternatives bind them as items, not keyword stubs
+        slot['items'] = [{'term': l['text'], 'text': ''}
+                         for l in links[:6]]
     im = re.search(r'<img[^>]+src="([^"]+)"', block)
     if im:
         slot['media'] = im.group(1)
@@ -2360,7 +2500,14 @@ def _slot_frag(comp, slot):
         h += '</div></div></div></div>'
     elif comp == 'footer-shop':
         h += ('<div class="wf-shop-footer-1"><div class="stack">'
-              '<div class="sec-inner"><div class="wf-usp-1-list">')
+              '<div class="sec-inner">'
+              '<div class="wf-shop-footer-1__container">'
+              '<div class="wf-shop-footer-1__content">')
+        # heading order: h2 leads the h3 card grid — never h3 first
+        h += f'<h2 class="text-fluid-2">{head}</h2>'
+        if sub:
+            h += f'<p class="text-fluid-0">{_inline(sub)}</p>'
+        h += '</div></div><div class="wf-usp-1-list">'
         its = items or [{'term': _Raw(_L.format(s='items[]')),
                          'text': _Raw(_L.format(s='items[]'))}
                         for _i in range(3)]
@@ -2372,11 +2519,8 @@ def _slot_frag(comp, slot):
             f'<h3 class="text-fluid-1">{_val(_iterm(i))}</h3>'
             f'<p class="text-fluid-0">{_val(i.get("text") or "")}</p>'
             '</div></div>' for i in its)
-        h += ('</div><div class="wf-shop-footer-1__container">'
-              '<div class="wf-shop-footer-1__content">')
-        h += f'<h2 class="text-fluid-2">{head}</h2>'
-        if sub:
-            h += f'<p class="text-fluid-0">{_inline(sub)}</p>'
+        h += '</div><div class="wf-shop-footer-1__container">'
+        h += '<div class="wf-shop-footer-1__content">'
         if links:
             h += '<ul class="mt-stack list-plain">' + ''.join(
                 f'<li>{_inline(t)}</li>' for t in links) + '</ul>'
@@ -2474,16 +2618,23 @@ def emit_section_fragments(pd):
         # their copy from the section's own emitted block, not lorem
         slot = _copy_slot(pd, bid) or _block_slot(block)
         for c in cand:
-            src = blocks.get(c)
+            # an artifact binds ONLY its own row's copy — a foreign
+            # row's emitted fragment would carry that row's copy into
+            # this board, so non-own candidates render through
+            # _slot_frag bound to THIS row's slot
+            src = blocks.get(c) if c == comp else None
             if src:
-                # HARD RULE: a candidate renders the comp's real
-                # emitted fragment — the pipeline's own file — never
-                # a re-rendered skeleton when an artifact exists
                 markup, bhead, battr, css = src[0], src[1], src[2], ''
             else:
                 inner, unmap = _slot_frag(c, slot)
                 if inner is None:
                     missing.append(c)
+                    continue
+                if unmap:
+                    # NO LOREM: a variant that can't bind the slot it
+                    # needs is dropped, not emitted with filler copy
+                    missing.append(c)
+                    unmapped_map[c] = unmap
                     continue
                 bhead, battr = rows[0][4], rows[0][5]
                 markup = (f'<section class="sec-band surface-base '
@@ -2491,8 +2642,6 @@ def emit_section_fragments(pd):
                           f'data-comp="{c}"><div class="sec-inner">'
                           + inner + '</div></section>')
                 css = _LOREM_CSS + _SEQ_CSS
-                if unmap:
-                    unmapped_map[c] = unmap
             emitted.append(c)
             fp = os.path.join(sdir, c + '.html')
             with open(fp, 'w', encoding='utf-8') as fh:
@@ -2513,6 +2662,11 @@ def emit_section_fragments(pd):
         depth.append({'sec': sec, 'allowed': allowed.get(bid) or [],
                       'emitted': emitted, 'missing': missing,
                       'unmapped': unmapped_map})
+    # boards offer genuinely different structures: pairwise rendered
+    # first-screen Δ must reach 6, capped at 7 options per row
+    _fs_dedupe_rows(spec, dist)
+    for r in spec:
+        r['alts'] = r['alts'][:7]
     return spec, depth
 
 
