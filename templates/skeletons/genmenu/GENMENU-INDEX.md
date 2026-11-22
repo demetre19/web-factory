@@ -1,6 +1,6 @@
 # GENMENU-INDEX — AI-Studio-generated exemplars
 
-700 exemplars generated with Google AI Studio / Claude (operator-supplied
+720 exemplars generated with Google AI Studio / Claude (operator-supplied
 React + Tailwind sources), SSR-rendered to static open-state fragments and
 vectorised by `tools/design-gate/genmenu_bank.py` (deterministic — no paid
 calls).
@@ -97,8 +97,12 @@ calls).
 | `deco-divider/` | deco-divider | 9 | folio-ornaments |
 | `deco-frame/` | deco-frame | 5 | folio-ornaments |
 | `deco-ornament/` | deco-ornament | 6 | folio-ornaments |
+| `fx-cursor/` | fx-cursor | 6 | cursor-atlas |
+| `fx-magnetic/` | fx-magnetic | 7 | cursor-atlas |
+| `fx-tilt/` | fx-tilt | 2 | cursor-atlas |
+| `fx-reveal/` | fx-reveal | 5 | cursor-atlas |
 
-Counts are per `tags.json` (700 rows). `nav-bottom-sheet` and `nav-top-sheet`
+Counts are per `tags.json` (720 rows). `nav-bottom-sheet` and `nav-top-sheet`
 are NEW topology ids — web Mobbin returned no exemplars for these classes
 (iOS-heavy classes). `footer-*`, `pricing-*`, `auth-form`, `empty-state`,
 `modal-*`, `comparison-*`, `data-table-expandable`, `ui-*`, `nav-micro`,
