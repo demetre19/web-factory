@@ -1997,14 +1997,19 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
 #themeBtn svg{width:15px;height:15px}
 #themeBtn:hover{border-color:var(--line-2)}
 #vwCtl{display:flex;gap:2px;border:1px solid var(--line);
-     border-radius:999px;padding:2px;background:var(--bg-2)}
+     border-radius:999px;padding:2px;background:var(--bg-2);
+     position:relative}
+#vwCtl .vind{position:absolute;top:2px;left:0;height:calc(100% - 4px);
+     border-radius:999px;background:var(--ink);z-index:0;width:0;
+     transition:transform .18s ease,width .18s ease}
 #vwCtl button{border:0;background:transparent;color:var(--muted);
-     padding:6px 12px;font:600 12px var(--font);cursor:pointer;
-     display:grid;place-items:center;border-radius:999px;
-     transition:background .12s,color .12s}
-#vwCtl button:hover{color:var(--ink);background:var(--panel)}
+     padding:6px 12px;min-width:38px;font:600 12px var(--font);
+     cursor:pointer;display:grid;place-items:center;
+     border-radius:999px;transition:color .12s;position:relative;
+     z-index:1}
+#vwCtl button:hover{color:var(--ink)}
 #vwCtl button svg{width:15px;height:15px}
-#vwCtl button.on{background:var(--ink);color:var(--bg)}
+#vwCtl button.on{color:var(--bg)}
 #dnaPop{position:relative}
 #dnaPop>summary{list-style:none;width:34px;height:34px;
      display:grid;place-items:center;border:1px solid var(--line);
@@ -2231,6 +2236,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
       <small id="whoSub">design-file not loaded</small></div>
     <div class="sp"></div>
     <div id="vwCtl" title="preview breakpoint — applies to every preview">
+      <span class="vind" aria-hidden="true"></span>
       <button data-w="340px" title="mobile" aria-label="mobile">
         <svg viewBox="0 0 16 16" fill="none" stroke="currentColor"
           stroke-width="1.4"><rect x="4.5" y="1.5" width="7"
@@ -2307,12 +2313,21 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
       if(!localStorage.getItem('wfapp-theme'))
         applyTheme(e.matches?'dark':'light')})}catch(e){}
 
-  // one global preview breakpoint — M/T/D, every frame at once
+  // one global preview breakpoint — M/T/D, every frame at once;
+  // sliding indicator tracks the active segment
+  function _vind(){
+    var ind=document.querySelector('#vwCtl .vind'),
+        on=document.querySelector('#vwCtl button.on')||
+           document.querySelector('#vwCtl button');
+    if(ind&&on){ind.style.width=on.offsetWidth+'px';
+      ind.style.transform='translateX('+on.offsetLeft+'px)'}}
   document.querySelectorAll('#vwCtl button').forEach(function(b){
     b.onclick=function(){
       document.querySelectorAll('#vwCtl button').forEach(
         function(x){x.classList.toggle('on',x===b)});
-      document.documentElement.style.setProperty('--vw',b.dataset.w)}});
+      document.documentElement.style.setProperty('--vw',b.dataset.w);
+      _vind()}});
+  _vind();window.addEventListener('resize',_vind);
 
   // rail collapse — hamburger on narrow screens, auto-close on pick
   document.getElementById('railBtn').onclick=function(){
