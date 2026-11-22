@@ -25,7 +25,8 @@ per-section topology scrubbing inline on the full page) →
 sections/elements (galleries). Every preview is static HTML —
 variants differ by a CSS-var override bundle, never by a rebuild.
 """
-import datetime, html.parser, json, os, re, sys, urllib.parse
+import datetime, html.parser, json, os, re, sys, \
+    threading, urllib.parse
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
@@ -633,6 +634,13 @@ def emit_vibe_previews(pd):
 # ------------------------------------------------------------------
 _COPY_KEYS = ('answer', 'before', 'items', 'list_ordered', 'qa',
               'links', 'after')
+class _Raw(str):
+    """Value-level "already markup" marker for machinery-built
+    sentinels — a `_raw` dict key could be forged via COPY.json into
+    an escaping bypass; a str subclass cannot cross JSON, so only
+    values WE construct skip escaping."""
+
+
 _L = ('<em class="wf-lorem" data-slot="{s}">Lorem ipsum — '
       'unmapped {s}</em>')
 _LOREM_CSS = ('.wf-lorem{display:inline-block;outline:1px dashed '
@@ -648,6 +656,12 @@ def _inline(s):
     t = re.sub(r'\[([^\]]+)\]\(([^)\s]+)\)',
                r'<a href="\2">\1</a>', t)
     return t
+
+
+def _val(v):
+    """bind a slot value: machinery _Raw passes through untouched,
+    anything JSON-decoded is escaped via _inline"""
+    return str(v) if isinstance(v, _Raw) else _inline(v)
 
 
 def _copy_slot(pd, bid):
@@ -723,13 +737,14 @@ def _slot_frag(comp, slot):
         h += ''.join(f'<p class="mt-stack text-fluid-0">'
                      f'{_inline(p)}</p>' for p in before)
         h += '</div>'
-        its = items or [{'term': _L.format(s='items[]'),
-                         'text': _L.format(s='items[]')}]
+        its = items or [{'term': _Raw(_L.format(s='items[]')),
+                         'text': _Raw(_L.format(s='items[]'))}
+                        for _i in range(3)]
         if not items:
             unmapped.append('items')
         h += '<dl class="mt-stack grid-auto text-fluid-0">' + \
-            ''.join(f'<dt><strong>{_inline(i.get("term") or i.get("title") or "")}</strong></dt>'
-                    f'<dd>{_inline(i.get("text") or "")}</dd>'
+            ''.join(f'<dt><strong>{_val(i.get("term") or i.get("title") or "")}</strong></dt>'
+                    f'<dd>{_val(i.get("text") or "")}</dd>'
                     for i in its) + '</dl>'
         h += '<div class="max-w-prose">' + \
             ''.join(f'<p class="mt-stack text-fluid-0">'
@@ -783,15 +798,15 @@ def _slot_frag(comp, slot):
         h += '</div>'
         h += ''.join(f'<p class="mt-stack max-w-prose text-fluid-0">'
                      f'{_inline(p)}</p>' for p in before)
-        its = items or [{'quote': _L.format(s='items[].quote'),
-                         'who': _L.format(s='items[].who')}]
+        its = items or [{'quote': _Raw(_L.format(s='items[].quote')),
+                         'who': _Raw(_L.format(s='items[].who'))}]
         if not items:
             unmapped.append('items')
         h += '<ul class="mt-sec grid-auto list-plain">' + \
             ''.join('<li class="card"><p class="t0 quote">“' +
-                    _inline(i.get('quote') or i.get('text') or '') +
+                    _val(i.get('quote') or i.get('text') or '') +
                     '”</p><div class="quote-foot"><span>' +
-                    _inline(i.get('who') or '') +
+                    _val(i.get('who') or '') +
                     ((' · ' + _inline(i['source']))
                      if i.get('source') else '') +
                     '</span></div></li>' for i in its) + '</ul>'
@@ -805,14 +820,18 @@ def _slot_frag(comp, slot):
             h += f'<p class="lede">{_inline(sub)}</p>'
         h += ''.join(f'<p class="t0 sub-p">{_inline(p)}</p>'
                      for p in before) + '</div>'
-        if items:
-            h += '<ul class="mt-sec grid-auto list-plain">' + \
-                ''.join(f'<li class="card"><span class="num">'
-                        f'{n + 1:02d}</span><h3 class="t0 sub-h">'
-                        f'{_inline(i.get("term") or i.get("title") or "")}'
-                        f'</h3><p class="t0 sub-p">'
-                        f'{_inline(i.get("text") or "")}</p></li>'
-                        for n, i in enumerate(items)) + '</ul>'
+        its = items or [{'term': _Raw(_L.format(s='items[]')),
+                         'text': _Raw(_L.format(s='items[]'))}
+                        for _i in range(3)]
+        if not items:
+            unmapped.append('items')
+        h += '<ul class="mt-sec grid-auto list-plain">' + \
+            ''.join(f'<li class="card"><span class="num">'
+                    f'{n + 1:02d}</span><h3 class="t0 sub-h">'
+                    f'{_val(i.get("term") or i.get("title") or "")}'
+                    f'</h3><p class="t0 sub-p">'
+                    f'{_val(i.get("text") or "")}</p></li>'
+                    for n, i in enumerate(its)) + '</ul>'
         h += ''.join(f'<p class="mt-stack max-w-prose text-fluid-0">'
                      f'{_inline(p)}</p>' for p in after) + '</div>'
     elif comp == 'sequence':
@@ -822,15 +841,19 @@ def _slot_frag(comp, slot):
             h += f'<p class="lede">{_inline(sub)}</p>'
         h += ''.join(f'<p class="t0 sub-p">{_inline(p)}</p>'
                      for p in before) + '</div>'
-        if items:
-            h += '<ol class="flow-list mt-sec list-plain">' + \
-                ''.join(f'<li class="flow-row"><span class="num '
-                        f'num-prom">{n + 1:02d}</span><div>'
-                        f'<h3 class="t0 sub-h">'
-                        f'{_inline(i.get("term") or i.get("title") or "")}'
-                        f'</h3><p class="t0 sub-p sub-flow">'
-                        f'{_inline(i.get("text") or "")}</p></div></li>'
-                        for n, i in enumerate(items)) + '</ol>'
+        its = items or [{'term': _Raw(_L.format(s='items[]')),
+                         'text': _Raw(_L.format(s='items[]'))}
+                        for _i in range(3)]
+        if not items:
+            unmapped.append('items')
+        h += '<ol class="flow-list mt-sec list-plain">' + \
+            ''.join(f'<li class="flow-row"><span class="num '
+                    f'num-prom">{n + 1:02d}</span><div>'
+                    f'<h3 class="t0 sub-h">'
+                    f'{_val(i.get("term") or i.get("title") or "")}'
+                    f'</h3><p class="t0 sub-p sub-flow">'
+                    f'{_val(i.get("text") or "")}</p></div></li>'
+                    for n, i in enumerate(its)) + '</ol>'
         h += ''.join(f'<p class="t0 sub-p">{_inline(t)}</p>'
                      for t in links)
         h += ''.join(f'<p class="t0 sub-p">{_inline(p)}</p>'
@@ -841,14 +864,18 @@ def _slot_frag(comp, slot):
         if sub:
             h += f'<p class="mt-stack max-w-prose text-fluid-0">' \
                  f'{_inline(sub)}</p>'
-        if items:
-            h += '<div class="mt-fluid-l grid gap-stack ' \
-                 'md:grid-cols-2">' + \
-                ''.join(f'<div class="card"><h3 class="t0 sub-h">'
-                        f'{_inline(i.get("term") or i.get("title") or "")}'
-                        f'</h3><p class="mt-fluid-s text-fluid-0">'
-                        f'{_inline(i.get("text") or "")}</p></div>'
-                        for i in items) + '</div>'
+        its = items or [{'term': _Raw(_L.format(s='items[]')),
+                         'text': _Raw(_L.format(s='items[]'))}
+                        for _i in range(3)]
+        if not items:
+            unmapped.append('items')
+        h += '<div class="mt-fluid-l grid gap-stack ' \
+             'md:grid-cols-2">' + \
+            ''.join(f'<div class="card"><h3 class="t0 sub-h">'
+                    f'{_val(i.get("term") or i.get("title") or "")}'
+                    f'</h3><p class="mt-fluid-s text-fluid-0">'
+                    f'{_val(i.get("text") or "")}</p></div>'
+                    for i in its) + '</div>'
         for seq in (before, after):
             h += ''.join(f'<p class="mt-stack max-w-prose text-fluid-0">'
                          f'{_inline(p)}</p>' for p in seq)
@@ -911,15 +938,16 @@ def _slot_frag(comp, slot):
         h += ''.join(f'<p class="t0 sub-p">{_inline(p)}</p>'
                      for p in before) + '</div>'
         qas = slot.get('qa') or []
-        if qas:
-            h += '<div class="mt-sec">' + \
-                ''.join(f'<details class="faq-item"><summary '
-                        f'class="faq-q">{_inline(q.get("q") or "")}'
-                        f'</summary><p class="t0 faq-a">'
-                        f'{_inline(q.get("a") or "")}</p></details>'
-                        for q in qas) + '</div>'
-        else:
+        if not qas:
+            qas = [{'q': _Raw(_L.format(s='qa[]')),
+                    'a': _Raw(_L.format(s='qa[]'))}]
             unmapped.append('qa')
+        h += '<div class="mt-sec">' + \
+            ''.join(f'<details class="faq-item"><summary '
+                    f'class="faq-q">{_val(q.get("q") or "")}'
+                    f'</summary><p class="t0 faq-a">'
+                    f'{_val(q.get("a") or "")}</p></details>'
+                    for q in qas) + '</div>'
         h += ''.join(f'<p class="t0 sub-p">{_inline(t)}</p>'
                      for t in links)
         h += ''.join(f'<p class="t0 sub-p">{_inline(p)}</p>'
@@ -955,6 +983,28 @@ def _slot_frag(comp, slot):
             h += f'<p class="t0 lede">{_inline(p)}</p>'
         h += ('</div><figure class="media-round"><div class="ph-media">'
               'media slot</div></figure></div>')
+    elif comp == 'modal-form':
+        # mirrors ModalForm.astro — sec-head + trigger + the open
+        # .flyout dialog (fields ride items[].term)
+        h += '<div class="stack"><div class="sec-head">' \
+             f'<h2 class="text-fluid-3">{head}</h2>'
+        if sub:
+            h += f'<p class="lede">{_inline(sub)}</p>'
+        h += '</div>'
+        its = items or [{'term': _Raw(_L.format(s='fields[]'))}]
+        if not items:
+            unmapped.append('fields')
+        h += ('<div class="flyout open" role="dialog" aria-modal="true">'
+              '<button class="flyout-close" type="button" '
+              'aria-label="Close">&times;</button>'
+              f'<h3 class="text-fluid-1">{head}</h3><form novalidate>' +
+              ''.join(f'<label class="text-fluid-0">'
+                      f'{_val(i.get("term") or i.get("title") or "")}'
+                      f'<input name="f{n}" type="text" /></label>'
+                      for n, i in enumerate(its)) +
+              f'<button class="wf-cta-button" type="submit">'
+              f'{_L.format(s="cta")}</button></form></div></div>')
+        unmapped.append('cta')
     else:
         return _generic_frag(slot, unmapped), unmapped
     return h, unmapped
@@ -1328,6 +1378,36 @@ def app_data(pipeline):
                             'variant': key,
                             'grp': grp.get('label'),
                             'mobile': bool(g.get('mobile'))})
+        if g['id'] == 'modals' and not any(
+                c['emitted'] for c in gcards):
+            # seed: builds predating modal emission leave the gallery
+            # empty — emit slot-bound fragments of the bank's own
+            # modal skeletons so there's something to scrub
+            outdir = os.path.join(pd, 'site', 'dist', 'preview',
+                                  'elements')
+            os.makedirs(outdir, exist_ok=True)
+            blk0, _r = _comp_blocks(pd)
+            head0 = battr0 = ''
+            if blk0:
+                head0, battr0 = blk0[next(iter(blk0))][1:3]
+            for comp in ('modal-form', 'form-panel'):
+                inner, _u = _slot_frag(comp, {})
+                if not inner:
+                    continue
+                fn = comp + '-open.html'
+                with open(os.path.join(outdir, fn), 'w',
+                          encoding='utf-8') as fh:
+                    fh.write(_doc(head0, battr0, inner,
+                                  css=_LOREM_CSS))
+                gcards.append({
+                    'id': comp + '-open', 'name': comp + ' (seeded)',
+                    'preview': '/built/' + urllib.parse.quote(
+                        os.path.join(pd, 'site', 'dist',
+                                     'preview', 'elements', fn)),
+                    'tags': [comp, 'seeded', 'lorem'],
+                    'emitted': True, 'element': 'modals',
+                    'variant': comp + '-open',
+                    'grp': None, 'mobile': bool(g.get('mobile'))})
         galleries[g['id']] = dict(
             g, cards=gcards,
             emitted_n=sum(1 for c in gcards if c['emitted']))
@@ -1461,11 +1541,11 @@ def save_system(pipeline, name, mode=None):
     slug = re.sub(r'[^a-z0-9-]+', '-', (name or '').lower()) \
         .strip('-')[:48]
     if not slug:
-        return 1, 'name needed'
+        return 1, 'name needed', None
     ctx = G.Ctx(pipeline)
     pd = ctx.dir
     if not os.path.isdir(pd):
-        return 1, f'pipeline {pipeline} not found'
+        return 1, f'pipeline {pipeline} not found', None
     ep = _json_at(pd, 'ELEMENT-PICKS.json') or {}
     picks = ep.get('picks', [])
     vibe = next((p.get('variant') for p in picks
@@ -1489,7 +1569,7 @@ def save_system(pipeline, name, mode=None):
     fp = os.path.join(sdir, slug + '.json')
     with open(fp, 'w') as fh:
         json.dump(rec, fh, indent=1, sort_keys=True)
-    return 0, f'system “{name}” saved → SAVED-SYSTEMS/{slug}.json'
+    return 0, f'system “{name}” saved → SAVED-SYSTEMS/{slug}.json', rec
 
 
 def list_systems(pd):
@@ -1508,6 +1588,11 @@ def list_systems(pd):
     return out
 
 
+# pick/nonce registries are read-modify-write files — the threaded
+# server can interleave two picks and lose one, so writes serialise
+_PICKS_LOCK = threading.Lock()
+
+
 def record_element_pick(pipeline, element, variant):
     """Signed element decision — ELEMENT-PICKS.json in the pipeline
     dir. Same service-side signing as candidate decisions; the file
@@ -1523,21 +1608,22 @@ def record_element_pick(pipeline, element, variant):
     ctx = G.Ctx(pipeline)
     pd = ctx.dir
     fp = os.path.join(pd, 'ELEMENT-PICKS.json')
-    data = _json_at(pd, 'ELEMENT-PICKS.json') or {
-        'generated_by': 'approve_service.py',
-        'picks': []}
-    for p in data.get('picks', []):
-        if p.get('element') == element:
-            return 1, (f'{element} already picked '
-                       f'({p.get("variant")}) — one decision per '
-                       'gallery')
-    rec = {'element': element, 'variant': variant,
-           'ts': datetime.datetime.now().isoformat(
-               timespec='seconds')}
-    rec['sig'] = G._sig(rec, G.op_key(create=True))
-    data.setdefault('picks', []).append(rec)
-    with open(fp, 'w') as fh:
-        json.dump(data, fh, indent=1, sort_keys=True)
+    with _PICKS_LOCK:
+        data = _json_at(pd, 'ELEMENT-PICKS.json') or {
+            'generated_by': 'approve_service.py',
+            'picks': []}
+        for p in data.get('picks', []):
+            if p.get('element') == element:
+                return 1, (f'{element} already picked '
+                           f'({p.get("variant")}) — one decision per '
+                           'gallery')
+        rec = {'element': element, 'variant': variant,
+               'ts': datetime.datetime.now().isoformat(
+                   timespec='seconds')}
+        rec['sig'] = G._sig(rec, G.op_key(create=True))
+        data.setdefault('picks', []).append(rec)
+        with open(fp, 'w') as fh:
+            json.dump(data, fh, indent=1, sort_keys=True)
     return 0, f'{element} → {variant} (signed into ELEMENT-PICKS.json)'
 
 
@@ -1668,6 +1754,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
 .card.mobile .cb iframe{max-width:var(--vw,340px);margin:0 auto;
      border-left:1px solid var(--line);
      border-right:1px solid var(--line)}
+.card.mobile{max-width:calc(var(--vw,340px) + 26px);
+     justify-self:center;width:100%}
 .card .cb .noprev{display:grid;place-items:center;height:120px;
      color:var(--muted);font-size:12px;padding:0 16px;text-align:center}
 .card .vp{position:absolute;top:8px;right:8px;display:flex;gap:4px;
@@ -2008,9 +2096,10 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
       api('/save-system',{pipeline:PIPELINE,name:nm,
         mode:document.documentElement.dataset.theme}).then(function(j){
         toast(j.message||(j.ok?'saved':'refused'));
-        if(j.ok){DATA.saved_systems=(DATA.saved_systems||[]).concat([{
-          slug:(nm||'').toLowerCase().replace(/[^a-z0-9-]+/g,'-').
-            replace(/^-+|-+$/g,''),name:nm,vibe:BAKED}]);
+        if(j.ok){var s=j.system||{slug:(nm||'').toLowerCase().
+          replace(/[^a-z0-9-]+/g,'-').replace(/^-+|-+$/g,''),
+          name:nm,vibe:BAKED,picks:[]};
+          DATA.saved_systems=(DATA.saved_systems||[]).concat([s]);
           board()}})};
     document.querySelectorAll('[data-load]').forEach(function(b){
       b.onclick=function(){
