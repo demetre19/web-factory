@@ -1,6 +1,6 @@
 # GENMENU-INDEX — AI-Studio-generated exemplars
 
-380 exemplars generated with Google AI Studio / Claude (operator-supplied
+400 exemplars generated with Google AI Studio / Claude (operator-supplied
 React + Tailwind sources), SSR-rendered to static open-state fragments and
 vectorised by `tools/design-gate/genmenu_bank.py` (deterministic — no paid
 calls).
@@ -25,10 +25,10 @@ calls).
 | `modal-bottom-sheet/` | modal-bottom-sheet | 3 | modal-atlas |
 | `modal-slide-over/` | modal-slide-over | 1 | modal-atlas |
 | `ui-element/` | ui-element | 20 | ui-elements |
-| `checkout/` | checkout | 10 | checkout-components |
-| `order-confirm/` | order-confirm | 5 | checkout-components |
-| `product-page/` | product-page | 2 | checkout-components |
-| `commerce-flow/` | commerce-flow | 3 | checkout-components |
+| `checkout/` | checkout | 16 | checkout-components, commerce-kit-20 |
+| `order-confirm/` | order-confirm | 9 | checkout-components, commerce-kit-20 |
+| `product-page/` | product-page | 5 | checkout-components, commerce-kit-20 |
+| `commerce-flow/` | commerce-flow | 6 | checkout-components, commerce-kit-20 |
 | `proof-testimonial/` | proof-testimonial | 5 | proofatlas |
 | `proof-rating/` | proof-rating | 8 | proofatlas |
 | `proof-logo-cloud/` | proof-logo-cloud | 3 | proofatlas |
@@ -42,8 +42,10 @@ calls).
 | `hero-media-bg/` | hero-media-bg | 11 | hero-architecture |
 | `card-block/` | card-block | 20 | folio-twenty |
 | `form-block/` | form-block | 20 | formspecimen |
+| `commerce-cart/` | commerce-cart | 3 | commerce-kit-20 |
+| `product-grid/` | product-grid | 1 | commerce-kit-20 |
 
-Counts are per `tags.json` (380 rows). `nav-bottom-sheet` and `nav-top-sheet`
+Counts are per `tags.json` (400 rows). `nav-bottom-sheet` and `nav-top-sheet`
 are NEW topology ids — web Mobbin returned no exemplars for these classes
 (iOS-heavy classes). `footer-*`, `pricing-*`, `auth-form`, `empty-state` and
 `modal-*` classes are new to this corpus (generator families, distinct from

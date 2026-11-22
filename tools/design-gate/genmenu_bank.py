@@ -43,6 +43,7 @@ PACK_META = {
     "elements": ("ui-element", "element", ["element"], "ui element"),
     "modal": ("modal-dialog", "modal", ["modal"], "modal"),
     "checkout": ("commerce-flow", "commerce", ["commerce"], "commerce"),
+    "commerce": ("commerce-flow", "commerce", ["commerce"], "commerce"),
     "patternfolio": (None, "screen", ["screen"], "screen"),
     "proofatlas": ("proof-testimonial", "proof", ["social proof"], "social proof"),
     "meridian": ("data-display", "element", ["data"], "data display"),
@@ -171,12 +172,14 @@ def sniff_topology(html_text: str, baseline: str) -> tuple[str, str]:
             return any(n in low for n in needles)
         if "order" in low and hasl("confirm", "receipt", "thank", "placed"):
             return "order-confirm", "medium"
+        if hasl("sort by", "filters", "filter by") and c.count("grid") >= 1:
+            return "product-grid", "medium"
+        if hasl("shopping cart", "your cart", "cart is empty", "order summary"):
+            return "commerce-cart", "medium"
         if hasl("add to cart", "add to bag"):
             return "product-page", "medium"
         if hasl("card number", "expiry", "expiration", "cvv", "checkout"):
             return "checkout", "medium"
-        if hasl("shopping cart", "your cart", "qty"):
-            return "commerce-cart", "medium"
         return "commerce-flow", "low"
     if baseline == "modal-dialog":
         if has("bottom-0", "rounded-t-"):
