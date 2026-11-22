@@ -191,7 +191,13 @@ DIVERGENCES = dict(
        'sec-pad': "section shell local: binds the density's "
                   '--section-space-* rung (DENSITY-RUNGS)',
        'tracking-display': 'display letter-spacing in em from DNA '
-                           'type.tracking_display'})
+                           'type.tracking_display',
+       'elements-gap': 'B smart-spacing semantic alias for the '
+                       'wrapped-sibling gap floor — binds the '
+                       'density-matched -to- pair, not a scale rung',
+       'list-item-spacing': 'ACSS alias of the -to- pair bound by '
+                            'space.density_scale — prose-adjacent list '
+                            'rhythm, not a scale rung'})
 
 
 def settings(overrides=None):

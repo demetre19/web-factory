@@ -390,6 +390,10 @@ def _finish(geno, genes, site_type, seed, declared, wild=(),
             'machinery derives neutrals but never invents hex')
     prov['color.accent'] = {'source': 'chosen', 'sample_n': profile_n,
                             'value': accent}
+    prov['fluid'] = {'divergences': {
+        'elements-gap': 'ACSS smart-spacing semantic alias for the '
+                        'wrapped-sibling gap floor (not a scale rung '
+                        '— binds to the matched -to- tier)'}}
     light, dark = roles_for(geno, accent)
     vs = css_vars(knobs, geno, accent, light)
     nov = genome.novelty(geno, site_type)
