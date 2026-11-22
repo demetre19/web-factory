@@ -322,6 +322,43 @@ def parse_html(text):
                      for k, v in p._first_p.items()}
     return p
 
+
+def _css_rules(txt):
+    """Yield (selector_text, body) per {…} rule, linearly. A regex
+    like `([^{}]+)\\{([^}]*)(?:min-height|height)` backtracks
+    quadratically across a built stylesheet (~10s on 80KB of CSS)."""
+    prev_end = 0
+    for m in re.finditer(r'\{([^{}]*)\}', txt):
+        yield txt[prev_end:m.start()], m.group(1)
+        prev_end = m.end()
+
+
+def _media_blocks(txt):
+    """Yield (prelude, body) per @media rule; body keeps inner braces
+    (depth-matched scan, not a nested-quantifier regex)."""
+    for m in re.finditer(r'@media[^{]+\{', txt):
+        depth, i = 1, m.end()
+        while i < len(txt) and depth:
+            if txt[i] == '{':
+                depth += 1
+            elif txt[i] == '}':
+                depth -= 1
+            i += 1
+        yield m.group(0)[len('@media'):-1], txt[m.end():i - 1]
+
+
+def _rule_min_heights(txt, sel_rx, under):
+    """[(sel, px)] rules whose selector matches sel_rx and declares
+    min-height < under px."""
+    out = []
+    for sel, body in _css_rules(txt):
+        if not sel_rx.search(sel):
+            continue
+        mh = re.search(r'min-height\s*:\s*(\d+)px', body)
+        if mh and int(mh.group(1)) < under:
+            out.append((sel.strip(), int(mh.group(1))))
+    return out
+
 def first_sentence(text):
     m = re.search(r'[.!?](\s|$)', text)
     return (text[:m.end()].strip() if m else text.strip())
@@ -6074,17 +6111,14 @@ def check_mobile_cta(ctx):
         css = re.sub(r'<!--.*?-->', '', txt, flags=re.S)
         parsed = parse_html(txt)
         has_cta = re.search(r'class="[^"]*(?:cta|btn|button)', txt, re.I)
-        for m in re.finditer(
-                r'([^{}]+)\{([^}]*)(?:min-height|height)\s*:\s*(\d+)px',
-                css):
-            sel = m.group(1)
-            if re.search(r'\b(btn|cta|button)\b', sel, re.I) \
-                    and int(m.group(3)) < 48 and 'min-height' in m.group(0):
-                f.append(f'R.9 {name}: CTA {sel.strip()[:40]} '
-                         f'min-height {m.group(3)}px < 48px')
-        mobile = ' '.join(m.group(1) for m in re.finditer(
-            r'@media[^{]*max-width:\s*(?:768|767|640|480|375)px[^{]*\{'
-            r'((?:[^{}]|\{[^}]*\})*)\}', css))
+        cta_sel = re.compile(r'\b(btn|cta|button)\b', re.I)
+        for sel, px in _rule_min_heights(css, cta_sel, 48):
+            f.append(f'R.9 {name}: CTA {sel[:40]} '
+                     f'min-height {px}px < 48px')
+        mobile = ' '.join(body for prelude, body in _media_blocks(css)
+                          if re.search(
+                              r'max-width:\s*(?:768|767|640|480|375)px',
+                              prelude))
         if has_cta and 'cta' in css.lower() and mobile and not re.search(
                 r'(?:cta|btn|button)[^,{}]*\{[^}]*'
                 r'(?:display:\s*flex|width:\s*100%|inline-size:\s*100%)',
@@ -6797,15 +6831,13 @@ def check_tap_size(ctx):
     f = []
     for p, txt in ctx.page_htmls() + dist_csss(ctx):
         # best-effort: interactive selectors with declared height < 44
-        for m in re.finditer(
-                r'([^{}]+)\{([^}]*)(?:min-height|height)\s*:\s*(\d+)px',
-                txt):
-            sel, px = m.group(1), int(m.group(3))
-            if re.search(r'\b(a|button|input|select|summary)\b', sel) \
-                    and px < 44 and 'min-height' in m.group(0):
-                f.append(f'R.6 {os.path.basename(p)}: {sel.strip()[:40]} '
-                         f'min-height {px}px < 44px')
+        ia_sel = re.compile(r'\b(a|button|input|select|summary)\b')
+        for sel, px in _rule_min_heights(txt, ia_sel, 44):
+            f.append(f'R.6 {os.path.basename(p)}: {sel[:40]} '
+                     f'min-height {px}px < 44px')
     return f
+
+
 
 def _segmented(ctx):
     """Per page: parsed html + block list (sections/nav with data-sec)."""
