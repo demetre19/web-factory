@@ -593,8 +593,7 @@ def emit_element_previews(pd):
             # inside the family's token space.
             open_js = ('<script>(function(){var n='
                        'document.querySelector('
-                       '".nav-links");if(n&&matchMedia('
-                       '"(min-width:60rem)").matches)'
+                       '".nav-links");if(n)'
                        'n.classList.add("open");})()</script>')
             # desktop surface — the nav as a bar, drawer never forced
             # open: burger hidden, links inline (menu board at D)
