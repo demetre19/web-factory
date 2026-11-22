@@ -65,8 +65,8 @@ ELEMENT_GALLERIES = [
          {'label': None, 'element': 'modals',
           'comps': ['modal-form', 'form-panel'], 'suffix': '-open'}]},
     {'id': 'footers', 'title': 'Footers · bank', 'icon': 'bars',
-     'desc': 'Reference footer topologies from the genmenu bank — '
-             'rendered as-banked (reference fidelity), not vibe-bound.',
+     'desc': 'Reference footer designs — shown exactly as stored '
+             'in the bank, not recoloured to the vibe.',
      'groups': []},
     {'id': 'pricing', 'title': 'Pricing · bank', 'icon': 'doc',
      'desc': 'Reference pricing topologies — tiers, single, table.',
@@ -2953,7 +2953,8 @@ def record_element_pick(pipeline, element, variant, bundle=None):
                                   G.op_key(create=True))
                 with open(fp, 'w') as fh:
                     json.dump(data, fh, indent=1, sort_keys=True)
-                return 0, (f'{element} {old_v} → {variant} '
+                return 0, ('Vibe baked' if element == 'vibe'
+                           else f'{element} {old_v} → {variant} '
                            '(superseded, signed into ELEMENT-PICKS.json)')
         rec = {'element': element, 'variant': variant, 'ts': now}
         if isinstance(bundle, dict):
@@ -2962,7 +2963,9 @@ def record_element_pick(pipeline, element, variant, bundle=None):
         data.setdefault('picks', []).append(rec)
         with open(fp, 'w') as fh:
             json.dump(data, fh, indent=1, sort_keys=True)
-    return 0, f'{element} → {variant} (signed into ELEMENT-PICKS.json)'
+    return 0, ('Vibe baked' if element == 'vibe'
+               else f'{element} → {variant} '
+               '(signed into ELEMENT-PICKS.json)')
 
 
 # ------------------------------------------------------------------
@@ -3686,8 +3689,11 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
   // AND picker — chips are conjunctive facets: every selected tag
   // must be present on a card (e.g. light AND professional)
   var FTAG_LABEL={
-    'fv1':'variant 1','fv2':'variant 2','fv3':'variant 3',
+    'fv1':'variant 1 · fine-tuned','fv2':'variant 2 · fine-tuned',
+    'fv3':'variant 3 · fine-tuned',
     'v1':'variant 1','v2':'variant 2','v3':'variant 3',
+    'index-led':'index layout','prose-led':'editorial layout',
+    'copy default':'standard layout','best-predicted':'recommended',
     'bank-option':'bank only — not emitted','bank':'in bank',
     'derived':'from this design','web':'from the web'};
   function filters(tags){
@@ -3696,7 +3702,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
          'title="clear all filters">clear all</button>';
     tags.forEach(function(t){
       var lab=FTAG_LABEL[t]||t;
-      if(seen[lab])return;seen[lab]=1;
+      if(seen[t])return;seen[t]=1;
       h+='<button class="fchip'+(FILT[t]?' on':'')+'" data-f="'+esc(t)+'">'+esc(lab)+'</button>'});
     return h;
   }
@@ -4860,16 +4866,25 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
         api('/approve',{wave:b.dataset.wave,pipeline:PIPELINE,
           nonce:n.nonce,design:b.dataset.d}).then(function(j){
           stat.className='pstat '+(j.ok?'ok':'bad');
-          var rw=!j.ok&&(j.message||'').match(/re-gate (w\d+)/);
-          if(rw){stat.textContent='inputs changed since '+rw[1]+
-              ' passed — re-gate it, then pick again. ';
+          // ORDER refusals name the earliest wave to re-gate:
+          // "re-gate wN", "ORDER: wN has not passed — run it first",
+          // "wN inputs changed since it passed"
+          var rw=!j.ok&&(j.message||'').match(
+            /re-gate (w\d+)|ORDER: (w\d+)|(w\d+) has not passed/);
+          if(rw){var wv=rw[1]||rw[2]||rw[3];
+            stat.textContent='earlier wave '+wv+
+              ' isn’t clean — re-gate it, then pick again. ';
             var rb=document.createElement('button');
-            rb.className='abtn';rb.textContent='Re-gate '+rw[1];
+            rb.className='abtn';rb.textContent='Re-gate '+wv;
             rb.onclick=function(){rb.disabled=true;
-              api('/regate',{wave:rw[1],pipeline:PIPELINE})
-                .then(function(g){toast(g.message);rb.disabled=false;
-                  if(g.ok)stat.textContent=rw[1]+
-                    ' clean — pick again'})};
+              api('/regate',{wave:wv,pipeline:PIPELINE})
+                .then(function(g){
+                  var msg=g.ok?g.message:(g.reason||g.message);
+                  toast(msg);rb.disabled=false;
+                  if(g.ok)stat.textContent=wv+
+                    ' clean — pick again';
+                  else stat.textContent=msg;
+                })};
             stat.appendChild(rb);
           }else stat.textContent=(j.message||(j.ok?'recorded':'refused'))
             .replace(/^approve REFUSED:? ?/,'');

@@ -920,15 +920,15 @@ def _handler():
                     body.get('wave', ''), body.get('pipeline', ''),
                     nonce=body.get('nonce'), design=body.get('design'),
                     chat=body.get('chat'))
-                self._send(200 if code == 0 else 400,
-                           {'ok': code == 0, 'message': txt})
+                # refusals are UX, not faults — 200 keeps them off
+                # the console error channel
+                self._send(200, {'ok': code == 0, 'message': txt})
             elif self.path == '/element-pick':
                 import picker_app
                 code, txt = picker_app.record_element_pick(
                     body.get('pipeline', ''), body.get('element', ''),
                     body.get('variant', ''), body.get('bundle'))
-                self._send(200 if code == 0 else 400,
-                           {'ok': code == 0, 'message': txt})
+                self._send(200, {'ok': code == 0, 'message': txt})
             elif self.path == '/vibe-resolve':
                 import picker_app
                 self._send(200, picker_app.vibe_resolve(
@@ -978,41 +978,98 @@ def _handler():
             elif self.path == '/confirm':
                 code, txt = confirm_approval(body.get('wave', ''),
                                              body.get('pipeline', ''))
-                self._send(200 if code == 0 else 400,
-                           {'ok': code == 0, 'message': txt})
+                self._send(200, {'ok': code == 0, 'message': txt})
             elif self.path == '/regate':
-                # re-run a wave's gate via the machinery CLI —
-                # gate.py <wave> <pipeline-dir> is the only path
+                # re-gate via the legal recorder: pipeline.py mints
+                # RUN.json + PIPELINE_RUN and cascades waves
+                # (producers → checklist → gate) — run.py/gate.py
+                # alone write a failing verdict (P.8/X.2)
                 import re as _re
                 import subprocess as _sp
                 wv = body.get('wave', '')
                 pd = os.path.realpath(body.get('pipeline', ''))
                 if not _re.fullmatch(r'w\d+', wv or '') or \
                         not os.path.isdir(pd):
-                    self._send(400, {'ok': False,
-                                     'message': 'bad wave or pipeline'})
+                    self._send(200, {'ok': False,
+                                     'reason': 'bad wave or pipeline'})
+                    return
+                here = os.path.dirname(os.path.abspath(__file__))
+                order = ['s0', 'w0', 'w1', 'w2', 'w3', 'w4',
+                         'w5', 'w6', 'w7', 'w8']
+                if wv not in order:
+                    self._send(200, {'ok': False,
+                                     'reason': f'{wv} is not a wave'})
                     return
                 try:
-                    env = dict(os.environ)
-                    env.pop('PIPELINE_RUN', None)
+                    _gs = json.load(open(os.path.join(
+                        pd, 'GATES.json'))) or {}
+                except Exception:
+                    _gs = {}
+                # earliest non-passed wave in ORDER — the cascade
+                # must start there or ORDER refuses the target
+                start = wv
+                for w in order[:order.index(wv) + 1]:
+                    if w != 's0' and \
+                            not (_gs.get(w) or {}).get('pass'):
+                        start = w
+                        break
+                env = dict(os.environ)
+                env.pop('PIPELINE_RUN', None)
+                try:
                     r = _sp.run(
                         [sys.executable,
-                         os.path.join(os.path.dirname(
-                             os.path.abspath(__file__)), 'gate.py'),
-                         wv, pd],
-                        capture_output=True, text=True, timeout=600,
+                         os.path.join(here, 'pipeline.py'), pd,
+                         '--from', start, '--to', wv],
+                        capture_output=True, text=True, timeout=900,
                         env=env)
-                    tail = (r.stdout + r.stderr).strip()[-3000:]
-                    self._send(200 if r.returncode == 0 else 400,
-                               {'ok': r.returncode == 0,
-                                'exit': r.returncode,
-                                'message': f'{wv} re-gate exit '
-                                           f'{r.returncode}',
-                                'tail': tail})
                 except _sp.TimeoutExpired:
-                    self._send(400, {'ok': False,
-                                     'message': f'{wv} re-gate timed '
-                                                'out (10m)'})
+                    self._send(200, {'ok': False,
+                                     'reason': f'{wv} re-gate timed '
+                                               'out (15m)'})
+                    return
+                tail = ((r.stdout or '') + (r.stderr or ''))\
+                    .strip()[-3000:]
+                # paused at a pick surface? say who must act (P.8)
+                m = _re.search(r'pick (w\d+) — click', tail)
+                if r.returncode == 0 and m:
+                    self._send(200, {
+                        'ok': False,
+                        'reason': f'{m.group(1)} needs your pick — '
+                                  'click a card in the picker, '
+                                  'then Re-gate again',
+                        'tail': tail})
+                    return
+                # report the failing rule ids from the wave's own
+                # verdict record — not a bare exit code
+                try:
+                    _gs2 = json.load(open(os.path.join(
+                        pd, 'GATES.json'))) or {}
+                except Exception:
+                    _gs2 = {}
+                if r.returncode == 0 and \
+                        (_gs2.get(wv) or {}).get('pass'):
+                    self._send(200, {
+                        'ok': True,
+                        'message': f'{wv} passed — pick again',
+                        'tail': tail})
+                    return
+                first = None
+                for w in order[:order.index(wv) + 1]:
+                    if w == 's0':
+                        continue
+                    if not (_gs2.get(w) or {}).get('pass'):
+                        first = w
+                        break
+                fails = ((_gs2.get(first) or {}).get('failures')
+                         if first else None) or []
+                reason = (f'{first} still fails: '
+                          + '; '.join(str(x) for x in fails[:4])
+                          if fails else
+                          (tail.splitlines()[-1] if tail
+                           else f'{wv} re-gate failed '
+                                f'(exit {r.returncode})'))
+                self._send(200, {'ok': False, 'reason': reason,
+                                 'exit': r.returncode, 'tail': tail})
             else:
                 self._send(404, {'error': 'unknown path'})
 
