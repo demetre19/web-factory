@@ -22,7 +22,16 @@ category[], mode, platform, plus derived style vocabulary
 Usage:
   bank_classify.py --dry-run
   OPENROUTER_API_KEY=... bank_classify.py --run [--model M]
-                                                 [--limit N]
+      [--batch-size N] [--resume]
+
+--batch-size N processes at most N uncheckpointed items (default:
+all); --resume is implicit — the checkpoint file is consulted every
+run, so a stopped batch never re-spends finished items. Commit the
+tags.json + checkpoint after each batch before starting the next.
+
+Test modes (see bottom of file): --test (24 exemplars x flash-lite
+vs flash), --test2 (free decider/vision lanes), --test-embed
+(embedding NN + rerank probes). Outputs land in classify_test/.
 """
 import base64
 import json
@@ -123,8 +132,10 @@ def main():
         sys.exit('OPENROUTER_API_KEY not set')
     model = args[args.index('--model') + 1] if '--model' in args \
         else MODEL_DEFAULT
-    limit = int(args[args.index('--limit') + 1]) \
-        if '--limit' in args else len(todo)
+    limit = int(args[args.index('--batch-size') + 1]) \
+        if '--batch-size' in args else (
+            int(args[args.index('--limit') + 1])
+            if '--limit' in args else len(todo))
     done = 0
     for tid, t, p in todo[:limit]:
         try:
@@ -779,3 +790,239 @@ if '--test2' in sys.argv:
     test_run2()
 if '--test-embed' in sys.argv:
     test_embed()
+
+
+# -------------------------------------------------------------------
+# --run (whole-bank): parallel paid pass over EVERY banked exemplar.
+# Worker pool (default 12) → 429 backoff; per-item .classify.json
+# output = resume token; credit floor checked before the batch.
+# -------------------------------------------------------------------
+import concurrent.futures  # noqa: E402
+import threading  # noqa: E402
+import time  # noqa: E402
+
+SKEL = os.path.join(REPO, 'templates', 'skeletons')
+WORKERS = 12
+RUN_MODEL = MODEL_LITE
+SEMANTIC_AXES = ('domain-vertical', 'audience', 'device-feel',
+                 'era-signature', 'vibe-primary', 'brand-weight',
+                 'copy-tone', 'polish-level', 'era-signature')
+
+
+def _bank_items():
+    """Every classifiable exemplar across all banks."""
+    best = {}
+    rank = {'.html': 0, '.webp': 1, '.astro': 2, '.tsx': 3,
+            '.json': 4}
+    for bank in sorted(os.listdir(SKEL)):
+        bd = os.path.join(SKEL, bank)
+        if not os.path.isdir(bd):
+            continue
+        for fam in sorted(os.listdir(bd)):
+            fd = os.path.join(bd, fam)
+            if not os.path.isdir(fd):
+                continue
+            for fn in sorted(os.listdir(fd)):
+                stem, ext = os.path.splitext(fn)
+                if ext not in rank or (
+                        ext == '.json' and (
+                            stem.endswith((
+                                '.spec', '.topo', '.classify',
+                                '.forensic')) or
+                            fn.startswith((
+                                'tags', '_', 'MANIFEST')))):
+                    continue
+                key = (fd, stem)
+                if key not in best or rank[ext] < best[key][0]:
+                    best[key] = (rank[ext], ext, os.path.join(fd, fn))
+    return [{
+        'id': f"{os.path.relpath(fd, SKEL).replace('/', '-')}-{stem}"
+              .replace(os.sep, '-'),
+        'kind': 'image' if ext == '.webp' else 'markup',
+        'path': path, 'ext': ext,
+        'out': os.path.join(fd, stem + '.classify.json')}
+        for (fd, stem), (_, ext, path) in sorted(best.items())]
+
+
+def _item_struct(it):
+    if it['kind'] == 'image':
+        for ext in ('.topo.json', '.spec.json'):
+            p = it['path'][:-5] + ext
+            if os.path.exists(p):
+                return open(p).read()
+        return ''
+    return open(it['path'], 'rb').read().decode('utf-8', 'replace')
+
+
+def _item_png(it, shots_dir):
+    """Cached png path for image-kind items; None otherwise."""
+    p = os.path.join(shots_dir,
+                     it['id'].replace('/', '_') + '.png')
+    if os.path.exists(p):
+        return p
+    try:
+        if it['kind'] == 'image':
+            open(p, 'wb').write(
+                base64.b64decode(_png_b64(it['path'])))
+            return p
+    except Exception:
+        return None
+    return None
+
+
+def _render_html_items(its, shots_dir, workers=8):
+    """Render .html fragments to PNGs concurrently (async pw)."""
+    import asyncio
+
+    async def go():
+        from playwright.async_api import async_playwright
+        async with async_playwright() as pw:
+            browser = await pw.chromium.launch()
+            sem = asyncio.Semaphore(workers)
+            css = open(PREVIEW_CSS, 'rb').read().decode(
+                'utf-8', 'replace')
+
+            async def one(it):
+                out = os.path.join(
+                    shots_dir,
+                    it['id'].replace('/', '_') + '.png')
+                if os.path.exists(out):
+                    return out
+                frag = open(it['path'], 'rb').read().decode(
+                    'utf-8', 'replace')
+                c = css
+                own = it['path'][:-5] + '.css'
+                if os.path.exists(own):
+                    c = open(own, 'rb').read().decode(
+                        'utf-8', 'replace')
+                html = ('<!doctype html><meta charset=utf-8>'
+                        '<style>' + c + '</style>'
+                        '<body style="margin:0">' + frag +
+                        '</body>')
+                async with sem:
+                    pg = await browser.new_page(
+                        viewport={'width': 1280, 'height': 1100})
+                    try:
+                        await pg.set_content(
+                            html, wait_until='load')
+                        await pg.wait_for_timeout(250)
+                        await pg.screenshot(path=out)
+                    finally:
+                        await pg.close()
+                return out
+            return await asyncio.gather(
+                *[one(it) for it in its],
+                return_exceptions=True)
+    res = asyncio.run(go())
+    return {it['id']: (r if isinstance(r, str) else None)
+            for it, r in zip(its, res)}
+
+
+_tls = threading.local()
+
+
+def _classify_one(key, model, it, png, struct, prompt):
+    """One vision-chat call with 429 backoff; returns labels dict."""
+    content = [{'type': 'text',
+                'text': prompt + '\n\nSTRUCTURE:\n' +
+                struct[:3000]}]
+    if png:
+        data = base64.b64encode(open(png, 'rb').read()).decode()
+        content.append({'type': 'image_url', 'image_url':
+                        {'url': f'data:image/png;base64,{data}'}})
+    body = {'model': model,
+            'messages': [{'role': 'user', 'content': content}],
+            'response_format': {'type': 'json_object'},
+            'max_tokens': 4000}
+    for attempt in range(5):
+        try:
+            req = urllib.request.Request(
+                API, data=json.dumps(body).encode(),
+                headers={'Authorization': f'Bearer {key}',
+                         'Content-Type': 'application/json'})
+            with urllib.request.urlopen(req, timeout=120) as r:
+                d = json.loads(r.read())
+            labels = json.loads(
+                d['choices'][0]['message']['content'])
+            u = d.get('usage') or {}
+            return {'labels': labels,
+                    'usage': {'in': u.get('prompt_tokens', 0),
+                              'out': u.get('completion_tokens', 0)}}
+        except urllib.error.HTTPError as e:
+            if e.code == 429:
+                time.sleep(2 ** attempt + (attempt % 3))
+                continue
+            return {'labels': {'_error': f'HTTP {e.code}'},
+                    'usage': {}}
+        except Exception as e:
+            time.sleep(1 + attempt)
+            last = str(e)
+    return {'labels': {'_error': last}, 'usage': {}}
+
+
+def run_bank():
+    key = os.environ.get('OPENROUTER_API_KEY')
+    if not key:
+        sys.exit('OPENROUTER_API_KEY not set')
+    args = sys.argv[1:]
+    model = args[args.index('--model') + 1] \
+        if '--model' in args else RUN_MODEL
+    batch = int(args[args.index('--batch-size') + 1]) \
+        if '--batch-size' in args else 100
+    workers = int(args[args.index('--workers') + 1]) \
+        if '--workers' in args else WORKERS
+    spec = _axis_spec()
+    prompt = _test_prompt(spec)
+    items = _bank_items()
+    todo = [it for it in items if not os.path.exists(it['out'])]
+    print(f'{len(items)} banked exemplars, {len(todo)} unlabeled, '
+          f'model={model}, batch={batch}, workers={workers}')
+    bal = _credits(key)
+    print(f'credits remaining: ${bal}')
+    if bal is not None and bal < 0.5:
+        sys.exit('CREDIT FLOOR: balance under $0.50 — stopping')
+    shots_dir = os.path.join(TEST_DIR, 'shots-run')
+    os.makedirs(shots_dir, exist_ok=True)
+    todo = todo[:batch]
+    # Phase A: prep images — PIL for webp, async render for .html
+    pngs = {}
+    htmls = []
+    for it in todo:
+        if it['kind'] == 'image':
+            pngs[it['id']] = _item_png(it, shots_dir)
+        elif it['path'].endswith('.html'):
+            htmls.append(it)
+    pngs.update(_render_html_items(htmls, shots_dir))
+    jobs = [(it, pngs.get(it['id']), _item_struct(it))
+            for it in todo]
+    # Phase B: parallel calls
+    done = [0]
+    lock = threading.Lock()
+    stats = {'in': 0, 'out': 0, 'errors': 0}
+
+    def work(job):
+        it, png, struct = job
+        r = _classify_one(key, model, it, png, struct, prompt)
+        rec = {'id': it['id'], 'model': model,
+               'labels': r['labels'], 'usage': r['usage']}
+        json.dump(rec, open(it['out'], 'w'), indent=1)
+        with lock:
+            done[0] += 1
+            stats['in'] += r['usage'].get('in', 0)
+            stats['out'] += r['usage'].get('out', 0)
+            if '_error' in r['labels']:
+                stats['errors'] += 1
+            if done[0] % 20 == 0:
+                print(f"{done[0]}/{len(jobs)} "
+                      f"errors={stats['errors']}")
+    with concurrent.futures.ThreadPoolExecutor(
+            max_workers=workers) as ex:
+        list(ex.map(work, jobs))
+    bal2 = _credits(key)
+    print(f'batch done: {done[0]}, errors={stats["errors"]}, '
+          f'tokens in={stats["in"]} out={stats["out"]}, '
+          f'credits now: ${bal2}')
+
+
+if '--run-bank' in sys.argv:
+    run_bank()
