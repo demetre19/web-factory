@@ -2546,11 +2546,13 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
     var vw=document.documentElement.style.getPropertyValue('--vw')
         ||'100%';
     document.querySelectorAll('.card .cb iframe').forEach(function(f){
-      var u=(f.dataset.src||f.src.split('?')[0]);
-      if(vw==='100%'&&/-menu(-[a-z-]+)?\.html/.test(u))
-        u=u.replace(/-menu(-[a-z-]+)?\.html/,'-menu-desktop.html');
-      else if(vw!=='100%'&&u.indexOf('-menu-desktop.html')>0)
-        u=u.replace('-menu-desktop.html','-menu.html');
+      // remember each frame's own src once — derived variants come
+      // back from it, never from a previously-swapped one
+      var orig=f.dataset.orig||(f.dataset.src||f.src.split('?')[0]);
+      if(!f.dataset.orig)f.dataset.orig=orig;
+      var u=(vw==='100%'&&/-menu(-[a-z-]+)?\.html/.test(orig))
+        ?orig.replace(/-menu(-[a-z-]+)?\.html/,'-menu-desktop.html')
+        :orig;
       var cur=(f.dataset.src||'').split('?')[0];
       if(u!==cur){f.dataset.src=u;
         f.src=u+(document.documentElement.dataset.theme==='dark'
@@ -2558,6 +2560,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
       var cb=f.parentElement;
       if(vw==='100%'){
         var W=1280,s=Math.min(1,cb.clientWidth/W)||1;
+        f.style.maxWidth='none';   // --vw cap would clamp the 1280 render
         f.style.width=W+'px';
         f.style.transform='scale('+s+')';
         f.style.transformOrigin='0 0';
@@ -2565,8 +2568,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
           if(hh>0){f.style.height=hh+'px';
             cb.style.height=(hh*s)+'px'}}catch(e){}
       }else{
-        f.style.width='';f.style.transform='';f.style.height='';
-        cb.style.height=''}
+        f.style.maxWidth='';f.style.width='';f.style.transform='';
+        f.style.height='';cb.style.height=''}
     })}
 
   document.querySelectorAll('#vwCtl button').forEach(function(b){
@@ -2693,10 +2696,11 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
         stat.className='pstat '+(j.ok?'ok':'bad');
         stat.textContent=j.message||(j.ok?'recorded':'refused');
         if(j.ok){b.textContent='picked ✓';toast(j.message);
-          if(b.dataset.elem==='vibe'){
+          DATA.picked_elements=DATA.picked_elements||{};
+          DATA.picked_elements[b.dataset.elem]=b.dataset.var;
+          if(b.dataset.elem==='vibe')
             BAKED=b.dataset.var;      // bake: every preview reframes
-            DATA.picked_elements=DATA.picked_elements||{};
-            DATA.picked_elements.vibe=BAKED;board()}}
+          board()}
         else b.disabled=false})}
   }
 
