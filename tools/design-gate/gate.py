@@ -4590,7 +4590,7 @@ def check_auto_grid(ctx):
 # genotype allele (1–4) is the only legal track-count source
 GRID_COMPS = {'cards-n', 'feature-grid', 'gallery-grid', 'logo-wall',
               'service-grid', 'card-grid', 'media-grid',
-              'comparison-grid'}
+              'comparison-grid', 'cutout-catalog-grid'}
 
 
 def check_grid_tracks(ctx):
@@ -7272,6 +7272,12 @@ RECIPE_FOR_COMP = {
     'quote-grid': 'bricksmaven/testimonials/testimonial-2',
     'link-grid': 'bricksmaven/grids-and-cards/grid-2',
     'text-index': 'bricksmaven/table-of-content/table-of-content-2',
+    # cutout comps render the gold exemplar (_comp_copy — the recipe
+    # is a trace id only, not a bricksmaven skeleton), but J.4 still
+    # requires the id to resolve in the skeleton bank
+    'cutout-hero-split': 'wfcutout/cutout-hero-split',
+    'cutout-catalog-grid': 'wfcutout/cutout-catalog-grid',
+    'cutout-cta-band': 'wfcutout/cutout-cta-band',
 }
 
 
@@ -13213,6 +13219,10 @@ COMP_ARCH = {
     'form-panel': ('split-form',),
     'quote-grid': ('card-grid-2', 'card-grid-3', 'card-grid-4'),
     'map-finder': ('split-media', 'asymmetric-offset'),
+    'cutout-hero-split': ('split-media', 'asymmetric-offset'),
+    'cutout-catalog-grid': ('card-grid-2', 'card-grid-3',
+                            'card-grid-4'),
+    'cutout-cta-band': ('horizontal-band',),
     'capture-form': ('split-form',),
     'text-index': ('editorial-single', 'table-matrix'),
     'app-band': ('split-media',),

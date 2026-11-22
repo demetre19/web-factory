@@ -340,6 +340,16 @@ def _copy_slot(copy, ref, comp=None):
 _TERM_ITEM_COMPS = {'cards-n', 'sequence', 'text-index', 'link-grid',
                     'comparison'}
 
+# comps whose exemplar binds a top-level `image` prop — placeholder
+# generation fills only these; chrome ignores the prop and catalog
+# grids read per-item images, so spending a generation there fills
+# no rendered slot
+_IMG_PROP_COMPS = {'split-media', 'stacked-hero', 'full-bleed',
+                   'hero-act-merge', 'media-gallery', 'editorial',
+                   'comparison', 'proof-band', 'form-panel',
+                   'quote-grid', 'cutout-hero-split',
+                   'cutout-cta-band'}
+
 
 def _instance_body(ctx, contract, row, copy=None):
     """The <Comp props/> render call + its import — the ONE instance
@@ -378,18 +388,24 @@ def _instance_body(ctx, contract, row, copy=None):
                               str(img.get('src') or '').lstrip('/'))
         img['ratio'] = emit_global.media_ratio_for(
             _asset, contract.get('media_ratio'))
-    if img is None:
+    if img is None and comp in _IMG_PROP_COMPS:
         # F — an empty media slot gets a generated placeholder
-        # (recraft): deterministic per comp+row, cutout comps get an
+        # (recraft): deterministic per comp+row (row.name is the
+        # plan's section identity), cutout comps get an
         # isolation-ready subject; stubs to the section's own
-        # placeholder when OPENROUTER_API_KEY is unset. The file lands
-        # in public/media and mirrors into src/assets/media below, so
-        # mediaFor resolves it like any brief asset.
+        # placeholder when OPENROUTER_API_KEY is unset.
         gen = recraft.fill(
-            comp + '-' + str(row.get('id') or row.get('slot') or ''),
+            comp + '-' + str(row.get('name') or row.get('id') or ''),
             'cutout' if comp.startswith('cutout-') else 'default',
             os.path.join(ctx.site, 'public', 'media'))
         if gen:
+            # the V.8 mirror (public/media → src/assets/media) may
+            # already have run on this pass — mirror now so mediaFor
+            # resolves it through astro:assets on the same emit
+            _mdir = os.path.join(ctx.site, 'src', 'assets', 'media')
+            os.makedirs(_mdir, exist_ok=True)
+            shutil.copyfile(gen, os.path.join(
+                _mdir, os.path.basename(gen)))
             img = {'src': '/media/' + os.path.basename(gen),
                    'alt': str(row.get('heading') or comp)}
     for k, src in (('cta', c.get('cta') or row.get('cta')),

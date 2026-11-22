@@ -32,6 +32,7 @@ const answer = cp.answer || '';
 const sub = answer || fs || body;
 const before = cp.before || [];
 const list = (cp.items && cp.items.length ? cp.items : items) || [];
+const links = cp.links || [];
 const after = cp.after || [];
 ---
 <div>
@@ -69,6 +70,9 @@ const after = cp.after || [];
       })}
     </ul>
   )}
+  {links.map((l) => (
+    <p class="t0 sub-p" set:html={inline(l.text || '')} />
+  ))}
   {after.map((p) => (
     <p class="t0 sub-p" set:html={inline(p)} />
   ))}
