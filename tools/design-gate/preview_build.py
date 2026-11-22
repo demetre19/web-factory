@@ -616,7 +616,7 @@ def emit_layouts(ctx):
                            'preview-bank.css'), bank_css)
     slug = gate.page_path(ctx)[1]
     rows_by_sec = {r.get('name'): r for _, r in ctx.rows(slug)}
-    brief_media = list((gate._brief(ctx).get('media') or []))
+    brief_media = _site_media(ctx)
     for oid, label, score, override in options:
         # a comp override must render the way the real projection would
         # (L.3): the hero already spent media[0] (V.1), then every
@@ -1028,6 +1028,32 @@ const sharp = require(process.argv[1] + '/node_modules/sharp');
 """
 
 
+_MEDIA_EXT = ('.jpg', '.jpeg', '.png', '.webp', '.avif')
+
+
+def _site_media(ctx):
+    """The brief's media list — or, when the brief files none, the
+    photos the site already ships in public/media (src /media/<name>,
+    the path the shell serves), so a media topology never renders an
+    empty slot while the site has imagery."""
+    media = []
+    try:
+        media = list(gate._brief(ctx).get('media') or [])
+    except Exception:
+        pass
+    if media:
+        return media
+    d = os.path.join(ctx.site, 'public', 'media')
+    brand = (gate._brief(ctx).get('brand') or {}) if os.path.isdir(d) \
+        else {}
+    name = brand.get('name') if isinstance(brand, dict) else brand
+    return [{'src': f'/media/{f}',
+             'alt': f"{name or 'Site'} — "
+                    f"{os.path.splitext(f)[0].replace('-', ' ')}"}
+            for f in sorted(os.listdir(d)) if os.path.isdir(d) and
+            f.lower().endswith(_MEDIA_EXT)] if os.path.isdir(d) else []
+
+
 def _distinct_media(bctx, media):
     """The brief's media with near-identical photos folded to their
     first entry (8×8 average hash, Hamming ≤ 4) — one photo filed
@@ -1102,12 +1128,7 @@ def _emit_page_boards(ctx, doc):
     if 'content' not in tpls:
         raise SystemExit('preview_build: no content contract to clone')
     bctx = _boards_site(ctx)
-    media = []
-    try:
-        media = list(gate._brief(ctx).get('media') or [])
-    except Exception:
-        pass
-    media = _distinct_media(bctx, media)
+    media = _distinct_media(bctx, _site_media(ctx))
     comps, pages = {}, {}
     for board, b in doc['boards'].items():
         prog = b['plan']
