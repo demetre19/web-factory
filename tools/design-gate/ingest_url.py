@@ -307,9 +307,12 @@ def _dna_draft(colors, fonts, radii, spacing, body=None):
     density = ('tight' if (space_s and
                sum(1 for x in space_s if x >= 24) <
                len(space_s) / 2) else 'regular')
+    # ink/surface take the page's own computed roles first — the
+    # top colour buckets mix text and fills, so dark[0] was often
+    # the background and light[0] was empty on dark sites
     return {'palette': palette,
-            'ink': dark[0] if dark else (body.get('color') or ''),
-            'surface': light[0] if light else (body.get('bg') or ''),
+            'ink': body.get('color') or (dark[0] if dark else ''),
+            'surface': body.get('bg') or (light[0] if light else ''),
             'accent_guess': accent,
             'radius_px_median': radius,
             'density_guess': density,

@@ -2021,6 +2021,10 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
 .railgrp:first-child{margin-top:2px}
 /* --- ingest --- */
 .ingbar{display:grid;gap:8px;margin:14px 0;max-width:640px}
+.abtn{justify-self:start;padding:8px 18px;border:0;
+  border-radius:8px;background:var(--ink);color:var(--bg);
+  font:650 12.5px var(--font);cursor:pointer}
+.abtn:disabled{opacity:.45;cursor:default}
 .ingbar input,.ingbar textarea{background:var(--bg-2);color:var(--ink);
   border:1px solid var(--line);border-radius:8px;padding:10px 12px;
   font:13px var(--font)}
