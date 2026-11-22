@@ -2731,7 +2731,7 @@ _FX_DRIVER = (
     'var off=document.body.dataset.motion==="off";'
     'document.body.dataset.motion=off?"on":"off";'
     'm.setAttribute("aria-pressed",off?"false":"true");'
-    'if(off)resume()'
+    'if(off)resume();'
     # rAF-driven fx ignore css animation-play-state — suspending
     # the scheduler is the only generic stop for them. Their
     # callbacks are queued, not dropped, so resume() can re-arm
