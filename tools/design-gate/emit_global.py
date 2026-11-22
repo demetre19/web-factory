@@ -944,11 +944,15 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
      and the band CTA inverts to an ink plate — a brand-on-brand button
      has no edge. A card inside the band re-grounds on the elevated
      surface with the page inks and the standard primary action. */
+  /* C.1: band secondary copy binds --sec-fg at full strength — any
+     dimmed mix (85% gave 4.04:1 light / 1.2:1 dark) drops under the
+     4.5:1 contract. --sec-fg itself is already paired >=4.5 against
+     --sec-bg by the vibe producer's on-accent/on-surface pairing. */
   :is([data-surface="brand"], [data-surface="inverse"])
       :is(.lede, .attrib, .helper, .eyebrow, .sub-p, .nav-link,
           .foot-head, .legal, .brand-mark, .quote, .stars,
           .link-quiet) {
-    color: color-mix(in srgb, var(--sec-fg) 85%, transparent); }
+    color: var(--sec-fg); }
   [data-surface="brand"] .wf-cta-button {
     background: var(--sec-fg); color: var(--sec-bg); }
   :is([data-surface="brand"], [data-surface="inverse"]) .card {

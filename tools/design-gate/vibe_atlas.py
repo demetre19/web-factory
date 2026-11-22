@@ -132,9 +132,13 @@ _ALLELE = {
                    '--r-card:1.25rem'},),
     },
     'surface-rhythm': {
-        'single-surface': ({'S': '.sec-band{background:'
+        'single-surface': ({'S': '.sec-band:not([data-surface='
+                            '"brand"]):not([data-surface='
+                            '"inverse"]){background:'
                             'var(--bg-canvas)!important}'},),
-        'alternating': ({'S': '.sec-band:nth-of-type(2n){background:'
+        'alternating': ({'S': '.sec-band:nth-of-type(2n):not('
+                         '[data-surface="brand"]):not('
+                         '[data-surface="inverse"]){background:'
                          'var(--bg-surface)}'},),
         'one-contrast-moment': ({'S': '.wf-hero-1{background:'
                                  'var(--ink,var(--text-primary));'
