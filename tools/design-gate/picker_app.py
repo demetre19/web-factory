@@ -2441,7 +2441,16 @@ _BANK_STAGE_CSS = (
     'body[data-motion="off"] .wf-stage *,'
     'body[data-motion="off"] .wf-page *{'
     'animation-play-state:paused!important;'
-    'transition:none!important}')
+    'transition:none!important}'
+    # form validation demo — inline field errors + a success note
+    # (the bank fragments ship unvalidated inputs; the emit pass
+    # adds required/type, this styles what the driver reports)
+    '.wf-ferr{display:block;color:#b42318;'
+    'font:12px/1.3 system-ui,sans-serif;margin-top:2px}'
+    '.wf-fok{display:block;color:#067647;'
+    'font:600 13px/1.4 system-ui,sans-serif;margin-top:8px}'
+    '[aria-invalid="true"]{outline:2px solid #b42318;'
+    'outline-offset:1px}')
 
 
 # E1 — fragment interactions are authored against a REAL surface:
@@ -2676,6 +2685,111 @@ def _bank_fallback_css():
             rules.append(f'{sel}{{{decl}}}')
         # pseudo-el/other variants unhandled → skip silently
     return ''.join(rules)
+
+
+# empty submits never reach 'submit' — constraint validation
+# suppresses it — so the demo hooks 'invalid' (capture) for the
+# inline marks and 'submit' only for the valid path.
+_FORM_DRIVER = (
+    '<script>(function(){'
+    'function err(c){'
+    'c.setAttribute("aria-invalid","true");'
+    'var n=c.nextSibling;'
+    'if(n&&n.classList&&n.classList.contains("wf-ferr"))'
+    'n.textContent=c.validationMessage||"required field";'
+    'else{var d=document.createElement("span");'
+    'd.className="wf-ferr";'
+    'd.textContent=c.validationMessage||"required field";'
+    'if(c.parentNode)c.parentNode.insertBefore(d,c.nextSibling)}}'
+    'function ok(c){c.removeAttribute("aria-invalid");'
+    'var n=c.nextSibling;'
+    'if(n&&n.classList&&n.classList.contains("wf-ferr"))n.remove()}'
+    'document.querySelectorAll(".wf-stage form,.wf-page form")'
+    '.forEach(function(f){'
+    'f.addEventListener("invalid",function(e){'
+    'e.preventDefault();err(e.target)},true);'
+    'f.addEventListener("submit",function(e){'
+    'e.preventDefault();'
+    'var o=f.querySelector(".wf-fok");'
+    'if(!o){o=document.createElement("div");o.className="wf-fok";'
+    'o.textContent="\\u2713 valid — demo only, nothing was sent"}'
+    'f.appendChild(o)});'
+    'f.addEventListener("input",function(e){'
+    'var c=e.target;if(c&&c.checkValidity&&c.checkValidity())ok(c)});'
+    'f.addEventListener("change",function(e){'
+    'var c=e.target;if(c&&c.checkValidity&&c.checkValidity())ok(c)})'
+    '})})()</script>')
+
+
+def _infer_form_type(attrs):
+    """a name/id/placeholder hint → the input's semantic type —
+    banked exemplars ship bare <input> so the browser never
+    validates; the emit pass supplies the type."""
+    hint = ' '.join(re.findall(
+        r'(?:name|id|placeholder|aria-label)\s*=\s*["\']([^"\']+)',
+        attrs)).lower()
+    for pat, ty in (
+            (r'e-?mail', 'email'),
+            (r'tel|phone|mobile', 'tel'),
+            (r'url|website|link', 'url'),
+            (r'pass(word|code)?', 'password'),
+            (r'date|dob|birth', 'date'),
+            (r'zip|post(code|al)?|qty|quant|num|amount|price|count|'
+             r'card|cvc|cvv', 'text')):
+        if re.search(pat, hint):
+            return ty
+    return 'text'
+
+
+_FORM_SKIP_TYPES = {'hidden', 'submit', 'button', 'image', 'file',
+                    'range', 'reset'}
+
+
+def _bank_form_attrs(frag):
+    """banked <form> previews submitted empty — no required attrs,
+    bare text inputs, several novalidate forms. Emit-time rewrite
+    (never a hand edit to the bank): inside every <form>…</form>,
+    drop novalidate, give each textual input a semantic type, and
+    mark fill-in controls required so the validation driver has
+    something real to exercise."""
+
+    def _control(m):
+        tag, at = m.group(1).lower(), m.group(2) or ''
+        # sr-only peers are css toggle hacks (drawer/accordion
+        # switches), not fill-in fields — a required hidden checkbox
+        # would make the demo form unsubmittable
+        if 'disabled' in at or 'readonly' in at or 'sr-only' in at:
+            return m.group(0)
+        if tag == 'input':
+            tm = re.search(r'\btype\s*=\s*["\']?[\w-]+["\']?', at)
+            ty = (tm.group(0).split('=', 1)[-1].strip(
+                '"\' ').lower() if tm else '')
+            if ty in _FORM_SKIP_TYPES:
+                return m.group(0)
+            if ty in ('', 'text'):
+                ty = _infer_form_type(at)
+                if tm:
+                    at = at[:tm.start()] + at[tm.end():]
+                at = ' type="%s"' % ty + at
+        at = at.rstrip()
+        close = '/'
+        if at.endswith('/'):
+            at = at[:-1].rstrip()
+        else:
+            close = ''
+        if 'required' not in at:
+            at += ' required'
+        return '<%s%s%s>' % (tag, at, close)
+
+    def _form(m):
+        block = re.sub(r'novalidate(="[^"]*")?', '', m.group(0),
+                       flags=re.I)
+        return re.sub(
+            r'<(input|textarea|select)(\s[^<>]*)?>',
+            _control, block, flags=re.I | re.S)
+
+    return re.sub(r'<form\b[^<>]*>.*?</form>', _form, frag,
+                  flags=re.I | re.S)
 
 
 def _bank_scale(frag):
@@ -2924,7 +3038,7 @@ def emit_bank_previews(pd):
                     (os.path.isfile(css_dst) and
                      os.path.getmtime(css_dst) >
                      os.path.getmtime(dst)) or \
-                    '<!--wf:bank:v4-->' not in open(
+                    '<!--wf:bank:v7-->' not in open(
                         dst, encoding='utf-8',
                         errors='replace').read(64)
                 if stale:
@@ -2936,6 +3050,9 @@ def emit_bank_previews(pd):
                     frag = re.sub(
                         r'/src/assets/[^\s"\'()]+',
                         '/media/placeholder.svg', frag)
+                    # (d) form previews submitted empty — supply
+                    # required/type attrs at emit, never hand edits
+                    frag = _bank_form_attrs(frag)
                     fx = cls.startswith(('fx-', 'imgfx-', 'mobfx-'))
                     if fx:
                         frag = _fx_strip_freeze(frag)
@@ -2961,11 +3078,14 @@ def emit_bank_previews(pd):
                     css_ = _BANK_STAGE_CSS + \
                         ('body{padding:0}' if page else '')
                     with open(dst, 'w', encoding='utf-8') as fh:
-                        fh.write('<!--wf:bank:v4-->' +
+                        fh.write('<!--wf:bank:v7-->' +
                                  _doc(head, '', stage,
                                       extra=(_STAGE_SCROLL_SHIM
                                              if not page else '') +
-                                      (_FX_DRIVER if fx else ''),
+                                      (_FX_DRIVER if fx else '') +
+                                      (_FORM_DRIVER
+                                       if '<form' in frag.lower()
+                                       else ''),
                                       css=css_,
                                       chrome=gid == 'menu' or
                                       cls.startswith('nav-')))
