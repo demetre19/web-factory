@@ -3364,6 +3364,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
   .ssrow{grid-template-columns:minmax(0,1fr) auto auto;gap:8px 10px}
   .ssrow .ssm{display:none}
 }
+.compmob{display:none}
 @media(max-width:560px){
   .grid.fxgrid{grid-template-columns:1fr}
   .card,.grid.fxgrid .card{grid-template-columns:minmax(0,1fr);
@@ -3378,7 +3379,6 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
   .fxsel{width:100%}
 }
 .compwrap{overflow-x:auto}
-.compmob{display:none}
 .cmp{border:1px solid var(--line);border-radius:8px;padding:10px 12px;
   margin:8px 0;background:var(--panel)}
 .csec{font:600 11px var(--mono);color:var(--muted);margin-bottom:6px}
@@ -3427,12 +3427,32 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
   font-size:11px;cursor:pointer;margin-left:auto}
 .xp:hover{background:var(--panel-2)}
 #xpOv{position:fixed;inset:0;z-index:60;background:rgba(0,0,0,.72);
-  display:flex;align-items:center;justify-content:center}
-#xpOv iframe{width:96vw;height:94vh;border:0;border-radius:10px;
-  background:#fff}
-#xpX{position:absolute;top:14px;right:18px;z-index:61;
+  display:flex;flex-direction:column}
+#xpBar{display:flex;align-items:center;gap:8px;padding:9px 14px;
+  background:var(--panel);border-bottom:1px solid var(--line);
+  flex:none}
+.xttl{font:600 12.5px var(--font);color:var(--ink);max-width:26%;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.xdev{display:flex;border:1px solid var(--line);border-radius:7px;
+  overflow:hidden;margin-left:auto}
+.xdev button{border:0;background:none;color:var(--muted);cursor:pointer;
+  font:600 11px var(--mono);padding:5px 10px}
+.xdev button.on{background:var(--accent);color:var(--accent-ink)}
+#xpBar .xth,#xpBar .xnav,#xpBar .xopen,#xpBar #xpX{
   background:var(--bg-2);color:var(--ink);border:1px solid var(--line);
-  border-radius:8px;padding:6px 12px;cursor:pointer;font-size:13px}
+  border-radius:7px;padding:5px 10px;cursor:pointer;font-size:12px;
+  text-decoration:none;line-height:1.2}
+.xpPrim{background:var(--accent);color:var(--accent-ink);border:0;
+  border-radius:7px;padding:6px 14px;cursor:pointer;
+  font:600 12px var(--font)}
+.xstage{flex:1;overflow:auto;display:flex;justify-content:center;
+  padding:14px}
+.xframe{height:calc(100vh - 76px);flex:none}
+.xframe iframe{width:100%;height:100%;border:0;border-radius:8px;
+  background:#fff}
+@media(max-width:640px){
+  .xttl{display:none}
+  .xdev{margin-left:0}}
 .ssq{flex:1;min-width:180px;padding:9px 12px;border:1px solid var(--line);
      border-radius:8px;background:var(--panel);color:var(--ink);
      font:12px var(--font)}
@@ -4397,18 +4417,101 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
     go();
   }
 
-  // expand — one click, fullscreen overlay; Esc or X closes
-  function expand(u){
+  // expand — full-screen preview overlay (spec §3): device-width
+  // frames (unscaled, true width), theme toggle, ‹ › card nav,
+  // primary action, open-in-new-tab, Esc/X/scrim close + focus return
+  function themed(u,m){
+    var b=u.replace(/([?&])theme=[^&]*&?/,'$1')
+           .replace(/[?&]$/,'');
+    return b+(b.indexOf('?')>=0?'&':'?')+'theme='+m}
+  // context for expand() from the ⤢ that opened it — title, the
+  // card's own Pick/Bake/Apply as the primary action, and its
+  // position in the board for ‹ › navigation
+  function xpOpts(b){
+    var cd=b.closest('.card,.vprev,.srow');
+    var pk=cd&&cd.querySelector('.pick,.spick,#vBake');
+    var nm=cd&&(cd.querySelector('.nm')||cd.querySelector('.vname'));
+    return {xp:b,
+      title:nm?nm.textContent:'preview',
+      primary:pk?pk.textContent.trim():null,
+      onprimary:pk?function(){pk.click()}:null}}
+  function wireXp(scope){
+    scope.querySelectorAll('.xp').forEach(function(b){
+      b.onclick=function(e){e.stopPropagation();
+        expand(b.dataset.x,xpOpts(b))}})}
+  function expand(u,opts){
+    opts=opts||{};
+    var prevFocus=document.activeElement;
+    var xps=[...document.querySelectorAll('.xp')];
+    var cur=opts.xp?xps.indexOf(opts.xp):-1;
     var ov=document.createElement('div');ov.id='xpOv';
-    ov.innerHTML='<button id="xpX">&#x2715; close</button>'+
-      '<iframe src="'+esc(u)+'"></iframe>';
+    var theme=document.documentElement.dataset.theme==='dark'?'dark':'light';
+    ov.innerHTML='<div id="xpBar"><span class="xttl">'+
+      esc(opts.title||'preview')+'</span>'+
+      '<div class="xdev">'+
+      [['D1280',1280],['T768',768],['M390',390]].map(function(d){
+        return '<button data-w="'+d[1]+'"'+(d[1]===1280?' class="on"':'')+
+               '>'+d[0]+'</button>'}).join('')+'</div>'+
+      '<button class="xth" title="toggle preview theme">'+
+      (theme==='dark'?'☀':'☾')+'</button>'+
+      '<button class="xnav xpP" title="previous">&#8249;</button>'+
+      '<button class="xnav xpN" title="next">&#8250;</button>'+
+      (opts.primary?'<button class="xpPrim">'+esc(opts.primary)+'</button>':'')+
+      '<a class="xopen" href="'+esc(themed(u,theme))+
+      '" target="_blank" rel="noopener" title="open in new tab">&#8599;</a>'+
+      '<button id="xpX">&#x2715;</button></div>'+
+      '<div class="xstage"><div class="xframe">'+
+      '<iframe src="'+esc(themed(u,theme))+'"></iframe></div></div>';
     document.body.appendChild(ov);
+    document.body.style.overflow='hidden';
+    var fr=ov.querySelector('.xframe'),im=fr.querySelector('iframe');
+    function setW(w){
+      fr.style.width=w+'px';
+      fr.style.maxWidth='calc(100vw - 28px)';
+      ov.querySelectorAll('.xdev button').forEach(function(b){
+        b.classList.toggle('on',+b.dataset.w===w)})}
+    setW(1280);
+    ov.querySelectorAll('.xdev button').forEach(function(b){
+      b.onclick=function(){setW(+b.dataset.w)}});
+    ov.querySelector('.xth').onclick=function(){
+      theme=theme==='dark'?'light':'dark';
+      this.textContent=theme==='dark'?'☀':'☾';
+      var s=themed(u,theme);
+      im.src=s;ov.querySelector('.xopen').href=s};
+    function nav(d){
+      if(cur<0||!xps.length)return;
+      cur=(cur+d+xps.length)%xps.length;
+      var xp=xps[cur],cd=xp.closest('.card');
+      u=xp.dataset.x;
+      ov.querySelector('.xttl').textContent=
+        cd?(cd.querySelector('.nm')||{}).textContent:opts.title||'preview';
+      var s=themed(u,theme);im.src=s;
+      ov.querySelector('.xopen').href=s;
+      var pb=ov.querySelector('.xpPrim'),np=cd&&cd.querySelector('.pick');
+      if(np){if(!pb){pb=document.createElement('button');
+          pb.className='xpPrim';
+          ov.querySelector('.xopen').before(pb)}
+        pb.textContent=np.textContent.trim();
+        pb.onclick=function(){np.click();close()}}
+      else if(pb)pb.remove()}
+    ov.querySelector('.xpP').onclick=function(){nav(-1)};
+    ov.querySelector('.xpN').onclick=function(){nav(1)};
+    if(opts.primary){
+      ov.querySelector('.xpPrim').onclick=function(){
+        if(opts.onprimary)opts.onprimary();close()}}
     function close(){ov.remove();
-      document.removeEventListener('keydown',k)}
-    function k(e){if(e.key==='Escape')close()}
+      document.body.style.overflow='';
+      document.removeEventListener('keydown',k);
+      if(prevFocus&&prevFocus.focus)prevFocus.focus()}
+    function k(e){
+      if(e.key==='Escape')close();
+      else if(e.key==='ArrowLeft')nav(-1);
+      else if(e.key==='ArrowRight')nav(1)}
     document.addEventListener('keydown',k);
     ov.querySelector('#xpX').onclick=close;
-    ov.onclick=function(e){if(e.target===ov)close()}}
+    ov.querySelector('.xstage').onclick=function(e){
+      if(e.target===this)close()};
+    var f0=ov.querySelector('#xpX');if(f0)f0.focus()}
 
   // viewport fit — desktop (vw=100%) renders iframes at 1280px and
   // scales them into the card; M/T keep the real small widths.
@@ -4515,8 +4618,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
         b.onclick=function(e){e.stopPropagation();fxToggle(b)}});
       el.querySelectorAll('.fxsel').forEach(function(s){
         s.onchange=function(){fxPick(s.dataset.fx,s.value)}});
-      el.querySelectorAll('.xp').forEach(function(b){
-        b.onclick=function(e){e.stopPropagation();expand(b.dataset.x)}});
+      wireXp(el);
       wireFrames(el);
       setTimeout(fitIframes,150);
       applyTheme(document.documentElement.dataset.theme);
@@ -4570,8 +4672,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
       b.onclick=function(){doPick(b)}});
     el.querySelectorAll('.fxsel').forEach(function(s){
       s.onchange=function(){fxPick(s.dataset.fx,s.value)}});
-    el.querySelectorAll('.xp').forEach(function(b){
-      b.onclick=function(e){e.stopPropagation();expand(b.dataset.x)}});
+    wireXp(el);
     wireFrames(el);
     setTimeout(fitIframes,150);
     applyTheme(document.documentElement.dataset.theme);
