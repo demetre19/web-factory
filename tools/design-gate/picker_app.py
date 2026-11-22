@@ -1084,7 +1084,6 @@ def type_candidates(pd):
     specs = [
         ('resolved', cur_tm, cur_tr, cur_hm, cur_hr, None),
         ('tight', 1.19, 1.2, 1.19, 1.2, None),
-        ('classic', 1.25, 1.333, 1.25, 1.333, None),
         ('display', 1.28, 1.333, 1.36, 1.5, None),
     ]
     for f in ('sans', 'serif', 'mono', 'mixed'):
