@@ -1,0 +1,590 @@
+{
+ "label": "preline/text-editor/modal-example",
+ "source": "preline",
+ "sourceUrl": "",
+ "version": "1",
+ "topology_id": "content",
+ "element_sig": {
+  "btn": 12,
+  "h": 1,
+  "icn": 10,
+  "a": 1
+ },
+ "tree": [
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "flex",
+    "justify-center"
+   ],
+   "depth": 0
+  },
+  {
+   "name": "button",
+   "tag": "button",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "py-3",
+    "px-4",
+    "inline-flex",
+    "items-center",
+    "gap-x-2",
+    "text-sm",
+    "font-medium",
+    "rounded-lg"
+   ],
+   "depth": 1
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "hs-overlay",
+    "hidden",
+    "size-full",
+    "fixed",
+    "top-0",
+    "inset-s-0",
+    "z-80",
+    "overflow-x-hidden"
+   ],
+   "depth": 0
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "hs-overlay-open:mt-7",
+    "hs-overlay-open:opacity-100",
+    "hs-overlay-open:duration-500",
+    "mt-0",
+    "opacity-0",
+    "ease-out",
+    "transition-all",
+    "sm:max-w-lg"
+   ],
+   "depth": 1
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "flex",
+    "flex-col",
+    "bg-overlay",
+    "border",
+    "border-overlay-line",
+    "shadow-2xs",
+    "rounded-xl",
+    "pointer-events-auto"
+   ],
+   "depth": 2
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "flex",
+    "justify-between",
+    "items-center",
+    "py-3",
+    "px-4",
+    "border-b",
+    "border-overlay-header"
+   ],
+   "depth": 3
+  },
+  {
+   "name": "h3",
+   "tag": "h3",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "font-semibold",
+    "text-foreground"
+   ],
+   "depth": 4
+  },
+  {
+   "name": "button",
+   "tag": "button",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "size-8",
+    "inline-flex",
+    "justify-center",
+    "items-center",
+    "gap-x-2",
+    "rounded-full",
+    "bg-surface",
+    "border"
+   ],
+   "depth": 4
+  },
+  {
+   "name": "span",
+   "tag": "span",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "sr-only"
+   ],
+   "depth": 5
+  },
+  {
+   "name": "svg",
+   "tag": "svg",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "shrink-0",
+    "size-4"
+   ],
+   "depth": 5
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-4",
+    "min-h-32",
+    "overflow-y-auto",
+    "[&::-webkit-scrollbar]:w-2",
+    "[&::-webkit-scrollbar-thumb]:rounded-none",
+    "[&::-webkit-scrollbar-track]:bg-scrollbar-track",
+    "[&::-webkit-scrollbar-thumb]:bg-scrollbar-thumb"
+   ],
+   "depth": 3
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "bg-layer",
+    "border",
+    "border-layer-line",
+    "rounded-xl",
+    "overflow-hidden"
+   ],
+   "depth": 4
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [],
+   "depth": 5
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "sticky",
+    "top-0",
+    "bg-layer",
+    "flex",
+    "align-middle",
+    "gap-x-0.5",
+    "border-b",
+    "border-layer-line"
+   ],
+   "depth": 6
+  },
+  {
+   "name": "button",
+   "tag": "button",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "size-8",
+    "inline-flex",
+    "justify-center",
+    "items-center",
+    "gap-x-2",
+    "text-sm",
+    "font-semibold",
+    "rounded-full"
+   ],
+   "depth": 7
+  },
+  {
+   "name": "svg",
+   "tag": "svg",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "shrink-0",
+    "size-4"
+   ],
+   "depth": 8
+  },
+  {
+   "name": "button",
+   "tag": "button",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "size-8",
+    "inline-flex",
+    "justify-center",
+    "items-center",
+    "gap-x-2",
+    "text-sm",
+    "font-semibold",
+    "rounded-full"
+   ],
+   "depth": 7
+  },
+  {
+   "name": "svg",
+   "tag": "svg",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "shrink-0",
+    "size-4"
+   ],
+   "depth": 8
+  },
+  {
+   "name": "button",
+   "tag": "button",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "size-8",
+    "inline-flex",
+    "justify-center",
+    "items-center",
+    "gap-x-2",
+    "text-sm",
+    "font-semibold",
+    "rounded-full"
+   ],
+   "depth": 7
+  },
+  {
+   "name": "svg",
+   "tag": "svg",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "shrink-0",
+    "size-4"
+   ],
+   "depth": 8
+  },
+  {
+   "name": "button",
+   "tag": "button",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "size-8",
+    "inline-flex",
+    "justify-center",
+    "items-center",
+    "gap-x-2",
+    "text-sm",
+    "font-semibold",
+    "rounded-full"
+   ],
+   "depth": 7
+  },
+  {
+   "name": "svg",
+   "tag": "svg",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "shrink-0",
+    "size-4"
+   ],
+   "depth": 8
+  },
+  {
+   "name": "button",
+   "tag": "button",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "size-8",
+    "inline-flex",
+    "justify-center",
+    "items-center",
+    "gap-x-2",
+    "text-sm",
+    "font-semibold",
+    "rounded-full"
+   ],
+   "depth": 7
+  },
+  {
+   "name": "svg",
+   "tag": "svg",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "shrink-0",
+    "size-4"
+   ],
+   "depth": 8
+  },
+  {
+   "name": "button",
+   "tag": "button",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "size-8",
+    "inline-flex",
+    "justify-center",
+    "items-center",
+    "gap-x-2",
+    "text-sm",
+    "font-semibold",
+    "rounded-full"
+   ],
+   "depth": 7
+  },
+  {
+   "name": "svg",
+   "tag": "svg",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "shrink-0",
+    "size-4"
+   ],
+   "depth": 8
+  },
+  {
+   "name": "button",
+   "tag": "button",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "size-8",
+    "inline-flex",
+    "justify-center",
+    "items-center",
+    "gap-x-2",
+    "text-sm",
+    "font-semibold",
+    "rounded-full"
+   ],
+   "depth": 7
+  },
+  {
+   "name": "svg",
+   "tag": "svg",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "shrink-0",
+    "size-4"
+   ],
+   "depth": 8
+  },
+  {
+   "name": "button",
+   "tag": "button",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "size-8",
+    "inline-flex",
+    "justify-center",
+    "items-center",
+    "gap-x-2",
+    "text-sm",
+    "font-semibold",
+    "rounded-full"
+   ],
+   "depth": 7
+  },
+  {
+   "name": "svg",
+   "tag": "svg",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "shrink-0",
+    "size-4"
+   ],
+   "depth": 8
+  },
+  {
+   "name": "button",
+   "tag": "button",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "size-8",
+    "inline-flex",
+    "justify-center",
+    "items-center",
+    "gap-x-2",
+    "text-sm",
+    "font-semibold",
+    "rounded-full"
+   ],
+   "depth": 7
+  },
+  {
+   "name": "svg",
+   "tag": "svg",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "shrink-0",
+    "size-4"
+   ],
+   "depth": 8
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "h-40",
+    "overflow-auto"
+   ],
+   "depth": 6
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "flex",
+    "justify-end",
+    "items-center",
+    "gap-x-2",
+    "py-3",
+    "px-4",
+    "border-t",
+    "border-overlay-footer"
+   ],
+   "depth": 3
+  },
+  {
+   "name": "button",
+   "tag": "button",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "py-2",
+    "px-3",
+    "inline-flex",
+    "items-center",
+    "gap-x-2",
+    "text-sm",
+    "font-medium",
+    "rounded-lg"
+   ],
+   "depth": 4
+  },
+  {
+   "name": "a",
+   "tag": "a",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "py-2",
+    "px-3",
+    "inline-flex",
+    "items-center",
+    "gap-x-2",
+    "text-sm",
+    "font-medium",
+    "rounded-lg"
+   ],
+   "depth": 4
+  }
+ ],
+ "classes": [
+  "[&::-webkit-scrollbar-thumb]:bg-scrollbar-thumb",
+  "[&::-webkit-scrollbar-thumb]:rounded-none",
+  "[&::-webkit-scrollbar-track]:bg-scrollbar-track",
+  "[&::-webkit-scrollbar]:w-2",
+  "align-middle",
+  "bg-layer",
+  "bg-overlay",
+  "bg-primary",
+  "bg-surface",
+  "border",
+  "border-b",
+  "border-layer-line",
+  "border-overlay-footer",
+  "border-overlay-header",
+  "border-overlay-line",
+  "border-primary-line",
+  "border-surface-line",
+  "border-t",
+  "disabled:opacity-50",
+  "disabled:pointer-events-none",
+  "ease-out",
+  "fixed",
+  "flex",
+  "flex-col",
+  "focus:bg-layer-focus",
+  "focus:bg-muted-focus",
+  "focus:bg-primary-focus",
+  "focus:bg-surface-focus",
+  "focus:outline-hidden",
+  "font-medium",
+  "font-semibold",
+  "gap-x-0.5",
+  "gap-x-2",
+  "h-40",
+  "hidden",
+  "hover:bg-layer-hover",
+  "hover:bg-muted-hover",
+  "hover:bg-primary-hover",
+  "hover:bg-surface-hover",
+  "hs-overlay",
+  "hs-overlay-open:duration-500",
+  "hs-overlay-open:mt-7",
+  "hs-overlay-open:opacity-100",
+  "inline-flex",
+  "inset-s-0",
+  "items-center",
+  "justify-between",
+  "justify-center",
+  "justify-end",
+  "m-3",
+  "min-h-32",
+  "mt-0",
+  "opacity-0",
+  "overflow-auto",
+  "overflow-hidden",
+  "overflow-x-hidden",
+  "overflow-y-auto",
+  "p-2",
+  "p-4",
+  "pointer-events-auto"
+ ]
+}

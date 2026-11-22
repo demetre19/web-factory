@@ -1,0 +1,1632 @@
+{
+ "label": "preline/datatables/row-selection",
+ "source": "preline",
+ "sourceUrl": "",
+ "version": "1",
+ "topology_id": "table-cell",
+ "element_sig": {
+  "table": 1,
+  "form": 21,
+  "icn": 3,
+  "btn": 22
+ },
+ "tree": [
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "flex",
+    "flex-col"
+   ],
+   "depth": 0
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "min-h-130",
+    "overflow-x-auto",
+    "[&::-webkit-scrollbar]:h-2",
+    "[&::-webkit-scrollbar-thumb]:rounded-none",
+    "[&::-webkit-scrollbar-track]:bg-scrollbar-track",
+    "[&::-webkit-scrollbar-thumb]:bg-scrollbar-thumb"
+   ],
+   "depth": 1
+  },
+  {
+   "name": "table",
+   "tag": "table",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "min-w-full"
+   ],
+   "depth": 2
+  },
+  {
+   "name": "thead",
+   "tag": "thead",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "border-b",
+    "border-table-line"
+   ],
+   "depth": 3
+  },
+  {
+   "name": "tr",
+   "tag": "tr",
+   "label": null,
+   "loop": false,
+   "classes": [],
+   "depth": 4
+  },
+  {
+   "name": "th",
+   "tag": "th",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "py-1",
+    "ps-3",
+    "--exclude-from-ordering"
+   ],
+   "depth": 5
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "flex",
+    "items-center",
+    "h-5"
+   ],
+   "depth": 6
+  },
+  {
+   "name": "input",
+   "tag": "input",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "shrink-0",
+    "size-4",
+    "bg-transparent",
+    "border-line-3",
+    "rounded-sm",
+    "shadow-2xs",
+    "text-primary",
+    "focus:ring-0"
+   ],
+   "depth": 7
+  },
+  {
+   "name": "label",
+   "tag": "label",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "sr-only"
+   ],
+   "depth": 8
+  },
+  {
+   "name": "th",
+   "tag": "th",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "py-1",
+    "group",
+    "text-start",
+    "font-normal",
+    "focus:outline-hidden"
+   ],
+   "depth": 6
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "py-1",
+    "px-2.5",
+    "inline-flex",
+    "items-center",
+    "border",
+    "border-transparent",
+    "text-sm",
+    "text-muted-foreground-1"
+   ],
+   "depth": 7
+  },
+  {
+   "name": "svg",
+   "tag": "svg",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "size-3.5",
+    "ms-1",
+    "-me-0.5",
+    "text-muted-foreground"
+   ],
+   "depth": 8
+  },
+  {
+   "name": "th",
+   "tag": "th",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "py-1",
+    "group",
+    "text-start",
+    "font-normal",
+    "focus:outline-hidden"
+   ],
+   "depth": 6
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "py-1",
+    "px-2.5",
+    "inline-flex",
+    "items-center",
+    "border",
+    "border-transparent",
+    "text-sm",
+    "text-muted-foreground-1"
+   ],
+   "depth": 7
+  },
+  {
+   "name": "svg",
+   "tag": "svg",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "size-3.5",
+    "ms-1",
+    "-me-0.5",
+    "text-muted-foreground"
+   ],
+   "depth": 8
+  },
+  {
+   "name": "th",
+   "tag": "th",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "py-1",
+    "group",
+    "text-start",
+    "font-normal",
+    "focus:outline-hidden"
+   ],
+   "depth": 6
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "py-1",
+    "px-2.5",
+    "inline-flex",
+    "items-center",
+    "border",
+    "border-transparent",
+    "text-sm",
+    "text-muted-foreground-1"
+   ],
+   "depth": 7
+  },
+  {
+   "name": "svg",
+   "tag": "svg",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "size-3.5",
+    "ms-1",
+    "-me-0.5",
+    "text-muted-foreground"
+   ],
+   "depth": 8
+  },
+  {
+   "name": "th",
+   "tag": "th",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "py-2",
+    "px-3",
+    "text-end",
+    "font-normal",
+    "text-sm",
+    "text-muted-foreground-1",
+    "--exclude-from-ordering"
+   ],
+   "depth": 6
+  },
+  {
+   "name": "tbody",
+   "tag": "tbody",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "divide-y",
+    "divide-table-line"
+   ],
+   "depth": 4
+  },
+  {
+   "name": "tr",
+   "tag": "tr",
+   "label": null,
+   "loop": false,
+   "classes": [],
+   "depth": 5
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "py-3",
+    "ps-3"
+   ],
+   "depth": 6
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "flex",
+    "items-center",
+    "h-5"
+   ],
+   "depth": 7
+  },
+  {
+   "name": "input",
+   "tag": "input",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "shrink-0",
+    "size-4",
+    "bg-transparent",
+    "border-line-3",
+    "rounded-sm",
+    "shadow-2xs",
+    "text-primary",
+    "focus:ring-0"
+   ],
+   "depth": 8
+  },
+  {
+   "name": "label",
+   "tag": "label",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "sr-only"
+   ],
+   "depth": 9
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-sm",
+    "font-medium",
+    "text-foreground"
+   ],
+   "depth": 7
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-sm",
+    "text-foreground"
+   ],
+   "depth": 7
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-sm",
+    "text-foreground"
+   ],
+   "depth": 7
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-end",
+    "text-sm",
+    "font-medium"
+   ],
+   "depth": 7
+  },
+  {
+   "name": "button",
+   "tag": "button",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "inline-flex",
+    "items-center",
+    "gap-x-2",
+    "text-sm",
+    "font-semibold",
+    "rounded-lg",
+    "text-primary",
+    "hover:text-primary-hover"
+   ],
+   "depth": 8
+  },
+  {
+   "name": "tr",
+   "tag": "tr",
+   "label": null,
+   "loop": false,
+   "classes": [],
+   "depth": 6
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "py-3",
+    "ps-3"
+   ],
+   "depth": 7
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "flex",
+    "items-center",
+    "h-5"
+   ],
+   "depth": 8
+  },
+  {
+   "name": "input",
+   "tag": "input",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "shrink-0",
+    "size-4",
+    "bg-transparent",
+    "border-line-3",
+    "rounded-sm",
+    "shadow-2xs",
+    "text-primary",
+    "focus:ring-0"
+   ],
+   "depth": 9
+  },
+  {
+   "name": "label",
+   "tag": "label",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "sr-only"
+   ],
+   "depth": 10
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-sm",
+    "font-medium",
+    "text-foreground"
+   ],
+   "depth": 8
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-sm",
+    "text-foreground"
+   ],
+   "depth": 8
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-sm",
+    "text-foreground"
+   ],
+   "depth": 8
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-end",
+    "text-sm",
+    "font-medium"
+   ],
+   "depth": 8
+  },
+  {
+   "name": "button",
+   "tag": "button",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "inline-flex",
+    "items-center",
+    "gap-x-2",
+    "text-sm",
+    "font-semibold",
+    "rounded-lg",
+    "text-primary",
+    "hover:text-primary-hover"
+   ],
+   "depth": 9
+  },
+  {
+   "name": "tr",
+   "tag": "tr",
+   "label": null,
+   "loop": false,
+   "classes": [],
+   "depth": 7
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "py-3",
+    "ps-3"
+   ],
+   "depth": 8
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "flex",
+    "items-center",
+    "h-5"
+   ],
+   "depth": 9
+  },
+  {
+   "name": "input",
+   "tag": "input",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "shrink-0",
+    "size-4",
+    "bg-transparent",
+    "border-line-3",
+    "rounded-sm",
+    "shadow-2xs",
+    "text-primary",
+    "focus:ring-0"
+   ],
+   "depth": 10
+  },
+  {
+   "name": "label",
+   "tag": "label",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "sr-only"
+   ],
+   "depth": 11
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-sm",
+    "font-medium",
+    "text-foreground"
+   ],
+   "depth": 9
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-sm",
+    "text-foreground"
+   ],
+   "depth": 9
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-sm",
+    "text-foreground"
+   ],
+   "depth": 9
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-end",
+    "text-sm",
+    "font-medium"
+   ],
+   "depth": 9
+  },
+  {
+   "name": "button",
+   "tag": "button",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "inline-flex",
+    "items-center",
+    "gap-x-2",
+    "text-sm",
+    "font-semibold",
+    "rounded-lg",
+    "text-primary",
+    "hover:text-primary-hover"
+   ],
+   "depth": 10
+  },
+  {
+   "name": "tr",
+   "tag": "tr",
+   "label": null,
+   "loop": false,
+   "classes": [],
+   "depth": 8
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "py-3",
+    "ps-3"
+   ],
+   "depth": 9
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "flex",
+    "items-center",
+    "h-5"
+   ],
+   "depth": 10
+  },
+  {
+   "name": "input",
+   "tag": "input",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "shrink-0",
+    "size-4",
+    "bg-transparent",
+    "border-line-3",
+    "rounded-sm",
+    "shadow-2xs",
+    "text-primary",
+    "focus:ring-0"
+   ],
+   "depth": 11
+  },
+  {
+   "name": "label",
+   "tag": "label",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "sr-only"
+   ],
+   "depth": 12
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-sm",
+    "font-medium",
+    "text-foreground"
+   ],
+   "depth": 10
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-sm",
+    "text-foreground"
+   ],
+   "depth": 10
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-sm",
+    "text-foreground"
+   ],
+   "depth": 10
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-end",
+    "text-sm",
+    "font-medium"
+   ],
+   "depth": 10
+  },
+  {
+   "name": "button",
+   "tag": "button",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "inline-flex",
+    "items-center",
+    "gap-x-2",
+    "text-sm",
+    "font-semibold",
+    "rounded-lg",
+    "text-primary",
+    "hover:text-primary-hover"
+   ],
+   "depth": 11
+  },
+  {
+   "name": "tr",
+   "tag": "tr",
+   "label": null,
+   "loop": false,
+   "classes": [],
+   "depth": 9
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "py-3",
+    "ps-3"
+   ],
+   "depth": 10
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "flex",
+    "items-center",
+    "h-5"
+   ],
+   "depth": 11
+  },
+  {
+   "name": "input",
+   "tag": "input",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "shrink-0",
+    "size-4",
+    "bg-transparent",
+    "border-line-3",
+    "rounded-sm",
+    "shadow-2xs",
+    "text-primary",
+    "focus:ring-0"
+   ],
+   "depth": 12
+  },
+  {
+   "name": "label",
+   "tag": "label",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "sr-only"
+   ],
+   "depth": 13
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-sm",
+    "font-medium",
+    "text-foreground"
+   ],
+   "depth": 11
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-sm",
+    "text-foreground"
+   ],
+   "depth": 11
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-sm",
+    "text-foreground"
+   ],
+   "depth": 11
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-end",
+    "text-sm",
+    "font-medium"
+   ],
+   "depth": 11
+  },
+  {
+   "name": "button",
+   "tag": "button",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "inline-flex",
+    "items-center",
+    "gap-x-2",
+    "text-sm",
+    "font-semibold",
+    "rounded-lg",
+    "text-primary",
+    "hover:text-primary-hover"
+   ],
+   "depth": 12
+  },
+  {
+   "name": "tr",
+   "tag": "tr",
+   "label": null,
+   "loop": false,
+   "classes": [],
+   "depth": 10
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "py-3",
+    "ps-3"
+   ],
+   "depth": 11
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "flex",
+    "items-center",
+    "h-5"
+   ],
+   "depth": 12
+  },
+  {
+   "name": "input",
+   "tag": "input",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "shrink-0",
+    "size-4",
+    "bg-transparent",
+    "border-line-3",
+    "rounded-sm",
+    "shadow-2xs",
+    "text-primary",
+    "focus:ring-0"
+   ],
+   "depth": 13
+  },
+  {
+   "name": "label",
+   "tag": "label",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "sr-only"
+   ],
+   "depth": 14
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-sm",
+    "font-medium",
+    "text-foreground"
+   ],
+   "depth": 12
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-sm",
+    "text-foreground"
+   ],
+   "depth": 12
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-sm",
+    "text-foreground"
+   ],
+   "depth": 12
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-end",
+    "text-sm",
+    "font-medium"
+   ],
+   "depth": 12
+  },
+  {
+   "name": "button",
+   "tag": "button",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "inline-flex",
+    "items-center",
+    "gap-x-2",
+    "text-sm",
+    "font-semibold",
+    "rounded-lg",
+    "text-primary",
+    "hover:text-primary-hover"
+   ],
+   "depth": 13
+  },
+  {
+   "name": "tr",
+   "tag": "tr",
+   "label": null,
+   "loop": false,
+   "classes": [],
+   "depth": 11
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "py-3",
+    "ps-3"
+   ],
+   "depth": 12
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "flex",
+    "items-center",
+    "h-5"
+   ],
+   "depth": 13
+  },
+  {
+   "name": "input",
+   "tag": "input",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "shrink-0",
+    "size-4",
+    "bg-transparent",
+    "border-line-3",
+    "rounded-sm",
+    "shadow-2xs",
+    "text-primary",
+    "focus:ring-0"
+   ],
+   "depth": 14
+  },
+  {
+   "name": "label",
+   "tag": "label",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "sr-only"
+   ],
+   "depth": 15
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-sm",
+    "font-medium",
+    "text-foreground"
+   ],
+   "depth": 13
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-sm",
+    "text-foreground"
+   ],
+   "depth": 13
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-sm",
+    "text-foreground"
+   ],
+   "depth": 13
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-end",
+    "text-sm",
+    "font-medium"
+   ],
+   "depth": 13
+  },
+  {
+   "name": "button",
+   "tag": "button",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "inline-flex",
+    "items-center",
+    "gap-x-2",
+    "text-sm",
+    "font-semibold",
+    "rounded-lg",
+    "text-primary",
+    "hover:text-primary-hover"
+   ],
+   "depth": 14
+  },
+  {
+   "name": "tr",
+   "tag": "tr",
+   "label": null,
+   "loop": false,
+   "classes": [],
+   "depth": 12
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "py-3",
+    "ps-3"
+   ],
+   "depth": 13
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "flex",
+    "items-center",
+    "h-5"
+   ],
+   "depth": 14
+  },
+  {
+   "name": "input",
+   "tag": "input",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "shrink-0",
+    "size-4",
+    "bg-transparent",
+    "border-line-3",
+    "rounded-sm",
+    "shadow-2xs",
+    "text-primary",
+    "focus:ring-0"
+   ],
+   "depth": 15
+  },
+  {
+   "name": "label",
+   "tag": "label",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "sr-only"
+   ],
+   "depth": 16
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-sm",
+    "font-medium",
+    "text-foreground"
+   ],
+   "depth": 14
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-sm",
+    "text-foreground"
+   ],
+   "depth": 14
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-sm",
+    "text-foreground"
+   ],
+   "depth": 14
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-end",
+    "text-sm",
+    "font-medium"
+   ],
+   "depth": 14
+  },
+  {
+   "name": "button",
+   "tag": "button",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "inline-flex",
+    "items-center",
+    "gap-x-2",
+    "text-sm",
+    "font-semibold",
+    "rounded-lg",
+    "text-primary",
+    "hover:text-primary-hover"
+   ],
+   "depth": 15
+  },
+  {
+   "name": "tr",
+   "tag": "tr",
+   "label": null,
+   "loop": false,
+   "classes": [],
+   "depth": 13
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "py-3",
+    "ps-3"
+   ],
+   "depth": 14
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "flex",
+    "items-center",
+    "h-5"
+   ],
+   "depth": 15
+  },
+  {
+   "name": "input",
+   "tag": "input",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "shrink-0",
+    "size-4",
+    "bg-transparent",
+    "border-line-3",
+    "rounded-sm",
+    "shadow-2xs",
+    "text-primary",
+    "focus:ring-0"
+   ],
+   "depth": 16
+  },
+  {
+   "name": "label",
+   "tag": "label",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "sr-only"
+   ],
+   "depth": 17
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-sm",
+    "font-medium",
+    "text-foreground"
+   ],
+   "depth": 15
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-sm",
+    "text-foreground"
+   ],
+   "depth": 15
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-sm",
+    "text-foreground"
+   ],
+   "depth": 15
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-end",
+    "text-sm",
+    "font-medium"
+   ],
+   "depth": 15
+  },
+  {
+   "name": "button",
+   "tag": "button",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "inline-flex",
+    "items-center",
+    "gap-x-2",
+    "text-sm",
+    "font-semibold",
+    "rounded-lg",
+    "text-primary",
+    "hover:text-primary-hover"
+   ],
+   "depth": 16
+  },
+  {
+   "name": "tr",
+   "tag": "tr",
+   "label": null,
+   "loop": false,
+   "classes": [],
+   "depth": 14
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "py-3",
+    "ps-3"
+   ],
+   "depth": 15
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "flex",
+    "items-center",
+    "h-5"
+   ],
+   "depth": 16
+  },
+  {
+   "name": "input",
+   "tag": "input",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "shrink-0",
+    "size-4",
+    "bg-transparent",
+    "border-line-3",
+    "rounded-sm",
+    "shadow-2xs",
+    "text-primary",
+    "focus:ring-0"
+   ],
+   "depth": 17
+  },
+  {
+   "name": "label",
+   "tag": "label",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "sr-only"
+   ],
+   "depth": 18
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-sm",
+    "font-medium",
+    "text-foreground"
+   ],
+   "depth": 16
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-sm",
+    "text-foreground"
+   ],
+   "depth": 16
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-sm",
+    "text-foreground"
+   ],
+   "depth": 16
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-end",
+    "text-sm",
+    "font-medium"
+   ],
+   "depth": 16
+  },
+  {
+   "name": "button",
+   "tag": "button",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "inline-flex",
+    "items-center",
+    "gap-x-2",
+    "text-sm",
+    "font-semibold",
+    "rounded-lg",
+    "text-primary",
+    "hover:text-primary-hover"
+   ],
+   "depth": 17
+  }
+ ],
+ "classes": [
+  "--exclude-from-ordering",
+  "-me-0.5",
+  "[&::-webkit-scrollbar-thumb]:bg-scrollbar-thumb",
+  "[&::-webkit-scrollbar-thumb]:rounded-none",
+  "[&::-webkit-scrollbar-track]:bg-scrollbar-track",
+  "[&::-webkit-scrollbar]:h-2",
+  "[&>.active]:bg-muted-active",
+  "bg-transparent",
+  "border",
+  "border-b",
+  "border-line-3",
+  "border-table-line",
+  "border-transparent",
+  "checked:bg-primary-checked",
+  "checked:border-primary-checked",
+  "disabled:opacity-50",
+  "disabled:pointer-events-none",
+  "divide-table-line",
+  "divide-y",
+  "flex",
+  "flex-col",
+  "focus:bg-muted-focus",
+  "focus:outline-hidden",
+  "focus:ring-0",
+  "focus:ring-offset-0",
+  "focus:text-primary-focus",
+  "font-medium",
+  "font-normal",
+  "font-semibold",
+  "gap-x-2",
+  "group",
+  "h-5",
+  "hidden",
+  "hover:bg-muted-hover",
+  "hover:border-line-2",
+  "hover:text-primary-hover",
+  "inline-flex",
+  "items-center",
+  "justify-center",
+  "min-h-130",
+  "min-w-10",
+  "min-w-full",
+  "ms-1",
+  "mt-4",
+  "overflow-x-auto",
+  "p-2.5",
+  "p-3",
+  "ps-3",
+  "px-2.5",
+  "px-3",
+  "py-1",
+  "py-2",
+  "py-3",
+  "rounded-full",
+  "rounded-lg",
+  "rounded-md",
+  "rounded-sm",
+  "shadow-2xs",
+  "shrink-0",
+  "size-3.5"
+ ]
+}

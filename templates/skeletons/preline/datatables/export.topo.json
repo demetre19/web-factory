@@ -1,0 +1,1655 @@
+{
+ "label": "preline/datatables/export",
+ "source": "preline",
+ "sourceUrl": "",
+ "version": "1",
+ "topology_id": "table-cell",
+ "element_sig": {
+  "form": 1,
+  "icn": 11,
+  "btn": 28,
+  "table": 1
+ },
+ "tree": [
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "flex",
+    "flex-col",
+    "--prevent-on-load-init"
+   ],
+   "depth": 0
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "flex",
+    "flex-wrap",
+    "items-center",
+    "gap-2",
+    "mb-4"
+   ],
+   "depth": 1
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "grow"
+   ],
+   "depth": 2
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "relative",
+    "max-w-xs",
+    "w-full"
+   ],
+   "depth": 3
+  },
+  {
+   "name": "label",
+   "tag": "label",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "sr-only"
+   ],
+   "depth": 4
+  },
+  {
+   "name": "input",
+   "tag": "input",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "py-1.5",
+    "sm:py-2",
+    "px-3",
+    "ps-9",
+    "block",
+    "w-full",
+    "bg-layer",
+    "border-layer-line"
+   ],
+   "depth": 4
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "absolute",
+    "inset-y-0",
+    "inset-s-0",
+    "flex",
+    "items-center",
+    "pointer-events-none",
+    "ps-3"
+   ],
+   "depth": 5
+  },
+  {
+   "name": "svg",
+   "tag": "svg",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "size-4",
+    "text-muted-foreground"
+   ],
+   "depth": 6
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "flex-1",
+    "flex",
+    "items-center",
+    "justify-end",
+    "space-x-2"
+   ],
+   "depth": 3
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "hs-dropdown",
+    "[--placement:bottom-right]",
+    "relative",
+    "inline-flex"
+   ],
+   "depth": 4
+  },
+  {
+   "name": "button",
+   "tag": "button",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "hs-dropdown-toggle",
+    "py-2",
+    "px-3",
+    "inline-flex",
+    "items-center",
+    "gap-x-2",
+    "text-sm",
+    "rounded-lg"
+   ],
+   "depth": 5
+  },
+  {
+   "name": "svg",
+   "tag": "svg",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "shrink-0",
+    "size-4"
+   ],
+   "depth": 6
+  },
+  {
+   "name": "svg",
+   "tag": "svg",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "hs-dropdown-open:rotate-180",
+    "size-4"
+   ],
+   "depth": 6
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "hs-dropdown-menu",
+    "hs-dropdown-open:opacity-100",
+    "w-32",
+    "transition-[opacity,margin]",
+    "duration",
+    "opacity-0",
+    "hidden",
+    "z-20"
+   ],
+   "depth": 5
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-1",
+    "space-y-0.5"
+   ],
+   "depth": 6
+  },
+  {
+   "name": "button",
+   "tag": "button",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "flex",
+    "w-full",
+    "items-center",
+    "gap-x-2",
+    "py-2",
+    "px-3",
+    "rounded-lg",
+    "text-sm"
+   ],
+   "depth": 7
+  },
+  {
+   "name": "svg",
+   "tag": "svg",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "shrink-0",
+    "size-3.5"
+   ],
+   "depth": 8
+  },
+  {
+   "name": "button",
+   "tag": "button",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "flex",
+    "w-full",
+    "items-center",
+    "gap-x-2",
+    "py-2",
+    "px-3",
+    "rounded-lg",
+    "text-sm"
+   ],
+   "depth": 7
+  },
+  {
+   "name": "svg",
+   "tag": "svg",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "shrink-0",
+    "size-3.5"
+   ],
+   "depth": 8
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-1",
+    "space-y-0.5",
+    "border-t",
+    "border-dropdown-divider"
+   ],
+   "depth": 6
+  },
+  {
+   "name": "button",
+   "tag": "button",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "flex",
+    "w-full",
+    "items-center",
+    "gap-x-2",
+    "py-2",
+    "px-3",
+    "rounded-lg",
+    "text-sm"
+   ],
+   "depth": 7
+  },
+  {
+   "name": "svg",
+   "tag": "svg",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "shrink-0",
+    "size-3.5"
+   ],
+   "depth": 8
+  },
+  {
+   "name": "button",
+   "tag": "button",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "flex",
+    "w-full",
+    "items-center",
+    "gap-x-2",
+    "py-2",
+    "px-3",
+    "rounded-lg",
+    "text-sm"
+   ],
+   "depth": 7
+  },
+  {
+   "name": "svg",
+   "tag": "svg",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "shrink-0",
+    "size-3.5"
+   ],
+   "depth": 8
+  },
+  {
+   "name": "clippath",
+   "tag": "clippath",
+   "label": null,
+   "loop": false,
+   "classes": [],
+   "depth": 9
+  },
+  {
+   "name": "button",
+   "tag": "button",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "flex",
+    "w-full",
+    "items-center",
+    "gap-x-2",
+    "py-2",
+    "px-3",
+    "rounded-lg",
+    "text-sm"
+   ],
+   "depth": 7
+  },
+  {
+   "name": "svg",
+   "tag": "svg",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "shrink-0",
+    "size-3.5"
+   ],
+   "depth": 8
+  },
+  {
+   "name": "clippath",
+   "tag": "clippath",
+   "label": null,
+   "loop": false,
+   "classes": [],
+   "depth": 9
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "min-h-130",
+    "overflow-x-auto",
+    "[&::-webkit-scrollbar]:h-2",
+    "[&::-webkit-scrollbar-thumb]:rounded-none",
+    "[&::-webkit-scrollbar-track]:bg-scrollbar-track",
+    "[&::-webkit-scrollbar-thumb]:bg-scrollbar-thumb"
+   ],
+   "depth": 2
+  },
+  {
+   "name": "table",
+   "tag": "table",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "min-w-full"
+   ],
+   "depth": 3
+  },
+  {
+   "name": "thead",
+   "tag": "thead",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "border-b",
+    "border-table-line"
+   ],
+   "depth": 4
+  },
+  {
+   "name": "tr",
+   "tag": "tr",
+   "label": null,
+   "loop": false,
+   "classes": [],
+   "depth": 5
+  },
+  {
+   "name": "th",
+   "tag": "th",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "py-1",
+    "group",
+    "text-start",
+    "font-normal",
+    "focus:outline-hidden"
+   ],
+   "depth": 6
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "py-1",
+    "px-2.5",
+    "inline-flex",
+    "items-center",
+    "border",
+    "border-transparent",
+    "text-sm",
+    "text-muted-foreground-1"
+   ],
+   "depth": 7
+  },
+  {
+   "name": "svg",
+   "tag": "svg",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "size-3.5",
+    "ms-1",
+    "-me-0.5",
+    "text-muted-foreground"
+   ],
+   "depth": 8
+  },
+  {
+   "name": "th",
+   "tag": "th",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "py-1",
+    "group",
+    "text-start",
+    "font-normal",
+    "focus:outline-hidden"
+   ],
+   "depth": 6
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "py-1",
+    "px-2.5",
+    "inline-flex",
+    "items-center",
+    "border",
+    "border-transparent",
+    "text-sm",
+    "text-muted-foreground-1"
+   ],
+   "depth": 7
+  },
+  {
+   "name": "svg",
+   "tag": "svg",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "size-3.5",
+    "ms-1",
+    "-me-0.5",
+    "text-muted-foreground"
+   ],
+   "depth": 8
+  },
+  {
+   "name": "th",
+   "tag": "th",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "py-1",
+    "group",
+    "text-start",
+    "font-normal",
+    "focus:outline-hidden"
+   ],
+   "depth": 6
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "py-1",
+    "px-2.5",
+    "inline-flex",
+    "items-center",
+    "border",
+    "border-transparent",
+    "text-sm",
+    "text-muted-foreground-1"
+   ],
+   "depth": 7
+  },
+  {
+   "name": "svg",
+   "tag": "svg",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "size-3.5",
+    "ms-1",
+    "-me-0.5",
+    "text-muted-foreground"
+   ],
+   "depth": 8
+  },
+  {
+   "name": "th",
+   "tag": "th",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "py-2",
+    "px-3",
+    "text-end",
+    "font-normal",
+    "text-sm",
+    "text-muted-foreground-1",
+    "--exclude-from-ordering"
+   ],
+   "depth": 6
+  },
+  {
+   "name": "tbody",
+   "tag": "tbody",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "divide-y",
+    "divide-table-line"
+   ],
+   "depth": 4
+  },
+  {
+   "name": "tr",
+   "tag": "tr",
+   "label": null,
+   "loop": false,
+   "classes": [],
+   "depth": 5
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-sm",
+    "font-medium",
+    "text-foreground"
+   ],
+   "depth": 6
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-sm",
+    "text-foreground"
+   ],
+   "depth": 6
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-sm",
+    "text-foreground"
+   ],
+   "depth": 6
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-end",
+    "text-sm",
+    "font-medium"
+   ],
+   "depth": 6
+  },
+  {
+   "name": "button",
+   "tag": "button",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "inline-flex",
+    "items-center",
+    "gap-x-2",
+    "text-sm",
+    "font-semibold",
+    "rounded-lg",
+    "text-primary",
+    "hover:text-primary-hover"
+   ],
+   "depth": 7
+  },
+  {
+   "name": "tr",
+   "tag": "tr",
+   "label": null,
+   "loop": false,
+   "classes": [],
+   "depth": 5
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-sm",
+    "font-medium",
+    "text-foreground"
+   ],
+   "depth": 6
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-sm",
+    "text-foreground"
+   ],
+   "depth": 6
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-sm",
+    "text-foreground"
+   ],
+   "depth": 6
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-end",
+    "text-sm",
+    "font-medium"
+   ],
+   "depth": 6
+  },
+  {
+   "name": "button",
+   "tag": "button",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "inline-flex",
+    "items-center",
+    "gap-x-2",
+    "text-sm",
+    "font-semibold",
+    "rounded-lg",
+    "text-primary",
+    "hover:text-primary-hover"
+   ],
+   "depth": 7
+  },
+  {
+   "name": "tr",
+   "tag": "tr",
+   "label": null,
+   "loop": false,
+   "classes": [],
+   "depth": 5
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-sm",
+    "font-medium",
+    "text-foreground"
+   ],
+   "depth": 6
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-sm",
+    "text-foreground"
+   ],
+   "depth": 6
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-sm",
+    "text-foreground"
+   ],
+   "depth": 6
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-end",
+    "text-sm",
+    "font-medium"
+   ],
+   "depth": 6
+  },
+  {
+   "name": "button",
+   "tag": "button",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "inline-flex",
+    "items-center",
+    "gap-x-2",
+    "text-sm",
+    "font-semibold",
+    "rounded-lg",
+    "text-primary",
+    "hover:text-primary-hover"
+   ],
+   "depth": 7
+  },
+  {
+   "name": "tr",
+   "tag": "tr",
+   "label": null,
+   "loop": false,
+   "classes": [],
+   "depth": 5
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-sm",
+    "font-medium",
+    "text-foreground"
+   ],
+   "depth": 6
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-sm",
+    "text-foreground"
+   ],
+   "depth": 6
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-sm",
+    "text-foreground"
+   ],
+   "depth": 6
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-end",
+    "text-sm",
+    "font-medium"
+   ],
+   "depth": 6
+  },
+  {
+   "name": "button",
+   "tag": "button",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "inline-flex",
+    "items-center",
+    "gap-x-2",
+    "text-sm",
+    "font-semibold",
+    "rounded-lg",
+    "text-primary",
+    "hover:text-primary-hover"
+   ],
+   "depth": 7
+  },
+  {
+   "name": "tr",
+   "tag": "tr",
+   "label": null,
+   "loop": false,
+   "classes": [],
+   "depth": 5
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-sm",
+    "font-medium",
+    "text-foreground"
+   ],
+   "depth": 6
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-sm",
+    "text-foreground"
+   ],
+   "depth": 6
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-sm",
+    "text-foreground"
+   ],
+   "depth": 6
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-end",
+    "text-sm",
+    "font-medium"
+   ],
+   "depth": 6
+  },
+  {
+   "name": "button",
+   "tag": "button",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "inline-flex",
+    "items-center",
+    "gap-x-2",
+    "text-sm",
+    "font-semibold",
+    "rounded-lg",
+    "text-primary",
+    "hover:text-primary-hover"
+   ],
+   "depth": 7
+  },
+  {
+   "name": "tr",
+   "tag": "tr",
+   "label": null,
+   "loop": false,
+   "classes": [],
+   "depth": 5
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-sm",
+    "font-medium",
+    "text-foreground"
+   ],
+   "depth": 6
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-sm",
+    "text-foreground"
+   ],
+   "depth": 6
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-sm",
+    "text-foreground"
+   ],
+   "depth": 6
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-end",
+    "text-sm",
+    "font-medium"
+   ],
+   "depth": 6
+  },
+  {
+   "name": "button",
+   "tag": "button",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "inline-flex",
+    "items-center",
+    "gap-x-2",
+    "text-sm",
+    "font-semibold",
+    "rounded-lg",
+    "text-primary",
+    "hover:text-primary-hover"
+   ],
+   "depth": 7
+  },
+  {
+   "name": "tr",
+   "tag": "tr",
+   "label": null,
+   "loop": false,
+   "classes": [],
+   "depth": 5
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-sm",
+    "font-medium",
+    "text-foreground"
+   ],
+   "depth": 6
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-sm",
+    "text-foreground"
+   ],
+   "depth": 6
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-sm",
+    "text-foreground"
+   ],
+   "depth": 6
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-end",
+    "text-sm",
+    "font-medium"
+   ],
+   "depth": 6
+  },
+  {
+   "name": "button",
+   "tag": "button",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "inline-flex",
+    "items-center",
+    "gap-x-2",
+    "text-sm",
+    "font-semibold",
+    "rounded-lg",
+    "text-primary",
+    "hover:text-primary-hover"
+   ],
+   "depth": 7
+  },
+  {
+   "name": "tr",
+   "tag": "tr",
+   "label": null,
+   "loop": false,
+   "classes": [],
+   "depth": 5
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-sm",
+    "font-medium",
+    "text-foreground"
+   ],
+   "depth": 6
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-sm",
+    "text-foreground"
+   ],
+   "depth": 6
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-sm",
+    "text-foreground"
+   ],
+   "depth": 6
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-end",
+    "text-sm",
+    "font-medium"
+   ],
+   "depth": 6
+  },
+  {
+   "name": "button",
+   "tag": "button",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "inline-flex",
+    "items-center",
+    "gap-x-2",
+    "text-sm",
+    "font-semibold",
+    "rounded-lg",
+    "text-primary",
+    "hover:text-primary-hover"
+   ],
+   "depth": 7
+  },
+  {
+   "name": "tr",
+   "tag": "tr",
+   "label": null,
+   "loop": false,
+   "classes": [],
+   "depth": 5
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-sm",
+    "font-medium",
+    "text-foreground"
+   ],
+   "depth": 6
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-sm",
+    "text-foreground"
+   ],
+   "depth": 6
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-sm",
+    "text-foreground"
+   ],
+   "depth": 6
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-end",
+    "text-sm",
+    "font-medium"
+   ],
+   "depth": 6
+  },
+  {
+   "name": "button",
+   "tag": "button",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "inline-flex",
+    "items-center",
+    "gap-x-2",
+    "text-sm",
+    "font-semibold",
+    "rounded-lg",
+    "text-primary",
+    "hover:text-primary-hover"
+   ],
+   "depth": 7
+  },
+  {
+   "name": "tr",
+   "tag": "tr",
+   "label": null,
+   "loop": false,
+   "classes": [],
+   "depth": 5
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-sm",
+    "font-medium",
+    "text-foreground"
+   ],
+   "depth": 6
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-sm",
+    "text-foreground"
+   ],
+   "depth": 6
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-sm",
+    "text-foreground"
+   ],
+   "depth": 6
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-end",
+    "text-sm",
+    "font-medium"
+   ],
+   "depth": 6
+  },
+  {
+   "name": "button",
+   "tag": "button",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "inline-flex",
+    "items-center",
+    "gap-x-2",
+    "text-sm",
+    "font-semibold",
+    "rounded-lg",
+    "text-primary",
+    "hover:text-primary-hover"
+   ],
+   "depth": 7
+  },
+  {
+   "name": "tr",
+   "tag": "tr",
+   "label": null,
+   "loop": false,
+   "classes": [],
+   "depth": 5
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-sm",
+    "font-medium",
+    "text-foreground"
+   ],
+   "depth": 6
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-sm",
+    "text-foreground"
+   ],
+   "depth": 6
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-sm",
+    "text-foreground"
+   ],
+   "depth": 6
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-end",
+    "text-sm",
+    "font-medium"
+   ],
+   "depth": 6
+  },
+  {
+   "name": "button",
+   "tag": "button",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "inline-flex",
+    "items-center",
+    "gap-x-2",
+    "text-sm",
+    "font-semibold",
+    "rounded-lg",
+    "text-primary",
+    "hover:text-primary-hover"
+   ],
+   "depth": 7
+  },
+  {
+   "name": "tr",
+   "tag": "tr",
+   "label": null,
+   "loop": false,
+   "classes": [],
+   "depth": 5
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-sm",
+    "font-medium",
+    "text-foreground"
+   ],
+   "depth": 6
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-sm",
+    "text-foreground"
+   ],
+   "depth": 6
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-sm",
+    "text-foreground"
+   ],
+   "depth": 6
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-end",
+    "text-sm",
+    "font-medium"
+   ],
+   "depth": 6
+  },
+  {
+   "name": "button",
+   "tag": "button",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "inline-flex",
+    "items-center",
+    "gap-x-2",
+    "text-sm",
+    "font-semibold",
+    "rounded-lg",
+    "text-primary",
+    "hover:text-primary-hover"
+   ],
+   "depth": 7
+  },
+  {
+   "name": "tr",
+   "tag": "tr",
+   "label": null,
+   "loop": false,
+   "classes": [],
+   "depth": 5
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-sm",
+    "font-medium",
+    "text-foreground"
+   ],
+   "depth": 6
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-sm",
+    "text-foreground"
+   ],
+   "depth": 6
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-sm",
+    "text-foreground"
+   ],
+   "depth": 6
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-end",
+    "text-sm",
+    "font-medium"
+   ],
+   "depth": 6
+  }
+ ],
+ "classes": [
+  "--exclude-from-ordering",
+  "--prevent-on-load-init",
+  "-me-0.5",
+  "[&::-webkit-scrollbar-thumb]:bg-scrollbar-thumb",
+  "[&::-webkit-scrollbar-thumb]:rounded-none",
+  "[&::-webkit-scrollbar-track]:bg-scrollbar-track",
+  "[&::-webkit-scrollbar]:h-2",
+  "[&>.active]:bg-muted-active",
+  "[--placement:bottom-right]",
+  "absolute",
+  "bg-layer",
+  "bg-white",
+  "block",
+  "border",
+  "border-b",
+  "border-dropdown-divider",
+  "border-layer-line",
+  "border-t",
+  "border-table-line",
+  "border-transparent",
+  "dark:bg-neutral-900",
+  "disabled:opacity-50",
+  "disabled:pointer-events-none",
+  "divide-table-line",
+  "divide-y",
+  "duration",
+  "flex",
+  "flex-1",
+  "flex-col",
+  "flex-wrap",
+  "focus:bg-layer-focus",
+  "focus:bg-muted-focus",
+  "focus:border-primary-focus",
+  "focus:outline-hidden",
+  "focus:ring-primary-focus",
+  "focus:text-primary-focus",
+  "focus:z-10",
+  "font-medium",
+  "font-normal",
+  "font-semibold",
+  "gap-2",
+  "gap-x-2",
+  "group",
+  "grow",
+  "hidden",
+  "hover:bg-layer-hover",
+  "hover:bg-muted-hover",
+  "hover:border-line-2",
+  "hover:text-primary-hover",
+  "hs-dropdown",
+  "hs-dropdown-menu",
+  "hs-dropdown-open:opacity-100",
+  "hs-dropdown-open:rotate-180",
+  "hs-dropdown-toggle",
+  "inline-flex",
+  "inset-s-0",
+  "inset-y-0",
+  "items-center",
+  "justify-center",
+  "justify-end"
+ ]
+}

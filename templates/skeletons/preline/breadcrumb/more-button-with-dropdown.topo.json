@@ -1,0 +1,254 @@
+{
+ "label": "preline/breadcrumb/more-button-with-dropdown",
+ "source": "preline",
+ "sourceUrl": "",
+ "version": "1",
+ "topology_id": "list-cards",
+ "element_sig": {
+  "ul": 1,
+  "li": 3,
+  "a": 3,
+  "icn": 3,
+  "btn": 1
+ },
+ "tree": [
+  {
+   "name": "ol",
+   "tag": "ol",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "flex",
+    "items-center",
+    "whitespace-nowrap"
+   ],
+   "depth": 0
+  },
+  {
+   "name": "li",
+   "tag": "li",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "inline-flex",
+    "items-center"
+   ],
+   "depth": 1
+  },
+  {
+   "name": "a",
+   "tag": "a",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "flex",
+    "items-center",
+    "text-sm",
+    "text-muted-foreground-1",
+    "hover:text-primary-focus",
+    "focus:outline-hidden",
+    "focus:text-primary-focus"
+   ],
+   "depth": 2
+  },
+  {
+   "name": "svg",
+   "tag": "svg",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "shrink-0",
+    "mx-2",
+    "size-4",
+    "text-muted-foreground"
+   ],
+   "depth": 2
+  },
+  {
+   "name": "li",
+   "tag": "li",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "inline-flex",
+    "items-center"
+   ],
+   "depth": 1
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "hs-dropdown",
+    "[--placement:top-left]",
+    "relative",
+    "inline-flex"
+   ],
+   "depth": 2
+  },
+  {
+   "name": "button",
+   "tag": "button",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "hs-dropdown-toggle",
+    "py-1.5",
+    "px-2",
+    "inline-flex",
+    "items-center",
+    "gap-x-2",
+    "text-sm",
+    "font-medium"
+   ],
+   "depth": 3
+  },
+  {
+   "name": "svg",
+   "tag": "svg",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "shrink-0",
+    "size-4"
+   ],
+   "depth": 4
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "hs-dropdown-menu",
+    "hs-dropdown-open:opacity-100",
+    "w-48",
+    "hidden",
+    "z-10",
+    "transition-[margin,opacity]",
+    "opacity-0",
+    "duration-300"
+   ],
+   "depth": 3
+  },
+  {
+   "name": "a",
+   "tag": "a",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "flex",
+    "items-center",
+    "gap-x-3.5",
+    "py-2",
+    "px-3",
+    "rounded-lg",
+    "text-sm",
+    "text-dropdown-item-foreground"
+   ],
+   "depth": 4
+  },
+  {
+   "name": "a",
+   "tag": "a",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "flex",
+    "items-center",
+    "gap-x-3.5",
+    "py-2",
+    "px-3",
+    "rounded-lg",
+    "text-sm",
+    "text-dropdown-item-foreground"
+   ],
+   "depth": 4
+  },
+  {
+   "name": "svg",
+   "tag": "svg",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "shrink-0",
+    "mx-2",
+    "size-4",
+    "text-muted-foreground"
+   ],
+   "depth": 2
+  },
+  {
+   "name": "li",
+   "tag": "li",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "inline-flex",
+    "items-center",
+    "text-sm",
+    "font-semibold",
+    "text-foreground",
+    "truncate"
+   ],
+   "depth": 1
+  }
+ ],
+ "classes": [
+  "[--placement:top-left]",
+  "bg-dropdown",
+  "bg-layer",
+  "border",
+  "border-dropdown-line",
+  "border-layer-line",
+  "disabled:opacity-50",
+  "disabled:pointer-events-none",
+  "duration-300",
+  "flex",
+  "focus:bg-dropdown-item-focus",
+  "focus:bg-layer-focus",
+  "focus:outline-hidden",
+  "focus:text-primary-focus",
+  "font-medium",
+  "font-semibold",
+  "gap-x-2",
+  "gap-x-3.5",
+  "hidden",
+  "hover:bg-dropdown-item-hover",
+  "hover:bg-layer-hover",
+  "hover:text-primary-focus",
+  "hs-dropdown",
+  "hs-dropdown-menu",
+  "hs-dropdown-open:opacity-100",
+  "hs-dropdown-toggle",
+  "inline-flex",
+  "items-center",
+  "mx-2",
+  "opacity-0",
+  "p-1",
+  "px-2",
+  "px-3",
+  "py-1.5",
+  "py-2",
+  "relative",
+  "rounded-lg",
+  "shadow-2xs",
+  "shadow-md",
+  "shrink-0",
+  "size-4",
+  "space-y-0.5",
+  "text-dropdown-item-foreground",
+  "text-foreground",
+  "text-layer-foreground",
+  "text-muted-foreground",
+  "text-muted-foreground-1",
+  "text-sm",
+  "transition-[margin,opacity]",
+  "truncate",
+  "w-48",
+  "whitespace-nowrap",
+  "z-10"
+ ]
+}

@@ -1,0 +1,1594 @@
+{
+ "label": "preline/datatables/column-filter",
+ "source": "preline",
+ "sourceUrl": "",
+ "version": "1",
+ "topology_id": "table-cell",
+ "element_sig": {
+  "form": 27,
+  "icn": 3,
+  "table": 1,
+  "btn": 24
+ },
+ "tree": [
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "flex",
+    "flex-col",
+    "--prevent-on-load-init"
+   ],
+   "depth": 0
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "flex",
+    "flex-wrap",
+    "items-center",
+    "gap-2",
+    "mb-4"
+   ],
+   "depth": 1
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "grow"
+   ],
+   "depth": 2
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "relative",
+    "max-w-xs",
+    "w-full"
+   ],
+   "depth": 3
+  },
+  {
+   "name": "label",
+   "tag": "label",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "sr-only"
+   ],
+   "depth": 4
+  },
+  {
+   "name": "input",
+   "tag": "input",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "py-1.5",
+    "sm:py-2",
+    "px-3",
+    "ps-9",
+    "block",
+    "w-full",
+    "bg-layer",
+    "border-layer-line"
+   ],
+   "depth": 4
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "absolute",
+    "inset-y-0",
+    "inset-s-0",
+    "flex",
+    "items-center",
+    "pointer-events-none",
+    "ps-3"
+   ],
+   "depth": 5
+  },
+  {
+   "name": "svg",
+   "tag": "svg",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "size-4",
+    "text-muted-foreground"
+   ],
+   "depth": 6
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "flex-1",
+    "flex",
+    "items-center",
+    "justify-end",
+    "space-x-2"
+   ],
+   "depth": 3
+  },
+  {
+   "name": "select",
+   "tag": "select",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "hidden"
+   ],
+   "depth": 4
+  },
+  {
+   "name": "option",
+   "tag": "option",
+   "label": null,
+   "loop": false,
+   "classes": [],
+   "depth": 5
+  },
+  {
+   "name": "option",
+   "tag": "option",
+   "label": null,
+   "loop": false,
+   "classes": [],
+   "depth": 5
+  },
+  {
+   "name": "option",
+   "tag": "option",
+   "label": null,
+   "loop": false,
+   "classes": [],
+   "depth": 5
+  },
+  {
+   "name": "option",
+   "tag": "option",
+   "label": null,
+   "loop": false,
+   "classes": [],
+   "depth": 5
+  },
+  {
+   "name": "option",
+   "tag": "option",
+   "label": null,
+   "loop": false,
+   "classes": [],
+   "depth": 5
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "min-h-130",
+    "overflow-x-auto",
+    "[&::-webkit-scrollbar]:h-2",
+    "[&::-webkit-scrollbar-thumb]:rounded-none",
+    "[&::-webkit-scrollbar-track]:bg-scrollbar-track",
+    "[&::-webkit-scrollbar-thumb]:bg-scrollbar-thumb"
+   ],
+   "depth": 2
+  },
+  {
+   "name": "table",
+   "tag": "table",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "min-w-full"
+   ],
+   "depth": 3
+  },
+  {
+   "name": "thead",
+   "tag": "thead",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "border-b",
+    "border-table-line"
+   ],
+   "depth": 4
+  },
+  {
+   "name": "tr",
+   "tag": "tr",
+   "label": null,
+   "loop": false,
+   "classes": [],
+   "depth": 5
+  },
+  {
+   "name": "th",
+   "tag": "th",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "py-1",
+    "ps-3",
+    "--exclude-from-ordering"
+   ],
+   "depth": 6
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "flex",
+    "items-center",
+    "h-5"
+   ],
+   "depth": 7
+  },
+  {
+   "name": "input",
+   "tag": "input",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "shrink-0",
+    "size-4",
+    "bg-transparent",
+    "border-line-3",
+    "rounded-sm",
+    "shadow-2xs",
+    "text-primary",
+    "focus:ring-0"
+   ],
+   "depth": 8
+  },
+  {
+   "name": "label",
+   "tag": "label",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "sr-only"
+   ],
+   "depth": 9
+  },
+  {
+   "name": "th",
+   "tag": "th",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "py-1",
+    "group",
+    "text-start",
+    "font-normal",
+    "--exclude-from-ordering"
+   ],
+   "depth": 7
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "ms-2",
+    "inline-block"
+   ],
+   "depth": 8
+  },
+  {
+   "name": "select",
+   "tag": "select",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "hidden"
+   ],
+   "depth": 9
+  },
+  {
+   "name": "option",
+   "tag": "option",
+   "label": null,
+   "loop": false,
+   "classes": [],
+   "depth": 10
+  },
+  {
+   "name": "option",
+   "tag": "option",
+   "label": null,
+   "loop": false,
+   "classes": [],
+   "depth": 10
+  },
+  {
+   "name": "option",
+   "tag": "option",
+   "label": null,
+   "loop": false,
+   "classes": [],
+   "depth": 10
+  },
+  {
+   "name": "option",
+   "tag": "option",
+   "label": null,
+   "loop": false,
+   "classes": [],
+   "depth": 10
+  },
+  {
+   "name": "th",
+   "tag": "th",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "py-1",
+    "group",
+    "text-start",
+    "font-normal",
+    "--exclude-from-ordering"
+   ],
+   "depth": 7
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "flex",
+    "items-center"
+   ],
+   "depth": 8
+  },
+  {
+   "name": "span",
+   "tag": "span",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "py-1",
+    "px-2.5",
+    "text-sm",
+    "text-muted-foreground-1",
+    "rounded-md"
+   ],
+   "depth": 9
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "hs-dropdown",
+    "[--auto-close:inside]",
+    "[--placement:bottom-right]",
+    "relative",
+    "sm:inline-flex",
+    "z-20"
+   ],
+   "depth": 9
+  },
+  {
+   "name": "button",
+   "tag": "button",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "hs-dropdown-toggle",
+    "size-7.5",
+    "inline-flex",
+    "justify-center",
+    "items-center",
+    "gap-2",
+    "rounded-lg",
+    "text-muted-foreground-1"
+   ],
+   "depth": 10
+  },
+  {
+   "name": "svg",
+   "tag": "svg",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "shrink-0",
+    "size-3.5"
+   ],
+   "depth": 11
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "hs-dropdown-menu",
+    "transition-[opacity,margin]",
+    "duration",
+    "hs-dropdown-open:opacity-100",
+    "opacity-0",
+    "hidden",
+    "bg-dropdown",
+    "border"
+   ],
+   "depth": 10
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "max-w-xs",
+    "w-full",
+    "flex",
+    "gap-x-2"
+   ],
+   "depth": 11
+  },
+  {
+   "name": "input",
+   "tag": "input",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "py-1",
+    "px-2.5",
+    "block",
+    "w-24",
+    "bg-layer",
+    "border-layer-line",
+    "rounded-md",
+    "sm:text-[13px]"
+   ],
+   "depth": 12
+  },
+  {
+   "name": "input",
+   "tag": "input",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "py-1",
+    "px-2.5",
+    "block",
+    "w-24",
+    "bg-layer",
+    "border-layer-line",
+    "rounded-md",
+    "sm:text-[13px]"
+   ],
+   "depth": 13
+  },
+  {
+   "name": "th",
+   "tag": "th",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "py-1",
+    "group",
+    "text-start",
+    "font-normal",
+    "--exclude-from-ordering"
+   ],
+   "depth": 9
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "flex",
+    "items-center"
+   ],
+   "depth": 10
+  },
+  {
+   "name": "span",
+   "tag": "span",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "py-1",
+    "px-2.5",
+    "text-sm",
+    "text-muted-foreground-1",
+    "rounded-md"
+   ],
+   "depth": 11
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "hs-dropdown",
+    "[--auto-close:inside]",
+    "[--placement:bottom-right]",
+    "relative",
+    "sm:inline-flex",
+    "z-20",
+    "ms-2"
+   ],
+   "depth": 11
+  },
+  {
+   "name": "button",
+   "tag": "button",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "hs-dropdown-toggle",
+    "size-7.5",
+    "inline-flex",
+    "justify-center",
+    "items-center",
+    "gap-2",
+    "rounded-lg",
+    "text-muted-foreground-1"
+   ],
+   "depth": 12
+  },
+  {
+   "name": "svg",
+   "tag": "svg",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "shrink-0",
+    "size-3.5"
+   ],
+   "depth": 13
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "hs-dropdown-menu",
+    "transition-[opacity,margin]",
+    "duration",
+    "hs-dropdown-open:opacity-100",
+    "opacity-0",
+    "hidden",
+    "bg-dropdown",
+    "border"
+   ],
+   "depth": 12
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "max-w-xs",
+    "w-full",
+    "flex",
+    "gap-x-2"
+   ],
+   "depth": 13
+  },
+  {
+   "name": "input",
+   "tag": "input",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "py-1",
+    "px-2.5",
+    "block",
+    "w-full",
+    "bg-layer",
+    "border-layer-line",
+    "rounded-md",
+    "sm:text-[13px]"
+   ],
+   "depth": 14
+  },
+  {
+   "name": "th",
+   "tag": "th",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "py-2",
+    "px-3",
+    "text-end",
+    "font-normal",
+    "text-sm",
+    "text-muted-foreground-1",
+    "--exclude-from-ordering"
+   ],
+   "depth": 10
+  },
+  {
+   "name": "tbody",
+   "tag": "tbody",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "divide-y",
+    "divide-table-line"
+   ],
+   "depth": 8
+  },
+  {
+   "name": "tr",
+   "tag": "tr",
+   "label": null,
+   "loop": false,
+   "classes": [],
+   "depth": 9
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "py-3",
+    "ps-3"
+   ],
+   "depth": 10
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "flex",
+    "items-center",
+    "h-5"
+   ],
+   "depth": 11
+  },
+  {
+   "name": "input",
+   "tag": "input",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "hs-datatable-select-row",
+    "shrink-0",
+    "size-4",
+    "bg-transparent",
+    "border-line-3",
+    "rounded-sm",
+    "shadow-2xs",
+    "text-primary"
+   ],
+   "depth": 12
+  },
+  {
+   "name": "label",
+   "tag": "label",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "sr-only"
+   ],
+   "depth": 13
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-sm",
+    "font-medium",
+    "text-foreground"
+   ],
+   "depth": 11
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-sm",
+    "text-foreground"
+   ],
+   "depth": 11
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-sm",
+    "text-foreground"
+   ],
+   "depth": 11
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-end",
+    "text-sm",
+    "font-medium"
+   ],
+   "depth": 11
+  },
+  {
+   "name": "button",
+   "tag": "button",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "inline-flex",
+    "items-center",
+    "gap-x-2",
+    "text-sm",
+    "font-semibold",
+    "rounded-lg",
+    "text-primary",
+    "hover:text-primary-hover"
+   ],
+   "depth": 12
+  },
+  {
+   "name": "tr",
+   "tag": "tr",
+   "label": null,
+   "loop": false,
+   "classes": [],
+   "depth": 10
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "py-3",
+    "ps-3"
+   ],
+   "depth": 11
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "flex",
+    "items-center",
+    "h-5"
+   ],
+   "depth": 12
+  },
+  {
+   "name": "input",
+   "tag": "input",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "hs-datatable-select-row",
+    "shrink-0",
+    "size-4",
+    "bg-transparent",
+    "border-line-3",
+    "rounded-sm",
+    "shadow-2xs",
+    "text-primary"
+   ],
+   "depth": 13
+  },
+  {
+   "name": "label",
+   "tag": "label",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "sr-only"
+   ],
+   "depth": 14
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-sm",
+    "font-medium",
+    "text-foreground"
+   ],
+   "depth": 12
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-sm",
+    "text-foreground"
+   ],
+   "depth": 12
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-sm",
+    "text-foreground"
+   ],
+   "depth": 12
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-end",
+    "text-sm",
+    "font-medium"
+   ],
+   "depth": 12
+  },
+  {
+   "name": "button",
+   "tag": "button",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "inline-flex",
+    "items-center",
+    "gap-x-2",
+    "text-sm",
+    "font-semibold",
+    "rounded-lg",
+    "text-primary",
+    "hover:text-primary-hover"
+   ],
+   "depth": 13
+  },
+  {
+   "name": "tr",
+   "tag": "tr",
+   "label": null,
+   "loop": false,
+   "classes": [],
+   "depth": 11
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "py-3",
+    "ps-3"
+   ],
+   "depth": 12
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "flex",
+    "items-center",
+    "h-5"
+   ],
+   "depth": 13
+  },
+  {
+   "name": "input",
+   "tag": "input",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "hs-datatable-select-row",
+    "shrink-0",
+    "size-4",
+    "bg-transparent",
+    "border-line-3",
+    "rounded-sm",
+    "shadow-2xs",
+    "text-primary"
+   ],
+   "depth": 14
+  },
+  {
+   "name": "label",
+   "tag": "label",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "sr-only"
+   ],
+   "depth": 15
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-sm",
+    "font-medium",
+    "text-foreground"
+   ],
+   "depth": 13
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-sm",
+    "text-foreground"
+   ],
+   "depth": 13
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-sm",
+    "text-foreground"
+   ],
+   "depth": 13
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-end",
+    "text-sm",
+    "font-medium"
+   ],
+   "depth": 13
+  },
+  {
+   "name": "button",
+   "tag": "button",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "inline-flex",
+    "items-center",
+    "gap-x-2",
+    "text-sm",
+    "font-semibold",
+    "rounded-lg",
+    "text-primary",
+    "hover:text-primary-hover"
+   ],
+   "depth": 14
+  },
+  {
+   "name": "tr",
+   "tag": "tr",
+   "label": null,
+   "loop": false,
+   "classes": [],
+   "depth": 12
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "py-3",
+    "ps-3"
+   ],
+   "depth": 13
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "flex",
+    "items-center",
+    "h-5"
+   ],
+   "depth": 14
+  },
+  {
+   "name": "input",
+   "tag": "input",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "hs-datatable-select-row",
+    "shrink-0",
+    "size-4",
+    "bg-transparent",
+    "border-line-3",
+    "rounded-sm",
+    "shadow-2xs",
+    "text-primary"
+   ],
+   "depth": 15
+  },
+  {
+   "name": "label",
+   "tag": "label",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "sr-only"
+   ],
+   "depth": 16
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-sm",
+    "font-medium",
+    "text-foreground"
+   ],
+   "depth": 14
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-sm",
+    "text-foreground"
+   ],
+   "depth": 14
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-sm",
+    "text-foreground"
+   ],
+   "depth": 14
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-end",
+    "text-sm",
+    "font-medium"
+   ],
+   "depth": 14
+  },
+  {
+   "name": "button",
+   "tag": "button",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "inline-flex",
+    "items-center",
+    "gap-x-2",
+    "text-sm",
+    "font-semibold",
+    "rounded-lg",
+    "text-primary",
+    "hover:text-primary-hover"
+   ],
+   "depth": 15
+  },
+  {
+   "name": "tr",
+   "tag": "tr",
+   "label": null,
+   "loop": false,
+   "classes": [],
+   "depth": 13
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "py-3",
+    "ps-3"
+   ],
+   "depth": 14
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "flex",
+    "items-center",
+    "h-5"
+   ],
+   "depth": 15
+  },
+  {
+   "name": "input",
+   "tag": "input",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "hs-datatable-select-row",
+    "shrink-0",
+    "size-4",
+    "bg-transparent",
+    "border-line-3",
+    "rounded-sm",
+    "shadow-2xs",
+    "text-primary"
+   ],
+   "depth": 16
+  },
+  {
+   "name": "label",
+   "tag": "label",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "sr-only"
+   ],
+   "depth": 17
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-sm",
+    "font-medium",
+    "text-foreground"
+   ],
+   "depth": 15
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-sm",
+    "text-foreground"
+   ],
+   "depth": 15
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-sm",
+    "text-foreground"
+   ],
+   "depth": 15
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-end",
+    "text-sm",
+    "font-medium"
+   ],
+   "depth": 15
+  },
+  {
+   "name": "button",
+   "tag": "button",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "inline-flex",
+    "items-center",
+    "gap-x-2",
+    "text-sm",
+    "font-semibold",
+    "rounded-lg",
+    "text-primary",
+    "hover:text-primary-hover"
+   ],
+   "depth": 16
+  },
+  {
+   "name": "tr",
+   "tag": "tr",
+   "label": null,
+   "loop": false,
+   "classes": [],
+   "depth": 14
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "py-3",
+    "ps-3"
+   ],
+   "depth": 15
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "flex",
+    "items-center",
+    "h-5"
+   ],
+   "depth": 16
+  },
+  {
+   "name": "input",
+   "tag": "input",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "hs-datatable-select-row",
+    "shrink-0",
+    "size-4",
+    "bg-transparent",
+    "border-line-3",
+    "rounded-sm",
+    "shadow-2xs",
+    "text-primary"
+   ],
+   "depth": 17
+  },
+  {
+   "name": "label",
+   "tag": "label",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "sr-only"
+   ],
+   "depth": 18
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-sm",
+    "font-medium",
+    "text-foreground"
+   ],
+   "depth": 16
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-sm",
+    "text-foreground"
+   ],
+   "depth": 16
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-sm",
+    "text-foreground"
+   ],
+   "depth": 16
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-end",
+    "text-sm",
+    "font-medium"
+   ],
+   "depth": 16
+  },
+  {
+   "name": "button",
+   "tag": "button",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "inline-flex",
+    "items-center",
+    "gap-x-2",
+    "text-sm",
+    "font-semibold",
+    "rounded-lg",
+    "text-primary",
+    "hover:text-primary-hover"
+   ],
+   "depth": 17
+  },
+  {
+   "name": "tr",
+   "tag": "tr",
+   "label": null,
+   "loop": false,
+   "classes": [],
+   "depth": 15
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "py-3",
+    "ps-3"
+   ],
+   "depth": 16
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "flex",
+    "items-center",
+    "h-5"
+   ],
+   "depth": 17
+  },
+  {
+   "name": "input",
+   "tag": "input",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "hs-datatable-select-row",
+    "shrink-0",
+    "size-4",
+    "bg-transparent",
+    "border-line-3",
+    "rounded-sm",
+    "shadow-2xs",
+    "text-primary"
+   ],
+   "depth": 18
+  },
+  {
+   "name": "label",
+   "tag": "label",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "sr-only"
+   ],
+   "depth": 19
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-sm",
+    "font-medium",
+    "text-foreground"
+   ],
+   "depth": 17
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-sm",
+    "text-foreground"
+   ],
+   "depth": 17
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-sm",
+    "text-foreground"
+   ],
+   "depth": 17
+  },
+  {
+   "name": "td",
+   "tag": "td",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-3",
+    "whitespace-nowrap",
+    "text-end",
+    "text-sm",
+    "font-medium"
+   ],
+   "depth": 17
+  }
+ ],
+ "classes": [
+  "--exclude-from-ordering",
+  "--prevent-on-load-init",
+  "[&::-webkit-inner-spin-button]:appearance-none",
+  "[&::-webkit-outer-spin-button]:appearance-none",
+  "[&::-webkit-scrollbar-thumb]:bg-scrollbar-thumb",
+  "[&::-webkit-scrollbar-thumb]:rounded-none",
+  "[&::-webkit-scrollbar-track]:bg-scrollbar-track",
+  "[&::-webkit-scrollbar]:h-2",
+  "[&>.active]:bg-muted-active",
+  "[--auto-close:inside]",
+  "[--placement:bottom-right]",
+  "absolute",
+  "bg-dropdown",
+  "bg-layer",
+  "bg-transparent",
+  "block",
+  "border",
+  "border-b",
+  "border-dropdown-line",
+  "border-layer-line",
+  "border-line-3",
+  "border-table-line",
+  "border-transparent",
+  "checked:bg-primary-checked",
+  "checked:border-primary-checked",
+  "disabled:opacity-50",
+  "disabled:pointer-events-none",
+  "divide-table-line",
+  "divide-y",
+  "duration",
+  "flex",
+  "flex-1",
+  "flex-col",
+  "flex-wrap",
+  "focus:bg-muted-focus",
+  "focus:border-primary-focus",
+  "focus:outline-hidden",
+  "focus:ring-0",
+  "focus:ring-offset-0",
+  "focus:ring-primary-focus",
+  "focus:text-primary-focus",
+  "focus:z-10",
+  "font-medium",
+  "font-normal",
+  "font-semibold",
+  "gap-1",
+  "gap-2",
+  "gap-x-2",
+  "group",
+  "grow",
+  "h-5",
+  "hidden",
+  "hover:bg-muted-hover",
+  "hover:border-line-2",
+  "hover:text-primary-hover",
+  "hs-datatable-select-row",
+  "hs-dropdown",
+  "hs-dropdown-menu",
+  "hs-dropdown-open:opacity-100",
+  "hs-dropdown-toggle"
+ ]
+}
