@@ -1,0 +1,39 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Whistle Clean</title><meta name="description" content="Strata Cleaning Melbourne – common-area cleaning for strata buildings – foyers, lifts, carparks and amenities. Eco products, audited visits."><meta property="og:title" content="Whistle Clean"><meta property="og:description" content="Strata Cleaning Melbourne – common-area cleaning for strata buildings – foyers, lifts, carparks and amenities. Eco products, audited visits."><meta property="og:image" content="/og.webp"><link rel="icon" href="/favicon.svg"><script>
+(function () {
+  // U.3 — first paint is BRIEF theme.default (never the OS preference);
+  // a manual toggle persists the choice in localStorage.
+  var s = new URLSearchParams(location.search).get('theme') || localStorage.getItem('theme');
+  var m = s || "light";
+  document.documentElement.dataset.theme = m;
+  document.documentElement.classList.toggle('dark', m === 'dark');
+  window.__wfSetTheme = function (v) {
+    localStorage.setItem('theme', v);
+    document.documentElement.dataset.theme = v;
+    document.documentElement.classList.toggle('dark', v === 'dark');
+  };
+  document.addEventListener('click', function (e) {
+    if (e.target && e.target.closest && e.target.closest('[data-theme-toggle]')) {
+      window.__wfSetTheme(document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark');
+    }
+    var nl = document.querySelector('.nav-links');
+    if (e.target && e.target.closest && e.target.closest('.burger')) {
+      if (nl) nl.classList.toggle('open');
+    } else if (nl && nl.classList.contains('open')) {
+      // flyout closes on the close control, on a link it navigates
+      // to, or on any click outside the sheet (the scrim)
+      var inside = e.target && e.target.closest &&
+                   e.target.closest('.nav-links');
+      if (!inside || e.target.closest('.nav-close') ||
+          e.target.closest('.nav-links a')) {
+        nl.classList.remove('open');
+      }
+    }
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') {
+      var nl = document.querySelector('.nav-links');
+      if (nl) nl.classList.remove('open');
+    }
+  });
+})();
+</script><link rel="stylesheet" href="/_astro/design-system.DVFyCvPd.css"><style>.burger{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;min-width:44px;min-height:44px;padding:0!important;font-size:0!important;border:1px solid var(--border-default);border-radius:var(--radius,10px);background:var(--bg-elevated);color:var(--text-primary);box-shadow:none!important;cursor:pointer}.burger::after{content:"";width:20px;height:14px;background:repeating-linear-gradient(to bottom,currentColor 0 2px,transparent 2px 6px)}.wf-lorem{display:inline-block;outline:1px dashed var(--action-primary,#999);outline-offset:2px;font-style:italic;opacity:.75;padding:0 .3em;border-radius:3px}</style></head><body><section class="sec-band surface-base density-regular" data-sec="reporting" data-comp="quote-grid"><div class="sec-inner"><div><div class="sec-head"><h2 class="text-fluid-3">What reporting does strata cleaning carry?</h2><p class="lede">Strata cleaning carries <strong>a reporting rhythm</strong> – visit logs, photo records and a supervisor sign-off the strata manager files with each invoice.</p></div><p class="mt-stack max-w-prose text-fluid-0">The reporting discipline is what separates a contract from a casual arrangement. Visit logs timestamp every attendance, photo records show condition at handover, and the sign-off closes each visit against the written scope. The strata manager files the lot in the compliance file, ready for committee meetings or owner queries.</p><p class="mt-stack max-w-prose text-fluid-0">Committee meetings run on evidence, and the file supplies it: missed visits show as gaps, extra work shows as photos, and the manager defends the spend from records rather than memory.</p><p class="mt-stack max-w-prose text-fluid-0">The <a href="/guides/strata-contracts/">strata cleaning contracts</a> guide lists the clauses worth holding in the agreement, and each invoice on this side arrives with the records already attached.</p><ul class="mt-sec grid-auto list-plain"><li class="card"><p class="t0 quote">“The reporting discipline is what separates a contract from a casual arrangement.”</p><div class="quote-foot"><span></span></div></li><li class="card"><p class="t0 quote">“Visit logs timestamp every attendance, photo records show condition at handover, and the sign-off closes each visit against the written scope.”</p><div class="quote-foot"><span></span></div></li><li class="card"><p class="t0 quote">“Visit logs timestamp every attendance, photo records show condition at handover, and the sign-off closes each visit against the written scope.”</p><div class="quote-foot"><span></span></div></li><li class="card"><p class="t0 quote">“Visit logs timestamp every attendance, photo records show condition at handover, and the sign-off closes each visit against the written scope.”</p><div class="quote-foot"><span></span></div></li><li class="card"><p class="t0 quote">“The <a href="/guides/strata-contracts/">strata cleaning contracts</a> guide lists the clauses worth holding in the agreement, and each invoice on this side arrives with the records already attached.”</p><div class="quote-foot"><span></span></div></li><li class="card"><p class="t0 quote">“The strata manager files the lot in the compliance file, ready for committee meetings or owner queries.”</p><div class="quote-foot"><span></span></div></li><li class="card"><p class="t0 quote">“The strata manager files the lot in the compliance file, ready for committee meetings or owner queries.”</p><div class="quote-foot"><span></span></div></li></ul></div></div></section></body></html>
