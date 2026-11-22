@@ -390,28 +390,33 @@ def _render_pythons():
 
 
 def fetch_rendered(url: str):
-    errs = []
+    saw_module, render_errs = False, []
     for py in _render_pythons():
         chk = subprocess.run(
             [py, '-c', 'import playwright'], capture_output=True,
             text=True, timeout=30)
         if chk.returncode:
-            errs.append(f'{py}: no playwright module')
             continue
+        saw_module = True
         try:
             r = subprocess.run([py, '-c', _RENDER_PY, url],
                                capture_output=True, text=True,
                                timeout=120)
         except subprocess.TimeoutExpired:
-            errs.append(f'{py}: render timed out')
+            render_errs.append('render timed out')
             continue
         if r.returncode:
-            errs.append(f'{py}: ' + (r.stderr or '')[-200:])
+            # one line of the render failure — never a raw traceback
+            tail = [l for l in (r.stderr or '').splitlines()
+                    if l.strip()]
+            render_errs.append((tail[-1] if tail else
+                                'render failed')[:180])
             continue
         return json.loads(r.stdout)
-    raise RuntimeError(
-        'render failed (no working playwright): ' +
-        ' | '.join(errs)[-280:])
+    if not saw_module:
+        raise RuntimeError('NO_PLAYWRIGHT')
+    raise RuntimeError('RENDER_FAILED: ' +
+                       ' | '.join(render_errs)[-280:])
 
 
 # ------------------------------------------------------------------

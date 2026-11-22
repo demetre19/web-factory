@@ -1106,7 +1106,8 @@ def _type_sign_bundle(pd, variant):
     if vibe_atlas is None or not str(variant).startswith('genes:'):
         return None
     card = next((c for c in type_candidates(pd)
-                 if c.get('variant') == variant), None)
+                 if c.get('variant') == variant or
+                 variant in (c.get('aliases') or ())), None)
     if not card:
         return None
     overrides = dict(card.get('genes') or {})
@@ -1188,7 +1189,6 @@ def type_candidates(pd):
     cur_tm = float(fluid.get('text_scale_mob') or cur_tr)
     cur_hm = float(fluid.get('heading_scale_mob') or cur_hr)
     base = _current_vibe_genes(pd)
-    cur_face = base.get('display-face')
     # ratio sweep at the resolved face, then the resolved ladder
     # through each other display-face allele the vibe allows
     specs = [
@@ -1196,11 +1196,15 @@ def type_candidates(pd):
         ('tight', 1.19, 1.2, 1.19, 1.2, None),
         ('display', 1.28, 1.333, 1.36, 1.5, None),
     ]
+    # every face allele is always a candidate — dropping the face
+    # that equals the vibe's own leaves a signed 'sans face' pick
+    # with no candidate after a re-bake to a sans vibe ('unknown').
+    # Content-dedupe below folds it into the resolved card instead
+    # and keeps its variant id as an alias on that card.
     for f in ('sans', 'serif', 'mono', 'mixed'):
-        if f != cur_face:
-            specs.append((f + ' face', cur_tm, cur_tr, cur_hm,
-                          cur_hr, f))
-    cards, seen = [], set()
+        specs.append((f + ' face', cur_tm, cur_tr, cur_hm,
+                      cur_hr, f))
+    cards, seen, by_ch = [], set(), {}
     for label, tm, tr, hm, hr, face in specs:
         # card genes are the candidate's own overrides — the pick
         # merges them onto the CURRENT signed vibe at click time, so
@@ -1226,6 +1230,13 @@ def type_candidates(pd):
         if gh in seen:
             continue
         seen.add(gh)
+        # same resolved content as an earlier card (e.g. 'sans face'
+        # over a sans vibe = 'resolved') — skip the duplicate doc
+        # and card but alias its variant id so the pick still signs
+        if ch in by_ch:
+            by_ch[ch].setdefault('aliases', []).append(
+                'genes:' + gh)
+            continue
         bundle = vibe_atlas.resolve(merged)
         ladder = _ladder_css(fluid, tm, tr, hm, hr)
         if ladder:
@@ -1261,6 +1272,7 @@ def type_candidates(pd):
             'fluid': {'text_scale_mob': tm, 'text_scale_desk': tr,
                       'heading_scale_mob': hm,
                       'heading_scale_desk': hr}})
+        by_ch[ch] = cards[-1]
         if len(cards) >= 6:
             break
     return cards
@@ -3014,8 +3026,17 @@ def run_ingest(pipeline, url='', html='', css_text=''):
         return ingest_url.ingest(url=url or None, html=html or None,
                                  css_text=css_text or '')
     except Exception as e:
-        return {'ok': False, 'error': str(e)[:400],
-                'reason': str(e)[:400]}
+        msg = str(e)
+        if 'NO_PLAYWRIGHT' in msg:
+            reason = ('ingest needs playwright to render the URL — '
+                      'install it with `pip install playwright && '
+                      'playwright install chromium`')
+        elif 'RENDER_FAILED' in msg:
+            reason = ('the URL could not be loaded — check the '
+                      'address or that the site is reachable')
+        else:
+            reason = msg[:400]
+        return {'ok': False, 'error': reason, 'reason': reason}
 
 
 # ------------------------------------------------------------------
@@ -3886,6 +3907,9 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
 .sbwide{display:contents}
 .sbnarrow{display:none}
 @media(min-width:768px) and (max-width:1100px){
+  /* overflow:hidden on #selbar clips the picks popover — in this
+     band the wide chips are hidden anyway so nothing overflows */
+  #selbar{overflow:visible}
   .sbwide{display:none}
   .sbnarrow{display:block;position:relative}
   .sbnarrow>summary{list-style:none;cursor:pointer}
@@ -4117,6 +4141,10 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
   #rail{display:none;position:fixed;top:56px;left:0;bottom:0;
        width:min(80vw,300px);z-index:50;overflow-y:auto;
        box-shadow:10px 0 34px rgba(0,0,0,.45)}
+  /* the fixed selbar (~54px) covers the drawer's last rows —
+     lift the rail's bottom edge over it wherever the bar shows */
+  #rail{bottom:56px}
+  @media(max-width:767px){#rail{bottom:0}}
   #rail.open{display:block}
   #scrim{display:none;position:fixed;inset:0;top:56px;z-index:49;
         background:rgba(0,0,0,.35)}
