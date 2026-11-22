@@ -922,26 +922,36 @@ def _ts_col(sizes, vp, lh, dw, trk):
     return out
 
 
-def emit_typescale_doc(pd, name='current', bundle=None):
+def emit_typescale_doc(pd, name='current', bundle=None, tok=None):
     """preview/typescale/<name>.html — the resolved type ladder at
     emitted px: mobile (320) vs desktop (1280) columns, light + dark
     panels. Reads TOKENS.json sizes — what emit actually produces —
-    so a re-bake re-emits the ladder. Returns dist-relative path."""
-    tp = os.path.join(pd, 'TOKENS.json')
-    if not os.path.isfile(tp):
-        return None
-    try:
-        with open(tp, encoding='utf-8') as fh:
-            tok = json.load(fh)
-    except (OSError, json.JSONDecodeError):
-        return None
+    so a re-bake re-emits the ladder. `tok` overrides the token
+    bundle for candidate ladders. Returns dist-relative path."""
+    if tok is None:
+        tp = os.path.join(pd, 'TOKENS.json')
+        if not os.path.isfile(tp):
+            return None
+        try:
+            with open(tp, encoding='utf-8') as fh:
+                tok = json.load(fh)
+        except (OSError, json.JSONDecodeError):
+            return None
     sizes = tok.get('sizes') or {}
     fluid = tok.get('fluid') or {}
     knobs = tok.get('knobs') or {}
     outdir = os.path.join(pd, 'site', 'dist', 'preview', 'typescale')
     fp = os.path.join(outdir, name + '.html')
     stale = True
-    if os.path.isfile(fp) and \
+    if tok is not None:
+        # candidate ladders re-emit only when their own spec changed
+        try:
+            with open(fp, encoding='utf-8', errors='replace') as rf:
+                stale = ('wf:ts:v1' not in rf.read(4096)) if \
+                    os.path.isfile(fp) else True
+        except OSError:
+            stale = True
+    elif os.path.isfile(fp) and \
             os.path.getmtime(fp) >= os.path.getmtime(tp):
         try:
             with open(fp, encoding='utf-8', errors='replace') as rf:
@@ -976,6 +986,124 @@ def emit_typescale_doc(pd, name='current', bundle=None):
             fh.write('<!--wf:ts:v2-->' + _doc(head, battr, body,
                                               css=css))
     return 'preview/typescale/' + name + '.html'
+
+
+_TS_TEXT_STEPS = {'text-xs': -2, 'text-s': -1, 'text-m': 0,
+                  'text-l': 1, 'text-xl': 2, 'text-xxl': 3}
+_TS_HEAD_STEPS = {'h6': -2, 'h5': -1, 'h4': 0, 'h3': 1,
+                  'h2': 2, 'h1': 3}
+
+
+def _ts_sizes_for(sizes, tr_mob, tr_desk, hr_mob, hr_desk):
+    """candidate ladder px — keep the emitted base (n=0) rung and
+    re-step every other rung at the candidate's ratios, the same
+    stepped math clamp uses for TOKENS sizes."""
+    out = {}
+    for vp, tr, hr in (('320', tr_mob, hr_mob),
+                       ('1280', tr_desk, hr_desk)):
+        tb = (sizes.get('text-m') or {}).get('px', {}).get(vp)
+        hb = (sizes.get('h4') or {}).get('px', {}).get(vp)
+        for key, n in _TS_TEXT_STEPS.items():
+            if tb is None:
+                continue
+            out.setdefault(key, {}).setdefault('px', {})[vp] = \
+                round(tb * tr ** n, 2)
+        for key, n in _TS_HEAD_STEPS.items():
+            if hb is None:
+                continue
+            out.setdefault(key, {}).setdefault('px', {})[vp] = \
+                round(hb * hr ** n, 2)
+    return out
+
+
+def _current_vibe_genes(pd):
+    """the gene map behind the signed vibe pick — genes bundle,
+    atlas preset, or preset family."""
+    ep = _json_at(pd, 'ELEMENT-PICKS.json') or {}
+    vibe = next((p for p in reversed(ep.get('picks') or [])
+                 if p.get('element') == 'vibe'), None)
+    if not vibe:
+        return {}
+    b = vibe.get('bundle') or {}
+    if isinstance(b.get('genes'), dict) and b['genes']:
+        return dict(b['genes'])
+    v = vibe.get('variant') or ''
+    if v.startswith('atlas:') and vibe_atlas is not None:
+        p = vibe_atlas.PRESET_BY_ID.get(v[6:])
+        if p:
+            return dict(p['genes'])
+    f = VIBE_FAMILIES.get(v)
+    if f and isinstance(f.get('genes'), dict):
+        return dict(f['genes'])
+    return {}
+
+
+def type_candidates(pd):
+    """candidate type ladders derived from the resolved vibe — the
+    text ratio, heading ratio and display face vary inside the
+    vibe's allowed alleles; each emits its own typescale doc and
+    yields a pick card signed through element-pick (element 'type',
+    variant 'genes:<hash>' — same path as vibe genes)."""
+    if vibe_atlas is None:
+        return []
+    tok = _json_at(pd, 'TOKENS.json') or {}
+    sizes = tok.get('sizes') or {}
+    fluid = tok.get('fluid') or {}
+    knobs = tok.get('knobs') or {}
+    if not sizes:
+        return []
+    cur_tr = float(fluid.get('text_scale_desk') or 1.333)
+    cur_hr = float(fluid.get('heading_scale_desk') or cur_tr)
+    cur_tm = float(fluid.get('text_scale_mob') or cur_tr)
+    cur_hm = float(fluid.get('heading_scale_mob') or cur_hr)
+    base = _current_vibe_genes(pd)
+    cur_face = base.get('display-face')
+    # ratio sweep at the resolved face, then the resolved ladder
+    # through each other display-face allele the vibe allows
+    specs = [
+        ('resolved', cur_tm, cur_tr, cur_hm, cur_hr, None),
+        ('tight', 1.19, 1.2, 1.19, 1.2, None),
+        ('classic', 1.25, 1.333, 1.25, 1.333, None),
+        ('display', 1.28, 1.333, 1.36, 1.5, None),
+    ]
+    for f in ('sans', 'serif', 'mono', 'mixed'):
+        if f != cur_face:
+            specs.append((f + ' face', cur_tm, cur_tr, cur_hm,
+                          cur_hr, f))
+    cards, seen = [], set()
+    for label, tm, tr, hm, hr, face in specs:
+        genes = dict(base)
+        if face:
+            genes['display-face'] = face
+        gh = vibe_atlas.gene_hash(genes)
+        if gh in seen:
+            continue
+        seen.add(gh)
+        bundle = vibe_atlas.resolve(genes)
+        ctok = dict(tok)
+        ctok['sizes'] = _ts_sizes_for(sizes, tm, tr, hm, hr)
+        rel = emit_typescale_doc(pd, 'cand-' + gh, bundle=bundle,
+                                 tok=ctok)
+        if not rel:
+            continue
+        tags = ['text x%g>%g' % (tm, tr),
+                'heads x%g>%g' % (hm, hr)]
+        if face:
+            tags.append(face)
+        cards.append({
+            'id': 'tsc-' + gh, 'name': 'Ladder — ' + label,
+            'preview': '/built/' + urllib.parse.quote(
+                os.path.join(pd, 'site', 'dist', rel)),
+            'tags': tags,
+            'desc': 'mobile 320 · desktop 1280 — h1-h4, lead, body',
+            'element': 'type', 'variant': 'genes:' + gh,
+            'genes': genes,
+            'fluid': {'text_scale_mob': tm, 'text_scale_desk': tr,
+                      'heading_scale_mob': hm,
+                      'heading_scale_desk': hr}})
+        if len(cards) >= 6:
+            break
+    return cards
 
 
 def emit_vibe_previews(pd):
@@ -2000,7 +2128,8 @@ def app_data(pipeline):
         'typescale': True,
         'tsdoc': ('/built/' + urllib.parse.quote(
                   os.path.join(pd, 'site', 'dist', ts_rel))
-                  if ts_rel else None)}
+                  if ts_rel else None),
+        'cards': type_candidates(pd)}
     # step 2 — LAYOUT: whole-page scrub over section topologies,
     # then the option boards
     boards['page'] = {
@@ -2466,7 +2595,7 @@ def atlas_family(pd, fam):
                       if pd.endswith('/site')
                       else pd, 'ELEMENT-PICKS.json') or {}
         for pick in reversed(ep.get('picks') or []):
-            if pick.get('element') == 'vibe' and \
+            if pick.get('element') in ('vibe', 'type') and \
                     pick.get('variant') == fam and \
                     isinstance(pick.get('bundle'), dict):
                 b = pick['bundle']
@@ -3265,7 +3394,7 @@ def record_element_pick(pipeline, element, variant, bundle=None):
     valid = {grp['element'] for g in ELEMENT_GALLERIES
              for grp in g['groups']} | {'vibe', 'header', 'footer',
                                         'mobile-menu', 'modals',
-                                        'layout'} | \
+                                        'layout', 'type'} | \
             {d for dirs in _BANK_DIRS.values() for d in dirs}
     fxel = re.fullmatch(
         r'fx:(default|sec:[\w-]{1,40}|[\w-]{1,40})', element or '')
@@ -4290,7 +4419,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
     // first-class effect control — the per-element decorator, labeled
     if(!c.bank&&c.element&&c.element!=='vibe'&&
        String(c.element).indexOf('layout')!==0&&
-       c.element!=='fx:default'){
+       c.element!=='type'&&c.element!=='fx:default'){
       var fel='fx:'+c.element,fcur=DATA.picked_elements[fel]||'none',
           fopts=fxOpts(fel);
       if(fopts.length)
@@ -4305,7 +4434,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
     if(c.wave){
       h+='<button class="pick" data-wave="'+c.wave+'" data-d="'+esc(c.id)+'">Pick</button>';
     }else if(c.element){
-      h+='<button class="pick" data-elem="'+c.element+'" data-var="'+esc(c.variant)+'">'+
+      h+='<button class="pick" data-elem="'+c.element+'" data-var="'+esc(c.variant)+'"'+
+         (c.genes?' data-genes="'+esc(JSON.stringify(c.genes))+'"':'')+'>'+
          (c.element==='vibe'?'Bake':c.element==='fx:default'?
           'Set site effect':'Pick')+'</button>';
     }
@@ -5194,6 +5324,9 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
     if(o.atlas){vibePane(el,o);return}
     var h='<h1>'+esc(o.title)+'</h1><div class="desc">'+esc(o.desc||'')+'</div>';
     if(o.typescale){
+      var tg='<div class="grid">';
+      (o.cards||[]).forEach(function(c,i){tg+=card(c,i)});
+      tg+='</div>';
       el.innerHTML=h+'<div class="vprev">'+
         '<div class="cb" style="height:auto">'+
         (o.tsdoc?'<iframe class="tsfr" src="'+esc(o.tsdoc)+
@@ -5202,7 +5335,11 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
         'border:0;display:block"></iframe>'+
         '<button class="xp" data-x="'+esc(o.tsdoc)+'">\u2922</button>':
         '<div class="noprev">TOKENS.json not emitted for this '+
-        'pipeline yet</div>')+'</div></div>';
+        'pipeline yet</div>')+'</div></div>'+
+        '<h2 style="margin:22px 0 4px;font-size:14px">'+
+        'candidate ladders — pick one</h2>'+tg;
+      el.querySelectorAll('.pick').forEach(function(b){
+        b.onclick=function(){doPick(b)}});
       wireXp(el);
       wireFrames(el);
       return}
@@ -5453,17 +5590,28 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
             wireFlow();
             toast(j.message)}else b.disabled=false})})
     }else{
-      api('/element-pick',{pipeline:PIPELINE,
-        element:b.dataset.elem,variant:b.dataset.var}).then(function(j){
-        stat.className='pstat '+(j.ok?'ok':'bad');
-        stat.textContent=j.message||(j.ok?'recorded':'refused');
-        if(j.ok){b.textContent='picked ✓';toast(j.message);
-          DATA.picked_elements=DATA.picked_elements||{};
-          DATA.picked_elements[b.dataset.elem]=b.dataset.var;
-          if(b.dataset.elem==='vibe')
-            BAKED=b.dataset.var;      // bake: every preview reframes
-          board()}
-        else b.disabled=false})}
+      var _sign=function(bundle){
+        api('/element-pick',{pipeline:PIPELINE,
+          element:b.dataset.elem,variant:b.dataset.var,
+          bundle:bundle}).then(function(j){
+          stat.className='pstat '+(j.ok?'ok':'bad');
+          stat.textContent=j.message||(j.ok?'recorded':'refused');
+          if(j.ok){b.textContent='picked ✓';toast(j.message);
+            DATA.picked_elements=DATA.picked_elements||{};
+            DATA.picked_elements[b.dataset.elem]=b.dataset.var;
+            if(b.dataset.elem==='vibe'||b.dataset.elem==='type')
+              BAKED=b.dataset.var;    // re-resolve: every preview
+                                      // reframes under the new bundle
+            board()}
+          else b.disabled=false})};
+      // a type pick signs the resolved ladder's gene bundle — same
+      // path as the vibe bake (resolve → sign → previews reframe)
+      if(b.dataset.elem==='type'&&b.dataset.genes)
+        api('/vibe-resolve',{pipeline:PIPELINE,
+          genes:JSON.parse(b.dataset.genes)}).then(function(r){
+          _sign({genes:JSON.parse(b.dataset.genes),
+            tokens:r.tokens,resolved:r.resolved})});
+      else _sign(null)}
   }
 
   // boot
@@ -5480,7 +5628,10 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
         if(d.error){document.getElementById('board').innerHTML=
           '<div class="empty">'+esc(d.error)+'</div>';return}
         DATA=d;CUR='vibe';
-        BAKED=(d.picked_elements||{}).vibe||'';
+        // a signed type pick rebinds previews under its resolved
+        // bundle — it carries the vibe genes + its own overrides
+        BAKED=(d.picked_elements||{}).type||
+          (d.picked_elements||{}).vibe||'';
         topchips();rail();board()});
   });
 })();
