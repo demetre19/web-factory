@@ -10280,6 +10280,28 @@ def _variant_entries(ctx):
             for e in _variants(ctx)}
 
 
+def look_deltas(ctx, design):
+    """The knob-delta vector a w4 design id projects: look ids from
+    VARIANT-GATES (_variant_entries), fine ids from the record
+    assemble_fine persists (FINE-VARIANTS.json — fv* never live in
+    VARIANT-GATES). None when the id is not a declared variant. For a
+    SIGNED pick the approval record's look_deltas is authoritative —
+    it pins what the operator signed; this is the sign-time and
+    legacy fallback resolution."""
+    entry = (_variant_entries(ctx) or {}).get(str(design))
+    if entry:
+        return dict((entry[0] or {}).get('deltas') or {})
+    fp = os.path.join(ctx.dir, 'FINE-VARIANTS.json')
+    if os.path.isfile(fp):
+        try:
+            rec = (json.load(open(fp)) or {}).get(str(design)) or {}
+        except Exception:
+            rec = {}
+        if rec:
+            return dict(rec.get('deltas') or {})
+    return None
+
+
 def _knob_vars(kn, base, knobs):
     """CSS custom-property overrides for one variant's knob vector."""
     out = {}
@@ -10349,6 +10371,14 @@ def assemble_fine(ctx):
     pick = ((read_approvals(ctx) or {}).get('w4') or {}).get('design')
     computed = _variant_entries(ctx)
     entry = (computed.get(str(pick)) or (None,))[0]
+    if not entry:
+        # a signed fine pick: the fine round nudges ITS OWN merged
+        # vector — resolve it from the persisted fv record, never the
+        # fallback look base (the shipped artifact binds the signed
+        # vector via approvals.w4.look_deltas either way)
+        fv = look_deltas(ctx, pick)
+        if fv is not None:
+            entry = {'id': str(pick), 'deltas': fv}
     if not entry:
         # no approval recorded (operator hasn't picked) — fall back to
         # the first declared variant so the file still exists; the
