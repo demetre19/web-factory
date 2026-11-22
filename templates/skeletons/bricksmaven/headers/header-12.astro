@@ -54,10 +54,10 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
       <div>
         <div>
           {list.length > 0 && <div class="row between">
-            <div class="row gap-fluid-m">{(list || []).map((it) => (
+            <div class="row gap-fluid-m">{(list || []).map((it) => (<>
                 <a class="text-fluid-0" href={it.href}>{it.icon && <IconChip name={it.icon} />} {it.label || it.term || it.anchor || it.text}</a>
                 {(it.label || it.term || it.anchor) && it.text && <p class="text-fluid-0">{it.text}</p>}
-              ))}</div>
+              </>))}</div>
           </div>}
           {list.length > 0 && <button class="burger" type="button" aria-label="Menu"><span aria-hidden="true">≡</span></button>}
         </div>

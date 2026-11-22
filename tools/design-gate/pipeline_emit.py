@@ -348,7 +348,8 @@ _IMG_PROP_COMPS = {'split-media', 'stacked-hero', 'full-bleed',
                    'hero-act-merge', 'media-gallery', 'editorial',
                    'comparison', 'proof-band', 'form-panel',
                    'quote-grid', 'cutout-hero-split',
-                   'cutout-cta-band'}
+                   'cutout-cta-band', 'gallery-grid',
+                   'portfolio-grid'}
 
 
 def _instance_body(ctx, contract, row, copy=None):

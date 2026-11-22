@@ -120,6 +120,17 @@ section built as a `split-media` is a defect).
 | `link-grid` | city/area/category link grid — **text-index links only, never cards** | `detail` | Service-area pages + marketplaces (hipages, taskrabbit). See `text-index` for the canonical shape; `link-grid` names the page-level pattern. |
 | `flyout-nav` | bar: brand + `.nav-desk` link row + CTA + burger; mobile menu is the `.nav-links.nav-flyout` sheet (scrim, `.nav-close`, `.nav-group` link sections, docked CTA) | `chrome` | The ONLY nav for new plans — the mobile menu is always an overlay flyout, never a dropdown (N.flyout, P.13). `nav-bar` stays legal vocabulary. |
 | `modal-form` | pitch + `.flyout-open` trigger; the form rides in a `.flyout` dialog (scrim, centred panel, `.flyout-close`) | `act` | The folded end-act — binds when the DNA's disclosure-tier is `folded`; `form-panel` stays the open alternative. |
+| `timeline-steps` | vertical numbered rail / timeline spine | `how` | Ordered processes — a second real step shape beside `sequence`. |
+| `how-steps` | icon-badge step column | `how` | Third step shape for processes. |
+| `newsletter-band` | single capture band | `act` | Sign-up rows. |
+| `teams-grid` | people-card grid | `detail`, `proof` | Team/crew blocks. |
+| `gallery-grid` | image-led masonry grid | `detail` | Work shots / before-after. |
+| `pricing-table` | tier / price matrix | `objection`, `detail` | Cost answers. |
+| `portfolio-grid` | project-card grid | `detail`, `proof` | Portfolio detail. |
+| `contact-panel` | contact split + form zone | `act`, `detail` | Reach-out rows. |
+| `event-list` | dated-item list | `detail` | Events / schedule. |
+| `banner-cta` | single-CTA band | `act` | Conversion band. |
+| `feature-grid` | feature-card grid | `how`, `detail` | Feature enumeration. |
 
 **Banned as composition rows:** icon+heading+text card grids *used as
 a substitute for a real composition*; "eyebrow + h2 + 3-col card"

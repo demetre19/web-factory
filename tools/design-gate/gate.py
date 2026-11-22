@@ -89,9 +89,41 @@ COMP_FOR_ACT = {
     'cutout-hero-split': {'promise', 'detail'},
     'cutout-catalog-grid': {'how', 'detail'},
     'cutout-cta-band': {'act'},
+    # banked topology classes exposed as pickable options (E)
+    'timeline-steps': {'how'}, 'how-steps': {'how'},
+    'newsletter-band': {'act'}, 'teams-grid': {'detail', 'proof'},
+    'gallery-grid': {'detail'}, 'pricing-table': {'objection', 'detail'},
+    'portfolio-grid': {'detail', 'proof'}, 'contact-panel': {'act', 'detail'},
+    'event-list': {'detail'}, 'banner-cta': {'act'},
+    'feature-grid': {'how', 'detail'},
     # chrome structural rows (declared, not in §2)
     'nav-bar': {'chrome'}, 'footer-bar': {'chrome'},
     'flyout-nav': {'chrome'},
+    'nav-h1': {'chrome'}, 'nav-h2': {'chrome'}, 'nav-h3': {'chrome'},
+    'nav-h4': {'chrome'}, 'nav-h5': {'chrome'}, 'nav-h6': {'chrome'},
+    'nav-h7': {'chrome'}, 'nav-h8': {'chrome'}, 'nav-h9': {'chrome'},
+    'nav-h10': {'chrome'}, 'nav-h11': {'chrome'}, 'nav-h12': {'chrome'},
+    'nav-h13': {'chrome'}, 'nav-h14': {'chrome'}, 'nav-h15': {'chrome'},
+    'nav-h16': {'chrome'}, 'nav-h17': {'chrome'}, 'nav-h18': {'chrome'},
+    'nav-h19': {'chrome'}, 'nav-h20': {'chrome'}, 'nav-h21': {'chrome'},
+    'nav-h22': {'chrome'}, 'nav-h23': {'chrome'}, 'nav-h24': {'chrome'},
+    'nav-h25': {'chrome'}, 'nav-shop-1': {'chrome'},
+    'nav-shop-2': {'chrome'}, 'nav-shop-3': {'chrome'},
+    'nav-shop-4': {'chrome'}, 'nav-mega-1': {'chrome'},
+    'nav-mega-2': {'chrome'}, 'nav-mega-3': {'chrome'},
+    'nav-mega-4': {'chrome'}, 'nav-mega-5': {'chrome'},
+    'nav-mega-6': {'chrome'}, 'nav-mega-7': {'chrome'},
+    'nav-offcanvas': {'chrome'}, 'footer-1': {'chrome'},
+    'footer-2': {'chrome'}, 'footer-3': {'chrome'}, 'footer-4': {'chrome'},
+    'footer-5': {'chrome'}, 'footer-6': {'chrome'}, 'footer-7': {'chrome'},
+    'footer-8': {'chrome'}, 'footer-9': {'chrome'},
+    'footer-10': {'chrome'}, 'footer-11': {'chrome'},
+    'footer-12': {'chrome'}, 'footer-13': {'chrome'},
+    'footer-15': {'chrome'}, 'footer-16': {'chrome'},
+    'footer-17': {'chrome'}, 'footer-18': {'chrome'},
+    'footer-19': {'chrome'}, 'footer-20': {'chrome'},
+    'footer-21': {'chrome'}, 'footer-22': {'chrome'},
+    'footer-23': {'chrome'}, 'footer-shop': {'chrome'},
 }
 SURFACES = {'base', 'muted', 'inverse', 'brand', 'media'}
 DENSITIES = {'compact', 'regular', 'spacious'}
@@ -5518,7 +5550,7 @@ def check_contrast_pairs(ctx):
         v = resolve(str(v).strip())
         if v.startswith('color-mix('):
             return _mix(v)
-        m = re.search(r'#[0-9a-fA-F]{3,8}\b', v)
+        m = re.search(r'(?<!&)#[0-9a-fA-F]{3,8}\b', v)
         if m:
             return m.group(0)
         if re.match(r'^(?:oklch|lch|lab|color)\(', v):
@@ -6705,7 +6737,7 @@ def check_no_stray_styles(ctx):
             if fn != 'global.css' and '<style' in t:
                 f.append(f'P.2 {fn}: <style> block — styles live in '
                          'the shared layer only')
-            for m in re.finditer(r'#[0-9a-fA-F]{3,8}\b', t):
+            for m in re.finditer(r'(?<!&)#[0-9a-fA-F]{3,8}\b', t):
                 f.append(f'P.5 {fn}: raw hex {m.group(0)} outside '
                          'config/tokens')
             for m in re.finditer(r'\b\d+px\b', t):
@@ -7216,6 +7248,45 @@ COMP_ARCHETYPE = {
     'hero-act-merge': 'split-form', 'nav-bar': 'horizontal-band',
     'footer-bar': 'horizontal-band', 'flyout-nav': 'horizontal-band',
     'modal-form': 'split-form',
+    'timeline-steps': 'sequence-steps', 'how-steps': 'sequence-steps',
+    'newsletter-band': 'horizontal-band', 'teams-grid': 'card-grid-3',
+    'gallery-grid': 'masonry-grid', 'pricing-table': 'table-matrix',
+    'portfolio-grid': 'masonry-grid', 'contact-panel': 'split-form',
+    'event-list': 'sequence-steps', 'banner-cta': 'horizontal-band',
+    'feature-grid': 'card-grid-3',
+    'cutout-hero-split': 'split-media',
+    'cutout-catalog-grid': 'card-grid-3',
+    'cutout-cta-band': 'horizontal-band',
+    'nav-h1': 'horizontal-band', 'nav-h2': 'horizontal-band',
+    'nav-h3': 'horizontal-band', 'nav-h4': 'horizontal-band',
+    'nav-h5': 'horizontal-band', 'nav-h6': 'horizontal-band',
+    'nav-h7': 'horizontal-band', 'nav-h8': 'horizontal-band',
+    'nav-h9': 'horizontal-band', 'nav-h10': 'horizontal-band',
+    'nav-h11': 'horizontal-band', 'nav-h12': 'horizontal-band',
+    'nav-h13': 'horizontal-band', 'nav-h14': 'horizontal-band',
+    'nav-h15': 'horizontal-band', 'nav-h16': 'horizontal-band',
+    'nav-h17': 'horizontal-band', 'nav-h18': 'horizontal-band',
+    'nav-h19': 'horizontal-band', 'nav-h20': 'horizontal-band',
+    'nav-h21': 'horizontal-band', 'nav-h22': 'horizontal-band',
+    'nav-h23': 'horizontal-band', 'nav-h24': 'horizontal-band',
+    'nav-h25': 'horizontal-band', 'nav-shop-1': 'horizontal-band',
+    'nav-shop-2': 'horizontal-band', 'nav-shop-3': 'horizontal-band',
+    'nav-shop-4': 'horizontal-band', 'nav-mega-1': 'horizontal-band',
+    'nav-mega-2': 'horizontal-band', 'nav-mega-3': 'horizontal-band',
+    'nav-mega-4': 'horizontal-band', 'nav-mega-5': 'horizontal-band',
+    'nav-mega-6': 'horizontal-band', 'nav-mega-7': 'horizontal-band',
+    'nav-offcanvas': 'horizontal-band', 'footer-1': 'horizontal-band',
+    'footer-2': 'horizontal-band', 'footer-3': 'horizontal-band',
+    'footer-4': 'horizontal-band', 'footer-5': 'horizontal-band',
+    'footer-6': 'horizontal-band', 'footer-7': 'horizontal-band',
+    'footer-8': 'horizontal-band', 'footer-9': 'horizontal-band',
+    'footer-10': 'horizontal-band', 'footer-11': 'horizontal-band',
+    'footer-12': 'horizontal-band', 'footer-13': 'horizontal-band',
+    'footer-15': 'horizontal-band', 'footer-16': 'horizontal-band',
+    'footer-17': 'horizontal-band', 'footer-18': 'horizontal-band',
+    'footer-19': 'horizontal-band', 'footer-20': 'horizontal-band',
+    'footer-21': 'horizontal-band', 'footer-22': 'horizontal-band',
+    'footer-23': 'horizontal-band', 'footer-shop': 'horizontal-band',
 }
 CONTRACT_SCHEMA = 'section-contract/v1'
 # Anchored with the trailing dash so prose/place-*/pointer-events-*/
@@ -7278,6 +7349,78 @@ RECIPE_FOR_COMP = {
     'cutout-hero-split': 'wfcutout/cutout-hero-split',
     'cutout-catalog-grid': 'wfcutout/cutout-catalog-grid',
     'cutout-cta-band': 'wfcutout/cutout-cta-band',
+    'timeline-steps': 'bricksmaven/timeline/timeline-1',
+    'how-steps': 'bricksmaven/how-it-works/how-it-works-2',
+    'newsletter-band': 'bricksmaven/newsletter/newsletter-1',
+    'teams-grid': 'bricksmaven/teams/team-1',
+    'gallery-grid': 'bricksmaven/gallery/gallery-11',
+    'pricing-table': 'bricksmaven/pricing/item-bpivlr',
+    'portfolio-grid': 'bricksmaven/portfolio-section/portfolio-section-1',
+    'contact-panel': 'bricksmaven/contact/contact-1',
+    'event-list': 'bricksmaven/event-section/event-section-1',
+    'banner-cta': 'bricksmaven/call-to-action/call-to-action-11',
+    'feature-grid': 'bricksmaven/feature/feature-2',
+    'logo-wall': 'bricksmaven/logo-sections/item-ctmenm',
+    'nav-h1': 'bricksmaven/headers/header-1',
+    'nav-h2': 'bricksmaven/headers/header-2',
+    'nav-h3': 'bricksmaven/headers/header-3',
+    'nav-h4': 'bricksmaven/headers/header-4',
+    'nav-h5': 'bricksmaven/headers/header-5',
+    'nav-h6': 'bricksmaven/headers/header-6',
+    'nav-h7': 'bricksmaven/headers/header-7',
+    'nav-h8': 'bricksmaven/headers/header-8',
+    'nav-h9': 'bricksmaven/headers/header-9',
+    'nav-h10': 'bricksmaven/headers/header-10',
+    'nav-h11': 'bricksmaven/headers/header-11',
+    'nav-h12': 'bricksmaven/headers/header-12',
+    'nav-h13': 'bricksmaven/headers/header-13',
+    'nav-h14': 'bricksmaven/headers/header-14',
+    'nav-h15': 'bricksmaven/headers/header-15',
+    'nav-h16': 'bricksmaven/headers/header-16',
+    'nav-h17': 'bricksmaven/headers/header-17',
+    'nav-h18': 'bricksmaven/headers/header-18',
+    'nav-h19': 'bricksmaven/headers/header-19',
+    'nav-h20': 'bricksmaven/headers/header-20',
+    'nav-h21': 'bricksmaven/headers/header-21',
+    'nav-h22': 'bricksmaven/headers/header-22',
+    'nav-h23': 'bricksmaven/headers/header-23',
+    'nav-h24': 'bricksmaven/headers/header-24',
+    'nav-h25': 'bricksmaven/headers/header-25',
+    'nav-shop-1': 'bricksmaven/shop-headers/shop-header-1',
+    'nav-shop-2': 'bricksmaven/shop-headers/shop-header-2',
+    'nav-shop-3': 'bricksmaven/shop-headers/shop-header-3',
+    'nav-shop-4': 'bricksmaven/shop-headers/shop-header-4',
+    'nav-mega-1': 'bricksmaven/megamenu/megamenu-1',
+    'nav-mega-2': 'bricksmaven/megamenu/megamenu-2',
+    'nav-mega-3': 'bricksmaven/megamenu/megamenu-3',
+    'nav-mega-4': 'bricksmaven/megamenu/megamenu-4',
+    'nav-mega-5': 'bricksmaven/megamenu/megamenu-5',
+    'nav-mega-6': 'bricksmaven/megamenu/megamenu-6',
+    'nav-mega-7': 'bricksmaven/megamenu/megamenu-7',
+    'nav-offcanvas': 'bricksmaven/off-canvas/take-out-content-and-remove-div',
+    'footer-1': 'bricksmaven/footer/footer-1',
+    'footer-2': 'bricksmaven/footer/footer-2',
+    'footer-3': 'bricksmaven/footer/footer-3',
+    'footer-4': 'bricksmaven/footer/footer-4',
+    'footer-5': 'bricksmaven/footer/footer-5',
+    'footer-6': 'bricksmaven/footer/footer-6',
+    'footer-7': 'bricksmaven/footer/footer-7',
+    'footer-8': 'bricksmaven/footer/footer-8',
+    'footer-9': 'bricksmaven/footer/footer-9',
+    'footer-10': 'bricksmaven/footer/footer-10',
+    'footer-11': 'bricksmaven/footer/footer-11',
+    'footer-12': 'bricksmaven/footer/footer-12',
+    'footer-13': 'bricksmaven/footer/footer-13',
+    'footer-15': 'bricksmaven/footer/footer-15',
+    'footer-16': 'bricksmaven/footer/footer-16',
+    'footer-17': 'bricksmaven/footer/footer-17',
+    'footer-18': 'bricksmaven/footer/footer-18',
+    'footer-19': 'bricksmaven/footer/footer-19',
+    'footer-20': 'bricksmaven/footer/footer-20',
+    'footer-21': 'bricksmaven/footer/footer-21',
+    'footer-22': 'bricksmaven/footer/footer-22',
+    'footer-23': 'bricksmaven/footer/footer-23',
+    'footer-shop': 'bricksmaven/shop-footers/shop-footer-1',
 }
 
 
@@ -7549,7 +7692,7 @@ def check_section_allowed(ctx):
         if bad:
             f.append(f'SB.3 {fn}: classes outside the layer/token '
                      f'utilities: {sorted(set(bad))[:6]}')
-        for m in re.finditer(r'#[0-9a-fA-F]{3,8}\b', txt):
+        for m in re.finditer(r'(?<!&)#[0-9a-fA-F]{3,8}\b', txt):
             f.append(f'SB.3 {fn}: raw hex {m.group(0)} — tokens only')
         for m in re.finditer(r'\b(?:rgb|hsl|oklch|lab)\(', txt):
             f.append(f'SB.3 {fn}: color function {m.group(0)} — tokens only')
@@ -7782,7 +7925,7 @@ def section_failures(ctx, contract):
         return [f'SB.3 {fn} missing']
     for bad in _class_set(ctx, txt):
         f.append(f'SB.3 {fn}: class "{bad}" outside layer/token utilities')
-    for m in re.finditer(r'#[0-9a-fA-F]{3,8}\b', txt):
+    for m in re.finditer(r'(?<!&)#[0-9a-fA-F]{3,8}\b', txt):
         f.append(f'P.5 {fn}: raw hex {m.group(0)}')
     for em in re.finditer('[\U0001F300-\U0001FAFF\u2600-\u27BF]', txt):
         f.append(f'P.10 {fn}: emoji {em.group(0)}')
@@ -13233,6 +13376,48 @@ COMP_ARCH = {
     'carousel-track': ('carousel-track',),
     'table-matrix': ('table-matrix',),
     'form-inline': ('split-form',),
+    'timeline-steps': ('sequence-steps',),
+    'how-steps': ('sequence-steps',),
+    'newsletter-band': ('horizontal-band',),
+    'teams-grid': ('card-grid-2', 'card-grid-3', 'card-grid-4'),
+    'gallery-grid': ('masonry-grid', 'card-grid-2', 'card-grid-3'),
+    'pricing-table': ('table-matrix', 'card-grid-3'),
+    'portfolio-grid': ('masonry-grid', 'card-grid-3', 'card-grid-4'),
+    'contact-panel': ('split-form',),
+    'event-list': ('sequence-steps', 'editorial-single'),
+    'banner-cta': ('horizontal-band',),
+    'feature-grid': ('card-grid-2', 'card-grid-3', 'card-grid-4'),
+    'nav-h1': ('horizontal-band',), 'nav-h2': ('horizontal-band',),
+    'nav-h3': ('horizontal-band',), 'nav-h4': ('horizontal-band',),
+    'nav-h5': ('horizontal-band',), 'nav-h6': ('horizontal-band',),
+    'nav-h7': ('horizontal-band',), 'nav-h8': ('horizontal-band',),
+    'nav-h9': ('horizontal-band',), 'nav-h10': ('horizontal-band',),
+    'nav-h11': ('horizontal-band',), 'nav-h12': ('horizontal-band',),
+    'nav-h13': ('horizontal-band',), 'nav-h14': ('horizontal-band',),
+    'nav-h15': ('horizontal-band',), 'nav-h16': ('horizontal-band',),
+    'nav-h17': ('horizontal-band',), 'nav-h18': ('horizontal-band',),
+    'nav-h19': ('horizontal-band',), 'nav-h20': ('horizontal-band',),
+    'nav-h21': ('horizontal-band',), 'nav-h22': ('horizontal-band',),
+    'nav-h23': ('horizontal-band',), 'nav-h24': ('horizontal-band',),
+    'nav-h25': ('horizontal-band',), 'nav-shop-1': ('horizontal-band',),
+    'nav-shop-2': ('horizontal-band',), 'nav-shop-3': ('horizontal-band',),
+    'nav-shop-4': ('horizontal-band',), 'nav-mega-1': ('horizontal-band',),
+    'nav-mega-2': ('horizontal-band',), 'nav-mega-3': ('horizontal-band',),
+    'nav-mega-4': ('horizontal-band',), 'nav-mega-5': ('horizontal-band',),
+    'nav-mega-6': ('horizontal-band',), 'nav-mega-7': ('horizontal-band',),
+    'nav-offcanvas': ('horizontal-band',),
+    'footer-1': ('horizontal-band',), 'footer-2': ('horizontal-band',),
+    'footer-3': ('horizontal-band',), 'footer-4': ('horizontal-band',),
+    'footer-5': ('horizontal-band',), 'footer-6': ('horizontal-band',),
+    'footer-7': ('horizontal-band',), 'footer-8': ('horizontal-band',),
+    'footer-9': ('horizontal-band',), 'footer-10': ('horizontal-band',),
+    'footer-11': ('horizontal-band',), 'footer-12': ('horizontal-band',),
+    'footer-13': ('horizontal-band',), 'footer-15': ('horizontal-band',),
+    'footer-16': ('horizontal-band',), 'footer-17': ('horizontal-band',),
+    'footer-18': ('horizontal-band',), 'footer-19': ('horizontal-band',),
+    'footer-20': ('horizontal-band',), 'footer-21': ('horizontal-band',),
+    'footer-22': ('horizontal-band',), 'footer-23': ('horizontal-band',),
+    'footer-shop': ('horizontal-band',),
 }
 
 
