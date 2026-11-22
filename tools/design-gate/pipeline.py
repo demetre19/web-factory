@@ -335,7 +335,10 @@ def _steps(pdir, wave, build, site_dir):
                  [os.path.join(pdir, 'DESIGN-PLAN.md'),
                   os.path.join(pdir, 'DNA.json')],
                  ['COMPONENTS.md', 'BUILD-PLAN.json',
-                  'site/src/pages/system.astro'])]
+                  'site/src/pages/system.astro']),
+                ('template export', [PY, T('template_export.py'), pdir],
+                 [os.path.join(pdir, 'DESIGN-PLAN.md')],
+                 ['templates/'])]
     if wave == 'w7':
         return [('page assembly', asm,
                  [os.path.join(pdir, 'DESIGN-PLAN.md')],

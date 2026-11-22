@@ -49,7 +49,8 @@ GENERATED_PAGE = {'COPY.json', 'DESIGN-PLAN.md', 'STUB.md',
                   'site', 'preview', 'COMPONENTS.md', 'BUILD-PLAN.json',
                   'SPEC.md', 'ASSEMBLED.md', 'SCORECARD.json',
                   'CANON-PADDING.json', 'SOP-CONSTANTS.json',
-                  'VARIANT-GATES.json', 'PREBUILD.json', 'sections'}
+                  'VARIANT-GATES.json', 'PREBUILD.json', 'sections',
+                  'templates'}
 SITE_COMPARE = ['DNA.json', 'TOKENS.json', 'DESIGN-SYSTEM.md']
 PAGE_COMPARE = ['COPY.json', 'DESIGN-PLAN.md', 'STUB.md',
                 'LAYOUT-OPTIONS.json', 'DNA.json', 'TOKENS.json',
@@ -260,6 +261,10 @@ def rebuild(pdir, tmp):
         diffs += [f'site/dist/{d}' for d in _diff_tree(
             os.path.join(real_site, 'dist'),
             os.path.join(t_pdir, 'site', 'dist'), skip=())]
+        _run([PY, os.path.join(HERE, 'template_export.py'), t_pdir])
+        diffs += [f'templates/{d}' for d in _diff_tree(
+            os.path.join(pdir, 'templates'),
+            os.path.join(t_pdir, 'templates'))]
     return diffs
 
 
