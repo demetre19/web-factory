@@ -2478,7 +2478,20 @@ _BANK_STAGE_CSS = (
     'body[data-motion="off"] .wf-stage *,'
     'body[data-motion="off"] .wf-page *{'
     'animation-play-state:paused!important;'
-    'transition:none!important}')
+    'transition:none!important}'
+    # form validation demo — inline field errors + a success note
+    # (the bank fragments ship unvalidated inputs; the emit pass
+    # adds required/type, this styles what the driver reports)
+    '.wf-ferr{display:inline-block;flex-basis:100%;'
+    'background:#fef3f2;color:#b42318;border:1px solid #fecdca;'
+    'border-radius:6px;padding:2px 8px;'
+    'font:12px/1.4 system-ui,sans-serif;margin-top:4px}'
+    '.wf-fok{display:block;flex-basis:100%;'
+    'background:#ecfdf3;color:#067647;border:1px solid #abefc6;'
+    'border-radius:6px;padding:6px 10px;'
+    'font:600 13px/1.4 system-ui,sans-serif;margin-top:8px}'
+    '[aria-invalid="true"]{outline:2px solid #b42318;'
+    'outline-offset:1px}')
 
 
 # E1 — fragment interactions are authored against a REAL surface:
@@ -2713,6 +2726,195 @@ def _bank_fallback_css():
             rules.append(f'{sel}{{{decl}}}')
         # pseudo-el/other variants unhandled → skip silently
     return ''.join(rules)
+
+
+# empty submits never reach 'submit' — constraint validation
+# suppresses it — so the demo hooks 'invalid' (capture) for the
+# inline marks and 'submit' only for the valid path.
+_FORM_DRIVER = (
+    '<script>(function(){'
+    'function err(c){'
+    'c.setAttribute("aria-invalid","true");'
+    'var n=c.nextSibling;'
+    'if(n&&n.classList&&n.classList.contains("wf-ferr"))'
+    'n.textContent=c.validationMessage||"required field";'
+    'else{var d=document.createElement("span");'
+    'd.className="wf-ferr";'
+    'd.textContent=c.validationMessage||"required field";'
+    'if(c.parentNode)c.parentNode.insertBefore(d,c.nextSibling)}}'
+    'function ok(c){c.removeAttribute("aria-invalid");'
+    'var n=c.nextSibling;'
+    'if(n&&n.classList&&n.classList.contains("wf-ferr"))n.remove()}'
+    'document.querySelectorAll(".wf-stage form,.wf-page form")'
+    '.forEach(function(f){'
+    'f.addEventListener("invalid",function(e){'
+    'e.preventDefault();err(e.target)},true);'
+    'f.addEventListener("submit",function(e){'
+    'e.preventDefault();'
+    'var o=f.nextElementSibling;'
+    'if(!o||!o.classList||!o.classList.contains("wf-fok")){'
+    'o=document.createElement("div");o.className="wf-fok";'
+    'o.textContent="\\u2713 valid — demo only, nothing was sent";'
+    'f.parentNode.insertBefore(o,f.nextSibling)}});'
+    'f.addEventListener("input",function(e){'
+    'var c=e.target;if(c&&c.checkValidity&&c.checkValidity())ok(c)});'
+    'f.addEventListener("change",function(e){'
+    'var c=e.target;if(c&&c.checkValidity&&c.checkValidity())ok(c)})'
+    '})})()</script>')
+
+
+_FORM_EMAIL = re.compile(r'\b(?:e-?mail|newsletter)\b', re.I)
+_FORM_PHONE = re.compile(
+    r'\b(?:tel|phone|mobile|cell|sms)\b|\+?\d[\d\s().-]{6,}\d',
+    re.I)
+
+
+def _form_dual(hint):
+    # the field accepts either an email or a phone channel --
+    # typing it as either would reject the other
+    return bool(_FORM_EMAIL.search(hint) and
+                _FORM_PHONE.search(hint))
+
+
+def _infer_form_type(attrs):
+    """a name/id/placeholder hint → the input's semantic type —
+    banked exemplars ship bare <input> so the browser never
+    validates; the emit pass supplies the type. Word-boundary
+    cues — 'Patel' must not read as 'tel' — and a field that
+    names two channels ("email or phone") stays plain text so it
+    accepts either."""
+    hint = ' '.join(re.findall(
+        r'(?:name|id|placeholder|aria-label)\s*=\s*["\']([^"\']+)',
+        attrs)).lower()
+    if _form_dual(hint):
+        return 'text'
+    if _FORM_EMAIL.search(hint):
+        return 'email'
+    if _FORM_PHONE.search(hint):
+        return 'tel'
+    for pat, ty in (
+            (r'\b(?:url|website)\b', 'url'),
+            (r'\bpass(?:word|code)?\b', 'password'),
+            (r'\b(?:date|dob|birth)\b', 'date'),
+            (r'\b(?:zip|post(?:code|al)?|qty|quant|num|amount|price|'
+             r'count|card|cvc|cvv)\b', 'text')):
+        if re.search(pat, hint):
+            return ty
+    return 'text'
+
+
+# not fill-in controls — a required checkbox forces it checked
+# (breaks multi-select groups and consent demos); file/range carry
+# their own values
+_FORM_SKIP_TYPES = {'hidden', 'submit', 'button', 'image', 'file',
+                    'range', 'reset', 'checkbox', 'radio', 'color'}
+
+# hint words that mark a control optional — 'required' on these
+# would block a valid demo submit (apt, delivery notes, …)
+_FORM_OPTIONAL = re.compile(
+    r'\b(?:optional|apartment|apt|suite|unit|floor|'
+    r'instructions?|notes?|comments?|middle|nickname|'
+    r'referral|coupon|promo|vat|tax)\b', re.I)
+
+
+def _form_required(attrs, label=''):
+    # the optional-word scan reads identity attrs + the control's
+    # label text only — placeholder copy like "leave us notes" must
+    # not un-require a real field
+    hint = label + ' ' + ' '.join(re.findall(
+        r'(?:name|id|aria-label)\s*=\s*["\']([^"\']+)',
+        attrs))
+    # 'you@company.com' must not read as a 'company' optional cue
+    hint = re.sub(r'\S+@\S+', ' ', hint)
+    return not _FORM_OPTIONAL.search(hint)
+
+
+def _bank_form_attrs(frag):
+    """banked <form> previews submitted empty — no required attrs,
+    bare text inputs, several novalidate forms. Emit-time rewrite
+    (never a hand edit to the bank): inside every <form>…</form>,
+    drop novalidate, give each textual input a semantic type, and
+    mark fill-in controls required so the validation driver has
+    something real to exercise."""
+
+    # control id -> its <label> text: 'optional'/'notes' cues live
+    # there, not in attrs ('Apt, Suite, or Unit (Optional)')
+    def _labels(block):
+        lab = {}
+        for lm in re.finditer(
+                r'<label\b[^>]*>(.*?)</label>', block, re.I | re.S):
+            txt = re.sub(r'<[^>]*>', ' ', lm.group(1))
+            fm = re.search(r'\bfor\s*=\s*["\']([^"\']+)', lm.group(0),
+                           re.I)
+            if fm:
+                lab[fm.group(1)] = txt
+            else:
+                # wrapping label — associate to the control inside
+                for cm in re.finditer(
+                        r'<(?:input|textarea|select)\b[^>]*'
+                        r'\bid\s*=\s*["\']([^"\']+)', lm.group(1),
+                        re.I):
+                    lab[cm.group(1)] = txt
+        return lab
+
+    def _control(m, labels):
+        tag, at = m.group(1).lower(), m.group(2) or ''
+        # sr-only peers are css toggle hacks (drawer/accordion
+        # switches), not fill-in fields — a required hidden checkbox
+        # would make the demo form unsubmittable
+        if 'disabled' in at or 'readonly' in at or 'sr-only' in at:
+            return m.group(0)
+        ty = ''
+        if tag == 'input':
+            tm = re.search(r'\btype\s*=\s*["\']?[\w-]+["\']?', at)
+            ty = (tm.group(0).split('=', 1)[-1].strip(
+                '"\' ').lower() if tm else '')
+            if ty in _FORM_SKIP_TYPES:
+                return m.group(0)
+            if ty in ('', 'text'):
+                ty = _infer_form_type(at)
+                if tm:
+                    at = at[:tm.start()] + at[tm.end():]
+                at = ' type="%s"' % ty + at
+            elif ty in ('email', 'tel') and _form_dual(
+                    ' '.join(re.findall(
+                        r'(?:name|id|placeholder|aria-label)'
+                        r'\s*=\s*["\']([^"\']+)', at)).lower()):
+                # dual-purpose banked type ("phone or email" shipped
+                # as type="email") rejects the other channel — drop
+                # back to text so either answer validates
+                at = at[:tm.start()] + ' type="text"' + at[tm.end():]
+        at = at.rstrip()
+        close = '/'
+        if at.endswith('/'):
+            at = at[:-1].rstrip()
+        else:
+            close = ''
+        # an email/newsletter field is always required — the
+        # optional-word scan never applies to the email channel
+        emailish = ty == 'email' or bool(_FORM_EMAIL.search(
+            ' '.join(re.findall(
+                r'(?:name|id|placeholder|aria-label)'
+                r'\s*=\s*["\']([^"\']+)', at))))
+        # the optional-word scan sees the control's own label too
+        cid = re.search(r'\bid\s*=\s*["\']([^"\']+)', at)
+        ltxt = labels.get(cid.group(1), '') if cid else ''
+        if 'required' not in at and (
+                emailish or _form_required(at, ltxt)):
+            at += ' required'
+        return '<%s%s%s>' % (tag, at, close)
+
+    def _form(m):
+        block = re.sub(r'novalidate(="[^"]*")?', '', m.group(0),
+                       flags=re.I)
+        labels = _labels(block)
+        return re.sub(
+            r'<(input|textarea|select)(\s[^<>]*)?>',
+            lambda cm: _control(cm, labels), block,
+            flags=re.I | re.S)
+
+    return re.sub(r'<form\b[^<>]*>.*?</form>', _form, frag,
+                  flags=re.I | re.S)
 
 
 def _bank_scale(frag):
@@ -2961,7 +3163,7 @@ def emit_bank_previews(pd):
                     (os.path.isfile(css_dst) and
                      os.path.getmtime(css_dst) >
                      os.path.getmtime(dst)) or \
-                    '<!--wf:bank:v4-->' not in open(
+                    '<!--wf:bank:v14-->' not in open(
                         dst, encoding='utf-8',
                         errors='replace').read(64)
                 if stale:
@@ -2973,6 +3175,9 @@ def emit_bank_previews(pd):
                     frag = re.sub(
                         r'/src/assets/[^\s"\'()]+',
                         '/media/placeholder.svg', frag)
+                    # (d) form previews submitted empty — supply
+                    # required/type attrs at emit, never hand edits
+                    frag = _bank_form_attrs(frag)
                     fx = cls.startswith(('fx-', 'imgfx-', 'mobfx-'))
                     if fx:
                         frag = _fx_strip_freeze(frag)
@@ -2998,11 +3203,14 @@ def emit_bank_previews(pd):
                     css_ = _BANK_STAGE_CSS + \
                         ('body{padding:0}' if page else '')
                     with open(dst, 'w', encoding='utf-8') as fh:
-                        fh.write('<!--wf:bank:v4-->' +
+                        fh.write('<!--wf:bank:v14-->' +
                                  _doc(head, '', stage,
                                       extra=(_STAGE_SCROLL_SHIM
                                              if not page else '') +
-                                      (_FX_DRIVER if fx else ''),
+                                      (_FX_DRIVER if fx else '') +
+                                      (_FORM_DRIVER
+                                       if '<form' in frag.lower()
+                                       else ''),
                                       css=css_,
                                       chrome=gid == 'menu' or
                                       cls.startswith('nav-')))
