@@ -1193,6 +1193,14 @@ def _type_sign_bundle(pd, variant, spec=None):
         css_dark += (';' if css_dark else '') + ladder
     shape = (r.get('shape') or '') if base_genes else \
         (vb.get('shape') or '') + (r.get('shape') or '')
+    if custom is not None:
+        # the vibe's type-contrast shape rules pin literal heading
+        # weights (h1,h2,h3,.sec-h{font-weight:NNN}) that would
+        # outrank the producer's var(--display-weight) decls — bind
+        # them back to the signed var, later in the same cascade so
+        # the editor's chosen weight actually ships
+        shape += ('h1,h2,h3,.sec-h{font-weight:'
+                  'var(--display-weight)}')
     bundle = {'genes': merged,
               'resolved': {
                   'css': css, 'css_dark': css_dark, 'shape': shape,
@@ -6149,7 +6157,10 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
     var wc=+(S&&S.hweight||700),wopts='';
     [400,500,600,700,800,900].forEach(function(w){
       wopts+='<option'+(wc===w?' selected':'')+'>'+w+'</option>'});
-    var lc=S?+S.lheight:1.55,lopts='';
+    // S.lheight may be absent on picks signed before the control
+    // existed — +undefined is NaN, which left no option selected
+    // and silently signed the first (1.3)
+    var lc=(S&&S.lheight!=null)?+S.lheight:1.55,lopts='';
     [1.3,1.4,1.5,1.55,1.6,1.7,1.8].forEach(function(l){
       lopts+='<option'+(Math.abs(lc-l)<0.001?' selected':'')+
         '>'+l+'</option>'});
