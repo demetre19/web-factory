@@ -2714,10 +2714,11 @@ _FORM_DRIVER = (
     'e.preventDefault();err(e.target)},true);'
     'f.addEventListener("submit",function(e){'
     'e.preventDefault();'
-    'var o=f.querySelector(".wf-fok");'
-    'if(!o){o=document.createElement("div");o.className="wf-fok";'
-    'o.textContent="\\u2713 valid — demo only, nothing was sent"}'
-    'f.appendChild(o)});'
+    'var o=f.nextElementSibling;'
+    'if(!o||!o.classList||!o.classList.contains("wf-fok")){'
+    'o=document.createElement("div");o.className="wf-fok";'
+    'o.textContent="\\u2713 valid — demo only, nothing was sent";'
+    'f.parentNode.insertBefore(o,f.nextSibling)}});'
     'f.addEventListener("input",function(e){'
     'var c=e.target;if(c&&c.checkValidity&&c.checkValidity())ok(c)});'
     'f.addEventListener("change",function(e){'
@@ -3125,7 +3126,7 @@ def emit_bank_previews(pd):
                     (os.path.isfile(css_dst) and
                      os.path.getmtime(css_dst) >
                      os.path.getmtime(dst)) or \
-                    '<!--wf:bank:v13-->' not in open(
+                    '<!--wf:bank:v14-->' not in open(
                         dst, encoding='utf-8',
                         errors='replace').read(64)
                 if stale:
@@ -3165,7 +3166,7 @@ def emit_bank_previews(pd):
                     css_ = _BANK_STAGE_CSS + \
                         ('body{padding:0}' if page else '')
                     with open(dst, 'w', encoding='utf-8') as fh:
-                        fh.write('<!--wf:bank:v13-->' +
+                        fh.write('<!--wf:bank:v14-->' +
                                  _doc(head, '', stage,
                                       extra=(_STAGE_SCROLL_SHIM
                                              if not page else '') +
