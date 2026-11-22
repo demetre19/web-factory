@@ -1,0 +1,68 @@
+{
+ "dist_sha256": "e6f736471a5bac0f",
+ "findings": [
+  {
+   "metric": "image_coverage",
+   "op": ">=",
+   "page": "strata-cleaning-melbourne",
+   "pass": false,
+   "rule": "J.12",
+   "severity": "fail",
+   "threshold": 0.06,
+   "value": 0.0551
+  },
+  {
+   "metric": "tap_target_min_px",
+   "op": ">=",
+   "page": "strata-cleaning-melbourne",
+   "pass": true,
+   "rule": "J.12",
+   "severity": "warn",
+   "threshold": 24,
+   "value": 15
+  }
+ ],
+ "measure_sha256": "3ce7135168b7b176",
+ "thresholds": {
+  "contrast_min_ratio": {
+   "fail": 3.0,
+   "warn": 4.5
+  },
+  "cta_count": {
+   "fail": 1,
+   "warn": 2
+  },
+  "dead_space_ratio": {
+   "fail": 0.4,
+   "warn": 0.3
+  },
+  "dead_space_vps": {
+   "fail": 1.5,
+   "warn": 1.0
+  },
+  "hierarchy_violations": {
+   "fail": 0,
+   "warn": 0
+  },
+  "image_coverage": {
+   "fail": 0.06,
+   "warn": 0.1
+  },
+  "proof_surfaces": {
+   "fail": 1,
+   "warn": 2
+  },
+  "section_count": {
+   "fail": 4,
+   "warn": 8
+  },
+  "tap_target_min_px": {
+   "fail": 12,
+   "warn": 24
+  }
+ },
+ "tool": "judge.py",
+ "verdict": "fail",
+ "version": 1,
+ "vertical": "services"
+}

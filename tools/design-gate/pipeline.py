@@ -335,9 +335,14 @@ def _steps(pdir, wave, build, site_dir):
                  [os.path.join(pdir, 'DESIGN-PLAN.md')],
                  ['SPEC.md', 'ASSEMBLED.md']),
                 ('page evidence', [PY, T('evidence.py'), pdir], [],
-                 [])]
+                 []),
+                ('page measure', [PY, T('measure.py'), pdir], [],
+                 ['MEASURE.json'])]
     if wave == 'w8':
-        return [('reproducibility', [PY, T('repro.py'), pdir],
+        return [('measured judgment', [PY, T('judge.py'), pdir],
+                 [os.path.join(pdir, 'MEASURE.json')],
+                 ['JUDGE.json']),
+                ('reproducibility', [PY, T('repro.py'), pdir],
                  [os.path.join(site_dir, 'BRIEF.yaml'),
                   os.path.join(pdir, 'COPY.json')],
                  [])]
