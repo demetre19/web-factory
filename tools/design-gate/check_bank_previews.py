@@ -84,15 +84,37 @@ _RENDER_JS = r"""() => {
     return .2126 * f(c[0]) + .7152 * f(c[1]) + .0722 * f(c[2])};
   const rgba = s => {const m = s.match(/[\d.]+/g);
     return m ? m.map(Number) : [0,0,0,1]};
-  for (const el of root.querySelectorAll('*')) {
+  // painted surface = opaque background-color OR an opaque gradient
+  // stop in background-image OR a covering pseudo-element's bg —
+  // reference surfaces are gradients/images far more often than
+  // flat backgroundColor
+  const painted = n => {
+    for (const cs of [getComputedStyle(n),
+                      getComputedStyle(n, '::before'),
+                      getComputedStyle(n, '::after')]) {
+      const b = rgba(cs.backgroundColor);
+      if (b.length > 3 && b[3] > .5) return b;
+      const g = cs.backgroundImage || '';
+      if (g !== 'none') {
+        const m = g.match(/rgba?\([\d.,\s%]+\)|#[0-9a-fA-F]{3,8}/);
+        if (m) {
+          const c = rgba(m[0]);
+          if (c.length > 3 && c[3] > .5) return c;
+        }
+      }
+    }
+    return null;
+  };
+  for (const el of root.querySelectorAll(
+      '*:not(style):not(script):not(noscript)')) {
     if (!el.childNodes.length ||
         ![...el.childNodes].some(n => n.nodeType === 3 &&
                                      n.textContent.trim())) continue;
     const fg = rgba(getComputedStyle(el).color);
     let bg = [255,255,255], n = el;
     while (n && n !== document.documentElement) {
-      const b = rgba(getComputedStyle(n).backgroundColor);
-      if (b.length > 3 && b[3] > .5) { bg = b; break; }
+      const b = painted(n);
+      if (b) { bg = b; break; }
       n = n.parentElement;
     }
     const L = (lum(fg) + .05) / (lum(bg) + .05);

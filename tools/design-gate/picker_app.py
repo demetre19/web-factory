@@ -2506,6 +2506,41 @@ def app_data(pipeline):
             rel = emit_vibe_doc(pd, 'atlas-' + p['id'], r)
             if p['cluster'] not in clusters:
                 clusters.append(p['cluster'])
+    # E1 — the committed css must cover the CURRENT bank: an exemplar
+    # banked after the last compile loses its arbitrary-value surface
+    # (bg-[#…] etc.), so its white text renders on the stage's
+    # near-white in light mode. mtime can't see that (a checkout
+    # bumps everything together) — hash every banked source; a stamp
+    # mismatch means the css predates the bank and must recompile:
+    # vendored tailwind, deterministic, no network.
+    bh = hashlib.sha256()
+    # config-version salt — a compiler-setting change (e.g. darkMode
+    # 'class' below) must also recompile; the bank-content hash alone
+    # can't see it
+    bh.update(b'bank-preview-config:v2-darkmode-class')
+    for r, _ds, fns in os.walk(_GENMENU):
+        for fn in sorted(fns):
+            if fn.endswith(('.html', '.tsx')):
+                fp_ = os.path.join(r, fn)
+                try:
+                    bh.update(os.path.relpath(fp_, _GENMENU).encode())
+                    bh.update(open(fp_, 'rb').read())
+                except OSError:
+                    pass
+    stamp_fp = os.path.join(css_src + '.sha256')
+    stamp = (open(stamp_fp).read() if os.path.isfile(stamp_fp)
+             else '')
+    if stamp != bh.hexdigest():
+        try:
+            sys.path.insert(0, HERE)
+            import genmenu_bank
+            if genmenu_bank.preview_css() == 0:
+                with open(stamp_fp, 'w') as fh:
+                    fh.write(bh.hexdigest())
+                print('  bank-preview.css recompiled '
+                      '(bank content changed)')
+        except Exception as e:
+            print(f'  ! bank-preview.css recompile skipped: {e}')
             toks = r['tokens']
             preset_cards.append({
                 'id': p['id'], 'name': p['name'],
@@ -2687,16 +2722,28 @@ _BANK_STAGE_CSS = (
     'transform:translateZ(0);display:flex;'
     'border-radius:14px;'
     'box-shadow:0 10px 34px rgba(15,18,30,.16);'
-    'width:min(100%,1100px);max-width:100%;max-height:78vh;'
+    # content-sized both axes — a fragment wider than its siblings'
+    # fixed widths expands the box instead of clipping inside it
+    'width:max-content;min-width:min(100%,420px);max-width:96vw;'
+    'max-height:78vh;'
     'padding:clamp(16px,3vw,32px);box-sizing:border-box}'
     '.wf-stage>*{margin:auto;flex:none}'
+    # edge-pinned fx (fab strips, sheet handles) absolutely anchor
+    # to the nearest positioned ancestor — this inner wrapper keeps
+    # them inside the stage padding, ≥16px inset on every side
+    '.wf-stage-in{position:relative;width:100%;min-height:100%;'
+    'margin:auto;flex:none}'
     '.wf-stage.mob{width:min(360px,96%);height:min(660px,86vh);'
     'border-radius:24px}'
     # E1 — section/page-scale fragments never sit in the compact
     # stage (the 640x460 box clipped mega footers and tier pages):
     # full viewport width, content height, the fragment's own
     # surface edge-to-edge
-    '.wf-page{position:relative;width:100%;min-height:100vh}'
+    # page-scale fragments render at natural width (a 1440px
+    # checkout would clip inside a 1280 box); the doc scrolls
+    # horizontally instead, the picker scales the whole doc
+    '.wf-page{position:relative;width:max-content;min-width:100%;'
+    'min-height:100vh}'
     '.wf-fx-bar{display:flex;gap:8px}'
     '.wf-fx-bar button{font:600 12px/1 system-ui,sans-serif;'
     'padding:8px 12px;border-radius:8px;'
@@ -2723,7 +2770,16 @@ _BANK_STAGE_CSS = (
     'border-radius:6px;padding:6px 10px;'
     'font:600 13px/1.4 system-ui,sans-serif;margin-top:8px}'
     '[aria-invalid="true"]{outline:2px solid #b42318;'
-    'outline-offset:1px}')
+    'outline-offset:1px}'
+    # ?theme=dark — the frame chrome follows the doc theme; the
+    # fragment's own dark: utilities come from the class build
+    '[data-theme="dark"] body{background:#14171d}'
+    '[data-theme="dark"] .wf-stage{'
+    'box-shadow:0 10px 34px rgba(0,0,0,.5)}'
+    '[data-theme="dark"] .wf-fx-bar button{background:#23262e;'
+    'color:#e4e6ea;border-color:#3a3e47}'
+    '[data-theme="dark"] .wf-fx-bar button[aria-pressed="true"]{'
+    'background:#e8eaef;color:#1c1f26;border-color:#e8eaef}')
 
 
 # E1 — fragment interactions are authored against a REAL surface:
@@ -3370,6 +3426,15 @@ def emit_bank_previews(pd):
                  'tailwind v3 dialect gaps */\n' + extra)
     head = ('<meta charset="utf-8"><meta name="viewport" '
             'content="width=device-width,initial-scale=1">'
+            # U.3 — ?theme=dark / localStorage bind the doc like the
+            # system sheet: data-theme on <html> + the .dark class
+            # the bank tailwind build (darkMode:'class') keys on
+            '<script>(function(){var m=new URLSearchParams('
+            'location.search).get("theme")||localStorage.'
+            'getItem("theme")||"light";document.'
+            'documentElement.dataset.theme=m;document.'
+            'documentElement.classList.toggle("dark",m==="dark")'
+            '})()</script>'
             '<link rel="stylesheet" href="/built/' +
             urllib.parse.quote(os.path.join(
                 pd, 'site', 'dist', 'preview', 'bank',
@@ -3390,16 +3455,23 @@ def emit_bank_previews(pd):
                 fp = os.path.join(cdir, fn)
                 dst = os.path.join(outdir, cls, slug + '.html')
                 os.makedirs(os.path.dirname(dst), exist_ok=True)
+                row = tags.get(cls + '/' + slug) or {}
                 stale = (not os.path.isfile(dst)) or \
                     os.path.getmtime(fp) > os.path.getmtime(dst) or \
                     (os.path.isfile(css_dst) and
                      os.path.getmtime(css_dst) >
                      os.path.getmtime(dst)) or \
-                    '<!--wf:bank:v14-->' not in open(
+                    '<!--wf:bank:v15-->' not in open(
                         dst, encoding='utf-8',
                         errors='replace').read(64)
                 if stale:
                     frag = open(fp, encoding='utf-8').read()
+                    # the AI-Studio harness shim is never vendored —
+                    # it 404s on every load; the fx driver below is
+                    # the replacement interaction layer
+                    frag = re.sub(
+                        r'<script[^>]*_aistudio-iframe[^>]*>'
+                        r'\s*</script>', '', frag)
                     # E4 — banked fragments may keep the source app's
                     # /src/assets/… refs; that tree is never shipped,
                     # so every fx load 404s the image. Bind them to
@@ -3420,8 +3492,9 @@ def emit_bank_previews(pd):
                                  '</div>')
                     else:
                         stage = ('<div class="wf-stage' +
-                                 (' mob' if mob else '') + '">' +
-                                 frag + '</div>')
+                                 (' mob' if mob else '') + '">'
+                                 '<div class="wf-stage-in">' + frag +
+                                 '</div></div>')
                     # E1 — fx cards carry the demo chrome (replay +
                     # motion toggle) and the interaction driver; the
                     # burger icon css is nav-only chrome, never fx
@@ -3432,10 +3505,16 @@ def emit_bank_previews(pd):
                                   '<button class="wf-motion" '
                                   'type="button" aria-pressed="false">'
                                   'Reduce motion</button></div>')
+                    # dark-mode fragments keep transparent inner
+                    # surfaces — the stage underlay binds their
+                    # intended surface or light text sits on the
+                    # light frame (E1 readability)
                     css_ = _BANK_STAGE_CSS + \
-                        ('body{padding:0}' if page else '')
+                        ('body{padding:0}' if page else '') + \
+                        ('body{background:#0b0e14}'
+                         if row.get('mode') == 'dark' else '')
                     with open(dst, 'w', encoding='utf-8') as fh:
-                        fh.write('<!--wf:bank:v14-->' +
+                        fh.write('<!--wf:bank:v15-->' +
                                  _doc(head, '', stage,
                                       extra=(_STAGE_SCROLL_SHIM
                                              if not page else '') +
