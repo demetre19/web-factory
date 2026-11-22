@@ -2744,6 +2744,10 @@ _BANK_STAGE_CSS = (
     # horizontally instead, the picker scales the whole doc
     '.wf-page{position:relative;width:max-content;min-width:100%;'
     'min-height:100vh}'
+    # a page-scale doc taller than the viewport must NOT be
+    # vertically centered — flex centering pushes its top off
+    # screen and the heading/controls are unreachable
+    'body:has(>.wf-page){justify-content:flex-start}'
     '.wf-fx-bar{display:flex;gap:8px}'
     '.wf-fx-bar button{font:600 12px/1 system-ui,sans-serif;'
     'padding:8px 12px;border-radius:8px;'
@@ -2810,8 +2814,14 @@ _FX_DRIVER = (
     '(function sweep(t){var k=Math.min(1,(t-t0)/2400);'
     'scrollTo_(top*(k<.5?2*k*k:1-Math.pow(-2*k+2,2)/2));'
     'if(k<1)requestAnimationFrame(sweep)})(t0);}'
-    'var hit=sc.querySelector("button,a,[role=button],summary,'
-    'input,select,[data-hover],[tabindex]");'
+    'var hit=[].slice.call(sc.querySelectorAll("button,a,'
+    '[role=button],summary,input,select,[data-hover],'
+    '[tabindex]")).filter(function(e){'
+    'var s=((e.id||"")+" "+(e.className||"")+" "+'
+    '(e.getAttribute("aria-label")||"")).toLowerCase();'
+    # demo driver must never flip the preview's own theme — a
+    # themeToggle control overriding ?theme= is not the effect
+    'return !/theme|dark|light/.test(s)})[0];'
     'if(hit){["pointerover","mouseover","pointerdown","pointerup",'
     '"click","pointerout"].forEach(function(n,i){'
     'setTimeout(function(){try{hit.dispatchEvent('
@@ -2830,11 +2840,17 @@ _FX_DRIVER = (
     'if(r)r.addEventListener("click",function(){'
     'scrollTo_(0);play();drive()});'
     'var m=document.querySelector(".wf-motion");'
+    'var raf_=window.requestAnimationFrame;'
     'if(m)m.addEventListener("click",function(){'
     'var off=document.body.dataset.motion==="off";'
     'document.body.dataset.motion=off?"on":"off";'
     'm.setAttribute("aria-pressed",off?"false":"true");'
-    'if(off)anim().forEach(function(a){try{a.play()}catch(e){}})'
+    'if(off){window.requestAnimationFrame=raf_;'
+    'anim().forEach(function(a){try{a.play()}catch(e){}})}'
+    # rAF-driven fx ignore css animation-play-state — suspending
+    # the scheduler is the only generic stop for them; the pending
+    # frame fires once and cannot reschedule
+    'else{window.requestAnimationFrame=function(){return -1}}'
     '})'
     '})();</script>')
 
