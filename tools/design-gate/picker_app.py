@@ -728,12 +728,19 @@ def _real_topo_variants(pd, sec, comp, slot, head, battr, sdir, dist,
 # subprocess; when playwright can't run the dedupe is a no-op
 # rather than a fake.
 _FS_PY = (
-    "import json,sys,threading,functools\n"
+    "import json,sys,threading,functools,urllib.parse\n"
     "import http.server\n"
     "files=json.loads(sys.argv[1]); root=sys.argv[2]; td=sys.argv[3]\n"
-    "h=functools.partial(http.server.SimpleHTTPRequestHandler,"
-    "directory=root)\n"
-    "srv=http.server.ThreadingHTTPServer(('127.0.0.1',0),h)\n"
+    "class H(http.server.SimpleHTTPRequestHandler):\n"
+    " def __init__(self,*a,**k):\n"
+    "  super().__init__(*a,directory=root,**k)\n"
+    " def translate_path(self,path):\n"
+    "  p=urllib.parse.unquote("
+    "urllib.parse.urlparse(path).path)\n"
+    "  if p.startswith('/built/'):\n"
+    "   return p[6:]\n"
+    "  return super().translate_path(path)\n"
+    "srv=http.server.ThreadingHTTPServer(('127.0.0.1',0),H)\n"
     "port=srv.server_address[1]\n"
     "threading.Thread(target=srv.serve_forever,daemon=True).start()\n"
     "from playwright.sync_api import sync_playwright\n"
