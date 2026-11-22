@@ -1723,7 +1723,7 @@ def _hex_mix(a, b, amt):
         for x, y in zip(ta, tb))
 
 
-_FONT_BAD = re.compile(r'[<>"\'`{}();\\&]|url', re.I)
+_FONT_BAD = re.compile(r'[<>"\'`{}();\\&]')
 
 
 def _clean_fonts(fams):
