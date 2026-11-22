@@ -540,6 +540,23 @@ def recorded_pick(pdir):
         return None
 
 
+HERO_SURFACES = ('inverse', 'muted', 'brand')
+MEDIA_BAND_HEROES = {'hero-act-merge'}
+
+
+def signed_chrome(pdir):
+    """{'header'|'footer': comp} the operator signed in
+    ELEMENT-PICKS.json — {} when nothing is signed."""
+    try:
+        picks = json.load(open(os.path.join(
+            pdir, 'ELEMENT-PICKS.json'))).get('picks') or []
+    except Exception:
+        return {}
+    return {p['element']: p['variant'] for p in picks
+            if p.get('element') in ('header', 'footer')
+            and p.get('variant')}
+
+
 def build(pdir, option=None):
     site_dir, slug = SF.site_of(pdir)
     _, brief, page = SF.brief(pdir)
@@ -610,10 +627,33 @@ def build(pdir, option=None):
     nav_pool = allowed['nav'] or ['flyout-nav']
     foot_pool = allowed['footer'] or ['footer-bar']
     hero_pool = allowed['hero']
+    # the operator's signed header/footer (ELEMENT-PICKS) is site
+    # chrome — every option wears it; header variety is its own board
+    signed = signed_chrome(pdir)
+    if signed.get('header') in nav_pool:
+        nav_pool = [signed['header']]
+    if signed.get('footer') in foot_pool:
+        foot_pool = [signed['footer']]
+    # the hero rotation is anchored on the signed pick: the picked
+    # option keeps the plan-default hero (re-projecting never swaps
+    # the shipped hero), every other option opens on the next comp
+    # in the pool — d1..d5 differ above the fold
+    pick = option or recorded_pick(pdir) or 'd1'
+    p_at = next((i for i, o in enumerate(opts) if o[0] == pick), 0)
+    # the unpicked options' hero bands rotate surface too (strongest
+    # contrast first) — a comp that owns its band (a media hero)
+    # keeps it, the pick keeps the plan's
+    surf_at, k = {}, 0
+    for oi in range(len(opts)):
+        hc = hero_pool[(oi - p_at) % len(hero_pool)]
+        if oi != p_at and hc not in MEDIA_BAND_HEROES:
+            surf_at[oi] = HERO_SURFACES[k % len(HERO_SURFACES)]
+            k += 1
     zone_of = {b['id']: b['zone'] for b in blocks}
     table = []
     row_media = max(0, len(media) - 1)
     for oi, (oid, label, v) in enumerate(opts):
+        ri = oi - p_at
         seq = repair_rhythm([(b['id'], v[b['id']]) for b in blocks],
                             allowed, zone_of)
         seq = [(bid, eff_comp(by[bid], c, allowed[bid], row_media))
@@ -621,11 +661,12 @@ def build(pdir, option=None):
         s, inputs = score(seq, by)
         table.append({'id': oid, 'label': label,
                       'compositions': {bid: c for bid, c in seq},
-                      'chrome': {'nav': nav_pool[oi % len(nav_pool)],
-                                 'hero': hero_pool[oi % len(hero_pool)],
-                                 'footer': foot_pool[oi % len(foot_pool)]},
+                      'chrome': {'nav': nav_pool[ri % len(nav_pool)],
+                                 'hero': hero_pool[ri % len(hero_pool)],
+                                 'footer': foot_pool[ri % len(foot_pool)]},
+                      **({'surfaces': {'hero': surf_at[oi]}}
+                         if oi in surf_at else {}),
                       'score': s, 'score_inputs': inputs})
-    pick = option or recorded_pick(pdir) or 'd1'
     chosen = next((o for o in table if o['id'] == pick), None)
     if chosen is None:
         raise SystemExit(f'{TOOL}: option {pick!r} not among '

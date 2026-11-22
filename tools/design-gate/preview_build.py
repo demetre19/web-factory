@@ -620,6 +620,9 @@ def emit_layouts(ctx):
         for sec, comp in (o.get('chrome') or {}).items():
             if comp:
                 override[sec] = comp
+        for sec, surf in (o.get('surfaces') or {}).items():
+            if surf in gate.SURFACES:
+                override[f'{sec}@surface'] = surf
         options.append((str(o.get('id')), o.get('label') or
                         o.get('id'), float(o.get('score') or 0),
                         override))
@@ -629,7 +632,7 @@ def emit_layouts(ctx):
     # union of compositions across every option + the plan defaults —
     # components emit once (bank recipes stay recipe-bound)
     extra = {comp for _, _, _, ov in options
-             for comp in ov.values()}
+             for sec, comp in ov.items() if '@' not in sec}
     bank_css, emitted = _emit_components(ctx, contracts_rows, extra)
     _ensure_shell(ctx)
     _ensure_assets(ctx)
@@ -688,12 +691,16 @@ def emit_layouts(ctx):
             # a hero chrome override that turns the hero media-led
             # spends the brief's FIRST asset — the same intake the
             # real projection gives the hero row (V.1)
+            # (a hero row that already carries the asset still takes
+            # the media comp's ratio and band — hero-act-merge is a
+            # media-surface band, never a plain base one)
             if (ov and c['section'] == 'hero'
-                    and not r2.get('image')):
+                    and (not r2.get('image') or ov in _MEDIA_HERO_COMPS)):
                 if ov in _MEDIA_HERO_COMPS and brief_media:
                     hm = brief_media[0]
-                    r2['image'] = {'src': hm.get('src') or hm.get('file'),
-                                   'alt': hm.get('alt', '')}
+                    r2['image'] = r2.get('image') or {
+                        'src': hm.get('src') or hm.get('file'),
+                        'alt': hm.get('alt', '')}
                     r2['media_ratio'] = (
                         'none' if ov == 'hero-act-merge'
                         else _asset_ratio(
@@ -715,6 +722,9 @@ def emit_layouts(ctx):
                 if r2.pop('image', None) is not None:
                     r2['media_ratio'] = 'none'
                     cc['media_ratio'] = 'none'
+            surf = override.get(f"{c['section']}@surface")
+            if surf and cc.get('surface') != 'media':
+                cc['surface'] = r2['surface'] = surf
             ov_rows.append((cc, r2))
         # and after the split-media rows, the same media-pane rows
         # the plan's post-pass fills — the card locks the ratios the
