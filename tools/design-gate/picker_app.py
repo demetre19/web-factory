@@ -4472,7 +4472,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
       '<button class="xnav xpP" title="previous">&#8249;</button>'+
       '<button class="xnav xpN" title="next">&#8250;</button>'+
       (opts.primary?'<button class="xpPrim">'+esc(opts.primary)+'</button>':'')+
-      '<a class="xopen" href="'+esc(themed(u,theme))+
+      '<a class="xopen" href="'+esc(builtUrl(themed(u,theme)))+
       '" target="_blank" rel="noopener" title="open in new tab">&#8599;</a>'+
       '<button id="xpX">&#x2715;</button></div>'+
       '<div class="xstage"><div class="xframe">'+
@@ -4491,7 +4491,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
       theme=theme==='dark'?'light':'dark';
       this.textContent=theme==='dark'?'☀':'☾';
       var s=themed(u,theme);
-      im.src=s;ov.querySelector('.xopen').href=s};
+      im.src=s;ov.querySelector('.xopen').href=builtUrl(s)};
     function nav(d){
       if(cur<0||!xps.length)return;
       var hops=xps.length;
