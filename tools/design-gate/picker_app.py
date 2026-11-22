@@ -477,6 +477,25 @@ def _bank_doc(pd, cls, nav=None):
         bnd.feed(frag)
         frag = ''.join(bnd.out)
     bankdir = os.path.join(pd, 'site', 'dist', 'preview', 'bank')
+    # the exemplar's utilities live in bank-preview.css — a doc that
+    # links it before emit_bank_previews ran renders unstyled, so
+    # materialise the vendored sheet + generated fallbacks here
+    os.makedirs(bankdir, exist_ok=True)
+    css_src = os.path.join(_GENMENU, 'bank-preview.css')
+    css_dst = os.path.join(bankdir, 'bank-preview.css')
+    if os.path.isfile(css_src) and (
+            not os.path.isfile(css_dst) or
+            os.path.getmtime(css_src) > os.path.getmtime(css_dst)):
+        with open(css_src, 'rb') as fi:
+            blob = fi.read()
+        with open(css_dst, 'wb') as fo:
+            fo.write(blob)
+    extra_dst = os.path.join(bankdir, 'bank-preview-extra.css')
+    if not os.path.isfile(extra_dst):
+        with open(extra_dst, 'w') as fh:
+            fh.write('/* generated fallback utilities — vendored '
+                     'tailwind v3 dialect gaps */\n' +
+                     _bank_fallback_css())
     head = ('<meta charset="utf-8"><meta name="viewport" '
             'content="width=device-width,initial-scale=1">'
             '<link rel="stylesheet" href="/built/' +
