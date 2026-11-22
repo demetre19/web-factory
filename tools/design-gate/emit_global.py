@@ -800,6 +800,26 @@ input, textarea { border: 1px solid var(--input-border); padding: var(--input-py
               background: none; border: 0;
               color: var(--text-secondary); font-size: var(--fs-2);
               line-height: 1; cursor: pointer; }
+    /* a sheet-head in the flyout keeps its brand + close row
+       (the head is desktop-hidden until the panel opens) */
+    .nav-links.nav-mega.open .nav-sheet-head,
+    .nav-links[data-over].open .nav-sheet-head {
+              display: flex; align-items: center;
+              justify-content: space-between; gap: var(--space-m);
+              padding-block-end: var(--space-s);
+              border-block-end: 1px solid
+                  var(--border-subtle, var(--border-default)); }
+    .nav-links.nav-mega.open .nav-sheet-head .nav-sheet-brand,
+    .nav-links[data-over].open .nav-sheet-head .nav-sheet-brand {
+              font-weight: 700; }
+    .nav-links.nav-mega.open .nav-sheet-head .nav-close,
+    .nav-links[data-over].open .nav-sheet-head .nav-close {
+              align-self: center; margin-inline-start: auto; }
+    .nav-links.nav-mega.open:has(.nav-sheet-head)
+        .nav-close:not(.nav-sheet-head .nav-close),
+    .nav-links[data-over].open:has(.nav-sheet-head)
+        .nav-close:not(.nav-sheet-head .nav-close) {
+              display: none; }
     /* the flyout anchors to the bar it drops from — the sticky
        header is already a positioned ancestor */
   }
