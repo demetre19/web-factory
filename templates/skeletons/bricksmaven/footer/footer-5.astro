@@ -1,6 +1,6 @@
 ---
 /**
- * bm-footer-5 — TRANSLATED Bricksmaven skeleton.
+ * wf-footer-5 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (footer-5.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -60,8 +60,8 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
 
 <div class="wf-footer-5">
   <div class="sec-inner">
-    <div class="footer-5-container row between">
-      <div class="footer-5-alpha row between">
+    <div class="wf-footer-5-container row between">
+      <div class="wf-footer-5-alpha row between">
         <span class="logo brand-mark">{brand}</span>
         {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
               </div>
@@ -86,11 +86,11 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
           ))}</div>}
       </div>
       }
-      <div class="footer-5-epsilon row between">
+      <div class="wf-footer-5-epsilon row between">
         {head && <h4 class="text-fluid-2">{head}</h4>}
-        {links.length >= 0 &&         <div class="footer-5__apps row between">
+        {links.length >= 0 &&         <div class="wf-footer-5__apps row between">
           {links.length > 0 && <div class="row gap-fluid-m">{(links || []).map((it) => (
-              <div class="footer-5__apps-btn row between">
+              <div class="wf-footer-5__apps-btn row between">
                 <div class="row between">
                   <p class="text-fluid-0">{it.text}</p>
                   {it.tag && <span class="tag text-fluid--1">{it.tag}</span>}
@@ -102,8 +102,8 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
         }
       </div>
     </div>
-    <div class="footer-5-bottom row between">
-      <div class="footer-5-bottom__beta">
+    <div class="wf-footer-5-bottom row between">
+      <div class="wf-footer-5-bottom__beta">
         <div>
           {links.length > 0 && <div class="footer-legal-nav row between">
             <div class="row gap-fluid-m">{(links || []).map((it) => (

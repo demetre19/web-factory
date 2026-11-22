@@ -1,6 +1,6 @@
 ---
 /**
- * bm-item-wxlsno — TRANSLATED Bricksmaven skeleton.
+ * wf-item-wxlsno — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (item-wxlsno.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -73,8 +73,8 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
   {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
   {list.length > 0 &&   <div class="sec-inner">
     {list.length > 0 &&     <div>
-      {list.length > 0 && <div class="gridcard-10-grid-ul">{(list || []).map((it) => (
-            <div class="gridcard-10-card card">
+      {list.length > 0 && <div class="wf-gridcard-10-grid-ul">{(list || []).map((it) => (
+            <div class="wf-gridcard-10-card card">
               {it.icon && <IconChip name={it.icon} />}
               <h3 class="text-fluid-1">{it.term || it.title}</h3>
               <p class="text-fluid-0">{it.text}</p>

@@ -1,6 +1,6 @@
 ---
 /**
- * bm-blog-archive-11 — TRANSLATED Bricksmaven skeleton.
+ * wf-blog-archive-11 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (blog-archive-11.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -69,7 +69,7 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
   <div class={image && image.src ? 'split' : undefined}>
     <div class="stack">
   <div class="sec-inner">
-    <div class="blog-archive-11-container">
+    <div class="wf-blog-archive-11-container">
       <div class="blog-archive-intro">
         {head && (h1 ? <h1 class="text-fluid-4">{head}</h1> : <h2 class="text-fluid-2">{head}</h2>)}
         {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
@@ -78,10 +78,10 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
 {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
       </div>}
 
-      {list.length > 0 && <div class="blog-archive-11-archive-list">{(list || []).map((it) => (
-            <div class="blog-archive-11-archive-card card">
-              <div class="blog-archive-11-archive-card__content">
-                <div class="blog-archive-11-archive-card__meta-data">
+      {list.length > 0 && <div class="wf-blog-archive-11-archive-list">{(list || []).map((it) => (
+            <div class="wf-blog-archive-11-archive-card card">
+              <div class="wf-blog-archive-11-archive-card__content">
+                <div class="wf-blog-archive-11-archive-card__meta-data">
                   {it.icon && <IconChip name={it.icon} />}
                   <div class="stack">
                     <h3 class="text-fluid-1">{it.term || it.title || it.text}</h3>

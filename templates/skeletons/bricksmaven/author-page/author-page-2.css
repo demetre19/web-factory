@@ -1,54 +1,50 @@
-  .wf-author-page-2 .bm-author-page-2__container {
+  .wf-author-page-2 .wf-author-page-2__container {
     row-gap: var(--space-s);
   }
 
-  .wf-author-page-2 .bm-author-card-2__bottom {
+  .wf-author-page-2 .wf-author-card-2__bottom {
     display: grid;
     gap: var(--space-m);
-    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+    grid-template-columns: calc(100% * 2 / 1);
   }
 
-  .wf-author-page-2 .bm-author-card-2__thumb {
+  .wf-author-page-2 .wf-author-card-2__thumb {
     display: flex;
     gap: var(--space-s);
   }
 
-  .wf-author-page-2 .bm-author-card-2__content {
+  .wf-author-page-2 .wf-author-card-2__content {
     row-gap: calc(var(--flow-spacing) / 2);
   }
 
-  .wf-author-page-2 .bm-social-share {
+  .wf-author-page-2 .wf-social-share {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
     column-gap: var(--flow-spacing);
   }
 
-  .wf-author-page-2 .bm-author-page-2__post-container {
+  .wf-author-page-2 .wf-author-page-2__post-container {
     row-gap: var(--space-s);
   }
 
-  .wf-author-page-2 .bm-author-page-2-post-list {
+  .wf-author-page-2 .wf-author-page-2-post-list {
     row-gap: var(--flow-spacing);
   }
 
-  .wf-author-page-2 .bm-blog-archive-6-card {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+  .wf-author-page-2 .wf-blog-archive-6-card {
+    grid-template-columns: calc(100% * 2 / 1);
     display: grid;
     gap: var(--space-m);
   }
 
-  .wf-author-page-2 .bm-blog-archive-6-card__meta {
+  .wf-author-page-2 .wf-blog-archive-6-card__meta {
     display: flex;
     flex-direction: column;
     row-gap: var(--flow-spacing);
   }
 
   @media (max-width: 44rem) {
-    .wf-author-page-2 .bm-author-card-2__bottom { grid-template-columns: 1fr; }
-    .wf-author-page-2 .bm-blog-archive-6-card { grid-template-columns: 1fr; }
-    .wf-author-page-2 .bm-author-card-2__thumb { flex-direction: column; }
-    .wf-author-page-2 .bm-social-share { flex-direction: column; }
+    .wf-author-page-2 .wf-author-card-2__thumb { flex-direction: column; }
+    .wf-author-page-2 .wf-social-share { flex-direction: column; }
   }
-  .wf-author-page-2 .bm-author-card-2__bottom > :only-child { grid-column: 1 / -1; }
-  .wf-author-page-2 .bm-blog-archive-6-card > :only-child { grid-column: 1 / -1; }

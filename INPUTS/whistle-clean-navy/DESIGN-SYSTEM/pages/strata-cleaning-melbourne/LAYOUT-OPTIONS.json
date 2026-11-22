@@ -1,7 +1,7 @@
 {
  "generated_by": "plan_from_copy.py",
  "copy_sha256": "8c58d3f64d579fbac2794bf2e7b0fbc316c51a3b1cfc89600b97728e7902dde0",
- "pick": "d5",
+ "pick": "d1",
  "allowed": {
   "b01": [
    "editorial",
@@ -10,11 +10,17 @@
   ],
   "b02": [
    "cards-n",
+   "cutout-catalog-grid",
    "editorial",
-   "text-index"
+   "text-index",
+   "feature-grid",
+   "portfolio-grid",
+   "teams-grid"
   ],
   "b03": [
    "sequence",
+   "timeline-steps",
+   "how-steps",
    "cards-n"
   ],
   "b04": [
@@ -30,6 +36,7 @@
    "comparison",
    "stat-band",
    "text-index",
+   "pricing-table",
    "editorial",
    "cards-n",
    "text-index",
@@ -57,6 +64,82 @@
   ],
   "b09": [
    "faq"
+  ],
+  "nav": [
+   "flyout-nav",
+   "nav-bar",
+   "nav-bar",
+   "nav-h1",
+   "nav-h10",
+   "nav-h11",
+   "nav-h12",
+   "nav-h13",
+   "nav-h14",
+   "nav-h15",
+   "nav-h16",
+   "nav-h17",
+   "nav-h18",
+   "nav-h19",
+   "nav-h2",
+   "nav-h20",
+   "nav-h21",
+   "nav-h22",
+   "nav-h23",
+   "nav-h24",
+   "nav-h25",
+   "nav-h3",
+   "nav-h4",
+   "nav-h5",
+   "nav-h6",
+   "nav-h7",
+   "nav-h8",
+   "nav-h9",
+   "nav-mega-1",
+   "nav-mega-2",
+   "nav-mega-3",
+   "nav-mega-4",
+   "nav-mega-5",
+   "nav-mega-6",
+   "nav-mega-7",
+   "nav-offcanvas",
+   "nav-shop-1",
+   "nav-shop-2",
+   "nav-shop-3",
+   "nav-shop-4"
+  ],
+  "footer": [
+   "footer-bar",
+   "footer-1",
+   "footer-10",
+   "footer-11",
+   "footer-12",
+   "footer-13",
+   "footer-15",
+   "footer-16",
+   "footer-17",
+   "footer-18",
+   "footer-19",
+   "footer-2",
+   "footer-20",
+   "footer-21",
+   "footer-22",
+   "footer-23",
+   "footer-3",
+   "footer-4",
+   "footer-5",
+   "footer-6",
+   "footer-7",
+   "footer-8",
+   "footer-9",
+   "footer-bar",
+   "footer-shop"
+  ],
+  "hero": [
+   "stacked-hero",
+   "cutout-hero-split",
+   "hero-act-merge",
+   "quote-grid",
+   "split-media"
   ]
  },
  "options": [
@@ -73,6 +156,11 @@
     "b07": "split-media",
     "b08": "link-grid",
     "b09": "faq"
+   },
+   "chrome": {
+    "nav": "flyout-nav",
+    "hero": "stacked-hero",
+    "footer": "footer-bar"
    },
    "score": 1.0,
    "score_inputs": {
@@ -96,6 +184,11 @@
     "b08": "text-index",
     "b09": "faq"
    },
+   "chrome": {
+    "nav": "nav-bar",
+    "hero": "cutout-hero-split",
+    "footer": "footer-1"
+   },
    "score": 0.95,
    "score_inputs": {
     "orphan_rows": 0,
@@ -118,6 +211,11 @@
     "b08": "editorial",
     "b09": "faq"
    },
+   "chrome": {
+    "nav": "nav-bar",
+    "hero": "hero-act-merge",
+    "footer": "footer-10"
+   },
    "score": 0.95,
    "score_inputs": {
     "orphan_rows": 0,
@@ -131,7 +229,7 @@
    "label": "grid-led",
    "compositions": {
     "b01": "editorial",
-    "b02": "editorial",
+    "b02": "cutout-catalog-grid",
     "b03": "sequence",
     "b04": "cards-n",
     "b05": "cards-n",
@@ -140,12 +238,17 @@
     "b08": "cards-n",
     "b09": "faq"
    },
-   "score": 0.89,
+   "chrome": {
+    "nav": "nav-h1",
+    "hero": "quote-grid",
+    "footer": "footer-11"
+   },
+   "score": 0.95,
    "score_inputs": {
     "orphan_rows": 0,
     "long_card_texts": 0,
-    "adjacent_same_composition": 2,
-    "distinct_compositions": 6
+    "adjacent_same_composition": 1,
+    "distinct_compositions": 7
    }
   },
   {
@@ -162,6 +265,11 @@
     "b08": "link-grid",
     "b09": "faq"
    },
+   "chrome": {
+    "nav": "nav-h10",
+    "hero": "split-media",
+    "footer": "footer-12"
+   },
    "score": 0.99,
    "score_inputs": {
     "orphan_rows": 0,
@@ -171,5 +279,73 @@
    }
   }
  ],
+ "labels": {
+  "nav": "Header",
+  "hero": "Hero",
+  "definition": "What is strata cleaning?",
+  "scope": "What does a strata clean include?",
+  "process": "How does a strata cleaning contract run?",
+  "reporting": "What reporting does strata cleaning carry?",
+  "pricing": "How is strata cleaning priced?",
+  "frequency": "How often should common areas be cleaned?",
+  "siblings": "Which services pair with strata cleaning?",
+  "coverage": "Where does strata cleaning run in Melbourne?",
+  "faq-no-link-before-its-concept-defined": "What questions do strata managers ask?",
+  "end-act": "Contact",
+  "footer": "Footer"
+ },
+ "gene_labels": {
+  "layout-archetype": "Layout",
+  "page-macro-structure": "Page shape",
+  "density-tier": "Density",
+  "image-led-ratio": "Imagery weight",
+  "type-contrast": "Type contrast",
+  "display-face": "Display typeface",
+  "radius-personality": "Corner style",
+  "surface-rhythm": "Surfaces",
+  "cta-restraint": "CTA restraint",
+  "cta-rank": "CTA strength",
+  "disclosure-tier": "Disclosure",
+  "nav-pattern": "Navigation",
+  "motion-tier": "Motion",
+  "proof-type": "Proof style",
+  "media-treatment": "Media treatment",
+  "columns": "Columns",
+  "heading-form": "Headings",
+  "whitespace-band": "Breathing room",
+  "gallery-mode": "Gallery",
+  "form-presence": "Forms",
+  "mood-energy": "Mood",
+  "mood-register": "Tone",
+  "image-style": "Image style",
+  "trend": "Trend",
+  "seam-shape": "Section seams",
+  "ornament": "Ornament"
+ },
+ "ui_copy": {
+  "bank_progress": "{n} more bank exemplars in the vectorisation queue"
+ },
+ "boards": {
+  "service": {
+   "type": "service-page",
+   "copy": "COPY.json",
+   "real": true
+  },
+  "location": {
+   "type": "near-me",
+   "copy": "boards/location.copy.json",
+   "real": false
+  },
+  "contact": {
+   "type": "contact-page",
+   "copy": "boards/contact.copy.json",
+   "real": false
+  },
+  "blog": {
+   "type": "guide",
+   "copy": "boards/blog.copy.json",
+   "real": false
+  }
+ },
  "score_formula": "0.85 - 0.1*orphan_rows - 0.05*long_card_texts - 0.04*adjacent_same_composition + 0.02*distinct_compositions, clamp 0..1"
 }

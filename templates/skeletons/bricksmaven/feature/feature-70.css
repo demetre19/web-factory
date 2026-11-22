@@ -1,7 +1,7 @@
-  .wf-feature-70 .bm-feature-70__container {
+  .wf-feature-70 .wf-feature-70__container {
     display: grid;
     gap: var(--space-m);
-    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+    grid-template-columns: calc(100% * 2 / 1);
   }
 
   .wf-feature-70 .intro {
@@ -16,23 +16,21 @@
     gap: var(--space-s);
   }
 
-  .wf-feature-70 .bm-feature-70-grid {
+  .wf-feature-70 .wf-feature-70-grid {
     flex-wrap: nowrap;
   }
 
-  .wf-feature-70 .bm-feature-70-card {
+  .wf-feature-70 .wf-feature-70-card {
     display: flex;
     flex-direction: row;
     column-gap: var(--flow-spacing);
     flex-wrap: nowrap;
   }
 
-  .wf-feature-70 .bm-feature-70-card__content {
+  .wf-feature-70 .wf-feature-70-card__content {
     row-gap: var(--flow-spacing);
   }
 
   @media (max-width: 44rem) {
-    .wf-feature-70 .bm-feature-70__container { grid-template-columns: 1fr; }
-    .wf-feature-70 .bm-feature-70-card { flex-direction: column; }
+    .wf-feature-70 .wf-feature-70-card { flex-direction: column; }
   }
-  .wf-feature-70 .bm-feature-70__container > :only-child { grid-column: 1 / -1; }

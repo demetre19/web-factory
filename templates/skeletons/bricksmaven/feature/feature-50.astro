@@ -1,6 +1,6 @@
 ---
 /**
- * bm-feature-50 — TRANSLATED Bricksmaven skeleton.
+ * wf-feature-50 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (feature-50.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -67,7 +67,7 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
 
 <div class="wf-feature-50">
   <div class="sec-inner">
-    <div class="bm-feature-50__container">
+    <div class="wf-feature-50__container">
       <div>
         <div class="intro">
           {head && (h1 ? <h1 class="text-fluid-4">{head}</h1> : <h2 class="text-fluid-2">{head}</h2>)}
@@ -78,10 +78,10 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
         </div>}
 
       </div>
-      {list.length > 0 && <div class="bm-feature-50-feature-grid">{(list || []).map((it) => (
+      {list.length > 0 && <div class="wf-feature-50-feature-grid">{(list || []).map((it) => (
             <div class="card">
               <div class="grid-auto gap-fluid-l">
-                <div class="bm-feature-50-feature-card__content">
+                <div class="wf-feature-50-feature-card__content">
                   {it.icon && <IconChip name={it.icon} />}
                   <h3 class="text-fluid-1">{it.term || it.title}</h3>
                   <p class="text-fluid-0">{it.text}</p>

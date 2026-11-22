@@ -1,6 +1,6 @@
 ---
 /**
- * bm-remove-this-div — TRANSLATED Bricksmaven skeleton.
+ * wf-remove-this-div — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (remove-this-div.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -16,9 +16,7 @@ interface Props {
              label?: string; href?: string;
              icon?: string; items?: any[] }[];
   image?: { src: string; alt: string };
-  images?: { src: string; alt: string }[];
   copy?: any;
-  h1?: boolean;
 }
 import { inline } from '../_shared/inline';
 import IconChip from '../_shared/IconChip.astro';
@@ -30,9 +28,7 @@ const {
   cta = { label: '', href: '#' },
   items = [],
   image,
-  images = [],
   copy,
-  h1 = false,
 } = Astro.props;
 // §4.3 — a copy slot binds verbatim article copy onto
 // the skeleton's native props (F.1 — nothing dropped)
@@ -42,15 +38,6 @@ const sub = cp.answer || cp.text || fs;
 const before = cp.before || [];
 const list = (cp.items && cp.items.length
   ? cp.items : items) || [];
-// N.select — the desktop bar keeps the leading links whose
-// labels fit its budget; the rest open behind "More"
-const _lbl = (it) => String(it.label || it.term || it.title || it.text || '');
-const navFit = (() => { let w = 0, n = 0;
-  for (const it of list) { w += _lbl(it).length + 2;
-    if (w > 56) break; n++; }
-  return n; })();
-const navOver = list.length > 6 || navFit < list.length;
-const navCut = Math.max(1, Math.min(navFit, 4));
 const qas = cp.qa || [];
 const links = cp.links || [];
 const after = cp.after || [];
@@ -62,23 +49,22 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
 const _media = import.meta.glob('../assets/media/*.{jpg,jpeg,png,webp}', { eager: true });
 const _mn = image ? String(image.src).split('/').pop() : null;
 const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : null;
-const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}`]?.default ?? m.src;
 ---
 
 <div class="wf-remove-this-div">
   <div>
     <div class="sec-inner">
-      <div class="bm-contact-27__container">
-        <div class="bm-contact-27__intro">
-          {head &&           <div class="bm-contact-27__head">
-            {head && (h1 ? <h1 class="text-fluid-4">{head}</h1> : <h2 class="text-fluid-2">{head}</h2>)}
+      <div class="wf-contact-27__container">
+        <div class="wf-contact-27__intro">
+          {head &&           <div class="wf-contact-27__head">
+            {head && <h2 class="text-fluid-2">{head}</h2>}
           </div>
           }
   {sub && <p class="mt-stack lede" set:html={inline(sub)} />}
   {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
-          {list.length > 0 && <div class="bm-contact-27__contact-details">
+          {list.length > 0 && <div class="wf-contact-27__contact-details">
             <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
-                <div class="bm-contact-27__detail-wrapper card">
+                <div class="wf-contact-27__detail-wrapper card">
                   <h3 class="text-fluid-1"><a class="text-fluid-0" href={it.href}>{it.icon && <IconChip name={it.icon} />} {it.label || it.term || it.anchor || it.text}</a></h3>
                   {(it.label || it.term || it.anchor) && it.text && <p class="text-fluid-0">{it.text}</p>}
                 </div>
@@ -88,7 +74,7 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
       </div>
     </div>
     <div class="sec-inner">
-      <div class="bm-contact-27-container-sub">
+      <div class="wf-contact-27-container-sub">
         <div>
           <form novalidate>
             <label class="field flow"><span class="text-fluid--1">Name <span aria-hidden="true">*</span></span><input type="text" name="name" autocomplete="name" required aria-required="true" /></label>

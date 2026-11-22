@@ -1,10 +1,10 @@
-  .wf-content-2 .content-2-container {
+  .wf-content-2 .wf-content-2-container {
     display: grid;
     gap: var(--space-xl);
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
   }
 
-  .wf-content-2 .content-2__box {
+  .wf-content-2 .wf-content-2__box {
     display: flex;
     flex-direction: column;
     row-gap: var(--space-m);

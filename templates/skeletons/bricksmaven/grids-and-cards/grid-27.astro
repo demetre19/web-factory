@@ -1,6 +1,6 @@
 ---
 /**
- * bm-grid-27 — TRANSLATED Bricksmaven skeleton.
+ * wf-grid-27 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (grid-27.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -69,7 +69,7 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
   <div class={image && image.src ? 'split' : undefined}>
     <div class="stack">
   <div class="sec-inner">
-    <div class="grid-27-container">
+    <div class="wf-grid-27-container">
       <div class="intro-3col">
         {head &&         <div>
           {head && (h1 ? <h1 class="text-fluid-4">{head}</h1> : <h2 class="text-fluid-2">{head}</h2>)}
@@ -83,17 +83,18 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
         </div>}
 
       </div>
-      {list.length > 0 && <div class="grid-27-list">{(list || []).map((it) => (
+      {list.length > 0 && <div class="wf-grid-27-list">{(list || []).map((it) => (
             <div class="card">
-              <div class="grid-27-card__content">
+              <div class="wf-grid-27-card__content">
                 {it.icon && <IconChip name={it.icon} />}
                 <div class="stack">
                   <h3 class="text-fluid-1">{it.term || it.title || it.text}</h3>
                   {it.text && (it.term || it.title) && <p class="text-fluid-0">{it.text}</p>}
                 </div>
-                <div class="grid-27-card__footer">
-                  {it.meta && <p class="meta text-fluid--1">{it.meta}</p>}
-                  {it.tag && <span class="tag text-fluid--1">{it.tag}</span>}
+                <div class="wf-grid-27-card__footer">
+                  {it.icon && <IconChip name={it.icon} />}
+                  <h3 class="text-fluid-1">{it.term || it.title}</h3>
+                  <p class="text-fluid-0">{it.text}</p>
                 </div>
               </div>
             </div>

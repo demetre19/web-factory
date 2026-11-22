@@ -1,6 +1,6 @@
 ---
 /**
- * bm-team-18 — TRANSLATED Bricksmaven skeleton.
+ * wf-team-18 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (team-18.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -69,7 +69,7 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
   <div class={image && image.src ? 'split' : undefined}>
     <div class="stack">
   <div class="sec-inner">
-    <div class="bm-team-18__container">
+    <div class="wf-team-18__container">
       <div class="intro">
         {head && (h1 ? <h1 class="text-fluid-4">{head}</h1> : <h2 class="text-fluid-2">{head}</h2>)}
         {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
@@ -78,20 +78,21 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
 {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
       </div>}
 
-      {list.length > 0 && <div class="bm-team-18-team-list">{(list || []).map((it) => (
-            <div class="bm-team-18-card card">
-              <div class="bm-team-18-card__content">
-                <div class="bm-team-18-card__top">
+      {list.length > 0 && <div class="wf-team-18-team-list">{(list || []).map((it) => (
+            <div class="wf-team-18-card card">
+              <div class="wf-team-18-card__content">
+                <div class="wf-team-18-card__top">
                   {it.icon && <IconChip name={it.icon} />}
                   <div class="stack">
                     <h3 class="text-fluid-1">{it.term || it.title || it.text}</h3>
                     {it.text && (it.term || it.title) && <p class="text-fluid-0">{it.text}</p>}
                   </div>
-                  {it.tag &&                   <div class="bm-team-18-card__foot">
-                    {it.tag && <span class="tag text-fluid--1">{it.tag}</span>}
+                  <div class="wf-team-18-card__foot">
+                    <p class="text-fluid-0">{it.text}</p>
+                    <p class="text-fluid-0">{it.text}</p>
                   </div>
-                  }
                 </div>
+                <p class="text-fluid-0">{it.text}</p>
               </div>
             </div>
           ))}</div>}

@@ -1,6 +1,6 @@
 ---
 /**
- * bm-grid-7 — TRANSLATED Bricksmaven skeleton.
+ * wf-grid-7 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (grid-7.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -73,10 +73,10 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
   {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
   {list.length > 0 &&   <div class="sec-inner">
     {list.length > 0 &&     <div>
-      {list.length > 0 && <div class="gridcard-7-grid-ul">{(list || []).map((it) => (
-            <div class="gridcard-7-card card">
-              <div class="gridcard-7-card__box">
-                <div class="gridcard-7-card__header">
+      {list.length > 0 && <div class="wf-gridcard-7-grid-ul">{(list || []).map((it) => (
+            <div class="wf-gridcard-7-card card">
+              <div class="wf-gridcard-7-card__box">
+                <div class="wf-gridcard-7-card__header">
                   {it.icon && <IconChip name={it.icon} />}
                   <h3 class="text-fluid-1">{it.term || it.title}</h3>
                   <p class="text-fluid-0">{it.text}</p>

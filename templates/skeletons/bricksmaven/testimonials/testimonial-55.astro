@@ -1,6 +1,6 @@
 ---
 /**
- * bm-testimonial-55 — TRANSLATED Bricksmaven skeleton.
+ * wf-testimonial-55 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (testimonial-55.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -67,7 +67,7 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
 
 <div class="wf-testimonial-55">
   <div class="sec-inner">
-    <div class="bm-testimonial-56__container">
+    <div class="wf-testimonial-56__container">
       <div class="intro intro--split">
         {head &&         <div class="intro__left-column">
           {head && (h1 ? <h1 class="text-fluid-4">{head}</h1> : <h2 class="text-fluid-2">{head}</h2>)}
@@ -81,18 +81,18 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
         </div>}
 
       </div>
-      {list.length > 0 && <div class="bm-testimonial-56-list">{(list || []).map((it) => (
+      {list.length > 0 && <div class="wf-testimonial-56-list">{(list || []).map((it) => (
             <div class="card">
-              <div class="bm-testimonial-56-card__content">
+              <div class="wf-testimonial-56-card__content">
                 {it.icon && <IconChip name={it.icon} />}
                 <div class="stack">
                   <h3 class="text-fluid-1">{it.term || it.title || it.text}</h3>
                   {it.text && (it.term || it.title) && <p class="text-fluid-0">{it.text}</p>}
                 </div>
-                {it.tag &&                 <div class="bm-testimonial-56-card__user-data">
-                  {it.tag && <span class="tag text-fluid--1">{it.tag}</span>}
+                <div class="wf-testimonial-56-card__user-data">
+                  <p class="text-fluid-0">{it.text}</p>
+                  <p class="text-fluid-0">{it.text}</p>
                 </div>
-                }
               </div>
               {image && image.src && <figure class="media-bg" aria-hidden="true"><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[960, 1440, 1920]} sizes="100vw" width={1600} height={900} loading="eager" fetchpriority="high" /></figure>}
             </div>

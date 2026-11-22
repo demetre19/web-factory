@@ -1,6 +1,6 @@
 ---
 /**
- * bm-content-26 — TRANSLATED Bricksmaven skeleton.
+ * wf-content-26 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (content-26.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -66,8 +66,8 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
 
 <div class="wf-content-26">
   <div class="sec-inner">
-    <div class="content-26-container">
-      <div class="content-26__content-intro">
+    <div class="wf-content-26-container">
+      <div class="wf-content-26__content-intro">
         <div>
           <div class="intro intro--left">
             {head && (h1 ? <h1 class="text-fluid-4">{head}</h1> : <h2 class="text-fluid-2">{head}</h2>)}
@@ -78,7 +78,7 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
           </div>}
 
         </div>
-        <div class="content-26__media">
+        <div class="wf-content-26__media">
           {image &&           <div>
             {image && image.src && <figure class="ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
           </div>
@@ -89,9 +89,9 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
           }
         </div>
       </div>
-      {list.length > 0 && <div class="content-26-list">{(list || []).map((it) => (
-            <div class="content-26-card card">
-              <div class="content-26-card__content">
+      {list.length > 0 && <div class="wf-content-26-list">{(list || []).map((it) => (
+            <div class="wf-content-26-card card">
+              <div class="wf-content-26-card__content">
                 <h3 class="text-fluid-1">{it.term || it.title}</h3>
                 <p class="text-fluid-0">{it.text}</p>
               </div>

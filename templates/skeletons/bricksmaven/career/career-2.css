@@ -1,7 +1,7 @@
-  .wf-career-2 .bm-career-2__container {
+  .wf-career-2 .wf-career-2__container {
     display: grid;
     gap: var(--space-m);
-    grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+    grid-template-columns: calc(100% * 3 / 2);
   }
 
   .wf-career-2 .intro {
@@ -16,33 +16,33 @@
     gap: var(--space-s);
   }
 
-  .wf-career-2 .bm-career-2__career-list {
+  .wf-career-2 .wf-career-2__career-list {
     row-gap: var(--flow-spacing);
   }
 
-  .wf-career-2 .bm-career-2-card {
+  .wf-career-2 .wf-career-2-card {
     display: grid;
     gap: var(--space-m);
-    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+    grid-template-columns: calc(100% * 2 / 1);
   }
 
-  .wf-career-2 .bm-career-2-card__intro {
+  .wf-career-2 .wf-career-2-card__intro {
     display: flex;
     flex-direction: column;
     row-gap: calc(var(--flow-spacing) / 2);
   }
 
-  .wf-career-2 .bm-career-2-card__content {
+  .wf-career-2 .wf-career-2-card__content {
     row-gap: var(--flow-spacing);
   }
 
-  .wf-career-2 .bm-career-meta-list {
+  .wf-career-2 .wf-career-meta-list {
     flex-direction: row;
     flex-wrap: nowrap;
     column-gap: var(--flow-spacing);
   }
 
-  .wf-career-2 .bm-career-meta-item {
+  .wf-career-2 .wf-career-meta-item {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
@@ -50,10 +50,6 @@
   }
 
   @media (max-width: 44rem) {
-    .wf-career-2 .bm-career-2__container { grid-template-columns: 1fr; }
-    .wf-career-2 .bm-career-2-card { grid-template-columns: 1fr; }
-    .wf-career-2 .bm-career-meta-list { flex-direction: column; }
-    .wf-career-2 .bm-career-meta-item { flex-direction: column; }
+    .wf-career-2 .wf-career-meta-list { flex-direction: column; }
+    .wf-career-2 .wf-career-meta-item { flex-direction: column; }
   }
-  .wf-career-2 .bm-career-2__container > :only-child { grid-column: 1 / -1; }
-  .wf-career-2 .bm-career-2-card > :only-child { grid-column: 1 / -1; }

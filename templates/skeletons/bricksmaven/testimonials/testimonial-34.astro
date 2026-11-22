@@ -1,6 +1,6 @@
 ---
 /**
- * bm-testimonial-34 — TRANSLATED Bricksmaven skeleton.
+ * wf-testimonial-34 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (testimonial-34.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -60,7 +60,7 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
 
 <div class="wf-testimonial-34">
   <div class="sec-inner">
-    <div class="testimonial-34-container">
+    <div class="wf-testimonial-34-container">
       <div class="intro intro--left">
         {head && (h1 ? <h1 class="text-fluid-4">{head}</h1> : <h2 class="text-fluid-2">{head}</h2>)}
         {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
@@ -72,16 +72,16 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
       {list.length > 0 &&       <div>
         {list.length > 0 &&         <div>
           {list.length > 0 && <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
-              <div class="testimonial-34-slide card">
+              <div class="wf-testimonial-34-slide card">
                 {it.icon && <IconChip name={it.icon} />}
                 <div class="stack">
                   <h3 class="text-fluid-1">{it.term || it.title || it.text}</h3>
                   {it.text && (it.term || it.title) && <p class="text-fluid-0">{it.text}</p>}
                 </div>
-                {it.tag &&                 <div class="testimonial-34-slide__client-data">
-                  {it.tag && <span class="tag text-fluid--1">{it.tag}</span>}
+                <div class="wf-testimonial-34-slide__client-data">
+                  <p class="text-fluid-0">{it.text}</p>
+                  <p class="text-fluid-0">{it.text}</p>
                 </div>
-                }
               </div>
             ))}</div>}
         </div>

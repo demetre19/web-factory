@@ -1,16 +1,16 @@
-  .wf-grid-1 .gridcard-1-grid-ul {
+  .wf-grid-1 .wf-gridcard-1-grid-ul {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: var(--grid-gap);
   }
 
-  .wf-grid-1 .gridcard-1-card {
+  .wf-grid-1 .wf-gridcard-1-card {
     display: flex;
     flex-direction: column;
     row-gap: var(--space-xs);
   }
 
   @media (max-width: 44rem) {
-    .wf-grid-1 .gridcard-1-grid-ul { grid-template-columns: 1fr; }
+    .wf-grid-1 .wf-gridcard-1-grid-ul { grid-template-columns: 1fr; }
   }
-  .wf-grid-1 .gridcard-1-grid-ul > :only-child { grid-column: 1 / -1; }
+  .wf-grid-1 .wf-gridcard-1-grid-ul > :only-child { grid-column: 1 / -1; }

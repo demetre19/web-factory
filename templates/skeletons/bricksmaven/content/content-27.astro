@@ -1,6 +1,6 @@
 ---
 /**
- * bm-content-27 — TRANSLATED Bricksmaven skeleton.
+ * wf-content-27 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (content-27.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -67,13 +67,13 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
 
 <div class="wf-content-27">
   <div class="sec-inner">
-    <div class="content-27-container">
+    <div class="wf-content-27-container">
       {head &&       <div class="intro intro--left">
         {head && (h1 ? <h1 class="text-fluid-4">{head}</h1> : <h2 class="text-fluid-2">{head}</h2>)}
       </div>
       }
-      <div class="content-27__content-wrapper">
-        <div class="content-27__content-intro">
+      <div class="wf-content-27__content-wrapper">
+        <div class="wf-content-27__content-intro">
           {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
           {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
           {act.label && <p class="mt-fluid-m"><a class="wf-cta-button" href={act.href}>{act.label}</a></p>}

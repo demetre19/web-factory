@@ -1,6 +1,6 @@
 ---
 /**
- * bm-header-22 — TRANSLATED Bricksmaven skeleton.
+ * wf-header-22 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (header-22.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -16,9 +16,7 @@ interface Props {
              label?: string; href?: string;
              icon?: string; items?: any[] }[];
   image?: { src: string; alt: string };
-  images?: { src: string; alt: string }[];
   copy?: any;
-  h1?: boolean;
 }
 import { inline } from '../_shared/inline';
 import { Image } from 'astro:assets';
@@ -29,9 +27,7 @@ const {
   cta = { label: '', href: '#' },
   items = [],
   image,
-  images = [],
   copy,
-  h1 = false,
 } = Astro.props;
 // §4.3 — a copy slot binds verbatim article copy onto
 // the skeleton's native props (F.1 — nothing dropped)
@@ -41,15 +37,6 @@ const sub = cp.answer || cp.text || fs;
 const before = cp.before || [];
 const list = (cp.items && cp.items.length
   ? cp.items : items) || [];
-// N.select — the desktop bar keeps the leading links whose
-// labels fit its budget; the rest open behind "More"
-const _lbl = (it) => String(it.label || it.term || it.title || it.text || '');
-const navFit = (() => { let w = 0, n = 0;
-  for (const it of list) { w += _lbl(it).length + 2;
-    if (w > 56) break; n++; }
-  return n; })();
-const navOver = list.length > 6 || navFit < list.length;
-const navCut = Math.max(1, Math.min(navFit, 4));
 const qas = cp.qa || [];
 const links = cp.links || [];
 const after = cp.after || [];
@@ -61,21 +48,20 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
 const _media = import.meta.glob('../assets/media/*.{jpg,jpeg,png,webp}', { eager: true });
 const _mn = image ? String(image.src).split('/').pop() : null;
 const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : null;
-const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}`]?.default ?? m.src;
 ---
 
 <div class="wf-header-22">
+  <span class="logo brand-mark">{brand}</span>
   <div class="sec-inner">
-    <div class="bm-header-22__container row between">
-      <span class="logo brand-mark">{brand}</span>
+    <div class="wf-header-22__container row between">
       {image &&       <div>
         {image && image.src && <figure class="ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
       </div>
       }
       <div>
-        {list.length > 0 && !navOver && <nav class="nav-links" aria-label="Primary"><div class="nav-sheet-head"><span class="logo nav-sheet-brand">{brand}</span><button class="nav-close" type="button" aria-label="Close menu">×</button></div><form class="nav-search" role="search"><input class="nav-search-input" type="search" placeholder="Search" aria-label="Search site" /></form><div class="nav-mega-cols"><div class="nav-group"><p class="nav-group-head">Menu</p><ul class="row gap-fluid-m list-plain">{list.map((it, i) => <li><a class="nav-link" href={it.href}><span>{it.label || it.term || it.title || it.text}</span><span class="nav-num" aria-hidden="true">{String((0) + i + 1).padStart(2, '0')}</span></a></li>)}</ul></div></div>{act.label && <p class="nav-sheet-cta mt-fluid-m"><a class="wf-cta-button" href={act.href}>{act.label}</a></p>}</nav>}
-        {navOver && <nav class="nav-links nav-mega" aria-label="Primary"><div class="nav-sheet-head"><span class="logo nav-sheet-brand">{brand}</span><button class="nav-close" type="button" aria-label="Close menu">×</button></div><form class="nav-search" role="search"><input class="nav-search-input" type="search" placeholder="Search" aria-label="Search site" /></form><div class="nav-mega-cols">{[list.slice(0, Math.ceil(list.length / 2)), list.slice(Math.ceil(list.length / 2))].map((grp, gi) => (<div class="nav-group"><p class="nav-group-head">{'Menu ' + (gi + 1)}</p><ul class="row gap-fluid-m list-plain">{grp.map((it, i) => <li><a class="nav-link" href={it.href}><span>{it.label || it.term || it.title || it.text}</span><span class="nav-num" aria-hidden="true">{String((gi > 0 ? Math.ceil(list.length / 2) : 0) + i + 1).padStart(2, '0')}</span></a></li>)}</ul></div>))}</div>{act.label && <p class="nav-sheet-cta mt-fluid-m"><a class="wf-cta-button" href={act.href}>{act.label}</a></p>}</nav>}
-        {navOver && <Fragment><nav class="nav-priority" aria-label="Primary"><ul class="row gap-fluid-m list-plain">{list.slice(0, navCut).map((it) => <li><a class="nav-link" href={it.href}>{it.label || it.term || it.title || it.text}</a></li>)}</ul></nav><button class="nav-more" type="button" aria-label="More links">More</button></Fragment>}
+        {list.length > 0 && list.length < 7 && <nav class="nav-links" aria-label="Primary"><div class="nav-sheet-head"><span class="logo nav-sheet-brand">{brand}</span><button class="nav-close" type="button" aria-label="Close menu">×</button></div><form class="nav-search" role="search"><input class="nav-search-input" type="search" placeholder="Search" aria-label="Search site" /></form><div class="nav-mega-cols"><div class="nav-group"><p class="nav-group-head">Menu</p><ul class="row gap-fluid-m list-plain">{list.map((it, i) => <li><a class="nav-link" href={it.href}><span>{it.label || it.term || it.title || it.text}</span><span class="nav-num" aria-hidden="true">{String((0) + i + 1).padStart(2, '0')}</span></a></li>)}</ul></div></div></nav>}
+        {list.length > 6 && <nav class="nav-links nav-mega" aria-label="Primary"><div class="nav-sheet-head"><span class="logo nav-sheet-brand">{brand}</span><button class="nav-close" type="button" aria-label="Close menu">×</button></div><form class="nav-search" role="search"><input class="nav-search-input" type="search" placeholder="Search" aria-label="Search site" /></form><div class="nav-mega-cols">{[list.slice(0, Math.ceil(list.length / 2)), list.slice(Math.ceil(list.length / 2))].map((grp, gi) => (<div class="nav-group"><p class="nav-group-head">{'Menu ' + (gi + 1)}</p><ul class="row gap-fluid-m list-plain">{grp.map((it, i) => <li><a class="nav-link" href={it.href}><span>{it.label || it.term || it.title || it.text}</span><span class="nav-num" aria-hidden="true">{String((gi > 0 ? Math.ceil(list.length / 2) : 0) + i + 1).padStart(2, '0')}</span></a></li>)}</ul></div>))}</div></nav>}
+        {list.length > 6 && <Fragment><nav class="nav-priority" aria-label="Primary"><ul class="row gap-fluid-m list-plain">{list.slice(0, 4).map((it) => <li><a class="nav-link" href={it.href}>{it.label || it.term || it.title || it.text}</a></li>)}</ul></nav><button class="nav-more" type="button" aria-label="More links">More</button></Fragment>}
         {list.length > 0 && <button class="burger" type="button" aria-label="Menu"><span aria-hidden="true">≡</span></button>}
       </div>
     </div>

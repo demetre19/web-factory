@@ -1,47 +1,46 @@
-  .wf-author-page-3 .bm-author-page-3 {
+  .wf-author-page-3 .wf-author-page-3 {
     row-gap: var(--space-s);
   }
 
-  .wf-author-page-3 .bm-author-page-3__top-container {
+  .wf-author-page-3 .wf-author-page-3__top-container {
     display: flex;
     gap: var(--space-s);
   }
 
-  .wf-author-page-3 .bm-author-card-3 {
+  .wf-author-page-3 .wf-author-card-3 {
     display: flex;
     flex-direction: row;
     column-gap: var(--flow-spacing);
     row-gap: var(--flow-spacing);
   }
 
-  .wf-author-page-3 .bm-author-card-3__content {
+  .wf-author-page-3 .wf-author-card-3__content {
     row-gap: calc(var(--flow-spacing) / 2);
   }
 
-  .wf-author-page-3 .bm-author-page-3__post-container {
+  .wf-author-page-3 .wf-author-page-3__post-container {
     row-gap: var(--space-s);
   }
 
-  .wf-author-page-3 .bm-author-page-3-post-list {
+  .wf-author-page-3 .wf-author-page-3-post-list {
     display: grid;
     gap: var(--space-m);
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
   }
 
-  .wf-author-page-3 .bm-blog-section-22-card {
+  .wf-author-page-3 .wf-blog-section-22-card {
     flex-direction: row;
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+    grid-template-columns: calc(100% * 2 / 1);
     gap: var(--space-m);
   }
 
-  .wf-author-page-3 .bm-blog-section-22-card__content {
+  .wf-author-page-3 .wf-blog-section-22-card__content {
     row-gap: calc(var(--flow-spacing) / 2);
   }
 
   @media (max-width: 44rem) {
-    .wf-author-page-3 .bm-blog-section-22-card { grid-template-columns: 1fr; }
-    .wf-author-page-3 .bm-author-page-3__top-container { flex-direction: column; }
-    .wf-author-page-3 .bm-author-card-3 { flex-direction: column; }
+    .wf-author-page-3 .wf-author-page-3__top-container { flex-direction: column; }
+    .wf-author-page-3 .wf-author-card-3 { flex-direction: column; }
+    .wf-author-page-3 .wf-blog-section-22-card { flex-direction: column; }
   }
-  .wf-author-page-3 .bm-blog-section-22-card > :only-child { grid-column: 1 / -1; }

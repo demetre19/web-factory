@@ -1,6 +1,6 @@
 ---
 /**
- * bm-portfolio-section-5 — TRANSLATED Bricksmaven skeleton.
+ * wf-portfolio-section-5 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (portfolio-section-5.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -81,15 +81,15 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
           {act.label && <p class="mt-fluid-m"><a class="wf-cta-button" href={act.href}>{act.label}</a></p>}
         </div>
       </div>
-      {list.length > 0 && <div class="portfolio-section-5-case-list">
+      {list.length > 0 && <div class="wf-portfolio-section-5-case-list">
         <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
             <div class="card">
               <div>
                 {it.icon && <IconChip name={it.icon} />}
                 <h3 class="text-fluid-1">{it.term || it.title}</h3>
               </div>
-              <div class="portfolio-section-5-case-card__content">
-                <div class="portfolio-section-5-case-card__top">
+              <div class="wf-portfolio-section-5-case-card__content">
+                <div class="wf-portfolio-section-5-case-card__top">
                   <p class="text-fluid-0">{it.text}</p>
                   {it.tag && <span class="tag text-fluid--1">{it.tag}</span>}
                 </div>

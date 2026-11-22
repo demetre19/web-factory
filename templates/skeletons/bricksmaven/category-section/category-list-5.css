@@ -15,12 +15,12 @@
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
   }
 
-  .wf-category-list-5 .category-list-5-card {
+  .wf-category-list-5 .wf-category-list-5-card {
     row-gap: calc( var(--flow-spacing) / 2 );
     flex-direction: row;
     column-gap: calc( var(--flow-spacing) / 2 );
     display: grid;
-    grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+    grid-template-columns: calc(100% * 3 / 2);
   }
 
   .wf-category-list-5 .category-list-5__content {
@@ -29,19 +29,18 @@
     flex-direction: column;
   }
 
-  .wf-category-list-5 .category-list-5-card__heading {
+  .wf-category-list-5 .wf-category-list-5-card__heading {
     row-gap: calc( var(--flow-spacing) / 2 );
   }
 
-  .wf-category-list-5 .category-list-5-card__text {
+  .wf-category-list-5 .wf-category-list-5-card__text {
     row-gap: calc( var(--flow-spacing) / 2 );
   }
 
-  .wf-category-list-5 .category-list-5-card__image {
+  .wf-category-list-5 .wf-category-list-5-card__image {
     row-gap: calc( var(--flow-spacing) / 2 );
   }
 
   @media (max-width: 44rem) {
-    .wf-category-list-5 .category-list-5-card { grid-template-columns: 1fr; }
+    .wf-category-list-5 .wf-category-list-5-card { flex-direction: column; }
   }
-  .wf-category-list-5 .category-list-5-card > :only-child { grid-column: 1 / -1; }

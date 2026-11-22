@@ -1,6 +1,6 @@
 ---
 /**
- * bm-blog-section-4 — TRANSLATED Bricksmaven skeleton.
+ * wf-blog-section-4 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (blog-section-4.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -79,20 +79,22 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
       </div>}
 
       {list.length > 0 &&       <div>
-        {list.length > 0 && <div class="blog-section-4-wrapper">{(list || []).map((it) => (
-              <div class="blog-section-4-card card">
-                <div class="blog-section-4-card__body">
-                  <div class="blog-section-4-card__box">
+        {list.length > 0 && <div class="wf-blog-section-4-wrapper">{(list || []).map((it) => (
+              <div class="wf-blog-section-4-card card">
+                <div class="wf-blog-section-4-card__body">
+                  <div class="wf-blog-section-4-card__box">
                     {it.icon && <IconChip name={it.icon} />}
                     <div class="stack">
                       <h3 class="text-fluid-1">{it.term || it.title || it.text}</h3>
                       {it.text && (it.term || it.title) && <p class="text-fluid-0">{it.text}</p>}
                     </div>
-                    {it.meta && <p class="meta text-fluid--1">{it.meta}</p>}
-                    <div class="blog-section-4-card__author grid-auto gap-fluid-l">
+                    {it.icon && <IconChip name={it.icon} />}
+                    <h3 class="text-fluid-1">{it.term || it.title}</h3>
+                    <div class="wf-blog-section-4-card__author grid-auto gap-fluid-l">
                       <div>
-                        {it.meta && <p class="meta text-fluid--1">{it.meta}</p>}
-                        {it.tag && <span class="tag text-fluid--1">{it.tag}</span>}
+                        {it.icon && <IconChip name={it.icon} />}
+                        <h4 class="text-fluid-1">{it.term || it.title}</h4>
+                        <p class="text-fluid-0">{it.text}</p>
                       </div>
                     </div>
                   </div>

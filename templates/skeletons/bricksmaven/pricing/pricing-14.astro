@@ -1,6 +1,6 @@
 ---
 /**
- * bm-pricing-14 — TRANSLATED Bricksmaven skeleton.
+ * wf-pricing-14 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (pricing-14.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -60,7 +60,7 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
 
 <div class="wf-pricing-14">
   <div class="sec-inner">
-    <div class="bm-pricing-14__container">
+    <div class="wf-pricing-14__container">
       <div class="intro">
         {head && (h1 ? <h1 class="text-fluid-4">{head}</h1> : <h2 class="text-fluid-2">{head}</h2>)}
         {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
@@ -69,27 +69,35 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
 {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
       </div>}
 
-      {list.length > 0 && <div class="bm-pricing-14__pricing-wrapper">{(list || []).map((it) => (
-            <div class="bm-pricing-14-card card">
-              <div class="bm-pricing-14-card__top">
+      {list.length > 0 && <div class="wf-pricing-14__pricing-wrapper">{(list || []).map((it) => (
+            <div class="wf-pricing-14-card card">
+              <div class="wf-pricing-14-card__top">
                 <div>
-                  <div class="bm-pricing-14-card__plan-wrapper">
+                  <div class="wf-pricing-14-card__plan-wrapper">
                     {it.icon && <IconChip name={it.icon} />}
                     <div class="stack">
                       <h3 class="text-fluid-1">{it.term || it.title || it.text}</h3>
                       {it.text && (it.term || it.title) && <p class="text-fluid-0">{it.text}</p>}
                     </div>
-                    {it.tag &&                     <div class="bm-pricing-14-card__label-wrapper">
-                      {it.tag && <span class="tag text-fluid--1">{it.tag}</span>}
+                    <div class="wf-pricing-14-card__label-wrapper">
+                      <p class="text-fluid-0">{it.text}</p>
                     </div>
-                    }
                   </div>
+                  <p class="text-fluid-0">{it.text}</p>
+                </div>
+                <div class="wf-pricing-14-card__right-column">
+                  <p class="text-fluid-0">{it.text}</p>
+                  <p class="text-fluid-0">{it.text}</p>
                 </div>
               </div>
-              <div class="bm-pricing-14-card__feature-wrapper">
-                {(it.items || []).length > 0 && <div class="bm-list">
+              <div>
+                <p class="text-fluid-0">{it.text}</p>
+                <p class="text-fluid-0">{it.text}</p>
+              </div>
+              <div class="wf-pricing-14-card__feature-wrapper">
+                {(it.items || []).length > 0 && <div class="wf-list">
                   <div class="grid-auto gap-fluid-m">{((it.items || []) || []).map((it2) => (
-                      <div class="bm-list-item card">
+                      <div class="wf-list-item card">
                         {it2.icon && <IconChip name={it2.icon} />}
                         <div class="stack">
                           <h3 class="text-fluid-1">{it2.term || it2.title || it2.text}</h3>
@@ -98,9 +106,9 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
                       </div>
                     ))}</div>
                 </div>}
-                {(it.items || []).length > 0 && <div class="bm-list">
+                {(it.items || []).length > 0 && <div class="wf-list">
                   <div class="grid-auto gap-fluid-m">{((it.items || []) || []).map((it2) => (
-                      <div class="bm-list-item card">
+                      <div class="wf-list-item card">
                         {it2.icon && <IconChip name={it2.icon} />}
                         <div class="stack">
                           <h3 class="text-fluid-1">{it2.term || it2.title || it2.text}</h3>

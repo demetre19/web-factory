@@ -4,23 +4,23 @@
     row-gap: var(--space-s);
   }
 
-  .wf-item-sivzmx .pricing-7-content {
+  .wf-item-sivzmx .wf-pricing-7-content {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
     gap: var(--space-m);
   }
 
-  .wf-item-sivzmx .pricing-7-card {
+  .wf-item-sivzmx .wf-pricing-7-card {
     display: flex;
     row-gap: var(--space-s);
     flex-direction: column;
   }
 
-  .wf-item-sivzmx .bm-li-benefits {
+  .wf-item-sivzmx .wf-li-benefits {
     display: flex;
     column-gap: var(--space-xs);
   }
 
   @media (max-width: 44rem) {
-    .wf-item-sivzmx .bm-li-benefits { flex-direction: column; }
+    .wf-item-sivzmx .wf-li-benefits { flex-direction: column; }
   }

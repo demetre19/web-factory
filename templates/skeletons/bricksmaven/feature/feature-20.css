@@ -1,22 +1,22 @@
-  .wf-feature-20 .feature-20-container {
+  .wf-feature-20 .wf-feature-20-container {
     display: flex;
     flex-direction: column;
     row-gap: var(--space-xl);
   }
 
-  .wf-feature-20 .feature-20-content {
+  .wf-feature-20 .wf-feature-20-content {
     display: grid;
     gap: var(--space-xl);
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
   }
 
-  .wf-feature-20 .feature-20-content__intro {
+  .wf-feature-20 .wf-feature-20-content__intro {
     display: flex;
     flex-direction: column;
     row-gap: var(--space-s);
   }
 
-  .wf-feature-20 .feature-20-card {
+  .wf-feature-20 .wf-feature-20-card {
     display: flex;
     flex-direction: column;
     row-gap: var(--space-s);

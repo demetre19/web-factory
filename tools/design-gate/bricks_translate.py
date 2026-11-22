@@ -1650,6 +1650,20 @@ def translate(payload, stem):
                "${String(m.src).split('/').pop()}`]?.default ?? m.src;\n")
               if _has_media else '')
            + f'---\n\n<div class="wf-{stem}">\n' + body + '</div>\n')
+    # no vendor class names in emitted docs: the skeleton's own
+    # bm-*/{stem}-* tokens become wf-* — markup and scoped css must
+    # rename together or the layout declarations unbind
+    for _a, _b in (('bm-', 'wf-'), (f'{stem}-', f'wf-{stem}-')):
+        src = re.sub(rf'(?<![\w-]){re.escape(_a)}', _b, src)
+        style = re.sub(rf'(?<![\w-]){re.escape(_a)}', _b, style)
+    # residual vendor stems — payload markup abbreviates its stem
+    # inside class names (how-it-works-14 → hworks-14-*, gridcard-1-*,
+    # cta-10-*, conparison-1-* …): any surviving letter-run+digits
+    # token gets the wf- prefix so no vendor naming leaks
+    _stem_pat = re.compile(
+        r'(?<![\w-])(?!wf-)[a-z][a-z0-9]*-\d+(?=[-_])')
+    src = _stem_pat.sub(lambda m: 'wf-' + m.group(0), src)
+    style = _stem_pat.sub(lambda m: 'wf-' + m.group(0), style)
     return src, {'stem': stem, 'rules': 0, 'css': style,
                  'unmapped_vars': sorted(unmapped)}
 

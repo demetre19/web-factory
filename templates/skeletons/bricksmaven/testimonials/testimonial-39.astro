@@ -1,6 +1,6 @@
 ---
 /**
- * bm-testimonial-39 — TRANSLATED Bricksmaven skeleton.
+ * wf-testimonial-39 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (testimonial-39.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -69,7 +69,7 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
   <div class={image && image.src ? 'split' : undefined}>
     <div class="stack">
   <div class="sec-inner">
-    <div class="bm-testimonial-39__container">
+    <div class="wf-testimonial-39__container">
       <div class="intro intro--split">
         {head &&         <div class="intro__left-column">
           {head && (h1 ? <h1 class="text-fluid-4">{head}</h1> : <h2 class="text-fluid-2">{head}</h2>)}
@@ -83,15 +83,15 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
         </div>}
 
       </div>
-      <div class="bm-testimonial-39__content">
-        {list.length > 0 && <div class="bm-testimonial-39-list">
+      <div class="wf-testimonial-39__content">
+        {list.length > 0 && <div class="wf-testimonial-39-list">
           <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
-              <div class="bm-testimonial-39-card card">
-                <div class="bm-testimonial-39-card__top">
-                  <div class="bm-testimonial-39-card__meta">
+              <div class="wf-testimonial-39-card card">
+                <div class="wf-testimonial-39-card__top">
+                  <div class="wf-testimonial-39-card__meta">
                     {it.icon && <IconChip name={it.icon} />}
                     <h3 class="text-fluid-1">{it.term || it.title}</h3>
-                    <div class="bm-testimonial-39-card__name-date">
+                    <div class="wf-testimonial-39-card__name-date">
                       <p class="text-fluid-0">{it.text}</p>
                       {it.tag && <span class="tag text-fluid--1">{it.tag}</span>}
                     </div>
@@ -101,9 +101,9 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
             ))}</div>
         </div>}
         {links.length > 0 &&         <div>
-          {links.length > 0 && <div class="bm-list">
+          {links.length > 0 && <div class="wf-list">
             <div class="grid-auto gap-fluid-m">{(links || []).map((it) => (
-                <div class="bm-list-item card">
+                <div class="wf-list-item card">
                   {it.icon && <IconChip name={it.icon} />}
                   <div class="stack">
                     <h3 class="text-fluid-1">{it.term || it.title || it.text}</h3>

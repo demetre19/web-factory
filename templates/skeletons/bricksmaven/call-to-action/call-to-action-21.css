@@ -1,14 +1,14 @@
-  .wf-call-to-action-21 .bm-cta-21-card {
+  .wf-call-to-action-21 .wf-cta-21-card {
     display: grid;
     gap: var(--space-m);
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
   }
 
-  .wf-call-to-action-21 .bm-cta-21-card__left {
+  .wf-call-to-action-21 .wf-cta-21-card__left {
     row-gap: calc(var(--flow-spacing) / 1.4);
   }
 
-  .wf-call-to-action-21 .bm-team-list {
+  .wf-call-to-action-21 .wf-team-list {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
@@ -16,5 +16,5 @@
   }
 
   @media (max-width: 44rem) {
-    .wf-call-to-action-21 .bm-team-list { flex-direction: column; }
+    .wf-call-to-action-21 .wf-team-list { flex-direction: column; }
   }

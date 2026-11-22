@@ -1,84 +1,89 @@
 ---
 /**
- * proof-band — gold exemplar (SB.5). Adapt copy, tokens and rhythm to the
- * contract; keep the skeleton. Renders inside Section.astro: no
- * <section>, no outer padding/background/max-width (SB.2).
- *
- * F.2: every figure, quote and link label is a prop from the plan row
- * or the copy block (sourced from the article/BRIEF). Nothing renders
- * by default — no rating, no quote, no "read the reviews" link
- * without a source.
- *
- * Full-copy slots (§4.3): heading → answer → band → remaining prose →
- * links → after in article order (F.1). The band's voice is the item
- * carrying `quote`, else the copy's first `before` paragraph — the
- * evidence the section leads with.
+ * wf-testimonial-1 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (testimonial-1.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
  */
-import { iconFor, inline } from '../_shared/inline';
-import type { CopySlot } from '../_shared/inline';
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
-  body?: string;
   cta?: { label: string; href: string };
-  items?: { term?: string; title?: string; text?: string; value?: string;
-             label?: string; href?: string; quote?: string;
-             icon?: string }[];
+  items?: { title?: string; text?: string; term?: string;
+             label?: string; href?: string;
+             icon?: string; items?: any[] }[];
   image?: { src: string; alt: string };
-  h1?: boolean;
-  copy?: CopySlot;
+  copy?: any;
 }
+import { inline } from '../_shared/inline';
+import IconChip from '../_shared/IconChip.astro';
+import { Image } from 'astro:assets';
 const {
-  heading = 'Section heading', fs = '', body = '', cta, items = [], image,
-  h1, copy,
+  brand = 'Brand',
+  heading = '',
+  fs = '',
+  cta = { label: '', href: '#' },
+  items = [],
+  image,
+  copy,
 } = Astro.props;
-const cp: CopySlot = copy || {};
+// §4.3 — a copy slot binds verbatim article copy onto
+// the skeleton's native props (F.1 — nothing dropped)
+const cp = copy || {};
 const head = cp.heading || heading;
-const sub = cp.answer || fs || body;
+const sub = cp.answer || cp.text || fs;
 const before = cp.before || [];
-const links = (cp.links && cp.links.length)
-  ? cp.links.map((l) => l.text || `[${l.anchor}](${l.href})`)
-  : [];
-const list = (cp.items && cp.items.length) ? cp.items : items;
-const stat = list.find((it) => it.value);
-const voice = list.find((it) => it.quote);
-const quote = voice ? voice.quote : before[0];
-const rest = voice ? before : before.slice(1);
+const list = (cp.items && cp.items.length
+  ? cp.items : items) || [];
+const qas = cp.qa || [];
+const links = cp.links || [];
 const after = cp.after || [];
-const StatIcon = stat ? iconFor(stat.icon) : null;
+const act = cp.cta || cta;
+const phone = cp.phone || '';
+const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
+// V.8/P.12 — rasters resolve through src/assets/media/
+// so <Image> compiles AVIF/WebP srcsets
+const _media = import.meta.glob('../assets/media/*.{jpg,jpeg,png,webp}', { eager: true });
+const _mn = image ? String(image.src).split('/').pop() : null;
+const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : null;
 ---
 
-<div>
-  {(h1 || head) &&
-    (h1 ? <h1 class="text-fluid-4">{head}</h1>
-       : <h2 class="text-fluid-3">{head}</h2>)}
-  {sub && <p class="mt-stack max-w-prose text-fluid-0" set:html={inline(sub)} />}
-  <div class="mt-stack flex flex-wrap items-center justify-between gap-stack">
-    {stat && (
-      <div class="row">
-        {StatIcon &&
-          <span class="icon-chip"><StatIcon size={22} aria-hidden="true" /></span>}
-        <p class="text-fluid-1 t0">
-          <span class="font-bold">{stat.value}</span>
-          {stat.label &&
-            <span class="text-fluid--1" set:html={inline(stat.label)} />}
-        </p>
+<div class="wf-testimonial-1">
+  <div class={image && image.src ? 'split' : undefined}>
+    <div class="stack">
+  {head && <h2 class="text-fluid-2">{head}</h2>}
+  {sub && <p class="mt-stack lede" set:html={inline(sub)} />}
+  {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
+  {list.length > 0 &&   <div class="sec-inner">
+    {list.length > 0 &&     <div>
+      {list.length > 0 &&       <div class="wf-testimonial-1-content">
+        {list.length > 0 &&         <div>
+          {list.length > 0 && <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
+              <div class="wf-testimonial-1-slides-item card">
+                {it.icon && <IconChip name={it.icon} />}
+                <div class="stack">
+                  <h3 class="text-fluid-1">{it.term || it.title || it.text}</h3>
+                  {it.text && (it.term || it.title) && <p class="text-fluid-0">{it.text}</p>}
+                </div>
+                <p class="text-fluid-0">{it.text}</p>
+              </div>
+            ))}</div>}
+        </div>
+        }
       </div>
-    )}
-    {quote &&
-      <blockquote class="max-w-prose text-fluid-0"
-                  set:html={inline(quote)} />}
-    {cta && <a class="text-fluid-0 underline" href={cta.href}>{cta.label}</a>}
+      }
+    </div>
+    }
   </div>
-  {rest.map((p) => (
-    <p class="mt-stack max-w-prose text-fluid-0" set:html={inline(p)} />
-  ))}
-  {links.length > 0 && (
-    <ul class="mt-stack grid-auto list-plain text-fluid-0">
-      {links.map((t) => <li set:html={inline(t)} />)}
-    </ul>
-  )}
-  {after.map((p) => (
-    <p class="mt-stack max-w-prose text-fluid-0" set:html={inline(p)} />
-  ))}
+  }
+    </div>
+    {image && image.src && <div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div>}
+  </div>
+  {qas.length > 0 && <dl class="mt-stack">{qas.map((qa) => <><dt class="text-fluid-0" set:html={inline(qa.q)} /><dd class="text-fluid-0" set:html={inline(qa.a)} /></>)}</dl>}
+  {links.length > 0 && <div class="flow mt-stack">{links.map((l) => <p class="text-fluid-0" set:html={inline(l.text || `[${l.anchor}](${l.href})`)} />)}</div>}
+  {after.length > 0 && <div class="flow mt-stack">{after.map((p) => <p class="text-fluid-0" set:html={inline(p)} />)}</div>}
+  {tel && <p class="mt-stack"><a class="link-quiet" href={tel}>{phone}</a></p>}
 </div>

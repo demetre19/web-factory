@@ -1,8 +1,8 @@
-  .wf-content-26 .content-26-container {
+  .wf-content-26 .wf-content-26-container {
     row-gap: var(--space-s);
   }
 
-  .wf-content-26 .content-26__content-intro {
+  .wf-content-26 .wf-content-26__content-intro {
     display: grid;
     gap: var(--space-m);
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
@@ -20,28 +20,28 @@
     gap: var(--space-s);
   }
 
-  .wf-content-26 .content-26__media {
+  .wf-content-26 .wf-content-26__media {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
     gap: var(--grid-gap);
   }
 
-  .wf-content-26 .content-26-list {
+  .wf-content-26 .wf-content-26-list {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
     gap: var(--grid-gap);
   }
 
-  .wf-content-26 .content-26-card {
+  .wf-content-26 .wf-content-26-card {
     display: flex;
     flex-direction: row;
     column-gap: var(--flow-spacing);
   }
 
-  .wf-content-26 .content-26-card__content {
+  .wf-content-26 .wf-content-26-card__content {
     row-gap: calc(var(--flow-spacing) / 2);
   }
 
   @media (max-width: 44rem) {
-    .wf-content-26 .content-26-card { flex-direction: column; }
+    .wf-content-26 .wf-content-26-card { flex-direction: column; }
   }

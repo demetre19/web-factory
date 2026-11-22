@@ -1,16 +1,16 @@
-  .wf-grid-6 .gridcard-6-grid-ul {
+  .wf-grid-6 .wf-gridcard-6-grid-ul {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
     gap: var(--space-m);
   }
 
-  .wf-grid-6 .gridcard-6-card {
+  .wf-grid-6 .wf-gridcard-6-card {
     display: flex;
     flex-direction: column;
     row-gap: var(--space-s);
   }
 
-  .wf-grid-6 .gridcard-6-card__box-wrapper {
+  .wf-grid-6 .wf-gridcard-6-card__box-wrapper {
     display: flex;
     flex-direction: column;
     row-gap: var(--space-xs);

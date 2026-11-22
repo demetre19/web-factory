@@ -1,6 +1,6 @@
 ---
 /**
- * bm-login-3 — TRANSLATED Bricksmaven skeleton.
+ * wf-login-3 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (login-3.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -62,8 +62,8 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
   {head && (h1 ? <h1 class="text-fluid-4">{head}</h1> : <h2 class="text-fluid-2">{head}</h2>)}
   <div class="sec-inner">
     <div>
-      {list.length > 0 && <div class="bm-login-3__inner">{(list || []).map((it) => (
-            <div class="bm-login-3__form-wrapper card">
+      {list.length > 0 && <div class="wf-login-3__inner">{(list || []).map((it) => (
+            <div class="wf-login-3__form-wrapper card">
               <div class="login-form-wrapper">
                 {it.icon && <IconChip name={it.icon} />}
                 <h3 class="text-fluid-4">{it.term || it.title}</h3>
@@ -82,7 +82,7 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
                     ))}</div>
                 </div>}
               </div>
-              <div class="login-1__logged-in-heading-wrapper">
+              <div class="wf-login-1__logged-in-heading-wrapper">
                 {it.icon && <IconChip name={it.icon} />}
                 <h3 class="text-fluid-4">{it.term || it.title}</h3>
                 {(it.items || []).length > 0 && <div class="login-footer">
@@ -96,7 +96,7 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
               </div>
             </div>
           ))}</div>}
-      <div class="bm-login-3__footer">
+      <div class="wf-login-3__footer">
         {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
               </div>
       {before.length > 0 && <div class="flow mt-stack">

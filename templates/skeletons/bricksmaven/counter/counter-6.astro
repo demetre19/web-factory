@@ -1,6 +1,6 @@
 ---
 /**
- * bm-counter-6 — TRANSLATED Bricksmaven skeleton.
+ * wf-counter-6 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (counter-6.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -21,6 +21,7 @@ interface Props {
   h1?: boolean;
 }
 import { inline } from '../_shared/inline';
+import IconChip from '../_shared/IconChip.astro';
 const {
   brand = 'Brand',
   heading = '',
@@ -70,11 +71,12 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
 
     </div>
     {list.length > 0 &&     <div>
-      {list.length > 0 && <div class="counter-6-grid-ul">{(list || []).map((it) => (
-            <div class="counter-6-card card">
+      {list.length > 0 && <div class="wf-counter-6-grid-ul">{(list || []).map((it) => (
+            <div class="wf-counter-6-card card">
               <h3>{it.stat || it.term || it.title}</h3>
-              <div class="counter-6-card__box">
-                {it.meta && <p class="meta text-fluid--1">{it.meta}</p>}
+              <div class="wf-counter-6-card__box">
+                {it.icon && <IconChip name={it.icon} />}
+                <h3 class="text-fluid-1">{it.term || it.title}</h3>
                 <p class="text-fluid-0">{it.text}</p>
               </div>
             </div>

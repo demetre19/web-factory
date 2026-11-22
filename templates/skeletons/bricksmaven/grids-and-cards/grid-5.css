@@ -1,10 +1,10 @@
-  .wf-grid-5 .gridcard-5-grid-ul {
+  .wf-grid-5 .wf-gridcard-5-grid-ul {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
     gap: var(--grid-gap);
   }
 
-  .wf-grid-5 .gridcard-5-card {
+  .wf-grid-5 .wf-gridcard-5-card {
     display: flex;
     flex-direction: column;
     row-gap: var(--space-xs);

@@ -1,6 +1,6 @@
 ---
 /**
- * bm-linktree-10 — TRANSLATED Bricksmaven skeleton.
+ * wf-linktree-10 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (linktree-10.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -71,17 +71,17 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
   {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
   <div class="sec-inner">
     <div>
-      <div class="bm-linktree-10__link-cover">
+      <div class="wf-linktree-10__link-cover">
         {image &&         <div class="grid-auto gap-fluid-l">
           {image && image.src && <figure class="ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
         </div>
         }
-        {links.length > 0 &&         <div class="bm-linktree-10__links">
+        {links.length > 0 &&         <div class="wf-linktree-10__links">
           {links.length > 0 && <div class="grid-auto gap-fluid-m">{(links || []).map((it) => (
-              <div class="bm-linktree-9__link-row card">
+              <div class="wf-linktree-9__link-row card">
                 {it.icon && <IconChip name={it.icon} />}
                 <h3 class="text-fluid-1">{it.term || it.title}</h3>
-                {(it.items || []).length > 0 && <div class="bm-linktree-list">
+                {(it.items || []).length > 0 && <div class="wf-linktree-list">
                   <div class="grid-auto gap-fluid-m">{((it.items || []) || []).map((it2) => (
                       <div class="card">
                         <h3 class="text-fluid-1"><a class="text-fluid-0" href={it2.href}>{it2.icon && <IconChip name={it2.icon} />} {it2.label || it2.term || it2.anchor || it2.text}</a></h3>

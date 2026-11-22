@@ -1,39 +1,39 @@
-  .wf-newsletter-9 .newsletter-9-container {
+  .wf-newsletter-9 .wf-newsletter-9-container {
     row-gap: var(--space-l);
     display: flex;
     flex-direction: column;
   }
 
-  .wf-newsletter-9 .newsletter-9__intro {
+  .wf-newsletter-9 .wf-newsletter-9__intro {
     display: flex;
     flex-direction: column;
     gap: var(--space-s);
   }
 
-  .wf-newsletter-9 .newsletter-9__content {
+  .wf-newsletter-9 .wf-newsletter-9__content {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
     gap: var(--space-m);
   }
 
-  .wf-newsletter-9 .newsletter-9__box {
+  .wf-newsletter-9 .wf-newsletter-9__box {
     display: flex;
     flex-direction: column;
     row-gap: var(--flow-spacing);
   }
 
-  .wf-newsletter-9 .bm-form {
+  .wf-newsletter-9 .wf-form {
     display: flex;
     flex-direction: column;
     row-gap: var(--space-xs);
   }
 
-  .wf-newsletter-9 .bm-form-widget {
+  .wf-newsletter-9 .wf-form-widget {
     display: flex;
     gap: var(--space-xs);
     flex-direction: row;
   }
 
   @media (max-width: 44rem) {
-    .wf-newsletter-9 .bm-form-widget { flex-direction: column; }
+    .wf-newsletter-9 .wf-form-widget { flex-direction: column; }
   }

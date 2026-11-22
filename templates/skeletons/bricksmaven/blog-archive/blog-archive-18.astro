@@ -1,6 +1,6 @@
 ---
 /**
- * bm-blog-archive-18 — TRANSLATED Bricksmaven skeleton.
+ * wf-blog-archive-18 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (blog-archive-18.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -69,7 +69,7 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
   <div class={image && image.src ? 'split' : undefined}>
     <div class="stack">
   <div class="sec-inner">
-    <div class="blog-archive-18-container">
+    <div class="wf-blog-archive-18-container">
       <div class="intro">
         {head && (h1 ? <h1 class="text-fluid-4">{head}</h1> : <h2 class="text-fluid-2">{head}</h2>)}
         {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
@@ -78,10 +78,10 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
 {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
       </div>}
 
-      {list.length > 0 && <div class="blog-archive-18-archive-list">{(list || []).map((it) => (
-            <div class="blog-archive-18-archive-card card">
-              <div class="blog-archive-18-archive-card__content">
-                <div class="blog-archive-18-archive-card__meta-data">
+      {list.length > 0 && <div class="wf-blog-archive-18-archive-list">{(list || []).map((it) => (
+            <div class="wf-blog-archive-18-archive-card card">
+              <div class="wf-blog-archive-18-archive-card__content">
+                <div class="wf-blog-archive-18-archive-card__meta-data">
                   {it.icon && <IconChip name={it.icon} />}
                   <div class="stack">
                     <h3 class="text-fluid-1">{it.term || it.title || it.text}</h3>
@@ -89,13 +89,12 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
                   </div>
                 </div>
               </div>
-              {it.tag &&               <div class="grid-auto gap-fluid-l">
-                {it.tag &&                 <div class="blog-archive-18-archive-card__catgeory-date">
-                  {it.tag && <span class="tag text-fluid--1">{it.tag}</span>}
+              <div class="grid-auto gap-fluid-l">
+                <div class="wf-blog-archive-18-archive-card__catgeory-date">
+                  <p class="text-fluid-0">{it.text}</p>
+                  <p class="text-fluid-0">{it.text}</p>
                 </div>
-                }
               </div>
-              }
             </div>
           ))}</div>}
       <nav class="pagination row gap-fluid-s" aria-label="Pagination"><a href="?page=1" aria-current="page">1</a><a href="?page=2">2</a><a href="?page=3">3</a><a href="?page=2" rel="next">Next</a></nav>

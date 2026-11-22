@@ -1,6 +1,6 @@
 ---
 /**
- * bm-testimonial-30 — TRANSLATED Bricksmaven skeleton.
+ * wf-testimonial-30 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (testimonial-30.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -69,7 +69,7 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
   <div class={image && image.src ? 'split' : undefined}>
     <div class="stack">
   <div class="sec-inner">
-    <div class="testimonial-30-container">
+    <div class="wf-testimonial-30-container">
       <div class="intro">
         {head && (h1 ? <h1 class="text-fluid-4">{head}</h1> : <h2 class="text-fluid-2">{head}</h2>)}
         {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
@@ -78,18 +78,19 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
 {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
       </div>}
 
-      {list.length > 0 && <div class="testimonial-30-list-ul">{(list || []).map((it) => (
-            <div class="testimonial-30-list-card card">
-              <div class="testimonial-30-list-card__meta">
+      {list.length > 0 && <div class="wf-testimonial-30-list-ul">{(list || []).map((it) => (
+            <div class="wf-testimonial-30-list-card card">
+              <div class="wf-testimonial-30-list-card__meta">
                 {it.icon && <IconChip name={it.icon} />}
                 <div class="stack">
                   <h3 class="text-fluid-1">{it.term || it.title || it.text}</h3>
                   {it.text && (it.term || it.title) && <p class="text-fluid-0">{it.text}</p>}
                 </div>
-                <div class="testimonial-30-list-card__profile">
-                  {it.meta && <p class="meta text-fluid--1">{it.meta}</p>}
+                <div class="wf-testimonial-30-list-card__profile">
+                  {it.icon && <IconChip name={it.icon} />}
+                  <h3 class="text-fluid-1">{it.term || it.title}</h3>
                   <hr />
-                  {it.tag && <span class="tag text-fluid--1">{it.tag}</span>}
+                  <p class="text-fluid-0">{it.text}</p>
                 </div>
               </div>
             </div>

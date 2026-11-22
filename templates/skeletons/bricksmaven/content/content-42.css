@@ -1,20 +1,20 @@
-  .wf-content-42 .bm-content-42__main {
+  .wf-content-42 .wf-content-42__main {
     display: grid;
     gap: var(--space-m);
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
   }
 
-  .wf-content-42 .bm-content-42__content {
+  .wf-content-42 .wf-content-42__content {
     row-gap: calc(var(--flow-spacing) * 2);
   }
 
-  .wf-content-42 .bm-content-42-data-list {
+  .wf-content-42 .wf-content-42-data-list {
     display: grid;
     grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
     gap: var(--grid-gap);
   }
 
-  .wf-content-42 .bm-content-42-data-list__numbers {
+  .wf-content-42 .wf-content-42-data-list__numbers {
     row-gap: calc(var(--flow-spacing) / 2);
   }
 

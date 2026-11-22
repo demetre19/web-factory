@@ -1,6 +1,6 @@
 ---
 /**
- * bm-feature-75 — TRANSLATED Bricksmaven skeleton.
+ * wf-feature-75 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (feature-75.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -69,7 +69,7 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
   <div class={image && image.src ? 'split' : undefined}>
     <div class="stack">
   <div class="sec-inner">
-    <div class="bm-feature-75__container">
+    <div class="wf-feature-75__container">
       <div class="intro">
         {head && (h1 ? <h1 class="text-fluid-4">{head}</h1> : <h2 class="text-fluid-2">{head}</h2>)}
         {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
@@ -78,16 +78,16 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
 {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
       </div>}
 
-      {links.length > 0 &&       <div class="bm-feature-75__cover">
-        {links.length > 0 &&         <div class="bm-feature-75-accordion-nestable">
+      {links.length > 0 &&       <div class="wf-feature-75__cover">
+        {links.length > 0 &&         <div class="wf-feature-75-accordion-nestable">
           {links.length > 0 && <div class="grid-auto gap-fluid-m">{(links || []).map((it) => (
               <div class="card">
-                <div class="bm-feature-75-accordion-item__title">
+                <div class="wf-feature-75-accordion-item__title">
                   <h3 class="text-fluid-1">{it.term || it.title}</h3>
                 </div>
                 <div>
-                  <div class="bm-feature-75-accordion-item__inner grid-auto gap-fluid-l">
-                    {it.meta && <p class="meta text-fluid--1">{it.meta}</p>}
+                  <div class="wf-feature-75-accordion-item__inner grid-auto gap-fluid-l">
+                    <h4 class="text-fluid-1">{it.term || it.title}</h4>
                     <p class="text-fluid-0">{it.text}</p>
                   </div>
                 </div>

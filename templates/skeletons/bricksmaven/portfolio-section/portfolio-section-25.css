@@ -1,4 +1,4 @@
-  .wf-portfolio-section-25 .bm-portfolio-section-25__container {
+  .wf-portfolio-section-25 .wf-portfolio-section-25__container {
     row-gap: var(--space-s);
   }
 
@@ -22,13 +22,13 @@
     row-gap: var(--flow-spacing);
   }
 
-  .wf-portfolio-section-25 .bm-portfolio-section-25-list {
+  .wf-portfolio-section-25 .wf-portfolio-section-25-list {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
     gap: var(--space-m);
   }
 
-  .wf-portfolio-section-25 .bm-portfolio-section-25-card {
+  .wf-portfolio-section-25 .wf-portfolio-section-25-card {
     display: flex;
     flex-direction: row;
     column-gap: var(--flow-spacing);
@@ -36,26 +36,26 @@
     flex-wrap: nowrap;
   }
 
-  .wf-portfolio-section-25 .bm-portfolio-section-25-card__content {
+  .wf-portfolio-section-25 .wf-portfolio-section-25-card__content {
     row-gap: var(--flow-spacing);
   }
 
-  .wf-portfolio-section-25 .bm-portfolio-section-25-card__intro {
+  .wf-portfolio-section-25 .wf-portfolio-section-25-card__intro {
     row-gap: calc(var(--flow-spacing) / 4);
   }
 
-  .wf-portfolio-section-25 .bm-portfolio-section-25-card-terms-list {
+  .wf-portfolio-section-25 .wf-portfolio-section-25-card-terms-list {
     display: flex;
     column-gap: calc(var(--flow-spacing) / 4);
   }
 
-  .wf-portfolio-section-25 .bm-portfolio-section-25-card__media {
+  .wf-portfolio-section-25 .wf-portfolio-section-25-card__media {
     display: flex;
     gap: var(--space-s);
   }
 
   @media (max-width: 44rem) {
-    .wf-portfolio-section-25 .bm-portfolio-section-25-card { flex-direction: column; }
-    .wf-portfolio-section-25 .bm-portfolio-section-25-card-terms-list { flex-direction: column; }
-    .wf-portfolio-section-25 .bm-portfolio-section-25-card__media { flex-direction: column; }
+    .wf-portfolio-section-25 .wf-portfolio-section-25-card { flex-direction: column; }
+    .wf-portfolio-section-25 .wf-portfolio-section-25-card-terms-list { flex-direction: column; }
+    .wf-portfolio-section-25 .wf-portfolio-section-25-card__media { flex-direction: column; }
   }

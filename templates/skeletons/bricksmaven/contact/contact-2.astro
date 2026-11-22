@@ -1,6 +1,6 @@
 ---
 /**
- * bm-contact-2 — TRANSLATED Bricksmaven skeleton.
+ * wf-contact-2 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (contact-2.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -69,8 +69,8 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
   <div class={image && image.src ? 'split' : undefined}>
     <div class="stack">
   <div class="sec-inner">
-    <div class="contact-2-container">
-      <div class="contact-2-content">
+    <div class="wf-contact-2-container">
+      <div class="wf-contact-2-content">
         <div class="contact-content__intro">
           {head && (h1 ? <h1 class="text-fluid-4">{head}</h1> : <h2 class="text-fluid-2">{head}</h2>)}
           {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
@@ -79,15 +79,15 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
 {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
         </div>}
 
-        {list.length > 0 && <div class="contact-2-sales-grid-ul">{(list || []).map((it) => (
-              <div class="contact-2-sales-card card">
+        {list.length > 0 && <div class="wf-contact-2-sales-grid-ul">{(list || []).map((it) => (
+              <div class="wf-contact-2-sales-card card">
                 {it.icon && <IconChip name={it.icon} />}
                 <h3 class="text-fluid-1">{it.term || it.title}</h3>
                 <p class="text-fluid-0">{it.text}</p>
-                {it.tag &&                 <div class="contact-2-sales-card__contact-information">
-                  {it.tag && <span class="tag text-fluid--1">{it.tag}</span>}
+                <div class="wf-contact-2-sales-card__contact-information">
+                  <p class="text-fluid-0">{it.text}</p>
+                  <p class="text-fluid-0">{it.text}</p>
                 </div>
-                }
               </div>
             ))}</div>}
         <div class="contact-form">

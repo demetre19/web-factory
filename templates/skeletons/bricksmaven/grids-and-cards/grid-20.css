@@ -1,4 +1,4 @@
-  .wf-grid-20 .gridcard-20-container {
+  .wf-grid-20 .wf-gridcard-20-container {
     row-gap: var(--space-s);
   }
 
@@ -8,19 +8,19 @@
     row-gap: var(--space-s);
   }
 
-  .wf-grid-20 .gridcard-20-ct {
+  .wf-grid-20 .wf-gridcard-20-ct {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
     gap: 1.5em 0.9375em;
   }
 
-  .wf-grid-20 .gridcard-20-article {
+  .wf-grid-20 .wf-gridcard-20-article {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
     gap: var(--grid-gap);
   }
 
-  .wf-grid-20 .gridcard-20-article__meta {
+  .wf-grid-20 .wf-gridcard-20-article__meta {
     display: flex;
     flex-direction: column;
     row-gap: var(--flow-spacing);

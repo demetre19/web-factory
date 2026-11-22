@@ -1,6 +1,6 @@
 ---
 /**
- * bm-feature-64 — TRANSLATED Bricksmaven skeleton.
+ * wf-feature-64 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (feature-64.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -59,7 +59,7 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
 
 <div class="wf-feature-64">
   <div class="sec-inner">
-    <div class="bm-feature-64__container">
+    <div class="wf-feature-64__container">
       <div class="intro">
         {head && (h1 ? <h1 class="text-fluid-4">{head}</h1> : <h2 class="text-fluid-2">{head}</h2>)}
         {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
@@ -68,10 +68,10 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
 {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
       </div>}
 
-      {list.length > 0 && <div class="bm-feature-64-list">{(list || []).map((it) => (
-            <div class="bm-feature-64-card card">
-              <div class="bm-feature-64-card__content">
-                <div class="bm-feature-64-card__inner">
+      {list.length > 0 && <div class="wf-feature-64-list">{(list || []).map((it) => (
+            <div class="wf-feature-64-card card">
+              <div class="wf-feature-64-card__content">
+                <div class="wf-feature-64-card__inner">
                   <h3 class="text-fluid-1">{it.term || it.title}</h3>
                   <p class="text-fluid-0">{it.text}</p>
                 </div>

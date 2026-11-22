@@ -156,6 +156,28 @@ def _semantic_scope(tok, merged):
 
 
 
+def _asset_ratio(ctx, src, fallback='4:3'):
+    """Declared ratio for a bound asset — the raster's own dims
+    snapped to the vocabulary, so the locked card and the emitted
+    data-ratio agree (P.4/P.7)."""
+    if not src:
+        return fallback
+    s = str(src).lstrip('/')
+    base = os.path.basename(s)
+    cands = [os.path.join(ctx.site, 'public', s),
+             os.path.join(ctx.site, 'public', 'media', base),
+             os.path.join(ctx.site, 'src', 'assets', 'media', base)]
+    import site_folder as _SF
+    sdir, _ = _SF.site_of(ctx.dir)
+    if sdir:
+        cands += [os.path.join(sdir, 'assets', s),
+                  os.path.join(sdir, 'assets', 'media', base)]
+    for p in cands:
+        if os.path.isfile(p):
+            return emit_global.media_ratio_for(p, fallback)
+    return fallback
+
+
 def _ensure_assets(ctx):
     """The media/logo mirror the w6 emit does (P.11/V.8): public/
     <logo>.svg prolog-stripped into src/assets/, public/media/* into
@@ -655,10 +677,12 @@ def emit_layouts(ctx):
                     # data-ratio rides the contract's locked card —
                     # the shipped media box locks the ratio the plan
                     # row declares (P.4/P.7); 4:3 only when it has none
-                    lock = str(row.get('media_ratio') or 'none')
-                    lock = '4:3' if lock == 'none' else lock
-                    r2['media_ratio'] = lock
-                    cc['media_ratio'] = lock
+                    r2['media_ratio'] = _asset_ratio(
+                        ctx, m.get('src') or m.get('file'),
+                        row.get('media_ratio')
+                        if row.get('media_ratio') != 'none'
+                        else '4:3')
+                    cc['media_ratio'] = r2['media_ratio']
                 else:
                     r2.pop('image', None)
             # a hero chrome override that turns the hero media-led
@@ -670,10 +694,13 @@ def emit_layouts(ctx):
                     hm = brief_media[0]
                     r2['image'] = {'src': hm.get('src') or hm.get('file'),
                                    'alt': hm.get('alt', '')}
-                    lock = str(row.get('media_ratio') or 'none')
                     r2['media_ratio'] = (
                         'none' if ov == 'hero-act-merge'
-                        else '4:3' if lock == 'none' else lock)
+                        else _asset_ratio(
+                            ctx, hm.get('src') or hm.get('file'),
+                            row.get('media_ratio')
+                            if row.get('media_ratio') != 'none'
+                            else '4:3'))
                     cc['media_ratio'] = r2['media_ratio']
                     cc['surface'] = (
                         'media' if ov == 'hero-act-merge'
@@ -704,8 +731,9 @@ def emit_layouts(ctx):
                 break
             r3['image'] = {'src': m.get('src') or m.get('file'),
                            'alt': m.get('alt', '')}
-            lock = str(r3.get('media_ratio') or 'none')
-            r3['media_ratio'] = '4:3' if lock == 'none' else lock
+            r3['media_ratio'] = _asset_ratio(
+                ctx, m.get('src') or m.get('file'),
+                cc2.get('media_ratio') or '4:3')
             cc2['media_ratio'] = r3['media_ratio']
         txt = _page_astro(ctx, ov_rows, copy, bank_css)
         PE._w(os.path.join(ctx.site, 'src', 'pages', 'preview',

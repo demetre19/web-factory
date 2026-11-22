@@ -1,4 +1,4 @@
-  .wf-testimonial-35 .testimonial-35__container {
+  .wf-testimonial-35 .wf-testimonial-35__container {
     row-gap: var(--space-s);
   }
 
@@ -23,42 +23,42 @@
     row-gap: var(--flow-spacing);
   }
 
-  .wf-testimonial-35 .testimonial-35__carousel {
+  .wf-testimonial-35 .wf-testimonial-35__carousel {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
     gap: var(--space-m);
   }
 
-  .wf-testimonial-35 .testimonial-35-carousel-list {
+  .wf-testimonial-35 .wf-testimonial-35-carousel-list {
     display: flex;
     flex-direction: row;
     gap: var(--space-s);
   }
 
-  .wf-testimonial-35 .testimonial-35-carousel-card {
+  .wf-testimonial-35 .wf-testimonial-35-carousel-card {
     flex-direction: row;
   }
 
-  .wf-testimonial-35 .testimonial-35-carousel-card__wrapper {
+  .wf-testimonial-35 .wf-testimonial-35-carousel-card__wrapper {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
     gap: var(--grid-gap);
   }
 
-  .wf-testimonial-35 .testimonial-35-carousel-card__content {
+  .wf-testimonial-35 .wf-testimonial-35-carousel-card__content {
     row-gap: calc(var(--flow-spacing) * 1.4);
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
   }
 
-  .wf-testimonial-35 .testimonial-35-carousel-card__client-data {
+  .wf-testimonial-35 .wf-testimonial-35-carousel-card__client-data {
     display: flex;
     flex-direction: column;
     gap: var(--space-s);
   }
 
   @media (max-width: 44rem) {
-    .wf-testimonial-35 .testimonial-35-carousel-list { flex-direction: column; }
-    .wf-testimonial-35 .testimonial-35-carousel-card { flex-direction: column; }
+    .wf-testimonial-35 .wf-testimonial-35-carousel-list { flex-direction: column; }
+    .wf-testimonial-35 .wf-testimonial-35-carousel-card { flex-direction: column; }
   }

@@ -1,6 +1,6 @@
 ---
 /**
- * bm-hero-61 — TRANSLATED Bricksmaven skeleton.
+ * wf-hero-61 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (hero-61.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -67,20 +67,20 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
 
 <div class="wf-hero-61">
   <div class="sec-inner">
-    <div class="bm-hero-61__container">
+    <div class="wf-hero-61__container">
       {head &&       <div>
         {head && (h1 ? <h1 class="text-fluid-4">{head}</h1> : <h2 class="text-fluid-2">{head}</h2>)}
       </div>
       }
-      <div class="bm-hero-61__main">
-        <div class="bm-hero-61__content">
+      <div class="wf-hero-61__main">
+        <div class="wf-hero-61__content">
           {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
                   </div>
         {before.length > 0 && <div class="flow mt-stack">
 {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
         </div>}
 
-        {image &&         <div class="bm-hero-61__media">
+        {image &&         <div class="wf-hero-61__media">
           {image && image.src && <figure class="ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
         </div>
         }

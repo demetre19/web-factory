@@ -1,4 +1,4 @@
-  .wf-404-error-15 .error-15-container {
+  .wf-404-error-15 .wf-error-15-container {
     row-gap: var(--space-m);
   }
 
@@ -8,17 +8,17 @@
     row-gap: var(--space-s);
   }
 
-  .wf-404-error-15 .error-15-media-list {
+  .wf-404-error-15 .wf-error-15-media-list {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
     gap: var(--space-m);
   }
 
-  .wf-404-error-15 .error-15-image-wrapper {
+  .wf-404-error-15 .wf-error-15-image-wrapper {
     display: flex;
     gap: var(--space-s);
   }
 
   @media (max-width: 44rem) {
-    .wf-404-error-15 .error-15-image-wrapper { flex-direction: column; }
+    .wf-404-error-15 .wf-error-15-image-wrapper { flex-direction: column; }
   }

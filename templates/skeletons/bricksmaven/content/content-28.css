@@ -1,11 +1,11 @@
-  .wf-content-28 .content-28-container {
+  .wf-content-28 .wf-content-28-container {
     row-gap: var(--space-s);
     display: grid;
     gap: calc(var(--space-m) * 2);
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
   }
 
-  .wf-content-28 .content-28__intro-block {
+  .wf-content-28 .wf-content-28__intro-block {
     display: flex;
     flex-direction: row;
     column-gap: var(--flow-spacing);
@@ -25,5 +25,5 @@
   }
 
   @media (max-width: 44rem) {
-    .wf-content-28 .content-28__intro-block { flex-direction: column; }
+    .wf-content-28 .wf-content-28__intro-block { flex-direction: column; }
   }

@@ -1,6 +1,6 @@
 ---
 /**
- * bm-portfolio-section-10 — TRANSLATED Bricksmaven skeleton.
+ * wf-portfolio-section-10 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (portfolio-section-10.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -69,7 +69,7 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
   <div class={image && image.src ? 'split' : undefined}>
     <div class="stack">
   <div class="sec-inner">
-    <div class="bm-portfolio-section-10__container">
+    <div class="wf-portfolio-section-10__container">
       <div class="intro">
         {head && (h1 ? <h1 class="text-fluid-4">{head}</h1> : <h2 class="text-fluid-2">{head}</h2>)}
         {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
@@ -78,19 +78,18 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
 {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
       </div>}
 
-      {list.length > 0 &&       <div class="bm-portfolio-3-related-list">
+      {list.length > 0 &&       <div class="wf-portfolio-3-related-list">
         {list.length > 0 && <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
             <div class="card">
               <div>
-                <div class="bm-portfolio-3-related-card__top">
+                <div class="wf-portfolio-3-related-card__top">
                   {it.icon && <IconChip name={it.icon} />}
                   <h3 class="text-fluid-1">{it.term || it.title}</h3>
                   <p class="text-fluid-0">{it.text}</p>
                 </div>
-                {it.tag &&                 <div class="bm-portfolio-3-related-card__footer">
-                  {it.tag && <span class="tag text-fluid--1">{it.tag}</span>}
+                <div class="wf-portfolio-3-related-card__footer">
+                  <p class="text-fluid-0">{it.text}</p>
                 </div>
-                }
               </div>
             </div>
           ))}</div>}

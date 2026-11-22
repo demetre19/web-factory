@@ -1,6 +1,6 @@
 ---
 /**
- * bm-footer-17 — TRANSLATED Bricksmaven skeleton.
+ * wf-footer-17 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (footer-17.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -69,9 +69,9 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
   <div class={image && image.src ? 'split' : undefined}>
     <div class="stack">
   <div class="sec-inner">
-    <div class="bm-footer-17__container row between">
+    <div class="wf-footer-17__container row between">
       {list.length > 0 &&       <div>
-        {list.length > 0 && <div class="bm-footer-17-nav-menu row between">
+        {list.length > 0 && <div class="wf-footer-17-nav-menu row between">
           <div class="row gap-fluid-m">{(list || []).map((it) => (
               <div>
                 <a class="text-fluid-0" href={it.href}>{it.icon && <IconChip name={it.icon} />} {it.label || it.term || it.anchor || it.text}</a>
@@ -81,15 +81,15 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
         </div>}
       </div>
       }
-      {links.length > 0 && <div class="bm-footer-17__contact-info row between">{(links || []).map((it) => (
+      {links.length > 0 && <div class="wf-footer-17__contact-info row between">{(links || []).map((it) => (
             <div>
               <a class="text-fluid-0" href={it.href}>{it.icon && <IconChip name={it.icon} />} {it.label || it.term || it.anchor || it.text}</a>
               {(it.label || it.term || it.anchor) && it.text && <p class="text-fluid-0">{it.text}</p>}
             </div>
           ))}</div>}
       {links.length === 0 && <p class="footer-legal-nav text-fluid-0">Copyright {new Date().getFullYear()} {brand}</p>}
-      <div class="bm-footer-17__footer row between">
-        <div class="bm-footer-17__copyright-wrapper">
+      <div class="wf-footer-17__footer row between">
+        <div class="wf-footer-17__copyright-wrapper">
           {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
                   </div>
         {before.length > 0 && <div class="flow mt-stack">
