@@ -1812,14 +1812,24 @@ def record_element_pick(pipeline, element, variant):
         data = _json_at(pd, 'ELEMENT-PICKS.json') or {
             'generated_by': 'approve_service.py',
             'picks': []}
+        now = datetime.datetime.now().isoformat(timespec='seconds')
         for p in data.get('picks', []):
             if p.get('element') == element:
-                return 1, (f'{element} already picked '
-                           f'({p.get("variant")}) — one decision per '
-                           'gallery')
-        rec = {'element': element, 'variant': variant,
-               'ts': datetime.datetime.now().isoformat(
-                   timespec='seconds')}
+                if p.get('variant') == variant:
+                    return 0, (f'{element} already is {variant} — '
+                               'still signed')
+                old_v = p.get('variant')
+                p['variant'] = variant
+                p['ts'] = now
+                p['prev'] = old_v
+                p['sig'] = G._sig({k: v for k, v in p.items()
+                                   if k != 'sig'},
+                                  G.op_key(create=True))
+                with open(fp, 'w') as fh:
+                    json.dump(data, fh, indent=1, sort_keys=True)
+                return 0, (f'{element} {old_v} → {variant} '
+                           '(superseded, signed into ELEMENT-PICKS.json)')
+        rec = {'element': element, 'variant': variant, 'ts': now}
         rec['sig'] = G._sig(rec, G.op_key(create=True))
         data.setdefault('picks', []).append(rec)
         with open(fp, 'w') as fh:
