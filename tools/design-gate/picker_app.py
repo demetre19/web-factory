@@ -3002,7 +3002,9 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
 #top .mark{width:26px;height:26px;border-radius:7px;
      background:var(--accent);color:var(--accent-ink);
      display:grid;place-items:center;font:700 13px var(--mono)}
-#top .who{font-weight:650;font-size:14px}
+#top .who{font-weight:650;font-size:14px;min-width:0}
+#whoName{display:block;max-width:100%;overflow:hidden;
+  text-overflow:ellipsis;white-space:nowrap}
 #top .who small{display:block;font-weight:500;color:var(--muted);
      font-size:12px}
 #top .sp{flex:1}
@@ -4585,7 +4587,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
     if(o.atlas){vibePane(el,o);return}
     var h='<h1>'+esc(o.title)+'</h1><div class="desc">'+esc(o.desc||'')+'</div>';
     if(o.typescale){
-      el.innerHTML=h+'<div class="vprev" style="max-width:none">'+
+      el.innerHTML=h+'<div class="vprev">'+
         '<div class="cb" style="height:auto">'+
         (o.tsdoc?'<iframe class="tsfr" src="'+esc(o.tsdoc)+
         (document.documentElement.dataset.theme==='dark'
@@ -4693,6 +4695,23 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
     applyTheme(document.documentElement.dataset.theme);
   }
 
+  // a loaded frame is done — mark it and compact small centred
+  // demos to their real content box
+  function _frameDone(f,cb){
+    cb.classList.add('done');
+    try{var cd=f.contentDocument,
+        H=cd.documentElement.clientHeight||f.clientHeight||0,
+        maxH=0,maxB=0;
+      cd.querySelectorAll('body *').forEach(function(n){
+        var r=n.getBoundingClientRect();
+        if(r.width>4&&r.height>4&&r.height<H*0.92){
+          maxH=Math.max(maxH,r.height);
+          maxB=Math.max(maxB,r.bottom)}});
+      if(H&&(maxH<H*0.55||maxB<H*0.6)){
+        var crd=f.closest('.card');
+        if(crd)crd.classList.add('mini')}}catch(e){}
+    setTimeout(fitIframes,90)}
+
   // skeleton → done/error lifecycle for every preview frame in
   // a rendered pane (grid cards, vibe, remix, scrub rows)
   function wireFrames(scope){
@@ -4701,10 +4720,27 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
       var cb=f.closest('.cb');
       if(!cb)return;
       f.addEventListener('load',function(){
-        try{if(!f.contentDocument||
-             f.contentDocument.contentType!=='text/html'||
-             !f.contentDocument.body||
-             !f.contentDocument.body.children.length){
+        var bad=function(){try{
+          return !f.contentDocument||
+            f.contentDocument.contentType!=='text/html'||
+            !f.contentDocument.body||
+            !f.contentDocument.body.children.length
+        }catch(e){return false}};
+        if(bad()){
+          // lazy/theme-rewritten frames can fire load before the
+          // real document parses — re-check once before failing
+          if(!f._rt){f._rt=1;setTimeout(function(){
+            if(bad()){
+              cb.classList.add('err');
+              if(!cb.querySelector('.perr')){
+                var d=document.createElement('div');
+                d.className='perr';
+                d.textContent='preview failed to load — '+
+                  (f.dataset.src||f.src).split('/').pop();
+                cb.appendChild(d)}
+              return}
+            _frameDone(f,cb)},450);
+            return}
           cb.classList.add('err');
           if(!cb.querySelector('.perr')){
             var d=document.createElement('div');
@@ -4712,22 +4748,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
             d.textContent='preview failed to load — '+
               (f.dataset.src||f.src).split('/').pop();
             cb.appendChild(d)}
-          return}}catch(e){}
-        cb.classList.add('done');
-        // small centred-widget demos get a compact box instead of
-        // a tall empty panel — measured from real content bounds
-        try{var cd=f.contentDocument,
-            H=cd.documentElement.clientHeight||f.clientHeight||0,
-            maxH=0,maxB=0;
-          cd.querySelectorAll('body *').forEach(function(n){
-            var r=n.getBoundingClientRect();
-            if(r.width>4&&r.height>4&&r.height<H*0.92){
-              maxH=Math.max(maxH,r.height);
-              maxB=Math.max(maxB,r.bottom)}});
-          if(H&&(maxH<H*0.55||maxB<H*0.6)){
-            var crd=f.closest('.card');
-            if(crd)crd.classList.add('mini')}}catch(e){}
-        setTimeout(fitIframes,90)});
+          return}
+        _frameDone(f,cb)});
       f.addEventListener('error',function(){
         cb.classList.add('err')})})}
 
