@@ -337,36 +337,17 @@ def _build(ctx):
 
 
 def _rewrite_dist(ctx):
-    """Astro emits asset URLs site-root absolute (/_astro/…, /media/…,
-    /logo.svg). A preview opened over file:// or the loopback pick
-    service has no site root — rewrite them relative to each page's
-    own depth so the SAME built bytes render at every base. Preview
-    pages only; w6's dist keeps absolute paths (it ships on a real
-    origin)."""
+    """Keep astro's root-absolute asset URLs (/_astro/…, /media/…,
+    /logo.svg) in the emitted preview HTML. The pick service resolves
+    them under the pipeline's site/dist on /built, and rewrites them to
+    /built/<abs> inside /frame responses — a *relative* ref under
+    /frame/<fam>/<path> would resolve to a /frame URL that serves no
+    asset, leaving the framed page unstyled. (file:// opens lose
+    styling; the service is the canonical viewer.) The _astro css keeps
+    its internals relative — a css file served from dist/_astro/
+    resolves url(../…) against its own location in every mode."""
     import re
     dist = os.path.join(ctx.site, 'dist')
-    pre = os.path.join(dist, 'preview')
-    if not os.path.isdir(pre):
-        return
-    for dp, _, fns in os.walk(pre):
-        for fn in fns:
-            if not fn.endswith('.html'):
-                continue
-            p = os.path.join(dp, fn)
-            txt = open(p, encoding='utf-8',
-                       errors='replace').read()
-            depth = os.path.relpath(dp, dist).count(os.sep) + 1
-            rel = '../' * depth
-            txt2 = re.sub(r'((?:href|src|poster)=")/', '\\1' + rel,
-                          txt)
-            # srcset carries comma-joined absolute URLs — rewrite each
-            txt2 = re.sub(
-                r'srcset="([^"]*)"',
-                lambda m: 'srcset="' + ', '.join(
-                    rel + u[1:] if u.startswith('/') else u
-                    for u in m.group(1).split(', ')) + '"', txt2)
-            if txt2 != txt:
-                open(p, 'w', encoding='utf-8').write(txt2)
     ast = os.path.join(dist, '_astro')
     if os.path.isdir(ast):
         for fn in os.listdir(ast):

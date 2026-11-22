@@ -60,6 +60,12 @@ _BAND_SECTION = {'space-s': (2.0, 3.0),         # tight
                  'space-l': (3.0, 4.0)}         # airy = ACSS default
 _TIER_SECTION = {'space-s': 'section-space-s', 'space-m':
                  'section-space-m', 'space-l': 'section-space-l'}
+# DNA spacing knob → ACSS smart-spacing tier: the gap aliases bind the
+# "-to-" pair a rung above the density rung (compact → -to-s,
+# balanced → -to-m, airy → -to-l/xl) — wide screens hold the larger
+# gap, narrow screens relax one rung down.
+_TIER_SMART = {'space-s': 'space-m-to-s', 'space-m': 'space-l-to-m',
+               'space-l': 'space-xl-to-l'}
 
 
 def fluid_settings(knobs):
@@ -87,7 +93,14 @@ def fluid_settings(knobs):
         'heading_scale_mob': h_mob, 'heading_scale_desk': h_desk,
         'space_base_mob': sp[0], 'space_base_desk': sp[1],
         'section_adjust_mob': sec[0], 'section_adjust_desk': sec[1],
-        'grid_gap': knobs.get('grid.gutter') or 'space-m',
+        'grid_gap': _TIER_SMART.get(
+            knobs.get('grid.gutter') or 'space-m', 'space-l-to-m'),
+        'content_gap': _TIER_SMART.get(
+            knobs.get('space.density_scale') or 'space-m',
+            'space-l-to-m'),
+        'elements_gap': _TIER_SMART.get(
+            knobs.get('space.density_scale') or 'space-m',
+            'space-l-to-m'),
         'btn_padding_inline': round(
             0.75 * float(knobs.get('btn.padding_ratio', 2.0)), 4),
         'source': 'inferred (ACSS defaults + DNA knobs type.base/'
@@ -377,6 +390,10 @@ def _finish(geno, genes, site_type, seed, declared, wild=(),
             'machinery derives neutrals but never invents hex')
     prov['color.accent'] = {'source': 'chosen', 'sample_n': profile_n,
                             'value': accent}
+    prov['fluid'] = {'divergences': {
+        'elements-gap': 'ACSS smart-spacing semantic alias for the '
+                        'wrapped-sibling gap floor (not a scale rung '
+                        '— binds to the matched -to- tier)'}}
     light, dark = roles_for(geno, accent)
     vs = css_vars(knobs, geno, accent, light)
     nov = genome.novelty(geno, site_type)

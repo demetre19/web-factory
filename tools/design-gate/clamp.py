@@ -141,7 +141,9 @@ DEFAULTS = {
     # ACSS aliases + em/fixed members of the family (reference §3):
     'grid_gap': 'space-m',          # --grid-gap: var(--space-m)
     'content_gap': 'space-m',       # --content-gap: var(--space-m)
+    'elements_gap': 'space-m',      # --elements-gap: var(--space-m)
     'container_gap': 'space-xl',    # --container-gap: var(--space-xl)
+    'list_item_spacing': 'space-s', # --list-item-spacing: var(--space-s)
     'btn_padding_block': 0.75,      # em
     'btn_padding_inline': 1.5,      # em
     'source': 'defaults (ACSS dashboard)',
@@ -189,7 +191,13 @@ DIVERGENCES = dict(
        'sec-pad': "section shell local: binds the density's "
                   '--section-space-* rung (DENSITY-RUNGS)',
        'tracking-display': 'display letter-spacing in em from DNA '
-                           'type.tracking_display'})
+                           'type.tracking_display',
+       'elements-gap': 'B smart-spacing semantic alias for the '
+                       'wrapped-sibling gap floor — binds the '
+                       'density-matched -to- pair, not a scale rung',
+       'list-item-spacing': 'ACSS alias of the -to- pair bound by '
+                            'space.density_scale — prose-adjacent list '
+                            'rhythm, not a scale rung'})
 
 
 def settings(overrides=None):
@@ -305,6 +313,14 @@ def sizes(s=None):
     for rung, n in _SPACE_ORDER.items():
         mn, mx = _space_pair(s, n)
         put('space-' + rung, mn, mx)
+    # --- smart-spacing "-to-" variants: each adjacent rung pair emits
+    # --space-<hi>-to-<lo> — the hi rung on wide, relaxing to the lo
+    # rung on narrow (live ACSS's contextual pairs)
+    ordered = sorted(_SPACE_ORDER.items(), key=lambda kv: kv[1])
+    for (hi_r, hi_n), (lo_r, lo_n) in zip(ordered[1:], ordered):
+        hi_mn, hi_mx = _space_pair(s, hi_n)
+        lo_mn, lo_mx = _space_pair(s, lo_n)
+        put(f'space-{hi_r}-to-{lo_r}', lo_mn, hi_mx)
     for rung, n in _SPACE_ORDER.items():
         mn, mx = _space_pair(s, n)
         put('section-space-' + rung,
@@ -325,7 +341,9 @@ def aliases(s=None, radius_rem=None):
     s = s or settings()
     out = {'grid-gap': f"var(--{s['grid_gap']})",
            'content-gap': f"var(--{s['content_gap']})",
+           'elements-gap': f"var(--{s['elements_gap']})",
            'container-gap': f"var(--{s['container_gap']})",
+           'list-item-spacing': f"var(--{s['list_item_spacing']})",
            'btn-padding-block': f"{_fmt(s['btn_padding_block'])}em",
            'btn-padding-inline': f"{_fmt(s['btn_padding_inline'])}em"}
     if radius_rem is not None:

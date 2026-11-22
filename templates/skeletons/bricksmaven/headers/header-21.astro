@@ -65,10 +65,10 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
       }
       <div class="header-21__cta row between">
         <div class="row between">
-          {list.length > 0 && <button class="burger" type="button" aria-label="Menu"><span aria-hidden="true">&equiv;</span></button>}
+          {list.length > 0 && <button class="burger" type="button" aria-label="Menu"><span aria-hidden="true">≡</span></button>}
           {list.length > 0 && <nav class="nav-links nav-flyout" aria-label="Primary">
             <div class="bm-off-canvas-6__content">
-              <button class="nav-close" type="button" aria-label="Close menu">&times;</button>
+              <button class="nav-close" type="button" aria-label="Close menu">×</button>
               {head && <h2 class="text-fluid-2">{head}</h2>}
               {list.length > 0 && <div class="bm-off-canvas-nav-ul">
                 <div class="nav-group">{(list || []).map((it) => (
@@ -95,7 +95,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
 
             </div>
           }
-          {act.label && <p class="mt-fluid-m"><a class="wf-cta-button nav-cta" href={act.href}>{act.label}</a></p>}
+          {act.label && <p class="nav-cta mt-fluid-m"><a class="wf-cta-button" href={act.href}>{act.label}</a></p>}
         </div>
       </div>
     </div>
