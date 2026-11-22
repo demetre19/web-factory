@@ -307,6 +307,26 @@ def _copy_slot(copy, ref):
         else:
             slot[k] = v if v is not None else ([] if k != 'answer'
                                                else '')
+    # items[] fallback — a block with a term list but no items[]
+    # still carries real copy: terms become card titles, the first
+    # sentence mentioning each term becomes its text (the §4.3
+    # tagger's mechanical fill, not invented copy — same binding the
+    # picker's slot fragments apply)
+    if not slot.get('items'):
+        terms = blk.get('terms') or []
+        if terms:
+            sents = []
+            for para in (slot.get('before') or []) + \
+                    [slot.get('answer') or '']:
+                sents += [x.strip() for x in
+                          re.split(r'(?<=[.!?])\s+', para) if x.strip()]
+            slot['items'] = [
+                {'term': t if len(t) < 60 else t[:57] + '…',
+                 'text': next(
+                     (x for x in sents if t.lower() in x.lower()),
+                     '')}
+                for t in terms]
+            slot['items_from'] = 'terms'
     return slot
 
 
