@@ -316,10 +316,18 @@ def synthesize(board, real_copy, brand, place):
         nb['terms'] = list(terms)
         nb.pop('before', None)
         nb.pop('after', None)
-        nb.pop('qa', None)
         nb.pop('links', None)
         nb.pop('items', None)
         nb.pop('list_ordered', None)
+        # a faq block keeps accordion questions — synthesized from
+        # the block's own terms, never carried over from the source
+        # article (review: boilerplate FAQ previews lost all
+        # questions; Faq.astro reads qa or row items only)
+        if _intent(blk.get('answer_type')) == 'faq' or blk.get('qa'):
+            nb['qa'] = [{'q': f'What about {t}?', 'a': answer}
+                        for t in terms[:4]]
+        else:
+            nb.pop('qa', None)
         blocks.append(nb)
     out['blocks'] = blocks
     out['closing'] = {'text': lib.get('cta', ('', [], ''))[2]}

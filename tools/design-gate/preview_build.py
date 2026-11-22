@@ -669,9 +669,20 @@ def emit_layouts(ctx):
             if bm.get('real'):
                 continue
             bcopy = _board_copy(ctx, bm)
+            # boilerplate boards must not project the source
+            # article's row items/qa — chrome keeps its link rows
+            # (they're site chrome, not body copy); body rows bind
+            # the board copy's own terms/qa fill
+            b_rows = []
+            for cc, r2 in ov_rows:
+                r3 = dict(r2)
+                if 'chrome' not in (r3.get('speech_act') or []):
+                    r3.pop('items', None)
+                    r3.pop('qa', None)
+                b_rows.append((cc, r3))
             PE._w(os.path.join(ctx.site, 'src', 'pages', 'preview',
                                f'lo-{oid}-{bid}.astro'),
-                  _page_astro(ctx, ov_rows, bcopy, bank_css))
+                  _page_astro(ctx, b_rows, bcopy, bank_css))
     _write_system_astro(ctx, emitted)
     ok, msg = _build(ctx)
     if not ok:
