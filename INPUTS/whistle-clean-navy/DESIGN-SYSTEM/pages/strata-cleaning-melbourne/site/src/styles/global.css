@@ -275,7 +275,7 @@ h1, h2, h3, h4, h5, h6, p, ul, ol, li, figure, blockquote { margin: 0; }
 h1, h2 { text-wrap: var(--text-wrap-heading); }
 p { text-wrap: var(--text-wrap-body); }
 img { object-fit: cover; }
-input { border: 1px solid var(--input-border); padding: var(--input-py) var(--input-px); border-radius: var(--input-radius); }
+input, textarea { border: 1px solid var(--input-border); padding: var(--input-py) var(--input-px); border-radius: var(--input-radius); }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
@@ -534,7 +534,25 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
                    color: var(--action-primary-ink);
                    font-weight: 600; text-decoration: none;
                    white-space: nowrap;
-                   min-height: var(--tap); }
+                   min-height: var(--tap);
+                   transition: background-color .15s ease,
+                       box-shadow .15s ease; }
+  .wf-cta-button:hover {
+                   background: var(--action-primary-hover,
+                       var(--action-primary)); }
+  .wf-cta-button:focus-visible {
+                   outline: 2px solid var(--action-primary);
+                   outline-offset: 2px; }
+  /* the ghost: secondary action on the surface, bordered like the
+     field — never a second filled block (N.cta) */
+  .wf-cta-button.ghost {
+                   background: transparent;
+                   color: var(--text-primary);
+                   border: 1px solid var(--border-default);
+                   box-shadow: none; }
+  .wf-cta-button.ghost:hover {
+                   background: var(--bg-elevated);
+                   box-shadow: var(--shadow-card); }
   /* burger IS the mobile nav trigger: an icon button top-right,
      visible below the nav breakpoint, hidden where .nav-links flows
      inline (R.1 mobile-first). It is a quiet icon — never a second
@@ -542,10 +560,18 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
   .burger { display: inline-flex; min-height: var(--tap);
             min-width: var(--tap); align-items: center;
             justify-content: center;
-            background: var(--bg-surface); color: var(--text-primary);
-            border: 1px solid var(--border-default);
-            border-radius: var(--r-card); font-size: var(--fs-1);
-            font-weight: 600; cursor: pointer; }
+            /* a ghost icon pinned to the row's far end — never a
+               filled chip, never a second CTA (N.burger) */
+            margin-inline-start: auto;
+            background: transparent; color: var(--text-primary);
+            border: 1px solid var(--border-subtle,
+                var(--border-default));
+            border-radius: var(--r-card); font-size: 0;
+            cursor: pointer; }
+  .burger > * { font-size: 0; }
+  .burger::after { content: ""; width: 20px; height: 14px;
+            background: repeating-linear-gradient(to bottom,
+                currentColor 0 2px, transparent 2px 6px); }
   .row.between { position: relative; }
   /* the open mobile menu is a flyout sheet, not a dropdown: a
      right-side panel over a scrim, a close control, vertical links,
@@ -560,37 +586,85 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
             border-inline-start: 1px solid var(--border-default);
             box-shadow: var(--shadow-pop); overflow-y: auto; }
   .nav-links.open ul { flex-direction: column; flex-wrap: nowrap;
-            align-items: flex-start; gap: var(--space-xs); }
+            align-items: stretch; gap: var(--space-xs); width: 100%; }
   .nav-links.open .nav-link { font-size: var(--fs-1);
+            display: flex; align-items: center;
+            /* ~3rem rows: fs-1 line + space-s padding, tap-sized
+               without declaring a height (A.1) */
+            padding-block: var(--space-s);
             white-space: normal; }
+  /* under 30rem the sheet is the whole viewport — a docked rail
+     leaves no room for a strip of page behind it */
+  @media (max-width: 30rem) {
+    .nav-links.open { width: 100vw; inset-inline: 0;
+            border-inline-start: 0; }
+  }
   .nav-close { display: none; }
   .nav-links.open .nav-close { display: inline-flex;
             align-self: flex-end; min-height: var(--tap);
             min-width: var(--tap); align-items: center;
-            justify-content: center; background: none; border: 0;
+            justify-content: center; background: none !important;
+            border: 0 !important;
             color: var(--text-secondary); font-size: var(--fs-2);
             line-height: 1; cursor: pointer; }
+  /* the sheet's top row: brand left, ghost close right — one row,
+     never a floating X (N.flyout) */
+  .nav-sheet-head { display: none; }
+  .nav-links.open .nav-sheet-head { display: flex;
+            align-items: center; justify-content: space-between;
+            gap: var(--space-m);
+            padding-block-end: var(--space-s);
+            border-block-end: 1px solid
+                var(--border-subtle, var(--border-default)); }
+  .nav-links.open .nav-sheet-head .nav-sheet-brand {
+            font-weight: 700; }
+  .nav-links.open .nav-sheet-head .nav-close {
+            align-self: center; margin-inline-start: auto; }
+  /* exactly one close where a head row exists — an exemplar's own
+     mid-sheet X is dropped in favour of the head-row ghost close;
+     a drawer with no head keeps its close (N.flyout) */
+  .nav-links.open:has(.nav-sheet-head)
+      .nav-close:not(.nav-sheet-head .nav-close) {
+            display: none; }
   body:has(.nav-links.open)::after { content: ""; position: fixed;
             inset: 0; background: color-mix(in oklch,
                 var(--text-primary) 45%, transparent);
             z-index: var(--primitive-z-sticky); }
-  body:has(.nav-links.open) .nav-cta { display: block;
-            position: fixed; inset-inline-end: 0; inset-block-end: 0;
-            width: min(20rem, 85vw); margin: 0;
-            z-index: calc(var(--primitive-z-sticky) + 1);
-            padding: var(--space-m); background: var(--bg-canvas);
-            border-inline-start: 1px solid var(--border-default); }
-  body:has(.nav-links.open) .nav-cta .wf-cta-button,
-  body:has(.nav-links.open) .nav-cta { display: block; }
-  body:has(.nav-links.open) .nav-cta > .wf-cta-button {
-            display: flex; justify-content: center; }
+  /* the scrim paints after the header at equal z — lift the whole
+     header context (sheet + docked CTA ride inside it) above the
+     scrim, and park the floating call button while open (N.flyout) */
+  header[data-sec="nav"]:has(.nav-links.open) {
+          z-index: calc(var(--primitive-z-sticky) + 2); }
+  body:has(.nav-links.open) .call-bar { display: none; }
+  /* the open sheet carries its own CTA copy: the bar's .nav-cta is
+     hidden under the breakpoint, so .nav-sheet-cta — a child of the
+     sheet, docked at its foot — shows the plan action instead
+     (N.flyout). Full width within the sheet's own padding. */
+  .nav-sheet-cta { display: none; }
+  .nav-links.open .nav-sheet-cta { display: block;
+            margin-block-start: auto; margin-inline: 0;
+            padding-block-start: var(--space-m); width: 100%; }
+  .nav-links.open .nav-sheet-cta > .wf-cta-button,
+  .nav-links.open .nav-sheet-cta a {
+            display: flex; justify-content: center; width: 100%; }
   /* header CTA: below the nav breakpoint it rides inside the flyout;
      burger, links and CTA share one breakpoint (60rem — the
      .nav-links one below) or a dead zone opens where the header
      shows brand alone */
   .nav-cta { display: none; }
+  @media (max-width: 60rem) {
+    /* an empty CTA lane beside the burger must not hold flex space —
+       hide a wrapper whose only element is the hidden .nav-cta, so
+       the burger pins to the row's far end (N.flyout) */
+    header[data-sec="nav"] div:has(> .nav-cta:only-child) {
+            display: none; }
+  }
   @media (min-width: 60rem) {
-    .burger { display: none; }
+    /* a stray CTA class on the trigger must not resurrect it: the
+       doubled class keeps this rule ahead of ANY later
+       .wf-cta-button{display:*} line at equal order (specificity
+       decides, never position) */
+    .burger, .burger.wf-cta-button { display: none; }
     .nav-cta { display: inline-block; }
   }
   /* ---- composition vocabulary ------------------------------- */
@@ -705,9 +779,17 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
   .link-quiet { color: var(--text-secondary); text-decoration: none;
                 font-size: var(--fs-0); }
   .link-quiet:hover { color: var(--text-primary); }
-  .nav-links { display: none; gap: var(--space-s);
+  /* the header bar is sticky chrome — it keeps a hairline at rest
+     and lifts a shadow once the page scrolls under it */
+  header[data-sec="nav"] { position: sticky; top: 0;
+              z-index: var(--primitive-z-sticky);
+              border-block-end: 1px solid var(--border-subtle,
+                  var(--border-default)); }
+  header[data-sec="nav"].scrolled { box-shadow: var(--shadow-card); }
+  .nav-links { display: none; gap: var(--space-m);
                align-items: center; flex: 0 1 auto; min-width: 0; }
-  .nav-links ul { flex-wrap: nowrap; gap: var(--space-s); }
+  .nav-links ul { flex-wrap: nowrap; gap: var(--space-m);
+              align-items: center; }
   /* the desktop bar shows the group's links inline — the wrapper
      only materialises as a titled stack inside the open drawer */
   .nav-links .nav-group { display: contents; }
@@ -721,6 +803,49 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
   .row.between:has(.nav-links), .row.between:has(.burger),
   .row.between:has(.nav-desk) { flex-wrap: nowrap; }
   .row.between:has(.burger) > * { min-width: 0; }
+  /* the lanes keep a gap and only the link lane gives — the brand
+     and CTA lanes never shrink under the links (H.1 overlap) */
+  .row.between:has(.burger), .row.between:has(.nav-desk),
+  .row.between:has(.nav-links) { gap: var(--space-s); }
+  .row:has(> .nav-cta), .row:has(> .theme-toggle),
+  .row.between > .row:has(.wf-cta-button) { flex-wrap: nowrap;
+              gap: var(--space-xs); }
+  @media (min-width: 60rem) {
+    .row.between:has(.burger) > :first-child,
+    .row.between:has(.nav-desk) > :first-child,
+    .row.between:has(.burger) > :has(.nav-cta):not(:has(.nav-links,
+                .nav-desk)),
+    .row.between > .row:has(.wf-cta-button),
+    .row:has(> .nav-cta), .row:has(> .theme-toggle) { flex: none; }
+  }
+  .nav-links ul, .nav-desk ul { flex-wrap: nowrap; }
+  .nav-link { white-space: nowrap; }
+  /* post-card meta (author · date · read time) and the category /
+     attribution tag a card's second text slot binds */
+  .meta { color: var(--text-secondary); }
+  .tag { display: inline-block; align-self: flex-start;
+         padding: .15em .6em; border: 1px solid var(--border-default);
+         border-radius: var(--r-card); color: var(--text-secondary); }
+  /* a two-tier bank header (links in a topbar, brand + CTA in the
+     row below) folds into ONE desktop row: brand · links · CTA (H.1).
+     :has() never nests, so the tiers are read by position */
+  @media (min-width: 60rem) {
+    .sec-inner:has(> :first-child > :is(.nav-links,
+        .nav-priority)):has(> :first-child + .row .brand-mark) {
+        display: flex; align-items: center;
+        justify-content: space-between; gap: var(--space-s); }
+    .sec-inner:has(> :first-child > :is(.nav-links,
+        .nav-priority)) > :first-child + .row { display: contents; }
+    .sec-inner:has(> :first-child > :is(.nav-links,
+        .nav-priority)) > :first-child + .row > :first-child { order: -1; }
+    .sec-inner:has(> :first-child > :is(.nav-links,
+        .nav-priority)) > :first-child + .row > :not(:first-child) {
+        order: 1; }
+    /* a stacked (column) bank bar lays its lanes in one row */
+    .sec-inner > .row.between:has(> * .brand-mark, > .brand-mark):has(
+        .nav-links, .nav-priority, .nav-desk) { flex-direction: row;
+        align-items: center; }
+  }
   div:has(> .burger), div:has(> .nav-links + .burger),
   div:has(> .nav-desk + .burger) { display: flex;
               align-items: center; margin-inline-start: auto; }
@@ -738,9 +863,10 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
      .nav-flyout panel is the ONLY nav-links — hidden at every width
      until .open, so it never doubles as a second desktop row
      (N.flyout) */
-  .nav-desk { display: none; gap: var(--space-s);
+  .nav-desk { display: none; gap: var(--space-m);
               align-items: center; flex: 0 1 auto; min-width: 0; }
-  .nav-desk ul { flex-wrap: nowrap; gap: var(--space-s); }
+  .nav-desk ul { flex-wrap: nowrap; gap: var(--space-m);
+              align-items: center; }
   .nav-links.nav-flyout { display: none; }
   .nav-links.open.nav-flyout { display: flex; }
   @media (min-width: 60rem) { .nav-desk { display: flex; } }
@@ -757,7 +883,8 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
   .nav-links.open .nav-group a { font-size: var(--fs-1);
               white-space: normal; color: var(--text-primary);
               text-decoration: none; display: inline-flex;
-              align-items: center; gap: var(--space-s); }
+              align-items: center; gap: var(--space-s);
+              padding-block: var(--space-s); }
   /* drawer furniture — search, group heads, row numerals — exists
      only inside the open flyout; the desktop bar stays brand + links
      + CTA (N.flyout) */
@@ -780,7 +907,7 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
               tabular-nums; }
   .nav-links.open .nav-link { display: flex; width: 100%;
               align-items: center; gap: var(--space-s);
-              padding-block: var(--space-xs);
+              padding-block: var(--space-s);
               border-block-end: 1px solid var(--border-default); }
   /* nav selection (N.select): >6 links switch to the hybrid —
      .nav-priority keeps the first four inline on desktop, the full
@@ -804,10 +931,15 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
               align-items: center; flex: 0 1 auto; min-width: 0; }
     .nav-priority ul { flex-wrap: nowrap; gap: var(--space-s); }
     .nav-more { display: inline-flex; }
+    /* the bar's link lane and its "More" sit on one line */
+    :has(> .nav-desk + .nav-more), :has(> .nav-priority + .nav-more) {
+              display: flex; align-items: center; gap: var(--space-s); }
     /* a mega nav never unrolls inline — the priority row + More own
        the desktop bar; the panel still opens as a flyout */
-    .nav-links.nav-mega { display: none; }
-    .nav-links.nav-mega.open { display: flex; }
+    .nav-links.nav-links.nav-mega:not(.open),
+    .nav-links.nav-links[data-over]:not(.open) { display: none; }
+    .nav-links.nav-mega.open, .nav-links[data-over].open {
+              display: flex; }
   }
   /* the generic overlay family — modals, popups, form dialogs
      (N.flyout): a centred .flyout panel over the same scrim, a
@@ -866,12 +998,25 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
     .wf-cta-button { font-size: inherit; }
     .call-bar { display: none; }
     body { padding-block-end: 0; } }
-  .nav-link { color: var(--text-secondary); text-decoration: none;
-              font-size: var(--fs--1); font-weight: 500;
+  .wf-cta-button.alt { background: var(--bg-elevated);
+              color: var(--text-primary);
+              border: 1px solid var(--border-default);
+              box-shadow: var(--shadow-card); }
+  .wf-cta-button.alt:hover { box-shadow: var(--shadow-pop); }
+  .nav-link { color: var(--text-primary); text-decoration: none;
+              font-size: var(--fs-0); font-weight: 500;
               /* one line per link — a link that wraps reads as two
                  nav bars even when the ul itself cannot wrap */
               white-space: nowrap; }
-  .nav-link:hover { color: var(--text-primary); }
+  .nav-link:hover { color: var(--action-primary);
+              text-decoration: underline;
+              text-underline-offset: .2em; }
+  .nav-link[aria-current], .nav-link.active {
+              color: var(--action-primary); }
+  /* the header CTA fits the bar — compact padding and nav font,
+     never the hero-sized call */
+  .nav-cta .wf-cta-button { padding: .5em .75em;
+              font-size: var(--fs--1); min-height: 0; }
   .brand-mark { font-weight: 650; letter-spacing: -.02em;
                 font-size: var(--fs-1); color: var(--text-primary);
                 text-decoration: none; }
@@ -908,7 +1053,7 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
   .field > span { font-size: var(--fs--1); font-weight: 600;
                   letter-spacing: .06em; text-transform: uppercase;
                   color: var(--text-secondary); }
-  .field input, .field select { font: inherit; font-size: var(--fs-0);
+  .field input, .field select, .field textarea { font: inherit; font-size: var(--fs-0);
       padding: var(--input-py) var(--input-px); border-radius: var(--r-card);
       border: 1px solid var(--border-default);
       background: var(--bg-canvas); color: var(--text-primary);
@@ -997,17 +1142,28 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
      and the band CTA inverts to an ink plate — a brand-on-brand button
      has no edge. A card inside the band re-grounds on the elevated
      surface with the page inks and the standard primary action. */
+  /* C.1: band secondary copy binds --sec-fg at full strength — any
+     dimmed mix (85% gave 4.04:1 light / 1.2:1 dark) drops under the
+     4.5:1 contract. --sec-fg itself is already paired >=4.5 against
+     --sec-bg by the vibe producer's on-accent/on-surface pairing. */
   :is([data-surface="brand"], [data-surface="inverse"])
       :is(.lede, .attrib, .helper, .eyebrow, .sub-p, .nav-link,
           .foot-head, .legal, .brand-mark, .quote, .stars,
           .link-quiet) {
-    color: color-mix(in srgb, var(--sec-fg) 85%, transparent); }
+    color: var(--sec-fg); }
   [data-surface="brand"] .wf-cta-button {
     background: var(--sec-fg); color: var(--sec-bg); }
   :is([data-surface="brand"], [data-surface="inverse"]) .card {
     color: var(--text-primary); }
   :is([data-surface="brand"], [data-surface="inverse"]) .card
       :is(.lede, .attrib, .helper) { color: var(--text-secondary); }
+  /* an inverse band's card sits on a dark mix — its copy reads in
+     the band's own ink, never the light-canvas text roles */
+  [data-surface="inverse"] .card, .surface-inverse .card {
+    color: var(--sec-fg); }
+  [data-surface="inverse"] .card :is(p, .meta, .tag, .lede, .attrib,
+      .helper), .surface-inverse .card :is(p, .meta, .tag) {
+    color: color-mix(in srgb, var(--sec-fg) 82%, transparent); }
   [data-surface="brand"] .card .wf-cta-button {
     background: var(--action-primary);
     color: var(--action-primary-ink); }
@@ -1078,364 +1234,3 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
   .ds-tx-text-xxl { font-size: var(--text-xxl); }
 }
 [data-theme=dark] img { filter: brightness(.85) contrast(.92); }
-
-@layer components {
-/* bricksmaven/grids-and-cards/grid-1 */
-  .wf-grid-1 .gridcard-1-grid-ul {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--grid-gap);
-  }
-
-  .wf-grid-1 .gridcard-1-card {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--space-xs);
-  }
-
-  @media (max-width: 44rem) {
-    .wf-grid-1 .gridcard-1-grid-ul { grid-template-columns: 1fr; }
-  }
-  .wf-grid-1 .gridcard-1-grid-ul > :only-child { grid-column: 1 / -1; }
-
-/* bricksmaven/comparison/comparison-1 */
-  .wf-comparison-1 .bm-conparison-1__container {
-    row-gap: var(--space-s);
-  }
-
-  .wf-comparison-1 .intro {
-    flex-direction: column;
-    display: flex;
-    row-gap: var(--flow-spacing);
-  }
-
-  .wf-comparison-1 .bm-conparison-1-list {
-    display: grid;
-    gap: var(--space-m);
-    grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
-  }
-
-  .wf-comparison-1 .bm-conparison-1-card {
-    row-gap: var(--flow-spacing);
-  }
-
-  .wf-comparison-1 .bm-conparison-status {
-    display: flex;
-    gap: var(--space-s);
-  }
-
-  .wf-comparison-1 .bm-list {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--flow-spacing);
-  }
-
-  .wf-comparison-1 .bm-list-item {
-    flex-direction: row;
-    display: flex;
-    column-gap: var(--flow-spacing);
-  }
-
-  .wf-comparison-1 .bm-conparison-1__footer {
-    row-gap: var(--flow-spacing);
-  }
-
-  .wf-comparison-1 .cta-combo {
-    display: flex;
-    column-gap: var(--flow-spacing);
-  }
-
-  @media (max-width: 44rem) {
-    .wf-comparison-1 .bm-conparison-status { flex-direction: column; }
-    .wf-comparison-1 .bm-list-item { flex-direction: column; }
-    .wf-comparison-1 .cta-combo { flex-direction: column; }
-  }
-
-/* bricksmaven/footer/footer-1 */
-  .wf-footer-1 .footer-1 {
-    row-gap: var(--space-s);
-  }
-
-  .wf-footer-1 .footer-1-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
-    gap: var(--space-m);
-  }
-
-  .wf-footer-1 .footer-column-left {
-    display: flex;
-    row-gap: var(--flow-spacing);
-    flex-direction: column;
-  }
-
-  .wf-footer-1 .footer-column-mid {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--flow-spacing);
-  }
-
-  .wf-footer-1 .footer-menu {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--flow-spacing);
-  }
-
-  .wf-footer-1 .footer-column-right {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--flow-spacing);
-  }
-
-  .wf-footer-1 .footer-1-bottom {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
-    gap: var(--grid-gap);
-  }
-
-  .wf-footer-1 .footer-1-bottom__left {
-    display: flex;
-    column-gap: var(--space-s);
-  }
-
-  .wf-footer-1 .footer-legal-nav {
-    flex-direction: row;
-    column-gap: var(--flow-spacing);
-  }
-
-  .wf-footer-1 .footer-1-bottom__right {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-s);
-  }
-
-  @media (max-width: 44rem) {
-    .wf-footer-1 .footer-1-bottom__left { flex-direction: column; }
-    .wf-footer-1 .footer-legal-nav { flex-direction: column; }
-  }
-
-/* bricksmaven/call-to-action/call-to-action-10 */
-  .wf-call-to-action-10 .cta-10-container {
-    display: grid;
-    gap: var(--space-m);
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .wf-call-to-action-10 .cta-10-content {
-    display: flex;
-    row-gap: var(--space-m);
-    flex-direction: column;
-  }
-
-  .wf-call-to-action-10 .cta-10-heading {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-s);
-  }
-
-  .wf-call-to-action-10 .hero-1__cta {
-    display: flex;
-    column-gap: var(--space-xs);
-  }
-
-  @media (max-width: 44rem) {
-    .wf-call-to-action-10 .cta-10-container { grid-template-columns: 1fr; }
-    .wf-call-to-action-10 .hero-1__cta { flex-direction: column; }
-  }
-  .wf-call-to-action-10 .cta-10-container > :only-child { grid-column: 1 / -1; }
-
-/* bricksmaven/grids-and-cards/grid-2 */
-  .wf-grid-2 .gridcard-2-grid-ul {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
-    gap: var(--grid-gap);
-  }
-
-  .wf-grid-2 .gridcard-2-card {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--space-xs);
-  }
-
-/* bricksmaven/headers/header-1 */
-  .wf-header-1 .bm-header-1__container {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    gap: var(--space-s);
-  }
-
-  .wf-header-1 .bm-header-1__cta {
-    display: flex;
-    gap: var(--space-s);
-  }
-
-/* bricksmaven/how-it-works/how-it-works-1 */
-  .wf-how-it-works-1 .hworks-1-container {
-    grid-template-columns: 1fr 3fr;
-    display: grid;
-    gap: var(--space-s);
-  }
-
-  .wf-how-it-works-1 .hworks-1-intro {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--space-s);
-  }
-
-  .wf-how-it-works-1 .hworks-grid-ul {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
-    gap: var(--space-s);
-  }
-
-  .wf-how-it-works-1 .hworks-card {
-    display: flex;
-    flex-direction: row;
-    column-gap: var(--space-s);
-  }
-
-  .wf-how-it-works-1 .hworks-card__content {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--space-s);
-  }
-
-  @media (max-width: 44rem) {
-    .wf-how-it-works-1 .hworks-1-container { grid-template-columns: 1fr; }
-    .wf-how-it-works-1 .hworks-card { flex-direction: column; }
-  }
-  .wf-how-it-works-1 .hworks-1-container > :only-child { grid-column: 1 / -1; }
-
-/* bricksmaven/feature/feature-1 */
-  .wf-feature-1 .feature-1 {
-    row-gap: var(--section-space-xxl);
-  }
-
-  .wf-feature-1 .intro {
-    flex-direction: column;
-    display: flex;
-    row-gap: var(--space-s);
-  }
-
-  .wf-feature-1 .feature-1-ul {
-    row-gap: var(--space-xl);
-  }
-
-  .wf-feature-1 .feature-1-li {
-    grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
-    display: grid;
-    gap: var(--space-m);
-  }
-
-  .wf-feature-1 .feature-1-li__content {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--space-xs);
-  }
-
-  .wf-feature-1 .bm-list {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-s);
-  }
-
-  .wf-feature-1 .bm-list__item {
-    flex-direction: row;
-    display: flex;
-    column-gap: var(--flow-spacing);
-  }
-
-  @media (max-width: 44rem) {
-    .wf-feature-1 .bm-list__item { flex-direction: column; }
-  }
-
-/* bricksmaven/hero/hero-1 */
-  .wf-hero-1 .hero-1 {
-    display: flex;
-    gap: var(--space-s);
-  }
-
-  .wf-hero-1 .hero-1-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
-    gap: var(--space-m);
-  }
-
-  .wf-hero-1 .hero-1__content {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--space-m);
-  }
-
-  .wf-hero-1 .hero-1__cta {
-    display: flex;
-    column-gap: var(--space-xs);
-  }
-
-  .wf-hero-1 .hero-1__content-trust {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--space-s);
-  }
-
-  .wf-hero-1 .hero-1-logo-ul {
-    display: flex;
-    flex-direction: row;
-    column-gap: var(--space-m);
-  }
-
-  @media (max-width: 44rem) {
-    .wf-hero-1 .hero-1 { flex-direction: column; }
-    .wf-hero-1 .hero-1__cta { flex-direction: column; }
-    .wf-hero-1 .hero-1-logo-ul { flex-direction: column; }
-  }
-
-/* bricksmaven/counter/counter-1 */
-  .wf-counter-1 .counter-1-container {
-    display: flex;
-    row-gap: var(--space-s);
-  }
-
-  .wf-counter-1 .intro {
-    flex-direction: column;
-    display: flex;
-    row-gap: var(--space-s);
-  }
-
-  .wf-counter-1 .counter-1-content {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
-    gap: var(--space-m);
-  }
-
-  .wf-counter-1 .counter-1-box {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--flow-spacing);
-  }
-
-  .wf-counter-1 .counter-1-grid-ul {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
-    gap: var(--space-m);
-  }
-
-  .wf-counter-1 .counter-1-card {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--flow-spacing);
-  }
-
-  .wf-counter-1 .counter-1-card__intro {
-    display: flex;
-    flex-direction: column;
-    row-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  @media (max-width: 44rem) {
-    .wf-counter-1 .counter-1-content { grid-template-columns: 1fr; }
-    .wf-counter-1 .counter-1-container { flex-direction: column; }
-  }
-  .wf-counter-1 .counter-1-content > :only-child { grid-column: 1 / -1; }
-
-}
