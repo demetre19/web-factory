@@ -722,6 +722,34 @@ def _copy_slot(pd, bid):
         else:
             slot[k] = v if v is not None else (
                 '' if k == 'answer' else [])
+    # items[] fallback — a block with a term list but no items[]
+    # still carries real copy: terms become card titles, the first
+    # sentence mentioning each term becomes its text (the §4.3
+    # tagger's mechanical fill, not invented copy)
+    if not slot.get('items'):
+        terms = blk.get('terms') or []
+        if terms:
+            sents = []
+            for para in (blk.get('before') or []) +                     [blk.get('answer') or '']:
+                sents += [x.strip() for x in
+                          re.split(r'(?<=[.!?])\s+', para) if x.strip()]
+            slot['items'] = [
+                {'term': t if len(t) < 60 else t[:57] + '…',
+                 'text': next(
+                     (x for x in sents if t.lower() in x.lower()),
+                     '')}
+                for t in terms]
+            slot['items_from'] = 'terms'
+    # media slot — first real asset in the pipeline's media dir
+    md = os.path.join(pd, 'site', 'dist', 'media')
+    if os.path.isdir(md):
+        imgs = sorted(f for f in os.listdir(md)
+                      if os.path.splitext(f)[1].lower() in
+                      ('.jpg', '.jpeg', '.png', '.webp', '.avif')
+                      and 'placeholder' not in f)
+        if imgs:
+            slot['media'] = '/built/' + urllib.parse.quote(
+                os.path.join(pd, 'site', 'dist', 'media', imgs[0]))
     return slot
 
 
@@ -1021,8 +1049,16 @@ def _slot_frag(comp, slot):
                         '</span></li>' for i in items) + '</ul>'
         for p in after:
             h += f'<p class="t0 lede">{_inline(p)}</p>'
-        h += ('</div><figure class="media-round"><div class="ph-media">'
-              'media slot</div></figure></div>')
+        if slot.get('media'):
+            h += ('</div><figure class="media-round"><img src="' +
+                  _inline(slot['media']) +
+                  '" alt="" style="width:100%;height:100%;'
+                  'object-fit:cover;display:block">'
+                  '</figure></div>')
+        else:
+            h += ('</div><figure class="media-round"><div '
+                  'class="ph-media wf-lorem" data-slot="media">'
+                  'media slot</div></figure></div>')
     elif comp == 'modal-form':
         # mirrors ModalForm.astro — sec-head + trigger + the open
         # .flyout dialog (fields ride items[].term)
@@ -1092,7 +1128,8 @@ def emit_section_fragments(pd):
     spec_rows = [{sec, bid, comp, alts:[{id,preview}]}]
     bank_depth = [{sec, allowed, emitted, missing}]"""
     lo = _json_at(pd, 'LAYOUT-OPTIONS.json') or {}
-    allowed = lo.get('allowed') or {}
+    allowed = {k: list(dict.fromkeys(v or []))
+               for k, v in (lo.get('allowed') or {}).items()}
     blocks, rows = _comp_blocks(pd)
     if not blocks:
         return [], []
@@ -1219,7 +1256,9 @@ def _composition_board(pd):
     lo = _json_at(pd, 'LAYOUT-OPTIONS.json')
     if not lo:
         return None
-    return {'allowed': lo.get('allowed') or {},
+    return {'allowed': {k: list(dict.fromkeys(v or []))
+                        for k, v in
+                        (lo.get('allowed') or {}).items()},
             'options': [{'id': o.get('id'), 'label': o.get('label'),
                          'score': o.get('score'),
                          'compositions': o.get('compositions') or {}}
@@ -1771,19 +1810,35 @@ _SHELL = r"""<!doctype html>
   --r:12px; --r-sm:8px;
 }
 :root[data-theme="dark"]{
-  --bg:#0b0d10;--bg-2:#101318;--panel:#141922;--panel-2:#1a212e;
-  --line:#232c3c;--line-2:#2e3a4f;
-  --ink:#e8edf5;--muted:#8b98ad;--faint:#5b6578;
-  --accent:#6ea8ff;--accent-ink:#0b1220;
+  --bg:#0a0a0c;--bg-2:#101013;--panel:#16161a;--panel-2:#1e1e23;
+  --line:#26262d;--line-2:#34343c;
+  --ink:#ededee;--muted:#9c9ca4;--faint:#5e5e66;
+  --accent:#e6e6e8;--accent-ink:#101013;
   --ok:#3ddc97;--bad:#ff6b6b;
 }
 :root[data-theme="light"]{
-  --bg:#f4f6f9;--bg-2:#ffffff;--panel:#ffffff;--panel-2:#f2f5f9;
-  --line:#dde3ec;--line-2:#c8d2e0;
-  --ink:#16202e;--muted:#5c6b80;--faint:#93a0b4;
-  --accent:#1d4ed8;--accent-ink:#ffffff;
+  --bg:#f4f4f6;--bg-2:#ffffff;--panel:#ffffff;--panel-2:#f0f0f2;
+  --line:#e0e0e5;--line-2:#c9c9d0;
+  --ink:#17171a;--muted:#62626b;--faint:#9898a0;
+  --accent:#17171a;--accent-ink:#ffffff;
   --ok:#0f9d6b;--bad:#c73e3e;
 }
+#railBtn{display:none}
+@media(max-width:760px){
+  #app{grid-template-columns:1fr}
+  #rail{display:none;position:fixed;top:52px;left:0;bottom:0;
+       width:min(80vw,300px);z-index:50;overflow-y:auto;
+       box-shadow:10px 0 34px rgba(0,0,0,.45)}
+  #rail.open{display:block}
+  #railBtn{display:grid}
+  #top{gap:8px;padding:0 10px}
+  #top .who small{display:none}
+  #dnaPop .panel{right:-40px}
+  .grid{grid-template-columns:1fr}
+  .ingrow{grid-template-columns:1fr}
+  .srow .srh{flex-wrap:wrap}
+}
+@media(min-width:761px){#railBtn{display:none !important}}
 *{box-sizing:border-box}
 html,body{margin:0;height:100%}
 body{font-family:var(--font);background:var(--bg);color:var(--ink);
@@ -1809,7 +1864,13 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
 .chip b{color:var(--ink);font-weight:600}
 .chip .sw{width:10px;height:10px;border-radius:3px;
      border:1px solid var(--line-2)}
-#themeBtn{width:34px;height:34px;display:grid;place-items:center;
+#railBtn,#themeBtn{width:34px;height:34px;display:grid;
+     place-items:center;
+     border:1px solid var(--line);background:var(--panel);
+     color:var(--ink);border-radius:999px;padding:0;
+     font:600 12px var(--font);cursor:pointer}
+#railBtn svg{width:15px;height:15px}
+#themeBtn{
      border:1px solid var(--line);background:var(--panel);
      color:var(--ink);border-radius:999px;padding:0;
      font:600 12px var(--font);cursor:pointer}
@@ -1973,6 +2034,10 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
 <body>
 <div id="app">
   <div id="top">
+    <button id="railBtn" type="button" title="boards"
+      aria-label="toggle boards"><svg viewBox="0 0 16 16" fill="none"
+      stroke="currentColor" stroke-width="1.4">
+      <path d="M2.5 4.5h11M2.5 8h11M2.5 11.5h11"/></svg></button>
     <div class="mark">wf</div>
     <div class="who"><span id="whoName">picker</span>
       <small id="whoSub">design-file not loaded</small></div>
@@ -2061,6 +2126,10 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
         function(x){x.classList.toggle('on',x===b)});
       document.documentElement.style.setProperty('--vw',b.dataset.w)}});
 
+  // rail collapse — hamburger on narrow screens, auto-close on pick
+  document.getElementById('railBtn').onclick=function(){
+    document.getElementById('rail').classList.toggle('open')};
+
   var ICON={
     home:'<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M2 7l6-5 6 5v6a1 1 0 01-1 1H3a1 1 0 01-1-1z"/></svg>',
     doc:'<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="1.5" width="10" height="13" rx="1.5"/><path d="M5.5 5h5M5.5 8h5M5.5 11h3"/></svg>',
@@ -2104,6 +2173,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
     el.innerHTML=h;
     el.querySelectorAll('.ritem').forEach(function(b){
       b.onclick=function(){CUR=b.dataset.k;FILT={};SEL=0;ROW=0;
+        if(innerWidth<761)
+          document.getElementById('rail').classList.remove('open');
         rail();board()}});
   }
 
@@ -2183,7 +2254,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
     rows.forEach(function(r,i){
       var alt=r.alts[r.idx];
       h+='<div class="srow'+(i===ROW?' sel':'')+'" data-i="'+i+'">'+
-         '<div class="srh"><span class="sec">'+esc(r.sec)+'</span>'+
+         '<div class="srh"><span class="sec">'+
+         esc((r.sec||'').replace(/-/g,' ').slice(0,34))+'</span>'+
          '<span class="sname" data-role="nm">'+esc(alt.id)+'</span>'+
          '<span class="spos" data-role="pos">'+(r.idx+1)+'/'+r.alts.length+'</span>'+
          '<div class="snav"><button data-d="-1">‹</button>'+
@@ -2356,9 +2428,10 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
       ev.preventDefault();return;
     }
     var n=(o.cards||[]).length;if(!n)return;
-    SEL=(SEL+d+n)%n;board();
-    var c=document.querySelectorAll('#board .card')[SEL];
-    if(c)c.scrollIntoView({block:'nearest'});
+    SEL=(SEL+d+n)%n;
+    var cs=document.querySelectorAll('#board .card');
+    cs.forEach(function(c,i){c.classList.toggle('sel',i===SEL)});
+    if(cs[SEL])cs[SEL].scrollIntoView({block:'nearest'});
     ev.preventDefault();
   });
 
