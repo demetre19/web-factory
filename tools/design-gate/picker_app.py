@@ -127,9 +127,9 @@ _STAGE_SCROLL_SHIM = (
 
 # page-scale fragments render at natural width (a 1280px checkout in
 # a 390px frame would scroll horizontally — the audit counts that as
-# overflow). .wf-page grows to content height so the DOCUMENT scrolls
-# — real scrollY/scroll events drive scroll fx (shadowing them onto
-# the wrapper would freeze them at 0).
+# overflow). No scroll shim: .wf-page grows to content height so the
+# DOCUMENT scrolls — real scrollY/scroll events drive scroll fx
+# (shadowing them onto the wrapper would freeze them at 0).
 
 def _menu_closed(frag):
     """E-K2 — nav exemplars are banked mid-interaction: the snapshot
@@ -157,6 +157,25 @@ def _menu_closed(frag):
     frag = re.sub(r'class="([^"]*translate-y-0[^"]*)"', _closed_y, frag)
     frag = frag.replace('aria-expanded="true"', 'aria-expanded="false"')
     return frag
+
+
+# banked nav snapshots render CLOSED, but their triggers carry no
+# handlers — this driver reopens the drawer/sheet on a control click
+# (and closes again on scrim click) so operators can inspect the
+# open chrome the exemplar was banked for
+_MENU_DRIVER = (
+    '<script>(function(){'
+    'document.addEventListener("click",function(e){'
+    'var t=e.target.closest("[aria-expanded],button,summary,'
+    '[role=button],[data-menu-toggle]");'
+    'if(!t){'
+    'if(e.target.closest(\'[class*="fixed inset-0"][class*="opacity-0"]\'))'
+    'document.body.classList.remove("wf-nav-open");'
+    'return}'
+    'var on=document.body.classList.toggle("wf-nav-open");'
+    'if(t.hasAttribute("aria-expanded"))'
+    't.setAttribute("aria-expanded",on?"true":"false")'
+    '})})();</script>')
 
 
 _BANK_DIRS = {
@@ -2706,7 +2725,14 @@ _BANK_STAGE_CSS = (
     '[data-theme="dark"] .wf-fx-bar button{background:#23262e;'
     'color:#e4e6ea;border-color:#3a3e47}'
     '[data-theme="dark"] .wf-fx-bar button[aria-pressed="true"]{'
-    'background:#e8eaef;color:#1c1f26;border-color:#e8eaef}')
+    'background:#e8eaef;color:#1c1f26;border-color:#e8eaef}'
+    # menu docs reopen: lift the off-canvas transforms + restore the
+    # scrim the closed normalisation faded out
+    'body.wf-nav-open .wf-menu-closed,'
+    'body.wf-nav-open .wf-menu-closed-y,'
+    'body.wf-nav-open .wf-menu-closed-up{transform:none!important}'
+    'body.wf-nav-open [class*="fixed inset-0"]{opacity:1!important;'
+    'pointer-events:auto!important}')
 
 
 # E1 — fragment interactions are authored against a REAL surface:
@@ -3391,7 +3417,7 @@ def emit_bank_previews(pd):
                     (os.path.isfile(css_dst) and
                      os.path.getmtime(css_dst) >
                      os.path.getmtime(dst)) or \
-                    '<!--wf:bank:v11-->' not in open(
+                    '<!--wf:bank:v14-->' not in open(
                         dst, encoding='utf-8',
                         errors='replace').read(64)
                 if stale:
@@ -3446,11 +3472,13 @@ def emit_bank_previews(pd):
                         'body{background:#0b0e14}'
                         if row.get('mode') == 'dark' else '')
                     with open(dst, 'w', encoding='utf-8') as fh:
-                        fh.write('<!--wf:bank:v11-->' +
+                        fh.write('<!--wf:bank:v14-->' +
                                  _doc(head, '', stage,
                                       extra=(_STAGE_SCROLL_SHIM
                                              if not page else '') +
-                                      (_FX_DRIVER if fx else ''),
+                                      (_FX_DRIVER if fx else '') +
+                                      (_MENU_DRIVER
+                                       if gid == 'menu' else ''),
                                       css=css_,
                                       chrome=gid == 'menu' or
                                       cls.startswith('nav-')))
