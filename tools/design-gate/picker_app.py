@@ -2869,10 +2869,11 @@ def app_data(pipeline):
             'title': ('Nav · ' if kind == 'nav' else 'Footer · ') +
                      pretty,
             'icon': 'burger' if kind == 'nav' else 'bars',
-            'desc': (f'Every banked {pretty} {kind} exemplar — real '
-                     'BaseLayout chrome, closed-by-default nav, '
-                     'correct M/T/D behaviour. Pick signs the '
-                     'element-pick path.'),
+            'desc': (f'Every banked {pretty} {kind} exemplar — '
+                     'reference-faithful render in the bank stage' +
+                     (', desktop + mobile frames' if kind == 'nav'
+                      else '') +
+                     '. Pick signs the element-pick path.'),
             'groups': [], 'mobile': kind == 'nav',
             'cards': bank_cards[gid],
             'emitted_n': len(bank_cards[gid]),
