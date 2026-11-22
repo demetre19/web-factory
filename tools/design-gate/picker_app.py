@@ -2001,9 +2001,11 @@ def mix_vectors(vecs, shares, groups):
     """numeric knobs lerp by share; categorical take the dominant
     share; group picks override with one source's knobs outright."""
     def dom(key):
-        best, bs = None, -1
+        # dominant share wins — a source at 0% never owns a
+        # categorical token even when it's the only carrier
+        best, bs = None, 0
         for v, sh in zip(vecs, shares):
-            if v.get(key) is not None and sh > bs:
+            if v.get(key) is not None and sh > 0 and sh >= bs:
                 best, bs = v[key], sh
         return best
 
@@ -2024,7 +2026,8 @@ def mix_vectors(vecs, shares, groups):
     # 0 is a real radius — keep it, don't fall back to 'no override'
     out['radius_px'] = wavg('radius_px')
     out['motion'] = wavg('motion', dec=3) or 0
-    dn = wavg('density', conv=lambda d: _DENSITY_NUM.get(d, 1))
+    dn = wavg('density', conv=lambda d: _DENSITY_NUM.get(d, 1),
+              dec=4)  # no dec=1 pre-round before the word lookup
     out['density'] = (_DENSITY_WORD.get(int(round(dn)), 'regular')
                       if dn is not None else 'regular')
     out['theme'] = dom('theme')
