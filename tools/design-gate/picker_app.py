@@ -1097,6 +1097,23 @@ def _css_merge(base, over):
     return ';'.join('%s:%s' % kv for kv in d.items())
 
 
+# C.1 pairing at the producer: preset palettes declare a light
+# --action-primary with no --action-primary-ink on the light side,
+# so the CTA band fell back to the base's white accent_foreground
+# (~1.1:1), and some accents sit under 4.5:1 on their own canvas.
+# Pair accent↔surface then ink↔accent once, at load — preview docs,
+# /frame and signed bundles all read the normalized css.
+if vibe_atlas is not None:
+    for _f in VIBE_FAMILIES.values():
+        for _k, _cv in (('css', '#FFFFFF'), ('css_dark', '#0E1416')):
+            if _f.get(_k):
+                _v = vibe_atlas.pair_ink(vibe_atlas.pair_surface(
+                    _pairs(_f[_k]), _cv))
+                _f[_k] = ';'.join('%s:%s' % kv for kv in _v.items())
+    for _v in ('_f', '_k', '_cv', '_v'):
+        globals().pop(_v, None)
+
+
 def _type_sign_bundle(pd, variant):
     """rebuild the signed bundle for a 'genes:<hash>' type pick —
     the SERVER computes it: the candidate's type-gene deltas and
