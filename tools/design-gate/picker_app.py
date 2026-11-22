@@ -3282,6 +3282,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
   #scrim.open{display:block}
   #railBtn{display:grid}
   #top{gap:8px;padding:0 10px}
+  #top .who{overflow:hidden;white-space:nowrap}
   #top .who small{display:none}
   #dnaPop .panel{right:-40px}
   .grid{grid-template-columns:1fr}
@@ -3293,6 +3294,11 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
   .srow .srh{flex-wrap:wrap}
 }
 @media(min-width:1025px){#railBtn{display:none !important}}
+@media(max-width:560px){
+  #top{gap:6px}
+  #top .who{max-width:130px;text-overflow:ellipsis}
+  #vwCtl{display:none}
+}
 .rmgrid{display:flex;flex-direction:column;gap:14px;max-width:920px}
 .rmslot{display:grid;grid-template-columns:minmax(0,1fr) minmax(110px,200px) 46px 20px;
      gap:10px;align-items:center}
@@ -3656,7 +3662,9 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
         '<div class="noprev">pick a mood, a preset, or move a '+
         'slider — the resolved vibe renders here</div>')+'</div>'+
        '<div class="cf"><span class="vname">'+
-       esc((VRES&&VRES.name)||'computed vibe')+'</span>'+
+       esc((VRES&&VRES.name)||'computed vibe')+
+       (Object.keys(VGENES).length?' · '+Object.keys(VGENES).length+
+        ' genes':'')+'</span>'+
        '<button class="pick" id="vBake">Bake</button></div></div>';
     h+='<div class="filters">'+filters(o.clusters||[])+'</div>';
     h+='<input class="vq" id="vq" placeholder="search presets…" '+
