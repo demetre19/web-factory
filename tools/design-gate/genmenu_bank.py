@@ -30,12 +30,24 @@ from pathlib import Path
 REPO = Path(__file__).resolve().parents[2]
 BANK = REPO / "templates" / "skeletons" / "genmenu"
 
-# pack prefix -> baseline topology class; refined per item by class sniffing.
-PACK_TOPO = {
-    "drawernav": "nav-dock-left-drawer",
-    "menucraft": "nav-sheet",
-    "navmenu": "nav-dropdown-menu",
-    "modalnav": "nav-modal",
+# pack prefix -> (baseline topology class, section_class, category, query word);
+# baseline refined per item by class sniffing.
+PACK_META = {
+    "drawernav": ("nav-dock-left-drawer", "navigation", ["navigation"], "menu"),
+    "menucraft": ("nav-sheet", "navigation", ["navigation"], "menu"),
+    "navmenu": ("nav-dropdown-menu", "navigation", ["navigation"], "menu"),
+    "modalnav": ("nav-modal", "navigation", ["navigation"], "menu"),
+    "footercraft": ("footer-columns", "footer", ["footer"], "footer"),
+    "pricing": ("pricing-tiers", "pricing", ["pricing"], "pricing"),
+    "modal": ("modal-dialog", "modal", ["modal"], "modal"),
+    "patternfolio": (None, "screen", ["screen"], "screen"),
+}
+
+# component-name prefix -> (baseline, section_class, category, query) override
+# for packs that mix families (patternfolio ships auth + error screens).
+COMP_META = {
+    "auth": ("auth-form", "screen", ["auth"], "auth screen"),
+    "error": ("empty-state", "screen", ["error"], "error screen"),
 }
 
 SEMANTIC_TAGS = {
@@ -79,7 +91,8 @@ class Tree(HTMLParser):
         }
         # panel classes: the menu surface itself (dialog/aside/nav), not the scrim
         if not self.panel_classes and (
-            a.get("role") == "dialog" or tag in ("aside", "dialog", "nav")
+            a.get("role") == "dialog"
+            or tag in ("aside", "dialog", "nav", "footer", "section", "main", "form")
         ):
             self.panel_classes = cls.split()
         if self.stack:
@@ -132,7 +145,25 @@ def sniff_topology(html_text: str, baseline: str) -> tuple[str, str]:
         if has("right-0"):
             return "nav-dock-right-drawer", "high"
         return "nav-dock-left-drawer", "high"
-    return baseline, "low"
+    if baseline == "footer-columns":
+        if has("grid-cols-4", "grid-cols-5", "grid-cols-6", "md:grid-cols-4", "lg:grid-cols-4", "lg:grid-cols-5"):
+            return "footer-mega", "high"
+        if has("grid-cols-2", "grid-cols-3", "sm:grid-cols-2", "md:grid-cols-3", "sm:grid-cols-3"):
+            return "footer-columns", "high"
+        return "footer-minimal", "medium"
+    if baseline == "pricing-tiers":
+        if "<table" in c:
+            return "pricing-table", "high"
+        if not has("grid-cols-2", "grid-cols-3", "grid-cols-4", "md:grid-cols", "lg:grid-cols"):
+            return "pricing-single", "medium"
+        return "pricing-tiers", "high"
+    if baseline == "modal-dialog":
+        if has("bottom-0", "rounded-t-"):
+            return "modal-bottom-sheet", "high"
+        if has("h-full") and has("right-0", "left-0"):
+            return "modal-slide-over", "high"
+        return "modal-dialog", "high"
+    return baseline, "high" if baseline in ("auth-form", "empty-state") else "low"
 
 
 def semantic_tree(t: Tree) -> list[dict]:
@@ -225,6 +256,11 @@ def bank_item(
     confidence: str,
     t: Tree,
     outdir: Path,
+    section_class: str,
+    category: list[str],
+    query_word: str,
+    comp_source: str | None,
+    is_new_topo: bool,
 ) -> dict:
     tree = semantic_tree(t)
     mode = mode_of(t.panel_classes or t.all_classes)
@@ -232,7 +268,7 @@ def bank_item(
         "id": str(uuid.uuid4()),
         "title": title_from(pack, comp, t.text_hints),
         "type": "section",
-        "category": ["navigation"],
+        "category": category,
         "elements": sorted(t.sig.keys()),
         "style_tags": style_tags(t.all_classes),
         "use_case": topo_class,
@@ -245,18 +281,18 @@ def bank_item(
         "platform": "web",
         "featured_image": None,
         "rendered_fragment": f"{slug}.html",
-        "component_source": f"{slug}.tsx",
+        "component_source": comp_source,
         "matched_topo": {"topology_id": topo_class, "confidence": confidence},
-        "is_new_topology": topo_class in ("nav-bottom-sheet", "nav-top-sheet"),
+        "is_new_topology": is_new_topo,
         "tags": {
-            "section_class": "navigation",
+            "section_class": section_class,
             "topology_class": topo_class,
             "style": [s for s in style_tags(t.all_classes) if s != "generated"],
-            "category": [],
+            "category": category,
             "mode": mode,
             "platform": "web",
         },
-        "queries": ["generated menu", topo_class],
+        "queries": [f"generated {query_word}", topo_class],
         "short_description": "",
     }
     topo = {
@@ -281,27 +317,48 @@ def main() -> int:
     ap.add_argument("--root", type=Path, default=BANK)
     args = ap.parse_args()
 
-    baseline = PACK_TOPO[args.pack.split("-")[0]]
+    baseline, section_class, category, query_word = PACK_META[args.pack.split("-")[0]]
     rendered = sorted(args.render_dir.glob("*.html"))
     if not rendered:
         print(f"no .html in {args.render_dir}", file=sys.stderr)
         return 2
 
     rows = []
+    batch_src: dict[str, str] = {}  # batch filename -> banked filename
     for frag in rendered:
         comp = frag.stem
         slug = slugify(args.pack, comp)
         html_text = frag.read_text()
-        topo_class, conf = sniff_topology(html_text, baseline)
+        meta = next((v for k, v in COMP_META.items() if comp.lower().startswith(k)), None)
+        b, sc, cat, qw = meta or (baseline, section_class, category, query_word)
+        topo_class, conf = sniff_topology(html_text, b)
         outdir = args.root / topo_class
+        is_new_topo = not outdir.exists()
         outdir.mkdir(parents=True, exist_ok=True)
         (outdir / f"{slug}.html").write_text(html_text)
-        tsx = list(args.tsx_dir.glob(f"{comp}.tsx"))
+        comp_source = None
+        tsx = list(args.tsx_dir.rglob(f"{comp}.tsx"))
         if tsx:
-            (outdir / f"{slug}.tsx").write_text(tsx[0].read_text())
+            comp_source = f"{slug}.tsx"
+            (outdir / comp_source).write_text(tsx[0].read_text())
+        else:
+            pat = re.compile(
+                rf"export\s+(?:async\s+)?(?:function|const)\s+{re.escape(comp)}\b")
+            for p in sorted(args.tsx_dir.rglob("*.tsx")):
+                try:
+                    if pat.search(p.read_text()):
+                        name = batch_src.setdefault(
+                            p.name, f"{args.pack}-src-{p.stem.lower()}.tsx")
+                        comp_source = name
+                        if not (outdir / name).exists():
+                            (outdir / name).write_text(p.read_text())
+                        break
+                except OSError:
+                    continue
         t = Tree()
         t.feed(html_text)
-        spec = bank_item(slug, args.pack, comp, html_text, topo_class, conf, t, outdir)
+        spec = bank_item(slug, args.pack, comp, html_text, topo_class, conf, t,
+                         outdir, sc, cat, qw, comp_source, is_new_topo)
         rows.append({"slug": slug, "topology_class": topo_class,
                      "mode": spec["tags"]["mode"], "confidence": conf})
         print(f"{slug}: {topo_class} ({conf}, {spec['tags']['mode']})")
