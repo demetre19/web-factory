@@ -98,6 +98,10 @@
     });
 
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduced) {
+      wrap.classList.remove('overflow-hidden');
+      wrap.classList.add('overflow-x-auto');
+    }
     let offset = 0;
     let scrollVelocity = 0;
     let lastScrollY = window.scrollY;
