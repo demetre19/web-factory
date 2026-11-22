@@ -183,7 +183,24 @@
     closeModalBtn.addEventListener('click', closeLightbox);
     lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLightbox(); });
     window.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && !lightbox.classList.contains('hidden')) closeLightbox();
+      if (lightbox.classList.contains('hidden')) return;
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'Tab') {
+        const focusables = lightbox.querySelectorAll('button, [href], [tabindex]:not([tabindex="-1"])');
+        if (!focusables.length) return;
+        const first = focusables[0];
+        const last = focusables[focusables.length - 1];
+        if (e.shiftKey && (document.activeElement === first || !lightbox.contains(document.activeElement))) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        } else if (!lightbox.contains(document.activeElement)) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
     });
   </script>
 </body>
