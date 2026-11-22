@@ -343,7 +343,11 @@ def aliases(s=None, radius_rem=None):
            'content-gap': f"var(--{s['content_gap']})",
            'elements-gap': f"var(--{s['elements_gap']})",
            'container-gap': f"var(--{s['container_gap']})",
-           'list-item-spacing': f"var(--{s['list_item_spacing']})",
+           'list_item_spacing': f"var(--{s['list_item_spacing']})",
+           # D: measure tracks the type knob — a denser family reads
+           # a narrower column (28 + 2×base → 60ch at the 16px ACSS
+           # default, 64ch at 18, 68ch at 20, 56ch at 14)
+           'measure': f"{round(28 + 2 * float(s['text_base_desk']))}ch",
            'btn-padding-block': f"{_fmt(s['btn_padding_block'])}em",
            'btn-padding-inline': f"{_fmt(s['btn_padding_inline'])}em"}
     if radius_rem is not None:

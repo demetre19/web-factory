@@ -70,7 +70,8 @@ h1, h2, h3, h4, h5, h6, p, ul, ol, li, figure, blockquote { margin: 0; }
   --content-width: 80rem;
   --content-width-safe: min(var(--content-width),
                             calc(100% - var(--gutter) * 2));
-  --measure: 60ch;
+  /* --measure is emitted by emit_tokens (clamp.aliases — it tracks
+     type.base so families differ on line length too) */
   --r-card: var(--primitive-radius);
   --tap: 3rem;
   --font-display: var(--primitive-font-display);
