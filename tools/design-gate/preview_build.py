@@ -652,11 +652,13 @@ def emit_layouts(ctx):
                 if m:
                     r2['image'] = {'src': m.get('src') or m.get('file'),
                                    'alt': m.get('alt', '')}
-                    r2['media_ratio'] = '4:3'
                     # data-ratio rides the contract's locked card —
-                    # the shipped media box locks the same ratio the
-                    # projected plan would declare (P.7)
-                    cc['media_ratio'] = '4:3'
+                    # the shipped media box locks the ratio the plan
+                    # row declares (P.4/P.7); 4:3 only when it has none
+                    lock = str(row.get('media_ratio') or 'none')
+                    lock = '4:3' if lock == 'none' else lock
+                    r2['media_ratio'] = lock
+                    cc['media_ratio'] = lock
                 else:
                     r2.pop('image', None)
             # a hero chrome override that turns the hero media-led
