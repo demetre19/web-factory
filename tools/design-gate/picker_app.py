@@ -1983,13 +1983,15 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
      font:600 12px var(--font);cursor:pointer}
 #themeBtn svg{width:15px;height:15px}
 #themeBtn:hover{border-color:var(--line-2)}
-#vwCtl{display:flex;border:1px solid var(--line);border-radius:999px;
-     overflow:hidden}
-#vwCtl button{border:0;background:var(--panel);color:var(--muted);
-     padding:8px 15px;font:600 12px var(--font);cursor:pointer;
-     display:grid;place-items:center}
+#vwCtl{display:flex;gap:2px;border:1px solid var(--line);
+     border-radius:999px;padding:2px;background:var(--bg-2)}
+#vwCtl button{border:0;background:transparent;color:var(--muted);
+     padding:6px 12px;font:600 12px var(--font);cursor:pointer;
+     display:grid;place-items:center;border-radius:999px;
+     transition:background .12s,color .12s}
+#vwCtl button:hover{color:var(--ink);background:var(--panel)}
 #vwCtl button svg{width:15px;height:15px}
-#vwCtl button.on{background:var(--accent);color:var(--accent-ink)}
+#vwCtl button.on{background:var(--ink);color:var(--bg)}
 #dnaPop{position:relative}
 #dnaPop>summary{list-style:none;width:34px;height:34px;
      display:grid;place-items:center;border:1px solid var(--line);
@@ -2099,8 +2101,10 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
      background:var(--panel);color:var(--muted);border-radius:6px;
      font:600 10px var(--font);padding:3px 7px;cursor:pointer}
 .card .vp button.on{color:var(--accent);border-color:var(--accent)}
-.card .cf{display:flex;align-items:center;gap:8px;
-     padding:10px 12px;border-top:1px solid var(--line)}
+.card .cf{display:flex;align-items:center;justify-content:center;
+     gap:10px;padding:10px 12px;border-top:1px solid var(--line);
+     min-height:44px}
+.card .cb{min-height:300px}
 .card .tags{display:flex;gap:5px;flex-wrap:wrap}
 .tag{font:600 10px var(--mono);color:var(--muted);
      border:1px solid var(--line);border-radius:4px;padding:2px 6px}
