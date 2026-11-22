@@ -2708,19 +2708,36 @@ _FX_DRIVER = (
     'setTimeout(drive,900);'
     'var r=document.querySelector(".wf-replay");'
     'if(r)r.addEventListener("click",function(){'
-    'scrollTo_(0);play();drive()});'
+    'scrollTo_(0);play();'
+    # Replay is explicit user intent to see the effect — if motion
+    # was suspended, re-arm the rAF scheduler and flush the queue
+    # so rAF-driven fx restart instead of staying dead
+    'if(window.requestAnimationFrame!==raf_){'
+    'document.body.dataset.motion="on";'
+    'if(m)m.setAttribute("aria-pressed","false");resume()}'
+    'drive()});'
     'var m=document.querySelector(".wf-motion");'
     'var raf_=window.requestAnimationFrame;'
+    'var pend=[];'
+    'function resume(){'
+    'window.requestAnimationFrame=raf_;'
+    'anim().forEach(function(a){try{a.play()}catch(e){}});'
+    # flushing the queued frames through the restored scheduler
+    # re-arms every rAF loop — each effect's own callback
+    # reschedules itself, so motion resumes where it froze
+    'pend.splice(0).forEach(function(cb){'
+    'try{cb(performance.now())}catch(e){}})}'
     'if(m)m.addEventListener("click",function(){'
     'var off=document.body.dataset.motion==="off";'
     'document.body.dataset.motion=off?"on":"off";'
     'm.setAttribute("aria-pressed",off?"false":"true");'
-    'if(off){window.requestAnimationFrame=raf_;'
-    'anim().forEach(function(a){try{a.play()}catch(e){}})}'
+    'if(off)resume()'
     # rAF-driven fx ignore css animation-play-state — suspending
-    # the scheduler is the only generic stop for them; the pending
-    # frame fires once and cannot reschedule
-    'else{window.requestAnimationFrame=function(){return -1}}'
+    # the scheduler is the only generic stop for them. Their
+    # callbacks are queued, not dropped, so resume() can re-arm
+    # them; a dropped frame would leave the loop dead
+    'else{window.requestAnimationFrame=function(cb){'
+    'pend.push(cb);return -1}}'
     '})'
     '})();</script>')
 
