@@ -790,6 +790,8 @@ _CHROME_CSS = (
 _NO_NAV = ('<script>document.addEventListener("click",function(e){'
            'var a=e.target&&e.target.closest&&e.target.closest("a");'
            'if(a&&a.getAttribute("href"))e.preventDefault()},true);'
+           'document.addEventListener("submit",function(e){'
+           'e.preventDefault()},true);'
            '</script>')
 
 
@@ -2707,8 +2709,11 @@ _BANK_STAGE_CSS = (
     # page-scale fragments render at natural width (a 1440px
     # checkout would clip inside a 1280 box); the doc scrolls
     # horizontally instead, the picker scales the whole doc
+    # align-self flex-start: the centered column body would push a
+    # wider-than-viewport page's left edge outside the scrollable
+    # area — horizontal scroll only reaches content to the right
     '.wf-page{position:relative;width:max-content;min-width:100%;'
-    'min-height:100vh}'
+    'min-height:100vh;align-self:flex-start}'
     '.wf-fx-bar{display:flex;gap:8px}'
     '.wf-fx-bar button{font:600 12px/1 system-ui,sans-serif;'
     'padding:8px 12px;border-radius:8px;'
@@ -2726,6 +2731,10 @@ _BANK_STAGE_CSS = (
     # ?theme=dark — the frame chrome follows the doc theme; the
     # fragment's own dark: utilities come from the class build
     '[data-theme="dark"] body{background:#14171d}'
+    # fragments without their own text color inherit the frame's —
+    # in dark that must be light or black headings sit on near-black
+    '[data-theme="dark"] .wf-stage,[data-theme="dark"] .wf-page{'
+    'color:#e8eaef}'
     '[data-theme="dark"] .wf-stage{'
     'box-shadow:0 10px 34px rgba(0,0,0,.5)}'
     '[data-theme="dark"] .wf-fx-bar button{background:#23262e;'
@@ -3228,7 +3237,7 @@ def emit_bank_previews(pd):
                     (os.path.isfile(css_dst) and
                      os.path.getmtime(css_dst) >
                      os.path.getmtime(dst)) or \
-                    '<!--wf:bank:v5-->' not in open(
+                    '<!--wf:bank:v6-->' not in open(
                         dst, encoding='utf-8',
                         errors='replace').read(64)
                 if stale:
@@ -3281,7 +3290,7 @@ def emit_bank_previews(pd):
                         'body{background:#0b0e14}'
                         if row.get('mode') == 'dark' else '')
                     with open(dst, 'w', encoding='utf-8') as fh:
-                        fh.write('<!--wf:bank:v5-->' +
+                        fh.write('<!--wf:bank:v6-->' +
                                  _doc(head, '', stage,
                                       extra=(_STAGE_SCROLL_SHIM
                                              if not page else '') +
