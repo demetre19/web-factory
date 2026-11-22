@@ -656,10 +656,9 @@ def _fam_css(f):
     """a family's full bundle: :root overrides + dark overrides +
     the structural 'shape' layer (per-family hero topology /
     arrangement, derived since the bank has one hero skeleton)."""
-    return ('' if not f['css'] else
-            ':root{' + f['css'] + '}'
-            '[data-theme="dark"]{' + f['css_dark'] + '}'
-            + (f.get('shape') or ''))
+    return ((':root{' + f['css'] + '}') if f.get('css') else '') + \
+           (('[data-theme="dark"]{' + f['css_dark'] + '}')
+            if f.get('css_dark') else '') + (f.get('shape') or '')
 
 
 def emit_vibe_doc(pd, fam, bundle):
@@ -1778,6 +1777,40 @@ def _genmenu_tags():
     return {r.get('path'): r for r in rows if r.get('path')}
 
 
+def atlas_family(pd, fam):
+    """family dict for atlas variants — 'atlas:<id>' resolves its
+    preset's genes; 'genes:<hash>' reuses the signed pick's bundle
+    (the hash alone cannot reconstruct the gene map)."""
+    if vibe_atlas is None or not fam:
+        return None
+    if fam.startswith('atlas:'):
+        p = vibe_atlas.PRESET_BY_ID.get(fam[6:])
+        return vibe_atlas.resolve(p['genes']) if p else None
+    if fam.startswith('genes:') and pd:
+        ep = _json_at(os.path.dirname(pd.rstrip('/'))
+                      if pd.endswith('/site')
+                      else pd, 'ELEMENT-PICKS.json') or {}
+        for pick in reversed(ep.get('picks') or []):
+            if pick.get('element') == 'vibe' and \
+                    pick.get('variant') == fam and \
+                    isinstance(pick.get('bundle'), dict):
+                b = pick['bundle']
+                if isinstance(b.get('resolved'), dict):
+                    return dict(b['resolved'])
+                r = dict(b)
+                if 'css' not in r and 'tokens' in r:
+                    t = r['tokens']
+                    r['css'] = ';'.join(
+                        f'{k}:{v}' for k, v in
+                        (t.get('light') or {}).items())
+                    r['css_dark'] = ';'.join(
+                        f'{k}:{v}' for k, v in
+                        (t.get('dark') or {}).items())
+                    r['shape'] = t.get('shape') or ''
+                return r
+    return None
+
+
 def vibe_resolve(pd, genes):
     """resolve a gene map through the atlas → emit its doc →
     {preview, name, genes, tokens, theme}."""
@@ -1790,7 +1823,10 @@ def vibe_resolve(pd, genes):
     return {'preview': '/built/' + urllib.parse.quote(
                 os.path.join(pd, 'site', 'dist', rel)),
             'name': r['name'], 'genes': r['genes'],
-            'tokens': r['tokens'], 'theme': r['theme']}
+            'tokens': r['tokens'], 'theme': r['theme'],
+            'resolved': {k: r.get(k) for k in
+                         ('css', 'css_dark', 'shape', 'theme',
+                          'tokens')}}
 
 
 def emit_bank_previews(pd):
@@ -2406,6 +2442,10 @@ def record_element_pick(pipeline, element, variant, bundle=None):
                 p['variant'] = variant
                 p['ts'] = now
                 p['prev'] = old_v
+                if isinstance(bundle, dict):
+                    p['bundle'] = bundle
+                else:
+                    p.pop('bundle', None)
                 p['sig'] = G._sig({k: v for k, v in p.items()
                                    if k != 'sig'},
                                   G.op_key(create=True))
@@ -3088,21 +3128,25 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
           (c.tags||[]).join(' ')).toLowerCase();
         cd.style.display=(VQ&&!hay.includes(VQ))?'none':''})};
     el.querySelector('#vBake').onclick=function(){
+      var v='genes:'+vhash(VGENES);
       api('/element-pick',{pipeline:PIPELINE,element:'vibe',
-        variant:'genes:'+vhash(VGENES),
-        bundle:{genes:VGENES,tokens:VRES&&VRES.tokens}}).then(
-        function(j){toast(j.message||(j.ok?'baked':'refused'))})};
+        variant:v,
+        bundle:{genes:VGENES,tokens:VRES&&VRES.tokens,
+          resolved:VRES&&VRES.resolved}}).then(
+        function(j){toast(j.message||(j.ok?'baked':'refused'));
+          if(j.ok){BAKED=v;DATA.picked_elements.vibe=v}})};
     el.querySelectorAll('.vload').forEach(function(b){
       b.onclick=function(){
         VGENES=Object.assign({},cards[+b.dataset.i].genes||{});
         resolveVibe(el,o)}});
     el.querySelectorAll('.cf .pick:not(#vBake)').forEach(function(b){
       b.onclick=function(){
-        var c=cards[+b.dataset.i];
+        var c=cards[+b.dataset.i],v='atlas:'+c.id;
         api('/element-pick',{pipeline:PIPELINE,element:'vibe',
-          variant:'atlas:'+c.id,
+          variant:v,
           bundle:{genes:c.genes}}).then(function(j){
-          toast(j.message||(j.ok?'baked':'refused'))})}});
+          toast(j.message||(j.ok?'baked':'refused'));
+          if(j.ok){BAKED=v;DATA.picked_elements.vibe=v}})}});
     setTheme(document.documentElement.dataset.theme);
     setTimeout(fitIframes,150);
   }
