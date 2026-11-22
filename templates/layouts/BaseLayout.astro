@@ -52,6 +52,23 @@ import '../styles/global.css';
     document.documentElement.dataset.theme = v;
     document.documentElement.classList.toggle('dark', v === 'dark');
   };
+  // the sticky header lifts a shadow once content scrolls under it
+  var markHead = function () {
+    var head = document.querySelector('header[data-sec="nav"], header.site-head');
+    if (head) head.classList.toggle('scrolled', window.scrollY > 4);
+  };
+  window.addEventListener('scroll', markHead, { passive: true });
+  window.addEventListener('DOMContentLoaded', function () {
+    markHead();
+    // nav triggers that arrived without the attribute default to
+    // collapsed — the toggle flips it from there
+    document.querySelectorAll('.burger').forEach(function (b) {
+      if (!b.hasAttribute('aria-expanded')) {
+        b.setAttribute('aria-expanded', 'false');
+      }
+    });
+  });
+  markHead();
   document.addEventListener('click', function (e) {
     if (e.target && e.target.closest && e.target.closest('[data-theme-toggle]')) {
       window.__wfSetTheme(document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark');

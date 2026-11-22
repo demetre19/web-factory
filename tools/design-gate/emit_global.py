@@ -542,9 +542,17 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
   .link-quiet { color: var(--text-secondary); text-decoration: none;
                 font-size: var(--fs-0); }
   .link-quiet:hover { color: var(--text-primary); }
-  .nav-links { display: none; gap: var(--space-s);
+  /* the header bar is sticky chrome — it keeps a hairline at rest
+     and lifts a shadow once the page scrolls under it */
+  header[data-sec="nav"] { position: sticky; top: 0;
+              z-index: var(--primitive-z-sticky);
+              border-block-end: 1px solid var(--border-subtle,
+                  var(--border-default)); }
+  header[data-sec="nav"].scrolled { box-shadow: var(--shadow-card); }
+  .nav-links { display: none; gap: var(--space-m);
                align-items: center; flex: 0 1 auto; min-width: 0; }
-  .nav-links ul { flex-wrap: nowrap; gap: var(--space-s); }
+  .nav-links ul { flex-wrap: nowrap; gap: var(--space-m);
+              align-items: center; }
   /* the desktop bar shows the group's links inline — the wrapper
      only materialises as a titled stack inside the open drawer */
   .nav-links .nav-group { display: contents; }
@@ -575,9 +583,10 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
      .nav-flyout panel is the ONLY nav-links — hidden at every width
      until .open, so it never doubles as a second desktop row
      (N.flyout) */
-  .nav-desk { display: none; gap: var(--space-s);
+  .nav-desk { display: none; gap: var(--space-m);
               align-items: center; flex: 0 1 auto; min-width: 0; }
-  .nav-desk ul { flex-wrap: nowrap; gap: var(--space-s); }
+  .nav-desk ul { flex-wrap: nowrap; gap: var(--space-m);
+              align-items: center; }
   .nav-links.nav-flyout { display: none; }
   .nav-links.open.nav-flyout { display: flex; }
   @media (min-width: 60rem) { .nav-desk { display: flex; } }
@@ -713,7 +722,15 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
               /* one line per link — a link that wraps reads as two
                  nav bars even when the ul itself cannot wrap */
               white-space: nowrap; }
-  .nav-link:hover { color: var(--text-primary); }
+  .nav-link:hover { color: var(--action-primary);
+              text-decoration: underline;
+              text-underline-offset: .2em; }
+  .nav-link[aria-current], .nav-link.active {
+              color: var(--action-primary); }
+  /* the header CTA fits the bar — compact padding and nav font,
+     never the hero-sized call */
+  .nav-cta .wf-cta-button { padding: .55em 1.15em;
+              font-size: var(--fs-0); min-height: 0; }
   .brand-mark { font-weight: 650; letter-spacing: -.02em;
                 font-size: var(--fs-1); color: var(--text-primary);
                 text-decoration: none; }
