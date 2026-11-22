@@ -2824,6 +2824,21 @@ def save_system(pipeline, name, mode=None):
     return 0, f'system “{name}” saved → SAVED-SYSTEMS/{slug}.json', rec
 
 
+def delete_system(pipeline, slug):
+    """remove SAVED-SYSTEMS/<slug>.json from disk — a real delete,
+    not a hidden row."""
+    slug = re.sub(r'[^a-z0-9-]+', '-', (slug or '').lower()) \
+        .strip('-')
+    if not slug:
+        return 1, 'slug needed'
+    ctx = G.Ctx(pipeline)
+    fp = os.path.join(ctx.dir, 'SAVED-SYSTEMS', slug + '.json')
+    if not os.path.isfile(fp):
+        return 1, f'no saved system {slug}'
+    os.remove(fp)
+    return 0, f'system “{slug}” deleted'
+
+
 def list_systems(pd):
     sdir = os.path.join(pd, 'SAVED-SYSTEMS')
     out = []
@@ -3074,7 +3089,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
   letter-spacing:.08em;text-transform:uppercase;color:var(--muted);
   margin-top:8px}
 .saves{display:flex;gap:9px;margin:0 0 18px}
-.saves input{flex:0 0 240px;background:var(--bg2);border:1px solid
+.saves input{flex:0 0 240px;background:var(--bg-2);border:1px solid
   var(--line);border-radius:7px;color:var(--ink);padding:7px 11px;
   font-size:13px}
 .fchip{padding:5px 13px;border:1px solid var(--line);
@@ -3096,7 +3111,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
 .card.mobile .cb{border-right:0}
 .fxlab{display:flex;align-items:center;gap:8px;font:600 11px var(--mono);
      color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
-.fxsel{flex:1;min-width:0;background:var(--bg2);border:1px solid var(--line);
+.fxsel{flex:1;min-width:0;background:var(--bg-2);border:1px solid var(--line);
      border-radius:7px;color:var(--ink);font:12px var(--font);
      padding:6px 8px;cursor:pointer}
 .crow{display:flex;align-items:center;gap:10px}
@@ -3254,14 +3269,17 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
      color:var(--accent);text-decoration:none;
      font:500 13px var(--mono);background:var(--panel)}
 #railBtn{display:none}
-@media(max-width:760px){
+@media(max-width:1024px){
   #app{grid-template-columns:1fr}
   #board{grid-column:auto}
   #top{grid-column:1/-1}
-  #rail{display:none;position:fixed;top:52px;left:0;bottom:0;
+  #rail{display:none;position:fixed;top:56px;left:0;bottom:0;
        width:min(80vw,300px);z-index:50;overflow-y:auto;
        box-shadow:10px 0 34px rgba(0,0,0,.45)}
   #rail.open{display:block}
+  #scrim{display:none;position:fixed;inset:0;top:56px;z-index:49;
+        background:rgba(0,0,0,.35)}
+  #scrim.open{display:block}
   #railBtn{display:grid}
   #top{gap:8px;padding:0 10px}
   #top .who small{display:none}
@@ -3274,11 +3292,11 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
   .ingrow{grid-template-columns:1fr}
   .srow .srh{flex-wrap:wrap}
 }
-@media(min-width:761px){#railBtn{display:none !important}}
+@media(min-width:1025px){#railBtn{display:none !important}}
 .rmgrid{display:flex;flex-direction:column;gap:14px;max-width:920px}
-.rmslot{display:grid;grid-template-columns:1fr 200px 46px 20px;
+.rmslot{display:grid;grid-template-columns:minmax(0,1fr) minmax(110px,200px) 46px 20px;
      gap:10px;align-items:center}
-.rmslot select{background:var(--bg2);border:1px solid var(--line);
+.rmslot select{background:var(--bg-2);border:1px solid var(--line);
      border-radius:7px;color:var(--ink);padding:7px 10px;font:500 13px
      var(--font)}
 .rmslot input[type=range]{accent-color:var(--accent)}
@@ -3291,28 +3309,43 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
 .rmrow label{display:inline-flex;gap:5px;align-items:center;
      font:600 11.5px var(--font);color:var(--muted);cursor:pointer}
 .rmsave{display:flex;gap:9px;align-items:center;margin-top:8px}
-.rmsave input{flex:0 0 240px;background:var(--bg2);border:1px solid
+.rmsave input{flex:0 0 240px;background:var(--bg-2);border:1px solid
   var(--line);border-radius:7px;color:var(--ink);padding:7px 11px;
   font-size:13px}
 .rmsave span{font:500 12px var(--font);color:var(--muted)}
 .rmprev{margin-top:14px;border:1px solid var(--line);
      border-radius:var(--r);overflow:hidden;height:520px}
-.rmprev iframe{width:100%;height:100%;border:0;background:#fff}
+.rmprev iframe{width:100%;height:100%;border:0;background:#fff;
+     pointer-events:none}
 
-.xp{border:1px solid var(--line);background:var(--bg2);color:var(--fg);
+.xp{border:1px solid var(--line);background:var(--bg-2);color:var(--ink);
   border-radius:6px;padding:0 7px;height:20px;line-height:1;
   font-size:11px;cursor:pointer;margin-left:auto}
-.xp:hover{background:var(--bg3)}
+.xp:hover{background:var(--panel-2)}
 #xpOv{position:fixed;inset:0;z-index:60;background:rgba(0,0,0,.72);
   display:flex;align-items:center;justify-content:center}
 #xpOv iframe{width:96vw;height:94vh;border:0;border-radius:10px;
   background:#fff}
 #xpX{position:absolute;top:14px;right:18px;z-index:61;
-  background:var(--bg2);color:var(--fg);border:1px solid var(--line);
+  background:var(--bg-2);color:var(--ink);border:1px solid var(--line);
   border-radius:8px;padding:6px 12px;cursor:pointer;font-size:13px}
+.ssq{flex:1;min-width:180px;padding:9px 12px;border:1px solid var(--line);
+     border-radius:8px;background:var(--panel);color:var(--ink);
+     font:12px var(--font)}
+.sscount{font:600 11px var(--mono);color:var(--muted);margin:12px 0 6px}
+.ssrow{display:grid;grid-template-columns:minmax(0,1fr) repeat(4,auto) auto auto;
+     gap:14px;align-items:center;padding:9px 14px;margin-bottom:6px;
+     background:var(--panel);border:1px solid var(--line);
+     border-radius:var(--r-sm)}
+.ssnm{font:650 13px var(--font);overflow:hidden;text-overflow:ellipsis;
+     white-space:nowrap}
+.ssm{font:500 11px var(--mono);color:var(--muted);white-space:nowrap}
+.ssdel{border:0;background:none;color:var(--muted);cursor:pointer;
+     font:600 12px var(--font);padding:2px 6px;border-radius:6px}
+.ssdel:hover{color:#d33;background:rgba(200,30,30,.08)}
 
 .compmat{margin-top:22px;border:1px solid var(--line);border-radius:10px;
-  padding:10px 14px;background:var(--bg-2)}
+  padding:10px 14px;background:var(--bg-2);overflow-x:auto}
 .compmat>summary{cursor:pointer;font:600 12px var(--font);color:var(--muted)}
 
 </style>
@@ -3355,6 +3388,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
       aria-label="toggle light/dark"></button>
   </div>
   <nav id="rail"></nav>
+  <div id="scrim"></div>
   <main id="board"></main>
 </div>
 <div id="toast"></div>
@@ -3376,7 +3410,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
     return fetch(path,{method:'POST',
       headers:{'Content-Type':'application/json',
                'X-WF-Page-Token':window.__wfTok},
-      body:JSON.stringify(body||{})}).then(function(r){return r.json()})}
+      body:JSON.stringify(body||{})}).then(function(r){return r.json()})
+      .catch(function(){return {error:'request failed'}})}
 
   // the baked vibe family frames every preview through /frame
   function frame(u){
@@ -3396,7 +3431,9 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
       function(f){var u=(f.dataset.src||f.src).split('?')[0];
         f.src=u+'?theme='+m});
   }
-  function setTheme(m){applyTheme(m);
+  function setTheme(m){var was=document.documentElement.dataset.theme;
+    applyTheme(m);
+    if(m!==was)toast('theme switched to '+m);
     try{localStorage.setItem('wfapp-theme',m)}catch(e){}}
   document.getElementById('themeBtn').onclick=function(){
     setTheme(document.documentElement.dataset.theme==='dark'
@@ -3420,7 +3457,11 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
 
   // rail collapse — hamburger on narrow screens, auto-close on pick
   document.getElementById('railBtn').onclick=function(){
-    document.getElementById('rail').classList.toggle('open')};
+    var r=document.getElementById('rail'),s=document.getElementById('scrim');
+    r.classList.toggle('open');s.classList.toggle('open',r.classList.contains('open'))};
+  document.getElementById('scrim').onclick=function(){
+    document.getElementById('rail').classList.remove('open');
+    document.getElementById('scrim').classList.remove('open')};
 
   var ICON={
     home:'<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M2 7l6-5 6 5v6a1 1 0 01-1 1H3a1 1 0 01-1-1z"/></svg>',
@@ -3480,6 +3521,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
       b.onclick=function(){CUR=b.dataset.k;FILT={};SEL=0;ROW=0;
         if(innerWidth<761)
           document.getElementById('rail').classList.remove('open');
+          document.getElementById('scrim').classList.remove('open');
         rail();board()}});
   }
 
@@ -3577,7 +3619,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
       if(seen[v])return 0;seen[v]=1;return 1})}
 
   // vibe space: gene sliders + preset atlas + signed gene bundle
-  var VGENES={},VQ='',VRES=null;
+  var VGENES={},VQ='',VRES=null,VMOOD='',VADV=false;
   function vibePane(el,o){
     var axes=o.axes||[],cards=o.cards||[];
     var h='<h1>Vibe space</h1><div class="desc">'+esc(o.desc||'')+'</div>';
@@ -3585,9 +3627,11 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
        ['happy·playful','professional·editorial','bold·brutal',
         'calm·paper','playful·neon','luxe·luxe','noir·noir'
        ].map(function(m){var p=m.split('·');
-         return '<button class="vmood" data-cl="'+p[1]+'">'+p[0]+
-                '</button>'}).join('')+'</div>';
-    h+='<details class="vadv"><summary>advanced tweaks</summary>';
+         return '<button class="vmood'+(VMOOD===p[1]?' on':'')+
+                '" data-cl="'+p[1]+'">'+p[0]+'</button>'}).join('')+
+                '</div>';
+    h+='<details class="vadv"'+(VADV?' open':'')+
+       '><summary>advanced tweaks</summary>';
     h+='<div class="vtweak">';
     var grp=null;
     axes.forEach(function(a){
@@ -3618,7 +3662,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
     h+='<input class="vq" id="vq" placeholder="search presets…" '+
        'value="'+esc(VQ)+'">';
     h+='<div class="grid">';
-    var lastG=null;
+    var lastG=null,shown=0;
     cards.forEach(function(c,i){
       if(!Object.keys(FILT).every(function(t){
         return (c.tags||[]).indexOf(t)>=0}))return;
@@ -3626,6 +3670,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
          .toLowerCase().indexOf(VQ)<0)return;
       if(c.grp&&c.grp!==lastG){lastG=c.grp;
         h+='<div class="glabel">'+esc(c.grp)+'</div>'}
+      shown++;
       var sw=(c.swatch&&c.swatch[0])||[];
       h+='<div class="card" data-i="'+i+'"><div class="ch">'+
          '<span class="id">'+esc(c.id)+'</span>'+
@@ -3643,10 +3688,11 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
          '<button class="pick" data-i="'+i+'">Bake</button></div></div>';
     });
     h+='</div>';
+    if(!shown)h+='<div class="empty">no presets match the '+('current search/filter — clear it to see the atlas')+'</div>';
     el.innerHTML=h;
     // wire: sliders → resolve; chips → clear axis; bake → sign bundle
     el.querySelectorAll('.vax input').forEach(function(r){
-      r.oninput=function(){
+      r.oninput=function(){VMOOD='';
         var a=o.axes.find(function(x){return x.axis===r.dataset.ax});
         VGENES[a.axis]=a.alleles[+r.value];
         r.parentElement.querySelector('.vaxa').textContent=
@@ -3666,10 +3712,12 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
           if(!was){
             var first=(cards||[]).filter(function(cc){
               return cc.grp===t})[0];
-            if(first&&first.genes){
+            if(first&&first.genes){VMOOD='';
               VGENES=Object.assign({},first.genes);
               vibePane(el,o);resolveVibe(el,o);return}}}
         vibePane(el,o)}});
+    var vd=el.querySelector('.vadv');
+    if(vd)vd.addEventListener('toggle',function(){VADV=vd.open});
     el.querySelector('#vq').oninput=function(e){
       VQ=e.target.value.toLowerCase();
       el.querySelectorAll('.grid .card').forEach(function(cd){
@@ -3687,16 +3735,14 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
             setTheme((VRES&&VRES.theme)||'light')}})};
     el.querySelectorAll('.vmood').forEach(function(m){
       m.onclick=function(){
-        el.querySelectorAll('.vmood').forEach(function(x){
-          x.classList.remove('on')});
-        m.classList.add('on');
+        VMOOD=m.dataset.cl;
         var first=(o.cards||[]).filter(function(cc){
           return cc.grp===m.dataset.cl})[0];
         VGENES=Object.assign({},first?first.genes||{}:{});
         vibePane(el,o);
         resolveVibe(el,o)}});
     el.querySelectorAll('.vload').forEach(function(b){
-      b.onclick=function(){
+      b.onclick=function(){VMOOD='';
         VGENES=Object.assign({},cards[+b.dataset.i].genes||{});
         vibePane(el,o);
         resolveVibe(el,o)}});
@@ -3850,31 +3896,80 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
   }
 
   // saved design systems — persist + reload the combination
+  var SSQ='',SSF={};
   function savedView(){
     var ss=DATA.saved_systems||[];
-    var h='<div class="desc">Current combination — vibe <b>'+
-      esc(BAKED||'baseline')+'</b> + every signed pick — saved '
-      +'as a named, reloadable design-system file.</div>'+
+    var vibes=ss.map(function(s){return s.vibe})
+      .filter(function(v,i,a){return v&&a.indexOf(v)===i});
+    var modes=ss.map(function(s){return s.default_mode})
+      .filter(function(v,i,a){return v&&a.indexOf(v)===i});
+    var shown=ss.filter(function(s){
+      if(Object.keys(SSF).length&&
+         !Object.keys(SSF).every(function(t){
+           return s.vibe===t||s.default_mode===t}))return false;
+      if(SSQ){
+        var hay=(s.slug+' '+(s.name||'')+' '+(s.vibe||'')+' '+
+                 ((s.genes||[]).join(' '))).toLowerCase();
+        if(hay.indexOf(SSQ)<0)return false}
+      return true});
+    var h='<div class="desc">Saved design systems — search by '+
+      'name, filter by vibe/mode. Loading restores its signed '+
+      'registry; delete removes the bundle on disk. Current '+
+      'combination — vibe <b>'+esc(BAKED||'baseline')+
+      '</b> + every signed pick — saves as a named file.</div>'+
       '<div class="saves"><input id="sysName" placeholder="system name">'+
-      '<button class="pick" id="sysSave">Save system</button></div>';
-    ss.forEach(function(s){
-      h+='<div class="card" style="padding:14px"><div class="ch">'+
-         '<span class="nm">'+esc(s.name||s.slug)+'</span>'+
-         '<span class="score">'+esc(s.vibe||'')+'</span></div>'+
-         '<div class="cb"><div class="desc">'+
-         (s.default_mode?'default '+esc(s.default_mode)+' · ':'')+
-         (s.picks||[]).map(function(p){
-           return esc(p.element)+' → '+esc(p.variant)}).join(' · ')+
-         '</div></div><div class="cf">'+
-         '<button class="pick" data-load="'+esc(s.slug)+'">Load</button>'+
-         '<span class="pstat"></span></div></div>'});
-    if(!ss.length)h+='<div class="empty">no saved systems yet</div>';
+      '<button class="pick" id="sysSave">Save system</button>'+
+      '<input class="ssq" id="ssq" placeholder="search '+ss.length+
+      ' systems…" value="'+esc(SSQ)+'"></div>';
+    if(vibes.length||modes.length){
+      h+='<div class="filters">';
+      h+='<span class="chip'+(Object.keys(SSF).length?'':' on')+
+        '" data-sf="">clear all</span>';
+      vibes.concat(modes).forEach(function(t){
+        h+='<span class="chip'+(SSF[t]?' on':'')+'" data-sf="'+esc(t)+
+           '">'+esc(t)+'</span>'});
+      h+='</div>'}
+    h+='<div class="sscount">'+shown.length+' / '+ss.length+
+      ' systems</div>';
+    shown.forEach(function(s){
+      h+='<div class="ssrow" data-slug="'+esc(s.slug)+'">'+
+         '<span class="ssnm" title="'+esc(s.slug)+'">'+
+         esc(s.name||s.slug)+'</span>'+
+         '<span class="ssm">'+esc(s.vibe||'—')+'</span>'+
+         '<span class="ssm">'+esc(s.default_mode||'—')+'</span>'+
+         '<span class="ssm">'+((s.genes||[]).length||(s.picks||[]).length)+
+         ' genes/picks</span>'+
+         '<span class="ssm">'+esc((s.created||'').slice(0,10))+
+         '</span>'+
+         '<button class="pick" data-load="'+esc(s.slug)+'">Load'+
+         '</button>'+
+         '<button class="ssdel" data-del="'+esc(s.slug)+
+         '" title="delete from disk">✕</button></div>'});
+    if(!ss.length)h+='<div class="empty">no saved systems yet — '+
+      'bake or save one</div>';
+    else if(!shown.length)
+      h+='<div class="empty">nothing matches the filter</div>';
     return h;
   }
   function wireSaved(){
+    var q=document.getElementById('ssq');
+    if(q)q.oninput=function(){SSQ=q.value.toLowerCase();
+      var el=document.getElementById('board');
+      var keep=q.selectionStart;
+      el.innerHTML='<h1>Saved systems</h1>'+savedView();wireSaved();
+      var q2=document.getElementById('ssq');
+      if(q2){q2.focus();q2.setSelectionRange(keep,keep)}};
+    document.querySelectorAll('[data-sf]').forEach(function(c){
+      c.onclick=function(){var t=c.dataset.sf;
+        if(!t)SSF={};
+        else if(SSF[t])delete SSF[t];
+        else{SSF={};SSF[t]=1}
+        var el=document.getElementById('board');
+        el.innerHTML='<h1>Saved systems</h1>'+savedView();wireSaved()}});
     var save=document.getElementById('sysSave');
     if(save)save.onclick=function(){
       var nm=document.getElementById('sysName').value;
+      if(!nm.trim()){toast('name the system');return}
       api('/save-system',{pipeline:PIPELINE,name:nm,
         mode:document.documentElement.dataset.theme}).then(function(j){
         toast(j.message||(j.ok?'saved':'refused'));
@@ -3895,6 +3990,16 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
         toast('system “'+s.name+'” loaded — vibe '+BAKED+
               ' · picks shown are its signed registry');
         CUR='vibe';rail();board()}});
+    document.querySelectorAll('[data-del]').forEach(function(b){
+      b.onclick=function(){
+        var slug=b.dataset.del;
+        if(!confirm('delete system “'+slug+'” from disk?'))return;
+        api('/delete-system',{pipeline:PIPELINE,slug:slug})
+          .then(function(j){
+            toast(j.message||(j.ok?'deleted':'refused'));
+            if(j.ok){DATA.saved_systems=(DATA.saved_systems||[])
+              .filter(function(x){return x.slug!==slug});
+              board()}})}});
   }
 
   var INGEST=null;
@@ -3917,6 +4022,9 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
       el.querySelector('#ingOut').innerHTML=
         '<div class="desc">ingesting…</div>';
       api('/ingest',{pipeline:PIPELINE,url:u,html:h}).then(function(j){
+        if(j&&j.error){el.querySelector('#ingOut').innerHTML=
+          '<div class="empty">'+esc(j.error)+'</div>';
+          toast(j.error);return}
         INGEST=j;renderIngest(el,j)})};
   }
   function renderIngest(el,j){
@@ -4000,7 +4108,9 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
       clearTimeout(t);
       t=setTimeout(function(){
         var sp=spec();
-        if(!sp.sources.length)return;
+        if(!sp.sources.length){var st=el.querySelector('#rmStatus');
+          if(st)st.textContent='pick a source or set a share above 0%';
+          return}
         api('/remix',{pipeline:PIPELINE,spec:sp}).then(function(j){
           if(j.error){toast(j.error);return}
           var f=document.getElementById('rmFrame');
@@ -4092,7 +4202,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
   function fitIframes(){
     var vw=document.documentElement.style.getPropertyValue('--vw')
         ||'100%';
-    document.querySelectorAll('.card .cb iframe').forEach(function(f){
+    document.querySelectorAll('.card .cb iframe,.vprev iframe').forEach(function(f){
       // remember each frame's own src once — derived variants come
       // back from it, never from a previously-swapped one
       var orig=f.dataset.orig||(f.dataset.src||f.src.split('?')[0]);
@@ -4113,10 +4223,12 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
         f.style.transformOrigin='0 0';
         try{var hh=f.contentDocument.body.scrollHeight;
           if(hh>0){f.style.height=hh+'px';
-            cb.style.height=(hh*s)+'px'}}catch(e){}
+            if(!cb.classList.contains('vprev'))
+              cb.style.height=(hh*s)+'px'}}catch(e){}
       }else{
         f.style.maxWidth='';f.style.width='';f.style.transform='';
-        f.style.height='';cb.style.height=''}
+        f.style.height='';
+        if(!cb.classList.contains('vprev'))cb.style.height=''}
     })}
 
   document.querySelectorAll('#vwCtl button').forEach(function(b){
@@ -4199,16 +4311,22 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
         o.emitted_n+' · raw skeleton backlog ~'+bl+
         ' (awaiting vectorisation)</div>';}
     h+='<div class="filters">'+filters(tags)+'</div><div class="grid">';
-    var lastGrp=null;
-    (o.cards||[]).forEach(function(c,i){
+    var lastGrp=null,shown2=0;
+    var gridCards=(o.cards||[]).slice();
+    // emitted options first — bank-only (no preview) rows sink
+    if(!gridCards.some(function(c){return c.grp}))
+      gridCards.sort(function(a,b){return (b.preview?1:0)-(a.preview?1:0)});
+    gridCards.forEach(function(c,i){
       var show=Object.keys(FILT).every(function(t){
         return (c.tags||[]).indexOf(t)>=0});
       if(c.grp&&c.grp!==lastGrp&&show){
         lastGrp=c.grp;
         h+='<div class="glabel">'+esc(c.grp)+'</div>';}
+      if(show)shown2++;
       h+=show?card(c,i):''});
     h+='</div>';
     if(!(o.cards||[]).length)h+='<div class="empty">nothing emitted here yet</div>';
+    else if(!shown2)h+='<div class="empty">no matches — clear the '+('filters or search to see all options')+'</div>';
     el.innerHTML=h;
     el.querySelectorAll('.fchip').forEach(function(b){
       b.onclick=function(ev){var t=b.dataset.f;
