@@ -1871,11 +1871,20 @@ def app_data(pipeline):
     # element galleries — emitted preview cards (+ derived geometry
     # topos on menus) + bank options the build didn't emit
     bank_cards, fxmap = emit_bank_previews(pd)
+    lo = _json_at(pd, 'LAYOUT-OPTIONS.json') or {}
+    lo_allowed = {k: list(dict.fromkeys(v or []))
+                  for k, v in (lo.get('allowed') or {}).items()}
     galleries = {}
     for g in ELEMENT_GALLERIES:
         gcards = []
         for grp in g['groups']:
-            for comp in grp['comps']:
+            comps = grp['comps']
+            if g['id'] == 'chrome':
+                # producer bank writes the full allowed nav/footer
+                # class list into LAYOUT-OPTIONS — surface all of it
+                key = 'nav' if grp['element'] == 'header' else 'footer'
+                comps = lo_allowed.get(key) or comps
+            for comp in comps:
                 sfx = grp.get('suffix', '')
                 keys = ([key for key in emitted
                          if key.startswith(comp + sfx) or
@@ -2556,7 +2565,10 @@ def _len_px(s):
 
 
 def _vibe_vector(fam):
-    f = VIBE_FAMILIES.get(fam) or {}
+    return _vector_from_family(VIBE_FAMILIES.get(fam) or {})
+
+
+def _vector_from_family(f):
     lv, dv = _css_vars(f.get('css')), _css_vars(f.get('css_dark'))
     rpx = _len_px(lv.get('--radius') or lv.get('--r-card') or '')
     gap = lv.get('--grid-gap') or ''
@@ -2614,6 +2626,17 @@ def source_vector(pd, sid):
             v = dict(k)
             v['theme'] = (rec.get('family') or {}).get('theme')
             return v
+    if (sid or '').startswith('sys:'):
+        d = _json_at(pd, 'SAVED-SYSTEMS', sid[4:] + '.json')
+        if not isinstance(d, dict):
+            return None
+        vibe = d.get('vibe') or ''
+        if vibe == 'baseline':
+            return _design_vector(pd)
+        if vibe in VIBE_FAMILIES:
+            return _vibe_vector(vibe)
+        f = atlas_family(pd, vibe)  # atlas:<id> / genes:<hash>
+        return _vector_from_family(f) if f else None
     return None
 
 
@@ -2628,6 +2651,10 @@ def dna_sources(pd):
             if fn.endswith('.json'):
                 out.append({'id': 'donor:' + fn[:-5],
                             'label': 'donor: ' + fn[:-5]})
+    for s0 in list_systems(pd):
+        out.append({'id': 'sys:' + s0['slug'],
+                    'label': 'system: ' + (s0.get('name') or s0['slug']),
+                    'vibe': s0.get('vibe')})
     return out
 
 
@@ -3122,6 +3149,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
 .card .ch .nm{font-weight:650;font-size:13px;flex:1;
  min-width:0;overflow:hidden;text-overflow:ellipsis;
  white-space:nowrap}
+.card .ch .nm[title]{cursor:default}
 .card .ch .vsw{flex:none}
 .card .ch .id{font:600 11px var(--mono);color:var(--accent);
      border:1px solid var(--accent);border-radius:4px;
@@ -3178,7 +3206,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
   letter-spacing:.08em;text-transform:uppercase;margin-top:4px}
 .vax{display:flex;align-items:center;gap:8px;font:500 11.5px var(--font);
   min-width:0;overflow:hidden}
-.vaxn{flex:0 0 96px;min-width:0;overflow:hidden;
+.vaxn{flex:0 0 112px;min-width:0;overflow:hidden;
   text-overflow:ellipsis;white-space:nowrap;color:var(--ink-dim)}
 .vax input{flex:1;min-width:40px;accent-color:var(--ink)}
 .vaxa{flex:0 0 64px;overflow:hidden;text-overflow:ellipsis;
@@ -3282,6 +3310,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
   #scrim.open{display:block}
   #railBtn{display:grid}
   #top{gap:8px;padding:0 10px}
+  #top .who{overflow:hidden;white-space:nowrap}
   #top .who small{display:none}
   #dnaPop .panel{right:-40px}
   .grid{grid-template-columns:1fr}
@@ -3293,9 +3322,21 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
   .srow .srh{flex-wrap:wrap}
 }
 @media(min-width:1025px){#railBtn{display:none !important}}
+@media(max-width:560px){
+  #top{gap:6px}
+  #top .who{max-width:130px;text-overflow:ellipsis}
+  #vwCtl{display:none}
+}
 .rmgrid{display:flex;flex-direction:column;gap:14px;max-width:920px}
-.rmslot{display:grid;grid-template-columns:minmax(0,1fr) minmax(110px,200px) 46px 20px;
+.rmslot{display:grid;grid-template-columns:20px minmax(0,1fr) 30px minmax(90px,170px) 46px;
      gap:10px;align-items:center}
+.rmsrc{display:flex;flex-direction:column;gap:4px;min-width:0}
+.rmq{background:var(--bg-2);border:1px solid var(--line);
+     border-radius:6px;color:var(--ink);padding:4px 9px;font:11.5px
+     var(--font)}
+.rmfav{border:0;background:none;font-size:15px;cursor:pointer;
+     color:var(--muted);padding:0}
+.rmfav:hover{color:var(--ink)}
 .rmslot select{background:var(--bg-2);border:1px solid var(--line);
      border-radius:7px;color:var(--ink);padding:7px 10px;font:500 13px
      var(--font)}
@@ -3561,7 +3602,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
     var h='<div class="'+cls+'" data-idx="'+idx+
           '" data-tags="'+esc(tags.join(' '))+'">';
     h+='<div class="ch"><span class="id">'+esc(c.id)+'</span>'+
-       '<span class="nm">'+esc(c.name)+'</span>'+
+       '<span class="nm" title="'+esc(c.name)+'">'+esc(c.name)+'</span>'+
        (c.preview?'<button class="xp" title="expand" data-x="'+
         esc(src)+'">&#x2922;</button>':'')+
        (c.score!=null?'<span class="score">'+esc(c.score)+'</span>':'')+
@@ -3638,7 +3679,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
       if(a.group!==grp){grp=a.group;
         h+='<div class="vgrp">'+esc(grp)+'</div>'}
       var cur=VGENES[a.axis],ix=cur?a.alleles.indexOf(cur):-1;
-      h+='<div class="vax"><span class="vaxn">'+esc(a.axis)+'</span>'+
+      h+='<div class="vax"><span class="vaxn" title="'+esc(a.axis)+
+         '">'+esc(a.axis)+'</span>'+
          '<input type="range" min="0" max="'+(a.alleles.length-1)+
          '" value="'+Math.max(0,ix)+'" data-ax="'+a.axis+
          '" data-n="'+a.alleles.length+'">'+
@@ -3656,7 +3698,9 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
         '<div class="noprev">pick a mood, a preset, or move a '+
         'slider — the resolved vibe renders here</div>')+'</div>'+
        '<div class="cf"><span class="vname">'+
-       esc((VRES&&VRES.name)||'computed vibe')+'</span>'+
+       esc((VRES&&VRES.name)||'computed vibe')+
+       (Object.keys(VGENES).length?' · '+Object.keys(VGENES).length+
+        ' genes':'')+'</span>'+
        '<button class="pick" id="vBake">Bake</button></div></div>';
     h+='<div class="filters">'+filters(o.clusters||[])+'</div>';
     h+='<input class="vq" id="vq" placeholder="search presets…" '+
@@ -3674,7 +3718,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
       var sw=(c.swatch&&c.swatch[0])||[];
       h+='<div class="card" data-i="'+i+'"><div class="ch">'+
          '<span class="id">'+esc(c.id)+'</span>'+
-         '<span class="nm">'+esc(c.name)+'</span>'+
+         '<span class="nm" title="'+esc(c.name)+'">'+esc(c.name)+'</span>'+
          '<span class="vsw">'+(sw[2]?'<i style="background:'+
           esc(sw[2])+'"></i>':'')+(sw[0]?'<i style="background:'+
           esc(sw[0])+'"></i>':'')+'</span></div>'+
@@ -4087,6 +4131,21 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
                {id:null,sh:0}];
     var over={};   // group -> 'mix' | slot index
     var t=null;
+    var FAV=new Set((function(){try{
+      return JSON.parse(localStorage.getItem('wf-rmfav')||'[]')}
+      catch(e){return[]}})());
+    function favSave(){try{localStorage.setItem('wf-rmfav',
+      JSON.stringify([...FAV]))}catch(e){}}
+    function srcOpts(sel,q){
+      // favourites float to the top of every source picker
+      var favs=SRC.filter(function(o){return FAV.has(o.id)}),
+          rest=SRC.filter(function(o){return !FAV.has(o.id)});
+      return favs.concat(rest).map(function(o){
+        var txt=(FAV.has(o.id)?'★ ':'')+o.label;
+        if(q&&(o.label+' '+(o.vibe||'')+' '+o.id).toLowerCase()
+           .indexOf(q)<0)return '';
+        return '<option value="'+esc(o.id)+'"'+
+          (sel===o.id?' selected':'')+'>'+esc(txt)+'</option>'}).join('')}
 
     function spec(){
       // a slot referenced by a group override stays a source even at
@@ -4125,16 +4184,19 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
       'preview re-emits the current page wearing the mixed DNA.</div>'+
       '<div class="rmgrid"><div class="rmslots">';
     ['A','B','C'].forEach(function(L,i){
-      h+='<div class="rmslot"><select data-i="'+i+'">'+
-         '<option value="">— none —</option>';
-      SRC.forEach(function(o){
-        h+='<option value="'+esc(o.id)+'"'+
-           (slots[i].id===o.id?' selected':'')+'>'+esc(o.label)+
-           '</option>'});
-      h+='</select><input type="range" min="0" max="100" value="'+
+      h+='<div class="rmslot"><i>'+L+'</i>'+
+         '<div class="rmsrc"><input class="rmq" data-i="'+i+'"'+
+         ' placeholder="search '+SRC.length+' sources…">'+
+         '<select data-i="'+i+'">'+
+         '<option value="">— none —</option>'+
+         srcOpts(slots[i].id,'')+
+         '</select></div>'+
+         '<button class="rmfav" data-i="'+i+'" title="favourite '+
+         'this source">☆</button>'+
+         '<input type="range" min="0" max="100" value="'+
          slots[i].sh+'" data-i="'+i+'">'+
          '<span class="rmpct" data-i="'+i+'">'+slots[i].sh+'%</span>'+
-         '<i>'+L+'</i></div>'});
+         '</div>'});
     h+='</div><div class="rmgroups">';
     Object.keys(GRP).forEach(function(g){
       h+='<div class="rmrow" data-g="'+esc(g)+'"><span>'+esc(GRP[g])+
@@ -4151,9 +4213,34 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
        '<div class="rmprev"><iframe id="rmFrame"></iframe></div></div>';
     el.innerHTML=h;
 
+    function favSync(i){
+      var b=el.querySelector('.rmfav[data-i="'+i+'"]');
+      if(b)b.textContent=FAV.has(slots[i].id)?'★':'☆'}
+    [0,1,2].forEach(favSync);
+    el.querySelectorAll('.rmq').forEach(function(q){
+      q.oninput=function(){
+        var i=+q.dataset.i,
+            sel=el.querySelector('.rmslot select[data-i="'+i+'"]');
+        sel.innerHTML='<option value="">— none —</option>'+
+          srcOpts(slots[i].id,q.value.toLowerCase());
+        sel.value=slots[i].id||''}});
+    el.querySelectorAll('.rmfav').forEach(function(b){
+      b.onclick=function(){
+        var i=+b.dataset.i,id=slots[i].id;
+        if(!id){toast('pick a source first');return}
+        if(FAV.has(id))FAV.delete(id);else FAV.add(id);
+        favSave();
+        // re-render every picker so favourites float up everywhere
+        el.querySelectorAll('.rmslot select').forEach(function(s2){
+          var j=+s2.dataset.i;
+          s2.innerHTML='<option value="">— none —</option>'+
+            srcOpts(slots[j].id,'');
+          s2.value=slots[j].id||''});
+        [0,1,2].forEach(favSync)}});
     el.querySelectorAll('.rmslot select').forEach(function(sel){
       sel.onchange=function(){
         var i=+sel.dataset.i;slots[i].id=sel.value||null;
+        favSync(i);
         // enable/disable the matching group radio labels
         el.querySelectorAll('.rmrow').forEach(function(r){
           var inp=r.querySelectorAll('input[type=radio]')[i+1];
@@ -4352,8 +4439,11 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
   function fxPick(el,v){
     api('/element-pick',{pipeline:PIPELINE,element:el,
       variant:v}).then(function(j){
-      if(j.ok){if(v==='none')delete DATA.picked_elements[el];
-        else DATA.picked_elements[el]=v;board()}
+      if(j.ok){if(v==='none'){delete DATA.picked_elements[el];
+          toast('effect cleared — '+el)}
+        else{DATA.picked_elements[el]=v;
+          toast(v+' applied — '+el)}
+        board()}
       else toast(j.message||'refused')})}
 
   // keyboard scrub — ←/→ moves card selection on boards,
