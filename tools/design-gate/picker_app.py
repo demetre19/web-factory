@@ -2445,9 +2445,13 @@ _BANK_STAGE_CSS = (
     # form validation demo — inline field errors + a success note
     # (the bank fragments ship unvalidated inputs; the emit pass
     # adds required/type, this styles what the driver reports)
-    '.wf-ferr{display:block;color:#b42318;'
-    'font:12px/1.3 system-ui,sans-serif;margin-top:2px}'
-    '.wf-fok{display:block;color:#067647;'
+    '.wf-ferr{display:inline-block;flex-basis:100%;'
+    'background:#fef3f2;color:#b42318;border:1px solid #fecdca;'
+    'border-radius:6px;padding:2px 8px;'
+    'font:12px/1.4 system-ui,sans-serif;margin-top:4px}'
+    '.wf-fok{display:block;flex-basis:100%;'
+    'background:#ecfdf3;color:#067647;border:1px solid #abefc6;'
+    'border-radius:6px;padding:6px 10px;'
     'font:600 13px/1.4 system-ui,sans-serif;margin-top:8px}'
     '[aria-invalid="true"]{outline:2px solid #b42318;'
     'outline-offset:1px}')
@@ -2721,7 +2725,7 @@ _FORM_DRIVER = (
     '})})()</script>')
 
 
-_FORM_EMAIL = re.compile(r'\be-?mail\b', re.I)
+_FORM_EMAIL = re.compile(r'\b(?:e-?mail|newsletter)\b', re.I)
 _FORM_PHONE = re.compile(
     r'\b(?:tel|phone|mobile|cell|sms)\b|\+?\d[\d\s().-]{6,}\d',
     re.I)
@@ -2776,8 +2780,10 @@ _FORM_OPTIONAL = re.compile(
 
 
 def _form_required(attrs):
+    # the optional-word scan reads identity attrs only — placeholder
+    # copy like "leave us notes" must not un-require a real field
     hint = ' '.join(re.findall(
-        r'(?:name|id|placeholder|aria-label)\s*=\s*["\']([^"\']+)',
+        r'(?:name|id|aria-label)\s*=\s*["\']([^"\']+)',
         attrs))
     # 'you@company.com' must not read as a 'company' optional cue
     hint = re.sub(r'\S+@\S+', ' ', hint)
@@ -2799,6 +2805,7 @@ def _bank_form_attrs(frag):
         # would make the demo form unsubmittable
         if 'disabled' in at or 'readonly' in at or 'sr-only' in at:
             return m.group(0)
+        ty = ''
         if tag == 'input':
             tm = re.search(r'\btype\s*=\s*["\']?[\w-]+["\']?', at)
             ty = (tm.group(0).split('=', 1)[-1].strip(
@@ -2824,7 +2831,14 @@ def _bank_form_attrs(frag):
             at = at[:-1].rstrip()
         else:
             close = ''
-        if 'required' not in at and _form_required(at):
+        # an email/newsletter field is always required — the
+        # optional-word scan never applies to the email channel
+        emailish = ty == 'email' or bool(_FORM_EMAIL.search(
+            ' '.join(re.findall(
+                r'(?:name|id|placeholder|aria-label)'
+                r'\s*=\s*["\']([^"\']+)', at))))
+        if 'required' not in at and (
+                emailish or _form_required(at)):
             at += ' required'
         return '<%s%s%s>' % (tag, at, close)
 
@@ -3085,7 +3099,7 @@ def emit_bank_previews(pd):
                     (os.path.isfile(css_dst) and
                      os.path.getmtime(css_dst) >
                      os.path.getmtime(dst)) or \
-                    '<!--wf:bank:v11-->' not in open(
+                    '<!--wf:bank:v12-->' not in open(
                         dst, encoding='utf-8',
                         errors='replace').read(64)
                 if stale:
@@ -3125,7 +3139,7 @@ def emit_bank_previews(pd):
                     css_ = _BANK_STAGE_CSS + \
                         ('body{padding:0}' if page else '')
                     with open(dst, 'w', encoding='utf-8') as fh:
-                        fh.write('<!--wf:bank:v11-->' +
+                        fh.write('<!--wf:bank:v12-->' +
                                  _doc(head, '', stage,
                                       extra=(_STAGE_SCROLL_SHIM
                                              if not page else '') +
