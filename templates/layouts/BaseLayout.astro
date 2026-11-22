@@ -96,7 +96,15 @@ import '../styles/global.css';
             (h && h.scrollWidth > h.clientWidth + 1)) {
           crowdLatch = true;
           if (h) h.classList.add('nav-crowded');
-          nav.setAttribute('data-over', '');
+          // stamp every nav layer in the header: a collapsed
+          // .nav-desk pairs with a .nav-links.nav-flyout that the
+          // burger must be able to open at >=60rem (data-over is
+          // what lets setNav open it there)
+          var sibs = document.querySelectorAll(
+            '.nav-links, .nav-desk');
+          for (var j = 0; j < sibs.length; j++) {
+            sibs[j].setAttribute('data-over', '');
+          }
           break;
         }
       }
@@ -183,13 +191,22 @@ import '../styles/global.css';
     // scrim clicks dismiss (N.flyout)
     var fo = document.querySelector('.flyout');
     if (fo) {
+      var syncFo = function () {
+        var trig = document.querySelectorAll('.flyout-open');
+        for (var i = 0; i < trig.length; i++) {
+          trig[i].setAttribute('aria-expanded',
+            fo.classList.contains('open') ? 'true' : 'false');
+        }
+      };
       if (e.target && e.target.closest && e.target.closest('.flyout-open')) {
         fo.classList.toggle('open');
+        syncFo();
       } else if (fo.classList.contains('open')) {
         var inFo = e.target && e.target.closest &&
                    e.target.closest('.flyout');
         if (!inFo || e.target.closest('.flyout-close')) {
           fo.classList.remove('open');
+          syncFo();
         }
       }
     }
@@ -204,7 +221,13 @@ import '../styles/global.css';
         setNav(false, { refocus: true });
       }
       var fo = document.querySelector('.flyout');
-      if (fo) fo.classList.remove('open');
+      if (fo && fo.classList.contains('open')) {
+        fo.classList.remove('open');
+        var trig = document.querySelectorAll('.flyout-open');
+        for (var i = 0; i < trig.length; i++) {
+          trig[i].setAttribute('aria-expanded', 'false');
+        }
+      }
     }
     // the open sheet holds focus: Tab cycles inside the panel — a
     // desktop flyout never traps
