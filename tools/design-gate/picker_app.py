@@ -1123,20 +1123,35 @@ if vibe_atlas is not None:
         globals().pop(_v, None)
 
 
-def _type_sign_bundle(pd, variant):
-    """rebuild the signed bundle for a 'genes:<hash>' type pick —
-    the SERVER computes it: the candidate's type-gene deltas and
-    its ladder layered over the currently signed vibe bundle, so a
-    preset family keeps its palette and the ladder is signed, not
+def _type_sign_bundle(pd, variant, spec=None):
+    """rebuild the signed bundle for a type pick — the SERVER
+    computes it: a 'genes:<hash>' candidate's type-gene deltas and
+    its ladder, or a 'custom:<sha>' editor spec's sanitized params,
+    layered over the currently signed vibe bundle, so a preset
+    family keeps its palette and the ladder is signed, not
     client-supplied."""
-    if vibe_atlas is None or not str(variant).startswith('genes:'):
+    if vibe_atlas is None:
         return None
-    card = next((c for c in type_candidates(pd)
-                 if c.get('variant') == variant or
-                 variant in (c.get('aliases') or ())), None)
-    if not card:
+    tok = _json_at(pd, 'TOKENS.json') or {}
+    fluid = tok.get('fluid') or {}
+    overrides, custom, fl = {}, None, None
+    if str(variant).startswith('custom:'):
+        if spec is None:
+            return None
+        custom = _clean_type_spec(spec, fluid)
+        if custom['head_face']:
+            overrides['display-face'] = custom['head_face']
+    elif str(variant).startswith('genes:'):
+        card = next((c for c in type_candidates(pd)
+                     if c.get('variant') == variant or
+                     variant in (c.get('aliases') or ())), None)
+        if not card:
+            return None
+        overrides = dict(card.get('genes') or {})
+        fl = card.get('fluid') or {}
+    else:
         return None
-    overrides = dict(card.get('genes') or {})
+        return None
     base_genes = _current_vibe_genes(pd)
     merged = dict(base_genes)
     merged.update(overrides)
@@ -1153,12 +1168,24 @@ def _type_sign_bundle(pd, variant):
               if k not in own}
         vb = dict(vb, css_dark=';'.join(f'{k}:{v}'
                                         for k, v in vd.items()))
-    fl = card.get('fluid') or {}
-    tok = _json_at(pd, 'TOKENS.json') or {}
-    fluid = tok.get('fluid') or {}
-    ladder = _ladder_css(
-        fluid, fl.get('text_scale_mob'), fl.get('text_scale_desk'),
-        fl.get('heading_scale_mob'), fl.get('heading_scale_desk'))
+    if custom is not None:
+        rungs = _custom_ladder(fluid, custom)
+        extra = ';'.join('--%s:%s' % kv for kv in rungs.items())
+        extra += (';' if extra else '') + \
+            '--display-weight:%d;--lh-0:%g' % (
+                custom['hweight'], custom['lheight'])
+        if custom['body_face'] in _FACE_STACKS:
+            # the resolved vibe emits --font-body itself — the
+            # primitive alone would never reach the cascade
+            extra += (';' if extra else '') + \
+                '--primitive-font-body:%s;--font-body:%s' % (
+                    _FACE_STACKS[custom['body_face']],
+                    _FACE_STACKS[custom['body_face']])
+        ladder = extra
+    else:
+        ladder = _ladder_css(
+            fluid, fl.get('text_scale_mob'), fl.get('text_scale_desk'),
+            fl.get('heading_scale_mob'), fl.get('heading_scale_desk'))
     css = _css_merge(vb.get('css'), r.get('css'))
     css_dark = _css_merge(vb.get('css_dark'), r.get('css_dark'))
     if ladder:
@@ -1166,16 +1193,27 @@ def _type_sign_bundle(pd, variant):
         css_dark += (';' if css_dark else '') + ladder
     shape = (r.get('shape') or '') if base_genes else \
         (vb.get('shape') or '') + (r.get('shape') or '')
-    return {'genes': merged,
-            'resolved': {
-                'css': css, 'css_dark': css_dark, 'shape': shape,
-                'theme': vb.get('theme') or r.get('theme'),
-                'tokens': {'light': dict(
-                    (p.split(':', 1) for p in css.split(';')
-                     if ':' in p)),
-                           'dark': dict(
-                    (p.split(':', 1) for p in css_dark.split(';')
-                     if ':' in p))}}}
+    if custom is not None:
+        # the vibe's type-contrast shape rules pin literal heading
+        # weights (h1,h2,h3,.sec-h{font-weight:NNN}) that would
+        # outrank the producer's var(--display-weight) decls — bind
+        # them back to the signed var, later in the same cascade so
+        # the editor's chosen weight actually ships
+        shape += ('h1,h2,h3,.sec-h{font-weight:'
+                  'var(--display-weight)}')
+    bundle = {'genes': merged,
+              'resolved': {
+                  'css': css, 'css_dark': css_dark, 'shape': shape,
+                  'theme': vb.get('theme') or r.get('theme'),
+                  'tokens': {'light': dict(
+                      (p.split(':', 1) for p in css.split(';')
+                       if ':' in p)),
+                             'dark': dict(
+                      (p.split(':', 1) for p in css_dark.split(';')
+                       if ':' in p))}}}
+    if custom is not None:
+        bundle['type_spec'] = custom
+    return bundle
 
 
 def _ladder_css(fluid, tm, tr, hm, hr):
@@ -1194,6 +1232,124 @@ def _ladder_css(fluid, tm, tr, hm, hr):
                     rungs.items()
                     if k.startswith('text-') or
                     re.fullmatch(r'h[1-6]', k))
+
+
+_FACE_STACKS = {
+    'sans': 'ui-sans-serif,system-ui,sans-serif',
+    'serif': 'Georgia,"Times New Roman",serif',
+    'mono': 'ui-monospace,"SF Mono",Menlo,monospace',
+    # 'mixed' heads are serif — the allele's own mapping
+    'mixed': 'Georgia,"Times New Roman",serif'}
+
+
+def _clean_type_spec(spec, fluid):
+    """whitelist + clamp the custom-ladder editor params — the
+    client's numbers never reach clamp raw. Defaults are the
+    pipeline's own fluid record."""
+    spec = spec if isinstance(spec, dict) else {}
+    f = fluid or {}
+
+    def _n(k, lo, hi, dflt):
+        try:
+            v = float(spec.get(k, dflt))
+        except (TypeError, ValueError):
+            v = float(dflt)
+        return max(lo, min(hi, v))
+    # bmin < 12 inverts the ladder: text-s/xs and h5/h6 pin at
+    # 11-12px, so a 10px base signs a smaller base rung than its
+    # own small rungs
+    bmin = _n('bmin', 12, 32, float(f.get('text_base_mob') or 16))
+    bmax = _n('bmax', 10, 40, float(f.get('text_base_desk') or 18))
+    rmin = _n('rmin', 1.0, 1.8, float(f.get('text_scale_mob') or 1.2))
+    rmax = _n('rmax', 1.0, 1.9, float(f.get('text_scale_desk') or 1.333))
+    if bmin > bmax:
+        bmin, bmax = bmax, bmin
+    if rmin > rmax:
+        rmin, rmax = rmax, rmin
+    vpm = int(_n('vpmin', 240, 1024, int(f.get('vp_min') or 320)))
+    vpx = int(_n('vpmax', 241, 1920, int(f.get('vp_max') or 1280)))
+    if vpx <= vpm:
+        vpx = vpm + 1
+    try:
+        steps = int(spec.get('steps', 6))
+    except (TypeError, ValueError):
+        steps = 6
+    hweight = int(_n('hweight', 400, 900, 700))
+    lheight = _n('lheight', 1.2, 2.0, 1.55)
+    hf = spec.get('head_face')
+    bf = spec.get('body_face')
+    return {'bmin': bmin, 'bmax': bmax, 'rmin': rmin, 'rmax': rmax,
+            'vpmin': vpm, 'vpmax': vpx, 'steps': max(2, min(6, steps)),
+            'hweight': hweight, 'lheight': lheight,
+            'head_face': hf if hf in _FACE_STACKS else None,
+            'body_face': bf if bf in ('sans', 'serif', 'mono')
+                         else None}
+
+
+def _custom_ladder(fluid, spec):
+    """custom editor spec → {rung: clamp css} — base/ratio/viewport
+    widths from the spec over the pipeline's fluid record; heading
+    rungs past `steps` collapse onto the smallest kept rung so the
+    count is a real, signed choice. The one math /type-ladder
+    previews and the sign path share."""
+    if clamp is None:
+        return {}
+    f = dict(fluid or {})
+    f.update(text_base_mob=spec['bmin'], text_base_desk=spec['bmax'],
+             heading_base_mob=spec['bmin'],
+             heading_base_desk=spec['bmax'],
+             text_scale_mob=spec['rmin'], text_scale_desk=spec['rmax'],
+             heading_scale_mob=spec['rmin'],
+             heading_scale_desk=spec['rmax'],
+             vp_min=spec['vpmin'], vp_max=spec['vpmax'])
+    try:
+        rungs = clamp.sizes(f)
+    except Exception:
+        return {}
+    horder = sorted(clamp._HEAD_STEPS, key=lambda k: -clamp._HEAD_STEPS[k])
+    # steps = distinct heading rungs: heads beyond it collapse to
+    # the smallest kept rung (previously they re-stepped at the
+    # text ratio — identical to the heading ratio in this spec, so
+    # steps never changed the signed vars)
+    if spec['steps'] < len(horder):
+        smallest = horder[spec['steps'] - 1]
+        for name in horder[spec['steps']:]:
+            rungs[name] = rungs[smallest]
+    return {k: v for k, v in rungs.items()
+            if k.startswith('text-') or re.fullmatch(r'h[1-6]', k)}
+
+
+def type_ladder(pipeline, spec):
+    """POST /type-ladder — the custom editor's live preview: the
+    sanitized spec → the clamp vars it would sign + emitted px at
+    the spec's own viewports."""
+    pd = G.Ctx(pipeline).dir
+    tok = _json_at(pd, 'TOKENS.json') or {}
+    fluid = tok.get('fluid') or {}
+    clean = _clean_type_spec(spec, fluid)
+    rungs = _custom_ladder(fluid, clean)
+    if not rungs:
+        return {'ok': False, 'error': 'clamp unavailable'}
+    s = dict(fluid)
+    s.update(vp_min=clean['vpmin'], vp_max=clean['vpmax'])
+    # probes at fixed widths so the specimen's M/T/D toggle stays
+    # valid however the spec moves its min/max viewport pins
+    px = {}
+    for name, css in rungs.items():
+        try:
+            px[name] = {str(w): round(
+                clamp.px_at(css, w, s), 1)
+                for w in (320, 768, 1280)}
+        except Exception:
+            pass
+    varz = {'--' + k: v for k, v in rungs.items()}
+    varz['--display-weight'] = str(clean['hweight'])
+    varz['--lh-0'] = '%g' % clean['lheight']
+    if clean['body_face'] in _FACE_STACKS:
+        varz['--primitive-font-body'] = \
+            _FACE_STACKS[clean['body_face']]
+        varz['--font-body'] = _FACE_STACKS[clean['body_face']]
+    return {'ok': True, 'spec': clean, 'vars': varz, 'px': px}
 
 
 def type_candidates(pd):
@@ -2168,6 +2324,14 @@ def app_data(pipeline):
     epicks = {p.get('element'): p.get('variant')
               for p in (_json_at(pd, 'ELEMENT-PICKS.json')
                         or {}).get('picks', [])}
+    type_spec = next(
+        ((p.get('bundle') or {}).get('type_spec')
+         for p in (_json_at(pd, 'ELEMENT-PICKS.json')
+                   or {}).get('picks', [])
+         if p.get('element') == 'type'
+         and isinstance(p.get('bundle'), dict)
+         and (p.get('bundle') or {}).get('type_spec')),
+        None)
 
     brief = _brief_file(ctx)
     dna = _json_at(pd, 'DNA.json') or _json_at(
@@ -2320,14 +2484,14 @@ def app_data(pipeline):
     boards['typescale'] = {
         'id': 'typescale', 'title': 'Type scale',
         'icon': 'type',
-        'desc': 'The resolved type ladder at emitted px — mobile '
-                '(320) vs desktop (1280) columns, light + dark '
-                'samples. Re-resolving genes re-emits it.',
+        'desc': 'Controls on top, one live specimen — set the '
+                'ladder and sign it through Use this.',
         'typescale': True,
         'tsdoc': ('/built/' + urllib.parse.quote(
                   os.path.join(pd, 'site', 'dist', ts_rel))
                   if ts_rel else None),
-        'cards': type_candidates(pd)}
+        'cards': [],
+        'presets': type_candidates(pd)}
     # step 2 — LAYOUT: whole-page scrub over section topologies,
     # then the option boards
     boards['page'] = {
@@ -2369,7 +2533,9 @@ def app_data(pipeline):
               for w in ('w3', 'w4')}
     return {'pipeline': pd,
             'picked_elements': epicks,
+            'type_spec': type_spec,
             'vibe_genes': _current_vibe_genes(pd),
+            'fluid': tokens.get('fluid') or {},
             'bank_depth': bank_depth,
             'palette': _palette(galleries),
             'saved_systems': list_systems(pd),
@@ -2991,7 +3157,7 @@ def atlas_family(pd, fam):
     if fam.startswith('atlas:'):
         p = vibe_atlas.PRESET_BY_ID.get(fam[6:])
         return vibe_atlas.resolve(p['genes']) if p else None
-    if fam.startswith('genes:') and pd:
+    if fam.startswith(('genes:', 'custom:')) and pd:
         ep = _json_at(os.path.dirname(pd.rstrip('/'))
                       if pd.endswith('/site')
                       else pd, 'ELEMENT-PICKS.json') or {}
@@ -3809,10 +3975,14 @@ def list_systems(pd):
 _PICKS_LOCK = threading.Lock()
 
 
-def record_element_pick(pipeline, element, variant, bundle=None):
+def record_element_pick(pipeline, element, variant, bundle=None,
+                        spec=None):
     """Signed element decision — ELEMENT-PICKS.json in the pipeline
     dir. Same service-side signing as candidate decisions; the file
-    is the element-choice registry the plan consumes later."""
+    is the element-choice registry the plan consumes later. `spec`
+    is the custom-ladder editor's params for a 'custom:' type pick —
+    sanitized server-side, and the variant hash derives from it, so
+    the client can never name the variant itself."""
     valid = {grp['element'] for g in ELEMENT_GALLERIES
              for grp in g['groups']} | {'vibe', 'header', 'footer',
                                         'mobile-menu', 'modals',
@@ -3864,7 +4034,15 @@ def record_element_pick(pipeline, element, variant, bundle=None):
     if element == 'type':
         # never trust the client's bundle — the server rebuilds
         # the candidate's deltas + ladder over the signed vibe
-        b = _type_sign_bundle(pd, variant)
+        if spec is not None:
+            if not isinstance(spec, dict):
+                return 1, 'invalid type spec'
+            spec = _clean_type_spec(
+                spec, (_json_at(pd, 'TOKENS.json') or {})
+                .get('fluid') or {})
+            variant = 'custom:' + hashlib.sha256(json.dumps(
+                spec, sort_keys=True).encode()).hexdigest()[:10]
+        b = _type_sign_bundle(pd, variant, spec=spec)
         if b is None:
             return 1, f'unknown type candidate {variant}'
         bundle = b
@@ -4344,6 +4522,51 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
 .vsw i{width:14px;height:14px;border-radius:4px;display:inline-block;
   border:1px solid var(--line)}
 
+/* custom type-ladder editor */
+.tsed{border:1px solid var(--line);border-radius:12px;
+  background:var(--panel);padding:16px 18px;margin:12px 0 18px}
+.tsed h2{margin:0 0 12px;font:700 14px var(--font)}
+.tsctl{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end}
+.tsctl>label,.tsgrid label{font:600 11px var(--font);
+  color:var(--muted);display:flex;flex-direction:column;gap:4px;
+  min-width:96px;flex:0 1 auto}
+.tsctl>label select,.tsctl>label input,.tsgrid input,
+.tsgrid select{background:var(--bg-2);border:1px solid var(--line);
+  border-radius:7px;padding:7px 9px;color:var(--ink);
+  font:12.5px var(--font);width:100%;min-width:0}
+.tsadv{flex:1 1 100%;font:600 11px var(--font);color:var(--muted)}
+.tsadv summary{cursor:pointer;padding:6px 0}
+.tsgrid{display:grid;grid-template-columns:repeat(auto-fill,
+  minmax(148px,1fr));gap:10px;padding:8px 0 2px}
+.tsvpbar{display:flex;gap:6px;margin-bottom:12px}
+.tsvpb{background:var(--bg-2);border:1px solid var(--line);
+  border-radius:7px;padding:5px 11px;color:var(--muted);
+  font:600 11px var(--mono);cursor:pointer}
+.tsvpb.on{color:var(--ink);border-color:var(--acc,#7c9eff);
+  background:color-mix(in srgb,var(--acc,#7c9eff) 12%,var(--bg-2))}
+.tsprev{display:grid;grid-template-columns:1fr;gap:18px;
+  margin:14px 0}
+.tsprev .tscol{background:var(--bg-2);border:1px solid var(--line);
+  border-radius:10px;padding:12px 14px;min-width:0;overflow:hidden}
+.tsprev .tscol h4{margin:0 0 8px;font:600 11px var(--mono);
+  color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.tsr{display:flex;align-items:baseline;gap:10px;min-width:0;
+  padding:2px 0;border-top:1px solid color-mix(in srgb,
+  var(--line) 45%,transparent)}
+.tsr:first-of-type{border-top:0}
+.tsrn{flex:0 0 38px;font:600 10.5px var(--mono);color:var(--muted)}
+.tsrx{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;
+  white-space:nowrap;color:var(--ink);line-height:1.2}
+.tsrp{flex:0 0 auto;font:10.5px var(--mono);color:var(--muted)}
+.tsvars{margin:0 0 12px;padding:10px 12px;max-height:150px;
+  overflow:auto;background:var(--bg-2);border:1px solid var(--line);
+  border-radius:9px;font:10.5px/1.55 var(--mono);color:var(--ink-dim);
+  white-space:pre-wrap;word-break:break-all}
+.tsc{background:var(--bg-2);color:var(--ink);border:1px solid
+  var(--line);border-radius:8px;padding:8px 13px;
+  font:600 12px var(--font);cursor:pointer}
+@media (max-width:768px){.tsprev{grid-template-columns:1fr}}
+
 
 /* card selection (keyboard scrub) */
 .card.sel{outline:2px solid var(--accent);outline-offset:-1px}
@@ -4783,7 +5006,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
     if(s==='type'){var tv=p.type;
       if(tv){var tc=((DATA.boards||{}).typescale||{}).cards||[],
         tn=tc.filter(function(x){return x.variant===tv})[0];
-        tv=(tn&&tn.name)||String(tv).replace(/^genes:/,'')}
+        tv=(tn&&tn.name)||(String(tv).indexOf('custom:')===0?
+          'custom ladder':String(tv).replace(/^genes:/,''))}
       return tv||null}
     // the signed w3 pick lives in the wave gates, not
     // ELEMENT-PICKS — derive it so a reload shows the choice
@@ -4818,7 +5042,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
       if(c.k==='type'&&v){
         var tc=((DATA.boards||{}).typescale||{}).cards||[],
             tn=tc.filter(function(x){return x.variant===v})[0];
-        v=(tn&&tn.name)||v}
+        v=(tn&&tn.name)||(String(v).indexOf('custom:')===0?
+          'custom ladder':v)}
       if(!v||v==='none'||v==='baseline')v=null;
       if(v)npick++;
       chips+='<button class="sbchip'+(v?' has':'')+'" data-b="'+c.board+
@@ -5890,6 +6115,237 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
   document.querySelectorAll('#vwCtl button').forEach(function(b){
     b.addEventListener('click',function(){setTimeout(fitIframes,80)})});
 
+  // --- custom type-ladder editor — the spec the server sanitizes;
+  // /type-ladder previews it, "Use this" signs it (element 'type',
+  // variant derived server-side from the spec hash) ---
+  var TS_RATIOS=[[1.067,'minor second'],[1.125,'major second'],
+    [1.2,'minor third'],[1.25,'major third'],[1.333,'perfect fourth'],
+    [1.414,'augmented fourth'],[1.5,'perfect fifth'],[1.618,'golden']],
+  TS_FACE={sans:'ui-sans-serif,system-ui,sans-serif',
+    serif:'Georgia,"Times New Roman",serif',
+    mono:'ui-monospace,"SF Mono",Menlo,monospace',
+    mixed:'Georgia,"Times New Roman",serif'},
+  TS_ROWS=[['h1'],['h2'],['h3'],['h4'],['h5'],['h6'],
+    ['lead','text-l'],['body','text-m'],['small','text-s']];
+
+  var TS_VPS=[[320,'M'],[768,'T'],[1280,'D']],_tsVp=1280,_tsPx=null,
+    _tsVars=null;
+
+  function tsEditor(){
+    // seed from the signed custom ladder when one exists — reopening
+    // the board shows the saved params, not the pipeline defaults
+    var S=DATA.type_spec||null,f=DATA.fluid||{},
+    d=function(k,x){return f[k]!=null?f[k]:x},
+    dv=function(sf,ff,x){
+      return S&&S[sf]!=null?S[sf]:d(ff,x)},
+    selh=function(v){return S&&S.head_face===v?' selected':''},
+    selb=function(v){return S&&S.body_face===v?' selected':''},
+    rmn=dv('rmin','text_scale_mob',1.2),
+    rmx=dv('rmax','text_scale_desk',1.333),
+    rp=function(cur){var o='',seen=0;
+      TS_RATIOS.forEach(function(p){
+        var s=Math.abs(p[0]-(+cur))<0.0005;if(s)seen=1;
+        o+='<option value="'+p[0]+'"'+(s?' selected':'')+'>'+
+          p[1]+' '+p[0]+'</option>'});
+      o+='<option value="custom"'+(seen?'':' selected')+
+        '>custom</option>';
+      return '<select id="ts-ratio" class="tsnum">'+o+'</select>'},
+    pres=(DATA.boards.typescale||{}).presets||[],
+    popts='<option value="">presets\u2026</option>';
+    pres.forEach(function(p,i){
+      popts+='<option value="'+i+'">'+esc(p.name)+'</option>'});
+    var wc=+(S&&S.hweight||700),wopts='';
+    [400,500,600,700,800,900].forEach(function(w){
+      wopts+='<option'+(wc===w?' selected':'')+'>'+w+'</option>'});
+    // S.lheight may be absent on picks signed before the control
+    // existed — +undefined is NaN, which left no option selected
+    // and silently signed the first (1.3)
+    var lc=(S&&S.lheight!=null)?+S.lheight:1.55,lopts='';
+    [1.3,1.4,1.5,1.55,1.6,1.7,1.8].forEach(function(l){
+      lopts+='<option'+(Math.abs(lc-l)<0.001?' selected':'')+
+        '>'+l+'</option>'});
+    return '<div class="tsed" id="tsed"><div class="tsctl">'+
+      '<label>preset<select id="ts-preset">'+popts+'</select>'+
+        '</label>'+
+      '<label>heading font<select id="ts-hf">'+
+        '<option value="">vibe default</option>'+
+        '<option'+selh('sans')+'>sans</option>'+
+        '<option'+selh('serif')+'>serif</option>'+
+        '<option'+selh('mono')+'>mono</option>'+
+        '<option'+selh('mixed')+'>mixed</option></select></label>'+
+      '<label>body font<select id="ts-bf">'+
+        '<option value="">vibe default</option>'+
+        '<option'+selb('sans')+'>sans</option>'+
+        '<option'+selb('serif')+'>serif</option>'+
+        '<option'+selb('mono')+'>mono</option></select></label>'+
+      '<label>scale ratio'+rp()+'</label>'+
+      '<label>min px<input id="ts-bmin" type="number" '+
+        'step="0.5" min="12" max="32" value="'+
+        dv('bmin','text_base_mob',16)+'"></label>'+
+      '<label>max px<input id="ts-bmax" type="number" '+
+        'step="0.5" min="10" max="40" value="'+
+        dv('bmax','text_base_desk',18)+'"></label>'+
+      '<label>heading weight<select id="ts-hweight">'+wopts+
+        '</select></label>'+
+      '<label>body line-height<select id="ts-lheight">'+lopts+
+        '</select></label>'+
+      '<label>steps<input id="ts-steps" type="number" min="2" '+
+        'max="6" value="'+(S&&S.steps||6)+'"></label>'+
+      '<details class="tsadv"><summary>advanced</summary>'+
+        '<div class="tsgrid">'+
+        '<label>ratio min<input id="ts-rmin" type="number" '+
+          'step="0.01" min="1" max="1.8" value="'+rmn+'"></label>'+
+        '<label>ratio max<input id="ts-rmax" type="number" '+
+          'step="0.01" min="1" max="1.9" value="'+rmx+'"></label>'+
+        '<label>viewport min px<input id="ts-vpmin" type="number" '+
+          'step="10" min="240" max="1024" value="'+
+          dv('vpmin','vp_min',320)+'"></label>'+
+        '<label>viewport max px<input id="ts-vpmax" type="number" '+
+          'step="10" min="241" max="1920" value="'+
+          dv('vpmax','vp_max',1280)+'"></label>'+
+        '</div></details>'+
+      '</div>'+
+      '<div class="tsprev"><div class="tscol" id="ts-pa">'+
+        '<div class="tsvpbar" id="ts-vpbar">'+
+        TS_VPS.map(function(v){
+          return '<button type="button" class="tsvpb'+
+            (v[0]===_tsVp?' on':'')+'" data-v="'+v[0]+'">'+
+            v[1]+' '+v[0]+'</button>'}).join('')+
+        '</div><div id="ts-spec"></div></div></div>'+
+      '<pre class="tsvars" id="ts-vars"></pre>'+
+      '<div class="crow"><button class="pick" id="ts-use">'+
+      'Use this</button><button class="tsc" id="ts-copy">'+
+      'copy css vars</button><span class="pstat" id="ts-stat">'+
+      '</span></div></div>'}
+
+  function tsSpec(){
+    var g=function(id){return document.getElementById(id).value},
+        num=function(id){var v=g(id).trim();return v===''?NaN:+v};
+    return {bmin:num('ts-bmin'),bmax:num('ts-bmax'),
+      rmin:num('ts-rmin'),rmax:num('ts-rmax'),
+      vpmin:num('ts-vpmin'),vpmax:num('ts-vpmax'),
+      steps:num('ts-steps'),hweight:num('ts-hweight'),
+      lheight:num('ts-lheight'),
+      head_face:g('ts-hf')||null,body_face:g('ts-bf')||null}}
+
+  var _tsT=null;
+  function tsValidate(){
+    var sp=tsSpec(),msg=null;
+    ['bmin','bmax','vpmin','vpmax','steps'].forEach(function(k){
+      var el=document.getElementById('ts-'+k);
+      if(el)el.style.outline=Number.isFinite(sp[k])
+        ?'':'2px solid #b42318'});
+    if(!Number.isFinite(sp.bmin)||!Number.isFinite(sp.bmax)||
+       !Number.isFinite(sp.vpmin)||!Number.isFinite(sp.vpmax)||
+       !Number.isFinite(sp.steps))msg='empty/invalid number field';
+    else if(sp.bmin>sp.bmax)msg='base min > base max — swap them';
+    else if(sp.rmin>sp.rmax)msg='ratio min > ratio max — swap them';
+    else if(sp.vpmin>=sp.vpmax)msg='vp min must be < vp max';
+    return msg}
+
+  function tsRenderSpecimen(){
+    // one specimen — re-renders on control or viewport change
+    var el=document.getElementById('ts-spec');
+    if(!el||!_tsPx)return;
+    var spec=tsSpec(),hf=spec.head_face||
+        (DATA.vibe_genes||{})['display-face']||'sans',
+      bf=spec.body_face||'sans',vp=String(_tsVp),h2='';
+    TS_ROWS.forEach(function(r){
+      var k=r[1]||r[0],p=(_tsPx[k]||{})[vp];
+      if(p==null)return;
+      // steps caps the number of heading rungs — extra rungs
+      // collapse onto the smallest kept one (same as the sign path)
+      if(r[0][0]==='h'&&(+r[0].slice(1))>(+spec.steps))return;
+      var fh=r[0][0]==='h'?'h':'b';
+      h2+='<div class="tsr"><span class="tsrn">'+r[0]+
+          '</span><span class="tsrx" data-f="'+fh+
+          '" style="font-size:'+p+'px">'+
+          (r[0]==='small'?'Aa small':'Aa '+r[0])+
+          '</span><span class="tsrp">'+p+'px</span></div>'});
+    el.innerHTML=h2;
+    // faces/weights go through style objects — font stacks contain
+    // quotes that break inline style attributes
+    el.querySelectorAll('.tsrx').forEach(function(x){
+      x.style.fontFamily=
+        x.dataset.f==='h'?TS_FACE[hf]:TS_FACE[bf];
+      if(x.dataset.f==='h')x.style.fontWeight=spec.hweight||700;
+      else x.style.lineHeight=spec.lheight||1.55})}
+
+  function tsRefresh(){
+    var vm=tsValidate(),st=document.getElementById('ts-stat');
+    if(vm){if(st){st.className='pstat bad';st.textContent=vm}return}
+    api('/type-ladder',{pipeline:PIPELINE,spec:tsSpec()})
+      .then(function(j){
+        if(!j||!j.ok){var st=document.getElementById('ts-stat');
+          if(st)st.textContent=(j&&j.error)||'preview failed';return}
+        _tsPx=j.px||{};_tsVars=j.vars||{};
+        tsRenderSpecimen();
+        var v=document.getElementById('ts-vars');
+        if(v)v.textContent=Object.keys(_tsVars).map(function(k){
+          return k+': '+_tsVars[k]+';'}).join('\n')})}
+
+  function tsSet(id,v){
+    var e=document.getElementById(id);
+    if(e&&v!=null)e.value=v}
+
+  function wireTsEd(el){
+    var ed=el.querySelector('#tsed');
+    if(!ed)return;
+    _tsVp=window.innerWidth<=480?320:1280;
+    ed.querySelectorAll('#ts-vpbar .tsvpb').forEach(function(b){
+      b.classList.toggle('on',+b.dataset.v===_tsVp)});
+    ed.querySelectorAll('input,select').forEach(function(i){
+      i.addEventListener('input',function(){
+        if(i.id==='ts-ratio'&&i.value&&i.value!=='custom'){
+          tsSet('ts-rmin',i.value);tsSet('ts-rmax',i.value)}
+        if((i.id==='ts-rmin'||i.id==='ts-rmax')&&
+           document.getElementById('ts-ratio'))
+          document.getElementById('ts-ratio').value='custom';
+        if(i.id==='ts-preset'){
+          var p=((DATA.boards.typescale||{}).presets||[])[+i.value];
+          if(p){
+            var pf=p.fluid||{};
+            tsSet('ts-rmin',pf.heading_scale_mob);
+            tsSet('ts-rmax',pf.heading_scale_desk);
+            document.getElementById('ts-ratio').value='custom';
+            var f=(p.genes||{})['display-face'];
+            if(f)tsSet('ts-hf',f)}}
+        clearTimeout(_tsT);_tsT=setTimeout(tsRefresh,220)})});
+    ed.querySelectorAll('#ts-vpbar .tsvpb').forEach(function(b){
+      b.onclick=function(){
+        _tsVp=+b.dataset.v;
+        ed.querySelectorAll('#ts-vpbar .tsvpb').forEach(function(x){
+          x.classList.toggle('on',x===b)});
+        tsRenderSpecimen()}});
+    var cp=document.getElementById('ts-copy');
+    if(cp)cp.onclick=function(){
+      var v=document.getElementById('ts-vars');
+      if(v&&v.textContent){
+        if(navigator.clipboard&&navigator.clipboard.writeText)
+          navigator.clipboard.writeText(v.textContent)
+            .then(function(){toast('css vars copied')});
+        else toast('select + copy the vars manually')}};
+    var us=document.getElementById('ts-use');
+    if(us)us.onclick=function(){
+      var st=document.getElementById('ts-stat');
+      var vm=tsValidate();
+      if(vm){if(st){st.className='pstat bad';st.textContent=vm}return}
+      us.disabled=true;
+      api('/element-pick',{pipeline:PIPELINE,element:'type',
+        variant:'custom',spec:tsSpec()}).then(function(j){
+        us.disabled=false;
+        if(st){st.className='pstat '+(j.ok?'ok':'bad');
+          st.textContent=j.message||(j.ok?'signed':'refused')}
+        if(j.ok){toast(j.message);
+          DATA.picked_elements=DATA.picked_elements||{};
+          // the server derives the variant — the supersession
+          // message carries old → new, so take the LAST match
+          var mv=(j.message||'').match(/\bcustom:[0-9a-f]+\b/g);
+          DATA.picked_elements.type=mv?mv[mv.length-1]:'custom';
+          DATA.type_spec=tsSpec();
+          BAKED=DATA.picked_elements.type;board()}})};
+    tsRefresh()}
+
   function board(){
     var el=document.getElementById('board');
     el.dataset.pane=CUR;
@@ -5915,24 +6371,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
     if(o.atlas){vibePane(el,o);return}
     var h='<h1>'+esc(o.title)+'</h1><div class="desc">'+esc(o.desc||'')+'</div>';
     if(o.typescale){
-      var tg='<div class="grid">';
-      (o.cards||[]).forEach(function(c,i){tg+=card(c,i)});
-      tg+='</div>';
-      el.innerHTML=h+'<div class="vprev">'+
-        '<div class="cb" style="height:auto">'+
-        (o.tsdoc?'<iframe class="tsfr" src="'+esc(o.tsdoc)+
-        (document.documentElement.dataset.theme==='dark'
-         ?'?theme=dark':'')+'" style="width:100%;height:1180px;'+
-        'border:0;display:block"></iframe>'+
-        '<button class="xp" data-x="'+esc(o.tsdoc)+'">\u2922</button>':
-        '<div class="noprev">TOKENS.json not emitted for this '+
-        'pipeline yet</div>')+'</div></div>'+
-        '<h2 style="margin:22px 0 4px;font-size:14px">'+
-        'candidate ladders — pick one</h2>'+tg;
-      el.querySelectorAll('.pick').forEach(function(b){
-        b.onclick=function(){doPick(b)}});
-      wireXp(el);
-      wireFrames(el);
+      el.innerHTML=h+tsEditor();
+      wireTsEd(el);
       return}
     if(o.scrub){
       el.innerHTML=h+scrubView(o);

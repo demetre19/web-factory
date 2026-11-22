@@ -834,6 +834,17 @@ def _handler():
                 if F and re.search(r'/site/', fp) and \
                         not os.path.isfile(fp):
                     _ensure_preview(fp)
+                if F is None and os.path.isfile(fp) and \
+                        re.search(r'/site/', fp):
+                    # a superseded genes:/custom: family (re-pick
+                    # changed the signed variant) — the page exists;
+                    # serve it unframed instead of a 404
+                    self.send_response(302)
+                    self.send_header(
+                        'Location', '/built/' + qpath)
+                    self.send_header('Content-Length', '0')
+                    self.end_headers()
+                    return
                 if not (F and os.path.isfile(fp) and
                         re.search(r'/site/', fp) and
                         fp.lower().endswith(('.html', '.htm'))):
@@ -950,8 +961,14 @@ def _handler():
                 import picker_app
                 code, txt = picker_app.record_element_pick(
                     body.get('pipeline', ''), body.get('element', ''),
-                    body.get('variant', ''), body.get('bundle'))
+                    body.get('variant', ''), body.get('bundle'),
+                    spec=body.get('spec'))
                 self._send(200, {'ok': code == 0, 'message': txt})
+            elif self.path == '/type-ladder':
+                import picker_app
+                self._send(200, picker_app.type_ladder(
+                    body.get('pipeline', ''),
+                    body.get('spec') or {}))
             elif self.path == '/vibe-resolve':
                 import picker_app
                 self._send(200, picker_app.vibe_resolve(
