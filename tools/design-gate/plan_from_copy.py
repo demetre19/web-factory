@@ -553,28 +553,9 @@ def build(pdir, option=None):
     allowed['nav'] = [c for c in nav_opts if c in gate.COMP_FOR_ACT]
     allowed['footer'] = ['footer-bar'] + sorted(
         c for c in gate.RECIPE_FOR_COMP if c.startswith('footer-'))
-    zone_of = {b['id']: b['zone'] for b in blocks}
-    table = []
-    row_media = max(0, len(media) - 1)
-    for oid, label, v in opts:
-        seq = repair_rhythm([(b['id'], v[b['id']]) for b in blocks],
-                            allowed, zone_of)
-        seq = [(bid, eff_comp(by[bid], c, allowed[bid], row_media))
-               for bid, c in seq]
-        s, inputs = score(seq, by)
-        table.append({'id': oid, 'label': label,
-                      'compositions': {bid: c for bid, c in seq},
-                      'score': s, 'score_inputs': inputs})
-    pick = option or recorded_pick(pdir) or 'd1'
-    chosen = next((o for o in table if o['id'] == pick), None)
-    if chosen is None:
-        raise SystemExit(f'{TOOL}: option {pick!r} not among '
-                         f'{[o["id"] for o in table]}')
-    refs = refs_by_comp(site_dir)
-    # a page with first-party photography earns the authored
-    # media-backed hero (image behind the copy, scrim-bound) —
-    # but only where the archetype admits the merge comp (J.10);
-    # a text-led DNA keeps the archetype's contained hero
+    # the hero resolves before the option table — every option varies
+    # nav/hero/footer through the archetype's allowed chrome pool, so
+    # lo-* previews differ above the fold, never only mid-page
     _media_hero = ('hero-act-merge'
                    if 'hero-act-merge' in
                    HERO_COMP.get(geno['layout-archetype'], ())
@@ -582,6 +563,48 @@ def build(pdir, option=None):
     hero_comp = (_media_hero if media and _media_hero else
                  HERO_FOR_ARCH.get(geno['layout-archetype'],
                                    'stacked-hero'))
+    # the archetype's own hero pool first, then every other hero
+    # comp — an archetype outside HERO_COMP (horizontal-band &c)
+    # still earns a rotating hero, never stacked-hero for all
+    _hero_rest = sorted({c for pool in HERO_COMP.values()
+                         for c in pool})
+    allowed['hero'] = [hero_comp] + sorted(
+        c for c in HERO_COMP.get(geno['layout-archetype'], ())
+        if c != hero_comp and c in gate.COMP_FOR_ACT) + [
+        c for c in _hero_rest
+        if c != hero_comp
+        and c not in HERO_COMP.get(geno['layout-archetype'], ())
+        and c in gate.COMP_FOR_ACT]
+    nav_pool = allowed['nav'] or ['flyout-nav']
+    foot_pool = allowed['footer'] or ['footer-bar']
+    hero_pool = allowed['hero']
+    zone_of = {b['id']: b['zone'] for b in blocks}
+    table = []
+    row_media = max(0, len(media) - 1)
+    for oi, (oid, label, v) in enumerate(opts):
+        seq = repair_rhythm([(b['id'], v[b['id']]) for b in blocks],
+                            allowed, zone_of)
+        seq = [(bid, eff_comp(by[bid], c, allowed[bid], row_media))
+               for bid, c in seq]
+        s, inputs = score(seq, by)
+        table.append({'id': oid, 'label': label,
+                      'compositions': {bid: c for bid, c in seq},
+                      'chrome': {'nav': nav_pool[oi % len(nav_pool)],
+                                 'hero': hero_pool[oi % len(hero_pool)],
+                                 'footer': foot_pool[oi % len(foot_pool)]},
+                      'score': s, 'score_inputs': inputs})
+    pick = option or recorded_pick(pdir) or 'd1'
+    chosen = next((o for o in table if o['id'] == pick), None)
+    if chosen is None:
+        raise SystemExit(f'{TOOL}: option {pick!r} not among '
+                         f'{[o["id"] for o in table]}')
+    refs = refs_by_comp(site_dir)
+    # the shipped page binds the CHOSEN option's chrome — the same
+    # picks the lo-* previews render, so the pick is never cosmetic
+    hero_comp = (chosen.get('chrome') or {}).get('hero') or hero_comp
+    nav_comp = (chosen.get('chrome') or {}).get('nav') or 'flyout-nav'
+    footer_comp = (chosen.get('chrome') or {}).get('footer') \
+        or 'footer-bar'
 
     def base_row(name, comp, **kw):
         r = {'name': name, 'wf_ref': f'preview/layouts.html#{pick}:{name}'}
@@ -608,7 +631,7 @@ def build(pdir, option=None):
         nav_items.append({'label': l['anchor'], 'href': l['href']})
     hero_cta = (copy.get('closing') or {}).get('cta')
     rows.append(base_row(
-        'nav', 'flyout-nav', label='Header', speech_act=['chrome'],
+        'nav', nav_comp, label='Header', speech_act=['chrome'],
         category='headers',
         surface='base', density='compact', emphasis='nav',
         align='center-axis', stack='text-first', collapse='burger',
@@ -697,7 +720,7 @@ def build(pdir, option=None):
             intent='cta', content_ids=['c-close'], copy_ref='closing',
             cta=clo['cta']))
     rows.append(base_row(
-        'footer', 'footer-bar', label='Footer', speech_act=['chrome'],
+        'footer', footer_comp, label='Footer', speech_act=['chrome'],
         category='footer',
         surface='base', density='compact', emphasis='links',
         align='center-axis', stack='text-first', collapse='1-col',
