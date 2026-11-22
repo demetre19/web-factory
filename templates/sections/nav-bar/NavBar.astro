@@ -30,11 +30,11 @@ const logoSvg = logoName ? logos[`../assets/${logoName}`] : null;
   {navOver && <nav class="nav-priority" aria-label="Primary"><ul class="row gap-fluid-m list-plain">{items.slice(0, navCut).map((it) => <li><a class="nav-link" href={it.href || '#'}>{it.label}</a></li>)}</ul></nav>}
   {navOver && <button class="nav-more" type="button" aria-label="More links">More</button>}
   <nav class="nav-links" data-over={navOver ? '' : undefined} aria-label="Primary">
-    <button class="nav-close" type="button" aria-label="Close menu">&times;</button>
+    <div class="nav-sheet-head"><span class="logo nav-sheet-brand">{brand}</span><button class="nav-close" type="button" aria-label="Close menu">&times;</button></div>
     {items.map((it) => (
       <a class="nav-link" href={it.href || '#'}>{it.label}</a>
     ))}
-  </nav>
+  {cta && <p class="nav-sheet-cta mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label}</a></p>}</nav>
   <div class="row">
     {cta && <div class="nav-cta"><a class="wf-cta-button" href={cta.href}>{cta.label}</a></div>}
     <button class="theme-toggle" data-theme-toggle type="button" aria-label="Switch between light and dark mode"><svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg><svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg></button>

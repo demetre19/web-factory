@@ -651,7 +651,10 @@ def build(pdir, option=None):
         align='center-axis', stack='text-first', collapse='burger',
         media_ratio='none', disclosure='open', intent='chrome',
         items=nav_items,
-        cta={'label': phone, 'href': tel}))
+        # a label, never a bare number — "Call 03 7003 2223" reads
+        # as an action; the digits alone read as text (N.cta)
+        cta={'label': 'Call ' + phone if phone else phone,
+             'href': tel}))
     rows.append(base_row(
         'hero', hero_comp, label='Hero', speech_act=['promise'],
         category='hero',
@@ -741,7 +744,8 @@ def build(pdir, option=None):
         media_ratio='none', disclosure='open', intent='chrome',
         items=[{'label': l['anchor'], 'href': l['href']}
                for l in copy['links_out']]
-        + ([{'label': phone, 'href': tel}] if phone else [])))
+        + ([{'label': 'Call ' + phone, 'href': tel}]
+            if phone else [])))
 
     # unspent brief media lands on rows whose comp renders a media
     # pane — a brief-declared photo is intake the page must carry,

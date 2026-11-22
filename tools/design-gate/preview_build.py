@@ -670,8 +670,10 @@ def emit_layouts(ctx):
                     hm = brief_media[0]
                     r2['image'] = {'src': hm.get('src') or hm.get('file'),
                                    'alt': hm.get('alt', '')}
+                    lock = str(row.get('media_ratio') or 'none')
                     r2['media_ratio'] = (
-                        'none' if ov == 'hero-act-merge' else '4:3')
+                        'none' if ov == 'hero-act-merge'
+                        else '4:3' if lock == 'none' else lock)
                     cc['media_ratio'] = r2['media_ratio']
                     cc['surface'] = (
                         'media' if ov == 'hero-act-merge'
@@ -702,8 +704,9 @@ def emit_layouts(ctx):
                 break
             r3['image'] = {'src': m.get('src') or m.get('file'),
                            'alt': m.get('alt', '')}
-            r3['media_ratio'] = '4:3'
-            cc2['media_ratio'] = '4:3'
+            lock = str(r3.get('media_ratio') or 'none')
+            r3['media_ratio'] = '4:3' if lock == 'none' else lock
+            cc2['media_ratio'] = r3['media_ratio']
         txt = _page_astro(ctx, ov_rows, copy, bank_css)
         PE._w(os.path.join(ctx.site, 'src', 'pages', 'preview',
                            f'lo-{oid}.astro'), txt)
@@ -1174,7 +1177,9 @@ def _emit_page_boards(ctx, doc):
                     row['image'], *row['images'] = [
                         {'src': x.get('src') or x.get('file'),
                          'alt': x.get('alt', '')} for x in ring]
-                    cc['media_ratio'] = '4:3'
+                    lock = str(row.get('media_ratio') or 'none')
+                    cc['media_ratio'] = (
+                        '4:3' if lock == 'none' else lock)
                 rows.append((cc, row))
             pages[oid] = rows, copy
     bank_css = []
