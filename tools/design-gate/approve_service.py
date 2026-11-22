@@ -1088,12 +1088,20 @@ def _handler():
                         break
                 fails = ((_gs2.get(first) or {}).get('failures')
                          if first else None) or []
+                fails = [str(x).removeprefix(
+                         'undeclared violation: ') for x in fails]
                 reason = (f'{first} still fails: '
                           + '; '.join(str(x) for x in fails[:4])
                           if fails else
                           (tail.splitlines()[-1] if tail
                            else f'{wv} re-gate failed '
                                 f'(exit {r.returncode})'))
+                if any('P.14' in f for f in fails):
+                    reason += (' — fix: add the missing canonical '
+                               'Mobbin refs (screen ID/URL per '
+                               'section kind) to MOBBIN-REFS.md, or '
+                               'pick a different composition in the '
+                               'picker')
                 self._send(200, {'ok': False, 'reason': reason,
                                  'exit': r.returncode, 'tail': tail})
             else:
