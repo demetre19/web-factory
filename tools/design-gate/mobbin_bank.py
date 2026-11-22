@@ -40,6 +40,8 @@ SOURCES_INDEX = os.path.join(REPO, 'templates', 'skeletons',
                              'topology-sources-index.json')
 NAV_INDEX_MD = os.path.join(REPO, 'docs', 'machinery', 'design',
                             'MOBBIN-NAV-INDEX.md')
+SECTIONS_INDEX_MD = os.path.join(REPO, 'docs', 'machinery', 'design',
+                                 'MOBBIN-SECTIONS-INDEX.md')
 
 FAMILY_FOR = {
     'top-bar': 'nav-top-bar',
@@ -51,6 +53,17 @@ FAMILY_FOR = {
     'modal': 'nav-modal',
     'bottom-sheet': 'nav-bottom-sheet',
     'sticky-bar': 'nav-sticky-bar',
+    # web section classes
+    'footer-columns': 'footer', 'faq-accordion': 'faq',
+    'pricing-tiers': 'pricing', 'testimonial-cards': 'testimonials',
+    'cta-band': 'cta', 'hero-split': 'hero',
+    'feature-grid': 'features', 'about-editorial': 'about',
+    'contact-form': 'contact', 'comparison-table': 'comparison',
+    'app-download': 'downloads', 'article-grid': 'blog',
+    'error-page': 'error-404', 'gallery-grid': 'gallery',
+    'steps': 'how-it-works', 'logo-cloud': 'logos',
+    'stats-row': 'stats', 'timeline': 'timeline',
+    'newsletter-band': 'newsletter',
 }
 
 # topology_class → (closest existing bank topology_id, confidence)
@@ -64,6 +77,26 @@ MATCHED_TOPO = {
     'full-screen-overlay': ('list-vertical-rows', 'low'),
     'bottom-sheet': ('list-vertical-rows', 'low'),
     'sticky-bar': ('nav-top-bar', 'medium'),
+    # web section classes
+    'footer-columns': ('footer-column', 'high'),
+    'faq-accordion': ('list-vertical-rows', 'high'),
+    'pricing-tiers': ('grid-3col-uniform', 'high'),
+    'testimonial-cards': ('list-cards', 'high'),
+    'cta-band': ('band-strip', 'high'),
+    'hero-split': ('hero-media-bg', 'medium'),
+    'feature-grid': ('grid-3col-uniform', 'high'),
+    'about-editorial': ('split-50-50', 'medium'),
+    'contact-form': ('form-centered', 'high'),
+    'comparison-table': ('table-cell', 'high'),
+    'app-download': ('split-50-50', 'high'),
+    'article-grid': ('grid-3col-uniform', 'high'),
+    'error-page': ('content', 'high'),
+    'gallery-grid': ('grid-4col-uniform', 'high'),
+    'steps': ('list-vertical-rows', 'medium'),
+    'logo-cloud': ('grid-4col-uniform', 'high'),
+    'stats-row': ('grid-4col-uniform', 'medium'),
+    'timeline': ('list-vertical-rows', 'high'),
+    'newsletter-band': ('form-centered', 'high'),
 }
 
 ELEMENT_SIG = {
@@ -76,6 +109,26 @@ ELEMENT_SIG = {
     'full-screen-overlay': {'nav': 1, 'ul': 3, 'a': 10},
     'bottom-sheet': {'ul': 2, 'a': 6, 'icn': 4},
     'sticky-bar': {'nav': 1, 'ul': 1, 'a': 5, 'icn': 2},
+    # web section classes
+    'footer-columns': {'ul': 4, 'a': 14, 'h': 4, 'btn': 1},
+    'faq-accordion': {'h': 1, 'ul': 1, 'li': 6, 'btn': 6},
+    'pricing-tiers': {'h': 1, 'card': 3, 'ul': 3, 'btn': 3},
+    'testimonial-cards': {'h': 1, 'card': 3, 'p': 3, 'img': 3},
+    'cta-band': {'h': 1, 'p': 1, 'btn': 2},
+    'hero-split': {'h': 1, 'p': 1, 'btn': 2, 'img': 1},
+    'feature-grid': {'h': 1, 'card': 6, 'icn': 6},
+    'about-editorial': {'h': 1, 'p': 2, 'img': 1},
+    'contact-form': {'h': 1, 'input': 4, 'btn': 1},
+    'comparison-table': {'h': 1, 'table': 1, 'th': 4, 'td': 8},
+    'app-download': {'h': 1, 'p': 1, 'btn': 2, 'img': 1},
+    'article-grid': {'h': 1, 'card': 4, 'img': 4, 'a': 4},
+    'error-page': {'h': 1, 'p': 1, 'btn': 1},
+    'gallery-grid': {'h': 1, 'img': 8},
+    'steps': {'h': 1, 'ul': 1, 'li': 4, 'icn': 4},
+    'logo-cloud': {'img': 8, 'a': 8},
+    'stats-row': {'h': 1, 'stat': 4},
+    'timeline': {'ul': 1, 'li': 5, 'h': 5, 'p': 5},
+    'newsletter-band': {'h': 1, 'p': 1, 'input': 1, 'btn': 1},
 }
 
 
@@ -129,10 +182,24 @@ def _tree(topology_class):
                 _node('heading', 'h2', 'Title', 2),
                 _node('text-basic', 'p', 'Body', 2),
                 _node('button', 'btn', 'Actions', 2)]
-    return [_node('section', 'nav', 'Bottom sheet', 0),
-            _node('block', 'ul', 'Items', 1),
-            _node('icon', 'icn', 'Row icon', 2),
-            _node('text-link', 'a', 'Row', 2)]
+    if topology_class == 'bottom-sheet':
+        return [_node('section', 'nav', 'Bottom sheet', 0),
+                _node('block', 'ul', 'Items', 1),
+                _node('icon', 'icn', 'Row icon', 2),
+                _node('text-link', 'a', 'Row', 2)]
+    # generic section tree derived from the element signature
+    sig = ELEMENT_SIG.get(topology_class, {})
+    tree = [_node('section', 'section', topology_class, 0)]
+    for el, count in sig.items():
+        for i in range(min(count, 4)):
+            tree.append(_node(
+                {'h': 'heading', 'p': 'text-basic', 'img': 'image',
+                 'btn': 'button', 'a': 'text-link', 'icn': 'icon',
+                 'card': 'block', 'li': 'block', 'input': 'input',
+                 'table': 'table', 'th': 'block', 'td': 'block',
+                 'ul': 'block', 'stat': 'block'}.get(el, 'block'),
+                el, None, 1 + (i > 0)))
+    return tree
 
 
 def _slug(s):
@@ -152,10 +219,14 @@ def bank_item(c, img_dir):
             g.write(f.read())
     matched, conf = MATCHED_TOPO.get(
         c['topology_class'], ('content', 'low'))
+    section_class = c.get('section_class', 'navigation')
+    nav_like = c['topology_class'] in MATCHED_TOPO and \
+        section_class == 'navigation'
     is_new = conf in ('low', 'medium') and c['topology_class'] \
-        not in ('top-bar', 'modal')
+        not in ('top-bar', 'modal') and nav_like
     topo_id = (matched if conf == 'high'
-               else f"nav-{c['topology_class']}")
+               else (f"nav-{c['topology_class']}" if nav_like
+                     else matched))
     topo = {
         'label': f"{c['site_name']} — {c['topology_class']}",
         'source': 'mobbin',
@@ -171,7 +242,7 @@ def bank_item(c, img_dir):
         'id': c['id'],
         'title': f"{c['site_name']} {c['topology_class']}",
         'type': 'section',
-        'category': ['navigation'],
+        'category': [section_class],
         'elements': list(ELEMENT_SIG.get(
             c['topology_class'], {}).keys()),
         'style_tags': [c['style'], c['mode']],
@@ -187,7 +258,7 @@ def bank_item(c, img_dir):
         'matched_topo': {'topology_id': matched, 'confidence': conf},
         'is_new_topology': is_new,
         'tags': {
-            'section_class': 'navigation',
+            'section_class': section_class,
             'topology_class': c['topology_class'],
             'style': [c['style']],
             'category': [],
@@ -221,9 +292,11 @@ def main():
         rows = []
         for root, _dirs, files in os.walk(MOBBIN):
             for fn in files:
-                if fn.endswith('.spec.json'):
+                if fn.endswith('.spec.json') and root != MOBBIN:
                     p = os.path.join(root, fn)
                     s = json.load(open(p))
+                    if 'site_name' not in s:
+                        continue
                     fam = os.path.relpath(root, MOBBIN)
                     name = fn[:-len('.spec.json')]
                     tp = os.path.join(root, f'{name}.topo.json')
@@ -235,6 +308,24 @@ def main():
                         'name': name, 'family': fam,
                         'c': s, 'spec': s,
                         'is_new': s.get('is_new_topology', False)})
+        mp = os.path.join(MOBBIN, 'MANIFEST.json')
+        merged = {}
+        if os.path.exists(mp):
+            for e in json.load(open(mp)):
+                merged[e.get('mobbin_id', e.get('id'))] = e
+        for r in rows:
+            s = r['spec']
+            merged[s.get('mobbin_id', s['id'])] = {
+                'id': s.get('mobbin_id', s['id']),
+                'site_name': s.get('site_name', ''),
+                'mobbin_url': s.get('mobbin_url', ''),
+                'section_class': (s.get('tags') or {}).get(
+                    'section_class', 'navigation'),
+                'topology_class': (s.get('tags') or {}).get(
+                    'topology_class', ''),
+                'mode': (s.get('tags') or {}).get('mode', ''),
+                'queries': s.get('queries', [])}
+        json.dump(list(merged.values()), open(mp, 'w'), indent=1)
         _write_indexes(rows)
         print(f'retagged {len(rows)} exemplars')
         return
@@ -249,8 +340,14 @@ def main():
 
 
 def _write_specs(rows):
-    json.dump([r['c'] for r in rows],
-              open(os.path.join(MOBBIN, 'MANIFEST.json'), 'w'), indent=1)
+    mp = os.path.join(MOBBIN, 'MANIFEST.json')
+    merged = {}
+    if os.path.exists(mp):
+        for e in json.load(open(mp)):
+            merged[e.get('mobbin_id', e.get('id'))] = e
+    for r in rows:
+        merged[r['c'].get('mobbin_id', r['c']['id'])] = r['c']
+    json.dump(list(merged.values()), open(mp, 'w'), indent=1)
 
 
 def _write_indexes(rows):
@@ -288,27 +385,35 @@ def _write_indexes(rows):
     json.dump(idx, open(SOURCES_INDEX, 'w'), indent=1)
 
     os.makedirs(os.path.dirname(NAV_INDEX_MD), exist_ok=True)
-    lines = ['# MOBBIN NAV/MENU/MODAL INDEX',
-             '',
-             'Web-platform exemplars banked from Mobbin '
-             '(screenshots licensed reference-only, not '
-             'redistributable assets).',
-             '',
-             '| # | site | family | topology_class | topology_id '
-             '| mode | style | new topo | mobbin |',
-             '|---|---|---|---|---|---|---|---|---|']
-    for i, r in enumerate(rows):
-        c = r['c'] if 'c' in r else r.get('spec', {})
-        t = (c.get('tags') or {})
-        lines.append(
-            f"| {i} | {c.get('site_name','')} | {r['family']} | "
-            f"{t.get('topology_class', c.get('topology_class',''))} | "
-            f"{r.get('topology_id','')} | {t.get('mode','')} | "
-            f"{','.join(t.get('style', []))} | "
-            f"{'YES' if r.get('is_new', c.get('is_new_topology')) else ''} | "
-            f"[link]({c.get('mobbin_url','').split('?')[0]}) |")
-    with open(NAV_INDEX_MD, 'w') as f:
-        f.write('\n'.join(lines) + '\n')
+    nav_rows = [r for r in rows
+                if r['family'].startswith('nav-')]
+    sec_rows = [r for r in rows
+                if not r['family'].startswith('nav-')]
+    for path, title, group in (
+            (NAV_INDEX_MD, 'MOBBIN NAV/MENU/MODAL INDEX', nav_rows),
+            (SECTIONS_INDEX_MD, 'MOBBIN WEB SECTIONS INDEX',
+             sec_rows)):
+        if not group:
+            continue
+        lines = [f'# {title}', '',
+                 'Web-platform exemplars banked from Mobbin '
+                 '(screenshots licensed reference-only, not '
+                 'redistributable assets).', '',
+                 '| # | site | family | topology_class | topology_id '
+                 '| mode | style | new topo | mobbin |',
+                 '|---|---|---|---|---|---|---|---|---|']
+        for i, r in enumerate(group):
+            c = r['c'] if 'c' in r else r.get('spec', {})
+            t = (c.get('tags') or {})
+            lines.append(
+                f"| {i} | {c.get('site_name','')} | {r['family']} | "
+                f"{t.get('topology_class', c.get('topology_class',''))} | "
+                f"{r.get('topology_id','')} | {t.get('mode','')} | "
+                f"{','.join(t.get('style', []))} | "
+                f"{'YES' if r.get('is_new', c.get('is_new_topology')) else ''} | "
+                f"[link]({c.get('mobbin_url','').split('?')[0]}) |")
+        with open(path, 'w') as f:
+            f.write('\n'.join(lines) + '\n')
 
 
 if __name__ == '__main__':
