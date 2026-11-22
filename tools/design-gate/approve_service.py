@@ -1029,6 +1029,25 @@ def _handler():
                     return
                 tail = ((r.stdout or '') + (r.stderr or ''))\
                     .strip()[-3000:]
+                # s0 lives in the SITE dir's GATES.json — a page-dir
+                # scan can't see its drift; when ORDER refuses on s0
+                # the cascade must start one wave earlier
+                if start != 's0' and _re.search(
+                        r'ORDER: s0 .{0,80}re-gate s0', tail):
+                    try:
+                        r = _sp.run(
+                            [sys.executable,
+                             os.path.join(here, 'pipeline.py'), pd,
+                             '--from', 's0', '--to', wv],
+                            capture_output=True, text=True,
+                            timeout=900, env=env)
+                    except _sp.TimeoutExpired:
+                        self._send(200, {'ok': False,
+                                         'reason': 's0 re-gate timed '
+                                                   'out (15m)'})
+                        return
+                    tail = ((r.stdout or '') + (r.stderr or ''))\
+                        .strip()[-3000:]
                 # paused at a pick surface? say who must act (P.8)
                 m = _re.search(r'pick (w\d+) — click', tail)
                 if r.returncode == 0 and m:
