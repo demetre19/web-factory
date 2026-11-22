@@ -2319,6 +2319,9 @@ def app_data(pipeline):
     lo = _json_at(pd, 'LAYOUT-OPTIONS.json') or {}
     lo_allowed = {k: list(dict.fromkeys(v or []))
                   for k, v in (lo.get('allowed') or {}).items()}
+    # the boards build also renders the Header·Footer classes, so it
+    # runs before the galleries list them
+    pboards = _page_boards(pd)
     galleries = {}
     for g in ELEMENT_GALLERIES:
         gcards = []
@@ -2344,12 +2347,19 @@ def app_data(pipeline):
                 for key in keys:
                     rel = emitted.get(key)
                     derived = key not in (comp, comp + sfx)
-                    if rel and os.path.isfile(os.path.join(
-                            pd, 'site', 'dist', rel)):
+                    fp = (os.path.join(pd, 'site', 'dist', rel)
+                          if rel else '')
+                    if g['id'] == 'chrome' and not os.path.isfile(fp):
+                        # a class the page didn't emit is still a real
+                        # built page — the boards build renders every
+                        # listed nav/footer class (lo-chrome-<comp>)
+                        fp = os.path.join(pd, 'boards', 'site', 'dist',
+                                          'preview', 'lo-chrome-' + key,
+                                          'index.html')
+                    if fp and os.path.isfile(fp):
                         gcards.append({
                             'id': key, 'name': key,
-                            'preview': '/built/' + urllib.parse.quote(
-                                os.path.join(pd, 'site', 'dist', rel)),
+                            'preview': '/built/' + urllib.parse.quote(fp),
                             'tags': [comp] + ([grp['label'].lower()]
                                 if grp.get('label') else []) +
                                 ([t for t in ('flyout', 'overlay',
@@ -2473,7 +2483,6 @@ def app_data(pipeline):
                 'row swaps that section\'s composition/topology '
                 'in place; ✓ signs the row\'s choice.',
         'scrub': scrub, 'cards': []}
-    pboards = _page_boards(pd)
     for b in PAGE_BOARDS:
         pb = pboards.get(b['id']) or {}
         bcards = list(pb.get('cards') or [])

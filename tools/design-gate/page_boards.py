@@ -972,6 +972,7 @@ def render_sha(ctx, doc):
         media = []
     h.update(json.dumps(media, sort_keys=True, default=str).encode())
     files = [os.path.join(ctx.dir, 'TOKENS.json'),
+             os.path.join(ctx.dir, 'LAYOUT-OPTIONS.json'),
              os.path.join(HERE, 'preview_build.py')]
     for sub in ('layouts', 'styles', '_shared', 'assets'):
         for root, _d, fns in os.walk(os.path.join(ctx.site, 'src', sub)):

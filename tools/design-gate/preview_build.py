@@ -1251,6 +1251,30 @@ def _emit_page_boards(ctx, doc):
                         '4:3' if lock == 'none' else lock)
                 rows.append((cc, row))
             pages[oid] = rows, copy
+    # the Header·Footer board — one built page per nav/footer class
+    # the plan allows (LAYOUT-OPTIONS), each worn over the home
+    # board's first option's hero, so every listed card expands
+    allowed = (gate._layout_options(ctx) or {}).get('allowed') or {}
+    excl = set(doc.get('excluded') or {})
+    home = (doc['boards'].get('home') or {}).get('options') or []
+    seed = (pages.get(home[0]['id']) if home else None) or next(
+        iter(pages.values()), None)
+    for role, key in (('header', 'nav'), ('footer', 'footer')):
+        for comp in dict.fromkeys(allowed.get(key) or []):
+            if seed is None or comp in excl or not os.path.isfile(
+                    os.path.join(PE.TEMPLATES, 'sections', comp,
+                                 gate.camel(comp) + '.astro')):
+                continue
+            rows = []
+            for cc, row in seed[0]:
+                if cc['section'] not in ('header', 'hero', 'footer'):
+                    continue
+                cc = dict(cc, wf_ref=f'preview/elements.html#{role}:{comp}')
+                if cc['section'] == role:
+                    cc.update(composition=comp, recipe=None)
+                    comps[comp] = ''
+                rows.append((cc, row))
+            pages['chrome-' + comp] = rows, seed[1]
     bank_css = []
     for comp, recipe in sorted(comps.items()):
         if comp.startswith('bm-'):
