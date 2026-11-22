@@ -73,6 +73,11 @@ h1, h2, h3, h4, h5, h6, p, ul, ol, li, figure, blockquote { margin: 0; }
   /* --measure is emitted by emit_tokens (clamp.aliases — it tracks
      type.base so families differ on line length too) */
   --r-card: var(--primitive-radius);
+  /* card + button shape knobs the vibe genes rebind (vibe_atlas) */
+  --r-btn: var(--r-card);
+  --card-pad: var(--space-m);
+  --card-border-w: 1px;
+  --card-border-style: solid;
   --tap: 3rem;
   --font-display: var(--primitive-font-display);
   --font-body: var(--primitive-font-body);
@@ -237,10 +242,10 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
   .between { justify-content: space-between; }
   .stack { display: flex; flex-direction: column; gap: var(--space-s); }
   .card { background: var(--bg-surface);
-          border: var(--card-border-w, 1px) var(--card-border-style, solid)
+          border: var(--card-border-w) var(--card-border-style)
                   var(--border-default);
           border-radius: var(--r-card);
-          padding: var(--card-pad, var(--space-m));
+          padding: var(--card-pad);
           box-shadow: var(--shadow-card); }
   /* brand mark — the inlined SVG scales to the bar height via the
      token layer, never an arbitrary-value utility on the element.
@@ -344,7 +349,7 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
                    align-items: center; justify-content: center;
                    text-align: center;
                    padding: var(--btn-padding-block) var(--btn-padding-inline);
-                   border-radius: var(--r-btn, var(--r-card));
+                   border-radius: var(--r-btn);
                    background: var(--action-primary);
                    color: var(--action-primary-ink);
                    font-weight: 600; text-decoration: none;
