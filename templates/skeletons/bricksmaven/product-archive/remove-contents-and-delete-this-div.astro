@@ -1,6 +1,6 @@
 ---
 /**
- * bm-remove-contents-and-delete-this-div — TRANSLATED Bricksmaven skeleton.
+ * wf-remove-contents-and-delete-this-div — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (remove-contents-and-delete-this-div.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -68,7 +68,7 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
 <div class="wf-remove-contents-and-delete-this-div">
   <div>
     <div class="sec-inner">
-      <div class="bm-product-archive-4__header-container">
+      <div class="wf-product-archive-4__header-container">
         {head && (h1 ? <h1 class="text-fluid-4">{head}</h1> : <h2 class="text-fluid-2">{head}</h2>)}
         {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
               </div>
@@ -78,17 +78,17 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
 
     </div>
     <div class="sec-inner">
-      <div class="bm-product-archive-4__container">
-        <div class="bm-product-archive-4__product-filters">
-          <div class="bm-product-archive-filter-wrapper bm-product-archive-filter-wrapper--alt">
-            <div class="bm-product-archive-filter-wrapper__toggle-button">
+      <div class="wf-product-archive-4__container">
+        <div class="wf-product-archive-4__product-filters">
+          <div class="wf-product-archive-filter-wrapper wf-product-archive-filter-wrapper--alt">
+            <div class="wf-product-archive-filter-wrapper__toggle-button">
               <button class="flyout-open" type="button" aria-label="Open panel"><span aria-hidden="true">≡</span></button>
             </div>
             <div class="flyout" role="dialog" aria-modal="true">
-              <div class="bm-product-archive-off-canvas__content">
-                {list.length > 0 &&                 <div class="bm-product-archive-2__filter-container">
+              <div class="wf-product-archive-off-canvas__content">
+                {list.length > 0 &&                 <div class="wf-product-archive-2__filter-container">
                   {list.length > 0 && <div class="nav-group">{(list || []).map((it) => (
-                      <div class="bm-product-archive__filter-row card">
+                      <div class="wf-product-archive__filter-row card">
                         {it.icon && <IconChip name={it.icon} />}
                         <h4 class="text-fluid-1">{it.term || it.title}</h4>
                       </div>
@@ -100,7 +100,7 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
             </div>
           </div>
         </div>
-        {image &&         <div class="bm-product-archive__product-list">
+        {image &&         <div class="wf-product-archive__product-list">
           {image &&           <div class="product-list-1-card grid-auto gap-fluid-l">
             {image && image.src && <figure class="product-list-1-card__image ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
           </div>

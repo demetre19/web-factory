@@ -1,6 +1,6 @@
 ---
 /**
- * bm-header-14 — TRANSLATED Bricksmaven skeleton.
+ * wf-header-14 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (header-14.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -66,7 +66,7 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
 
 <div class="wf-header-14">
   <div class="sec-inner">
-    <div class="bm-header-14__container row between">
+    <div class="wf-header-14__container row between">
       <span class="logo brand-mark">{brand}</span>
       {image &&       <div>
         {image && image.src && <figure class="ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
@@ -78,7 +78,7 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
         {navOver && <Fragment><nav class="nav-priority" aria-label="Primary"><ul class="row gap-fluid-m list-plain">{list.slice(0, navCut).map((it) => <li><a class="nav-link" href={it.href}>{it.label || it.term || it.title || it.text}</a></li>)}</ul></nav><button class="nav-more" type="button" aria-label="More links">More</button></Fragment>}
         {list.length > 0 && <button class="burger" type="button" aria-label="Menu"><span aria-hidden="true">≡</span></button>}
       </div>
-      {act.label &&       <div class="bm-header-14__cta row between">
+      {act.label &&       <div class="wf-header-14__cta row between">
         {act.label && <p class="nav-cta"><a class="wf-cta-button" href={act.href}>{act.label}</a></p>}
       </div>
       }

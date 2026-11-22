@@ -1,4 +1,4 @@
-  .wf-pricing-19 .bm-pricing-19__container {
+  .wf-pricing-19 .wf-pricing-19__container {
     row-gap: var(--space-s);
   }
 
@@ -8,51 +8,51 @@
     row-gap: var(--flow-spacing);
   }
 
-  .wf-pricing-19 .bm-pricing-19-card {
+  .wf-pricing-19 .wf-pricing-19-card {
     row-gap: var(--flow-spacing);
   }
 
-  .wf-pricing-19 .bm-pricing-19-card__top {
+  .wf-pricing-19 .wf-pricing-19-card__top {
     row-gap: calc(var(--flow-spacing) / 2);
   }
 
-  .wf-pricing-19 .bm-pricing-19-card__pricing {
+  .wf-pricing-19 .wf-pricing-19-card__pricing {
     display: grid;
     gap: var(--space-m);
     grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
   }
 
-  .wf-pricing-19 .bm-list {
+  .wf-pricing-19 .wf-list {
     display: flex;
     flex-direction: column;
     row-gap: calc(var(--flow-spacing) / 2);
   }
 
-  .wf-pricing-19 .bm-list-item {
+  .wf-pricing-19 .wf-list-item {
     flex-direction: row;
     display: flex;
     column-gap: calc(var(--flow-spacing) / 2);
   }
 
-  .wf-pricing-19 .bm-pricing-19-card__price-box-wrapper {
+  .wf-pricing-19 .wf-pricing-19-card__price-box-wrapper {
     row-gap: calc(var(--flow-spacing) / 2);
   }
 
-  .wf-pricing-19 .bm-pricing-19-card__price-box {
+  .wf-pricing-19 .wf-pricing-19-card__price-box {
     row-gap: calc(var(--flow-spacing) / 2);
     display: flex;
     flex-direction: column;
   }
 
-  .wf-pricing-19 .bm-pricing-19-card__meta-box {
+  .wf-pricing-19 .wf-pricing-19-card__meta-box {
     display: flex;
     flex-wrap: nowrap;
     column-gap: calc(var(--flow-spacing) / 2);
   }
 
   @media (max-width: 44rem) {
-    .wf-pricing-19 .bm-pricing-19-card__pricing { grid-template-columns: 1fr; }
-    .wf-pricing-19 .bm-list-item { flex-direction: column; }
-    .wf-pricing-19 .bm-pricing-19-card__meta-box { flex-direction: column; }
+    .wf-pricing-19 .wf-pricing-19-card__pricing { grid-template-columns: 1fr; }
+    .wf-pricing-19 .wf-list-item { flex-direction: column; }
+    .wf-pricing-19 .wf-pricing-19-card__meta-box { flex-direction: column; }
   }
-  .wf-pricing-19 .bm-pricing-19-card__pricing > :only-child { grid-column: 1 / -1; }
+  .wf-pricing-19 .wf-pricing-19-card__pricing > :only-child { grid-column: 1 / -1; }

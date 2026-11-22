@@ -1,16 +1,16 @@
-  .wf-hero-18 .hero-18-container {
+  .wf-hero-18 .wf-hero-18-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
     gap: var(--space-m);
   }
 
-  .wf-hero-18 .hero-18-content {
+  .wf-hero-18 .wf-hero-18-content {
     display: flex;
     flex-direction: column;
     row-gap: var(--space-s);
   }
 
-  .wf-hero-18 .hero-18-media {
+  .wf-hero-18 .wf-hero-18-media {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
     gap: var(--grid-gap);

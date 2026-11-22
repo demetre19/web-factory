@@ -1,6 +1,6 @@
 ---
 /**
- * bm-empty-cart — TRANSLATED Bricksmaven skeleton.
+ * wf-empty-cart — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (empty-cart.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -70,7 +70,7 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
     <div class="stack">
   <div class="sec-inner">
     <div>
-      <div class="bm-empty-cart__content">
+      <div class="wf-empty-cart__content">
         {head && (h1 ? <h1 class="text-fluid-4">{head}</h1> : <h2 class="text-fluid-2">{head}</h2>)}
         {act.label &&         <div class="cta-combo">
           {act.label && <p class="mt-fluid-m"><a class="wf-cta-button" href={act.href}>{act.label}</a></p>}
@@ -78,7 +78,7 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
         }
       </div>
     </div>
-    <div class="bm-product-list-1__container">
+    <div class="wf-product-list-1__container">
       <div class="intro">
         {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
               </div>
@@ -86,21 +86,21 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
 {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
       </div>}
 
-      {list.length > 0 && <div class="bm-product-list-1__list">{(list || []).map((it) => (
-            <div class="bm-product-list-1-card card">
-              <div class="bm-product-list-1-card__content">
+      {list.length > 0 && <div class="wf-product-list-1__list">{(list || []).map((it) => (
+            <div class="wf-product-list-1-card card">
+              <div class="wf-product-list-1-card__content">
                 {it.icon && <IconChip name={it.icon} />}
                 <div class="stack">
                   <h3 class="text-fluid-1">{it.term || it.title || it.text}</h3>
                   {it.text && (it.term || it.title) && <p class="text-fluid-0">{it.text}</p>}
                 </div>
-                <div class="bm-product-list-1-card__top">
+                <div class="wf-product-list-1-card__top">
                   {it.meta && <p class="meta text-fluid--1">{it.meta}</p>}
                   {it.meta && <p class="meta text-fluid--1">{it.meta}</p>}
                 </div>
               </div>
-              {it.tag &&               <div class="bm-product-list-notice__wrapper">
-                {it.tag &&                 <div class="bm-product-list-notice-circle__sale-badge">
+              {it.tag &&               <div class="wf-product-list-notice__wrapper">
+                {it.tag &&                 <div class="wf-product-list-notice-circle__sale-badge">
                   {it.tag && <span class="tag text-fluid--1">{it.tag}</span>}
                 </div>
                 }

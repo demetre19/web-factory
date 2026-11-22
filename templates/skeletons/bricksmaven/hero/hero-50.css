@@ -2,12 +2,12 @@
     flex-direction: row;
   }
 
-  .wf-hero-50 .hero-50__container {
+  .wf-hero-50 .wf-hero-50__container {
     display: flex;
     gap: var(--space-s);
   }
 
-  .wf-hero-50 .hero-50__content {
+  .wf-hero-50 .wf-hero-50__content {
     display: flex;
     flex-direction: column;
     row-gap: var(--space-m);
@@ -24,6 +24,6 @@
 
   @media (max-width: 44rem) {
     .wf-hero-50 .hero-50 { flex-direction: column; }
-    .wf-hero-50 .hero-50__container { flex-direction: column; }
+    .wf-hero-50 .wf-hero-50__container { flex-direction: column; }
     .wf-hero-50 .cta-combo { flex-direction: column; }
   }

@@ -4,7 +4,7 @@
  */
 
 /**
- * bm-take-out-content-and-remove-div — TRANSLATED Bricksmaven skeleton.
+ * wf-take-out-content-and-remove-div — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (take-out-content-and-remove-div.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -53,10 +53,10 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
   <div>
     <button class="flyout-open" type="button" aria-label="Open panel"><span aria-hidden="true">&#9776;</span></button>
     <div class="flyout" role="dialog" aria-modal="true">
-      <div class="bm-off-canvas-6__content">
+      <div class="wf-off-canvas-6__content">
         <button class="flyout-close" type="button" aria-label="Close">&times;</button>
         {head && <h2 class="text-fluid-2">{head}</h2>}
-        {list.length > 0 && <div class="bm-off-canvas-nav-ul">
+        {list.length > 0 && <div class="wf-off-canvas-nav-ul">
           <div class="nav-group">{(list || []).map((it) => (
               <div class="card">
                 <h3 class="text-fluid-1"><a class="text-fluid-0" href={it.href}>{it.icon && <IconChip name={it.icon} />} {it.label || it.term || it.anchor || it.text}</a></h3>
@@ -64,10 +64,10 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
               </div>
             ))}</div>
         </div>}
-        <div class="bm-off-canvas-6__contact-footer">
-          {links.length > 0 && <div class="bm-off-canvas-contact">
+        <div class="wf-off-canvas-6__contact-footer">
+          {links.length > 0 && <div class="wf-off-canvas-contact">
             <div class="nav-group">{(links || []).map((it) => (
-                <div class="bm-off-canvas-contact-item card">
+                <div class="wf-off-canvas-contact-item card">
                   <h3 class="text-fluid-1"><a class="text-fluid-0" href={it.href}>{it.icon && <IconChip name={it.icon} />} {it.label || it.term || it.anchor || it.text}</a></h3>
                   {(it.label || it.term || it.anchor) && it.text && <p class="text-fluid-0">{it.text}</p>}
                 </div>

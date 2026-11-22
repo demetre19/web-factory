@@ -1,4 +1,4 @@
-  .wf-blog-archive-14 .blog-archive-14-container {
+  .wf-blog-archive-14 .wf-blog-archive-14-container {
     row-gap: var(--space-s);
   }
 
@@ -8,13 +8,13 @@
     row-gap: var(--space-s);
   }
 
-  .wf-blog-archive-14 .blog-archive-14-archive-list {
+  .wf-blog-archive-14 .wf-blog-archive-14-archive-list {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
     gap: var(--space-xs);
   }
 
-  .wf-blog-archive-14 .blog-archive-14-archive-card__content {
+  .wf-blog-archive-14 .wf-blog-archive-14-archive-card__content {
     display: flex;
     flex-direction: column;
     row-gap: var(--flow-spacing);

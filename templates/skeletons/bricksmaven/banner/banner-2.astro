@@ -1,6 +1,6 @@
 ---
 /**
- * bm-banner-2 — TRANSLATED Bricksmaven skeleton.
+ * wf-banner-2 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (banner-2.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -60,9 +60,9 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
 
 <div class="wf-banner-2">
   <div class="sec-inner">
-    <div class="bm-banner-2__container">
-      <div class="bm-banner-content">
-        <div class="bm-banner-content__info">
+    <div class="wf-banner-2__container">
+      <div class="wf-banner-content">
+        <div class="wf-banner-content__info">
           {head && (h1 ? <h1 class="text-fluid-4">{head}</h1> : <h2 class="text-fluid-2">{head}</h2>)}
           {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
                   </div>
@@ -71,7 +71,7 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
         </div>}
 
       </div>
-      {act.label &&       <div class="bm-banner-2__right-column">
+      {act.label &&       <div class="wf-banner-2__right-column">
         {act.label && <p class="mt-fluid-m"><a class="wf-cta-button" href={act.href}>{act.label}</a></p>}
       </div>
       }

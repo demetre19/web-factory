@@ -1,37 +1,37 @@
-  .wf-call-to-action-24 .bm-call-to-action-24__container {
+  .wf-call-to-action-24 .wf-call-to-action-24__container {
     row-gap: var(--space-s);
   }
 
-  .wf-call-to-action-24 .bm-call-to-action-24-testimonial {
+  .wf-call-to-action-24 .wf-call-to-action-24-testimonial {
     row-gap: var(--flow-spacing);
   }
 
-  .wf-call-to-action-24 .bm-call-to-action-24-testimonial__customer-bio {
+  .wf-call-to-action-24 .wf-call-to-action-24-testimonial__customer-bio {
     display: flex;
     flex-direction: row;
     column-gap: calc(var(--flow-spacing) / 2);
   }
 
-  .wf-call-to-action-24 .bm-call-to-action-24-testimonial__bio {
+  .wf-call-to-action-24 .wf-call-to-action-24-testimonial__bio {
     display: flex;
     flex-direction: column;
     gap: var(--space-s);
   }
 
-  .wf-call-to-action-24 .bm-call-to-action-24-cta-card {
+  .wf-call-to-action-24 .wf-call-to-action-24-cta-card {
     display: grid;
     grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
     gap: var(--grid-gap);
   }
 
-  .wf-call-to-action-24 .bm-call-to-action-24-cta-card__content {
+  .wf-call-to-action-24 .wf-call-to-action-24-cta-card__content {
     flex-wrap: nowrap;
     flex-direction: column;
     row-gap: var(--flow-spacing);
   }
 
   @media (max-width: 44rem) {
-    .wf-call-to-action-24 .bm-call-to-action-24-cta-card { grid-template-columns: 1fr; }
-    .wf-call-to-action-24 .bm-call-to-action-24-testimonial__customer-bio { flex-direction: column; }
+    .wf-call-to-action-24 .wf-call-to-action-24-cta-card { grid-template-columns: 1fr; }
+    .wf-call-to-action-24 .wf-call-to-action-24-testimonial__customer-bio { flex-direction: column; }
   }
-  .wf-call-to-action-24 .bm-call-to-action-24-cta-card > :only-child { grid-column: 1 / -1; }
+  .wf-call-to-action-24 .wf-call-to-action-24-cta-card > :only-child { grid-column: 1 / -1; }

@@ -1,6 +1,6 @@
 ---
 /**
- * bm-product-single-2 — TRANSLATED Bricksmaven skeleton.
+ * wf-product-single-2 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (product-single-2.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -67,20 +67,20 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
 
 <div class="wf-product-single-2">
   <div class="sec-inner">
-    <div class="bm-product-single-2__container">
-      <div class="bm-product-single-2__breadcrumb-wrapper">
+    <div class="wf-product-single-2__container">
+      <div class="wf-product-single-2__breadcrumb-wrapper">
         {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
               </div>
       {before.length > 0 && <div class="flow mt-stack">
 {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
       </div>}
 
-      {links.length > 0 &&       <div class="bm-product-single-2__main">
-        {links.length > 0 &&         <div class="bm-product-single-2__content">
-          {links.length > 0 &&           <div class="bm-product-single-2__sticky-wrapper">
-            {links.length > 0 && <div class="bm-product-single-usp-1">
+      {links.length > 0 &&       <div class="wf-product-single-2__main">
+        {links.length > 0 &&         <div class="wf-product-single-2__content">
+          {links.length > 0 &&           <div class="wf-product-single-2__sticky-wrapper">
+            {links.length > 0 && <div class="wf-product-single-usp-1">
               <div class="grid-auto gap-fluid-m">{(links || []).map((it) => (
-                  <div class="bm-product-single-usp-1-list-item card">
+                  <div class="wf-product-single-usp-1-list-item card">
                     {it.icon && <IconChip name={it.icon} />}
                     <div class="stack">
                       <h3 class="text-fluid-1">{it.term || it.title || it.text}</h3>
@@ -95,9 +95,9 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
         }
       </div>
       }
-      {head &&       <div class="bm-product-single-2__product-footer">
-        {head &&         <div class="bm-product-single-2__footer-wrapper">
-          {head &&           <div class="bm-product-single-2__column">
+      {head &&       <div class="wf-product-single-2__product-footer">
+        {head &&         <div class="wf-product-single-2__footer-wrapper">
+          {head &&           <div class="wf-product-single-2__column">
             {head && (h1 ? <h1 class="text-fluid-4">{head}</h1> : <h2 class="text-fluid-2">{head}</h2>)}
           </div>
           }
@@ -106,12 +106,12 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
       </div>
       }
     </div>
-    {image &&     <div class="bm-product-single__related-products-container">
-      {image &&       <div class="bm-related-products-list-1__list">
+    {image &&     <div class="wf-product-single__related-products-container">
+      {image &&       <div class="wf-related-products-list-1__list">
         {image &&         <div>
-          {image &&           <div class="bm-related-products-list-1-card">
+          {image &&           <div class="wf-related-products-list-1-card">
             {image &&             <div>
-              {image && image.src && <figure class="bm-related-products-list-1-card__image ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
+              {image && image.src && <figure class="wf-related-products-list-1-card__image ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
             </div>
             }
           </div>

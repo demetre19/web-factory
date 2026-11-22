@@ -1,6 +1,6 @@
 ---
 /**
- * bm-item-gouojh — TRANSLATED Bricksmaven skeleton.
+ * wf-item-gouojh — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (item-gouojh.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -66,13 +66,13 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
 
 <div class="wf-item-gouojh">
   <div class="sec-inner">
-    <div class="contact-10-container">
+    <div class="wf-contact-10-container">
       {image &&       <div>
         {image && image.src && <figure class="ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
       </div>
       }
-      <div class="contact-10-content">
-        <div class="contact-10-intro">
+      <div class="wf-contact-10-content">
+        <div class="wf-contact-10-intro">
           {head && (h1 ? <h1 class="text-fluid-4">{head}</h1> : <h2 class="text-fluid-2">{head}</h2>)}
           {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
                   </div>
@@ -80,9 +80,9 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
 {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
         </div>}
 
-        {list.length > 0 && <div class="contact-10-information-grid-ul">{(list || []).map((it) => (
-              <div class="contact-10-info-card card">
-                <div class="contact-10-info-card__content">
+        {list.length > 0 && <div class="wf-contact-10-information-grid-ul">{(list || []).map((it) => (
+              <div class="wf-contact-10-info-card card">
+                <div class="wf-contact-10-info-card__content">
                   <h3 class="text-fluid-1">{it.term || it.title}</h3>
                   <p class="text-fluid-0">{it.text}</p>
                   {it.tag && <span class="tag text-fluid--1">{it.tag}</span>}

@@ -1,69 +1,69 @@
-  .wf-contact-41 .bm-contact-41__container {
+  .wf-contact-41 .wf-contact-41__container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
     gap: var(--space-m);
   }
 
-  .wf-contact-41 .bm-contact-41__content {
+  .wf-contact-41 .wf-contact-41__content {
     row-gap: var(--space-s);
   }
 
-  .wf-contact-41 .bm-contact-41__contact {
+  .wf-contact-41 .wf-contact-41__contact {
     display: grid;
     gap: var(--space-m);
     grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
   }
 
-  .wf-contact-41 .bm-contact-41__contact-data {
+  .wf-contact-41 .wf-contact-41__contact-data {
     row-gap: calc(var(--flow-spacing) / 2);
   }
 
-  .wf-contact-41 .bm-contact-41__column {
+  .wf-contact-41 .wf-contact-41__column {
     flex-direction: row;
     flex-wrap: nowrap;
     column-gap: var(--flow-spacing);
   }
 
-  .wf-contact-41 .bm-contact-41__social-media {
+  .wf-contact-41 .wf-contact-41__social-media {
     row-gap: calc(var(--flow-spacing) / 2);
   }
 
-  .wf-contact-41 .bm-social-share {
+  .wf-contact-41 .wf-social-share {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
     column-gap: calc(var(--flow-spacing) / 2);
   }
 
-  .wf-contact-41 .bm-contact-41-contact-card {
+  .wf-contact-41 .wf-contact-41-contact-card {
     display: flex;
     flex-direction: row;
     column-gap: var(--flow-spacing);
     row-gap: var(--flow-spacing);
   }
 
-  .wf-contact-41 .bm-contact-41-contact-card__team-data {
+  .wf-contact-41 .wf-contact-41-contact-card__team-data {
     flex-direction: row;
     display: flex;
     column-gap: calc(var(--flow-spacing) / 2);
   }
 
-  .wf-contact-41 .bm-contact-41-contact-card__data {
+  .wf-contact-41 .wf-contact-41-contact-card__data {
     row-gap: 0;
     flex-direction: column;
     display: flex;
   }
 
-  .wf-contact-41 .bm-contact-41__form-wrapper {
+  .wf-contact-41 .wf-contact-41__form-wrapper {
     row-gap: var(--flow-spacing);
     flex-wrap: nowrap;
   }
 
   @media (max-width: 44rem) {
-    .wf-contact-41 .bm-contact-41__contact { grid-template-columns: 1fr; }
-    .wf-contact-41 .bm-contact-41__column { flex-direction: column; }
-    .wf-contact-41 .bm-social-share { flex-direction: column; }
-    .wf-contact-41 .bm-contact-41-contact-card { flex-direction: column; }
-    .wf-contact-41 .bm-contact-41-contact-card__team-data { flex-direction: column; }
+    .wf-contact-41 .wf-contact-41__contact { grid-template-columns: 1fr; }
+    .wf-contact-41 .wf-contact-41__column { flex-direction: column; }
+    .wf-contact-41 .wf-social-share { flex-direction: column; }
+    .wf-contact-41 .wf-contact-41-contact-card { flex-direction: column; }
+    .wf-contact-41 .wf-contact-41-contact-card__team-data { flex-direction: column; }
   }
-  .wf-contact-41 .bm-contact-41__contact > :only-child { grid-column: 1 / -1; }
+  .wf-contact-41 .wf-contact-41__contact > :only-child { grid-column: 1 / -1; }

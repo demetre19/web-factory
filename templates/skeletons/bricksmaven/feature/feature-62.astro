@@ -1,6 +1,6 @@
 ---
 /**
- * bm-feature-62 — TRANSLATED Bricksmaven skeleton.
+ * wf-feature-62 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (feature-62.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -59,7 +59,7 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
 
 <div class="wf-feature-62">
   <div class="sec-inner">
-    <div class="bm-feature-62__container">
+    <div class="wf-feature-62__container">
       <div class="intro intro--left">
         {head && (h1 ? <h1 class="text-fluid-4">{head}</h1> : <h2 class="text-fluid-2">{head}</h2>)}
         {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
@@ -69,12 +69,12 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
       </div>}
 
       <div>
-        <div class="bm-feature-62-tabs">
+        <div class="wf-feature-62-tabs">
           <div>
             {list.length > 0 &&             <div>
-              {list.length > 0 && <div class="bm-feature-62-feature-list">{(list || []).map((it) => (
-                    <div class="bm-feature-62-feature-card card">
-                      <div class="bm-feature-62-feature-card__top">
+              {list.length > 0 && <div class="wf-feature-62-feature-list">{(list || []).map((it) => (
+                    <div class="wf-feature-62-feature-card card">
+                      <div class="wf-feature-62-feature-card__top">
                         <h3 class="text-fluid-1">{it.term || it.title}</h3>
                         <p class="text-fluid-0">{it.text}</p>
                       </div>
@@ -83,9 +83,9 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
             </div>
             }
             {links.length > 0 &&             <div>
-              {links.length > 0 && <div class="bm-feature-62-feature-list">{(links || []).map((it) => (
-                    <div class="bm-feature-62-feature-card card">
-                      <div class="bm-feature-62-feature-card__top">
+              {links.length > 0 && <div class="wf-feature-62-feature-list">{(links || []).map((it) => (
+                    <div class="wf-feature-62-feature-card card">
+                      <div class="wf-feature-62-feature-card__top">
                         <h3 class="text-fluid-1">{it.term || it.title}</h3>
                         <p class="text-fluid-0">{it.text}</p>
                       </div>

@@ -1,6 +1,6 @@
 ---
 /**
- * bm-call-to-action-33 — TRANSLATED Bricksmaven skeleton.
+ * wf-call-to-action-33 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (call-to-action-33.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -59,9 +59,9 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
 
 <div class="wf-call-to-action-33">
   <div class="sec-inner">
-    <div class="bm-cta-33__container">
-      <div class="bm-cta-33__content">
-        <div class="bm-cta-33__intro">
+    <div class="wf-cta-33__container">
+      <div class="wf-cta-33__content">
+        <div class="wf-cta-33__intro">
           {head && (h1 ? <h1 class="text-fluid-4">{head}</h1> : <h2 class="text-fluid-2">{head}</h2>)}
           {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
                   </div>
@@ -72,10 +72,10 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
         {act.label && <p class="mt-fluid-m"><a class="wf-cta-button" href={act.href}>{act.label}</a></p>}
       </div>
       {list.length > 0 &&       <div>
-        {list.length > 0 &&         <div class="bm-cta-33-accordion">
+        {list.length > 0 &&         <div class="wf-cta-33-accordion">
           {list.length > 0 && <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
               <div class="card">
-                <div class="bm-cta-33-accordion-item__title">
+                <div class="wf-cta-33-accordion-item__title">
                   <h3 class="text-fluid-1">{it.term || it.title}</h3>
                 </div>
                 <div>

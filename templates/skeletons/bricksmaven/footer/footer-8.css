@@ -2,32 +2,32 @@
     row-gap: var(--space-s);
   }
 
-  .wf-footer-8 .footer-8-nav-menu {
+  .wf-footer-8 .wf-footer-8-nav-menu {
     flex-direction: row;
     display: flex;
     flex-wrap: nowrap;
     gap: var(--space-s);
   }
 
-  .wf-footer-8 .footer-8-mid-container {
+  .wf-footer-8 .wf-footer-8-mid-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
     gap: var(--space-m);
   }
 
-  .wf-footer-8 .footer-8__mid-column {
+  .wf-footer-8 .wf-footer-8__mid-column {
     display: flex;
     flex-direction: column;
     row-gap: var(--flow-spacing);
   }
 
-  .wf-footer-8 .footer-8__email-phone {
+  .wf-footer-8 .wf-footer-8__email-phone {
     display: flex;
     flex-direction: column;
     row-gap: var(--space-xs);
   }
 
-  .wf-footer-8 .footer-8__openinghours {
+  .wf-footer-8 .wf-footer-8__openinghours {
     display: flex;
     flex-direction: column;
     row-gap: calc(0.5rem + 0vw);
@@ -45,14 +45,14 @@
     row-gap: var(--flow-spacing);
   }
 
-  .wf-footer-8 .footer-8-bottom-container {
+  .wf-footer-8 .wf-footer-8-bottom-container {
     display: grid;
     flex-direction: row;
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
     gap: var(--space-m);
   }
 
-  .wf-footer-8 .footer-8-bottom__left-column {
+  .wf-footer-8 .wf-footer-8-bottom__left-column {
     row-gap: var(--space-xs);
   }
 
@@ -74,8 +74,8 @@
   }
 
   @media (max-width: 44rem) {
-    .wf-footer-8 .footer-8-nav-menu { flex-direction: column; }
-    .wf-footer-8 .footer-8-bottom-container { flex-direction: column; }
+    .wf-footer-8 .wf-footer-8-nav-menu { flex-direction: column; }
+    .wf-footer-8 .wf-footer-8-bottom-container { flex-direction: column; }
     .wf-footer-8 .footer-bottom__left { flex-direction: column; }
     .wf-footer-8 .footer-legal-nav { flex-direction: column; }
     .wf-footer-8 .footer-social-wrapper-8 { flex-direction: column; }

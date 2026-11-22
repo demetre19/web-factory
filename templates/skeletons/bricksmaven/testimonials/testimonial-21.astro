@@ -1,6 +1,6 @@
 ---
 /**
- * bm-testimonial-21 — TRANSLATED Bricksmaven skeleton.
+ * wf-testimonial-21 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (testimonial-21.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -69,21 +69,21 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
   <div class={image && image.src ? 'split' : undefined}>
     <div class="stack">
   <div class="sec-inner">
-    <div class="testimonial-21-container">
-      <div class="testimonial-21-content">
+    <div class="wf-testimonial-21-container">
+      <div class="wf-testimonial-21-content">
         {head && (h1 ? <h1 class="text-fluid-4">{head}</h1> : <h2 class="text-fluid-2">{head}</h2>)}
   {sub && <p class="mt-stack lede" set:html={inline(sub)} />}
   {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
         {list.length > 0 &&         <div>
           {list.length > 0 && <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
-              <div class="testimonial-21-content__item card">
+              <div class="wf-testimonial-21-content__item card">
                 {it.icon && <IconChip name={it.icon} />}
                 <div class="stack">
                   <h3 class="text-fluid-1">{it.term || it.title || it.text}</h3>
                   {it.text && (it.term || it.title) && <p class="text-fluid-0">{it.text}</p>}
                 </div>
-                {it.tag &&                 <div class="testimonial-21-content__profile">
-                  {it.tag &&                   <div class="testimonial-21-content__meta">
+                {it.tag &&                 <div class="wf-testimonial-21-content__profile">
+                  {it.tag &&                   <div class="wf-testimonial-21-content__meta">
                     {it.tag && <span class="tag text-fluid--1">{it.tag}</span>}
                   </div>
                   }
@@ -94,9 +94,9 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
         </div>
         }
       </div>
-      {links.length > 0 && <div class="testimonial-21-post">{(links || []).map((it) => (
+      {links.length > 0 && <div class="wf-testimonial-21-post">{(links || []).map((it) => (
             <div class="card">
-              <div class="testimonial-21-post__card grid-auto gap-fluid-l">
+              <div class="wf-testimonial-21-post__card grid-auto gap-fluid-l">
                 {it.icon && <IconChip name={it.icon} />}
                 <h4 class="text-fluid-1">{it.term || it.title}</h4>
               </div>

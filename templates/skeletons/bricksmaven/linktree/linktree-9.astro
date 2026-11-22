@@ -1,6 +1,6 @@
 ---
 /**
- * bm-linktree-9 — TRANSLATED Bricksmaven skeleton.
+ * wf-linktree-9 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (linktree-9.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -67,9 +67,9 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
 
 <div class="wf-linktree-9">
   <div class="sec-inner">
-    <div class="bm-linktree-9__container">
-      {image &&       <div class="bm-linktree-9__bio-cover">
-        {image &&         <div class="bm-linktree-7-bio">
+    <div class="wf-linktree-9__container">
+      {image &&       <div class="wf-linktree-9__bio-cover">
+        {image &&         <div class="wf-linktree-7-bio">
           {image &&           <div>
             {image && image.src && <figure class="ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
           </div>
@@ -78,12 +78,12 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
         }
       </div>
       }
-      <div class="bm-linktree-9__links">
-        <div class="bm-linktree-9__link-row">
+      <div class="wf-linktree-9__links">
+        <div class="wf-linktree-9__link-row">
           {head && (h1 ? <h1 class="text-fluid-4">{head}</h1> : <h2 class="text-fluid-2">{head}</h2>)}
   {sub && <p class="mt-stack lede" set:html={inline(sub)} />}
   {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
-          {links.length > 0 && <div class="bm-linktree-list">
+          {links.length > 0 && <div class="wf-linktree-list">
             <div class="grid-auto gap-fluid-m">{(links || []).map((it) => (
                 <div class="card">
                   <h3 class="text-fluid-1"><a class="text-fluid-0" href={it.href}>{it.icon && <IconChip name={it.icon} />} {it.label || it.term || it.anchor || it.text}</a></h3>
@@ -92,8 +92,8 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
               ))}</div>
           </div>}
         </div>
-        {links.length > 0 &&         <div class="bm-linktree-9__link-row">
-          {links.length > 0 && <div class="bm-linktree-list">
+        {links.length > 0 &&         <div class="wf-linktree-9__link-row">
+          {links.length > 0 && <div class="wf-linktree-list">
             <div class="grid-auto gap-fluid-m">{(links || []).map((it) => (
                 <div class="card">
                   <h3 class="text-fluid-1"><a class="text-fluid-0" href={it.href}>{it.icon && <IconChip name={it.icon} />} {it.label || it.term || it.anchor || it.text}</a></h3>

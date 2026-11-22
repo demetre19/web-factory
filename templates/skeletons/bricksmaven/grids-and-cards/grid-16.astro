@@ -1,6 +1,6 @@
 ---
 /**
- * bm-grid-16 — TRANSLATED Bricksmaven skeleton.
+ * wf-grid-16 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (grid-16.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -69,8 +69,8 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
   <div class={image && image.src ? 'split' : undefined}>
     <div class="stack">
   <div class="sec-inner">
-    <div class="gridcard-16-container">
-      <div class="gridcard-16-head">
+    <div class="wf-gridcard-16-container">
+      <div class="wf-gridcard-16-head">
         {head && (h1 ? <h1 class="text-fluid-4">{head}</h1> : <h2 class="text-fluid-2">{head}</h2>)}
         {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
               </div>
@@ -78,16 +78,16 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
 {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
       </div>}
 
-      {list.length > 0 && <div class="gridcard-16-articles">{(list || []).map((it) => (
+      {list.length > 0 && <div class="wf-gridcard-16-articles">{(list || []).map((it) => (
             <div class="card">
-              <div class="gridcard-16-card">
-                <div class="gridcard-16-card__box">
+              <div class="wf-gridcard-16-card">
+                <div class="wf-gridcard-16-card__box">
                   {it.icon && <IconChip name={it.icon} />}
                   <div class="stack">
                     <h3 class="text-fluid-1">{it.term || it.title || it.text}</h3>
                     {it.text && (it.term || it.title) && <p class="text-fluid-0">{it.text}</p>}
                   </div>
-                  {it.meta &&                   <div class="gridcard-16-card__title">
+                  {it.meta &&                   <div class="wf-gridcard-16-card__title">
                     {it.meta && <p class="meta text-fluid--1">{it.meta}</p>}
                   </div>
                   }

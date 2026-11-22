@@ -1,6 +1,6 @@
 ---
 /**
- * bm-feature-1 — TRANSLATED Bricksmaven skeleton.
+ * wf-feature-1 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (feature-1.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -79,15 +79,15 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
       </div>}
 
     </div>
-    {list.length > 0 && <div class="feature-1-ul">
+    {list.length > 0 && <div class="wf-feature-1-ul">
       <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
-          <div class="feature-1-li card">
-            <div class="feature-1-li__content">
+          <div class="wf-feature-1-li card">
+            <div class="wf-feature-1-li__content">
               <h3 class="text-fluid-1">{it.term || it.title}</h3>
               <p class="text-fluid-0">{it.text}</p>
-              {(it.items || []).length > 0 && <div class="bm-list">
+              {(it.items || []).length > 0 && <div class="wf-list">
                 <div class="grid-auto gap-fluid-m">{((it.items || []) || []).map((it2) => (
-                    <div class="bm-list__item card">
+                    <div class="wf-list__item card">
                       {it2.icon && <IconChip name={it2.icon} />}
                       <div class="stack">
                         <h3 class="text-fluid-1">{it2.term || it2.title || it2.text}</h3>

@@ -1,6 +1,6 @@
 ---
 /**
- * bm-feature-48 — TRANSLATED Bricksmaven skeleton.
+ * wf-feature-48 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (feature-48.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -68,7 +68,7 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
 <div class="wf-feature-48">
   <div class="sec-inner">
     <div class="grid-auto gap-fluid-l">
-      <div class="bm-feature-48__intro">
+      <div class="wf-feature-48__intro">
         {head && (h1 ? <h1 class="text-fluid-4">{head}</h1> : <h2 class="text-fluid-2">{head}</h2>)}
         {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
               </div>
@@ -79,9 +79,9 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
       {image && image.src && <figure class="media-bg" aria-hidden="true"><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[960, 1440, 1920]} sizes="100vw" width={1600} height={900} loading="eager" fetchpriority="high" /></figure>}
     </div>
     {list.length > 0 &&     <div>
-      {list.length > 0 && <div class="bm-feature-48-grid-ul">{(list || []).map((it) => (
-            <div class="bm-feature-48-card card">
-              <div class="bm-feature-48-card__content">
+      {list.length > 0 && <div class="wf-feature-48-grid-ul">{(list || []).map((it) => (
+            <div class="wf-feature-48-card card">
+              <div class="wf-feature-48-card__content">
                 {it.icon && <IconChip name={it.icon} />}
                 <h3 class="text-fluid-1">{it.term || it.title}</h3>
               </div>

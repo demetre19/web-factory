@@ -1,6 +1,6 @@
 ---
 /**
- * bm-remove-this-div — TRANSLATED Bricksmaven skeleton.
+ * wf-remove-this-div — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (remove-this-div.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -68,7 +68,7 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
 <div class="wf-remove-this-div">
   <div>
     <div class="sec-inner">
-      <div class="feature-40__container">
+      <div class="wf-feature-40__container">
         <div class="intro">
           {head && (h1 ? <h1 class="text-fluid-4">{head}</h1> : <h2 class="text-fluid-2">{head}</h2>)}
           {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
@@ -79,8 +79,8 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
 
       </div>
     </div>
-    <div class="feature-40__list-container">
-      {list.length > 0 && <div class="feature-40-feature-nav">
+    <div class="wf-feature-40__list-container">
+      {list.length > 0 && <div class="wf-feature-40-feature-nav">
         <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
             <div class="card">
               <h3 class="text-fluid-1"><a class="text-fluid-0" href={it.href}>{it.icon && <IconChip name={it.icon} />} {it.label || it.term || it.anchor || it.text}</a></h3>
@@ -89,8 +89,8 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
           ))}</div>
       </div>}
       <div class="sec-inner">
-        <div class="feature-40__feature-container">
-          {act.label &&           <div class="feature-40__list-content">
+        <div class="wf-feature-40__feature-container">
+          {act.label &&           <div class="wf-feature-40__list-content">
             {act.label && <p class="mt-fluid-m"><a class="wf-cta-button" href={act.href}>{act.label}</a></p>}
           </div>
           }
@@ -99,21 +99,21 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
           </div>
           }
         </div>
-        {images[0] &&         <div class="feature-40__feature-container">
+        {images[0] &&         <div class="wf-feature-40__feature-container">
           {images[0] &&           <div>
             {images[0] && images[0].src && <figure class="ratio-portrait"><div class="media-round" data-ratio={(image && image.ratio) || null}><Image src={mediaOf(images[0])} alt={images[0].alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
           </div>
           }
         </div>
         }
-        {images[1] &&         <div class="feature-40__feature-container">
+        {images[1] &&         <div class="wf-feature-40__feature-container">
           {images[1] &&           <div>
             {images[1] && images[1].src && <figure class="ratio-portrait"><div class="media-round" data-ratio={(image && image.ratio) || null}><Image src={mediaOf(images[1])} alt={images[1].alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
           </div>
           }
         </div>
         }
-        {images[2] &&         <div class="feature-40__feature-container">
+        {images[2] &&         <div class="wf-feature-40__feature-container">
           {images[2] &&           <div>
             {images[2] && images[2].src && <figure class="ratio-portrait"><div class="media-round" data-ratio={(image && image.ratio) || null}><Image src={mediaOf(images[2])} alt={images[2].alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
           </div>

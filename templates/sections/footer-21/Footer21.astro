@@ -4,7 +4,7 @@
  */
 
 /**
- * bm-footer-21 — TRANSLATED Bricksmaven skeleton.
+ * wf-footer-21 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (footer-21.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -51,13 +51,13 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
 
 <div class="wf-footer-21">
   <div class="sec-inner">
-    <div class="bm-footer-21__cta-container row between">
+    <div class="wf-footer-21__cta-container row between">
       {head && <h2 class="text-fluid-2">{head}</h2>}
       {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
       {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
       {act.label && <p class="mt-fluid-m"><a class="wf-cta-button" href={act.href}>{act.label}</a></p>}
     </div>
-    <div class="bm-footer-21__footer-container row between">
+    <div class="wf-footer-21__footer-container row between">
       {list.length > 0 &&       <div>
         {list.length > 0 &&         <div class="footer-nav-wrapper footer-nav-wrapper-21 row between">
           {list.length > 0 && <div class="row gap-fluid-m">{(list || []).map((it) => (
@@ -79,9 +79,9 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
       </div>
       }
       <div class="row between">
-        {links.length > 0 && <div class="bm-contact-information-grid-ul row between">{(links || []).map((it) => (
-              <div class="bm-contact-info-card row between">
-                <div class="bm-contact-info-card__content row between">
+        {links.length > 0 && <div class="wf-contact-information-grid-ul row between">{(links || []).map((it) => (
+              <div class="wf-contact-info-card row between">
+                <div class="wf-contact-info-card__content row between">
                   <h3 class="text-fluid-1">{it.term || it.title}</h3>
                   <p class="text-fluid-0">{it.text}</p>
                 </div>
@@ -89,12 +89,12 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
             ))}</div>}
         {links.length === 0 && <p class="footer-legal-nav text-fluid-0">Copyright {new Date().getFullYear()} {brand}</p>}
       </div>
-      <div class="bm-footer-21__newsletter row between">
+      <div class="wf-footer-21__newsletter row between">
         <form novalidate>
         </form>
       </div>
     </div>
-    <div class="bm-footer-21__bottom-container row between">
+    <div class="wf-footer-21__bottom-container row between">
       <div class="footer-bottom__left row between">
         <div>
           {links.length > 0 && <div class="footer-legal-nav row between">

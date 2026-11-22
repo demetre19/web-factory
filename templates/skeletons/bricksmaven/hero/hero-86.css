@@ -1,47 +1,47 @@
-  .wf-hero-86 .bm-hero-86__container {
+  .wf-hero-86 .wf-hero-86__container {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
     gap: var(--space-m);
   }
 
-  .wf-hero-86 .bm-hero-86__content {
+  .wf-hero-86 .wf-hero-86__content {
     row-gap: var(--flow-spacing);
   }
 
-  .wf-hero-86 .bm-hero-86__top {
+  .wf-hero-86 .wf-hero-86__top {
     row-gap: var(--flow-spacing);
   }
 
-  .wf-hero-86 .bm-hero-86-card {
+  .wf-hero-86 .wf-hero-86-card {
     flex-direction: row;
     flex-wrap: nowrap;
     column-gap: var(--flow-spacing);
   }
 
-  .wf-hero-86 .bm-hero-86-card__thumb {
+  .wf-hero-86 .wf-hero-86-card__thumb {
     display: flex;
     gap: var(--space-s);
   }
 
-  .wf-hero-86 .bm-hero-86-card__content {
+  .wf-hero-86 .wf-hero-86-card__content {
     row-gap: calc(var(--flow-spacing) / 4);
   }
 
-  .wf-hero-86 .bm-hero-86-card__top {
+  .wf-hero-86 .wf-hero-86-card__top {
     flex-direction: row;
     flex-wrap: nowrap;
   }
 
-  .wf-hero-86 .bm-hero-86-media {
+  .wf-hero-86 .wf-hero-86-media {
     display: grid;
     gap: var(--space-m);
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
   }
 
   @media (max-width: 44rem) {
-    .wf-hero-86 .bm-hero-86__container { grid-template-columns: 1fr; }
-    .wf-hero-86 .bm-hero-86-card { flex-direction: column; }
-    .wf-hero-86 .bm-hero-86-card__thumb { flex-direction: column; }
-    .wf-hero-86 .bm-hero-86-card__top { flex-direction: column; }
+    .wf-hero-86 .wf-hero-86__container { grid-template-columns: 1fr; }
+    .wf-hero-86 .wf-hero-86-card { flex-direction: column; }
+    .wf-hero-86 .wf-hero-86-card__thumb { flex-direction: column; }
+    .wf-hero-86 .wf-hero-86-card__top { flex-direction: column; }
   }
-  .wf-hero-86 .bm-hero-86__container > :only-child { grid-column: 1 / -1; }
+  .wf-hero-86 .wf-hero-86__container > :only-child { grid-column: 1 / -1; }

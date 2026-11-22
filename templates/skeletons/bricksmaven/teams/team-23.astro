@@ -1,6 +1,6 @@
 ---
 /**
- * bm-team-23 — TRANSLATED Bricksmaven skeleton.
+ * wf-team-23 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (team-23.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -67,7 +67,7 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
 
 <div class="wf-team-23">
   <div class="sec-inner">
-    <div class="bm-team-23__container">
+    <div class="wf-team-23__container">
       <div class="intro intro--split">
         {head &&         <div class="intro__left-column">
           {head && (h1 ? <h1 class="text-fluid-4">{head}</h1> : <h2 class="text-fluid-2">{head}</h2>)}
@@ -81,12 +81,12 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
         </div>}
 
       </div>
-      {list.length > 0 && <div class="bm-team-23-lijst">{(list || []).map((it) => (
+      {list.length > 0 && <div class="wf-team-23-lijst">{(list || []).map((it) => (
             <div class="card">
-              <div class="bm-team-23-card__content">
+              <div class="wf-team-23-card__content">
                 {it.icon && <IconChip name={it.icon} />}
                 <h3 class="text-fluid-1">{it.term || it.title}</h3>
-                {(it.items || []).length > 0 && <div class="bm-team-23-card-feature-list">
+                {(it.items || []).length > 0 && <div class="wf-team-23-card-feature-list">
                   <div class="grid-auto gap-fluid-m">{((it.items || []) || []).map((it2) => (
                       <div class="card">
                         {it2.icon && <IconChip name={it2.icon} />}

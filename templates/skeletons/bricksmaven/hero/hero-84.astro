@@ -1,6 +1,6 @@
 ---
 /**
- * bm-hero-84 — TRANSLATED Bricksmaven skeleton.
+ * wf-hero-84 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (hero-84.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -67,9 +67,9 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
 
 <div class="wf-hero-84">
   <div class="sec-inner">
-    <div class="bm-hero-84__container">
-      <div class="bm-hero-84__intro">
-        <div class="bm-hero-84__intro-top">
+    <div class="wf-hero-84__container">
+      <div class="wf-hero-84__intro">
+        <div class="wf-hero-84__intro-top">
           {head && (h1 ? <h1 class="text-fluid-4">{head}</h1> : <h2 class="text-fluid-2">{head}</h2>)}
           {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
                   </div>
@@ -77,15 +77,15 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
 {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
         </div>}
 
-        <div class="bm-hero-84__footer-media">
+        <div class="wf-hero-84__footer-media">
           {image &&           <div>
             {image && image.src && <figure class="ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
           </div>
           }
-          <div class="bm-hero-84__misc">
-            {images[0] &&             <div class="bm-hero-84__testimonial">
-              {images[0] &&               <div class="testimonial-36-card__head">
-                {images[0] &&                 <div class="testimonial-36-card__avatar">
+          <div class="wf-hero-84__misc">
+            {images[0] &&             <div class="wf-hero-84__testimonial">
+              {images[0] &&               <div class="wf-testimonial-36-card__head">
+                {images[0] &&                 <div class="wf-testimonial-36-card__avatar">
                   {images[0] && images[0].src && <figure class="ratio-portrait"><div class="media-round" data-ratio={(image && image.ratio) || null}><Image src={mediaOf(images[0])} alt={images[0].alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
                 </div>
                 }
@@ -100,7 +100,7 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
           </div>
         </div>
       </div>
-      <div class="bm-hero-84__media">
+      <div class="wf-hero-84__media">
         {images[2] &&         <div>
           {images[2] && images[2].src && <figure class="ratio-portrait"><div class="media-round" data-ratio={(image && image.ratio) || null}><Image src={mediaOf(images[2])} alt={images[2].alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
         </div>

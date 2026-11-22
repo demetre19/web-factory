@@ -1,6 +1,6 @@
 ---
 /**
- * bm-portfolio-single-8 — TRANSLATED Bricksmaven skeleton.
+ * wf-portfolio-single-8 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (portfolio-single-8.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -67,10 +67,10 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
 
 <div class="wf-portfolio-single-8">
   <div class="sec-inner">
-    <div class="bm-portfolio-single-8__intro-container">
-      <div class="bm-portfolio-single-8__content">
+    <div class="wf-portfolio-single-8__intro-container">
+      <div class="wf-portfolio-single-8__content">
         {head && (h1 ? <h1 class="text-fluid-4">{head}</h1> : <h2 class="text-fluid-2">{head}</h2>)}
-        {list.length > 0 &&         <div class="bm-portfolio-single-meta-data-1 bm-portfolio-single-meta-data-1--inline">
+        {list.length > 0 &&         <div class="wf-portfolio-single-meta-data-1 wf-portfolio-single-meta-data-1--inline">
           {list.length > 0 && <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
               <div class="card">
                 {it.icon && <IconChip name={it.icon} />}
@@ -94,7 +94,7 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
       </div>
       }
     </div>
-    <div class="bm-portfolio-single-8__work-container">
+    <div class="wf-portfolio-single-8__work-container">
       {images[0] &&       <div>
         {images[0] && images[0].src && <figure class="ratio-portrait"><div class="media-round" data-ratio={(image && image.ratio) || null}><Image src={mediaOf(images[0])} alt={images[0].alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
       </div>
@@ -105,7 +105,7 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
       }
     </div>
     {images[2] &&     <div>
-      {images[2] &&       <div class="bm-portfolio-single-8__paragraph">
+      {images[2] &&       <div class="wf-portfolio-single-8__paragraph">
         {images[2] &&         <div>
           {images[2] && images[2].src && <figure class="ratio-portrait"><div class="media-round" data-ratio={(image && image.ratio) || null}><Image src={mediaOf(images[2])} alt={images[2].alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
         </div>
@@ -114,7 +114,7 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
       }
     </div>
     }
-    <div class="bm-portfolio-single-8__work-container">
+    <div class="wf-portfolio-single-8__work-container">
       {images[3] &&       <div>
         {images[3] && images[3].src && <figure class="ratio-portrait"><div class="media-round" data-ratio={(image && image.ratio) || null}><Image src={mediaOf(images[3])} alt={images[3].alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
       </div>
@@ -125,9 +125,9 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
       }
     </div>
     {links.length > 0 &&     <div>
-      {links.length > 0 &&       <div class="bm-portfolio-single__resul-section-8">
-        {links.length > 0 && <div class="bm-portfolio-single-result-list">{(links || []).map((it) => (
-              <div class="bm-portfolio-single-result-item card">
+      {links.length > 0 &&       <div class="wf-portfolio-single__resul-section-8">
+        {links.length > 0 && <div class="wf-portfolio-single-result-list">{(links || []).map((it) => (
+              <div class="wf-portfolio-single-result-item card">
                 {it.icon && <IconChip name={it.icon} />}
                 <h3 class="text-fluid-1">{it.term || it.title}</h3>
                 <p class="text-fluid-0">{it.text}</p>
@@ -137,10 +137,10 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
       }
     </div>
     }
-    {images[5] &&     <div class="bm-portfolio-single-8__cta-container">
-      {images[5] &&       <div class="bm-contact-widget-8">
-        {images[5] &&         <div class="bm-contact-widget-8__right">
-          {images[5] &&           <div class="bm-contact-widget-8__manager-data">
+    {images[5] &&     <div class="wf-portfolio-single-8__cta-container">
+      {images[5] &&       <div class="wf-contact-widget-8">
+        {images[5] &&         <div class="wf-contact-widget-8__right">
+          {images[5] &&           <div class="wf-contact-widget-8__manager-data">
             {images[5] &&             <div>
               {images[5] && images[5].src && <figure class="ratio-portrait"><div class="media-round" data-ratio={(image && image.ratio) || null}><Image src={mediaOf(images[5])} alt={images[5].alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
             </div>
@@ -153,13 +153,13 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
       }
     </div>
     }
-    {links.length > 0 &&     <div class="bm-portfolio-single-8__footer-container">
-      {links.length > 0 && <div class="bm-portfolio-6-related-list">{(links || []).map((it) => (
+    {links.length > 0 &&     <div class="wf-portfolio-single-8__footer-container">
+      {links.length > 0 && <div class="wf-portfolio-6-related-list">{(links || []).map((it) => (
             <div class="card">
-              <div class="bm-portfolio-6-related-card__content">
+              <div class="wf-portfolio-6-related-card__content">
                 {it.icon && <IconChip name={it.icon} />}
                 <h3 class="text-fluid-1">{it.term || it.title}</h3>
-                <div class="bm-portfolio-6-related-card__footer">
+                <div class="wf-portfolio-6-related-card__footer">
                   <p class="text-fluid-0">{it.text}</p>
                 </div>
               </div>

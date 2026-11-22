@@ -1,6 +1,6 @@
 ---
 /**
- * bm-contact-41 — TRANSLATED Bricksmaven skeleton.
+ * wf-contact-41 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (contact-41.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -69,12 +69,12 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
   <div class={image && image.src ? 'split' : undefined}>
     <div class="stack">
   <div class="sec-inner">
-    <div class="bm-contact-41__container">
-      <div class="bm-contact-41__content">
+    <div class="wf-contact-41__container">
+      <div class="wf-contact-41__content">
         {head && (h1 ? <h1 class="text-fluid-4">{head}</h1> : <h2 class="text-fluid-2">{head}</h2>)}
-        <div class="bm-contact-41__contact">
-          <div class="bm-contact-41__contact-data">
-            <div class="bm-contact-41__column">
+        <div class="wf-contact-41__contact">
+          <div class="wf-contact-41__contact-data">
+            <div class="wf-contact-41__column">
               {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
                           </div>
             {before.length > 0 && <div class="flow mt-stack">
@@ -85,8 +85,8 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
         </div>
         {links.length > 0 && <div>
           <div class="grid-auto gap-fluid-m">{(links || []).map((it) => (
-              <div class="bm-contact-41-contact-card card">
-                <div class="bm-contact-41-contact-card__team-data">
+              <div class="wf-contact-41-contact-card card">
+                <div class="wf-contact-41-contact-card__team-data">
                   <div>
                     {it.icon && <IconChip name={it.icon} />}
                     <div class="stack">
@@ -96,7 +96,7 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
                     {it.tag && <span class="tag text-fluid--1">{it.tag}</span>}
                   </div>
                 </div>
-                <div class="bm-contact-41-contact-card__data">
+                <div class="wf-contact-41-contact-card__data">
                   <h3 class="text-fluid-1"><a class="text-fluid-0" href={it.href}>{it.icon && <IconChip name={it.icon} />} {it.label || it.term || it.anchor || it.text}</a></h3>
                   {(it.label || it.term || it.anchor) && it.text && <p class="text-fluid-0">{it.text}</p>}
                   <h3 class="text-fluid-1"><a class="text-fluid-0" href={it.href}>{it.icon && <IconChip name={it.icon} />} {it.label || it.term || it.anchor || it.text}</a></h3>
@@ -106,7 +106,7 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
             ))}</div>
         </div>}
       </div>
-      <div class="bm-contact-41__form-wrapper">
+      <div class="wf-contact-41__form-wrapper">
         <form novalidate>
           <label class="field flow"><span class="text-fluid--1">Name <span aria-hidden="true">*</span></span><input type="text" name="name" autocomplete="name" required aria-required="true" /></label>
           <label class="field flow"><span class="text-fluid--1">Email <span aria-hidden="true">*</span></span><input type="email" name="email" autocomplete="email" required aria-required="true" /></label>

@@ -1,6 +1,6 @@
 ---
 /**
- * bm-remove-this — TRANSLATED Bricksmaven skeleton.
+ * wf-remove-this — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (remove-this.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -68,7 +68,7 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
   <div>
     <div class="sec-inner">
       <div>
-        <div class="hero-21-content__wrapper grid-auto gap-fluid-l">
+        <div class="wf-hero-21-content__wrapper grid-auto gap-fluid-l">
           {head && (h1 ? <h1 class="text-fluid-4">{head}</h1> : <h2 class="text-fluid-2">{head}</h2>)}
           {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
           {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
@@ -79,8 +79,8 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
     </div>
     {list.length > 0 &&     <div class="sec-inner">
       {list.length > 0 &&       <div>
-        {list.length > 0 && <div class="hero-21-list">{(list || []).map((it) => (
-              <div class="hero-21-card card">
+        {list.length > 0 && <div class="wf-hero-21-list">{(list || []).map((it) => (
+              <div class="wf-hero-21-card card">
                 <h3 class="text-fluid-1">{it.term || it.title}</h3>
                 <p class="text-fluid-0">{it.text}</p>
               </div>

@@ -1,6 +1,6 @@
 ---
 /**
- * bm-feature-60 — TRANSLATED Bricksmaven skeleton.
+ * wf-feature-60 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (feature-60.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -67,7 +67,7 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
 
 <div class="wf-feature-60">
   <div class="sec-inner">
-    <div class="bm-feature-60__container">
+    <div class="wf-feature-60__container">
       <div class="intro">
         {head && (h1 ? <h1 class="text-fluid-4">{head}</h1> : <h2 class="text-fluid-2">{head}</h2>)}
         {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
@@ -76,9 +76,9 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
 {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
       </div>}
 
-      <div class="bm-feature-60__list">
-        <div class="bm-feature-60-card">
-          {act.label &&           <div class="bm-feature-60-card__content">
+      <div class="wf-feature-60__list">
+        <div class="wf-feature-60-card">
+          {act.label &&           <div class="wf-feature-60-card__content">
             {act.label && <p class="mt-fluid-m"><a class="wf-cta-button" href={act.href}>{act.label}</a></p>}
           </div>
           }
@@ -93,7 +93,7 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
           </div>
           }
         </div>
-        {images[0] &&         <div class="bm-feature-60-card">
+        {images[0] &&         <div class="wf-feature-60-card">
           {images[0] &&           <div>
             {images[0] &&             <div>
               {images[0] &&               <div>

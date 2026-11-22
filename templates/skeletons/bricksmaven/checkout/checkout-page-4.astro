@@ -1,6 +1,6 @@
 ---
 /**
- * bm-checkout-page-4 — TRANSLATED Bricksmaven skeleton.
+ * wf-checkout-page-4 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (checkout-page-4.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -71,9 +71,9 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
       {head && (h1 ? <h1 class="text-fluid-4 checkout-page-4__page-heading">{head}</h1> : <h2 class="text-fluid-2 checkout-page-4__page-heading">{head}</h2>)}
   {sub && <p class="mt-stack lede" set:html={inline(sub)} />}
   {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
-      {list.length > 0 && <div class="checkout-page-4-breadcrumb">
+      {list.length > 0 && <div class="wf-checkout-page-4-breadcrumb">
         <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
-            <div class="checkout-page-4-breadcrumb-item card">
+            <div class="wf-checkout-page-4-breadcrumb-item card">
               {it.icon && <IconChip name={it.icon} />}
               <div class="stack">
                 <h3 class="text-fluid-1">{it.term || it.title || it.text}</h3>

@@ -1,6 +1,6 @@
 ---
 /**
- * bm-hero-94 — TRANSLATED Bricksmaven skeleton.
+ * wf-hero-94 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (hero-94.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -69,8 +69,8 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
   <div class={image && image.src ? 'split' : undefined}>
     <div class="stack">
   <div class="sec-inner">
-    <div class="bm-hero-94__container">
-      <div class="bm-hero-94__content">
+    <div class="wf-hero-94__container">
+      <div class="wf-hero-94__content">
         {head && (h1 ? <h1 class="text-fluid-4">{head}</h1> : <h2 class="text-fluid-2">{head}</h2>)}
         {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
         {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
@@ -82,8 +82,8 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
       {list.length > 0 &&       <div>
         {list.length > 0 &&         <div>
           {list.length > 0 && <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
-              <div class="bm-hero-94-review-card card">
-                <div class="bm-hero-94-review-card__content">
+              <div class="wf-hero-94-review-card card">
+                <div class="wf-hero-94-review-card__content">
                   {it.icon && <IconChip name={it.icon} />}
                   <div class="stack">
                     <h3 class="text-fluid-1">{it.term || it.title || it.text}</h3>

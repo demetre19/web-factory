@@ -1,14 +1,14 @@
-  .wf-shop-hero-5 .bm-shop-hero-5__container {
+  .wf-shop-hero-5 .wf-shop-hero-5__container {
     display: grid;
     gap: var(--space-m);
     grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
   }
 
-  .wf-shop-hero-5 .bm-shop-hero-5__intro {
+  .wf-shop-hero-5 .wf-shop-hero-5__intro {
     row-gap: var(--flow-spacing);
   }
 
-  .wf-shop-hero-5 .bm-shop-hero-5__top {
+  .wf-shop-hero-5 .wf-shop-hero-5__top {
     row-gap: calc(var(--flow-spacing) / 4);
   }
 
@@ -17,42 +17,42 @@
     column-gap: var(--flow-spacing);
   }
 
-  .wf-shop-hero-5 .bm-shop-hero-5__grid {
+  .wf-shop-hero-5 .wf-shop-hero-5__grid {
     display: grid;
     gap: var(--space-m);
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
   }
 
-  .wf-shop-hero-5 .bm-shop-hero-5__button-wrapper {
+  .wf-shop-hero-5 .wf-shop-hero-5__button-wrapper {
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
     row-gap: calc(var(--flow-spacing) / 4);
   }
 
-  .wf-shop-hero-5 .bm-shop-hero-5__content {
+  .wf-shop-hero-5 .wf-shop-hero-5__content {
     flex-wrap: nowrap;
     row-gap: var(--flow-spacing);
   }
 
-  .wf-shop-hero-5 .bm-shop-hero-5__header {
+  .wf-shop-hero-5 .wf-shop-hero-5__header {
     row-gap: calc(var(--flow-spacing) / 4);
   }
 
-  .wf-shop-hero-5 .bm-shop-hero-5__offer {
+  .wf-shop-hero-5 .wf-shop-hero-5__offer {
     flex-direction: row;
     display: flex;
     flex-wrap: nowrap;
     gap: var(--space-s);
   }
 
-  .wf-shop-hero-5 .bm-shop-hero-5__left-column {
+  .wf-shop-hero-5 .wf-shop-hero-5__left-column {
     row-gap: calc(var(--flow-spacing) / 4);
   }
 
   @media (max-width: 44rem) {
-    .wf-shop-hero-5 .bm-shop-hero-5__container { grid-template-columns: 1fr; }
+    .wf-shop-hero-5 .wf-shop-hero-5__container { grid-template-columns: 1fr; }
     .wf-shop-hero-5 .cta-combo { flex-direction: column; }
-    .wf-shop-hero-5 .bm-shop-hero-5__offer { flex-direction: column; }
+    .wf-shop-hero-5 .wf-shop-hero-5__offer { flex-direction: column; }
   }
-  .wf-shop-hero-5 .bm-shop-hero-5__container > :only-child { grid-column: 1 / -1; }
+  .wf-shop-hero-5 .wf-shop-hero-5__container > :only-child { grid-column: 1 / -1; }

@@ -1,6 +1,6 @@
 ---
 /**
- * bm-content-56 — TRANSLATED Bricksmaven skeleton.
+ * wf-content-56 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (content-56.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -59,22 +59,22 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
 
 <div class="wf-content-56">
   <div class="sec-inner">
-    <div class="bm-content-56__container">
-      {head &&       <div class="bm-content-56__intro">
+    <div class="wf-content-56__container">
+      {head &&       <div class="wf-content-56__intro">
         {head && (h1 ? <h1 class="text-fluid-4">{head}</h1> : <h2 class="text-fluid-2">{head}</h2>)}
       </div>
       }
-      <div class="bm-content-56__content">
-        <div class="bm-content-56__column">
+      <div class="wf-content-56__content">
+        <div class="wf-content-56__column">
           {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
                   </div>
         {before.length > 0 && <div class="flow mt-stack">
 {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
         </div>}
 
-        {list.length > 0 && <div class="bm-content-56-data">
+        {list.length > 0 && <div class="wf-content-56-data">
           <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
-              <div class="bm-content-56-data-card card">
+              <div class="wf-content-56-data-card card">
                 <h3>{it.stat || it.term || it.title}</h3>
                 <p class="text-fluid-0">{it.text}</p>
               </div>

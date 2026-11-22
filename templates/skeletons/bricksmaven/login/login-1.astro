@@ -1,6 +1,6 @@
 ---
 /**
- * bm-login-1 — TRANSLATED Bricksmaven skeleton.
+ * wf-login-1 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (login-1.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -67,8 +67,8 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
 
 <div class="wf-login-1">
   <div class="sec-inner">
-    <div class="login-1__container">
-      <div class="login-1__content">
+    <div class="wf-login-1__container">
+      <div class="wf-login-1__content">
         {image &&         <div>
           {image && image.src && <figure class="ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
         </div>
@@ -92,7 +92,7 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
               ))}</div>
           </div>}
         </div>
-        {links.length > 0 &&         <div class="login-1__logged-in-heading-wrapper">
+        {links.length > 0 &&         <div class="wf-login-1__logged-in-heading-wrapper">
           {links.length > 0 && <div class="login-footer">
             <div class="grid-auto gap-fluid-m">{(links || []).map((it) => (
                 <div class="card">
@@ -104,7 +104,7 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
         </div>
         }
       </div>
-      {images[0] &&       <div class="bm-login-1__media">
+      {images[0] &&       <div class="wf-login-1__media">
         {images[0] && images[0].src && <figure class="ratio-portrait"><div class="media-round" data-ratio={(image && image.ratio) || null}><Image src={mediaOf(images[0])} alt={images[0].alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
       </div>
       }

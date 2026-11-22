@@ -1,6 +1,6 @@
 ---
 /**
- * bm-testimonial-58 — TRANSLATED Bricksmaven skeleton.
+ * wf-testimonial-58 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (testimonial-58.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -69,13 +69,13 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
   <div class="sec-inner">
     <div>
       <div class="grid-auto gap-fluid-l">
-        {head &&         <div class="bm-testimonial-58-card__review-cover">
+        {head &&         <div class="wf-testimonial-58-card__review-cover">
           {head && (h1 ? <h1 class="text-fluid-4">{head}</h1> : <h2 class="text-fluid-2">{head}</h2>)}
         </div>
         }
   {sub && <p class="mt-stack lede" set:html={inline(sub)} />}
   {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
-        {act.label &&         <div class="bm-testimonial-58-card__footer">
+        {act.label &&         <div class="wf-testimonial-58-card__footer">
           {act.label && <p class="mt-fluid-m"><a class="wf-cta-button" href={act.href}>{act.label}</a></p>}
         </div>
         }

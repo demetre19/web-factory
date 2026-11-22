@@ -1,6 +1,6 @@
 ---
 /**
- * bm-how-it-works-28 — TRANSLATED Bricksmaven skeleton.
+ * wf-how-it-works-28 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (how-it-works-28.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -60,12 +60,12 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
 
 <div class="wf-how-it-works-28">
   <div class="sec-inner">
-    <div class="bm-how-it-works-28__container">
-      {list.length > 0 &&       <div class="bm-how-it-works-28-list">
+    <div class="wf-how-it-works-28__container">
+      {list.length > 0 &&       <div class="wf-how-it-works-28-list">
         {list.length > 0 && <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
-            <div class="bm-how-it-works-28-card card">
-              <div class="bm-how-it-works-28-card__content">
-                <div class="bm-how-it-works-28-card__heading-cover">
+            <div class="wf-how-it-works-28-card card">
+              <div class="wf-how-it-works-28-card__content">
+                <div class="wf-how-it-works-28-card__heading-cover">
                   {it.icon && <IconChip name={it.icon} />}
                   <h3 class="text-fluid-1">{it.term || it.title}</h3>
                   <div>
@@ -74,9 +74,9 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
                 </div>
                 {it.tag && <span class="tag text-fluid--1">{it.tag}</span>}
               </div>
-              <div class="bm-how-it-works-28-card__deliverables-wrapper">
+              <div class="wf-how-it-works-28-card__deliverables-wrapper">
                 {it.meta && <p class="meta text-fluid--1">{it.meta}</p>}
-                {(it.items || []).length > 0 && <div class="bm-how-it-works-28-card-deliverables-list">
+                {(it.items || []).length > 0 && <div class="wf-how-it-works-28-card-deliverables-list">
                   <div class="grid-auto gap-fluid-m">{((it.items || []) || []).map((it2) => (
                       <div class="card">
                         {it2.icon && <IconChip name={it2.icon} />}
@@ -92,14 +92,14 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
           ))}</div>}
       </div>
       }
-      <div class="bm-how-it-works-28__aside">
+      <div class="wf-how-it-works-28__aside">
         {head && (h1 ? <h1 class="text-fluid-4">{head}</h1> : <h2 class="text-fluid-2">{head}</h2>)}
   {sub && <p class="mt-stack lede" set:html={inline(sub)} />}
   {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
-        {links.length > 0 && <div class="bm-how-it-works-28-nav">
+        {links.length > 0 && <div class="wf-how-it-works-28-nav">
           <div class="grid-auto gap-fluid-m">{(links || []).map((it) => (
-              <div class="bm-how-it-works-28-nav-item card">
-                <div class="bm-how-it-works-28-nav-item__content">
+              <div class="wf-how-it-works-28-nav-item card">
+                <div class="wf-how-it-works-28-nav-item__content">
                   {it.icon && <IconChip name={it.icon} />}
                   <div class="stack">
                     <h3 class="text-fluid-1">{it.term || it.title || it.text}</h3>

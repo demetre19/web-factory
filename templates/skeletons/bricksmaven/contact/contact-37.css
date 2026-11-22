@@ -1,50 +1,50 @@
-  .wf-contact-37 .bm-contact-37 {
+  .wf-contact-37 .wf-contact-37 {
     row-gap: 0;
   }
 
-  .wf-contact-37 .bm-contact-37__content-container {
+  .wf-contact-37 .wf-contact-37__content-container {
     display: grid;
     gap: var(--space-m);
     grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
   }
 
-  .wf-contact-37 .bm-contact-37__content {
+  .wf-contact-37 .wf-contact-37__content {
     row-gap: var(--flow-spacing);
   }
 
-  .wf-contact-37 .bm-contact-37__intro {
+  .wf-contact-37 .wf-contact-37__intro {
     row-gap: var(--flow-spacing);
   }
 
-  .wf-contact-37 .bm-contact-25-side-list-ul {
+  .wf-contact-37 .wf-contact-25-side-list-ul {
     display: flex;
     flex-direction: column;
     row-gap: var(--flow-spacing);
   }
 
-  .wf-contact-37 .bm-contact-25-side-list-item {
+  .wf-contact-37 .wf-contact-25-side-list-item {
     display: flex;
     column-gap: calc(var(--flow-spacing) / 2);
   }
 
-  .wf-contact-37 .bm-contact-25-side-list-item__detail {
+  .wf-contact-37 .wf-contact-25-side-list-item__detail {
     display: flex;
     flex-direction: column;
     gap: var(--space-s);
   }
 
-  .wf-contact-37 .bm-contact-25-side-list-item__icon {
+  .wf-contact-37 .wf-contact-25-side-list-item__icon {
     display: flex;
     gap: var(--space-s);
   }
 
-  .wf-contact-37 .bm-contact-37__form-wrapper {
+  .wf-contact-37 .wf-contact-37__form-wrapper {
     row-gap: var(--flow-spacing);
   }
 
   @media (max-width: 44rem) {
-    .wf-contact-37 .bm-contact-37__content-container { grid-template-columns: 1fr; }
-    .wf-contact-37 .bm-contact-25-side-list-item { flex-direction: column; }
-    .wf-contact-37 .bm-contact-25-side-list-item__icon { flex-direction: column; }
+    .wf-contact-37 .wf-contact-37__content-container { grid-template-columns: 1fr; }
+    .wf-contact-37 .wf-contact-25-side-list-item { flex-direction: column; }
+    .wf-contact-37 .wf-contact-25-side-list-item__icon { flex-direction: column; }
   }
-  .wf-contact-37 .bm-contact-37__content-container > :only-child { grid-column: 1 / -1; }
+  .wf-contact-37 .wf-contact-37__content-container > :only-child { grid-column: 1 / -1; }

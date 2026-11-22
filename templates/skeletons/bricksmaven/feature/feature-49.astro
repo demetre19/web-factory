@@ -1,6 +1,6 @@
 ---
 /**
- * bm-feature-49 — TRANSLATED Bricksmaven skeleton.
+ * wf-feature-49 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (feature-49.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -67,8 +67,8 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
 
 <div class="wf-feature-49">
   <div class="sec-inner">
-    <div class="bm-feature-49__top-container">
-      <div class="bm-feature-49__content">
+    <div class="wf-feature-49__top-container">
+      <div class="wf-feature-49__content">
         {head && (h1 ? <h1 class="text-fluid-4">{head}</h1> : <h2 class="text-fluid-2">{head}</h2>)}
         {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
               </div>
@@ -77,9 +77,9 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
       </div>}
 
       {list.length > 0 &&       <div>
-        {list.length > 0 && <div class="bm-feature-49-grid-ul">{(list || []).map((it) => (
-              <div class="bm-feature-49-card card">
-                <div class="bm-feature-49-card__top">
+        {list.length > 0 && <div class="wf-feature-49-grid-ul">{(list || []).map((it) => (
+              <div class="wf-feature-49-card card">
+                <div class="wf-feature-49-card__top">
                   {it.icon && <IconChip name={it.icon} />}
                   <h3 class="text-fluid-1">{it.term || it.title}</h3>
                   <p class="text-fluid-0">{it.text}</p>

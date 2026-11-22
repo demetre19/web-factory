@@ -1,14 +1,14 @@
-  .wf-hero-73 .bm-hero-73__container {
+  .wf-hero-73 .wf-hero-73__container {
     display: grid;
     gap: var(--space-m);
     grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
   }
 
-  .wf-hero-73 .bm-hero-73__content {
+  .wf-hero-73 .wf-hero-73__content {
     row-gap: var(--flow-spacing);
   }
 
-  .wf-hero-73 .bm-hero-73__top {
+  .wf-hero-73 .wf-hero-73__top {
     row-gap: calc(var(--flow-spacing) / 2);
   }
 
@@ -17,14 +17,14 @@
     column-gap: var(--flow-spacing);
   }
 
-  .wf-hero-73 .bm-hero-73-media {
+  .wf-hero-73 .wf-hero-73-media {
     display: grid;
     gap: var(--space-m);
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
   }
 
   @media (max-width: 44rem) {
-    .wf-hero-73 .bm-hero-73__container { grid-template-columns: 1fr; }
+    .wf-hero-73 .wf-hero-73__container { grid-template-columns: 1fr; }
     .wf-hero-73 .cta-combo { flex-direction: column; }
   }
-  .wf-hero-73 .bm-hero-73__container > :only-child { grid-column: 1 / -1; }
+  .wf-hero-73 .wf-hero-73__container > :only-child { grid-column: 1 / -1; }

@@ -1,6 +1,6 @@
 ---
 /**
- * bm-portfolio-single-6 — TRANSLATED Bricksmaven skeleton.
+ * wf-portfolio-single-6 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (portfolio-single-6.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -68,11 +68,11 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
 <div class="wf-portfolio-single-6">
   <div class="sec-inner">
     <div>
-      <div class="bm-portfolio-single-6__intro">
+      <div class="wf-portfolio-single-6__intro">
         {head && (h1 ? <h1 class="text-fluid-4">{head}</h1> : <h2 class="text-fluid-2">{head}</h2>)}
         {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
         {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
-        {list.length > 0 && <div class="bm-portfolio-single-6-expertise-list">
+        {list.length > 0 && <div class="wf-portfolio-single-6-expertise-list">
           <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
               <div class="card">
                 <h3 class="text-fluid-1"><a class="text-fluid-0" href={it.href}>{it.icon && <IconChip name={it.icon} />} {it.label || it.term || it.anchor || it.text}</a></h3>
@@ -82,13 +82,13 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
         </div>}
       </div>
     </div>
-    <div class="bm-portfolio-single-6__content-container">
-      <div class="bm-portfolio-single-6__content">
+    <div class="wf-portfolio-single-6__content-container">
+      <div class="wf-portfolio-single-6__content">
         {image &&         <div>
           {image && image.src && <figure class="ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
         </div>
         }
-        {images[0] &&         <div class="bm-portfolio-single-testimonial-3">
+        {images[0] &&         <div class="wf-portfolio-single-testimonial-3">
           {images[0] &&           <div class="testimonial-list-card__profile">
             {images[0] &&             <div>
               {images[0] && images[0].src && <figure class="ratio-portrait"><div class="media-round" data-ratio={(image && image.ratio) || null}><Image src={mediaOf(images[0])} alt={images[0].alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
@@ -99,10 +99,10 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
         </div>
         }
       </div>
-      {images[1] &&       <div class="bm-portfolio-single-6__aside">
+      {images[1] &&       <div class="wf-portfolio-single-6__aside">
         {images[1] &&         <div>
-          {images[1] &&           <div class="bm-contact-widget-2">
-            {images[1] &&             <div class="bm-contact-widget-2__footer">
+          {images[1] &&           <div class="wf-contact-widget-2">
+            {images[1] &&             <div class="wf-contact-widget-2__footer">
               {images[1] &&               <div>
                 {images[1] && images[1].src && <figure class="ratio-portrait"><div class="media-round" data-ratio={(image && image.ratio) || null}><Image src={mediaOf(images[1])} alt={images[1].alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
               </div>
@@ -116,9 +116,9 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
       </div>
       }
     </div>
-    {links.length > 0 &&     <div class="bm-portfolio-single-6__footer-container">
-      {links.length > 0 && <div class="bm-portfolio-5-related-list">{(links || []).map((it) => (
-            <div class="bm-portfolio-5-related-card card">
+    {links.length > 0 &&     <div class="wf-portfolio-single-6__footer-container">
+      {links.length > 0 && <div class="wf-portfolio-5-related-list">{(links || []).map((it) => (
+            <div class="wf-portfolio-5-related-card card">
               {it.icon && <IconChip name={it.icon} />}
               <h3 class="text-fluid-1">{it.term || it.title}</h3>
             </div>

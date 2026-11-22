@@ -1,6 +1,6 @@
 ---
 /**
- * bm-footer-20 — TRANSLATED Bricksmaven skeleton.
+ * wf-footer-20 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (footer-20.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -69,8 +69,8 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
   <div class={image && image.src ? 'split' : undefined}>
     <div class="stack">
   <div class="sec-inner">
-    <div class="bm-footer-20__container row between">
-      <div class="bm-footer-20__top row between">
+    <div class="wf-footer-20__container row between">
+      <div class="wf-footer-20__top row between">
         <div>
           <span class="logo brand-mark">{brand}</span>
         </div>
@@ -83,22 +83,22 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
           </form>
         </div>
       </div>
-      <div class="bm-footer-20__content row between">
-        <div class="bm-footer-20__left row between">
-          <div class="bm-footer-20__left-top row between">
+      <div class="wf-footer-20__content row between">
+        <div class="wf-footer-20__left row between">
+          <div class="wf-footer-20__left-top row between">
             {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
                       </div>
           {before.length > 0 && <div class="flow mt-stack">
 {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
           </div>}
 
-          {head &&           <div class="bm-footer-20__social-wrapper row between">
+          {head &&           <div class="wf-footer-20__social-wrapper row between">
             {head && (h1 ? <h1 class="text-fluid-4">{head}</h1> : <h2 class="text-fluid-2">{head}</h2>)}
           </div>
           }
         </div>
         {links.length >= 0 &&         <div>
-          {links.length >= 0 &&           <div class="footer-nav-wrapper bm-footer-nav-wrapper--grid-2 row between">
+          {links.length >= 0 &&           <div class="footer-nav-wrapper wf-footer-nav-wrapper--grid-2 row between">
             {links.length > 0 && <div class="row gap-fluid-m">{(links || []).map((it) => (
                 <div class="footer-nav-column row between">
                   {it.icon && <IconChip name={it.icon} />}

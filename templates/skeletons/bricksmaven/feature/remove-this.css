@@ -4,13 +4,13 @@
     gap: var(--space-s);
   }
 
-  .wf-remove-this .feature-12-column-list {
+  .wf-remove-this .wf-feature-12-column-list {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
     gap: var(--space-m);
   }
 
-  .wf-remove-this .feature-12-column-item {
+  .wf-remove-this .wf-feature-12-column-item {
     display: flex;
     flex-direction: column;
     row-gap: var(--space-m);

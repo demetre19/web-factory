@@ -9,7 +9,7 @@
     grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
   }
 
-  .wf-product-list-3 .product-list-3-card__heading {
+  .wf-product-list-3 .wf-product-list-3-card__heading {
     row-gap: calc( var(--flow-spacing) / 2 );
   }
 
@@ -19,22 +19,22 @@
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
   }
 
-  .wf-product-list-3 .product-list-3-card__container {
+  .wf-product-list-3 .wf-product-list-3-card__container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
     gap: var(--space-m);
   }
 
-  .wf-product-list-3 .product-list-3-card {
+  .wf-product-list-3 .wf-product-list-3-card {
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
     row-gap: calc(var(--flow-spacing) / 2);
   }
 
-  .wf-product-list-3 .product-list-3-card__content {
+  .wf-product-list-3 .wf-product-list-3-card__content {
     row-gap: calc(var(--flow-spacing) / 2);
   }
 
-  .wf-product-list-3 .product-list-3-card__image {
+  .wf-product-list-3 .wf-product-list-3-card__image {
     row-gap: calc( var(--flow-spacing) / 2 );
   }
 

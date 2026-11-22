@@ -1,4 +1,4 @@
-  .wf-team-8 .team-8-container {
+  .wf-team-8 .wf-team-8-container {
     display: flex;
     row-gap: var(--space-l);
   }
@@ -9,18 +9,18 @@
     row-gap: var(--space-s);
   }
 
-  .wf-team-8 .team-8-card {
+  .wf-team-8 .wf-team-8-card {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
     gap: var(--grid-gap);
   }
 
-  .wf-team-8 .team-8-card__box {
+  .wf-team-8 .wf-team-8-card__box {
     display: flex;
     row-gap: var(--space-s);
     flex-direction: column;
   }
 
   @media (max-width: 44rem) {
-    .wf-team-8 .team-8-container { flex-direction: column; }
+    .wf-team-8 .wf-team-8-container { flex-direction: column; }
   }

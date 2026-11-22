@@ -1,8 +1,8 @@
-  .wf-empty-cart .bm-empty-cart {
+  .wf-empty-cart .wf-empty-cart {
     row-gap: var(--space-s);
   }
 
-  .wf-empty-cart .bm-empty-cart__content {
+  .wf-empty-cart .wf-empty-cart__content {
     row-gap: var(--flow-spacing);
   }
 
@@ -11,7 +11,7 @@
     column-gap: var(--flow-spacing);
   }
 
-  .wf-empty-cart .bm-product-list-1__container {
+  .wf-empty-cart .wf-product-list-1__container {
     flex-direction: column;
     row-gap: var(--space-s);
   }
@@ -22,47 +22,47 @@
     row-gap: var(--flow-spacing);
   }
 
-  .wf-empty-cart .bm-product-list-1__list {
+  .wf-empty-cart .wf-product-list-1__list {
     display: grid;
     gap: var(--space-m);
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
   }
 
-  .wf-empty-cart .bm-product-list-1-card {
+  .wf-empty-cart .wf-product-list-1-card {
     row-gap: var(--flow-spacing);
     flex-wrap: nowrap;
   }
 
-  .wf-empty-cart .bm-product-list-1-card__content {
+  .wf-empty-cart .wf-product-list-1-card__content {
     row-gap: calc(var(--flow-spacing) / 2);
   }
 
-  .wf-empty-cart .bm-product-list-1-card__top {
+  .wf-empty-cart .wf-product-list-1-card__top {
     display: flex;
     flex-direction: column;
     row-gap: calc(var(--flow-spacing) / 2);
   }
 
-  .wf-empty-cart .bm-product-list-1-card__heading {
+  .wf-empty-cart .wf-product-list-1-card__heading {
     row-gap: calc( var(--flow-spacing) / 2 );
   }
 
-  .wf-empty-cart .bm-product-list-notice__wrapper {
+  .wf-empty-cart .wf-product-list-notice__wrapper {
     display: flex;
     flex-direction: column;
     row-gap: calc(var(--flow-spacing) / 4);
   }
 
-  .wf-empty-cart .bm-product-list-notice-circle__sale-badge {
+  .wf-empty-cart .wf-product-list-notice-circle__sale-badge {
     display: flex;
     gap: var(--space-s);
   }
 
-  .wf-empty-cart .bm-product-list-1-card__image {
+  .wf-empty-cart .wf-product-list-1-card__image {
     row-gap: calc( var(--flow-spacing) / 2 );
   }
 
   @media (max-width: 44rem) {
     .wf-empty-cart .cta-combo { flex-direction: column; }
-    .wf-empty-cart .bm-product-list-notice-circle__sale-badge { flex-direction: column; }
+    .wf-empty-cart .wf-product-list-notice-circle__sale-badge { flex-direction: column; }
   }

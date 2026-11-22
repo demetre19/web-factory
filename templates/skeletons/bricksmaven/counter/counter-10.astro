@@ -1,6 +1,6 @@
 ---
 /**
- * bm-counter-10 — TRANSLATED Bricksmaven skeleton.
+ * wf-counter-10 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (counter-10.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -66,8 +66,8 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
 
 <div class="wf-counter-10">
   <div class="sec-inner">
-    <div class="counter-10-container">
-      <div class="counter-10-box">
+    <div class="wf-counter-10-container">
+      <div class="wf-counter-10-box">
         {head && (h1 ? <h1 class="text-fluid-4">{head}</h1> : <h2 class="text-fluid-2">{head}</h2>)}
         {image &&         <div>
           {image && image.src && <figure class="ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
@@ -77,8 +77,8 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
         {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
         {act.label && <p class="mt-fluid-m"><a class="wf-cta-button" href={act.href}>{act.label}</a></p>}
       </div>
-      {list.length > 0 && <div class="counter-10-grid-ul">{(list || []).map((it) => (
-            <div class="counter-10-card card">
+      {list.length > 0 && <div class="wf-counter-10-grid-ul">{(list || []).map((it) => (
+            <div class="wf-counter-10-card card">
               <h3>{it.stat || it.term || it.title}</h3>
               <p class="text-fluid-0">{it.text}</p>
               {it.tag && <span class="tag text-fluid--1">{it.tag}</span>}

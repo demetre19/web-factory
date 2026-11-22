@@ -1,6 +1,6 @@
 ---
 /**
- * bm-pricing-24 — TRANSLATED Bricksmaven skeleton.
+ * wf-pricing-24 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (pricing-24.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -60,7 +60,7 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
 
 <div class="wf-pricing-24">
   <div class="sec-inner">
-    <div class="bm-pricing-24__container">
+    <div class="wf-pricing-24__container">
       <div class="intro intro--split">
         {head &&         <div class="intro__left-column">
           {head && (h1 ? <h1 class="text-fluid-4">{head}</h1> : <h2 class="text-fluid-2">{head}</h2>)}
@@ -75,19 +75,19 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
 
       </div>
       {list.length > 0 && <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
-          <div class="bm-pricing-24__content card">
-            <div class="bm-pricing-24__aside">
-              <div class="bm-pricing-24__aside-content">
+          <div class="wf-pricing-24__content card">
+            <div class="wf-pricing-24__aside">
+              <div class="wf-pricing-24__aside-content">
                 {it.icon && <IconChip name={it.icon} />}
                 <h3 class="text-fluid-1">{it.term || it.title}</h3>
                 <p class="text-fluid-0">{it.text}</p>
               </div>
             </div>
-            <div class="bm-pricing-24__pricing-container">
-              {(it.items || []).length > 0 && <div class="bm-pricing-24-pricing-list">{((it.items || []) || []).map((it2) => (
-                    <div class="bm-pricing-24-pricing-item card">
-                      <div class="bm-pricing-24-pricing-item__top">
-                        <div class="bm-pricing-24-pricing-item__intro">
+            <div class="wf-pricing-24__pricing-container">
+              {(it.items || []).length > 0 && <div class="wf-pricing-24-pricing-list">{((it.items || []) || []).map((it2) => (
+                    <div class="wf-pricing-24-pricing-item card">
+                      <div class="wf-pricing-24-pricing-item__top">
+                        <div class="wf-pricing-24-pricing-item__intro">
                           {it2.icon && <IconChip name={it2.icon} />}
                           <h3 class="text-fluid-1">{it2.term || it2.title}</h3>
                           <p class="text-fluid-0">{it2.text}</p>
@@ -96,10 +96,10 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
                       </div>
                     </div>
                   ))}</div>}
-              {(it.items || []).length > 0 && <div class="bm-pricing-24-pricing-list">{((it.items || []) || []).map((it2) => (
-                    <div class="bm-pricing-24-pricing-item card">
-                      <div class="bm-pricing-24-pricing-item__top">
-                        <div class="bm-pricing-24-pricing-item__intro">
+              {(it.items || []).length > 0 && <div class="wf-pricing-24-pricing-list">{((it.items || []) || []).map((it2) => (
+                    <div class="wf-pricing-24-pricing-item card">
+                      <div class="wf-pricing-24-pricing-item__top">
+                        <div class="wf-pricing-24-pricing-item__intro">
                           {it2.icon && <IconChip name={it2.icon} />}
                           <h3 class="text-fluid-1">{it2.term || it2.title}</h3>
                           <p class="text-fluid-0">{it2.text}</p>

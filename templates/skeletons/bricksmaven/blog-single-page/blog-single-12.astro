@@ -1,6 +1,6 @@
 ---
 /**
- * bm-blog-single-12 — TRANSLATED Bricksmaven skeleton.
+ * wf-blog-single-12 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (blog-single-12.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -68,7 +68,7 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
 <div class="wf-blog-single-12">
   <div class="sec-inner">
     <div>
-      <div class="bm-blog-single-12__top-inner">
+      <div class="wf-blog-single-12__top-inner">
         {image &&         <div class="blog-single-2__meta">
           {image &&           <div class="blog-single-2__author">
             {image &&             <div>
@@ -79,8 +79,8 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
           }
         </div>
         }
-        {act.label &&         <div class="bm-blog-single-12__footer">
-          {act.label &&           <div class="bm-share-widget">
+        {act.label &&         <div class="wf-blog-single-12__footer">
+          {act.label &&           <div class="wf-share-widget">
             {act.label &&             <div>
               {act.label && <p class="mt-fluid-m"><a class="wf-cta-button" href={act.href}>{act.label}</a></p>}
             </div>
@@ -91,14 +91,14 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
         }
       </div>
     </div>
-    <div class="bm-blog-single-12__content-container grid-auto gap-fluid-l">
+    <div class="wf-blog-single-12__content-container grid-auto gap-fluid-l">
       {images[0] && images[0].src && <figure class="ratio-portrait"><div class="media-round" data-ratio={(image && image.ratio) || null}><Image src={mediaOf(images[0])} alt={images[0].alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
-      <div class="bm-newsletter-widget-card-2">
-        <div class="bm-newsletter-widget-card-2__top">
+      <div class="wf-newsletter-widget-card-2">
+        <div class="wf-newsletter-widget-card-2__top">
           {head && <h3 class="text-fluid-2">{head}</h3>}
           {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
           {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
-          <form class="bm-form-widget" novalidate>
+          <form class="wf-form-widget" novalidate>
             <label class="field flow"><span class="text-fluid--1">Email <span aria-hidden="true">*</span></span><input type="email" name="email" autocomplete="email" required aria-required="true" /></label>
             <p class="form-error text-fluid--1" role="alert" hidden></p>
             <p class="form-success text-fluid--1" role="status" hidden></p>

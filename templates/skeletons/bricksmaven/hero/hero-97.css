@@ -1,15 +1,15 @@
-  .wf-hero-97 .bm-hero-97__container {
+  .wf-hero-97 .wf-hero-97__container {
     display: grid;
     gap: var(--space-m);
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
   }
 
-  .wf-hero-97 .bm-hero-97__content {
+  .wf-hero-97 .wf-hero-97__content {
     flex-wrap: nowrap;
     row-gap: var(--flow-spacing);
   }
 
-  .wf-hero-97 .bm-hero-97__top {
+  .wf-hero-97 .wf-hero-97__top {
     flex-wrap: nowrap;
     row-gap: var(--flow-spacing);
   }
@@ -19,13 +19,13 @@
     column-gap: calc(var(--flow-spacing) / 2);
   }
 
-  .wf-hero-97 .bm-review-banner-1 {
+  .wf-hero-97 .wf-review-banner-1 {
     flex-direction: row;
     column-gap: calc(var(--flow-spacing) / 2);
     flex-wrap: nowrap;
   }
 
-  .wf-hero-97 .bm-testimonial-38-star-list {
+  .wf-hero-97 .wf-testimonial-38-star-list {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
@@ -34,6 +34,6 @@
 
   @media (max-width: 44rem) {
     .wf-hero-97 .cta-combo { flex-direction: column; }
-    .wf-hero-97 .bm-review-banner-1 { flex-direction: column; }
-    .wf-hero-97 .bm-testimonial-38-star-list { flex-direction: column; }
+    .wf-hero-97 .wf-review-banner-1 { flex-direction: column; }
+    .wf-hero-97 .wf-testimonial-38-star-list { flex-direction: column; }
   }

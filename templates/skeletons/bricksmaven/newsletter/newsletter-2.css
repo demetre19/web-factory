@@ -1,42 +1,42 @@
-  .wf-newsletter-2 .newsletter-2-container {
+  .wf-newsletter-2 .wf-newsletter-2-container {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: var(--space-xl);
   }
 
-  .wf-newsletter-2 .newsletter-2__left-box {
+  .wf-newsletter-2 .wf-newsletter-2__left-box {
     display: flex;
     flex-direction: column;
     row-gap: var(--flow-spacing);
   }
 
-  .wf-newsletter-2 .bm-list {
+  .wf-newsletter-2 .wf-list {
     display: flex;
     flex-direction: column;
     gap: var(--space-s);
   }
 
-  .wf-newsletter-2 .bm-list__item {
+  .wf-newsletter-2 .wf-list__item {
     flex-direction: row;
     display: flex;
     column-gap: var(--flow-spacing);
   }
 
-  .wf-newsletter-2 .bm-form {
+  .wf-newsletter-2 .wf-form {
     display: flex;
     flex-direction: column;
     row-gap: var(--space-xs);
   }
 
-  .wf-newsletter-2 .bm-form-widget {
+  .wf-newsletter-2 .wf-form-widget {
     display: flex;
     gap: var(--space-xs);
     flex-direction: row;
   }
 
   @media (max-width: 44rem) {
-    .wf-newsletter-2 .newsletter-2-container { grid-template-columns: 1fr; }
-    .wf-newsletter-2 .bm-list__item { flex-direction: column; }
-    .wf-newsletter-2 .bm-form-widget { flex-direction: column; }
+    .wf-newsletter-2 .wf-newsletter-2-container { grid-template-columns: 1fr; }
+    .wf-newsletter-2 .wf-list__item { flex-direction: column; }
+    .wf-newsletter-2 .wf-form-widget { flex-direction: column; }
   }
-  .wf-newsletter-2 .newsletter-2-container > :only-child { grid-column: 1 / -1; }
+  .wf-newsletter-2 .wf-newsletter-2-container > :only-child { grid-column: 1 / -1; }

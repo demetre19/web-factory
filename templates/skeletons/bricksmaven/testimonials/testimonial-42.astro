@@ -1,6 +1,6 @@
 ---
 /**
- * bm-testimonial-42 — TRANSLATED Bricksmaven skeleton.
+ * wf-testimonial-42 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (testimonial-42.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -69,20 +69,20 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
   <div class={image && image.src ? 'split' : undefined}>
     <div class="stack">
   <div class="sec-inner">
-    <div class="bm-testimonial-42__container">
+    <div class="wf-testimonial-42__container">
       <div>
-        <div class="bm-testimonial-42__content">
+        <div class="wf-testimonial-42__content">
           {head && (h1 ? <h1 class="text-fluid-4">{head}</h1> : <h2 class="text-fluid-2">{head}</h2>)}
           {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
           {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
           {act.label && <p class="mt-fluid-m"><a class="wf-cta-button" href={act.href}>{act.label}</a></p>}
         </div>
       </div>
-      {list.length > 0 && <div class="bm-testimonial-42__testimonial-list">{(list || []).map((it) => (
+      {list.length > 0 && <div class="wf-testimonial-42__testimonial-list">{(list || []).map((it) => (
           <>
-            {(it.items || []).length > 0 &&             <div class="bm-testimonial-42__testimonial-column card">
+            {(it.items || []).length > 0 &&             <div class="wf-testimonial-42__testimonial-column card">
               {(it.items || []).length > 0 && <div class="grid-auto gap-fluid-m">{((it.items || []) || []).map((it2) => (
-                  <div class="testimonial-36-card card">
+                  <div class="wf-testimonial-36-card card">
                     <div>
                       {it2.icon && <IconChip name={it2.icon} />}
                       <div class="stack">
@@ -90,8 +90,8 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
                         {it2.text && (it2.term || it2.title) && <p class="text-fluid-0">{it2.text}</p>}
                       </div>
                     </div>
-                    <div class="testimonial-36-card__head">
-                      <div class="testimonial-36-card__client-data">
+                    <div class="wf-testimonial-36-card__head">
+                      <div class="wf-testimonial-36-card__client-data">
                         {it2.meta && <p class="meta text-fluid--1">{it2.meta}</p>}
                         {it2.tag && <span class="tag text-fluid--1">{it2.tag}</span>}
                       </div>

@@ -1,6 +1,6 @@
 ---
 /**
- * bm-testimonial-27 — TRANSLATED Bricksmaven skeleton.
+ * wf-testimonial-27 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (testimonial-27.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -69,16 +69,16 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
   <div class={image && image.src ? 'split' : undefined}>
     <div class="stack">
   <div class="sec-inner">
-    <div class="testimonial-27-container">
-      <div class="testimonial-27-quote">
+    <div class="wf-testimonial-27-container">
+      <div class="wf-testimonial-27-quote">
         {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
               </div>
       {before.length > 0 && <div class="flow mt-stack">
 {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
       </div>}
 
-      <div class="testimonial-27-content">
-        <div class="testimonial-27-content__wrapper">
+      <div class="wf-testimonial-27-content">
+        <div class="wf-testimonial-27-content__wrapper">
           {head && (h1 ? <h1 class="text-fluid-4">{head}</h1> : <h2 class="text-fluid-2">{head}</h2>)}
           {list.length > 0 &&           <div>
             {list.length > 0 && <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
@@ -95,8 +95,8 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
           {links.length > 0 &&           <div>
             {links.length > 0 && <div class="grid-auto gap-fluid-m">{(links || []).map((it) => (
                 <div class="card">
-                  <div class="testimonial-27-content__profile">
-                    <div class="testimonial-27-content__meta">
+                  <div class="wf-testimonial-27-content__profile">
+                    <div class="wf-testimonial-27-content__meta">
                       {it.icon && <IconChip name={it.icon} />}
                       <h4 class="text-fluid-1">{it.term || it.title}</h4>
                       <p class="text-fluid-0">{it.text}</p>

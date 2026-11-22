@@ -1,6 +1,6 @@
 ---
 /**
- * bm-team-12 — TRANSLATED Bricksmaven skeleton.
+ * wf-team-12 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (team-12.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -68,7 +68,7 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
   <div class={image && image.src ? 'split' : undefined}>
     <div class="stack">
   <div class="sec-inner">
-    <div class="team-12-container">
+    <div class="wf-team-12-container">
       <div class="intro">
         {head && (h1 ? <h1 class="text-fluid-4">{head}</h1> : <h2 class="text-fluid-2">{head}</h2>)}
         {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
@@ -77,10 +77,10 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
 {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
       </div>}
 
-      {list.length > 0 && <div class="team-12-list">{(list || []).map((it) => (
-            <div class="team-12-card card">
-              <div class="team-12-card__content">
-                <div class="team-12-card__inner-content">
+      {list.length > 0 && <div class="wf-team-12-list">{(list || []).map((it) => (
+            <div class="wf-team-12-card card">
+              <div class="wf-team-12-card__content">
+                <div class="wf-team-12-card__inner-content">
                   <h3 class="text-fluid-1">{it.term || it.title}</h3>
                   <p class="text-fluid-0">{it.text}</p>
                 </div>

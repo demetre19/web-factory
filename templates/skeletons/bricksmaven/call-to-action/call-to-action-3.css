@@ -1,16 +1,16 @@
-  .wf-call-to-action-3 .cta-3-container {
+  .wf-call-to-action-3 .wf-cta-3-container {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: var(--space-xs);
   }
 
-  .wf-call-to-action-3 .cta-3__content {
+  .wf-call-to-action-3 .wf-cta-3__content {
     display: flex;
     flex-direction: column;
     row-gap: var(--space-s);
   }
 
   @media (max-width: 44rem) {
-    .wf-call-to-action-3 .cta-3-container { grid-template-columns: 1fr; }
+    .wf-call-to-action-3 .wf-cta-3-container { grid-template-columns: 1fr; }
   }
-  .wf-call-to-action-3 .cta-3-container > :only-child { grid-column: 1 / -1; }
+  .wf-call-to-action-3 .wf-cta-3-container > :only-child { grid-column: 1 / -1; }

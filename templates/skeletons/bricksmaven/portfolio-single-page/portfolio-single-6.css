@@ -1,33 +1,33 @@
-  .wf-portfolio-single-6 .bm-portfolio-single-6 {
+  .wf-portfolio-single-6 .wf-portfolio-single-6 {
     row-gap: var(--space-s);
   }
 
-  .wf-portfolio-single-6 .bm-portfolio-single-6__intro {
+  .wf-portfolio-single-6 .wf-portfolio-single-6__intro {
     row-gap: var(--flow-spacing);
   }
 
-  .wf-portfolio-single-6 .bm-portfolio-single-6-expertise-list {
+  .wf-portfolio-single-6 .wf-portfolio-single-6-expertise-list {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
     column-gap: var(--flow-spacing);
   }
 
-  .wf-portfolio-single-6 .bm-portfolio-single-6__content-container {
+  .wf-portfolio-single-6 .wf-portfolio-single-6__content-container {
     display: grid;
     grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
     gap: var(--space-m);
   }
 
-  .wf-portfolio-single-6 .bm-portfolio-single-6__content {
+  .wf-portfolio-single-6 .wf-portfolio-single-6__content {
     row-gap: var(--flow-spacing);
   }
 
-  .wf-portfolio-single-6 .bm-portfolio-single-6__column {
+  .wf-portfolio-single-6 .wf-portfolio-single-6__column {
     row-gap: var(--flow-spacing);
   }
 
-  .wf-portfolio-single-6 .bm-portfolio-single-testimonial-3 {
+  .wf-portfolio-single-6 .wf-portfolio-single-testimonial-3 {
     row-gap: var(--flow-spacing);
   }
 
@@ -42,54 +42,54 @@
     row-gap: calc(--content-gap / 2);
   }
 
-  .wf-portfolio-single-6 .bm-portfolio-single-6__aside {
+  .wf-portfolio-single-6 .wf-portfolio-single-6__aside {
     row-gap: var(--flow-spacing);
   }
 
-  .wf-portfolio-single-6 .bm-live-website-btn {
+  .wf-portfolio-single-6 .wf-live-website-btn {
     display: flex;
     flex-direction: row;
     column-gap: calc(var(--flow-spacing) / 4);
   }
 
-  .wf-portfolio-single-6 .bm-contact-widget-2 {
+  .wf-portfolio-single-6 .wf-contact-widget-2 {
     row-gap: var(--flow-spacing);
   }
 
-  .wf-portfolio-single-6 .bm-contact-widget-2__footer {
+  .wf-portfolio-single-6 .wf-contact-widget-2__footer {
     row-gap: calc(var(--flow-spacing) / 2);
   }
 
-  .wf-portfolio-single-6 .bm-contact-widget-link {
+  .wf-portfolio-single-6 .wf-contact-widget-link {
     display: flex;
     column-gap: calc(var(--flow-spacing) / 2);
   }
 
-  .wf-portfolio-single-6 .bm-contact-widget-link__icon-wrapper {
+  .wf-portfolio-single-6 .wf-contact-widget-link__icon-wrapper {
     display: flex;
     gap: var(--space-s);
   }
 
-  .wf-portfolio-single-6 .bm-portfolio-single-6__footer-container {
+  .wf-portfolio-single-6 .wf-portfolio-single-6__footer-container {
     row-gap: var(--space-s);
   }
 
-  .wf-portfolio-single-6 .bm-portfolio-5-related-list {
+  .wf-portfolio-single-6 .wf-portfolio-5-related-list {
     display: grid;
     gap: var(--space-m);
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
   }
 
-  .wf-portfolio-single-6 .bm-portfolio-5-related-card {
+  .wf-portfolio-single-6 .wf-portfolio-5-related-card {
     row-gap: var(--flow-spacing);
   }
 
   @media (max-width: 44rem) {
-    .wf-portfolio-single-6 .bm-portfolio-single-6__content-container { grid-template-columns: 1fr; }
-    .wf-portfolio-single-6 .bm-portfolio-single-6-expertise-list { flex-direction: column; }
+    .wf-portfolio-single-6 .wf-portfolio-single-6__content-container { grid-template-columns: 1fr; }
+    .wf-portfolio-single-6 .wf-portfolio-single-6-expertise-list { flex-direction: column; }
     .wf-portfolio-single-6 .testimonial-list-card__profile { flex-direction: column; }
-    .wf-portfolio-single-6 .bm-live-website-btn { flex-direction: column; }
-    .wf-portfolio-single-6 .bm-contact-widget-link { flex-direction: column; }
-    .wf-portfolio-single-6 .bm-contact-widget-link__icon-wrapper { flex-direction: column; }
+    .wf-portfolio-single-6 .wf-live-website-btn { flex-direction: column; }
+    .wf-portfolio-single-6 .wf-contact-widget-link { flex-direction: column; }
+    .wf-portfolio-single-6 .wf-contact-widget-link__icon-wrapper { flex-direction: column; }
   }
-  .wf-portfolio-single-6 .bm-portfolio-single-6__content-container > :only-child { grid-column: 1 / -1; }
+  .wf-portfolio-single-6 .wf-portfolio-single-6__content-container > :only-child { grid-column: 1 / -1; }

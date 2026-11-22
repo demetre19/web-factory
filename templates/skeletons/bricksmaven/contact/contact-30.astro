@@ -1,6 +1,6 @@
 ---
 /**
- * bm-contact-30 — TRANSLATED Bricksmaven skeleton.
+ * wf-contact-30 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (contact-30.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -60,9 +60,9 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
 
 <div class="wf-contact-30">
   <div class="sec-inner">
-    <div class="bm-contact-30__container">
-      <div class="bm-contact-30__intro">
-        {head &&         <div class="bm-contact-30__top">
+    <div class="wf-contact-30__container">
+      <div class="wf-contact-30__intro">
+        {head &&         <div class="wf-contact-30__top">
           {head && (h1 ? <h1 class="text-fluid-4">{head}</h1> : <h2 class="text-fluid-2">{head}</h2>)}
         </div>
         }
@@ -72,7 +72,7 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
 {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
       </div>}
 
-      {links.length > 0 &&       <div class="bm-contact-30-card">
+      {links.length > 0 &&       <div class="wf-contact-30-card">
         {links.length > 0 && <div class="grid-auto gap-fluid-m">{(links || []).map((it) => (
             <div class="card">
               {it.icon && <IconChip name={it.icon} />}

@@ -1,6 +1,6 @@
 ---
 /**
- * bm-footer-11 — TRANSLATED Bricksmaven skeleton.
+ * wf-footer-11 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (footer-11.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -60,8 +60,8 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
 
 <div class="wf-footer-11">
   <div class="sec-inner">
-    <div class="footer-11-container row between">
-      <div class="footer-11__top row between">
+    <div class="wf-footer-11-container row between">
+      <div class="wf-footer-11__top row between">
         <div>
           <span class="logo brand-mark">{brand}</span>
         </div>
@@ -77,7 +77,7 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
         </div>
         }
       </div>
-      <div class="footer-11__bottom row between">
+      <div class="wf-footer-11__bottom row between">
         <div>
           {links.length > 0 && <div class="footer-legal-nav row between">
             <div class="row gap-fluid-m">{(links || []).map((it) => (
@@ -89,7 +89,7 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
           </div>}
           {links.length === 0 && <p class="footer-legal-nav text-fluid-0">Copyright {new Date().getFullYear()} {brand}</p>}
         </div>
-        <div class="footer-3-bottom__right">
+        <div class="wf-footer-3-bottom__right">
           {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
                   </div>
         {before.length > 0 && <div class="flow mt-stack">

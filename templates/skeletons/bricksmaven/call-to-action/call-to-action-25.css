@@ -1,60 +1,60 @@
-  .wf-call-to-action-25 .bm-call-to-action-25__cta-block {
+  .wf-call-to-action-25 .wf-call-to-action-25__cta-block {
     display: grid;
     gap: var(--space-m);
     grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
   }
 
-  .wf-call-to-action-25 .bm-call-to-action-25__content {
+  .wf-call-to-action-25 .wf-call-to-action-25__content {
     row-gap: var(--flow-spacing);
   }
 
-  .wf-call-to-action-25 .bm-call-to-action-25__content-inner {
+  .wf-call-to-action-25 .wf-call-to-action-25__content-inner {
     row-gap: var(--flow-spacing);
   }
 
-  .wf-call-to-action-25 .bm-list {
+  .wf-call-to-action-25 .wf-list {
     display: flex;
     flex-direction: column;
     row-gap: calc(var(--flow-spacing) / 2);
   }
 
-  .wf-call-to-action-25 .bm-list-item {
+  .wf-call-to-action-25 .wf-list-item {
     flex-direction: row;
     display: flex;
     column-gap: calc(var(--flow-spacing) / 2);
   }
 
-  .wf-call-to-action-25 .bm-list-item__icon-wrapper {
+  .wf-call-to-action-25 .wf-list-item__icon-wrapper {
     display: flex;
     gap: var(--space-s);
   }
 
-  .wf-call-to-action-25 .bm-call-to-action-25__contact {
+  .wf-call-to-action-25 .wf-call-to-action-25__contact {
     row-gap: var(--flow-spacing);
   }
 
-  .wf-call-to-action-25 .bm-call-to-action-25__contact-inner {
+  .wf-call-to-action-25 .wf-call-to-action-25__contact-inner {
     row-gap: var(--flow-spacing);
   }
 
-  .wf-call-to-action-25 .bm-team-list {
+  .wf-call-to-action-25 .wf-team-list {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
     gap: var(--space-s);
   }
 
-  .wf-call-to-action-25 .bm-call-to-action-25-contact-item {
+  .wf-call-to-action-25 .wf-call-to-action-25-contact-item {
     flex-direction: row;
     flex-wrap: nowrap;
     column-gap: calc(var(--flow-spacing) / 2);
   }
 
   @media (max-width: 44rem) {
-    .wf-call-to-action-25 .bm-call-to-action-25__cta-block { grid-template-columns: 1fr; }
-    .wf-call-to-action-25 .bm-list-item { flex-direction: column; }
-    .wf-call-to-action-25 .bm-list-item__icon-wrapper { flex-direction: column; }
-    .wf-call-to-action-25 .bm-team-list { flex-direction: column; }
-    .wf-call-to-action-25 .bm-call-to-action-25-contact-item { flex-direction: column; }
+    .wf-call-to-action-25 .wf-call-to-action-25__cta-block { grid-template-columns: 1fr; }
+    .wf-call-to-action-25 .wf-list-item { flex-direction: column; }
+    .wf-call-to-action-25 .wf-list-item__icon-wrapper { flex-direction: column; }
+    .wf-call-to-action-25 .wf-team-list { flex-direction: column; }
+    .wf-call-to-action-25 .wf-call-to-action-25-contact-item { flex-direction: column; }
   }
-  .wf-call-to-action-25 .bm-call-to-action-25__cta-block > :only-child { grid-column: 1 / -1; }
+  .wf-call-to-action-25 .wf-call-to-action-25__cta-block > :only-child { grid-column: 1 / -1; }

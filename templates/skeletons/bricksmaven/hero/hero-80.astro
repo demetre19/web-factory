@@ -1,6 +1,6 @@
 ---
 /**
- * bm-hero-80 — TRANSLATED Bricksmaven skeleton.
+ * wf-hero-80 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (hero-80.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -68,7 +68,7 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
 <div class="wf-hero-80">
   <div class="sec-inner">
     <div>
-      <div class="bm-hero-80__intro">
+      <div class="wf-hero-80__intro">
         {head && (h1 ? <h1 class="text-fluid-4">{head}</h1> : <h2 class="text-fluid-2">{head}</h2>)}
         {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
               </div>
@@ -82,10 +82,10 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
         {image && image.src && <figure class="ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
       </div>
       }
-      {list.length > 0 &&       <div class="bm-hero-80__content">
-        {list.length > 0 && <div class="bm-hero-80-data-list">{(list || []).map((it) => (
+      {list.length > 0 &&       <div class="wf-hero-80__content">
+        {list.length > 0 && <div class="wf-hero-80-data-list">{(list || []).map((it) => (
               <div class="card">
-                <div class="bm-hero-80-data-card__top">
+                <div class="wf-hero-80-data-card__top">
                   {it.icon && <IconChip name={it.icon} />}
                   <div class="stack">
                     <h3 class="text-fluid-1">{it.term || it.title || it.text}</h3>

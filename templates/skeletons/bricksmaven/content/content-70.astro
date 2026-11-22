@@ -1,6 +1,6 @@
 ---
 /**
- * bm-content-70 — TRANSLATED Bricksmaven skeleton.
+ * wf-content-70 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (content-70.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -60,15 +60,15 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
 
 <div class="wf-content-70">
   <div class="sec-inner">
-    <div class="bm-content-70__container">
-      {head &&       <div class="bm-content-70__content">
+    <div class="wf-content-70__container">
+      {head &&       <div class="wf-content-70__content">
         {head && (h1 ? <h1 class="text-fluid-4">{head}</h1> : <h2 class="text-fluid-2">{head}</h2>)}
       </div>
       }
   {sub && <p class="mt-stack lede" set:html={inline(sub)} />}
   {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
-      {list.length > 0 && <div class="bm-content-70-usp-list">{(list || []).map((it) => (
-            <div class="bm-content-70-card card">
+      {list.length > 0 && <div class="wf-content-70-usp-list">{(list || []).map((it) => (
+            <div class="wf-content-70-card card">
               {it.icon && <IconChip name={it.icon} />}
               <div class="stack">
                 <h3 class="text-fluid-1">{it.term || it.title || it.text}</h3>

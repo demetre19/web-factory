@@ -1,6 +1,6 @@
 ---
 /**
- * bm-table-comparison — TRANSLATED Bricksmaven skeleton.
+ * wf-table-comparison — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (table-comparison.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -60,7 +60,7 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
 
 <div class="wf-table-comparison">
   <div class="sec-inner">
-    <div class="bm-table-comp-2-container">
+    <div class="wf-table-comp-2-container">
       <div class="intro">
         {head && (h1 ? <h1 class="text-fluid-4">{head}</h1> : <h2 class="text-fluid-2">{head}</h2>)}
         {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
@@ -70,11 +70,11 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
       </div>}
 
       <div>
-        <div class="bm-table-2">
-          {list.length > 0 &&           <div class="bm-table-2__thead">
-            {list.length > 0 &&             <div class="bm-table-2__tr">
+        <div class="wf-table-2">
+          {list.length > 0 &&           <div class="wf-table-2__thead">
+            {list.length > 0 &&             <div class="wf-table-2__tr">
               {list.length > 0 && <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
-                  <div class="bm-table-2__th card">
+                  <div class="wf-table-2__th card">
                     {it.icon && <IconChip name={it.icon} />}
                     <div class="stack">
                       <h3 class="text-fluid-1">{it.term || it.title || it.text}</h3>
@@ -86,10 +86,10 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
             }
           </div>
           }
-          <div class="bm-table-2__tbody">
-            {links.length > 0 &&             <div class="bm-table-2__tr">
+          <div class="wf-table-2__tbody">
+            {links.length > 0 &&             <div class="wf-table-2__tr">
               {links.length > 0 && <div class="grid-auto gap-fluid-m">{(links || []).map((it) => (
-                  <div class="bm-table-2__td card">
+                  <div class="wf-table-2__td card">
                     {it.icon && <IconChip name={it.icon} />}
                     <div class="stack">
                       <h3 class="text-fluid-1">{it.term || it.title || it.text}</h3>
@@ -99,9 +99,9 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
                 ))}</div>}
             </div>
             }
-            {links.length > 0 &&             <div class="bm-table-2__tr">
+            {links.length > 0 &&             <div class="wf-table-2__tr">
               {links.length > 0 && <div class="grid-auto gap-fluid-m">{(links || []).map((it) => (
-                  <div class="bm-table-2__td card">
+                  <div class="wf-table-2__td card">
                     {it.icon && <IconChip name={it.icon} />}
                     <div class="stack">
                       <h3 class="text-fluid-1">{it.term || it.title || it.text}</h3>

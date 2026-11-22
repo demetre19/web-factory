@@ -1,6 +1,6 @@
 ---
 /**
- * bm-blog-section-16 — TRANSLATED Bricksmaven skeleton.
+ * wf-blog-section-16 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (blog-section-16.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -69,7 +69,7 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
   <div class={image && image.src ? 'split' : undefined}>
     <div class="stack">
   <div class="sec-inner">
-    <div class="bm-blog-section-16__container">
+    <div class="wf-blog-section-16__container">
       <div class="intro intro--left intro--left-split">
         <div class="intro__left-column">
           {head && (h1 ? <h1 class="text-fluid-4">{head}</h1> : <h2 class="text-fluid-2">{head}</h2>)}
@@ -84,14 +84,14 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
         </div>
         }
       </div>
-      {list.length > 0 && <div class="bm-blog-section-16-grid-ul">{(list || []).map((it) => (
-            <div class="bm-blog-section-16-card card">
+      {list.length > 0 && <div class="wf-blog-section-16-grid-ul">{(list || []).map((it) => (
+            <div class="wf-blog-section-16-card card">
               <div>
                 {it.icon && <IconChip name={it.icon} />}
                 <h3 class="text-fluid-1">{it.term || it.title}</h3>
               </div>
               <div class="grid-auto gap-fluid-l">
-                <div class="bm-blog-section-16-card__term-wrapper">
+                <div class="wf-blog-section-16-card__term-wrapper">
                   <p class="text-fluid-0">{it.text}</p>
                 </div>
               </div>

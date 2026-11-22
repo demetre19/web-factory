@@ -1,4 +1,4 @@
-  .wf-portfolio-section-14 .bm-portfolio-section-14__container {
+  .wf-portfolio-section-14 .wf-portfolio-section-14__container {
     row-gap: var(--space-s);
   }
 
@@ -8,39 +8,39 @@
     row-gap: var(--flow-spacing);
   }
 
-  .wf-portfolio-section-14 .bm-portfolio-section-14-feature-list {
+  .wf-portfolio-section-14 .wf-portfolio-section-14-feature-list {
     row-gap: var(--space-s);
   }
 
-  .wf-portfolio-section-14 .bm-portfolio-section-14-card {
+  .wf-portfolio-section-14 .wf-portfolio-section-14-card {
     display: grid;
     grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
     gap: var(--grid-gap);
   }
 
-  .wf-portfolio-section-14 .bm-portfolio-section-14-card__cover {
+  .wf-portfolio-section-14 .wf-portfolio-section-14-card__cover {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
     gap: var(--grid-gap);
   }
 
-  .wf-portfolio-section-14 .bm-portfolio-section-14-card__top {
+  .wf-portfolio-section-14 .wf-portfolio-section-14-card__top {
     row-gap: calc(var(--flow-spacing) / 2);
   }
 
-  .wf-portfolio-section-14 .bm-list {
+  .wf-portfolio-section-14 .wf-list {
     display: flex;
     flex-direction: column;
     row-gap: calc(var(--flow-spacing) / 2);
   }
 
-  .wf-portfolio-section-14 .bm-list-item {
+  .wf-portfolio-section-14 .wf-list-item {
     flex-direction: row;
     display: flex;
     column-gap: calc(var(--flow-spacing) / 2);
   }
 
-  .wf-portfolio-section-14 .bm-list-item__icon-wrapper {
+  .wf-portfolio-section-14 .wf-list-item__icon-wrapper {
     display: flex;
     gap: var(--space-s);
   }
@@ -57,9 +57,9 @@
   }
 
   @media (max-width: 44rem) {
-    .wf-portfolio-section-14 .bm-portfolio-section-14-card { grid-template-columns: 1fr; }
-    .wf-portfolio-section-14 .bm-list-item { flex-direction: column; }
-    .wf-portfolio-section-14 .bm-list-item__icon-wrapper { flex-direction: column; }
+    .wf-portfolio-section-14 .wf-portfolio-section-14-card { grid-template-columns: 1fr; }
+    .wf-portfolio-section-14 .wf-list-item { flex-direction: column; }
+    .wf-portfolio-section-14 .wf-list-item__icon-wrapper { flex-direction: column; }
     .wf-portfolio-section-14 .testimonial-list-card__profile { flex-direction: column; }
   }
-  .wf-portfolio-section-14 .bm-portfolio-section-14-card > :only-child { grid-column: 1 / -1; }
+  .wf-portfolio-section-14 .wf-portfolio-section-14-card > :only-child { grid-column: 1 / -1; }

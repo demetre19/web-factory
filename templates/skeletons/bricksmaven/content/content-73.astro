@@ -1,6 +1,6 @@
 ---
 /**
- * bm-content-73 — TRANSLATED Bricksmaven skeleton.
+ * wf-content-73 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (content-73.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -69,23 +69,23 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
   <div class={image && image.src ? 'split' : undefined}>
     <div class="stack">
   <div class="sec-inner">
-    <div class="bm-content-73__container">
-      <div class="bm-content-73__content">
-        {head &&         <div class="bm-content-73__top">
+    <div class="wf-content-73__container">
+      <div class="wf-content-73__content">
+        {head &&         <div class="wf-content-73__top">
           {head && (h1 ? <h1 class="text-fluid-4">{head}</h1> : <h2 class="text-fluid-2">{head}</h2>)}
         </div>
         }
   {sub && <p class="mt-stack lede" set:html={inline(sub)} />}
   {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
-        {act.label &&         <div class="bm-content-73__footer">
+        {act.label &&         <div class="wf-content-73__footer">
           {act.label && <p class="mt-fluid-m"><a class="wf-cta-button" href={act.href}>{act.label}</a></p>}
         </div>
         }
       </div>
       {links.length > 0 &&       <div>
-        {links.length > 0 && <div class="bm-content-73-data-list">
+        {links.length > 0 && <div class="wf-content-73-data-list">
           <div class="grid-auto gap-fluid-m">{(links || []).map((it) => (
-              <div class="bm-content-73-data-card card">
+              <div class="wf-content-73-data-card card">
                 <h3>{it.stat || it.term || it.title}</h3>
                 <p class="text-fluid-0">{it.text}</p>
               </div>

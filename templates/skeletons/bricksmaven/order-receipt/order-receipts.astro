@@ -1,6 +1,6 @@
 ---
 /**
- * bm-order-receipts — TRANSLATED Bricksmaven skeleton.
+ * wf-order-receipts — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (order-receipts.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -60,7 +60,7 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
 
 <div class="wf-order-receipts">
   <div class="sec-inner">
-    <div class="bm-order-receipts__container">
+    <div class="wf-order-receipts__container">
       <div class="intro intro--left">
         {head && (h1 ? <h1 class="text-fluid-4">{head}</h1> : <h2 class="text-fluid-2">{head}</h2>)}
         {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
@@ -69,8 +69,8 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
 {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
       </div>}
 
-      {list.length > 0 &&       <div class="bm-order-receipts__content">
-        {list.length > 0 &&         <div class="bm-order-receipts__lists">
+      {list.length > 0 &&       <div class="wf-order-receipts__content">
+        {list.length > 0 &&         <div class="wf-order-receipts__lists">
           {list.length > 0 && <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
             <>
               {it.icon && <IconChip name={it.icon} />}

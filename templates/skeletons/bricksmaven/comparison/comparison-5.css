@@ -1,4 +1,4 @@
-  .wf-comparison-5 .bm-comparison-5__container {
+  .wf-comparison-5 .wf-comparison-5__container {
     row-gap: var(--space-s);
   }
 
@@ -8,59 +8,59 @@
     row-gap: var(--flow-spacing);
   }
 
-  .wf-comparison-5 .bm-comparison-5-list {
+  .wf-comparison-5 .wf-comparison-5-list {
     row-gap: var(--flow-spacing);
   }
 
-  .wf-comparison-5 .bm-comparison-5-card {
+  .wf-comparison-5 .wf-comparison-5-card {
     display: grid;
     gap: var(--space-m);
     grid-template-columns: minmax(0, 1fr) minmax(0, 3fr);
   }
 
-  .wf-comparison-5 .bm-comparison-5-card__intro {
+  .wf-comparison-5 .wf-comparison-5-card__intro {
     row-gap: var(--flow-spacing);
   }
 
-  .wf-comparison-5 .bm-comparison-5-card__icon-wrapper {
+  .wf-comparison-5 .wf-comparison-5-card__icon-wrapper {
     display: flex;
     gap: var(--space-s);
   }
 
-  .wf-comparison-5 .bm-comparison-5-step-list {
+  .wf-comparison-5 .wf-comparison-5-step-list {
     flex-direction: row;
     flex-wrap: nowrap;
     row-gap: var(--flow-spacing);
     column-gap: calc(var(--flow-spacing) / 2);
   }
 
-  .wf-comparison-5 .bm-comparison-5-step-item {
+  .wf-comparison-5 .wf-comparison-5-step-item {
     display: flex;
     flex-wrap: nowrap;
     flex-direction: column;
     row-gap: calc(var(--flow-spacing) / 2);
   }
 
-  .wf-comparison-5 .bm-comparison-5-step-item__marker {
+  .wf-comparison-5 .wf-comparison-5-step-item__marker {
     flex-direction: row;
     column-gap: calc(var(--flow-spacing) / 2);
   }
 
-  .wf-comparison-5 .bm-comparison-5-step-item__circle {
+  .wf-comparison-5 .wf-comparison-5-step-item__circle {
     display: flex;
     gap: var(--space-s);
   }
 
-  .wf-comparison-5 .bm-comparison-5-step-item__content {
+  .wf-comparison-5 .wf-comparison-5-step-item__content {
     row-gap: calc(var(--flow-spacing) / 2);
     flex-wrap: nowrap;
   }
 
   @media (max-width: 44rem) {
-    .wf-comparison-5 .bm-comparison-5-card { grid-template-columns: 1fr; }
-    .wf-comparison-5 .bm-comparison-5-card__icon-wrapper { flex-direction: column; }
-    .wf-comparison-5 .bm-comparison-5-step-list { flex-direction: column; }
-    .wf-comparison-5 .bm-comparison-5-step-item__marker { flex-direction: column; }
-    .wf-comparison-5 .bm-comparison-5-step-item__circle { flex-direction: column; }
+    .wf-comparison-5 .wf-comparison-5-card { grid-template-columns: 1fr; }
+    .wf-comparison-5 .wf-comparison-5-card__icon-wrapper { flex-direction: column; }
+    .wf-comparison-5 .wf-comparison-5-step-list { flex-direction: column; }
+    .wf-comparison-5 .wf-comparison-5-step-item__marker { flex-direction: column; }
+    .wf-comparison-5 .wf-comparison-5-step-item__circle { flex-direction: column; }
   }
-  .wf-comparison-5 .bm-comparison-5-card > :only-child { grid-column: 1 / -1; }
+  .wf-comparison-5 .wf-comparison-5-card > :only-child { grid-column: 1 / -1; }

@@ -1,6 +1,6 @@
 ---
 /**
- * bm-blog-archive-12 — TRANSLATED Bricksmaven skeleton.
+ * wf-blog-archive-12 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (blog-archive-12.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -90,10 +90,10 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
           {links.length > 0 && <div class="grid-auto gap-fluid-m">{(links || []).map((it) => (
             <>
               {(it.items || []).length > 0 &&               <div class="card">
-                {(it.items || []).length > 0 && <div class="blog-archive-12-archive-list">{((it.items || []) || []).map((it2) => (
-                      <div class="blog-archive-12-archive-card card">
-                        <div class="blog-archive-12-archive-card__content">
-                          <div class="blog-archive-12-archive-card__meta">
+                {(it.items || []).length > 0 && <div class="wf-blog-archive-12-archive-list">{((it.items || []) || []).map((it2) => (
+                      <div class="wf-blog-archive-12-archive-card card">
+                        <div class="wf-blog-archive-12-archive-card__content">
+                          <div class="wf-blog-archive-12-archive-card__meta">
                             {it2.icon && <IconChip name={it2.icon} />}
                             <div class="stack">
                               <h3 class="text-fluid-1">{it2.term || it2.title || it2.text}</h3>

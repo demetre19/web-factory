@@ -1,6 +1,6 @@
 ---
 /**
- * bm-feature-65 — TRANSLATED Bricksmaven skeleton.
+ * wf-feature-65 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (feature-65.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -66,14 +66,14 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
 
 <div class="wf-feature-65">
   <div class="sec-inner">
-    <div class="bm-feature-65__container">
-      <div class="bm-feature-65__column">
+    <div class="wf-feature-65__container">
+      <div class="wf-feature-65__column">
         {head && (h1 ? <h1 class="text-fluid-4">{head}</h1> : <h2 class="text-fluid-2">{head}</h2>)}
-        <div class="bm-feature-65__slider-media grid-auto gap-fluid-l">
+        <div class="wf-feature-65__slider-media grid-auto gap-fluid-l">
           {image && image.src && <figure class="ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
           {list.length > 0 &&           <div>
             {list.length > 0 && <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
-                <div class="bm-feature-slider-card card">
+                <div class="wf-feature-slider-card card">
                   <h3 class="text-fluid-1">{it.term || it.title}</h3>
                   <p class="text-fluid-0">{it.text}</p>
                 </div>
@@ -82,7 +82,7 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
           }
         </div>
       </div>
-      <div class="bm-feature-65__column">
+      <div class="wf-feature-65__column">
         {images[0] &&         <div>
           {images[0] && images[0].src && <figure class="ratio-portrait"><div class="media-round" data-ratio={(image && image.ratio) || null}><Image src={mediaOf(images[0])} alt={images[0].alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
         </div>

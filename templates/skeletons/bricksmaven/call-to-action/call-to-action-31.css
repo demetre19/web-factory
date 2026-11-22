@@ -1,43 +1,43 @@
-  .wf-call-to-action-31 .bm-cta-31__container {
+  .wf-call-to-action-31 .wf-cta-31__container {
     display: grid;
     gap: var(--space-m);
     grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
   }
 
-  .wf-call-to-action-31 .bm-testimonial-card-cta {
+  .wf-call-to-action-31 .wf-testimonial-card-cta {
     display: grid;
     grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
     gap: var(--space-m);
   }
 
-  .wf-call-to-action-31 .bm-testimonial-card-cta__content {
+  .wf-call-to-action-31 .wf-testimonial-card-cta__content {
     row-gap: var(--flow-spacing);
   }
 
-  .wf-call-to-action-31 .bm-testimonial-card-cta__icon-wrapper {
+  .wf-call-to-action-31 .wf-testimonial-card-cta__icon-wrapper {
     display: flex;
     gap: var(--space-s);
   }
 
-  .wf-call-to-action-31 .bm-cta-31__content {
+  .wf-call-to-action-31 .wf-cta-31__content {
     row-gap: var(--flow-spacing);
   }
 
-  .wf-call-to-action-31 .bm-cta-31__top {
+  .wf-call-to-action-31 .wf-cta-31__top {
     row-gap: var(--flow-spacing);
   }
 
-  .wf-call-to-action-31 .bm-avatar-list-2 {
+  .wf-call-to-action-31 .wf-avatar-list-2 {
     flex-wrap: nowrap;
     display: flex;
     gap: var(--space-s);
   }
 
   @media (max-width: 44rem) {
-    .wf-call-to-action-31 .bm-cta-31__container { grid-template-columns: 1fr; }
-    .wf-call-to-action-31 .bm-testimonial-card-cta { grid-template-columns: 1fr; }
-    .wf-call-to-action-31 .bm-testimonial-card-cta__icon-wrapper { flex-direction: column; }
-    .wf-call-to-action-31 .bm-avatar-list-2 { flex-direction: column; }
+    .wf-call-to-action-31 .wf-cta-31__container { grid-template-columns: 1fr; }
+    .wf-call-to-action-31 .wf-testimonial-card-cta { grid-template-columns: 1fr; }
+    .wf-call-to-action-31 .wf-testimonial-card-cta__icon-wrapper { flex-direction: column; }
+    .wf-call-to-action-31 .wf-avatar-list-2 { flex-direction: column; }
   }
-  .wf-call-to-action-31 .bm-cta-31__container > :only-child { grid-column: 1 / -1; }
-  .wf-call-to-action-31 .bm-testimonial-card-cta > :only-child { grid-column: 1 / -1; }
+  .wf-call-to-action-31 .wf-cta-31__container > :only-child { grid-column: 1 / -1; }
+  .wf-call-to-action-31 .wf-testimonial-card-cta > :only-child { grid-column: 1 / -1; }

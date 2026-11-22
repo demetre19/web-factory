@@ -1,6 +1,6 @@
 ---
 /**
- * bm-blog-section-7 — TRANSLATED Bricksmaven skeleton.
+ * wf-blog-section-7 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (blog-section-7.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -69,8 +69,8 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
   <div class={image && image.src ? 'split' : undefined}>
     <div class="stack">
   <div class="sec-inner">
-    <div class="blog-section-7-container">
-      <div class="blog-section-7-head">
+    <div class="wf-blog-section-7-container">
+      <div class="wf-blog-section-7-head">
         {head && (h1 ? <h1 class="text-fluid-4">{head}</h1> : <h2 class="text-fluid-2">{head}</h2>)}
         {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
               </div>
@@ -79,10 +79,10 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
       </div>}
 
       {list.length > 0 &&       <div>
-        {list.length > 0 && <div class="blog-section-7-wrapper">{(list || []).map((it) => (
-              <div class="blog-section-7-card card">
-                <div class="blog-section-7-card__meta">
-                  <div class="blog-section-7-card__meta-profile-date">
+        {list.length > 0 && <div class="wf-blog-section-7-wrapper">{(list || []).map((it) => (
+              <div class="wf-blog-section-7-card card">
+                <div class="wf-blog-section-7-card__meta">
+                  <div class="wf-blog-section-7-card__meta-profile-date">
                     {it.icon && <IconChip name={it.icon} />}
                     <div class="stack">
                       <h3 class="text-fluid-1">{it.term || it.title || it.text}</h3>

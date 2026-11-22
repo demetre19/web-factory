@@ -1,6 +1,6 @@
 ---
 /**
- * bm-feature-52 — TRANSLATED Bricksmaven skeleton.
+ * wf-feature-52 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (feature-52.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -69,7 +69,7 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
   <div class={image && image.src ? 'split' : undefined}>
     <div class="stack">
   <div class="sec-inner">
-    <div class="bm-feature-52__container">
+    <div class="wf-feature-52__container">
       <div class="intro intro--split">
         {head &&         <div class="intro__left-column">
           {head && (h1 ? <h1 class="text-fluid-4">{head}</h1> : <h2 class="text-fluid-2">{head}</h2>)}
@@ -87,17 +87,17 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
     {list.length > 0 &&     <div>
       {list.length > 0 &&       <div>
         {list.length > 0 && <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
-            <div class="bm-feature-52-card card">
-              <div class="bm-feature-52-card-inner">
+            <div class="wf-feature-52-card card">
+              <div class="wf-feature-52-card-inner">
                 <div>
                   <h3 class="text-fluid-1">{it.term || it.title}</h3>
                 </div>
-                <div class="bm-feature-52-card__inner">
-                  <div class="bm-feature-52-card__content">
+                <div class="wf-feature-52-card__inner">
+                  <div class="wf-feature-52-card__content">
                     <p class="text-fluid-0">{it.text}</p>
                     {(it.items || []).length > 0 && <div>
                       <div class="grid-auto gap-fluid-m">{((it.items || []) || []).map((it2) => (
-                          <div class="bm-link-list-item card">
+                          <div class="wf-link-list-item card">
                             {it2.icon && <IconChip name={it2.icon} />}
                             <div class="stack">
                               <h3 class="text-fluid-1">{it2.term || it2.title || it2.text}</h3>

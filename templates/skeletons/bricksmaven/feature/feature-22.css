@@ -1,4 +1,4 @@
-  .wf-feature-22 .feature-22-container {
+  .wf-feature-22 .wf-feature-22-container {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
     gap: var(--space-xl);
@@ -15,20 +15,20 @@
     column-gap: var(--space-xs);
   }
 
-  .wf-feature-22 .bm-feature-list-ul {
+  .wf-feature-22 .wf-feature-list-ul {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
     gap: var(--space-m);
   }
 
-  .wf-feature-22 .bm-feature-list-card {
+  .wf-feature-22 .wf-feature-list-card {
     display: flex;
     flex-direction: column;
     row-gap: var(--space-s);
   }
 
   @media (max-width: 44rem) {
-    .wf-feature-22 .feature-22-container { grid-template-columns: 1fr; }
+    .wf-feature-22 .wf-feature-22-container { grid-template-columns: 1fr; }
     .wf-feature-22 .cta-combo { flex-direction: column; }
   }
-  .wf-feature-22 .feature-22-container > :only-child { grid-column: 1 / -1; }
+  .wf-feature-22 .wf-feature-22-container > :only-child { grid-column: 1 / -1; }
