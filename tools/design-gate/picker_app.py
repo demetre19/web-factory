@@ -1889,7 +1889,7 @@ def emit_bank_previews(pd):
         return {}, {}
     _BANK_DIRS['fx'] = tuple(sorted(
         d for d in os.listdir(_GENMENU)
-        if d.startswith('fx-') and
+        if d.startswith(('fx-', 'imgfx-', 'mobfx-')) and
         os.path.isdir(os.path.join(_GENMENU, d))))
     tags = _genmenu_tags()
     css_src = os.path.join(_GENMENU, 'bank-preview.css')
