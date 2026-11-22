@@ -1185,9 +1185,16 @@ def type_candidates(pd):
         overrides = {'display-face': face} if face else {}
         merged = dict(base)
         merged.update(overrides)
-        # the variant binds genes AND the ladder — two candidates
-        # that share genes but differ on ratios are distinct picks
+        # the variant names the candidate SPEC, not the merged
+        # genes — a re-bake changes the base, and the signed pick
+        # is rebuilt over the CURRENT vibe at click time, so the
+        # variant must stay stable across bakes
         gh = hashlib.sha256(json.dumps(
+            {'l': label, 'g': sorted(overrides.items()),
+             'f': [tm, tr, hm, hr]},
+            sort_keys=True).encode()).hexdigest()[:10]
+        # the emitted doc still keys on resolved content
+        ch = hashlib.sha256(json.dumps(
             {'g': sorted(merged.items()), 'f': [tm, tr, hm, hr]},
             sort_keys=True).encode()).hexdigest()[:10]
         if gh in seen:
@@ -1206,7 +1213,7 @@ def type_candidates(pd):
                              text_scale_desk=tr,
                              heading_scale_mob=hm,
                              heading_scale_desk=hr)
-        rel = emit_typescale_doc(pd, 'cand-' + gh, bundle=bundle,
+        rel = emit_typescale_doc(pd, 'cand-' + ch, bundle=bundle,
                                  tok=ctok)
         if not rel:
             continue
