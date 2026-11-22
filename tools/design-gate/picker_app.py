@@ -87,6 +87,13 @@ ELEMENT_GALLERIES = [
      'desc': 'Reference atomic UI elements — pickers, toggles, '
              'chips, controls.',
      'groups': []},
+    {'id': 'fx', 'title': 'Effects · bank', 'icon': 'fx',
+     'desc': 'Interactive fx exemplars rendered live — hover and '
+             'scroll states actually run. Pick signs the site-'
+             'default effect; decorate toggles bind it per element. '
+             'Applied only when the design’s motion vector is '
+             'non-zero.',
+     'groups': []},
 ]
 
 # genmenu bank exemplars surfaced as scrubbable cards — gallery id
@@ -105,6 +112,7 @@ _BANK_DIRS = {
                  'commerce-flow'),
     'ui-elements': ('ui-element',),
 }
+_BANK_DIRS['fx'] = ()  # resolved below — every fx-* exemplar dir
 
 PAGE_BOARDS = [
     {'id': 'home', 'title': 'Home', 'icon': 'home',
@@ -1675,7 +1683,7 @@ def app_data(pipeline):
 
     # element galleries — emitted preview cards (+ derived geometry
     # topos on menus) + bank options the build didn't emit
-    bank_cards = emit_bank_previews(pd)
+    bank_cards, fxmap = emit_bank_previews(pd)
     galleries = {}
     for g in ELEMENT_GALLERIES:
         gcards = []
@@ -1857,7 +1865,8 @@ def app_data(pipeline):
                 'knobs': knobs},
             'waves': {'picked': picked,
                       'approvable': sorted(G.APPROVABLE)},
-            'boards': boards, 'galleries': galleries}, None
+            'boards': boards, 'galleries': galleries,
+            'fxmap': fxmap}, None
 
 
 def pipelines_index():
@@ -1971,13 +1980,59 @@ def vibe_resolve(pd, genes):
                           'tokens')}}
 
 
+_FX_PACK_TARGETS = {
+    'fx-hover': {'cards'}, 'fx-tilt': {'cards'}, 'fx-drag': {'cards'},
+    'fx-magnetic': {'cards'}, 'fx-expand': {'cards'},
+    'fx-spring': {'cards'}, 'fx-jelly': {'cards'}, 'fx-glow': {'cards'},
+    'fx-morph': {'cards', 'text'},
+    'fx-check': {'buttons'}, 'fx-rating': {'buttons'},
+    'fx-meter': {'buttons'}, 'fx-state': {'buttons'},
+    'fx-toast': {'buttons'}, 'fx-progress': {'buttons'},
+    'fx-iconmorph': {'buttons'}, 'fx-loadmorph': {'buttons'},
+    'fx-skeleton': {'buttons', 'cards'},
+    'fx-tabslide': {'headers'}, 'fx-menumorph': {'headers'},
+    'fx-marquee': {'text'}, 'fx-letter': {'text'}, 'fx-ink': {'text'},
+    'fx-outline': {'text'},
+    'fx-duotone': {'images'}, 'fx-mask': {'images'},
+    'fx-gradient': {'images'}, 'fx-liquid-wipe': {'images'},
+    'fx-parallax': {'page'}, 'fx-pinned': {'page'},
+    'fx-timeline': {'page'}, 'fx-cursor': {'page'},
+    'fx-burst': {'page'}, 'fx-compare': {'page'},
+    'fx-goo': {'any'}, 'fx-gooey': {'any'}, 'fx-ambient': {'any'},
+    'fx-blob': {'any'}, 'fx-phys': {'any'}, 'fx-particles': {'any'},
+    'fx-reveal': {'any'}, 'fx-motion': {'any'},
+}
+_FX_TARGET_KEYWORDS = (
+    ('button', 'buttons'), ('control', 'buttons'),
+    ('card', 'cards'), ('folio', 'cards'),
+    ('header', 'headers'), ('nav', 'headers'), ('foot', 'footers'),
+    ('mob-chrome', 'mobile-chrome'), ('mobfx', 'mobile-chrome'),
+    ('mob', 'mobile-chrome'), ('ktxt', 'text'), ('text', 'text'),
+    ('icfx', 'images'), ('image', 'images'),
+    ('scroll', 'page'), ('pinned', 'page'), ('parallax', 'page'),
+    ('goo', 'any'), ('ambient', 'any'), ('phys', 'any'))
+
+
+def _fx_targets(cls):
+    if cls in _FX_PACK_TARGETS:
+        return sorted(_FX_PACK_TARGETS[cls])
+    for kw, bucket in _FX_TARGET_KEYWORDS:
+        if kw in cls:
+            return [bucket]
+    return ['any']
+
+
 def emit_bank_previews(pd):
     """preview/bank/<cls>/<slug>.html — every genmenu exemplar
     rendered standalone under bank-preview.css: reference fidelity
     (the exemplar's own Tailwind), NOT bound into the baked family.
     Returns {gallery_id: [cards]}."""
     if not os.path.isdir(_GENMENU):
-        return {}
+        return {}, {}
+    _BANK_DIRS['fx'] = tuple(sorted(
+        d for d in os.listdir(_GENMENU)
+        if d.startswith(('fx-', 'imgfx-', 'mobfx-')) and
+        os.path.isdir(os.path.join(_GENMENU, d))))
     tags = _genmenu_tags()
     css_src = os.path.join(_GENMENU, 'bank-preview.css')
     outdir = os.path.join(pd, 'site', 'dist', 'preview', 'bank')
@@ -2037,7 +2092,15 @@ def emit_bank_previews(pd):
                     'grp': 'bank · ' + cls,
                     'mobile': gid == 'menu'})
         out[gid] = cards
-    return out
+    # a pick on an fx card signs the SITE-DEFAULT effect; each
+    # exemplar advertises which element types it may decorate
+    fxmap = {}
+    for c in out.get('fx', []):
+        c['element'] = 'fx:default'
+        c['targets'] = _fx_targets(c['grp'].split(' · ')[-1])
+        for t in c['targets']:
+            fxmap.setdefault(t, []).append(c['variant'])
+    return out, {k: sorted(v) for k, v in fxmap.items()}
 
 
 def run_ingest(pipeline, url='', html='', css_text=''):
@@ -2562,9 +2625,26 @@ def record_element_pick(pipeline, element, variant, bundle=None):
                                         'mobile-menu', 'modals',
                                         'layout'} | \
             {d for dirs in _BANK_DIRS.values() for d in dirs}
-    if element not in valid and not re.fullmatch(
+    fxel = re.fullmatch(
+        r'fx:(default|sec:[\w-]{1,40}|[\w-]{1,40})', element or '')
+    if element not in valid and not fxel and not re.fullmatch(
             r'sec:[\w-]{1,40}', element or ''):
         return 1, f'unknown element gallery {element}'
+    if fxel:
+        # decoration is opt-in: only when the design's motion
+        # vector is non-zero — a static design never gets fx
+        tk = _json_at(pipeline, 'TOKENS.json') or _json_at(
+            os.path.dirname(pipeline), 'TOKENS.json') or {}
+        mo = {'none': 0, 'subtle': .3, 'moderate': .6, 'rich': 1}\
+            .get(str((tk.get('knobs') or {})
+                 .get('motion.level')), 0)
+        if not mo:
+            return 1, ('decoration needs a non-zero motion vector — '
+                       'this design is motion:none')
+        if variant == 'none':
+            pass  # clearing a decoration is always allowed
+        elif not re.fullmatch(r'[\w-]{1,48}', variant or ''):
+            return 1, 'invalid fx id'
     if not variant or not re.fullmatch(r'[\w:-]{1,64}', variant):
         return 1, 'invalid variant id'
     ctx = G.Ctx(pipeline)
@@ -2887,6 +2967,22 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
 .srow .spos{margin-left:auto;font:600 10.5px var(--mono);
       color:var(--muted)}
 .srow .snav{display:flex;gap:3px}
+.fxmenu{position:absolute;right:8px;top:calc(100% - 2px);z-index:60;
+  background:var(--panel);border:1px solid var(--line);
+  border-radius:10px;padding:6px;display:flex;flex-direction:column;
+  gap:2px;max-height:240px;overflow:auto;min-width:150px;
+  box-shadow:0 8px 24px rgba(0,0,0,.18)}
+.fxopt{font:500 11px var(--mono);text-align:left;padding:5px 9px;
+  border:0;border-radius:6px;background:none;color:var(--ink-dim);
+  cursor:pointer;white-space:nowrap}
+.fxopt:hover{background:var(--bg-2);color:var(--ink)}
+.fxopt.on{color:var(--ink);font-weight:700}
+.fxbtn{margin-left:6px;padding:5px 10px;border:1px solid var(--line);
+  border-radius:999px;background:transparent;color:var(--muted);
+  font:650 11.5px var(--font);cursor:pointer}
+.fxbtn:hover{color:var(--ink)}
+.fxbtn.on{border-color:var(--ink);color:var(--ink)}
+.srow .fxbtn{padding:3px 8px;margin-left:0}
 .srow .snav button,.srow .spick{border:1px solid var(--line);
       background:var(--panel);color:var(--ink);border-radius:6px;
       font:600 12px var(--font);padding:3px 10px;cursor:pointer}
@@ -3085,7 +3181,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
     foot:'<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="1.5" y="9" width="13" height="4" rx="1"/><path d="M3.5 6h9M3.5 3h5"/></svg>',
     modal:'<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="2.5" y="4" width="11" height="8" rx="1.5"/><path d="M6 8h4"/></svg>',
     sun:'<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="8" cy="8" r="3"/><path d="M8 1.5v2M8 12.5v2M1.5 8h2M12.5 8h2M3.4 3.4l1.4 1.4M11.2 11.2l1.4 1.4M3.4 12.6l1.4-1.4M11.2 4.8l1.4-1.4"/></svg>',
-    moon:'<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M13.5 9.5A6 6 0 016.5 2.5a6 6 0 107 7z"/></svg>'};
+    moon:'<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M13.5 9.5A6 6 0 016.5 2.5a6 6 0 107 7z"/></svg>',
+    fx:'<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M8 1l1.7 4.4L14 7l-4.3 1.6L8 13l-1.7-4.4L2 7l4.3-1.6z"/></svg>'};
 
   var LAYOUT_TABS=['page','home','service','location','contact',
                    'blog'];
@@ -3193,6 +3290,13 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
     }else if(c.element){
       h+='<button class="pick" data-elem="'+c.element+'" data-var="'+esc(c.variant)+'">'+
          (c.element==='vibe'?'Bake':'Pick')+'</button>';
+      if(!c.bank&&c.element!=='vibe'&&c.element!=='layout'&&
+         c.element!=='fx:default'){
+        var fel='fx:'+c.element,fcur=DATA.picked_elements[fel];
+        h+='<button class="fxbtn'+(fcur&&fcur!=='none'?' on':'')+
+           '" data-fx="'+fel+'" title="decorate with the default '+
+           'effect (motion-gated)">&#9670;'+
+           (fcur&&fcur!=='none'?' '+esc(fcur):'')+'</button>';}
     }
     h+='<span class="pstat'+(isPicked?' ok':'')+'">'+
        (isPicked?'picked ✓':'')+'</span></div></div>';
@@ -3358,6 +3462,10 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
          '<div class="snav"><button data-d="-1">‹</button>'+
          '<button data-d="1">›</button></div>'+
          '<button class="spick" title="sign this row\'s choice">✓</button>'+
+         '<button class="fxbtn'+((DATA.picked_elements['fx:sec:'+r.sec]&&
+          DATA.picked_elements['fx:sec:'+r.sec]!=='none')?' on':'')+
+         '" data-fx="fx:sec:'+r.sec+
+         '" title="decorate this section">&#9670;</button>'+
          '<span class="sstat"></span></div>'+
          '<iframe data-src="'+esc(frame('/built/'+encodeURI(DATA.pipeline+'/site/dist/'+alt.preview)))+
          '" src="'+esc(frame('/built/'+encodeURI(DATA.pipeline+'/site/dist/'+alt.preview)))+
@@ -3365,6 +3473,54 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
     });
     return h;
   }
+
+  var FXMENU=null;
+  function fxBucket(element){
+    var e=element.replace(/^fx:/,'').replace(/^sec:/,'');
+    if(/mob/.test(e))return 'mobile-chrome';
+    if(/nav|header|men/.test(e))return 'headers';
+    if(/foot/.test(e))return 'footers';
+    if(/text|ktxt|faq|type/.test(e))return 'text';
+    if(/image|img|gallery|icon|media/.test(e))return 'images';
+    if(/btn|button|cta|control/.test(e))return 'buttons';
+    if(/scroll|page|layout/.test(e))return 'page';
+    if(/card|folio|proof|stat|compar|seq|cover|grid|modal|pricing|empty|commerce|auth|band|tiles/.test(e))return 'cards';
+    return 'any'}
+  function fxToggle(b){
+    if(FXMENU){FXMENU.remove();FXMENU=null}
+    var el=b.dataset.fx,bucket=fxBucket(el),
+        fxmap=DATA.fxmap||{},
+        opts=((fxmap[bucket]||[]).concat(fxmap.any||[])),
+        cur=DATA.picked_elements[el],seen={};
+    var menu=document.createElement('div');
+    menu.className='fxmenu';
+    menu.innerHTML='<button class="fxopt'+(cur==='none'?' on':'')+
+      '" data-v="none">none</button>'+
+      opts.filter(function(v){if(seen[v])return 0;seen[v]=1;return 1})
+        .map(function(v){
+        return '<button class="fxopt'+(v===cur?' on':'')+
+          '" data-v="'+esc(v)+'">'+esc(v)+'</button>'}).join('');
+    if(!opts.length)
+      menu.innerHTML+='<span class="fxopt">no effects banked '+
+        'for '+esc(bucket)+'</span>';
+    b.parentElement.style.position='relative';
+    b.parentElement.appendChild(menu);FXMENU=menu;
+    menu.querySelectorAll('.fxopt[data-v]').forEach(function(o){
+      o.onclick=function(ev){ev.stopPropagation();
+        api('/element-pick',{pipeline:PIPELINE,element:el,
+          variant:o.dataset.v}).then(function(j){
+          if(j.ok){
+            if(o.dataset.v==='none')delete DATA.picked_elements[el];
+            else DATA.picked_elements[el]=o.dataset.v;
+            board()}
+          else toast(j.message||'refused')});
+        menu.remove();FXMENU=null}});
+    setTimeout(function(){
+      document.addEventListener('click',function h(e){
+        if(menu&&!menu.contains(e.target)){menu.remove();
+          if(FXMENU===menu)FXMENU=null;
+          document.removeEventListener('click',h)}})},0)}
+
 
   function srowSwap(rowEl,d){
     var i=+rowEl.dataset.i,r=DATA.boards.page.scrub[i];
@@ -3692,6 +3848,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
         f.onload=function(){try{
           f.style.height=f.contentDocument.body.scrollHeight+'px'
         }catch(e){f.style.height='480px'}};
+        rowEl.querySelector('.fxbtn').onclick=function(e){
+          e.stopPropagation();fxToggle(e.target)};
         rowEl.querySelector('.spick').onclick=function(){
           var r=DATA.boards.page.scrub[+rowEl.dataset.i];
           var stat=rowEl.querySelector('.sstat');
@@ -3714,8 +3872,12 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
       el.innerHTML=h+oh;
       el.querySelectorAll('.pick').forEach(function(b){
         b.onclick=function(){doPick(b)}});
+      el.querySelectorAll('.fxbtn').forEach(function(b){
+        b.onclick=function(e){e.stopPropagation();fxToggle(b)}});
       el.querySelectorAll('.xp').forEach(function(b){
         b.onclick=function(e){e.stopPropagation();expand(b.dataset.x)}});
+      el.querySelectorAll('.fxbtn').forEach(function(b){
+        b.onclick=function(e){e.stopPropagation();fxToggle(b)}});
       el.querySelectorAll('.cb iframe').forEach(function(f){
         f.addEventListener('load',function(){setTimeout(fitIframes,90)})});
       setTimeout(fitIframes,150);
