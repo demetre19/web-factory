@@ -632,6 +632,10 @@ def emit_layouts(ctx):
         ov_rows = []
         for c, row in contracts_rows:
             cc = dict(c)
+            # each option's sections trace to THAT option's card —
+            # the plan rows carry the picked option's ref, which would
+            # otherwise leak onto every lo-<oid> page
+            cc['wf_ref'] = f"preview/layouts.html#{oid}:{c['section']}"
             r2 = dict(row)
             ov = override.get(c['section'])
             eff = ov or c['composition']
