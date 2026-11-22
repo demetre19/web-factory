@@ -681,6 +681,11 @@ def build(pd, excluded=None):
     return doc
 
 
+# exclusion reasons the boards render probe (preview_build) assigns
+PROBE_REASONS = ('navprobe@', 'overflows 390px', 'renders no h1',
+                 'mints a second h1')
+
+
 def ensure(pd, force=False, exclude=None):
     """PAGE-BOARDS.json, regenerated when any input moved. `exclude`
     {comp: reason} adds compositions the boards build could not render
@@ -690,10 +695,15 @@ def ensure(pd, force=False, exclude=None):
     p = os.path.join(ctx.dir, 'PAGE-BOARDS.json')
     cur = _json(p)
     excluded = dict((cur or {}).get('excluded') or {})
-    excluded.update(exclude or {})
     if not force and not exclude and cur and \
             cur.get('inputs_sha') == _inputs_sha(ctx):
         return cur
+    if not exclude:
+        # a probe verdict depends on copy/tokens/media — the inputs
+        # moved, so those comps get re-probed (compile failures stay)
+        excluded = {c: w for c, w in excluded.items()
+                    if not w.startswith(PROBE_REASONS)}
+    excluded.update(exclude or {})
     doc = build(ctx.dir, excluded)
     with open(p, 'w', encoding='utf-8') as fh:
         fh.write(json.dumps(doc, indent=1, ensure_ascii=False) + '\n')
