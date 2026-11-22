@@ -2273,7 +2273,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
   // must be present on a card (e.g. light AND professional)
   function filters(tags){
     var n=Object.keys(FILT).length;
-    var h='<button class="fchip'+(!n?' on':'')+'" data-f="">all</button>';
+    var h='<button class="fchip'+(!n?' on':'')+'" data-f="" '+
+         'title="clear all filters">clear all</button>';
     tags.forEach(function(t){
       h+='<button class="fchip'+(FILT[t]?' on':'')+'" data-f="'+esc(t)+'">'+esc(t)+'</button>'});
     return h;
@@ -2548,9 +2549,12 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
     if(!(o.cards||[]).length)h+='<div class="empty">nothing emitted here yet</div>';
     el.innerHTML=h;
     el.querySelectorAll('.fchip').forEach(function(b){
-      b.onclick=function(){var t=b.dataset.f;
-        if(!t)FILT={};else if(FILT[t])delete FILT[t];
-        else FILT[t]=1;board()}});
+      b.onclick=function(ev){var t=b.dataset.f;
+        if(!t)FILT={};
+        else if(ev.shiftKey||ev.metaKey||ev.ctrlKey){
+          if(FILT[t])delete FILT[t];else FILT[t]=1}
+        else{var was=FILT[t];FILT={};if(!was)FILT[t]=1}
+        board()}});
     el.querySelectorAll('.pick').forEach(function(b){
       b.onclick=function(){doPick(b)}});
     applyTheme(document.documentElement.dataset.theme);
