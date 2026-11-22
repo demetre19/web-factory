@@ -88,9 +88,13 @@ import '../styles/global.css';
         var nav = cands[i];
         if (nav.hasAttribute('data-over') ||
             nav.classList.contains('nav-mega')) continue;
-        if (nav.scrollWidth > nav.clientWidth + 1) {
+        // the row overflows when the nav itself is clipped OR when
+        // nav + brand + CTA together exceed the bar (header-21's
+        // .nav-desk never clips — the flex row does)
+        var h = nav.closest('header');
+        if (nav.scrollWidth > nav.clientWidth + 1 ||
+            (h && h.scrollWidth > h.clientWidth + 1)) {
           crowdLatch = true;
-          var h = nav.closest('header');
           if (h) h.classList.add('nav-crowded');
           nav.setAttribute('data-over', '');
           break;
