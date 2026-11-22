@@ -2775,7 +2775,7 @@ _FORM_SKIP_TYPES = {'hidden', 'submit', 'button', 'image', 'file',
 # would block a valid demo submit (apt, delivery notes, …)
 _FORM_OPTIONAL = re.compile(
     r'\b(?:optional|apartment|apt|suite|unit|floor|'
-    r'instructions?|notes?|comments?|company|middle|nickname|'
+    r'instructions?|notes?|comments?|middle|nickname|'
     r'referral|coupon|promo|vat|tax)\b', re.I)
 
 
@@ -3125,7 +3125,7 @@ def emit_bank_previews(pd):
                     (os.path.isfile(css_dst) and
                      os.path.getmtime(css_dst) >
                      os.path.getmtime(dst)) or \
-                    '<!--wf:bank:v12-->' not in open(
+                    '<!--wf:bank:v13-->' not in open(
                         dst, encoding='utf-8',
                         errors='replace').read(64)
                 if stale:
@@ -3165,7 +3165,7 @@ def emit_bank_previews(pd):
                     css_ = _BANK_STAGE_CSS + \
                         ('body{padding:0}' if page else '')
                     with open(dst, 'w', encoding='utf-8') as fh:
-                        fh.write('<!--wf:bank:v12-->' +
+                        fh.write('<!--wf:bank:v13-->' +
                                  _doc(head, '', stage,
                                       extra=(_STAGE_SCROLL_SHIM
                                              if not page else '') +
