@@ -5550,7 +5550,7 @@ def check_contrast_pairs(ctx):
         v = resolve(str(v).strip())
         if v.startswith('color-mix('):
             return _mix(v)
-        m = re.search(r'#[0-9a-fA-F]{3,8}\b', v)
+        m = re.search(r'(?<!r'(?<!&)#[0-9a-fA-F]{3,8}\b')#[0-9a-fA-F]{3,8}\b', v)
         if m:
             return m.group(0)
         if re.match(r'^(?:oklch|lch|lab|color)\(', v):
@@ -6737,7 +6737,7 @@ def check_no_stray_styles(ctx):
             if fn != 'global.css' and '<style' in t:
                 f.append(f'P.2 {fn}: <style> block — styles live in '
                          'the shared layer only')
-            for m in re.finditer(r'#[0-9a-fA-F]{3,8}\b', t):
+            for m in re.finditer(r'(?<!r'(?<!&)#[0-9a-fA-F]{3,8}\b')#[0-9a-fA-F]{3,8}\b', t):
                 f.append(f'P.5 {fn}: raw hex {m.group(0)} outside '
                          'config/tokens')
             for m in re.finditer(r'\b\d+px\b', t):
@@ -7692,7 +7692,7 @@ def check_section_allowed(ctx):
         if bad:
             f.append(f'SB.3 {fn}: classes outside the layer/token '
                      f'utilities: {sorted(set(bad))[:6]}')
-        for m in re.finditer(r'#[0-9a-fA-F]{3,8}\b', txt):
+        for m in re.finditer(r'(?<!r'(?<!&)#[0-9a-fA-F]{3,8}\b')#[0-9a-fA-F]{3,8}\b', txt):
             f.append(f'SB.3 {fn}: raw hex {m.group(0)} — tokens only')
         for m in re.finditer(r'\b(?:rgb|hsl|oklch|lab)\(', txt):
             f.append(f'SB.3 {fn}: color function {m.group(0)} — tokens only')
@@ -7925,7 +7925,7 @@ def section_failures(ctx, contract):
         return [f'SB.3 {fn} missing']
     for bad in _class_set(ctx, txt):
         f.append(f'SB.3 {fn}: class "{bad}" outside layer/token utilities')
-    for m in re.finditer(r'#[0-9a-fA-F]{3,8}\b', txt):
+    for m in re.finditer(r'(?<!r'(?<!&)#[0-9a-fA-F]{3,8}\b')#[0-9a-fA-F]{3,8}\b', txt):
         f.append(f'P.5 {fn}: raw hex {m.group(0)}')
     for em in re.finditer('[\U0001F300-\U0001FAFF\u2600-\u27BF]', txt):
         f.append(f'P.10 {fn}: emoji {em.group(0)}')
