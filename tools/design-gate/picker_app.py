@@ -2927,6 +2927,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
  border-radius:99px;border:1px solid var(--line);
  background:var(--panel);color:var(--muted);cursor:pointer}
 .vmood:hover{border-color:var(--accent);color:var(--accent)}
+.vmood.on{background:var(--accent);border-color:var(--accent);
+ color:var(--btn-ink,#fff)}
 .vadv{margin:2px 0 4px}
 .vadv>summary{cursor:pointer;font:600 11px var(--mono);
  letter-spacing:.08em;text-transform:uppercase;
@@ -3405,9 +3407,13 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
             setTheme((VRES&&VRES.theme)||'light')}})};
     el.querySelectorAll('.vmood').forEach(function(m){
       m.onclick=function(){
+        el.querySelectorAll('.vmood').forEach(function(x){
+          x.classList.remove('on')});
+        m.classList.add('on');
         var first=(o.cards||[]).filter(function(cc){
           return cc.grp===m.dataset.cl})[0];
         VGENES=Object.assign({},first?first.genes||{}:{});
+        vibePane(el,o);
         resolveVibe(el,o)}});
     el.querySelectorAll('.vload').forEach(function(b){
       b.onclick=function(){
