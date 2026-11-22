@@ -60,7 +60,9 @@
 | hero | /media/team.jpg | none |
 | definition | /media/gallery-vacuum.jpg | 4:3 |
 | reporting | /media/team-foyer.jpg | 4:3 |
+| pricing | /media/office-clean.jpg | 4:3 |
 | siblings | /media/office-clean.jpg | 4:3 |
+| end-act | /media/gallery-vacuum.jpg | 4:3 |
 
 ### CTAs
 

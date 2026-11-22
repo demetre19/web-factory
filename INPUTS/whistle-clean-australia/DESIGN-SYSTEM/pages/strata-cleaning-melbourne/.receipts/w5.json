@@ -1,6 +1,24 @@
 {
  "steps": [
   {
+   "label": "corpus artifacts",
+   "argv": [
+    "/home/ubuntu/.pyenv/versions/3.12.16/bin/python3.12",
+    "corpus_publish.py",
+    "/home/ubuntu/repos/web-factory/INPUTS/whistle-clean-australia/DESIGN-SYSTEM/pages/strata-cleaning-melbourne"
+   ],
+   "inputs": {
+    "/home/ubuntu/repos/web-factory/INPUTS/whistle-clean-australia/DESIGN-SYSTEM/pages/strata-cleaning-melbourne/DESIGN-PLAN.md": "0692aecfaf65e3a5"
+   },
+   "outputs": {
+    "SOP-CONSTANTS.json": "cda13af51ee34998",
+    "CANON-PADDING.json": "7b349a27d8ad7e1c"
+   },
+   "rc": 0,
+   "ts": "2026-11-22T02:19:20",
+   "sig": "faa9b759a5ad9dbaab8f6e1fbb097958"
+  },
+  {
    "label": "system sheet",
    "argv": [
     "/home/ubuntu/.pyenv/versions/3.12.16/bin/python3.12",
@@ -9,33 +27,15 @@
     "--system"
    ],
    "inputs": {
-    "/home/ubuntu/repos/web-factory/INPUTS/whistle-clean-australia/DESIGN-SYSTEM/pages/strata-cleaning-melbourne/DESIGN-PLAN.md": "3bd42463584c5c15",
+    "/home/ubuntu/repos/web-factory/INPUTS/whistle-clean-australia/DESIGN-SYSTEM/pages/strata-cleaning-melbourne/DESIGN-PLAN.md": "0692aecfaf65e3a5",
     "/home/ubuntu/repos/web-factory/INPUTS/whistle-clean-australia/DESIGN-SYSTEM/pages/strata-cleaning-melbourne/TOKENS.json": "463916e222af0dc4"
    },
    "outputs": {
     "preview/system.html": "8628cd847badf22b"
    },
    "rc": 0,
-   "ts": "2026-11-22T01:26:49",
-   "sig": "51a75ec3a897d4170b1cce784a8634aa"
-  },
-  {
-   "label": "corpus artifacts",
-   "argv": [
-    "/home/ubuntu/.pyenv/versions/3.12.16/bin/python3.12",
-    "corpus_publish.py",
-    "/home/ubuntu/repos/web-factory/INPUTS/whistle-clean-australia/DESIGN-SYSTEM/pages/strata-cleaning-melbourne"
-   ],
-   "inputs": {
-    "/home/ubuntu/repos/web-factory/INPUTS/whistle-clean-australia/DESIGN-SYSTEM/pages/strata-cleaning-melbourne/DESIGN-PLAN.md": "3bd42463584c5c15"
-   },
-   "outputs": {
-    "SOP-CONSTANTS.json": "cda13af51ee34998",
-    "CANON-PADDING.json": "7b349a27d8ad7e1c"
-   },
-   "rc": 0,
-   "ts": "2026-11-22T01:26:50",
-   "sig": "7d12ef6e4ce3a87d6cd573252d1da2db"
+   "ts": "2026-11-22T02:19:25",
+   "sig": "975d6dbd472909513e343f9b0454ec09"
   }
  ]
 }
