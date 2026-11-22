@@ -3423,7 +3423,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
   display:flex;flex-direction:column}
 #xpBar{display:flex;align-items:center;gap:8px;padding:9px 14px;
   background:var(--panel);border-bottom:1px solid var(--line);
-  flex:none}
+  flex:none;flex-wrap:wrap}
+#xpBar .xdev{flex:none}
 .xttl{font:600 12.5px var(--font);color:var(--ink);max-width:26%;
   overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .xdev{display:flex;border:1px solid var(--line);border-radius:7px;
@@ -3445,6 +3446,10 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
 @media(max-width:640px){
   .xttl{display:none}
   .xdev{margin-left:0}}
+@media(max-width:768px){
+  #xpBar button,#xpBar a{min-height:44px;min-width:44px;
+    display:inline-flex;align-items:center;justify-content:center}
+  .xpPrim{font-size:13px}}
 .ssq{flex:1;min-width:180px;padding:9px 12px;border:1px solid var(--line);
      border-radius:8px;background:var(--panel);color:var(--ink);
      font:12px var(--font)}
@@ -4440,11 +4445,12 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
   // open-in-new-tab targets the real /built/ URL, not the
   // family-bound /frame/ wrapper
   function builtUrl(u){
-    return u.replace(/^\/frame\/[^/?]+/,'/built')}
+    return u.replace(/^\/frame\/[^/?]+/,'/built')
+      .replace(/([^:])\/{2,}/g,'$1/')}
   function xpOpts(b){
     var cd=b.closest('.card,.vprev,.srow');
     var pk=cd&&cd.querySelector('.pick,.spick,#vBake');
-    var nm=cd&&(cd.querySelector('.nm')||cd.querySelector('.vname'));
+    var nm=cd&&cd.querySelector('.nm,.vname,.sname');
     return {xp:b,
       title:nm?nm.textContent:'preview',
       primary:pk?pk.textContent.trim():null,
@@ -4456,23 +4462,27 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
         else toast('nothing to preview yet')}})}
   function expand(u,opts){
     opts=opts||{};
+    u=u.replace(/([^:])\/{2,}/g,'$1/');
     var prevFocus=document.activeElement;
-    var xps=[...document.querySelectorAll('.xp')];
+    var xps=[...document.querySelectorAll('.xp')].filter(
+      function(x){var cd=x.closest('.card,.srow');
+        return !cd||cd.style.display!=='none'});
     var cur=opts.xp?xps.indexOf(opts.xp):-1;
     var ov=document.createElement('div');ov.id='xpOv';
     var theme=document.documentElement.dataset.theme==='dark'?'dark':'light';
+    var w0=innerWidth<=480?390:innerWidth<=900?768:1280;
     ov.innerHTML='<div id="xpBar"><span class="xttl">'+
       esc(opts.title||'preview')+'</span>'+
       '<div class="xdev">'+
       [['D1280',1280],['T768',768],['M390',390]].map(function(d){
-        return '<button data-w="'+d[1]+'"'+(d[1]===1280?' class="on"':'')+
+        return '<button data-w="'+d[1]+'"'+(d[1]===w0?' class="on"':'')+
                '>'+d[0]+'</button>'}).join('')+'</div>'+
       '<button class="xth" title="toggle preview theme">'+
       (theme==='dark'?'☀':'☾')+'</button>'+
       '<button class="xnav xpP" title="previous">&#8249;</button>'+
       '<button class="xnav xpN" title="next">&#8250;</button>'+
       (opts.primary?'<button class="xpPrim">'+esc(opts.primary)+'</button>':'')+
-      '<a class="xopen" href="'+esc(themed(u,theme))+
+      '<a class="xopen" href="'+esc(builtUrl(themed(u,theme)))+
       '" target="_blank" rel="noopener" title="open in new tab">&#8599;</a>'+
       '<button id="xpX">&#x2715;</button></div>'+
       '<div class="xstage"><div class="xframe">'+
@@ -4481,17 +4491,22 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
     document.body.style.overflow='hidden';
     var fr=ov.querySelector('.xframe'),im=fr.querySelector('iframe');
     function setW(w){
+      var pad=Math.max(0,Math.min(14,Math.floor((innerWidth-w-8)/2)));
+      ov.querySelector('.xstage').style.padding=pad+'px';
       fr.style.width=w+'px';
       ov.querySelectorAll('.xdev button').forEach(function(b){
         b.classList.toggle('on',+b.dataset.w===w)})}
-    setW(1280);
+    setW(w0);
+    im.addEventListener('load',function(){
+      // keydown inside a same-origin preview still reaches Esc/arrows
+      try{im.contentDocument.addEventListener('keydown',k)}catch(e){}});
     ov.querySelectorAll('.xdev button').forEach(function(b){
       b.onclick=function(){setW(+b.dataset.w)}});
     ov.querySelector('.xth').onclick=function(){
       theme=theme==='dark'?'light':'dark';
       this.textContent=theme==='dark'?'☀':'☾';
       var s=themed(u,theme);
-      im.src=s;ov.querySelector('.xopen').href=s};
+      im.src=s;ov.querySelector('.xopen').href=builtUrl(s)};
     function nav(d){
       if(cur<0||!xps.length)return;
       var hops=xps.length;
@@ -4592,9 +4607,12 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
         (o.tsdoc?'<iframe class="tsfr" src="'+esc(o.tsdoc)+
         (document.documentElement.dataset.theme==='dark'
          ?'?theme=dark':'')+'" style="width:100%;height:1180px;'+
-        'border:0;display:block"></iframe>':
+        'border:0;display:block"></iframe>'+
+        '<button class="xp" data-x="'+esc(o.tsdoc)+'">\u2922</button>':
         '<div class="noprev">TOKENS.json not emitted for this '+
         'pipeline yet</div>')+'</div></div>';
+      wireXp(el);
+      wireFrames(el);
       return}
     if(o.scrub){
       el.innerHTML=h+scrubView(o);
@@ -4769,6 +4787,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
   // swaps the current row's alternative on the scrub board
   document.addEventListener('keydown',function(ev){
     if(!DATA||CUR==null)return;
+    if(document.getElementById('xpOv'))return;
     if(ev.key!=='ArrowLeft'&&ev.key!=='ArrowRight')return;
     if(/INPUT|TEXTAREA/.test(ev.target.tagName))return;
     var d=ev.key==='ArrowRight'?1:-1;
