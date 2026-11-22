@@ -764,12 +764,18 @@ def translate(payload, stem):
                 _head = (f'{pad}  <div class="nav-sheet-head">'
                          f'<span class="logo nav-sheet-brand">'
                          f'{{brand}}</span>{_x}</div>\n')
+                # the header CTA has two homes: .nav-sheet-cta inside
+                # the panel (visible only while open, docked at its
+                # foot) and the bar-level .nav-cta the global rule
+                # pins inline above the breakpoint (N.flyout)
+                inner += (f'{pad}  {{act.label && '
+                          f'<p class="nav-sheet-cta mt-fluid-m">'
+                          f'<a class="wf-cta-button" '
+                          f'href={{act.href}}>{{act.label}}'
+                          f'</a></p>}}\n')
                 out = (f'{pad}{{list.length > 0 && <nav class="{ncls}"'
                        f' aria-label="Primary">\n{_head}{inner}'
-                       f'{pad}}}\n')
-                # the header CTA rides in the bar on desktop and
-                # docks at the panel's foot when the flyout opens —
-                # the bar-level .nav-cta the global rule pins
+                       f'{pad}</nav>}}\n')
                 if not seen.get('nav_cta'):
                     seen['nav_cta'] = True
                     out += (f'{pad}{{act.label && '

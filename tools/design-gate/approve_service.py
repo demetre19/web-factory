@@ -268,6 +268,19 @@ def _design_options(ctx, wave):
     return blocks
 
 
+def _clean_fails(fails):
+    """Dedupe a failure list for display: gate.py logs some checks
+    twice — once plain, once as 'undeclared violation: <same>' — so
+    strip the envelope and keep first occurrence per message."""
+    seen, out = set(), []
+    for f in fails:
+        s = str(f).removeprefix('undeclared violation: ')
+        if s not in seen:
+            seen.add(s)
+            out.append(s)
+    return out
+
+
 def record_approval(wave, pipeline, nonce=None, design=None,
                     chat=None):
     """Spend a picker nonce + record the operator's signed pick.
@@ -314,7 +327,7 @@ def record_approval(wave, pipeline, nonce=None, design=None,
     fails = G.ancestry_fails(ctx) if wave != 'w0' else []
     if fails:
         return 1, 'approve REFUSED — earlier waves are not clean: ' \
-                  + '; '.join(fails[:4])
+                  + '; '.join(_clean_fails(fails)[:4])
     g = G.load_gates(ctx)
     if not (g.get(wave) or {}).get('pass'):
         return 1, f'approve REFUSED: {wave} has not passed'
@@ -1091,8 +1104,7 @@ def _handler():
                         break
                 fails = ((_gs2.get(first) or {}).get('failures')
                          if first else None) or []
-                fails = [str(x).removeprefix(
-                         'undeclared violation: ') for x in fails]
+                fails = _clean_fails(fails)
                 reason = (f'{first} still fails: '
                           + '; '.join(str(x) for x in fails[:4])
                           if fails else
