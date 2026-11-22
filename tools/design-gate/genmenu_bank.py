@@ -69,6 +69,9 @@ PACK_META = {
     "cursor": ("fx-cursor", "decoration", ["micro interaction"], "cursor effect"),
     "viscous": ("fx-goo", "decoration", ["micro interaction"], "liquid effect"),
     "scroll": ("fx-scroll", "decoration", ["scroll animation"], "scroll effect"),
+    "statecraft": ("fx-state", "decoration", ["state animation"], "state effect"),
+    "atmosphere": ("fx-ambient", "decoration", ["ambient background"], "ambient effect"),
+    "icfx": ("fx-image", "decoration", ["image treatment"], "image effect"),
 }
 
 # component-name prefix -> (baseline, section_class, category, query) override
@@ -348,6 +351,45 @@ def sniff_topology(html_text: str, baseline: str) -> tuple[str, str]:
         if "CSS Timeline" in c:
             return "fx-timeline", "high"
         return "fx-scroll", "low"
+    if baseline == "fx-state":
+        low = c.lower()
+        if "toast" in low or "notification" in low or "dismiss" in low:
+            return "fx-toast", "high"
+        if "stroke-dashoffset" in low or "check" in low or "verified" in low or "success" in low:
+            return "fx-check", "high"
+        if "confetti" in low or "burst" in low or "heart" in low or "celebra" in low:
+            return "fx-burst", "medium"
+        if "progress" in low or "ring" in low or "percent" in low or "download" in low:
+            return "fx-progress", "medium"
+        if "skeleton" in low or "shimmer" in low:
+            return "fx-skeleton", "medium"
+        if "star" in low or "rating" in low:
+            return "fx-rating", "medium"
+        return "fx-state", "low"
+    if baseline == "fx-ambient":
+        low = c.lower()
+        if "particle" in low or "field" in low or "star" in low or "dot" in low:
+            return "fx-particles", "medium"
+        if "aurora" in low or "orb" in low or "blob" in low or "glow" in low:
+            return "fx-glow", "medium"
+        if "gradient" in low or "conic" in low or "mesh" in low:
+            return "fx-gradient", "medium"
+        if "grid" in low or "scanline" in low or "noise" in low:
+            return "fx-texture", "medium"
+        return "fx-ambient", "low"
+    if baseline == "fx-image":
+        low = c.lower()
+        if "before" in low and "after" in low or "comparison" in low or "slider" in low:
+            return "fx-compare", "high"
+        if "clip-path" in low or "mask" in low or "aperture" in low or "reveal" in low:
+            return "fx-mask", "medium"
+        if "duotone" in low or "grayscale" in low or "crossfade" in low or "opacity" in low:
+            return "fx-duotone", "medium"
+        if "tilt" in low or "perspective" in low:
+            return "fx-tilt", "medium"
+        if "zoom" in low or "scale" in low or "expand" in low:
+            return "fx-zoom", "medium"
+        return "fx-image", "low"
     if baseline == "ui-badge":
         low = c.lower()
         if "ribbon" in low or "corner" in low or "rotate" in low:
