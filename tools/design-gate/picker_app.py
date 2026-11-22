@@ -3693,13 +3693,13 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
     axes.forEach(function(a){
       if(a.group!==grp){grp=a.group;
         h+='<div class="vgrp">'+esc(grp)+'</div>'}
-      var cur=VGENES[a.axis],ix=cur?a.alleles.indexOf(cur):-1;
+      var cur=VGENES[a.axis],ix=cur?a.alleles.indexOf(cur):0;
       h+='<div class="vax"><span class="vaxn" title="'+esc(a.axis)+
          '">'+esc(a.axis)+'</span>'+
          '<input type="range" min="0" max="'+(a.alleles.length-1)+
          '" value="'+Math.max(0,ix)+'" data-ax="'+a.axis+
          '" data-n="'+a.alleles.length+'">'+
-         '<span class="vaxa">'+(cur?esc(cur):'—')+'</span></div>';
+         '<span class="vaxa">'+esc(cur||'baseline')+'</span></div>';
     });
     h+='</div></details>';
     var gkeys=Object.keys(VGENES);
@@ -3745,7 +3745,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
          '<button class="pick" data-i="'+i+'">Bake</button></div></div>';
     });
     h+='</div>';
-    if(!shown)h+='<div class="empty">no presets match the '+('current search/filter — clear it to see the atlas')+'</div>';
+    if(!shown)h+='<div class="empty">no presets match the current '+
+      'search/filter — <button class="abtn" id="vclr">clear '+('filters')+'</button></div>';
     el.innerHTML=h;
     // wire: sliders → resolve; chips → clear axis; bake → sign bundle
     el.querySelectorAll('.vax input').forEach(function(r){
@@ -3774,14 +3775,30 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
               VGENES=Object.assign({},first.genes);
               vibePane(el,o);resolveVibe(el,o);return}}}
         vibePane(el,o)}});
+    var vc=el.querySelector('#vclr');
+    if(vc)vc.onclick=function(){VQ='';FILT={};vibePane(el,o)};
     var vd=el.querySelector('.vadv');
     if(vd)vd.addEventListener('toggle',function(){VADV=vd.open});
     el.querySelector('#vq').oninput=function(e){
       VQ=e.target.value.toLowerCase();
+      var shown=0;
       el.querySelectorAll('.grid .card').forEach(function(cd){
         var c=cards[+cd.dataset.i],hay=(c.id+' '+c.name+' '+
-          (c.tags||[]).join(' ')).toLowerCase();
-        cd.style.display=(VQ&&!hay.includes(VQ))?'none':''})};
+          (c.tags||[]).join(' ')).toLowerCase(),
+            off=VQ&&!hay.includes(VQ);
+        cd.style.display=off?'none':'';
+        if(!off)shown++});
+      var em=el.querySelector('#vdyn');
+      if(!shown&&!em){
+        var d=document.createElement('div');
+        d.id='vdyn';d.className='empty';
+        d.style.gridColumn='1/-1';
+        d.innerHTML='no presets match the current search/filter — '+
+          '<button class="abtn" id="vclr">clear filters</button>';
+        el.querySelector('.grid').appendChild(d);
+        d.querySelector('#vclr').onclick=function(){
+          VQ='';FILT={};vibePane(el,o)}}
+      else if(shown&&em)em.remove()};
     el.querySelector('#vBake').onclick=function(){
       var v='genes:'+vhash(VGENES);
       api('/element-pick',{pipeline:PIPELINE,element:'vibe',
@@ -3817,6 +3834,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
               ?'dark':'light')}})}});
     setTheme(document.documentElement.dataset.theme);
     setTimeout(fitIframes,150);
+    if(!VRES)resolveVibe(el,o);   // baseline vibe on first open
   }
   function vhash(g){
     var s=Object.keys(g).sort().map(function(k){
@@ -3840,6 +3858,16 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
              ?'?theme=dark':'');
           var vn=document.querySelector('.vname');
           if(vn)vn.textContent=VSRC||'computed vibe';
+          var gm={};(j.genes||[]).forEach(function(g){
+            var p=g.split(':');gm[p[0]]=p.slice(1).join(':')});
+          el.querySelectorAll('.vax input').forEach(function(r){
+            var a=o.axes.find(function(x){
+              return x.axis===r.dataset.ax});
+            var al=gm[a.axis],
+                ix=al?a.alleles.indexOf(al):-1;
+            if(ix>=0)r.value=ix;
+            r.parentElement.querySelector('.vaxa').textContent=
+              al||'baseline'});
           el.querySelector('.vchips').innerHTML=
             Object.keys(VGENES).map(function(k){
             return '<span class="chip on" data-ax="'+k+'">'+
