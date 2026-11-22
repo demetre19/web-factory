@@ -51,5 +51,5 @@ const logoSvg = logoName ? logos[`../assets/${logoName}`] : null;
         <li><a class="nav-link" href={it.href || '#'}>{it.label}</a></li>
       ))}
     </ul>
-  </nav>
+  {cta && <p class="nav-sheet-cta mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label}</a></p>}</nav>
 </div>
