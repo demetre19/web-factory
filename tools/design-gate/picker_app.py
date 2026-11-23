@@ -7077,7 +7077,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
          '<div class="desc">'+esc(c.desc||'')+'</div></div>'+
          '<div class="cf">'+
          '<button class="abtn vload" data-i="'+i+
-         '">load genes</button>'+
+         '" title="load this preset\'s genes into the mixer">'+
+         'use vibe</button>'+
          (c.preview?'<button class="xp" title="expand" data-x="'+
           esc(c.preview)+'">⤢</button>':'')+
          '<button class="pick" data-i="'+i+'">Bake</button></div></div>';

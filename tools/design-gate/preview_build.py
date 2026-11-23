@@ -1100,10 +1100,23 @@ def emit_vibe_specs(ctx):
     Emitted inside the page's own build so the picker iframes REAL
     built pages, then wrapped per-preset by picker_app."""
     specs, comps = [], set()
+    # archetype photography generated once by vibe_images.py and
+    # shipped under assets/vibe/ — each specimen hero renders real
+    # imagery that matches its brand, so the board reads as eight
+    # different finished products instead of text-only comps
+    vimg = os.path.join(os.path.dirname(os.path.dirname(
+        os.path.dirname(os.path.abspath(__file__)))),
+        'assets', 'vibe')
     for k, rows_spec in enumerate(_VIBE_SPECS):
         cr = []
         for comp, cat, surface, row in rows_spec:
             comps.add(comp)
+            src = os.path.join(vimg, f'spec-{k}.webp')
+            if (row.get('name') == 'hero' and not row.get('image')
+                    and os.path.isfile(src)):
+                row['image'] = {'src': f'/media/vibe/spec-{k}.webp',
+                                'alt': ''}
+                row.setdefault('images', [row['image']])
             cr.append(({'section': row['name'],
                         'composition': comp, 'recipe': None,
                         'category': cat, 'surface': surface,
@@ -1116,6 +1129,14 @@ def emit_vibe_specs(ctx):
                         'seam_shape_bottom': None,
                         'skeleton': None, 'content': {}}, row))
         specs.append(cr)
+    if os.path.isdir(vimg):
+        import shutil as _shv
+        dst = os.path.join(ctx.site, 'public', 'media', 'vibe')
+        for fn in os.listdir(vimg):
+            if fn.endswith('.webp'):
+                os.makedirs(dst, exist_ok=True)
+                _shv.copyfile(os.path.join(vimg, fn),
+                              os.path.join(dst, fn))
     _emit_components(ctx, [], sorted(comps))
     _ensure_shell(ctx)
     _ensure_assets(ctx)
