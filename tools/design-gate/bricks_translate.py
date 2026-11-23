@@ -361,6 +361,12 @@ def settings_css(settings, unmapped, raw=None):
             if cv not in (None, '', 'default'):
                 if prop in ('grid-template-columns', 'grid-template-rows'):
                     cv = tracks(str(cv))
+                # nowrap pins intrinsic content wider than the
+                # viewport (bm-headers overflow at 1280/768/390);
+                # no spec combines nowrap with an overflow scroller,
+                # so wrap is the safe semantic
+                if prop == 'flex-wrap' and cv == 'nowrap':
+                    cv = 'wrap'
                 out.append((prop, cv))
     return out
 
