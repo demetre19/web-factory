@@ -1953,20 +1953,33 @@ def check_measurable(ctx):
     # S.10 — no card inside a card in emitted markup: a card-level
     # container (class token `card` or `*-card`) may never contain
     # another one. Card parts (`card-media`, `card__x`) and ds-*
-    # swatch plumbing are not cards.
-    _card = r'(?:^|\s)(?!ds-)(?:card|[a-z0-9_-]+-card)(?=[\s"])'
+    # swatch plumbing are not cards. A tag stack tracks nesting — a
+    # non-greedy body match would stop at the first sibling close and
+    # miss a later nested card.
+    _tok = r'(?<=[\s"])(?!ds-)(?:card|[a-z0-9_-]+-card)(?=[\s"])'
+    _open = re.compile(
+        r'<(/?)(div|article|section|figure|aside|li)\b([^>]*)>', re.S)
     for p_, t in list(srcs) + list(ctx.page_htmls()):
         name = os.path.basename(p_)
         if not p_.endswith(('.html', '.astro')):
             continue
-        for m in re.finditer(
-                r'<(?:div|article|section|figure|aside|li)[^>]*'
-                r'class="[^"]*' + _card + r'[^"]*"[^>]*>(.*?)</(?:div|'
-                r'article|section|figure|aside|li)>', t, re.S):
-            if re.search(r'class="[^"]*' + _card, m.group(2)):
-                f.append(f'S.10 {name}: card inside a card — '
-                         'flatten to one card-level container')
-                break
+        stack = []
+        for m in _open.finditer(t):
+            closing, tag, attrs = m.groups()
+            if not closing:
+                is_card = bool(
+                    re.search(r'class="[^"]*' + _tok, attrs))
+                if is_card and any(c for _, c in stack):
+                    f.append(f'S.10 {name}: card inside a card — '
+                             'flatten to one card-level container')
+                    break
+                if not attrs.rstrip().endswith('/'):
+                    stack.append((tag, is_card))
+            else:
+                for i in range(len(stack) - 1, -1, -1):
+                    if stack[i][0] == tag:
+                        del stack[i:]
+                        break
     return f
 
 def check_slop_palette(ctx):
