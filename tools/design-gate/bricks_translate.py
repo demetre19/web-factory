@@ -34,13 +34,16 @@ BANK = os.path.normpath(os.path.join(
     HERE, '..', '..', 'templates', 'skeletons', 'bricksmaven'))
 
 # --------------------------------------------------------- var map
+# A component's inner gaps stop at the space-xl rung: section-space-*
+# is the band's padding (SB.2), never a gap between a section's own
+# children (a 405px logo→content gap on header-page-8).
 # ACSS → emitted token layer. Values verified against
 # emit_global/global.css output (--fs-*, --space-*, --r-card,
 # --color-* roles, --content-width, --measure, --flow-spacing).
 EXACT = {
     'space-xs': 'space-xs', 'space-s': 'space-s',
     'space-m': 'space-m', 'space-l': 'space-l',
-    'space-xl': 'space-xl', 'space-xxl': 'section-space-xxl',
+    'space-xl': 'space-xl', 'space-xxl': 'space-xl',
     'content-gap': 'flow-spacing', 'container-gap': 'space-s',
     'grid-gap': 'space-m', 'gutter': 'gutter',
     'width-l': 'content-width', 'width-m': 'measure',

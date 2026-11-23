@@ -310,9 +310,17 @@ input, textarea { border: 1px solid var(--input-border); padding: var(--input-py
      intro column or a paragraph) separates at the content rung —
      without it the lead-in line sits flush against the first card
      row ('text touching divs'). Elements that already carry their
-     own stack/flow margin keep it. */
-  :is(.intro, p) + :not(p, .mt-stack, .mt-flow) {
+     own stack/flow margin keep it, and so does a bank container's
+     child — its row-gap already spaces it (no gap + margin stack). */
+  :is(.intro, p) + :not(p, .mt-stack, .mt-flow,
+      :is([class$="-container"], [class*="-container "]) > *) {
       margin-block-start: var(--content-gap); }
+  /* a stack/flow margin on a bank container's direct child rides on
+     top of that container's row-gap — cap it at the small rung so
+     gap + margin never reaches a band's padding (feature-26: 67px
+     gap + 30px mt-stack = 97px), floor still holds without a gap */
+  :is([class$="-container"], [class*="-container "]) > :is(.mt-stack,
+      .mt-flow) { margin-block-start: var(--space-s); }
   .mt-fluid-s { margin-block-start: var(--space-s); }
   .mt-fluid-m { margin-block-start: var(--space-m); }
   .mt-fluid-l { margin-block-start: var(--space-l); }
@@ -798,7 +806,7 @@ input, textarea { border: 1px solid var(--input-border); padding: var(--input-py
      long label list still fits between brand and CTA. The whole bar
      stays one row at every width: brand ellipsises under pressure,
      the burger pins to its lane's far end, nothing wraps (H.1) */
-  .bm-header-1__brand, .brand-mark, .logo { white-space: nowrap;
+  .wf-header-1__brand, .brand-mark, .logo { white-space: nowrap;
               overflow: hidden; text-overflow: ellipsis; }
   .row.between:has(.nav-links), .row.between:has(.burger),
   .row.between:has(.nav-desk) { flex-wrap: nowrap; }

@@ -123,9 +123,17 @@ input, textarea { border: 1px solid var(--input-border); padding: var(--input-py
      intro column or a paragraph) separates at the content rung —
      without it the lead-in line sits flush against the first card
      row ('text touching divs'). Elements that already carry their
-     own stack/flow margin keep it. */
-  :is(.intro, p) + :not(p, .mt-stack, .mt-flow) {
+     own stack/flow margin keep it, and so does a bank container's
+     child — its row-gap already spaces it (no gap + margin stack). */
+  :is(.intro, p) + :not(p, .mt-stack, .mt-flow,
+      :is([class$="-container"], [class*="-container "]) > *) {
       margin-block-start: var(--content-gap); }
+  /* a stack/flow margin on a bank container's direct child rides on
+     top of that container's row-gap — cap it at the small rung so
+     gap + margin never reaches a band's padding (feature-26: 67px
+     gap + 30px mt-stack = 97px), floor still holds without a gap */
+  :is([class$="-container"], [class*="-container "]) > :is(.mt-stack,
+      .mt-flow) { margin-block-start: var(--space-s); }
   .mt-fluid-s { margin-block-start: var(--space-s); }
   .mt-fluid-m { margin-block-start: var(--space-m); }
   .mt-fluid-l { margin-block-start: var(--space-l); }
@@ -610,8 +618,18 @@ input, textarea { border: 1px solid var(--input-border); padding: var(--input-py
            grid-template-columns: 1fr; align-items: center; }
   @media (min-width: 48rem) {
     .split { grid-template-columns: 1.05fr 1fr; }
-    .split.media-first { grid-template-columns: 1fr 1.05fr; }
+    .split.media-first, .split[data-media-first] {
+      grid-template-columns: 1fr 1.05fr; }
+    .split[data-media-first] > .stack { order: 2; }
   }
+  /* a media-band hero (hero-act-merge) covers its band with the photo
+     under a canvas scrim — the band ink stays legible in both modes */
+  .surface-media:has(> .sec-inner > .act-merge-media) {
+    position: relative; isolation: isolate; overflow: hidden; }
+  .act-merge-media { position: absolute; inset: 0; z-index: -1; }
+  .act-merge-media img { width: 100%; height: 100%; object-fit: cover; }
+  .act-merge-media::after { content: ""; position: absolute; inset: 0;
+    background: color-mix(in oklab, var(--bg-canvas) 65%, transparent); }
   .cta-row { display: flex; flex-wrap: wrap; gap: var(--space-s);
              align-items: center; }
   .link-quiet { color: var(--text-secondary); text-decoration: none;

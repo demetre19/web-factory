@@ -447,6 +447,8 @@ def _instance_body(ctx, contract, row, copy=None):
                      + ')}')
     if h1_text:
         props.append('h1={true}')
+    if (contract.get('stack') or row.get('stack')) == 'media-first':
+        props.append('stack="media-first"')
     # the brand is site chrome: every composition that renders a logo
     # takes it from the plan's site block, never a default
     site = ctx.site_block() or {}
@@ -1155,6 +1157,18 @@ def main(argv):
                 # earlier wave's build would linger and fail X.1
                 shutil.rmtree(os.path.join(ctx.site, 'dist'),
                               ignore_errors=True)
+                # the layout picker's lo-<oid> pages are producer
+                # output of THIS plan: re-emit their sources so the
+                # one build below ships the current options, never
+                # the pages an older plan left in src/pages/preview
+                if (gate._layout_options(ctx) or {}).get('options'):
+                    import preview_build
+                    os.environ['WF_DEFER_BUILD'] = '1'
+                    try:
+                        preview_build.emit_layouts(ctx)
+                    finally:
+                        os.environ.pop('WF_DEFER_BUILD', None)
+                    print('  layouts: lo-<oid> sources re-emitted')
                 r = subprocess.run(['npm', 'run', 'build'],
                                    cwd=ctx.site, capture_output=True,
                                    text=True, env=gate.node_env(),
