@@ -404,7 +404,10 @@ input, textarea { border: 1px solid var(--input-border); padding: var(--input-py
         var(--grid-floor),
         calc((100% - (var(--grid-cap) - 1) * var(--grid-gap))
              / var(--grid-cap))), 100%), 1fr)); }
-  [data-cols] .grid-auto { --grid-floor: 15rem; }
+  /* data-cols asks for an exact track count: drop the
+     responsive floor so N items fit N tracks instead of
+     orphaning the last one on a wrapped row */
+  [data-cols] .grid-auto { --grid-floor: 9rem; }
   [data-cols="2"] .grid-auto { --grid-cap: 2; }
   [data-cols="3"] .grid-auto { --grid-cap: 3; }
   [data-cols="4"] .grid-auto { --grid-cap: 4; }
@@ -413,13 +416,19 @@ input, textarea { border: 1px solid var(--input-border); padding: var(--input-py
      -grid-ul / -list grid tightens to exactly N tracks instead of
      spilling a lone orphan onto a partial row */
   [data-cols] [class*="-grid-ul"], [data-cols] [class*="-list"],
-  [data-cols] ul[class*="grid"] { --grid-floor: 15rem; }
+  [data-cols] ul[class*="grid"] { --grid-floor: 9rem; }
   [data-cols="2"] [class*="-grid-ul"], [data-cols="2"] [class*="-list"],
   [data-cols="2"] ul[class*="grid"] { --grid-cap: 2; }
   [data-cols="3"] [class*="-grid-ul"], [data-cols="3"] [class*="-list"],
   [data-cols="3"] ul[class*="grid"] { --grid-cap: 3; }
   [data-cols="4"] [class*="-grid-ul"], [data-cols="4"] [class*="-list"],
   [data-cols="4"] ul[class*="grid"] { --grid-cap: 4; }
+  /* a wrapper that only holds a grid must GROW inside a flex row —
+     several bank recipes flex their container (intro | list | cta)
+     and the anonymous list div shrinks to content, squeezing the
+     grid into one skinny column. data-cols sections always intend
+     a full-width multi-track grid. */
+  [data-cols] div:has(> .grid-auto) { flex: 1; min-width: 0; }
   /* grid gaps are GLOBAL: any bank grid list inherits the token's
      --grid-gap as the floor. A bank rule that names its own gap still
      wins (same layer, later source) until the translator stops

@@ -1196,7 +1196,12 @@ def emit_vibe_specs(ctx):
                         'wf_ref': 'preview/vibe-specs',
                         'media_ratio': 'none', 'disclosure': 'none',
                         'intent': None, 'content_ids': [],
-                        'cols': None, 'seam': 'none-set',
+                        # item rows bind a real column count — without
+                        # data-cols the grid caps never engage and
+                        # every band renders as a vertical stack
+                        'cols': (min(len(row.get('items') or []), 4)
+                                 if row.get('items') else None),
+                        'seam': 'none-set',
                         'seam_shape_top': None,
                         'seam_shape_bottom': None,
                         'skeleton': None, 'content': {}}, row))
