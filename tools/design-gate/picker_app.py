@@ -50,11 +50,7 @@ ELEMENT_GALLERIES = [
      'desc': 'Header + footer designer — nav rows, collapse '
              'patterns, footers. Picks sign the header/footer '
              'elements independently.',
-     'groups': [
-         {'label': 'Header', 'element': 'header',
-          'comps': ['nav-bar', 'flyout-nav']},
-         {'label': 'Footer', 'element': 'footer',
-          'comps': ['footer-bar']}]},
+     'groups': [], 'merged_into_types': True},
     {'id': 'menu', 'title': 'Menu designer', 'icon': 'burger',
      'desc': 'The nav surface at every breakpoint — M/T/D resizes '
              'the preview; the flyout panel doubles as a desktop '
@@ -187,12 +183,13 @@ _MENU_DRIVER = (
 
 
 _BANK_DIRS = {
-    'menu': ('nav-dock-left-drawer', 'nav-top-sheet',
-             'nav-bottom-sheet', 'nav-dropdown-menu',
-             'nav-mega-panel', 'nav-modal'),
+    # nav-*/footer-* bank dirs each get their OWN pick board (added
+    # per-dir at emit time) — 'menu'/'footers' keep only their
+    # emitted-comps galleries
+    'menu': (),
     'modals': ('modal-dialog', 'modal-bottom-sheet',
                'modal-slide-over'),
-    'footers': ('footer-mega', 'footer-columns', 'footer-minimal'),
+    'footers': (),
     'pricing': ('pricing-tiers', 'pricing-single', 'pricing-table'),
     'auth': ('auth-form',),
     'empty-states': ('empty-state',),
@@ -514,33 +511,6 @@ class _BankBind(html.parser.HTMLParser):
 # html.wf-menu-open class — ?menu=open enters it through the same
 # toggle a click takes (audit: cards must render the real open
 # state; docs must load closed with correct aria)
-_BANK_MENU_CSS = (
-    'html:not(.wf-menu-open) [data-wf-panel]{display:none !important}')
-_BANK_MENU_DRV = (
-    '<script>(function(){var d=document,r=d.documentElement;'
-    'function so(o){r.classList.toggle("wf-menu-open",o);'
-    'd.querySelectorAll("[data-wf-trigger]").forEach(function(b){'
-    'b.setAttribute("aria-expanded",o?"true":"false")});'
-    'if(d.body)d.body.style.overflow=o?"hidden":""}'
-    'd.addEventListener("DOMContentLoaded",function(){'
-    'if(new URLSearchParams(location.search).get("menu")==="open")'
-    'so(true)});'
-    'd.addEventListener("click",function(e){'
-    'var t=e.target&&e.target.closest&&'
-    'e.target.closest("[data-wf-trigger]");'
-    'if(t){so(!r.classList.contains("wf-menu-open"));return}'
-    'if(!r.classList.contains("wf-menu-open"))return;'
-    'var cb=e.target.closest&&e.target.closest("button,a");'
-    'if(cb&&/close|dismiss|\\u00d7/i.test('
-    '(cb.getAttribute("aria-label")||"")+" "+(cb.textContent||"")))'
-    '{so(false);return}'
-    'var inP=e.target.closest&&e.target.closest('
-    '"[role=\\"dialog\\"],[role=\\"menu\\"],'
-    '[data-wf-panel]:not([data-wf-scrim])");'
-    'if(!inP)so(false)});'
-    'd.addEventListener("keydown",function(e){'
-    'if(e.key==="Escape"&&r.classList.contains("wf-menu-open"))'
-    'so(false)})})();</script>')
 
 
 def _bank_doc(pd, cls, nav=None):
@@ -3483,6 +3453,8 @@ def app_data(pipeline):
                   for k, v in (lo.get('allowed') or {}).items()}
     galleries = {}
     for g in ELEMENT_GALLERIES:
+        if g.get('merged_into_types'):
+            continue  # the per-type boards below cover this bank
         gcards = []
         for grp in g['groups']:
             comps = grp['comps']
@@ -3576,6 +3548,29 @@ def app_data(pipeline):
         galleries[g['id']] = dict(
             g, cards=gcards,
             emitted_n=sum(1 for c in gcards if c['emitted']))
+
+    # per-type header/footer pick boards — one board per bank
+    # nav-*/footer-* dir, every stored exemplar of that type through
+    # the real BaseLayout chrome (closed-by-default nav, M/T/D)
+    for gid in sorted(bank_cards):
+        if not gid.startswith(('nav-', 'footer-')):
+            continue
+        kind, _, pretty = gid.partition('-')
+        pretty = pretty.replace('-', ' ')
+        galleries[gid] = {
+            'id': gid,
+            'title': ('Nav · ' if kind == 'nav' else 'Footer · ') +
+                     pretty,
+            'icon': 'burger' if kind == 'nav' else 'bars',
+            'desc': (f'Every banked {pretty} {kind} exemplar — '
+                     "bound to this site's brand, links and copy" +
+                     (', desktop + mobile frames' if kind == 'nav'
+                      else '') +
+                     '. Pick signs the element-pick path.'),
+            'groups': [], 'mobile': kind == 'nav',
+            'cards': bank_cards[gid],
+            'emitted_n': len(bank_cards[gid]),
+            'hf_type': True}
 
     boards = {}
     # step 1 — VIBE: the coarse family scrub
@@ -4417,6 +4412,449 @@ def _fx_targets(cls):
     return ['any']
 
 
+def _site_nav(block):
+    """(brand, links, cta, groups) bound from the page's own nav
+    comp — what every bank-topology menu doc rebinds over the
+    exemplar's copy so no foreign brand ever renders (audit).
+    links/cta are (href, label); groups are the drawer's IA heads."""
+    brand = re.search(
+        r'class="[^"]*\blogo\b[^"]*"[^>]*>\s*([^<]{1,60})', block)
+    region = block
+    m = re.search(r'class="[^"]*nav-links[^"]*"', block)
+    if m:
+        end = block.find('</nav>', m.start())
+        region = block[m.start():end if end > 0 else len(block)]
+    links = [(h, re.sub(r'<[^>]+>', '', lbl).strip())
+             for h, lbl in re.findall(
+                 r'<a [^>]*href="([^"]*)"[^>]*>(.*?)</a>',
+                 region, re.S)]
+    cm = re.search(r'class="[^"]*nav-cta[^"]*".*?</p>|'
+                   r'class="[^"]*nav-cta[^"]*".*?</div>', block, re.S)
+    cta = None
+    if cm:
+        am = re.search(r'<a [^>]*href="([^"]*)"[^>]*>(.*?)</a>',
+                       cm.group(0), re.S)
+        if am:
+            cta = (am.group(1),
+                   re.sub(r'<[^>]+>', '', am.group(2)).strip())
+    groups = re.findall(r'class="nav-group-head"[^>]*>\s*([^<]+)',
+                        block)
+    return ((re.sub(r'<[^>]+>', '', brand.group(1)).strip()
+             if brand else ''),
+            [(h, l) for h, l in links if l],
+            cta,
+            [g.strip() for g in groups])
+
+class _BankBind(html.parser.HTMLParser):
+    """Rewrite a genmenu exemplar for the element-preview stage:
+    bind the site's brand/links/CTA over the exemplar copy, load
+    every menu layer CLOSED (aria-expanded=false + data-wf-panel on
+    the overlay/dropdown elements the driver hides), and mark the
+    triggers the driver toggles. Structure is the exemplar's own —
+    only copy, aria and state markers change."""
+
+    VOID = {'br', 'hr', 'img', 'input', 'meta', 'link', 'source',
+            'wbr', 'area', 'base', 'col', 'embed', 'track', 'param'}
+    _PANEL_CLS = re.compile(r'\binset-0\b|\btop-full\b')
+    _SCRIM_CLS = re.compile(r'\bbg-\w|\bbackdrop|opacity')
+
+    def __init__(self, brand, links, cta, groups):
+        super().__init__(convert_charrefs=False)
+        self.brand = brand or 'Site'
+        self.links = links or [('#', 'Menu')]
+        self.cta = cta or ('#contact', 'Contact')
+        self.groups = groups or [self.brand]
+        self.out = []
+        self._stack = []
+        self._brand_done = False
+        self._li = 0          # nav-link cycle
+        self._gi = 0          # group-head cycle
+        self._panel_n = 0
+        self._controls = set()
+        self._trigger_seen = False
+        self._btn_seen = False
+        self._relabel = None   # (text, seen_first) inside relabel el
+        self._relstk = []      # outer relabels restored on endtag
+
+    @staticmethod
+    def _aria(v):
+        """Strip brand words from accessible names — the exemplar's
+        aria-labels name the bank's brand; reduce them to the
+        generic role the control plays (audit: no foreign copy)."""
+        low = v.lower()
+        if 'close' in low or 'dismiss' in low:
+            return 'Close menu'
+        if 'search' in low or 'filter' in low:
+            return 'Search'
+        if 'menu' in low or 'navigat' in low:
+            return 'Menu'
+        if 'dialog' in low or 'sheet' in low or 'drawer' in low:
+            return 'Menu'
+        return 'Menu'
+
+    def _emit(self, tag, attrs, selfclose=False):
+        a = dict(attrs)
+        cls = a.get('class', '')
+        if 'aria-label' in a:
+            a['aria-label'] = self._aria(a['aria-label'])
+        if 'alt' in a:
+            a['alt'] = self.brand
+        if 'title' in a:
+            a['title'] = self.brand
+        panel = False
+        if (a.get('role') in ('dialog', 'menu') or
+                self._PANEL_CLS.search(cls) or
+                (a.get('id') and a['id'] in self._controls)):
+            panel = True
+        trigger = (tag in ('button', 'a') and
+                   ('aria-haspopup' in a or 'aria-expanded' in a))
+        if not trigger and tag == 'button' and not self._btn_seen \
+                and not self._trigger_seen:
+            # the bank's open-trigger carries no aria at all
+            # (nav-modal) — the FIRST button in the doc is it
+            trigger = True
+        if tag == 'button':
+            self._btn_seen = True
+        if trigger:
+            self._trigger_seen = True
+            a['data-wf-trigger'] = ''
+            a['aria-expanded'] = 'false'
+            if 'aria-controls' not in a:
+                a['aria-controls'] = 'wf-panel-0'
+            else:
+                self._controls.add(a['aria-controls'])
+        if panel:
+            a['data-wf-panel'] = ''
+            if not a.get('id'):
+                a['id'] = f'wf-panel-{self._panel_n}'
+                self._panel_n += 1
+            if (a.get('role') not in ('dialog', 'menu') and
+                    self._SCRIM_CLS.search(cls) and 'z-' not in cls):
+                a['data-wf-scrim'] = ''
+            elif (a.get('role') not in ('dialog', 'menu') and
+                  'inset-0' in cls and self._SCRIM_CLS.search(cls)):
+                a['data-wf-scrim'] = ''
+        # ---- copy rebind ------------------------------------
+        relabeled = False
+        if tag == 'a':
+            if not self._brand_done and \
+                    ('logo' in cls or 'brand' in cls or
+                     a.get('href', '') in ('#', '#top', '/', '')):
+                self._relabel = (self.brand, False)
+                self._brand_done = True
+            elif 'cta' in cls.lower():
+                self._relabel = (self.cta[1], False)
+                a['href'] = self.cta[0]
+            else:
+                h, l = self.links[self._li % len(self.links)]
+                self._li += 1
+                self._relabel = (l, False)
+                if h:
+                    a['href'] = h
+            relabeled = True
+        elif tag == 'button' and \
+                'close' not in (a.get('aria-label') or '').lower() and \
+                '\u00d7' not in (a.get('aria-label') or ''):
+            if trigger:
+                self._relabel = (
+                    self.groups[self._gi % len(self.groups)], False)
+                self._gi += 1
+            elif 'cta' in cls.lower():
+                self._relabel = (self.cta[1], False)
+            else:
+                h, l = self.links[self._li % len(self.links)]
+                self._li += 1
+                self._relabel = (l, False)
+            relabeled = True
+        elif tag in ('h1', 'h2', 'h3', 'h4') and \
+                '[data-wf-panel]' in self._stack:
+            self._relabel = (
+                self.groups[self._gi % len(self.groups)], False)
+            self._gi += 1
+            relabeled = True
+        elif tag in ('p', 'span', 'strong', 'div') and \
+                '[data-wf-panel]' in self._stack and self._relabel is None:
+            h, l = self.links[self._li % len(self.links)]
+            self._li += 1
+            self._relabel = (l, False)
+            relabeled = True
+        if tag == 'input':
+            if 'placeholder' in a:
+                a['placeholder'] = 'Search'
+            if 'value' in a:
+                a['value'] = ''
+        if relabeled:
+            self._relstk.append(tag)
+        at = ''.join(
+            f' {k}' if v in (None, '') else
+            f' {k}="{html.escape(str(v), quote=True)}"'
+            for k, v in a.items())
+        self.out.append(f'<{tag}{at}{" /" if selfclose else ""}>')
+        if not selfclose and tag not in self.VOID:
+            self._stack.append(
+                tag if not panel else '[data-wf-panel]')
+
+    def handle_starttag(self, tag, attrs):
+        self._emit(tag, attrs)
+
+    def handle_startendtag(self, tag, attrs):
+        self._emit(tag, attrs, selfclose=True)
+
+    def handle_endtag(self, tag):
+        self.out.append(f'</{tag}>')
+        for i in range(len(self._stack) - 1, -1, -1):
+            if self._stack[i] == tag or \
+                    self._stack[i] == '[data-wf-panel]':
+                del self._stack[i:]
+                break
+        if self._relstk and self._relstk[-1] == tag:
+            self._relstk.pop()
+            self._relabel = None
+
+    def handle_data(self, data):
+        if self._relabel is not None:
+            if not self._relabel[1] and data.strip():
+                self.out.append(
+                    html.escape(self._relabel[0], quote=False))
+                self._relabel = (self._relabel[0], True)
+            elif not data.strip():
+                self.out.append(html.escape(data, quote=False))
+            # later text nodes in a relabeled element drop
+            return
+        if not self._brand_done and len(data.strip()) > 2 and \
+                re.search(r'[A-Za-z]', data):
+            # the exemplar's brand is bare text in several topologies
+            # (no logo anchor) — the first word-y text node is it
+            self.out.append(html.escape(self.brand, quote=False))
+            self._brand_done = True
+            return
+        self.out.append(html.escape(data, quote=False))
+
+    def handle_entityref(self, name):
+        self.out.append(f'&{name};')
+
+    def handle_charref(self, name):
+        self.out.append(f'&#{name};')
+
+    def handle_comment(self, data):
+        self.out.append(f'<!--{data}-->')
+
+# the menu driver's contract on a bank doc: triggers are the
+# [data-wf-trigger] elements, the open layers are [data-wf-panel]
+# (scrims [data-wf-scrim] close on click), the open state is one
+# html.wf-menu-open class — ?menu=open enters it through the same
+# toggle a click takes (audit: cards must render the real open
+# state; docs must load closed with correct aria)
+_BANK_MENU_CSS = (
+    'html:not(.wf-menu-open) [data-wf-panel]{display:none !important}'
+    # bank panels hide with inline opacity/transform/visibility —
+    # display:block alone leaves them invisible once open, so the
+    # open state must clear every hiding mechanism the bank ships
+    'html.wf-menu-open [data-wf-panel]{opacity:1 !important;'
+    'visibility:visible !important;'
+    'pointer-events:auto !important;max-height:100vh !important;'
+    'max-width:100vw !important;overflow-y:auto !important}')
+_BANK_MENU_DRV = (
+    '<script>(function(){var d=document,r=d.documentElement;'
+    'function so(o){r.classList.toggle("wf-menu-open",o);'
+    'd.querySelectorAll("[data-wf-trigger]").forEach(function(b){'
+    'b.setAttribute("aria-expanded",o?"true":"false")});'
+    'if(o){d.querySelectorAll("[data-wf-panel]").forEach(function(p){'
+    'var q=p.getBoundingClientRect();'
+    # only panels rendered off-viewport are hidden by a translate —
+    # clearing transform would break translate-based centering, so
+    # clear it just for the off-canvas ones (8px edge tolerance:
+    # a bottom sheet's translateY(100%) lands its top exactly on
+    # the viewport edge)
+    'if(q.right<=8||q.bottom<=8||q.left>=innerWidth-8||'
+    'q.top>=innerHeight-8)p.style.transform="none"})}else{'
+    'd.querySelectorAll("[data-wf-panel]").forEach(function(p){'
+    'p.style.transform=""})}'
+    'if(d.body)d.body.style.overflow=o?"hidden":""}'
+    'd.addEventListener("DOMContentLoaded",function(){'
+    'if(new URLSearchParams(location.search).get("menu")==="open")'
+    'so(true)});'
+    'd.addEventListener("click",function(e){'
+    'var t=e.target&&e.target.closest&&'
+    'e.target.closest("[data-wf-trigger]");'
+    'if(t){so(!r.classList.contains("wf-menu-open"));return}'
+    'if(!r.classList.contains("wf-menu-open"))return;'
+    'var cb=e.target.closest&&e.target.closest("button,a");'
+    'if(cb&&/close|dismiss|\\u00d7/i.test('
+    '(cb.getAttribute("aria-label")||"")+" "+(cb.textContent||"")))'
+    '{so(false);return}'
+    'var inP=e.target.closest&&e.target.closest('
+    '"[role=\\"dialog\\"],[role=\\"menu\\"],'
+    '[data-wf-panel]:not([data-wf-scrim])");'
+    'if(!inP)so(false)});'
+    'd.addEventListener("keydown",function(e){'
+    'if(e.key==="Escape"&&r.classList.contains("wf-menu-open"))'
+    'so(false)})})();</script>')
+
+
+
+def _site_footer(block):
+    """(brand, links, cta, groups, copyright, blurb) bound from the
+    site's own footer comp — the copy every banked footer exemplar
+    rebinds to so no foreign brand renders (audit)."""
+    brand = re.search(
+        r'class="[^"]*\blogo\b[^"]*"[^>]*>\s*([^<]{1,60})', block)
+    links = [(h, re.sub(r'<[^>]+>', '', lbl).strip())
+             for h, lbl in re.findall(
+                 r'<a [^>]*href="([^"]*)"[^>]*>(.*?)</a>',
+                 block, re.S)]
+    groups = re.findall(r'<h[1-4][^>]*>\s*([^<]{2,60}?)\s*</h[1-4]>',
+                        block)
+    if not groups:
+        groups = re.findall(
+            r'<strong[^>]*>\s*([^<]{2,60}?)\s*</strong>', block)
+    texts = [re.sub(r'<[^>]+>', '', p).strip()
+             for p in re.findall(r'<p\b[^>]*>(.*?)</p>', block, re.S)]
+    copy = next((t for t in texts if '©' in t or 'opyright' in t), '')
+    blurb = next((t for t in texts
+                  if len(t) > 30 and '©' not in t), '')
+    return ((re.sub(r'<[^>]+>', '', brand.group(1)).strip()
+             if brand else ''),
+            [(h, l) for h, l in links if l], None,
+            [g.strip() for g in groups], copy, blurb)
+
+
+_CHROME_CACHE = {}
+
+
+def _site_chrome(pd):
+    """(nav_meta, footer_meta) bound once from the emitted page's
+    own chrome blocks — brand, IA links, CTA, drawer heads; footers
+    also carry the site's copyright line + blurb."""
+    dist = os.path.join(pd, 'site', 'dist')
+    doc = ''
+    cands = sorted(os.path.join(dist, d, 'index.html')
+                   for d in os.listdir(dist)
+                   if os.path.isdir(os.path.join(dist, d)))
+    cands.append(os.path.join(dist, 'index.html'))
+    # a rebuild rewrites the docs — the bound brand/links/copy must
+    # follow them, not the first build the process saw
+    sig = max((os.path.getmtime(f) for f in cands
+               if os.path.isfile(f)), default=0)
+    hit = _CHROME_CACHE.get(pd)
+    if hit and hit[0] == sig:
+        return hit[1]
+    hdr = ftr = None
+    for fp in cands:
+        if not os.path.isfile(fp):
+            continue
+        doc = open(fp, encoding='utf-8',
+                   errors='replace').read()
+        hdr = re.search(
+            r'<header\b[^>]*data-sec="nav"[^>]*>.*?</header>',
+            doc, re.S)
+        ftr = re.search(
+            r'<footer\b[^>]*data-sec="footer"[^>]*>.*?</footer>',
+            doc, re.S)
+        if hdr or ftr:
+            break
+    nav_meta = _site_nav(hdr.group(0)) if hdr else ('Site', [], None, [])
+    # the emitted nav numbers its link labels (sup>01</sup> style)
+    # — strip the counters, they aren't copy
+    nav_meta = (nav_meta[0],
+                [(h, re.sub(r'\s*\d{1,2}$', '', l).strip())
+                 for h, l in nav_meta[1]], nav_meta[2], nav_meta[3])
+    foot_meta = (_site_footer(ftr.group(0)) if ftr else
+                 ('Site', [], None, [], '', ''))
+    # a footer without column heads still needs heads for banked
+    # multi-column footers — generic IA names, never foreign brands
+    if not foot_meta[3]:
+        foot_meta = foot_meta[:3] + (
+            ['Services', 'Company', 'Resources', 'Contact'],) + \
+            foot_meta[4:]
+    _CHROME_CACHE[pd] = (sig, (nav_meta, foot_meta))
+    return _CHROME_CACHE[pd][1]
+
+
+def _bank_bind(frag, meta):
+    p = _BankBind(*meta[:4])
+    p.feed(frag)
+    p.close()
+    return ''.join(p.out)
+
+
+def _nav_fix(frag, meta):
+    """nav companion to _footer_fix: exemplar prose blurbs rebind
+    to the site's own (a foreign brand sentence must never
+    render); headings/links were already bound by _BankBind."""
+    brand = meta[0] or 'Site'
+
+    def _p(m):
+        txt = re.sub(r'<[^>]+>', '', m.group(2)).strip()
+        if len(txt) > 40:
+            return (m.group(1) + html.escape(brand + '.',
+                                             quote=False) +
+                    m.group(3))
+        return m.group(0)
+    return re.sub(r'(<p\b[^>]*>)(.*?)(</p>)', _p, frag, flags=re.S)
+
+
+def _footer_fix(frag, meta):
+    """post-bind footer pass: foreign column heads outside panels,
+    foreign copyright lines and long exemplar blurbs all rebind to
+    the site's own footer copy."""
+    brand, _links, _cta, groups, copy, blurb = list(meta)[:6]
+    heads = [g for g in (groups or [brand]) if g]
+    it = [0]
+
+    def _h(m):
+        inner = m.group(2)
+        if not re.search(r'[A-Za-z]', inner):
+            return m.group(0)  # icon-only heads keep their glyph
+        rep = heads[it[0] % len(heads)]
+        it[0] += 1
+        return m.group(1) + html.escape(rep, quote=False) + m.group(3)
+    frag = re.sub(r'(<h[1-4][^>]*>)(.*?)(</h[1-4]>)', _h, frag,
+                  flags=re.S)
+    mine = copy or ('© ' + str(datetime.date.today().year) + ' ' +
+                    (brand or 'Site'))
+    frag = re.sub(r'(?i)(©|&copy;|&#169;)\s*[^<]{0,100}',
+                  lambda m: html.escape(mine, quote=False), frag)
+    frag = re.sub(r'(?i)\bcopyright\b[^<]{0,100}',
+                  lambda m: html.escape(mine, quote=False), frag)
+    mine_blurb = blurb or ((brand + '.') if brand else '')
+    if mine_blurb:
+        def _p(m):
+            txt = re.sub(r'<[^>]+>', '', m.group(2)).strip()
+            if len(txt) > 40 and '©' not in txt and                     'opyright' not in txt:
+                return (m.group(1) +
+                        html.escape(mine_blurb, quote=False) +
+                        m.group(3))
+            return m.group(0)
+        frag = re.sub(r'(<(?:p|li|span)\b[^>]*>)(.*?)(</(?:p|li|span)>)',
+                      _p, frag, flags=re.S)
+    return frag
+
+
+# footer cards must fit the stage at every breakpoint — bank
+# footers carry fixed multi-column grids that reach 1200px; wrap
+# grids/rows/columns below the breakpoints at the translate layer
+_FOOTER_RESP_CSS = (
+    '.wf-stage-in,.wf-stage-in *{max-width:100%;min-width:0;'
+    'box-sizing:border-box}'
+    '.wf-stage-in{overflow-x:clip}'
+    '@media (max-width:820px){'
+    '.wf-stage-in [class*="grid"]{display:flex!important;'
+    'flex-direction:column!important}'
+    '.wf-stage-in [class*="row"]{flex-wrap:wrap!important}'
+    '.wf-stage-in [class*="col"]{flex:1 1 100%!important;'
+    'max-width:100%!important}}'
+    '@media (max-width:480px){'
+    '.wf-stage-in [class*="grid"]{display:flex!important;'
+    'flex-direction:column!important}}')
+
+# nav exemplars spill past the stage edge when their fixed-width
+# content exceeds 96vw — cap the content and hide the doc overflow
+_NAV_FIT_CSS = (
+    'body{overflow-x:hidden}'
+    '.wf-stage-in,.wf-stage-in *{max-width:100%;min-width:0;'
+    'box-sizing:border-box}')
+
 def emit_bank_previews(pd):
     """preview/bank/<cls>/<slug>.html — every genmenu exemplar
     rendered standalone under bank-preview.css: reference fidelity
@@ -4428,6 +4866,12 @@ def emit_bank_previews(pd):
         d for d in os.listdir(_GENMENU)
         if d.startswith(('fx-', 'imgfx-', 'mobfx-', 'mob-')) and
         os.path.isdir(os.path.join(_GENMENU, d))))
+    # per-type header/footer pick boards — every nav-*/footer-* dir
+    # is its own gallery keyed by the dir name (the bank taxonomy)
+    for d in sorted(os.listdir(_GENMENU)):
+        if d.startswith(('nav-', 'footer-')) and os.path.isdir(
+                os.path.join(_GENMENU, d)):
+            _BANK_DIRS.setdefault(d, (d,))
     tags = _genmenu_tags()
     # /built/ URLs are repo-relative; Ctx.dir callers hand in an
     # absolute pipeline dir — normalize for URL building only
@@ -4555,7 +4999,7 @@ def emit_bank_previews(pd):
                     (os.path.isfile(css_dst) and
                      os.path.getmtime(css_dst) >
                      os.path.getmtime(dst)) or \
-                    '<!--wf:bank:v16-->' not in open(
+                    '<!--wf:bank:v17-->' not in open(
                         dst, encoding='utf-8',
                         errors='replace').read(64)
                 if stale:
@@ -4579,10 +5023,29 @@ def emit_bank_previews(pd):
                     fx = cls.startswith(('fx-', 'imgfx-', 'mobfx-'))
                     if fx:
                         frag = _fx_strip_freeze(frag)
-                    mob = gid == 'menu' or cls.startswith('mob')
+                    # bind every header/footer exemplar to the
+                    # site's own brand, IA links, CTA and footer
+                    # copy — a foreign bank brand must never render
+                    nav_d = cls.startswith('nav-')
+                    foot_d = cls.startswith('footer-')
+                    if nav_d or foot_d:
+                        nmeta, fmeta = _site_chrome(pd)
+                        frag = _bank_bind(
+                            frag, nmeta if nav_d else fmeta)
+                        if foot_d:
+                            frag = _footer_fix(frag, fmeta)
+                        else:
+                            frag = _nav_fix(frag, nmeta)
+                    mob = (gid == 'menu' or
+                           cls.startswith(('mob', 'nav-')))
                     if gid == 'menu':
                         frag = _menu_closed(frag)
-                    page = (not mob) and _bank_scale(frag) == 'page'
+                    # footers stage like navs — a wf-page frame
+                    # lets the bank's fixed-width mega grid spill
+                    # past the stage edge (audit); bound footers
+                    # wrap/stack via _FOOTER_RESP_CSS instead
+                    page = (not mob) and not foot_d and \
+                        _bank_scale(frag) == 'page'
                     if page:
                         stage = ('<div class="wf-page">' + frag +
                                  '</div>')
@@ -4608,15 +5071,20 @@ def emit_bank_previews(pd):
                     css_ = _BANK_STAGE_CSS + (
                         'body{padding:0}' if page else '') + (
                         'body{background:#0b0e14}'
-                        if row.get('mode') == 'dark' else '')
+                        if row.get('mode') == 'dark' else '') + (
+                        _BANK_MENU_CSS + _NAV_FIT_CSS
+                        if nav_d else '') + (
+                        _FOOTER_RESP_CSS if foot_d else '')
                     with open(dst, 'w', encoding='utf-8') as fh:
-                        fh.write('<!--wf:bank:v16-->' +
+                        fh.write('<!--wf:bank:v17-->' +
                                  _doc(head, '', stage,
                                       extra=(_STAGE_SCROLL_SHIM
                                              if not page else '') +
                                       (_FX_DRIVER if fx else '') +
                                       (_MENU_DRIVER
-                                       if gid == 'menu' else ''),
+                                       if gid == 'menu' else '') +
+                                      (_BANK_MENU_DRV
+                                       if nav_d else ''),
                                       css=css_,
                                       chrome=gid == 'menu' or
                                       cls.startswith('nav-')))
@@ -4636,7 +5104,8 @@ def emit_bank_previews(pd):
                     'tags': ctags, 'emitted': True, 'bank': True,
                     'element': cls, 'variant': slug,
                     'grp': 'bank · ' + cls,
-                    'mobile': gid == 'menu'})
+                    'mobile': (gid == 'menu' or
+                               cls.startswith('nav-'))})
         out[gid] = cards
     # a pick on an fx card signs the SITE-DEFAULT effect; each
     # exemplar advertises which element types it may decorate
@@ -6188,12 +6657,19 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
     LAYOUT_TABS.forEach(function(k){
       if(DATA.boards[k])item('b',DATA.boards[k])});
     h+='<div class="railgrp">3 · Sections · Elements</div>';
-    var banked=[];
+    var banked=[],hf=[];
     Object.keys(DATA.galleries).forEach(function(k){
       if(k==='fx')return;
       var g=DATA.galleries[k];
-      if(/\u00b7\s*bank/.test(g.title||''))banked.push(g);
+      if(g.hf_type)hf.push(g);
+      else if(/\u00b7\s*bank/.test(g.title||''))banked.push(g);
       else item('g',g)});
+    if(hf.length){
+      h+='<details class="railbank" open><summary>'+ICON.burger+
+         'Headers &amp; footers<span class="cnt">'+hf.length+
+         '</span></summary>';
+      hf.forEach(function(g){item('g',g)});
+      h+='</details>'}
     if(banked.length){
       h+='<details class="railbank"><summary>'+ICON.bars+
          'Bank (reference)<span class="cnt">'+banked.length+
@@ -6219,7 +6695,15 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
       b.onclick=function(){gotoBoard(b.dataset.k)}});
   }
 
-  function gotoBoard(k){CUR=k;FILT={};SEL=0;ROW=0;
+  function gotoBoard(k){
+    // the merged chrome gallery is gone — the header/footer chips
+    // land on the first per-type board of their kind instead
+    if(k==='chrome-h'||k==='chrome-f'){
+      var pre=k==='chrome-h'?'nav-':'footer-';
+      k=Object.keys(DATA.galleries||{}).filter(function(g){
+        return g.indexOf(pre)===0&&DATA.galleries[g].hf_type
+      }).sort()[0]||k}
+    CUR=k;FILT={};SEL=0;ROW=0;
     if(innerWidth<=1024){
       document.getElementById('rail').classList.remove('open');
       document.getElementById('scrim').classList.remove('open')}
@@ -6242,8 +6726,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
     {k:'vibe',label:'vibe',board:'vibe'},
     {k:'type',label:'type',board:'typescale'},
     {k:'layout',label:'layout',board:'home'},
-    {k:'header',label:'header',board:'chrome'},
-    {k:'footer',label:'footer',board:'chrome'},
+    {k:'header',label:'header',board:'chrome-h'},
+    {k:'footer',label:'footer',board:'chrome-f'},
     {k:'menu',label:'menu',board:'menu'},
     {k:'fx:default',label:'effect',board:'fx'}];
   function _boardExists(b){
