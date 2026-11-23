@@ -1093,6 +1093,70 @@ _VIBE_SPECS = [
      ('footer-17', _F, 'base', _sp_footer('Casa Verde'))],
 ]
 
+# ------------------------------------------------------------------
+# combinatorial specimen space — the 8 authored archetypes pin the
+# copy themes; remixes swap nav/hero/footer skeletons and middle
+# band comps over the REAL recipe pool so the vibe board spans
+# dozens of genuinely different finished pages, not 8 layouts
+# wearing different paint. Deterministic: same inputs → same specs.
+# ------------------------------------------------------------------
+_NAV_POOL = ['nav-bar', 'flyout-nav', 'nav-offcanvas',
+             'nav-h1', 'nav-h3', 'nav-h5', 'nav-h8', 'nav-h11',
+             'nav-h14', 'nav-h19', 'nav-h22',
+             'nav-mega-1', 'nav-mega-2', 'nav-mega-4', 'nav-mega-6']
+_HERO_POOL = ['hero-act-merge', 'stacked-hero', 'editorial',
+              'full-bleed', 'split-media', 'cutout-hero-split',
+              'banner-cta']
+# item-shaped bands — items carry {title,text,term,label}; every
+# comp here binds that shape
+_BAND_POOL = ['feature-grid', 'quote-grid', 'cards-n', 'text-index',
+              'pricing-table', 'how-steps', 'teams-grid',
+              'gallery-grid', 'comparison', 'timeline-steps',
+              'sequence', 'event-list', 'portfolio-grid', 'faq']
+_STAT_POOL = ['stat-band', 'proof-band']
+_FOOT_POOL = ['footer-1', 'footer-3', 'footer-5', 'footer-7',
+              'footer-9', 'footer-11', 'footer-15', 'footer-17',
+              'footer-20', 'footer-22', 'footer-bar']
+
+_REMIXES_PER_ARCHETYPE = 5
+
+
+def _remix_specs():
+    """(extra_specs, parents) — deterministic recombination of the
+    authored archetypes. Each remix keeps one archetype's copy rows
+    but draws its chrome (nav/footer) and band skeletons from the
+    recipe pool, seeded by (archetype, remix index) so builds are
+    byte-stable."""
+    extra, parents = [], []
+    for k, rows_spec in enumerate(_VIBE_SPECS):
+        for v in range(_REMIXES_PER_ARCHETYPE):
+            seed = (k + 1) * 977 + v * 131
+            rows = list(rows_spec)
+            remixed = []
+            for idx, (comp, cat, surface, row) in enumerate(rows):
+                s = seed + idx * 61
+                if cat == _H:
+                    comp = _NAV_POOL[s % len(_NAV_POOL)]
+                elif cat == _F:
+                    comp = _FOOT_POOL[s % len(_FOOT_POOL)]
+                elif row.get('name') == 'hero':
+                    comp = _HERO_POOL[s % len(_HERO_POOL)]
+                else:
+                    items = row.get('items') or []
+                    pool = (_STAT_POOL if items and
+                            'value' in items[0] else _BAND_POOL)
+                    comp = pool[s % len(pool)]
+                remixed.append((comp, cat, surface, row))
+            extra.append(remixed)
+            parents.append(k)
+    return extra, parents
+
+
+_spec_extra, _spec_parents_extra = _remix_specs()
+_SPEC_PARENTS = (list(range(len(_VIBE_SPECS))) +
+                 _spec_parents_extra)
+_VIBE_SPECS = _VIBE_SPECS + _spec_extra
+
 
 def emit_vibe_specs(ctx):
     """preview/spec-<k>.astro — one page per _VIBE_SPECS archetype,
@@ -1111,10 +1175,13 @@ def emit_vibe_specs(ctx):
         cr = []
         for comp, cat, surface, row in rows_spec:
             comps.add(comp)
-            src = os.path.join(vimg, f'spec-{k}.webp')
+            # remixed specs reuse their parent archetype's photo —
+            # the image belongs to the copy theme, not the skeleton
+            src = os.path.join(vimg, f'spec-{_SPEC_PARENTS[k]}.webp')
             if (row.get('name') == 'hero' and not row.get('image')
                     and os.path.isfile(src)):
-                row['image'] = {'src': f'/media/vibe/spec-{k}.webp',
+                row['image'] = {'src': f'/media/vibe/'
+                                f'spec-{_SPEC_PARENTS[k]}.webp',
                                 'alt': ''}
                 row.setdefault('images', [row['image']])
             cr.append(({'section': row['name'],
