@@ -1676,7 +1676,12 @@ def _emit_page_boards(ctx, doc):
                           media_ratio='none', disclosure='open',
                           seam=None, seam_shape_top=None,
                           seam_shape_bottom=None, skeleton=None)
-                row = {'name': role, 'speech_act': [p['act']]}
+                row = {'name': role, 'speech_act': [p['act']],
+                       # board pages are vibe previews: specimen brand,
+                       # never the site's real brand + logo (logo is
+                       # skipped by _instance_body when a row declares
+                       # its own brand)
+                       'brand': 'Atlas Studio'}
                 if blk:
                     row['copy_ref'] = blk['id']
                     row['vector'] = [{'heading': blk.get('h2') or '',
@@ -1694,7 +1699,9 @@ def _emit_page_boards(ctx, doc):
                     ring = media[j:] + media[:j]
                     row['image'], *row['images'] = [
                         {'src': x.get('src') or x.get('file'),
-                         'alt': x.get('alt', '')} for x in ring]
+                         # specimen alt — real photo descriptions are
+                         # site content and don't belong in previews
+                         'alt': 'Specimen photo'} for x in ring]
                     lock = str(row.get('media_ratio') or 'none')
                     cc['media_ratio'] = (
                         '4:3' if lock == 'none' else lock)

@@ -1378,6 +1378,79 @@ _WFVARS_HOOK = ('<script>addEventListener("message",function(e){'
                 'd.wfTheme==="dark")}})</script>')
 
 
+# vibe-doc re-skin: bank fragments carry their own literal colours, so
+# the preset's palette never reached them (a 'paper' preset rendered a
+# near-black page). This luminance tonemap re-binds every fragment
+# surface/text/border to the preset's emitted vars — dark bands take
+# the palette's surface, light bands its canvas, solid buttons its
+# action colour — while keeping structure, imagery (url() backgrounds)
+# and translucent overlays intact. Re-runs on every wfVars/wfTheme
+# broadcast so the live picker still repaints it.
+_VIBE_RESKIN = (
+    '<script>(function(){'
+    'function L(p){return(0.2126*p[0]+0.7152*p[1]+0.0722*p[2])/255}'
+    'function R(s){var m=/rgba?\\(\\s*([\\d.]+)[\\s,]+([\\d.]+)'
+    '[\\s,]+([\\d.]+)(?:[\\s,/]+([\\d.]+))?/.exec(s||"");'
+    'if(m)return[+m[1],+m[2],+m[3],m[4]==null?1:+m[4]];'
+    'var o=/oklch\\(\\s*([\\d.]+)/.exec(s||"");'
+    'if(o)return[+o[1]*255,+o[1]*255,+o[1]*255,1];'
+    'var q=/color\\(srgb\\s+([\\d.]+)\\s+([\\d.]+)\\s+([\\d.]+)/'
+    '.exec(s||"");'
+    'if(q)return[+q[1]*255,+q[2]*255,+q[3]*255,1];'
+    'return null}'
+    'function band(el){var n=el;while(n&&n!==document.body){'
+    'var b=R(getComputedStyle(n).backgroundColor);'
+    'if(b&&b[3]>.2)return L(b);n=n.parentElement}return null}'
+    'function skin(){var de=document.documentElement,'
+    'dk=de.dataset.theme==="dark",'
+    'els=document.querySelectorAll(".wf-page *");'
+    'els.forEach(function(el){'
+    'if(el.closest("svg")||/^(IMG|PICTURE|VIDEO|CANVAS)$/.test('
+    'el.tagName))return;'
+    'var s=getComputedStyle(el),b=R(s.backgroundColor);'
+    'if(b&&b[3]>.6&&!/^(A|BUTTON)$/.test(el.tagName)){'
+    'el.style.setProperty("background-color",'
+    '(L(b)<.5)===dk?"var(--bg-canvas)":"var(--bg-surface)",'
+    '"important");'
+    'if(!/url\\(/.test(s.backgroundImage))'
+    'el.style.setProperty("background-image","none","important")}'
+    'if(s.borderStyle!=="none")'
+    'el.style.setProperty("border-color",'
+    '"var(--border-default)","important")});'
+    'getComputedStyle(document.body).backgroundColor;'
+    'els.forEach(function(el){'
+    'if(el.closest("svg")||el.closest("a,button")||'
+    '!el.textContent.trim())return;'
+    'var c=R(getComputedStyle(el).color);if(!c)return;'
+    'var l=band(el);l=l==null?(dk?.1:.9):l;'
+    'el.style.setProperty("color",l>.5?'
+    '(dk?"var(--bg-canvas)":'
+    '((L(c)>.3&&L(c)<.7)?"var(--text-secondary)":'
+    '"var(--text-primary)")):'
+    '(dk?"var(--text-primary)":"var(--bg-canvas)"),'
+    '"important")});'
+    'document.querySelectorAll(".wf-page a,.wf-page button")'
+    '.forEach(function(el){var b=R(getComputedStyle(el)'
+    '.backgroundColor);'
+    'if(b&&b[3]>.6){'
+    'el.style.setProperty("background-color",'
+    '"var(--action-primary)","important");'
+    'el.style.setProperty("background-image","none","important");'
+    'el.style.setProperty("color",'
+    '"var(--action-primary-ink)","important");'
+    'el.querySelectorAll("*").forEach(function(k){'
+    'if(!k.closest("svg"))k.style.setProperty("color",'
+    '"inherit","important")})}'
+    'else if(el.tagName==="A"){var l=band(el);'
+    'el.style.setProperty("color",'
+    '(l!=null&&l<=.5)?(dk?"var(--text-primary)":'
+    '"var(--bg-canvas)"):'
+    '"var(--text-primary)","important")}})}'
+    'skin();addEventListener("message",function(e){'
+    'var d=e.data||{};if(d.wfVars||d.wfTheme)setTimeout(skin,0)})'
+    '})()</script>')
+
+
 def _doc(head, battr, inner, extra='', css='', chrome=True):
     style = ('<style>' + (_CHROME_CSS if chrome else '') +
              (css or '') + '</style>')
@@ -1444,8 +1517,11 @@ def _spec_for(fam):
 # by the preset name, so presets differ in structure AND look the way
 # the pricing bank cards differ, not just in vars
 _FRAG_KIND_DIRS = {
-    'nav': ('nav-menu', 'nav-dropdown-menu', 'nav-mega-panel',
-            'nav-micro', 'nav-tabs'),
+    # closed navbars only — nav-dropdown-menu / nav-mega-panel are the
+    # OPEN overlay state of a menu; composing one into a page renders
+    # an open menu sitting on top of the hero (the 'menus all open'
+    # defect)
+    'nav': ('nav-menu', 'nav-micro', 'nav-tabs'),
     'hero': ('hero-media-bg', 'hero-centered', 'hero-split'),
     'band': ('pricing-tiers', 'card-block', 'proof-testimonial',
              'proof-rating', 'proof-quote', 'data-display',
@@ -1453,6 +1529,12 @@ _FRAG_KIND_DIRS = {
              'checkout', 'product-grid', 'data-stepper'),
     'footer': ('footer-mega', 'footer-columns', 'footer-minimal'),
 }
+
+# demo/open-state markers that make a nav fragment unusable as a
+# closed page nav
+_NAV_JUNK = re.compile(
+    r'role="menu"|menuitem|Right-click|context menu|'
+    r'aria-expanded="true"', re.I)
 
 
 # the hero topology a gene bundle asks for (retrieval.vibe_topology,
@@ -1586,27 +1668,37 @@ def _frag_file(kind, seed, mode, salt, tags, prefer=None,
             return sc
         best = max(_sc(f) for f in fns)
         pool = [f for f in fns if _sc(f) == best]
-        fp = os.path.join(cdir, pool[(seed + salt) % len(pool)])
-        frag = open(fp, encoding='utf-8', errors='replace').read()
-        # bank image refs point at the exporter's asset tree — bind
-        # them to the pipeline's own media (seeded rotation) so media
-        # heroes render real photography, not the flat placeholder
-        # map by the source path, not the occurrence — a hero's
-        # preload and <img> reference the same asset and must land
-        # the same photo or the preload fetches the wrong one
-        _n = [0]
-        _seen = {}
-        def _img(m):
-            if media_pool:
-                src = m.group(0)
-                if src not in _seen:
-                    _n[0] += 1
-                    _seen[src] = media_pool[
-                        (seed + salt + _n[0]) % len(media_pool)]
-                return _seen[src]
-            return '/media/placeholder.svg'
-        frag = re.sub(r"/src/assets/[^\s\"'()]+", _img, frag)
-        return frag, d + '/' + pool[(seed + salt) % len(pool)][:-5]
+        # try the seeded pick first, then the rest of the pool in
+        # seeded order — lets us skip open-state/demo fragments
+        order = [pool[(seed + salt + i) % len(pool)]
+                 for i in range(len(pool))]
+        for fn in order:
+            frag = open(os.path.join(cdir, fn), encoding='utf-8',
+                        errors='replace').read()
+            if kind == 'nav' and _NAV_JUNK.search(frag):
+                # nav dirs hold kitchen-sink demo sheets — open-state
+                # menus and context-menu demos render as junk over a
+                # composed page
+                continue
+            # bank image refs point at the exporter's asset tree — bind
+            # them to the pipeline's own media (seeded rotation) so media
+            # heroes render real photography, not the flat placeholder
+            # map by the source path, not the occurrence — a hero's
+            # preload and <img> reference the same asset and must land
+            # the same photo or the preload fetches the wrong one
+            _n = [0]
+            _seen = {}
+            def _img(m):
+                if media_pool:
+                    src = m.group(0)
+                    if src not in _seen:
+                        _n[0] += 1
+                        _seen[src] = media_pool[
+                            (seed + salt + _n[0]) % len(media_pool)]
+                    return _seen[src]
+                return '/media/placeholder.svg'
+            frag = re.sub(r"/src/assets/[^\s\"'()]+", _img, frag)
+            return frag, d + '/' + fn[:-5]
     return '', ''
 
 
@@ -1650,7 +1742,12 @@ def _frag_doc_parts(pd, fam, bundle):
     if not os.path.isdir(_GENMENU):
         return None
     import zlib
-    seed = zlib.crc32(fam.encode('utf-8'))
+    # the preset ordinal salts the fragment seed — two presets whose
+    # crc lands on the same fragment set (and share a cluster palette)
+    # emitted byte-identical docs, the dupe pairs preview-diff flags
+    _ord = re.search(r'-(\d+)$', fam)
+    seed = zlib.crc32(fam.encode('utf-8')) + \
+        (int(_ord.group(1)) if _ord else 0)
     mode = (bundle or {}).get('theme') or 'light'
     tags = _genmenu_tags()
     # the pipeline's real photography — fragment /src/assets refs
@@ -1706,7 +1803,8 @@ def _frag_doc_parts(pd, fam, bundle):
             '<link rel="stylesheet" href="/built/' +
             urllib.parse.quote(css_dst) + '">'
             '<link rel="stylesheet" href="/built/' +
-            urllib.parse.quote(extra_dst) + '">')
+            urllib.parse.quote(extra_dst) + '">' +
+            '<style>' + _BANK_MENU_CSS + '</style>')
     return head, '', ('<div class="wf-page"><style>' +
                       _FRAG_CTA_CSS + '</style>' + body + '</div>')
 
@@ -1731,14 +1829,19 @@ def emit_vibe_doc(pd, fam, bundle, spec=None):
         for comp in _SINK_ORDER:
             if comp in blocks:
                 body += blocks[comp][0]
+    # the re-skin runs inside the doc (luminance tonemap → the
+    # preset's palette owns fragment surfaces); hashing it keeps the
+    # cache honest when the tonemap itself changes
+    body += _VIBE_RESKIN
     fp = os.path.join(outdir, fam + '.html')
     # the marker carries a hash of the emitted css — a producer fix
     # (e.g. the C.1 pairing) changes the resolved palette and the
     # cached doc must re-emit, so a version stamp alone is not enough
     css = _fam_css(bundle)
-    # v8: preview docs cancel anchor navigation (_NO_NAV in _doc);
-    # the marker covers css AND body so a specimen change re-emits
-    mark = 'wf:vibe:v8:' + hashlib.sha256(
+    # v9: vibe docs carry the re-skin tonemap + closed-menu contract
+    # (_BANK_MENU_CSS); the marker covers css AND body so a specimen
+    # or reskin change re-emits
+    mark = 'wf:vibe:v9:' + hashlib.sha256(
         (css + body).encode()).hexdigest()[:8]
     stale = True
     if os.path.isfile(fp):
@@ -5144,6 +5247,32 @@ def _site_chrome(pd):
     return _CHROME_CACHE[pd][1]
 
 
+# element previews bind SPECIMEN copy, never the pipeline's real
+# content — cramming real IA links/keywords into every exemplar slot
+# is what broke footer/nav layouts (six columns of 'strata cleaning').
+# The operator sees the shape and vibe of each option; real copy
+# binds only at Sections and the final emit.
+_SPEC_NAV = ('Atlas Studio',
+             [('#features', 'Features'), ('#solutions', 'Solutions'),
+              ('#pricing', 'Pricing'), ('#docs', 'Docs'),
+              ('#about', 'About'), ('#contact', 'Contact')],
+             ('#contact', 'Get started'),
+             ['Products', 'Company', 'Resources', 'Support'])
+_SPEC_FOOT = ('Atlas Studio',
+              [('#' + s, l) for s, l in
+               [('features', 'Features'), ('pricing', 'Pricing'),
+                ('docs', 'Docs'), ('about', 'About'),
+                ('blog', 'Blog'), ('careers', 'Careers'),
+                ('contact', 'Contact'), ('support', 'Support'),
+                ('status', 'Status'), ('privacy', 'Privacy'),
+                ('terms', 'Terms'), ('security', 'Security'),
+                ('integrations', 'Integrations'), ('changelog', 'Changelog')]],
+              ('#contact', 'Get started'),
+              ['Products', 'Company', 'Resources', 'Support'],
+              '© 2026 Atlas Studio',
+              'Specimen layout — your content binds at Sections.')
+
+
 def _bank_bind(frag, meta):
     p = _BankBind(*meta[:4])
     p.feed(frag)
@@ -5389,9 +5518,8 @@ def emit_bank_previews(pd):
                 foot_d0 = cls.startswith('footer-')
                 chrome_key = ''
                 if nav_d0 or foot_d0:
-                    _n0, _f0 = _site_chrome(pd)
                     chrome_key = json.dumps(
-                        _n0 if nav_d0 else _f0,
+                        _SPEC_NAV if nav_d0 else _SPEC_FOOT,
                         sort_keys=True, default=str)
                 key = hashlib.sha256(
                     b'v20\0' + cls.encode() + b'\0' + raw +
@@ -5453,13 +5581,12 @@ def emit_bank_previews(pd):
                     nav_d = cls.startswith('nav-')
                     foot_d = cls.startswith('footer-')
                     if nav_d or foot_d:
-                        nmeta, fmeta = _site_chrome(pd)
                         frag = _bank_bind(
-                            frag, nmeta if nav_d else fmeta)
+                            frag, _SPEC_NAV if nav_d else _SPEC_FOOT)
                         if foot_d:
-                            frag = _footer_fix(frag, fmeta)
+                            frag = _footer_fix(frag, _SPEC_FOOT)
                         else:
-                            frag = _nav_fix(frag, nmeta)
+                            frag = _nav_fix(frag, _SPEC_NAV)
                     mob = (gid == 'menu' or cls.startswith('mob'))
                     if gid == 'menu':
                         frag = _menu_closed(frag)
