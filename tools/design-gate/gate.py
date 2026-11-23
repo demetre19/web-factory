@@ -8967,10 +8967,20 @@ def check_plan_provenance(ctx):
                 sp = os.path.join(_site_root(ctx), fn)
                 if os.path.isfile(sp):
                     _sh.copy2(sp, os.path.join(tsite, fn))
+                elif os.path.isdir(sp):
+                    # assets/ etc. — the plan sniffs media on disk
+                    # (_asset_ratio, media budgets), so a file-only
+                    # clone re-runs a different plan and cries
+                    # "hand-edited" on a clean artifact
+                    _sh.copytree(sp, os.path.join(tsite, fn),
+                                 dirs_exist_ok=True)
             for fn in os.listdir(ctx.dir):
                 sp = os.path.join(ctx.dir, fn)
                 if os.path.isfile(sp):
                     _sh.copy2(sp, os.path.join(tpdir, fn))
+                elif os.path.isdir(sp):
+                    _sh.copytree(sp, os.path.join(tpdir, fn),
+                                 dirs_exist_ok=True)
             opt = stamps['DESIGN-PLAN.md'].group(3)
             PF.build(tpdir, option=opt)
             # the w4 look rewrite is a legit second producer — when the
