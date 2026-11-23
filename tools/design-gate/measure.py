@@ -261,13 +261,17 @@ _JS = r"""
   // visibility-hidden / display:none after the reveal pass ran
   let hidCh = 0, totCh = 0;
   // a hidden ancestor buries every descendant — computed style on
-  // the child alone still reports it visible
+  // the child alone still reports it visible. Visibility resolves
+  // per-element (a child can override `visible` inside a hidden
+  // parent); display:none flattens the whole subtree (no painted
+  // rect); only opacity needs the ancestor walk — it cannot be
+  // overridden downward.
   const buried = el => {
+    if (getComputedStyle(el).visibility === 'hidden') return true;
+    if (!el.getClientRects().length) return true;
     for (let q = el; q && q !== document.documentElement;
          q = q.parentElement) {
-      const cs = getComputedStyle(q);
-      if (cs.display === 'none' || cs.visibility === 'hidden'
-          || parseFloat(cs.opacity) < 0.05) return true;
+      if (parseFloat(getComputedStyle(q).opacity) < 0.05) return true;
     }
     return false;
   };
