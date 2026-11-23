@@ -454,7 +454,7 @@ def _instance_body(ctx, contract, row, copy=None):
         if k == 'heading':
             v = vec.get('heading') or h1_text or c.get('heading')
         elif k == 'fs':
-            v = vec.get('fs') or c.get('fs')
+            v = vec.get('fs') or c.get('fs') or row.get('fs')
         else:
             v = c.get(k)
         if v:
@@ -1287,6 +1287,16 @@ def main(argv):
                     (r.stdout + r.stderr).strip().split('\n')[-6:])
                 print(f'  astro build exit {r.returncode}\n  {tail}')
                 rc |= r.returncode
+                if not r.returncode:
+                    # signed fx:* picks bind into the built docs —
+                    # the same decorative layer the section
+                    # previews carry (preview == final)
+                    nd = emit_global.fx_decorate_dist(
+                        ctx.dir, ctx.site,
+                        os.path.join(HERE, '..', '..', 'templates',
+                                     'skeletons', 'genmenu'))
+                    if nd:
+                        print(f'  fx: decorated {nd} dist doc(s)')
         if not rc and ('--html' in flags or os.path.isdir(
                 os.path.join(ctx.site, 'html'))):
             # an --astro/--build run after --html replaces dist — the

@@ -1725,3 +1725,233 @@ def preview_css(tokens, fonts=None):
         '@@DS_SPECS@@\n', _ds_specs(tokens) + '\n')
     return floor_gaps(GAP_FLOOR_LAYER + font_faces_css(fonts)
                       + body + '\n' + _base_css(tokens) + '\n' + tail)
+
+
+# ------------------------------------------------------------------
+# FX decorations — a signed fx:* pick binds a banked exemplar's
+# DECORATIVE layer behind the section's own content. The exemplar's
+# demo copy is never emitted (the bank's foreign brand/text must
+# not render — the same law _bank_bind keeps on nav/footer
+# exemplars). One binder serves preview docs AND the built page —
+# whatever renders finally is what the preview shows.
+# ------------------------------------------------------------------
+import html.parser as _htmlp  # noqa: E402
+
+
+class _FxLayer(_htmlp.HTMLParser):
+    """Collects a banked fx exemplar's decorative layer: <style>
+    blocks + complete subtrees rooted at a clearly decorative node —
+    aria-hidden, pointer-events-none, or an absolute/fixed inset-0
+    overlay (svg fields, canvases, gradient veils). Demo content
+    (headings, counters, captions) stays out."""
+
+    _VOID = {'area', 'base', 'br', 'col', 'embed', 'hr', 'img',
+             'input', 'link', 'meta', 'source', 'track', 'wbr'}
+
+    def __init__(self):
+        super().__init__(convert_charrefs=False)
+        self.css = []
+        self.layers = []
+        self._stack = []
+        self._cap = None
+        self._style = None
+
+    @staticmethod
+    def _deco(attrs):
+        ad = dict(attrs)
+        c = ad.get('class') or ''
+        return ('aria-hidden' in ad or
+                'pointer-events-none' in c or
+                (('absolute' in c or 'fixed' in c) and
+                 'inset-0' in c))
+
+    def handle_starttag(self, tag, attrs):
+        if self._style is not None:
+            return
+        raw = self.get_starttag_text()
+        if self._cap is not None:
+            self._cap.append(raw)
+        elif tag == 'style':
+            self._style = []
+        elif self._deco(attrs):
+            if tag in self._VOID:
+                self.layers.append(raw)
+            else:
+                self._cap = [raw]
+        self._stack.append(tag)
+
+    def handle_startendtag(self, tag, attrs):
+        raw = self.get_starttag_text()
+        if self._cap is not None:
+            self._cap.append(raw)
+        elif self._style is None and self._deco(attrs):
+            self.layers.append(raw)
+
+    def handle_endtag(self, tag):
+        if self._style is not None:
+            if tag == 'style':
+                self.css.append(''.join(self._style))
+                self._style = None
+            return
+        if self._cap is not None:
+            self._cap.append(f'</{tag}>')
+        if tag in self._stack:
+            while self._stack and self._stack.pop() != tag:
+                pass
+            if self._cap is not None and not self._stack:
+                self.layers.append(''.join(self._cap))
+                self._cap = None
+
+    def handle_data(self, data):
+        if self._style is not None:
+            self._style.append(data)
+        elif self._cap is not None:
+            self._cap.append(data)
+
+    def handle_entityref(self, name):
+        s = '&' + name + ';'
+        if self._style is not None:
+            self._style.append(s)
+        elif self._cap is not None:
+            self._cap.append(s)
+
+    def handle_charref(self, name):
+        self.handle_entityref('#' + name)
+
+    def handle_comment(self, data):
+        pass
+
+    def finish(self):
+        if self._cap is not None:
+            self.layers.append(''.join(self._cap))
+            self._cap = None
+
+
+def fx_fragment_layers(genmenu, slug):
+    """(style_css, layer_html) of a banked fx exemplar's decorative
+    layer — searched by slug across every fx-* bank dir. ('','')
+    when unbanked."""
+    if not re.fullmatch(r'[\w-]{1,64}', slug or ''):
+        return '', ''
+    if not os.path.isdir(genmenu):
+        return '', ''
+    for d in sorted(os.listdir(genmenu)):
+        if not d.startswith(('fx-', 'imgfx-', 'mobfx-', 'mob-')):
+            continue
+        fp = os.path.join(genmenu, d, slug + '.html')
+        if not os.path.isfile(fp):
+            continue
+        try:
+            frag = open(fp, encoding='utf-8').read()
+        except OSError:
+            continue
+        p = _FxLayer()
+        p.feed(frag)
+        p.close()
+        p.finish()
+        return '\n'.join(p.css), ''.join(p.layers)
+    return '', ''
+
+
+def fx_picks(pd):
+    """{sec: slug} from ELEMENT-PICKS.json — fx:sec:<sec> rows, plus
+    fx:default as the page-wide key '*'."""
+    try:
+        picks = json.load(open(os.path.join(
+            pd, 'ELEMENT-PICKS.json'))).get('picks') or []
+    except Exception:
+        return {}
+    out = {}
+    for p in picks:
+        el, v = p.get('element') or '', p.get('variant')
+        if not v or v == 'none':
+            continue
+        if el.startswith('fx:sec:'):
+            out[el[7:]] = v
+        elif el == 'fx:default':
+            out['*'] = v
+    return out
+
+
+_FX_DECO_CSS = (
+    'section[data-sec],footer[data-sec],header[data-sec]'
+    '{position:relative}'
+    '.wf-fx-deco{position:absolute;inset:0;z-index:0;'
+    'pointer-events:none;overflow:hidden}'
+    '.wf-fx-deco>*{position:absolute;inset:0;width:100%;'
+    'height:100%}'
+    '[data-sec]>.sec-inner{position:relative;z-index:1}'
+    '.wf-fx-page{position:fixed;inset:0;z-index:0;'
+    'pointer-events:none}'
+    'body>*:not(.wf-fx-page){position:relative;z-index:1}')
+
+
+def fx_decorate(markup, layers_of, picks):
+    """(markup, css) — inject each picked decoration's layer behind
+    the section's .sec-inner. picks={sec:slug}, '*' decorates the
+    page itself. layers_of(slug) → (style_css, layer_html) —
+    fx_fragment_layers."""
+    if not picks:
+        return markup, ''
+    css, parts = [_FX_DECO_CSS], []
+    for sec, slug in picks.items():
+        lcss, layer = layers_of(slug)
+        if not layer:
+            continue
+        if lcss:
+            css.append(lcss)
+        if sec == '*':
+            parts.append(('<body([^>]*)>', '<body\\1>' +
+                          '<div class="wf-fx-page" data-fx="' + slug +
+                          '" aria-hidden="true">' + layer + '</div>'))
+            continue
+        pat = re.compile(
+            r'(<(?:section|header|footer)\b[^>]*data-sec="' +
+            re.escape(sec) + r'"[^>]*>)')
+        deco = ('<div class="wf-fx-deco" data-fx="' + slug +
+                '" aria-hidden="true">' + layer + '</div>')
+        markup = pat.sub(lambda m: m.group(1) + deco, markup,
+                         count=1)
+    for pat_s, rep in parts:
+        markup = re.sub(pat_s, rep, markup, count=1)
+    return markup, '\n'.join(css)
+
+
+def fx_decorate_dist(pd, site, genmenu):
+    """post-astro-build pass: bind signed fx:* picks into every
+    built page doc (the preview trees decorate inside their own
+    emitters — preview/bank, preview/sections, vibe specs). Returns
+    the number of docs decorated."""
+    picks = fx_picks(pd)
+    if not picks:
+        return 0
+    dist = os.path.join(site, 'dist')
+    if not os.path.isdir(dist):
+        return 0
+
+    def layers(slug):
+        return fx_fragment_layers(genmenu, slug)
+
+    n = 0
+    for root, _dn, fns in os.walk(dist):
+        rel = os.path.relpath(root, dist)
+        if rel.split(os.sep)[0] == 'preview':
+            continue
+        for fn in fns:
+            if not fn.endswith('.html'):
+                continue
+            fp = os.path.join(root, fn)
+            try:
+                txt = open(fp, encoding='utf-8').read()
+            except OSError:
+                continue
+            html, css = fx_decorate(txt, layers, picks)
+            if 'wf-fx-deco' not in html and 'wf-fx-page' not in html:
+                continue
+            html = html.replace('</head>',
+                                '<style>' + css + '</style></head>',
+                                1)
+            with open(fp, 'w', encoding='utf-8') as fh:
+                fh.write(html)
+            n += 1
+    return n
