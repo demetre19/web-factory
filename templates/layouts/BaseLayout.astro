@@ -258,5 +258,22 @@ import '../styles/bank.css';
 <a class="call-bar" href="{{tel}}">
   <span>{{phone}}</span><span class="sr-only">Call now</span>
 </a>
+<script is:inline>
+// live-var hook — picker iframes broadcast {wfVars} / {wfTheme} so a
+// picked vibe repaints this preview (same mechanism as _doc's hook)
+addEventListener('message', function (e) {
+  var d = e.data || {};
+  if (d.wfVars) {
+    var r = document.documentElement.style;
+    (window.__wfk || []).forEach(function (k) { r.removeProperty(k) });
+    window.__wfk = [];
+    for (var k in d.wfVars) { r.setProperty(k, d.wfVars[k]); window.__wfk.push(k) }
+  }
+  if (d.wfTheme) {
+    document.documentElement.dataset.theme = d.wfTheme;
+    document.documentElement.classList.toggle('dark', d.wfTheme === 'dark');
+  }
+});
+</script>
 </body>
 </html>

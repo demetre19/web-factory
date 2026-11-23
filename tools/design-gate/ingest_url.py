@@ -108,7 +108,62 @@ def _slice_regions(doc: str):
             continue
         seen.add(key)
         out.append((tag, frag[:60000]))
+    # page-builder sites often emit ONE landmark wrapping all real
+    # sections as plain divs — descend into oversized regions and
+    # harvest section-ish children (semantic tags, or divs whose
+    # class names a section). Depth is capped so we never double
+    # count a region and its own child.
+    if len(out) < 4:
+        div_re = re.compile(
+            r'<div\b[^>]*class="[^"]*(?:sect|block|banner|hero|'
+            r'content|wrapper|row|module)[^"]*"', re.I)
+        div_close = re.compile(r'</div\s*>', re.I)
+        for tag, frag in list(out):
+            sub = _nested_regions(frag, tag_re, close_re, div_re,
+                                  div_close)
+            for stag, sfrag in sub:
+                key = sfrag[:160]
+                if len(sfrag) < 200 or key in seen:
+                    continue
+                seen.add(key)
+                out.append((stag, sfrag[:60000]))
     return out[:24]
+
+
+def _nested_regions(frag, tag_re, close_re, div_re, div_close):
+    """section-ish children inside one region — semantic landmarks
+    or marked divs, paired by a tag stack. Only the outermost hit
+    per branch is kept."""
+    opens = {}
+    for m in tag_re.finditer(frag):
+        opens.setdefault('landmark', []).append((m.start(), m.group(1).lower()))
+    events = sorted(
+        [(m.start(), 1, 'lm:' + m.group(1).lower())
+         for m in tag_re.finditer(frag)] +
+        [(m.start(), 1, 'div')
+         for m in div_re.finditer(frag)] +
+        [(m.start(), -1, 'lm:' + m.group(1).lower())
+         for m in close_re.finditer(frag)] +
+        [(m.start(), -1, 'div')
+         for m in div_close.finditer(frag)])
+    stack, hits = [], []
+    for pos, kind, tag in events:
+        if kind == 1:
+            if stack and stack[-1][2]:   # inside a harvested region
+                stack.append((tag, pos, False))
+                continue
+            stack.append((tag, pos, True))
+        else:
+            for i in range(len(stack) - 1, -1, -1):
+                if stack[i][0] == tag:
+                    stag, start, outer = stack.pop(i)
+                    if outer:
+                        hits.append((stag.replace('lm:', ''),
+                                     frag[start:pos + len(
+                                         '</' + tag.split(':')[-1] +
+                                         '>')]))
+                    break
+    return hits
 
 
 def _kind(tag: str, frag: str, t: 'Tree'):

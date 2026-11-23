@@ -4726,3 +4726,507 @@ w2 CLEAR
 - iterations: 2 (max 10), consecutive clean: 2 (need 2)
 - **LOOP CLEAN** — from-scratch runs reached PIPELINE COMPLETE (s0→w2) twice with all mechanical checks green.
 - known external blocker: Mobbin P.14 (research service unreachable to the agent); w3/w4 picks are operator-only by design.
+
+## iteration 1 — 2026-11-23 04:42:48
+- scratch: `/tmp/wf-loop-1lCLv4/site` (operator+research files only; all generated files wiped)
+- command: `pipeline.py /tmp/wf-loop-1lCLv4/site/pages/strata-cleaning-melbourne --to w2` → exit 1
+- verdict: **producer/gate BLOCKED before w1 (see tail)**
+```
+  nav              flyout-nav    base   compact  
+  hero             hero-act-merge media  regular  
+  definition       editorial     muted  regular  
+  scope            cards-n       base   regular  
+  process          sequence      muted  regular  
+  reporting        proof-band    base   regular  
+  pricing          comparison    muted  regular  
+  frequency        stat-band     base   regular  
+  siblings         split-media   muted  regular  
+  coverage         link-grid     base   regular  
+  faq-no-link-before-its-concept-defined faq           muted  regular  
+  end-act          form-panel    brand  spacious 
+  footer           footer-bar    base   compact  
+emit → /tmp/wf-loop-1lCLv4/site/pages/strata-cleaning-melbourne
+  TOKENS.json kept (18 knobs)
+  scaffold: package.json, astro.config.mjs, favicon, index, _shared/inline.ts, _shared/IconChip.astro
+  public/: 7 site asset(s) (fonts/satoshi-400.woff2, fonts/satoshi-700.woff2, media/gallery-vacuum.jpg, media/office-clean.jpg, media/team-foyer.jpg, media/team.jpg, logo.svg)
+  tailwind.config.js
+  src/styles/global.css (2 @font-face)
+  src/styles/bank.css (12 skeleton(s))
+  Section.astro + BaseLayout.astro
+  scaffold-only emit done (w0)
+checklist → /tmp/wf-loop-1lCLv4/site/pages/strata-cleaning-melbourne/CHECKLIST/w0.md
+w0 FAIL — /tmp/wf-loop-1lCLv4/site/pages/strata-cleaning-melbourne
+  - I.3 DESIGN-PLAN.md differs from a clean plan_from_copy.py re-run — the file was hand-edited
+  - I.3 STUB.md differs from a clean plan_from_copy.py re-run — the file was hand-edited
+=== s0 ===
+s0 CLEAR
+=== w0 ===
+w0 BLOCKED — gate exited 1
+```
+
+## iteration 2 — 2026-11-23 04:42:57
+- scratch: `/tmp/wf-loop-Pjfe5m/site` (operator+research files only; all generated files wiped)
+- command: `pipeline.py /tmp/wf-loop-Pjfe5m/site/pages/strata-cleaning-melbourne --to w2` → exit 1
+- verdict: **producer/gate BLOCKED before w1 (see tail)**
+```
+  nav              flyout-nav    base   compact  
+  hero             hero-act-merge media  regular  
+  definition       editorial     muted  regular  
+  scope            cards-n       base   regular  
+  process          sequence      muted  regular  
+  reporting        proof-band    base   regular  
+  pricing          comparison    muted  regular  
+  frequency        stat-band     base   regular  
+  siblings         split-media   muted  regular  
+  coverage         link-grid     base   regular  
+  faq-no-link-before-its-concept-defined faq           muted  regular  
+  end-act          form-panel    brand  spacious 
+  footer           footer-bar    base   compact  
+emit → /tmp/wf-loop-Pjfe5m/site/pages/strata-cleaning-melbourne
+  TOKENS.json kept (18 knobs)
+  scaffold: package.json, astro.config.mjs, favicon, index, _shared/inline.ts, _shared/IconChip.astro
+  public/: 7 site asset(s) (fonts/satoshi-400.woff2, fonts/satoshi-700.woff2, media/gallery-vacuum.jpg, media/office-clean.jpg, media/team-foyer.jpg, media/team.jpg, logo.svg)
+  tailwind.config.js
+  src/styles/global.css (2 @font-face)
+  src/styles/bank.css (12 skeleton(s))
+  Section.astro + BaseLayout.astro
+  scaffold-only emit done (w0)
+checklist → /tmp/wf-loop-Pjfe5m/site/pages/strata-cleaning-melbourne/CHECKLIST/w0.md
+w0 FAIL — /tmp/wf-loop-Pjfe5m/site/pages/strata-cleaning-melbourne
+  - I.3 DESIGN-PLAN.md differs from a clean plan_from_copy.py re-run — the file was hand-edited
+  - I.3 STUB.md differs from a clean plan_from_copy.py re-run — the file was hand-edited
+=== s0 ===
+s0 CLEAR
+=== w0 ===
+w0 BLOCKED — gate exited 1
+```
+
+## iteration 3 — 2026-11-23 04:43:06
+- scratch: `/tmp/wf-loop-TGWwTh/site` (operator+research files only; all generated files wiped)
+- command: `pipeline.py /tmp/wf-loop-TGWwTh/site/pages/strata-cleaning-melbourne --to w2` → exit 1
+- verdict: **producer/gate BLOCKED before w1 (see tail)**
+```
+  nav              flyout-nav    base   compact  
+  hero             hero-act-merge media  regular  
+  definition       editorial     muted  regular  
+  scope            cards-n       base   regular  
+  process          sequence      muted  regular  
+  reporting        proof-band    base   regular  
+  pricing          comparison    muted  regular  
+  frequency        stat-band     base   regular  
+  siblings         split-media   muted  regular  
+  coverage         link-grid     base   regular  
+  faq-no-link-before-its-concept-defined faq           muted  regular  
+  end-act          form-panel    brand  spacious 
+  footer           footer-bar    base   compact  
+emit → /tmp/wf-loop-TGWwTh/site/pages/strata-cleaning-melbourne
+  TOKENS.json kept (18 knobs)
+  scaffold: package.json, astro.config.mjs, favicon, index, _shared/inline.ts, _shared/IconChip.astro
+  public/: 7 site asset(s) (fonts/satoshi-400.woff2, fonts/satoshi-700.woff2, media/gallery-vacuum.jpg, media/office-clean.jpg, media/team-foyer.jpg, media/team.jpg, logo.svg)
+  tailwind.config.js
+  src/styles/global.css (2 @font-face)
+  src/styles/bank.css (12 skeleton(s))
+  Section.astro + BaseLayout.astro
+  scaffold-only emit done (w0)
+checklist → /tmp/wf-loop-TGWwTh/site/pages/strata-cleaning-melbourne/CHECKLIST/w0.md
+w0 FAIL — /tmp/wf-loop-TGWwTh/site/pages/strata-cleaning-melbourne
+  - I.3 DESIGN-PLAN.md differs from a clean plan_from_copy.py re-run — the file was hand-edited
+  - I.3 STUB.md differs from a clean plan_from_copy.py re-run — the file was hand-edited
+=== s0 ===
+s0 CLEAR
+=== w0 ===
+w0 BLOCKED — gate exited 1
+```
+
+## iteration 4 — 2026-11-23 04:43:14
+- scratch: `/tmp/wf-loop-2LjPJ1/site` (operator+research files only; all generated files wiped)
+- command: `pipeline.py /tmp/wf-loop-2LjPJ1/site/pages/strata-cleaning-melbourne --to w2` → exit 1
+- verdict: **producer/gate BLOCKED before w1 (see tail)**
+```
+  nav              flyout-nav    base   compact  
+  hero             hero-act-merge media  regular  
+  definition       editorial     muted  regular  
+  scope            cards-n       base   regular  
+  process          sequence      muted  regular  
+  reporting        proof-band    base   regular  
+  pricing          comparison    muted  regular  
+  frequency        stat-band     base   regular  
+  siblings         split-media   muted  regular  
+  coverage         link-grid     base   regular  
+  faq-no-link-before-its-concept-defined faq           muted  regular  
+  end-act          form-panel    brand  spacious 
+  footer           footer-bar    base   compact  
+emit → /tmp/wf-loop-2LjPJ1/site/pages/strata-cleaning-melbourne
+  TOKENS.json kept (18 knobs)
+  scaffold: package.json, astro.config.mjs, favicon, index, _shared/inline.ts, _shared/IconChip.astro
+  public/: 7 site asset(s) (fonts/satoshi-400.woff2, fonts/satoshi-700.woff2, media/gallery-vacuum.jpg, media/office-clean.jpg, media/team-foyer.jpg, media/team.jpg, logo.svg)
+  tailwind.config.js
+  src/styles/global.css (2 @font-face)
+  src/styles/bank.css (12 skeleton(s))
+  Section.astro + BaseLayout.astro
+  scaffold-only emit done (w0)
+checklist → /tmp/wf-loop-2LjPJ1/site/pages/strata-cleaning-melbourne/CHECKLIST/w0.md
+w0 FAIL — /tmp/wf-loop-2LjPJ1/site/pages/strata-cleaning-melbourne
+  - I.3 DESIGN-PLAN.md differs from a clean plan_from_copy.py re-run — the file was hand-edited
+  - I.3 STUB.md differs from a clean plan_from_copy.py re-run — the file was hand-edited
+=== s0 ===
+s0 CLEAR
+=== w0 ===
+w0 BLOCKED — gate exited 1
+```
+
+## iteration 5 — 2026-11-23 04:43:23
+- scratch: `/tmp/wf-loop-ZTYDZO/site` (operator+research files only; all generated files wiped)
+- command: `pipeline.py /tmp/wf-loop-ZTYDZO/site/pages/strata-cleaning-melbourne --to w2` → exit 1
+- verdict: **producer/gate BLOCKED before w1 (see tail)**
+```
+  nav              flyout-nav    base   compact  
+  hero             hero-act-merge media  regular  
+  definition       editorial     muted  regular  
+  scope            cards-n       base   regular  
+  process          sequence      muted  regular  
+  reporting        proof-band    base   regular  
+  pricing          comparison    muted  regular  
+  frequency        stat-band     base   regular  
+  siblings         split-media   muted  regular  
+  coverage         link-grid     base   regular  
+  faq-no-link-before-its-concept-defined faq           muted  regular  
+  end-act          form-panel    brand  spacious 
+  footer           footer-bar    base   compact  
+emit → /tmp/wf-loop-ZTYDZO/site/pages/strata-cleaning-melbourne
+  TOKENS.json kept (18 knobs)
+  scaffold: package.json, astro.config.mjs, favicon, index, _shared/inline.ts, _shared/IconChip.astro
+  public/: 7 site asset(s) (fonts/satoshi-400.woff2, fonts/satoshi-700.woff2, media/gallery-vacuum.jpg, media/office-clean.jpg, media/team-foyer.jpg, media/team.jpg, logo.svg)
+  tailwind.config.js
+  src/styles/global.css (2 @font-face)
+  src/styles/bank.css (12 skeleton(s))
+  Section.astro + BaseLayout.astro
+  scaffold-only emit done (w0)
+checklist → /tmp/wf-loop-ZTYDZO/site/pages/strata-cleaning-melbourne/CHECKLIST/w0.md
+w0 FAIL — /tmp/wf-loop-ZTYDZO/site/pages/strata-cleaning-melbourne
+  - I.3 DESIGN-PLAN.md differs from a clean plan_from_copy.py re-run — the file was hand-edited
+  - I.3 STUB.md differs from a clean plan_from_copy.py re-run — the file was hand-edited
+=== s0 ===
+s0 CLEAR
+=== w0 ===
+w0 BLOCKED — gate exited 1
+```
+
+## iteration 6 — 2026-11-23 04:43:32
+- scratch: `/tmp/wf-loop-RuIfyr/site` (operator+research files only; all generated files wiped)
+- command: `pipeline.py /tmp/wf-loop-RuIfyr/site/pages/strata-cleaning-melbourne --to w2` → exit 1
+- verdict: **producer/gate BLOCKED before w1 (see tail)**
+```
+  nav              flyout-nav    base   compact  
+  hero             hero-act-merge media  regular  
+  definition       editorial     muted  regular  
+  scope            cards-n       base   regular  
+  process          sequence      muted  regular  
+  reporting        proof-band    base   regular  
+  pricing          comparison    muted  regular  
+  frequency        stat-band     base   regular  
+  siblings         split-media   muted  regular  
+  coverage         link-grid     base   regular  
+  faq-no-link-before-its-concept-defined faq           muted  regular  
+  end-act          form-panel    brand  spacious 
+  footer           footer-bar    base   compact  
+emit → /tmp/wf-loop-RuIfyr/site/pages/strata-cleaning-melbourne
+  TOKENS.json kept (18 knobs)
+  scaffold: package.json, astro.config.mjs, favicon, index, _shared/inline.ts, _shared/IconChip.astro
+  public/: 7 site asset(s) (fonts/satoshi-400.woff2, fonts/satoshi-700.woff2, media/gallery-vacuum.jpg, media/office-clean.jpg, media/team-foyer.jpg, media/team.jpg, logo.svg)
+  tailwind.config.js
+  src/styles/global.css (2 @font-face)
+  src/styles/bank.css (12 skeleton(s))
+  Section.astro + BaseLayout.astro
+  scaffold-only emit done (w0)
+checklist → /tmp/wf-loop-RuIfyr/site/pages/strata-cleaning-melbourne/CHECKLIST/w0.md
+w0 FAIL — /tmp/wf-loop-RuIfyr/site/pages/strata-cleaning-melbourne
+  - I.3 DESIGN-PLAN.md differs from a clean plan_from_copy.py re-run — the file was hand-edited
+  - I.3 STUB.md differs from a clean plan_from_copy.py re-run — the file was hand-edited
+=== s0 ===
+s0 CLEAR
+=== w0 ===
+w0 BLOCKED — gate exited 1
+```
+
+## iteration 7 — 2026-11-23 04:43:40
+- scratch: `/tmp/wf-loop-gaHtRA/site` (operator+research files only; all generated files wiped)
+- command: `pipeline.py /tmp/wf-loop-gaHtRA/site/pages/strata-cleaning-melbourne --to w2` → exit 1
+- verdict: **producer/gate BLOCKED before w1 (see tail)**
+```
+  nav              flyout-nav    base   compact  
+  hero             hero-act-merge media  regular  
+  definition       editorial     muted  regular  
+  scope            cards-n       base   regular  
+  process          sequence      muted  regular  
+  reporting        proof-band    base   regular  
+  pricing          comparison    muted  regular  
+  frequency        stat-band     base   regular  
+  siblings         split-media   muted  regular  
+  coverage         link-grid     base   regular  
+  faq-no-link-before-its-concept-defined faq           muted  regular  
+  end-act          form-panel    brand  spacious 
+  footer           footer-bar    base   compact  
+emit → /tmp/wf-loop-gaHtRA/site/pages/strata-cleaning-melbourne
+  TOKENS.json kept (18 knobs)
+  scaffold: package.json, astro.config.mjs, favicon, index, _shared/inline.ts, _shared/IconChip.astro
+  public/: 7 site asset(s) (fonts/satoshi-400.woff2, fonts/satoshi-700.woff2, media/gallery-vacuum.jpg, media/office-clean.jpg, media/team-foyer.jpg, media/team.jpg, logo.svg)
+  tailwind.config.js
+  src/styles/global.css (2 @font-face)
+  src/styles/bank.css (12 skeleton(s))
+  Section.astro + BaseLayout.astro
+  scaffold-only emit done (w0)
+checklist → /tmp/wf-loop-gaHtRA/site/pages/strata-cleaning-melbourne/CHECKLIST/w0.md
+w0 FAIL — /tmp/wf-loop-gaHtRA/site/pages/strata-cleaning-melbourne
+  - I.3 DESIGN-PLAN.md differs from a clean plan_from_copy.py re-run — the file was hand-edited
+  - I.3 STUB.md differs from a clean plan_from_copy.py re-run — the file was hand-edited
+=== s0 ===
+s0 CLEAR
+=== w0 ===
+w0 BLOCKED — gate exited 1
+```
+
+## iteration 8 — 2026-11-23 04:43:49
+- scratch: `/tmp/wf-loop-2bBokE/site` (operator+research files only; all generated files wiped)
+- command: `pipeline.py /tmp/wf-loop-2bBokE/site/pages/strata-cleaning-melbourne --to w2` → exit 1
+- verdict: **producer/gate BLOCKED before w1 (see tail)**
+```
+  nav              flyout-nav    base   compact  
+  hero             hero-act-merge media  regular  
+  definition       editorial     muted  regular  
+  scope            cards-n       base   regular  
+  process          sequence      muted  regular  
+  reporting        proof-band    base   regular  
+  pricing          comparison    muted  regular  
+  frequency        stat-band     base   regular  
+  siblings         split-media   muted  regular  
+  coverage         link-grid     base   regular  
+  faq-no-link-before-its-concept-defined faq           muted  regular  
+  end-act          form-panel    brand  spacious 
+  footer           footer-bar    base   compact  
+emit → /tmp/wf-loop-2bBokE/site/pages/strata-cleaning-melbourne
+  TOKENS.json kept (18 knobs)
+  scaffold: package.json, astro.config.mjs, favicon, index, _shared/inline.ts, _shared/IconChip.astro
+  public/: 7 site asset(s) (fonts/satoshi-400.woff2, fonts/satoshi-700.woff2, media/gallery-vacuum.jpg, media/office-clean.jpg, media/team-foyer.jpg, media/team.jpg, logo.svg)
+  tailwind.config.js
+  src/styles/global.css (2 @font-face)
+  src/styles/bank.css (12 skeleton(s))
+  Section.astro + BaseLayout.astro
+  scaffold-only emit done (w0)
+checklist → /tmp/wf-loop-2bBokE/site/pages/strata-cleaning-melbourne/CHECKLIST/w0.md
+w0 FAIL — /tmp/wf-loop-2bBokE/site/pages/strata-cleaning-melbourne
+  - I.3 DESIGN-PLAN.md differs from a clean plan_from_copy.py re-run — the file was hand-edited
+  - I.3 STUB.md differs from a clean plan_from_copy.py re-run — the file was hand-edited
+=== s0 ===
+s0 CLEAR
+=== w0 ===
+w0 BLOCKED — gate exited 1
+```
+
+## iteration 9 — 2026-11-23 04:43:57
+- scratch: `/tmp/wf-loop-2Hza3Z/site` (operator+research files only; all generated files wiped)
+- command: `pipeline.py /tmp/wf-loop-2Hza3Z/site/pages/strata-cleaning-melbourne --to w2` → exit 1
+- verdict: **producer/gate BLOCKED before w1 (see tail)**
+```
+  nav              flyout-nav    base   compact  
+  hero             hero-act-merge media  regular  
+  definition       editorial     muted  regular  
+  scope            cards-n       base   regular  
+  process          sequence      muted  regular  
+  reporting        proof-band    base   regular  
+  pricing          comparison    muted  regular  
+  frequency        stat-band     base   regular  
+  siblings         split-media   muted  regular  
+  coverage         link-grid     base   regular  
+  faq-no-link-before-its-concept-defined faq           muted  regular  
+  end-act          form-panel    brand  spacious 
+  footer           footer-bar    base   compact  
+emit → /tmp/wf-loop-2Hza3Z/site/pages/strata-cleaning-melbourne
+  TOKENS.json kept (18 knobs)
+  scaffold: package.json, astro.config.mjs, favicon, index, _shared/inline.ts, _shared/IconChip.astro
+  public/: 7 site asset(s) (fonts/satoshi-400.woff2, fonts/satoshi-700.woff2, media/gallery-vacuum.jpg, media/office-clean.jpg, media/team-foyer.jpg, media/team.jpg, logo.svg)
+  tailwind.config.js
+  src/styles/global.css (2 @font-face)
+  src/styles/bank.css (12 skeleton(s))
+  Section.astro + BaseLayout.astro
+  scaffold-only emit done (w0)
+checklist → /tmp/wf-loop-2Hza3Z/site/pages/strata-cleaning-melbourne/CHECKLIST/w0.md
+w0 FAIL — /tmp/wf-loop-2Hza3Z/site/pages/strata-cleaning-melbourne
+  - I.3 DESIGN-PLAN.md differs from a clean plan_from_copy.py re-run — the file was hand-edited
+  - I.3 STUB.md differs from a clean plan_from_copy.py re-run — the file was hand-edited
+=== s0 ===
+s0 CLEAR
+=== w0 ===
+w0 BLOCKED — gate exited 1
+```
+
+## iteration 10 — 2026-11-23 04:44:06
+- scratch: `/tmp/wf-loop-44ca5Q/site` (operator+research files only; all generated files wiped)
+- command: `pipeline.py /tmp/wf-loop-44ca5Q/site/pages/strata-cleaning-melbourne --to w2` → exit 1
+- verdict: **producer/gate BLOCKED before w1 (see tail)**
+```
+  nav              flyout-nav    base   compact  
+  hero             hero-act-merge media  regular  
+  definition       editorial     muted  regular  
+  scope            cards-n       base   regular  
+  process          sequence      muted  regular  
+  reporting        proof-band    base   regular  
+  pricing          comparison    muted  regular  
+  frequency        stat-band     base   regular  
+  siblings         split-media   muted  regular  
+  coverage         link-grid     base   regular  
+  faq-no-link-before-its-concept-defined faq           muted  regular  
+  end-act          form-panel    brand  spacious 
+  footer           footer-bar    base   compact  
+emit → /tmp/wf-loop-44ca5Q/site/pages/strata-cleaning-melbourne
+  TOKENS.json kept (18 knobs)
+  scaffold: package.json, astro.config.mjs, favicon, index, _shared/inline.ts, _shared/IconChip.astro
+  public/: 7 site asset(s) (fonts/satoshi-400.woff2, fonts/satoshi-700.woff2, media/gallery-vacuum.jpg, media/office-clean.jpg, media/team-foyer.jpg, media/team.jpg, logo.svg)
+  tailwind.config.js
+  src/styles/global.css (2 @font-face)
+  src/styles/bank.css (12 skeleton(s))
+  Section.astro + BaseLayout.astro
+  scaffold-only emit done (w0)
+checklist → /tmp/wf-loop-44ca5Q/site/pages/strata-cleaning-melbourne/CHECKLIST/w0.md
+w0 FAIL — /tmp/wf-loop-44ca5Q/site/pages/strata-cleaning-melbourne
+  - I.3 DESIGN-PLAN.md differs from a clean plan_from_copy.py re-run — the file was hand-edited
+  - I.3 STUB.md differs from a clean plan_from_copy.py re-run — the file was hand-edited
+=== s0 ===
+s0 CLEAR
+=== w0 ===
+w0 BLOCKED — gate exited 1
+```
+
+## result — 2026-11-23 04:44:06
+- iterations: 10 (max 10), consecutive clean: 0 (need 2)
+- loop did not reach two consecutive clean iterations (see iterations above).
+
+## iteration 1 — 2026-11-23 04:49:47
+- scratch: `/tmp/wf-loop-P7zoon/site` (operator+research files only; all generated files wiped)
+- command: `pipeline.py /tmp/wf-loop-P7zoon/site/pages/strata-cleaning-melbourne --to w2` → exit 0
+- verdict: **CLEAN — s0:yes w0/w1/w2 PASS, run COMPLETE through w2**
+```
+  end-act          form-panel    brand  spacious 
+  footer           footer-bar    base   compact  
+emit → /tmp/wf-loop-P7zoon/site/pages/strata-cleaning-melbourne
+  TOKENS.json kept (18 knobs)
+  scaffold: package.json, astro.config.mjs, favicon, index, _shared/inline.ts, _shared/IconChip.astro
+  public/: 7 site asset(s) (fonts/satoshi-400.woff2, fonts/satoshi-700.woff2, media/gallery-vacuum.jpg, media/office-clean.jpg, media/team-foyer.jpg, media/team.jpg, logo.svg)
+  tailwind.config.js
+  src/styles/global.css (2 @font-face)
+  src/styles/bank.css (12 skeleton(s))
+  Section.astro + BaseLayout.astro
+  scaffold-only emit done (w0)
+checklist → /tmp/wf-loop-P7zoon/site/pages/strata-cleaning-melbourne/CHECKLIST/w0.md
+w0 PASS — /tmp/wf-loop-P7zoon/site/pages/strata-cleaning-melbourne
+candidates_emit.py: 60/3414 pending candidates (+0 decided) → /tmp/wf-loop-P7zoon/site/pages/strata-cleaning-melbourne/CANDIDATES.json
+candidates_emit.py: picker → /tmp/wf-loop-P7zoon/site/pages/strata-cleaning-melbourne/preview/candidates.html (a84cdee5fb0a)
+bake_systems: 119 systems → /tmp/wf-loop-P7zoon/site/pages/strata-cleaning-melbourne/SAVED-SYSTEMS
+checklist → /tmp/wf-loop-P7zoon/site/pages/strata-cleaning-melbourne/CHECKLIST/w1.md
+w1 PASS — /tmp/wf-loop-P7zoon/site/pages/strata-cleaning-melbourne
+assembled layout picker → preview/layouts.html (marker 69ec1b9e512b)
+checklist → /tmp/wf-loop-P7zoon/site/pages/strata-cleaning-melbourne/CHECKLIST/w2.md
+w2 PASS — /tmp/wf-loop-P7zoon/site/pages/strata-cleaning-melbourne
+=== s0 ===
+s0 CLEAR
+=== w0 ===
+w0 CLEAR
+=== w1 ===
+w1 CLEAR
+=== w2 ===
+w2 CLEAR
+=== PIPELINE COMPLETE — all waves CLEAR ===
+```
+
+## iteration 2 — 2026-11-23 04:49:53
+- scratch: `/tmp/wf-loop-FfXcKE/site` (operator+research files only; all generated files wiped)
+- command: `pipeline.py /tmp/wf-loop-FfXcKE/site/pages/strata-cleaning-melbourne --to w2` → exit 1
+- verdict: **producer/gate BLOCKED before w1 (see tail)**
+```
+DISCOVERY: type=services vibe=approachable/calm fonts=Satoshi palette={'accent': '#166F64', 'secondary': '#00B488', 'surface': '#F0F3F6', 'ink': '#363636'}
+DNA: profile-services v0 bg=#FFFFFF surface=#F0F3F6 ink=#273B37 accent=#166F64 font=Satoshi core=4453241ea18e
+checklist → /tmp/wf-loop-FfXcKE/site/CHECKLIST/s0.md
+s0 FAIL — /tmp/wf-loop-FfXcKE/site
+  - X.2 templates/ tree changed since the run started
+=== s0 ===
+s0 BLOCKED — gate exited 1
+```
+
+## iteration 3 — 2026-11-23 04:50:19
+- scratch: `/tmp/wf-loop-3gijtE/site` (operator+research files only; all generated files wiped)
+- command: `pipeline.py /tmp/wf-loop-3gijtE/site/pages/strata-cleaning-melbourne --to w2` → exit 0
+- verdict: **CLEAN — s0:yes w0/w1/w2 PASS, run COMPLETE through w2**
+```
+  end-act          form-panel    brand  spacious 
+  footer           footer-bar    base   compact  
+emit → /tmp/wf-loop-3gijtE/site/pages/strata-cleaning-melbourne
+  TOKENS.json kept (18 knobs)
+  scaffold: package.json, astro.config.mjs, favicon, index, _shared/inline.ts, _shared/IconChip.astro
+  public/: 7 site asset(s) (fonts/satoshi-400.woff2, fonts/satoshi-700.woff2, media/gallery-vacuum.jpg, media/office-clean.jpg, media/team-foyer.jpg, media/team.jpg, logo.svg)
+  tailwind.config.js
+  src/styles/global.css (2 @font-face)
+  src/styles/bank.css (12 skeleton(s))
+  Section.astro + BaseLayout.astro
+  scaffold-only emit done (w0)
+checklist → /tmp/wf-loop-3gijtE/site/pages/strata-cleaning-melbourne/CHECKLIST/w0.md
+w0 PASS — /tmp/wf-loop-3gijtE/site/pages/strata-cleaning-melbourne
+candidates_emit.py: 60/3414 pending candidates (+0 decided) → /tmp/wf-loop-3gijtE/site/pages/strata-cleaning-melbourne/CANDIDATES.json
+candidates_emit.py: picker → /tmp/wf-loop-3gijtE/site/pages/strata-cleaning-melbourne/preview/candidates.html (a84cdee5fb0a)
+bake_systems: 119 systems → /tmp/wf-loop-3gijtE/site/pages/strata-cleaning-melbourne/SAVED-SYSTEMS
+checklist → /tmp/wf-loop-3gijtE/site/pages/strata-cleaning-melbourne/CHECKLIST/w1.md
+w1 PASS — /tmp/wf-loop-3gijtE/site/pages/strata-cleaning-melbourne
+assembled layout picker → preview/layouts.html (marker 69ec1b9e512b)
+checklist → /tmp/wf-loop-3gijtE/site/pages/strata-cleaning-melbourne/CHECKLIST/w2.md
+w2 PASS — /tmp/wf-loop-3gijtE/site/pages/strata-cleaning-melbourne
+=== s0 ===
+s0 CLEAR
+=== w0 ===
+w0 CLEAR
+=== w1 ===
+w1 CLEAR
+=== w2 ===
+w2 CLEAR
+=== PIPELINE COMPLETE — all waves CLEAR ===
+```
+
+## iteration 4 — 2026-11-23 04:50:46
+- scratch: `/tmp/wf-loop-lZk78u/site` (operator+research files only; all generated files wiped)
+- command: `pipeline.py /tmp/wf-loop-lZk78u/site/pages/strata-cleaning-melbourne --to w2` → exit 0
+- verdict: **CLEAN — s0:yes w0/w1/w2 PASS, run COMPLETE through w2**
+```
+  end-act          form-panel    brand  spacious 
+  footer           footer-bar    base   compact  
+emit → /tmp/wf-loop-lZk78u/site/pages/strata-cleaning-melbourne
+  TOKENS.json kept (18 knobs)
+  scaffold: package.json, astro.config.mjs, favicon, index, _shared/inline.ts, _shared/IconChip.astro
+  public/: 7 site asset(s) (fonts/satoshi-400.woff2, fonts/satoshi-700.woff2, media/gallery-vacuum.jpg, media/office-clean.jpg, media/team-foyer.jpg, media/team.jpg, logo.svg)
+  tailwind.config.js
+  src/styles/global.css (2 @font-face)
+  src/styles/bank.css (12 skeleton(s))
+  Section.astro + BaseLayout.astro
+  scaffold-only emit done (w0)
+checklist → /tmp/wf-loop-lZk78u/site/pages/strata-cleaning-melbourne/CHECKLIST/w0.md
+w0 PASS — /tmp/wf-loop-lZk78u/site/pages/strata-cleaning-melbourne
+candidates_emit.py: 60/3414 pending candidates (+0 decided) → /tmp/wf-loop-lZk78u/site/pages/strata-cleaning-melbourne/CANDIDATES.json
+candidates_emit.py: picker → /tmp/wf-loop-lZk78u/site/pages/strata-cleaning-melbourne/preview/candidates.html (a84cdee5fb0a)
+bake_systems: 119 systems → /tmp/wf-loop-lZk78u/site/pages/strata-cleaning-melbourne/SAVED-SYSTEMS
+checklist → /tmp/wf-loop-lZk78u/site/pages/strata-cleaning-melbourne/CHECKLIST/w1.md
+w1 PASS — /tmp/wf-loop-lZk78u/site/pages/strata-cleaning-melbourne
+assembled layout picker → preview/layouts.html (marker 69ec1b9e512b)
+checklist → /tmp/wf-loop-lZk78u/site/pages/strata-cleaning-melbourne/CHECKLIST/w2.md
+w2 PASS — /tmp/wf-loop-lZk78u/site/pages/strata-cleaning-melbourne
+=== s0 ===
+s0 CLEAR
+=== w0 ===
+w0 CLEAR
+=== w1 ===
+w1 CLEAR
+=== w2 ===
+w2 CLEAR
+=== PIPELINE COMPLETE — all waves CLEAR ===
+```
+
+## result — 2026-11-23 04:50:46
+- iterations: 4 (max 10), consecutive clean: 2 (need 2)
+- **LOOP CLEAN** — from-scratch runs reached PIPELINE COMPLETE (s0→w2) twice with all mechanical checks green.
+- known external blocker: Mobbin P.14 (research service unreachable to the agent); w3/w4 picks are operator-only by design.
