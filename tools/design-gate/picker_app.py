@@ -1537,13 +1537,38 @@ _NAV_JUNK = re.compile(
     r'aria-expanded="true"', re.I)
 
 
-def _frag_file(kind, seed, mode, salt, tags):
+# the hero topology a gene bundle asks for (retrieval.vibe_topology,
+# the section-bank vocabulary) → the genmenu hero dir that renders it
+_GENE_HERO_DIR = {
+    'hero-media-bg': 'hero-media-bg',
+    'hero-media-left': 'hero-split',
+    'hero-media-right': 'hero-split',
+    'split-50-50': 'hero-split',
+    'hero-no-media': 'hero-centered',
+    # the bank ships no media-top dir — the closest topology that
+    # keeps media is the media background, not the text-only centred
+    'hero-media-top': 'hero-media-bg',
+}
+
+
+_MEDIA_RX = re.compile(r'<(?:img|picture|video|figure|svg)\b')
+
+
+def _frag_file(kind, seed, mode, salt, tags, prefer=None,
+               want_media=None):
     """one bank fragment for `kind` — dir and file seeded so every
     vibe composes a different page; prefers fragments tagged for the
-    resolved theme's mode."""
-    dirs = _FRAG_KIND_DIRS[kind]
+    resolved theme's mode. `prefer` names a dir the genes ranked
+    first; when it has fragments it wins, otherwise the seeded walk
+    falls through the rest. `want_media` ranks fragments by whether
+    they actually carry media markup, so a media ask never lands a
+    text-only render. Returns (fragment html, 'dir/file')."""
+    dirs = list(_FRAG_KIND_DIRS[kind])
+    if prefer in dirs:
+        dirs = [prefer] + [d for d in dirs if d != prefer]
     for off in range(len(dirs)):
-        d = dirs[(seed + salt + off) % len(dirs)]
+        d = dirs[(seed + salt + off) % len(dirs)] \
+            if prefer is None else dirs[off]
         cdir = os.path.join(_GENMENU, d)
         if not os.path.isdir(cdir):
             continue
@@ -1552,8 +1577,17 @@ def _frag_file(kind, seed, mode, salt, tags):
             continue
         def _sc(fn):
             r = tags.get(d + '/' + fn[:-5]) or {}
-            return (2 if r.get('mode') == mode else 0) + \
+            sc = (2 if r.get('mode') == mode else 0) + \
                 len(r.get('style') or [])
+            if want_media is not None:
+                try:
+                    has = bool(_MEDIA_RX.search(open(
+                        os.path.join(cdir, fn), encoding='utf-8',
+                        errors='replace').read()))
+                except OSError:
+                    has = False
+                sc += 4 if has == want_media else 0
+            return sc
         best = max(_sc(f) for f in fns)
         pool = [f for f in fns if _sc(f) == best]
         # try the seeded pick first, then the rest of the pool in
@@ -1568,9 +1602,44 @@ def _frag_file(kind, seed, mode, salt, tags):
                 # menus and context-menu demos render as junk over a
                 # composed page
                 continue
-            return re.sub(r"/src/assets/[^\s\"'()]+",
+            frag = re.sub(r"/src/assets/[^\s\"'()]+",
                           '/media/placeholder.svg', frag)
-    return ''
+            return frag, d + '/' + fn[:-5]
+    return '', ''
+
+
+def _gene_hero_dir(bundle):
+    """the genmenu hero dir the bundle's genes rank — retrieval's
+    section-bank topology ask mapped onto the dirs the vendored bank
+    ships; '' when genes are absent or unmapped."""
+    genes = (bundle or {}).get('gene_map')
+    if not genes:
+        return ''
+    try:
+        import retrieval
+        return _GENE_HERO_DIR.get(
+            retrieval.vibe_topology(genes, 'hero') or '', '')
+    except Exception:
+        return ''
+
+
+def _gene_hero_media(bundle):
+    """True when the bundle's genes ask for hero media (image-style
+    allele with a media role, or media-interleaved surface rhythm),
+    False when they ask for none, None when genes are absent."""
+    genes = (bundle or {}).get('gene_map')
+    if not genes:
+        return None
+    try:
+        import retrieval
+        media = retrieval._VIBE_SHAPE['image-style'][1].get(
+            genes.get('image-style'), ('none',))[0]
+        if genes.get('surface-rhythm') == 'media-interleaved' and \
+                media == 'none':
+            media = 'hero-image'
+        return media not in (None, 'none')
+    except Exception:
+        return None
 
 
 def _frag_doc_parts(pd, fam, bundle):
@@ -1587,14 +1656,21 @@ def _frag_doc_parts(pd, fam, bundle):
         (int(_ord.group(1)) if _ord else 0)
     mode = (bundle or {}).get('theme') or 'light'
     tags = _genmenu_tags()
-    frags = [
+    # hero is gene-ranked: the preset's genes ask for a topology
+    # (retrieval.vibe_topology) and the matching bank dir wins, so
+    # noir/playful/luxe render different hero shapes, not the same
+    # seeded pick. Bands stay seeded for page-to-page variety.
+    picks = [
         _frag_file('nav', seed, mode, 0, tags),
-        _frag_file('hero', seed, mode, 3, tags),
+        _frag_file('hero', seed, mode, 3, tags,
+                   prefer=_gene_hero_dir(bundle) or None,
+                   want_media=_gene_hero_media(bundle)),
         _frag_file('band', seed, mode, 7, tags),
         _frag_file('band', seed, mode, 13, tags),
         _frag_file('footer', seed, mode, 29, tags),
     ]
-    body = ''.join(f for f in frags if f)
+    body = ''.join('<!--frag:' + ref + '-->' + f
+                   for f, ref in picks if f)
     if not body:
         return None
     # the fragments' utilities live in the same sheets _bank_doc
