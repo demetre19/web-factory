@@ -25,8 +25,8 @@ per-section topology scrubbing inline on the full page) →
 sections/elements (galleries). Every preview is static HTML —
 variants differ by a CSS-var override bundle, never by a rebuild.
 """
-import datetime, hashlib, html.parser, json, os, re, sys, \
-    threading, urllib.parse
+import datetime, hashlib, html.parser, json, os, re, subprocess, \
+    sys, tempfile, threading, urllib.parse
 from pathlib import Path
 
 try:
@@ -51,11 +51,7 @@ ELEMENT_GALLERIES = [
      'desc': 'Header + footer designer — nav rows, collapse '
              'patterns, footers. Picks sign the header/footer '
              'elements independently.',
-     'groups': [
-         {'label': 'Header', 'element': 'header',
-          'comps': ['nav-bar', 'flyout-nav']},
-         {'label': 'Footer', 'element': 'footer',
-          'comps': ['footer-bar']}]},
+     'groups': [], 'merged_into_types': True},
     {'id': 'menu', 'title': 'Menu designer', 'icon': 'burger',
      'desc': 'The nav surface at every breakpoint — M/T/D resizes '
              'the preview; the flyout panel doubles as a desktop '
@@ -188,12 +184,13 @@ _MENU_DRIVER = (
 
 
 _BANK_DIRS = {
-    'menu': ('nav-dock-left-drawer', 'nav-top-sheet',
-             'nav-bottom-sheet', 'nav-dropdown-menu',
-             'nav-mega-panel', 'nav-modal'),
+    # nav-*/footer-* bank dirs each get their OWN pick board (added
+    # per-dir at emit time) — 'menu'/'footers' keep only their
+    # emitted-comps galleries
+    'menu': (),
     'modals': ('modal-dialog', 'modal-bottom-sheet',
                'modal-slide-over'),
-    'footers': ('footer-mega', 'footer-columns', 'footer-minimal'),
+    'footers': (),
     'pricing': ('pricing-tiers', 'pricing-single', 'pricing-table'),
     'auth': ('auth-form',),
     'empty-states': ('empty-state',),
@@ -515,33 +512,6 @@ class _BankBind(html.parser.HTMLParser):
 # html.wf-menu-open class — ?menu=open enters it through the same
 # toggle a click takes (audit: cards must render the real open
 # state; docs must load closed with correct aria)
-_BANK_MENU_CSS = (
-    'html:not(.wf-menu-open) [data-wf-panel]{display:none !important}')
-_BANK_MENU_DRV = (
-    '<script>(function(){var d=document,r=d.documentElement;'
-    'function so(o){r.classList.toggle("wf-menu-open",o);'
-    'd.querySelectorAll("[data-wf-trigger]").forEach(function(b){'
-    'b.setAttribute("aria-expanded",o?"true":"false")});'
-    'if(d.body)d.body.style.overflow=o?"hidden":""}'
-    'd.addEventListener("DOMContentLoaded",function(){'
-    'if(new URLSearchParams(location.search).get("menu")==="open")'
-    'so(true)});'
-    'd.addEventListener("click",function(e){'
-    'var t=e.target&&e.target.closest&&'
-    'e.target.closest("[data-wf-trigger]");'
-    'if(t){so(!r.classList.contains("wf-menu-open"));return}'
-    'if(!r.classList.contains("wf-menu-open"))return;'
-    'var cb=e.target.closest&&e.target.closest("button,a");'
-    'if(cb&&/close|dismiss|\\u00d7/i.test('
-    '(cb.getAttribute("aria-label")||"")+" "+(cb.textContent||"")))'
-    '{so(false);return}'
-    'var inP=e.target.closest&&e.target.closest('
-    '"[role=\\"dialog\\"],[role=\\"menu\\"],'
-    '[data-wf-panel]:not([data-wf-scrim])");'
-    'if(!inP)so(false)});'
-    'd.addEventListener("keydown",function(e){'
-    'if(e.key==="Escape"&&r.classList.contains("wf-menu-open"))'
-    'so(false)})})();</script>')
 
 
 def _bank_doc(pd, cls, nav=None):
@@ -1060,6 +1030,284 @@ def _topo_variants(block, comp):
     topology candidate must be a real emitted comp (or a real bank
     topology), so this yields only the comp's own as-built doc."""
     return [('as-built', block, '')]
+
+
+_SEC_SIBLINGS = {
+    # pipeline sec key → same-family emitted comps in
+    # templates/sections — the real topology alternatives for a
+    # scrub row. The SectionBank is PNG-only (adapt() → 'gen' on all
+    # 17k rows), so the legal real-topology source is the pipeline's
+    # own section vocabulary rendered through _slot_frag.
+    'hero': ['stacked-hero', 'cutout-hero-split', 'hero-act-merge',
+             'full-bleed', 'badge-center'],
+    'definition': ['split-media', 'editorial', 'text-index',
+                   'quote-grid', 'proof-band'],
+    'reporting': ['split-media', 'proof-band', 'quote-grid',
+                  'editorial', 'text-index'],
+    'siblings': ['link-grid', 'split-media', 'editorial'],
+    'coverage': ['link-grid', 'cards-n', 'feature-grid', 'editorial'],
+    'scope': ['cards-n', 'feature-grid', 'link-grid', 'logo-wall'],
+    'process': ['sequence', 'timeline-steps', 'how-steps', 'cards-n'],
+    'pricing': ['comparison', 'pricing-table', 'stat-band'],
+    'frequency': ['stat-band', 'cards-n', 'feature-grid'],
+    'end-act': ['form-panel', 'banner-cta', 'cutout-cta-band',
+                'capture-form', 'newsletter-band', 'contact-panel',
+                'cards-n'],
+    'footer': ['footer-bar', 'footer-shop', 'newsletter-band',
+               'link-grid', 'cards-n'],
+}
+
+
+def _sec_siblings(sec):
+    """the same-family comp names a sec may swap to. faq-* rows map
+    to the faq family; unknown secs get the generic content set."""
+    if sec in _SEC_SIBLINGS:
+        return _SEC_SIBLINGS[sec]
+    if sec and sec.startswith('faq'):
+        return ['faq', 'contact-panel', 'cards-n']
+    return ['editorial', 'cards-n', 'split-media']
+
+
+def _real_topo_variants(pd, sec, comp, slot, head, battr, sdir, dist,
+                        have, cap=6):
+    """REAL topology alternatives for a scrub row: same-family
+    templates/sections comps rendered through _slot_frag — real
+    skeleton markup bound to the block's declared copy (the fake
+    injected-CSS variants were dropped in the sweep; the SectionBank
+    is PNG-only so adapt() has no markup to bind). Returns
+    [{'id','preview'}] — at most `cap`, skipping comps already in
+    `have` (LAYOUT-OPTIONS' own allowed list)."""
+    out = []
+    for c in _sec_siblings(sec):
+        if c == comp or c in have or len(out) >= cap:
+            continue
+        inner, unmap = _slot_frag(c, slot)
+        if inner is None or unmap:
+            # no lorem: a sibling that can't bind this row's slots is
+            # dropped, not emitted with filler copy
+            continue
+        markup = (f'<section class="sec-band surface-base '
+                  f'density-regular" data-sec="{sec}" '
+                  f'data-comp="{c}"><div class="sec-inner">'
+                  + inner + '</div></section>')
+        fn = f'{comp}--{c}.html'
+        with open(os.path.join(sdir, fn), 'w',
+                  encoding='utf-8') as fh:
+            fh.write(_doc(head, battr, markup,
+                          css=_LOREM_CSS + _SEQ_CSS))
+        out.append({'id': f'{comp}:{c}',
+                    'preview': os.path.relpath(
+                        os.path.join(sdir, fn), dist)})
+    return out
+
+
+# first-screen dedupe — the auditor measures the RENDERED first
+# screen (1280x720), not markup: a variant within Δ<6 of a kept
+# option is dropped. Renders are batched through one playwright
+# subprocess; when playwright can't run the dedupe is a no-op
+# rather than a fake.
+_FS_PY = (
+    "import json,os,sys,threading,functools,urllib.parse\n"
+    "import http.server\n"
+    "files=json.loads(sys.argv[1]); root=sys.argv[2]; td=sys.argv[3]\n"
+    "class H(http.server.SimpleHTTPRequestHandler):\n"
+    " def __init__(self,*a,**k):\n"
+    "  super().__init__(*a,directory=root,**k)\n"
+    " def translate_path(self,path):\n"
+    "  p=urllib.parse.unquote("
+    "urllib.parse.urlparse(path).path)\n"
+    "  if p.startswith('/built/'):\n"
+    "   q=os.path.realpath(p[6:])\n"
+    "   if q.startswith(os.path.realpath(root)+os.sep):\n"
+    "    return q\n"
+    "   return os.path.join(root,'.wf-no-such')\n"
+    "  return super().translate_path(path)\n"
+    "srv=http.server.ThreadingHTTPServer(('127.0.0.1',0),H)\n"
+    "port=srv.server_address[1]\n"
+    "threading.Thread(target=srv.serve_forever,daemon=True).start()\n"
+    "from playwright.sync_api import sync_playwright\n"
+    "with sync_playwright() as p:\n"
+    " b=p.chromium.launch()\n"
+    " pg=b.new_page(viewport={'width':1280,'height':720})\n"
+    " for i,f in enumerate(files):\n"
+    "  pg.goto('http://127.0.0.1:%d/%s'%(port,f),"
+    "wait_until='load',timeout=30000)\n"
+    "  pg.wait_for_timeout(250)\n"
+    "  pg.screenshot(path=td+'/'+str(i)+'.png',"
+    "clip={'x':0,'y':0,'width':1280,'height':720})\n"
+    " b.close()\n"
+    "print('ok')\n")
+
+
+def _fs_render(files, dist):
+    """{path: grayscale ndarray} — the first 1280x720 of each doc,
+    rendered by one playwright subprocess (venv first, then ambient
+    python, the ingest contract). {} when no interpreter can run
+    playwright — dedupe then skips rather than faking a signature."""
+    pys = []
+    try:
+        import ingest_url
+        pys = ingest_url._render_pythons()
+    except Exception:
+        pass
+    if sys.executable not in pys:
+        pys.append(sys.executable)
+    for py in pys:
+        chk = subprocess.run([py, '-c', 'import playwright'],
+                             capture_output=True, timeout=30)
+        if chk.returncode:
+            continue
+        with tempfile.TemporaryDirectory() as td:
+            try:
+                r = subprocess.run(
+                    [py, '-c', _FS_PY, json.dumps(files), dist, td],
+                    capture_output=True, text=True, timeout=900)
+            except subprocess.TimeoutExpired:
+                continue
+            if r.returncode:
+                continue
+            out = {}
+            for i, fp in enumerate(files):
+                png = os.path.join(td, f'{i}.png')
+                if os.path.isfile(png):
+                    out[fp] = _png_gray(png)
+            return out
+    return {}
+
+
+# downsampled grayscale grid the first-screen diff runs over —
+# cheap, dependency-free, and stable enough for a structural delta
+_FS_GW, _FS_GH = 320, 180
+
+
+def _png_gray(path):
+    """flat [_FS_GW*_FS_GH] grayscale sample of a PNG screenshot.
+    PIL fast path; the fallback decodes PNG with stdlib zlib only
+    (8-bit, non-interlaced, colour types 0/2/3/4/6), so the dedupe
+    never depends on numpy/PIL being installed."""
+    try:
+        from PIL import Image
+        im = Image.open(path).convert('L')
+        w, h = im.size
+        px = im.load()
+        # identical sample grid as the stdlib fallback below —
+        # resize() would interpolate, so the kept set would depend
+        # on whether Pillow happens to be installed
+        return [px[x, y]
+                for y in range(0, h, max(1, h // _FS_GH))
+                for x in range(0, w, max(1, w // _FS_GW))]
+    except ImportError:
+        pass
+    import struct, zlib
+    d = open(path, 'rb').read()
+    if d[:8] != b'\x89PNG\r\n\x1a\n':
+        raise ValueError('not png')
+    pos, idat, plte = 8, b'', []
+    w = h = ct = None
+    while pos + 8 <= len(d):
+        ln = int.from_bytes(d[pos:pos + 4], 'big')
+        typ, chunk = d[pos + 4:pos + 8], d[pos + 8:pos + 8 + ln]
+        pos += 12 + ln
+        if typ == b'IHDR':
+            w, h, bd, ct, _cm, _f, il = struct.unpack(
+                '>IIBBBBB', chunk)
+            if bd != 8 or il:
+                raise ValueError('png fmt')
+        elif typ == b'PLTE':
+            plte = [chunk[i:i + 3]
+                    for i in range(0, len(chunk) - 2, 3)]
+        elif typ == b'IDAT':
+            idat += chunk
+        elif typ == b'IEND':
+            break
+    bpp = {0: 1, 2: 3, 3: 1, 4: 2, 6: 4}[ct]
+    raw = zlib.decompress(idat)
+    stride = w * bpp
+    prev, rows, p = bytearray(stride), [], 0
+    for _y in range(h):
+        f = raw[p]
+        p += 1
+        line = bytearray(raw[p:p + stride])
+        p += stride
+        if f == 1:
+            for i in range(bpp, stride):
+                line[i] = (line[i] + line[i - bpp]) & 255
+        elif f == 2:
+            for i in range(stride):
+                line[i] = (line[i] + prev[i]) & 255
+        elif f == 3:
+            for i in range(stride):
+                a = line[i - bpp] if i >= bpp else 0
+                line[i] = (line[i] + ((a + prev[i]) >> 1)) & 255
+        elif f == 4:
+            for i in range(stride):
+                a = line[i - bpp] if i >= bpp else 0
+                b = prev[i]
+                c = prev[i - bpp] if i >= bpp else 0
+                pr = a + b - c
+                pa, pb, pc = abs(pr - a), abs(pr - b), abs(pr - c)
+                line[i] = (line[i] + (
+                    a if pa <= pb and pa <= pc
+                    else b if pb <= pc else c)) & 255
+        rows.append(line)
+        prev = line
+    out = []
+    for y in range(0, h, max(1, h // _FS_GH)):
+        row = rows[y]
+        for x in range(0, w, max(1, w // _FS_GW)):
+            i = x * bpp
+            if ct == 3:
+                r, g, b = plte[row[i]]
+            elif bpp >= 3:
+                r, g, b = row[i], row[i + 1], row[i + 2]
+            else:
+                out.append(row[i])
+                continue
+            # identical to PIL's RGB->L conversion, so the two paths
+            # sample the same values
+            out.append(
+                (r * 19595 + g * 38470 + b * 7471 + 0x8000) >> 16)
+    return out
+
+
+def _fs_delta(a, b):
+    """mean absolute pixel difference of the rendered first screen
+    (0–255 scale) — the rendered Δ the audit measures, not a markup
+    signature."""
+    if len(a) != len(b):
+        return 99.0
+    return sum(abs(x - y) for x, y in zip(a, b)) / len(a)
+
+
+def _fs_dedupe_rows(spec, dist):
+    """drop variant docs whose rendered first screen sits within
+    Δ<6 of an already-kept option in the same row (base comp or an
+    earlier variant). Pairwise greedy — genuine structural
+    alternatives survive; near-identical first screens don't."""
+    paths = [a['preview'] for r in spec for a in r['alts']]
+    imgs = _fs_render(paths, dist)
+    if not imgs:
+        return
+    for r in spec:
+        kept = []
+        for a in r['alts']:
+            fp = os.path.join(dist, a['preview'])
+            base = imgs.get(a['preview'])
+            if base is None:
+                kept.append(a)
+                continue
+            near = next(
+                (k for k in kept
+                 if imgs.get(k['preview']) is not None and
+                 _fs_delta(base, imgs[k['preview']]) < 6.0), None)
+            if near is not None and a is not r['alts'][0]:
+                try:
+                    os.remove(fp)
+                except OSError:
+                    pass
+                continue
+            kept.append(a)
+        r['alts'] = kept
 
 
 # the menu trigger is a designed affordance, not a text pill — the
@@ -2006,8 +2254,89 @@ def _copy_slot(pd, bid):
     return slot
 
 
+def _block_slot(block):
+    """minimal slot derived from the section's own emitted markup —
+    rows whose block isn't a COPY.json b-row (hero/end-act/footer)
+    bind their real emitted copy instead of lorem: h1/h2 (or the
+    brand mark / CTA label when a row has no heading element) →
+    heading, first <p>s → before, <a>s → links, <details> → qa,
+    <li>s → items, first <img> → media. Detail/list internals bind
+    to qa/items only — never again as paragraphs or links."""
+    slot = {}
+    if not block:
+        return slot
+    def txt(s):
+        # markup-derived text carries character references — unescape
+        # or _inline re-escapes them into literal &amp;/&#39;
+        return html.unescape(re.sub(
+            r'\s+', ' ', re.sub(r'<[^>]+>', '', s)).strip())
+    # <details>/<li> internals bind to qa/items below — strip them
+    # from the paragraph/link pools or answers render twice
+    naked = re.sub(r'<details[^>]*>.*?</details>', '', block,
+                   flags=re.S)
+    naked = re.sub(r'<(?:ul|ol)[^>]*>.*?</(?:ul|ol)>', '', naked,
+                   flags=re.S)
+    m = re.search(r'<h[12][^>]*>(.*?)</h[12]>', naked, re.S)
+    if m:
+        slot['heading'] = txt(m.group(1))
+    else:
+        # a row with no heading element still names itself: the
+        # brand mark (footer chrome) or the CTA label (act rows)
+        m = re.search(
+            r'class="[^"]*(?:brand-mark|logo)[^"]*"[^>]*>(.*?)<',
+            block, re.S) or re.search(
+            r'class="[^"]*wf-cta-button[^"]*"[^>]*>(.*?)</a>',
+            block, re.S)
+        if m:
+            t = txt(m.group(1))
+            if t and len(t) <= 60:
+                slot['heading'] = t[:1].upper() + t[1:]
+    ps = [txt(p) for p in
+          re.findall(r'<p[^>]*>(.*?)</p>', naked, re.S)]
+    ps = [p for p in ps if p]
+    if ps:
+        slot['before'] = ps[:3]
+    if len(ps) > 3:
+        slot['after'] = ps[3:]
+    links = [{'text': t} for t in
+             (txt(a) for a in re.findall(
+                 r'<a\b[^>]*>(.*?)</a>', naked, re.S)) if t]
+    if links:
+        slot['links'] = links[:4]
+    qas = [{'q': txt(m.group(1)), 'a': txt(m.group(2))}
+           for m in re.finditer(
+               r'<details[^>]*>\s*<summary[^>]*>(.*?)</summary>'
+               r'(.*?)</details>', block, re.S)]
+    if qas:
+        slot['qa'] = qas
+    lis = [txt(l) for l in
+           re.findall(r'<li[^>]*>(.*?)</li>', block, re.S)]
+    lis = [l for l in lis if l]
+    if lis:
+        slot['items'] = [{'term': l, 'text': ''} for l in lis]
+    elif links and re.match(r'\s*<footer', block):
+        # a footer's link columns ARE its content — card-list
+        # alternatives bind them as items, not keyword stubs
+        slot['items'] = [{'term': l['text'], 'text': ''}
+                         for l in links[:6]]
+    im = re.search(r'<img[^>]+src="([^"]+)"', block)
+    if im:
+        slot['media'] = im.group(1)
+    return slot
+
+
 def _iterm(i):
     return (i or {}).get('term') or (i or {}).get('title') or ''
+
+
+def _tail(after, links):
+    """trailing slot copy a mirror's skeleton has no slot for —
+    rendered after the comp's own content, never dropped"""
+    t = ''.join(f'<p class="mt-flow text-fluid-0">{_inline(l)}</p>'
+                for l in links)
+    t += ''.join(f'<p class="mt-flow text-fluid-0">{_inline(p)}</p>'
+                 for p in after)
+    return t
 
 
 def _slot_frag(comp, slot):
@@ -2026,6 +2355,14 @@ def _slot_frag(comp, slot):
     sub = slot.get('answer') or ''
     before = slot.get('before') or []
     items = slot.get('items') or []
+    # faq rows carry copy as qa pairs; they outrank the mechanical
+    # items-from-terms fill — a card-list alternative binds the real
+    # questions/answers, not keyword stubs
+    if slot.get('qa') and (
+            not items or slot.get('items_from') == 'terms'):
+        items = [{'term': q.get('q') or q.get('term') or '',
+                  'text': q.get('a') or q.get('text') or ''}
+                 for q in slot['qa']]
     links = [l.get('text') or f"[{l.get('anchor','')}]({l.get('href','')})"
              for l in (slot.get('links') or [])]
     after = slot.get('after') or []
@@ -2357,6 +2694,353 @@ def _slot_frag(comp, slot):
               f'<button class="wf-cta-button" type="submit">'
               f'{_L.format(s="cta")}</button></form></div></div>')
         unmapped.append('cta')
+    elif comp == 'stacked-hero':
+        h += '<div class="text-center"><div class="mx-auto max-w-prose">'
+        h += f'<h2 class="text-fluid-3">{head}</h2>'
+        if sub:
+            h += f'<p class="mt-stack text-fluid-1">{_inline(sub)}</p>'
+        h += ''.join(f'<p class="mt-stack text-fluid-0">'
+                     f'{_inline(p)}</p>' for p in before)
+        h += ''.join(f'<p class="mt-stack text-fluid-0">'
+                     f'{_inline(p)}</p>' for p in after)
+        if links:
+            h += f'<a class="wf-cta-button mt-stack" href="#">' \
+                 f'{_inline(links[0])}</a>'
+        h += '</div><div class="mt-stack media-round">'
+        if slot.get('media'):
+            h += ('<img src="' + _inline(slot['media']) + '" alt="" '
+                  'style="width:100%;object-fit:cover;display:block">')
+        else:
+            h += ('<div class="ph-media wf-lorem" data-slot="media">'
+                  'media slot</div>')
+        h += '</div></div>'
+    elif comp == 'cutout-hero-split':
+        h += '<div class="split"><div class="stack">'
+        h += f'<h2 class="t0 h-section text-fluid-3">{head}</h2>'
+        if sub:
+            h += f'<p class="t0 lede">{_inline(sub)}</p>'
+        h += ''.join(f'<p class="t0 sub-p">{_inline(p)}</p>'
+                     for p in before)
+        if items:
+            h += '<ul class="t0 sub-p list-items">' + ''.join(
+                f'<li><strong>{_inline(_iterm(i))}</strong> – '
+                f'<span>{_inline(i.get("text") or "")}</span></li>'
+                for i in items) + '</ul>'
+        h += ''.join(f'<p class="t0 sub-p">{_inline(t)}</p>'
+                     for t in links)
+        h += ''.join(f'<p class="t0 sub-p">{_inline(p)}</p>'
+                     for p in after)
+        h += '</div>'
+        if slot.get('media'):
+            h += ('<figure><img src="' + _inline(slot['media']) +
+                  '" alt="" style="width:100%;object-fit:contain">'
+                  '</figure></div>')
+        else:
+            h += ('<figure><div class="cutout-ph ph-media wf-lorem" '
+                  'data-slot="media">media slot</div></figure></div>')
+    elif comp == 'hero-act-merge':
+        h += '<div class="grid gap-fluid-l md:grid-cols-2 ' \
+             'md:items-center"><div class="max-w-prose">'
+        h += f'<h2 class="text-fluid-3">{head}</h2>'
+        if sub:
+            h += f'<p class="mt-stack text-fluid-1">{_inline(sub)}</p>'
+        h += ''.join(f'<p class="mt-stack text-fluid-0">'
+                     f'{_inline(p)}</p>' for p in before)
+        h += ''.join(f'<p class="mt-stack text-fluid-0">'
+                     f'{_inline(p)}</p>' for p in after)
+        h += '</div>'
+        if links:
+            h += f'<a class="wf-cta-button" href="#">' \
+                 f'{_inline(links[0])}</a>'
+        h += '</div>'
+    elif comp == 'full-bleed':
+        h += '<div class="media-bg">'
+        if slot.get('media'):
+            h += f'<img src="{_inline(slot["media"])}" alt="">'
+        else:
+            h += ('<div class="ph-media wf-lorem" data-slot="media">'
+                  'media slot</div>')
+        h += '</div><div class="text-center">'
+        h += f'<h2 class="text-fluid-3">{head}</h2>'
+        if sub:
+            h += ('<p class="mx-auto mt-stack max-w-prose '
+                  f'text-fluid-1">{_inline(sub)}</p>')
+        h += ''.join(f'<p class="mx-auto mt-stack max-w-prose '
+                     f'text-fluid-0">{_inline(p)}</p>' for p in before)
+        if links:
+            h += ('<a class="wf-cta-button mt-fluid-l" href="#">'
+                  f'{_inline(links[0])}</a>')
+        h += _tail(after, [])
+        h += '</div>'
+    elif comp == 'badge-center':
+        h += '<div class="text-center">'
+        h += ('<span class="wf-badge-chip" aria-hidden="true">'
+              '<svg width="16" height="16" viewBox="0 0 16 16" '
+              'fill="none"><path d="M3 8.5l3 3 7-7" stroke='
+              '"currentColor" stroke-width="2"/></svg></span>')
+        h += f'<h2 class="mt-fluid-s text-fluid-1">{head}</h2>'
+        if sub:
+            h += f'<p class="mt-fluid-s text-fluid-0">' \
+                 f'{_inline(sub)}</p>'
+        h += ''.join(f'<p class="mt-fluid-s text-fluid-0">'
+                     f'{_inline(p)}</p>' for p in before)
+        h += ''.join(f'<p class="mt-fluid-s text-fluid-0">'
+                     f'{_inline(p)}</p>' for p in after)
+        h += '</div>'
+    elif comp == 'feature-grid':
+        h += '<div class="wf-feature-2"><div class="sec-inner"><div>'
+        h += '<div class="intro">' \
+             f'<h2 class="text-fluid-2">{head}</h2>'
+        if sub:
+            h += f'<p class="text-fluid-0">{_inline(sub)}</p>'
+        h += '</div>'
+        if before:
+            h += '<div class="flow mt-stack">' + ''.join(
+                f'<p class="mt-flow text-fluid-0">{_inline(p)}</p>'
+                for p in before) + '</div>'
+        its = items or [{'term': _Raw(_L.format(s='items[]')),
+                         'text': _Raw(_L.format(s='items[]'))}
+                        for _i in range(3)]
+        if not items:
+            unmapped.append('items')
+        h += '<div><div class="grid-auto gap-fluid-m">' + ''.join(
+            '<div class="card"><div class="wf-feature-2-li__content">'
+            f'<h3 class="text-fluid-1">{_val(_iterm(i))}</h3>'
+            f'<p class="text-fluid-0">{_val(i.get("text") or "")}</p>'
+            '</div></div>' for i in its) + '</div></div>'
+        h += _tail(after, links)
+        h += '</div></div></div>'
+    elif comp == 'timeline-steps':
+        h += ('<div class="wf-timeline-1"><div class="sec-inner"><div>'
+              '<div class="wf-timeline-1__content">'
+              '<div class="intro intro--left">'
+              f'<h2 class="text-fluid-2">{head}</h2>')
+        if sub:
+            h += f'<p class="text-fluid-0">{_inline(sub)}</p>'
+        h += '</div>'
+        if before:
+            h += '<div class="flow mt-stack">' + ''.join(
+                f'<p class="mt-flow text-fluid-0">{_inline(p)}</p>'
+                for p in before) + '</div>'
+        its = items or [{'term': _Raw(_L.format(s='items[]')),
+                         'text': _Raw(_L.format(s='items[]'))}
+                        for _i in range(4)]
+        if not items:
+            unmapped.append('items')
+        h += ('<div class="wf-timeline-1-list">'
+              '<div class="grid-auto gap-fluid-m">' + ''.join(
+            '<div class="wf-timeline-1-card card">'
+            '<div class="wf-timeline-1-card__content">'
+            f'<h3 class="text-fluid-1">{_val(_iterm(i))}</h3>'
+            f'<p class="text-fluid-0">{_val(i.get("text") or "")}</p>'
+            '</div></div>' for i in its) + '</div></div>')
+        h += _tail(after, links)
+        h += '</div></div></div></div>'
+    elif comp == 'how-steps':
+        h += '<div class="wf-how-it-works-2">' \
+             f'<h2 class="text-fluid-2">{head}</h2>'
+        if sub:
+            h += f'<p class="mt-stack lede">{_inline(sub)}</p>'
+        h += ''.join(f'<p class="mt-flow text-fluid-0">'
+                     f'{_inline(p)}</p>' for p in before)
+        its = items or [{'term': _Raw(_L.format(s='items[]')),
+                         'text': _Raw(_L.format(s='items[]'))}
+                        for _i in range(3)]
+        if not items:
+            unmapped.append('items')
+        h += ('<div class="sec-inner"><div><div class="hworks-grid-ul">'
+              + ''.join(
+            '<div class="hworks-card card">'
+            '<div class="hworks-card__content">'
+            f'<h3 class="text-fluid-1">{_val(_iterm(i))}</h3>'
+            f'<p class="text-fluid-0">{_val(i.get("text") or "")}</p>'
+            '</div></div>' for i in its) + '</div></div></div>')
+        h += ''.join(f'<p class="text-fluid-0">{_inline(t)}</p>'
+                     for t in links)
+        h += ''.join(f'<p class="mt-flow text-fluid-0">'
+                     f'{_inline(p)}</p>' for p in after)
+        h += '</div>'
+    elif comp == 'pricing-table':
+        h += ('<div class="wf-item-bpivlr"><div class="sec-inner">'
+              '<div class="wf-pricing-2-container"><div class="intro">'
+              f'<h2 class="text-fluid-2">{head}</h2>')
+        if sub:
+            h += f'<p class="text-fluid-0">{_inline(sub)}</p>'
+        h += '</div>'
+        if before:
+            h += '<div class="flow mt-stack">' + ''.join(
+                f'<p class="mt-flow text-fluid-0">{_inline(p)}</p>'
+                for p in before) + '</div>'
+        its = items or [{'term': _Raw(_L.format(s='items[]')),
+                         'text': _Raw(_L.format(s='items[]'))}
+                        for _i in range(3)]
+        if not items:
+            unmapped.append('items')
+        h += ('<div><div class="grid-auto gap-fluid-m">' + ''.join(
+            '<div class="wf-li-benefits card"><div class="stack">'
+            f'<h3 class="text-fluid-1">{_val(_iterm(i))}</h3>'
+            f'<p class="text-fluid-0">{_val(i.get("text") or "")}</p>'
+            '</div></div>' for i in its) + '</div></div>')
+        if links:
+            h += ('<p class="mt-fluid-m"><a class="wf-cta-button" '
+                  f'href="#">{_inline(links[0])}</a></p>')
+        h += _tail(after, [])
+        h += '</div></div></div>'
+    elif comp == 'contact-panel':
+        h += ('<div class="wf-contact-1"><div class="contact-1">'
+              '<div class="wf-contact-1__container">'
+              '<div class="intro">'
+              f'<h2 class="text-fluid-2">{head}</h2>')
+        if sub:
+            h += f'<p class="text-fluid-0">{_inline(sub)}</p>'
+        h += '</div>'
+        if before:
+            h += '<div class="flow mt-stack">' + ''.join(
+                f'<p class="mt-flow text-fluid-0">{_inline(p)}</p>'
+                for p in before) + '</div>'
+        its = items or [{'term': _Raw(_L.format(s='items[]')),
+                         'text': _Raw(_L.format(s='items[]'))}
+                        for _i in range(3)]
+        if not items:
+            unmapped.append('items')
+        h += ('<div class="wf-contact-1__content">'
+              '<div class="wf-contact-1-grid-ul">' + ''.join(
+            '<div class="wf-contact-1-card card">'
+            f'<h3 class="text-fluid-1">{_val(_iterm(i))}</h3>'
+            f'<p class="text-fluid-0">{_val(i.get("text") or "")}</p>'
+            '</div>' for i in its) + '</div></div>')
+        h += _tail(after, links)
+        h += '</div></div></div>'
+    elif comp == 'logo-wall':
+        h += '<div class="split"><div class="sec-head">'
+        h += f'<h2 class="text-fluid-3">{head}</h2>'
+        if sub:
+            h += f'<p class="lede">{_inline(sub)}</p>'
+        h += '</div>'
+        its = items or [{'term': _Raw(_L.format(s='items[]')),
+                         'text': _Raw(_L.format(s='items[]'))}
+                        for _i in range(4)]
+        if not items:
+            unmapped.append('items')
+        h += '<ul class="logo-row list-plain">' + ''.join(
+            '<li><span class="brand-logo">'
+            + _val(i.get('label') or i.get('term') or
+                   i.get('title') or i.get('text') or '')
+            + '</span></li>' for i in its) + '</ul>'
+        h += _tail(after, links) + '</div>'
+    elif comp == 'banner-cta':
+        h += ('<div class="wf-call-to-action-11"><div class="sec-inner">'
+              '<div class="wf-cta-11-container">'
+              '<div class="wf-cta-11__box">')
+        h += f'<h2 class="text-fluid-2">{head}</h2>'
+        if sub:
+            h += f'<p class="text-fluid-0">{_inline(sub)}</p>'
+        h += ''.join(f'<p class="mt-flow text-fluid-0">'
+                     f'{_inline(p)}</p>' for p in before)
+        if links:
+            h += ('<p class="mt-fluid-m"><a class="wf-cta-button" '
+                  f'href="#">{_inline(links[0])}</a></p>')
+        h += _tail(after, [])
+        h += '</div></div></div></div>'
+    elif comp == 'cutout-cta-band':
+        h += '<div class="split cta-band"><div class="stack">'
+        h += f'<h2 class="t0 h-section text-fluid-3">{head}</h2>'
+        if sub:
+            h += f'<p class="t0 lede">{_inline(sub)}</p>'
+        h += ''.join(f'<p class="t0 sub-p">{_inline(p)}</p>'
+                     for p in before)
+        if links:
+            h += ('<div class="cta-row mt-act">'
+                  f'<a class="wf-cta-button" href="#">'
+                  f'{_inline(links[0])}</a></div>')
+        h += _tail(after, [])
+        h += '</div>'
+        if slot.get('media'):
+            h += ('<figure class="cutout-slot"><img src="'
+                  + _inline(slot['media'])
+                  + '" alt="" style="width:100%;object-fit:contain">'
+                    '</figure></div>')
+        else:
+            h += ('<figure class="cutout-slot"><div class="ph-media '
+                  'wf-lorem" data-slot="media">media slot</div>'
+                  '</figure></div>')
+    elif comp == 'capture-form':
+        h += '<div class="text-center"><div class="mx-auto max-w-prose">'
+        h += f'<h2 class="text-fluid-3">{head}</h2>'
+        if sub:
+            h += f'<p class="mt-stack text-fluid-0">{_inline(sub)}</p>'
+        h += ''.join(f'<p class="mt-stack text-fluid-0">'
+                     f'{_inline(p)}</p>' for p in before)
+        h += ('<form class="mt-stack flex flex-wrap justify-center '
+              'gap-fluid-s" onsubmit="return false">'
+              '<label class="sr-only">Email</label>'
+              '<input class="input" type="email" placeholder="Email">'
+              '<button class="wf-cta-button" type="submit">'
+              + _inline(links[0] if links else 'Submit')
+              + '</button></form>')
+        h += _tail(after, links[1:] if links else [])
+        h += '</div></div>'
+    elif comp == 'newsletter-band':
+        h += ('<div class="wf-newsletter-1"><div class="sec-inner">'
+              '<div class="newsletter-1-container">'
+              '<div class="newsletter-1__left-box">')
+        h += f'<h2 class="text-fluid-2">{head}</h2>'
+        if sub:
+            h += f'<p class="text-fluid-0">{_inline(sub)}</p>'
+        h += ''.join(f'<p class="mt-flow text-fluid-0">'
+                     f'{_inline(p)}</p>' for p in before)
+        h += ('<div class="bm-form"><form class="bm-form-widget" '
+              'onsubmit="return false"><input class="input" '
+              'type="email" placeholder="Email">'
+              '<button class="wf-cta-button" type="submit">'
+              'Subscribe</button></form></div>')
+        h += _tail(after, links)
+        h += '</div></div></div></div>'
+    elif comp == 'footer-shop':
+        h += ('<div class="wf-shop-footer-1"><div class="stack">'
+              '<div class="sec-inner">'
+              '<div class="wf-shop-footer-1__container">'
+              '<div class="wf-shop-footer-1__content">')
+        # heading order: h2 leads the h3 card grid — never h3 first
+        h += f'<h2 class="text-fluid-2">{head}</h2>'
+        if sub:
+            h += f'<p class="text-fluid-0">{_inline(sub)}</p>'
+        h += '</div></div><div class="wf-usp-1-list">'
+        its = items or [{'term': _Raw(_L.format(s='items[]')),
+                         'text': _Raw(_L.format(s='items[]'))}
+                        for _i in range(3)]
+        if not items:
+            unmapped.append('items')
+        h += ''.join(
+            '<div class="wf-usp-1-list-card card">'
+            '<div class="wf-usp-1-list-card__content">'
+            f'<h3 class="text-fluid-1">{_val(_iterm(i))}</h3>'
+            f'<p class="text-fluid-0">{_val(i.get("text") or "")}</p>'
+            '</div></div>' for i in its)
+        h += '</div><div class="wf-shop-footer-1__container">'
+        h += '<div class="wf-shop-footer-1__content">'
+        if links:
+            h += '<ul class="mt-stack list-plain">' + ''.join(
+                f'<li>{_inline(t)}</li>' for t in links) + '</ul>'
+        h += _tail(after, [])
+        h += '</div></div></div></div></div>'
+    elif comp == 'footer-bar':
+        h += '<div class="stack gap-form"><div class="foot-cols">'
+        h += f'<div class="foot-col"><div class="brand-mark">{head}</div>'
+        if sub:
+            h += f'<p class="t0 sub-p measure-28">{_inline(sub)}</p>'
+        h += ''.join(f'<p class="t0 sub-p">{_inline(p)}</p>'
+                     for p in before)
+        h += '<p class="t0 attrib">©</p></div>'
+        if links:
+            h += '<div class="foot-col"><p class="foot-head">'
+            h += f'{_inline(links[0])}</p>'
+            h += ''.join(f'<a class="nav-link" href="#">{_inline(t)}'
+                         '</a>' for t in links[1:])
+            h += '</div>'
+        h += ''.join(f'<p class="t0 sub-p">{_inline(p)}</p>'
+                     for p in after)
+        h += '</div></div>'
     else:
         return _generic_frag(slot, unmapped), unmapped
     return h, unmapped
@@ -2428,12 +3112,16 @@ def emit_section_fragments(pd):
         # shape comps (they render via _slot_frag, no artifact needed)
         if 'sequence' in cand and 'sequence' not in blocks:
             cand += ['timeline-spine', 'numbered-rail', 'icon-badge']
+        # rows without a COPY.json b-row (hero/end-act/footer) bind
+        # their copy from the section's own emitted block, not lorem
+        slot = _copy_slot(pd, bid) or _block_slot(block)
         for c in cand:
-            src = blocks.get(c)
+            # an artifact binds ONLY its own row's copy — a foreign
+            # row's emitted fragment would carry that row's copy into
+            # this board, so non-own candidates render through
+            # _slot_frag bound to THIS row's slot
+            src = blocks.get(c) if c == comp else None
             if src:
-                # HARD RULE: a candidate renders the comp's real
-                # emitted fragment — the pipeline's own file — never
-                # a re-rendered skeleton when an artifact exists
                 markup, bhead, battr, css = src[0], src[1], src[2], ''
             else:
                 if c in _NAV_COMPS or c == 'footer-bar':
@@ -2442,9 +3130,15 @@ def emit_section_fragments(pd):
                     # fragment is missing, not a _slot_frag mock
                     missing.append(c)
                     continue
-                inner, unmap = _slot_frag(c, _copy_slot(pd, bid))
+                inner, unmap = _slot_frag(c, slot)
                 if inner is None:
                     missing.append(c)
+                    continue
+                if unmap:
+                    # NO LOREM: a variant that can't bind the slot it
+                    # needs is dropped, not emitted with filler copy
+                    missing.append(c)
+                    unmapped_map[c] = unmap
                     continue
                 bhead, battr = rows[0][4], rows[0][5]
                 markup = (f'<section class="sec-band surface-base '
@@ -2452,8 +3146,6 @@ def emit_section_fragments(pd):
                           f'data-comp="{c}"><div class="sec-inner">'
                           + inner + '</div></section>')
                 css = _LOREM_CSS + _SEQ_CSS
-                if unmap:
-                    unmapped_map[c] = unmap
             emitted.append(c)
             fp = os.path.join(sdir, c + '.html')
             with open(fp, 'w', encoding='utf-8') as fh:
@@ -2461,22 +3153,24 @@ def emit_section_fragments(pd):
             rel = os.path.relpath(fp, dist)
             alts.append({'id': c, 'preview': rel})
             if c == comp:
-                for topo, markup, tcss in _topo_variants(
-                        src[0], c)[1:]:
-                    fn = f'{c}--{topo}.html'
-                    with open(os.path.join(sdir, fn), 'w',
-                              encoding='utf-8') as fh:
-                        fh.write(_doc(src[1], src[2], markup,
-                                      css=tcss))
-                    rel = os.path.relpath(
-                        os.path.join(sdir, fn), dist)
-                    alts.append({'id': f'{c}:{topo}', 'preview': rel})
+                # real topology alternatives: same-family emitted
+                # comps rendered through _slot_frag (SectionBank is
+                # PNG-only — adapt() has no markup to bind)
+                for alt in _real_topo_variants(
+                        pd, sec, c, slot,
+                        src[1], src[2], sdir, dist, set(cand)):
+                    alts.append(alt)
         cur = [i for i, a in enumerate(alts) if a['id'] == comp]
         spec.append({'sec': sec, 'bid': bid, 'comp': comp,
                      'alts': alts, 'idx': cur[0] if cur else 0})
         depth.append({'sec': sec, 'allowed': allowed.get(bid) or [],
                       'emitted': emitted, 'missing': missing,
                       'unmapped': unmapped_map})
+    # boards offer genuinely different structures: pairwise rendered
+    # first-screen Δ must reach 6, capped at 7 options per row
+    _fs_dedupe_rows(spec, dist)
+    for r in spec:
+        r['alts'] = r['alts'][:7]
     return spec, depth
 
 
@@ -2760,6 +3454,8 @@ def app_data(pipeline):
                   for k, v in (lo.get('allowed') or {}).items()}
     galleries = {}
     for g in ELEMENT_GALLERIES:
+        if g.get('merged_into_types'):
+            continue  # the per-type boards below cover this bank
         gcards = []
         for grp in g['groups']:
             comps = grp['comps']
@@ -2853,6 +3549,29 @@ def app_data(pipeline):
         galleries[g['id']] = dict(
             g, cards=gcards,
             emitted_n=sum(1 for c in gcards if c['emitted']))
+
+    # per-type header/footer pick boards — one board per bank
+    # nav-*/footer-* dir, every stored exemplar of that type through
+    # the real BaseLayout chrome (closed-by-default nav, M/T/D)
+    for gid in sorted(bank_cards):
+        if not gid.startswith(('nav-', 'footer-')):
+            continue
+        kind, _, pretty = gid.partition('-')
+        pretty = pretty.replace('-', ' ')
+        galleries[gid] = {
+            'id': gid,
+            'title': ('Nav · ' if kind == 'nav' else 'Footer · ') +
+                     pretty,
+            'icon': 'burger' if kind == 'nav' else 'bars',
+            'desc': (f'Every banked {pretty} {kind} exemplar — '
+                     "bound to this site's brand, links and copy" +
+                     (', desktop + mobile frames' if kind == 'nav'
+                      else '') +
+                     '. Pick signs the element-pick path.'),
+            'groups': [], 'mobile': kind == 'nav',
+            'cards': bank_cards[gid],
+            'emitted_n': len(bank_cards[gid]),
+            'hf_type': True}
 
     boards = {}
     # step 1 — VIBE: the coarse family scrub
@@ -3591,7 +4310,10 @@ def atlas_family(pd, fam):
     if vibe_atlas is None or not fam:
         return None
     if fam.startswith('atlas:'):
-        p = vibe_atlas.PRESET_BY_ID.get(fam[6:])
+        pid = fam[6:]
+        p = vibe_atlas.PRESET_BY_ID.get(pid) or \
+            vibe_atlas.PRESET_BY_ID.get(
+                vibe_atlas.PRESET_ALIAS.get(pid, ''))
         return vibe_atlas.resolve(p['genes']) if p else None
     if fam.startswith(('genes:', 'custom:')) and pd:
         ep = _json_at(os.path.dirname(pd.rstrip('/'))
@@ -3691,6 +4413,449 @@ def _fx_targets(cls):
     return ['any']
 
 
+def _site_nav(block):
+    """(brand, links, cta, groups) bound from the page's own nav
+    comp — what every bank-topology menu doc rebinds over the
+    exemplar's copy so no foreign brand ever renders (audit).
+    links/cta are (href, label); groups are the drawer's IA heads."""
+    brand = re.search(
+        r'class="[^"]*\blogo\b[^"]*"[^>]*>\s*([^<]{1,60})', block)
+    region = block
+    m = re.search(r'class="[^"]*nav-links[^"]*"', block)
+    if m:
+        end = block.find('</nav>', m.start())
+        region = block[m.start():end if end > 0 else len(block)]
+    links = [(h, re.sub(r'<[^>]+>', '', lbl).strip())
+             for h, lbl in re.findall(
+                 r'<a [^>]*href="([^"]*)"[^>]*>(.*?)</a>',
+                 region, re.S)]
+    cm = re.search(r'class="[^"]*nav-cta[^"]*".*?</p>|'
+                   r'class="[^"]*nav-cta[^"]*".*?</div>', block, re.S)
+    cta = None
+    if cm:
+        am = re.search(r'<a [^>]*href="([^"]*)"[^>]*>(.*?)</a>',
+                       cm.group(0), re.S)
+        if am:
+            cta = (am.group(1),
+                   re.sub(r'<[^>]+>', '', am.group(2)).strip())
+    groups = re.findall(r'class="nav-group-head"[^>]*>\s*([^<]+)',
+                        block)
+    return ((re.sub(r'<[^>]+>', '', brand.group(1)).strip()
+             if brand else ''),
+            [(h, l) for h, l in links if l],
+            cta,
+            [g.strip() for g in groups])
+
+class _BankBind(html.parser.HTMLParser):
+    """Rewrite a genmenu exemplar for the element-preview stage:
+    bind the site's brand/links/CTA over the exemplar copy, load
+    every menu layer CLOSED (aria-expanded=false + data-wf-panel on
+    the overlay/dropdown elements the driver hides), and mark the
+    triggers the driver toggles. Structure is the exemplar's own —
+    only copy, aria and state markers change."""
+
+    VOID = {'br', 'hr', 'img', 'input', 'meta', 'link', 'source',
+            'wbr', 'area', 'base', 'col', 'embed', 'track', 'param'}
+    _PANEL_CLS = re.compile(r'\binset-0\b|\btop-full\b')
+    _SCRIM_CLS = re.compile(r'\bbg-\w|\bbackdrop|opacity')
+
+    def __init__(self, brand, links, cta, groups):
+        super().__init__(convert_charrefs=False)
+        self.brand = brand or 'Site'
+        self.links = links or [('#', 'Menu')]
+        self.cta = cta or ('#contact', 'Contact')
+        self.groups = groups or [self.brand]
+        self.out = []
+        self._stack = []
+        self._brand_done = False
+        self._li = 0          # nav-link cycle
+        self._gi = 0          # group-head cycle
+        self._panel_n = 0
+        self._controls = set()
+        self._trigger_seen = False
+        self._btn_seen = False
+        self._relabel = None   # (text, seen_first) inside relabel el
+        self._relstk = []      # outer relabels restored on endtag
+
+    @staticmethod
+    def _aria(v):
+        """Strip brand words from accessible names — the exemplar's
+        aria-labels name the bank's brand; reduce them to the
+        generic role the control plays (audit: no foreign copy)."""
+        low = v.lower()
+        if 'close' in low or 'dismiss' in low:
+            return 'Close menu'
+        if 'search' in low or 'filter' in low:
+            return 'Search'
+        if 'menu' in low or 'navigat' in low:
+            return 'Menu'
+        if 'dialog' in low or 'sheet' in low or 'drawer' in low:
+            return 'Menu'
+        return 'Menu'
+
+    def _emit(self, tag, attrs, selfclose=False):
+        a = dict(attrs)
+        cls = a.get('class', '')
+        if 'aria-label' in a:
+            a['aria-label'] = self._aria(a['aria-label'])
+        if 'alt' in a:
+            a['alt'] = self.brand
+        if 'title' in a:
+            a['title'] = self.brand
+        panel = False
+        if (a.get('role') in ('dialog', 'menu') or
+                self._PANEL_CLS.search(cls) or
+                (a.get('id') and a['id'] in self._controls)):
+            panel = True
+        trigger = (tag in ('button', 'a') and
+                   ('aria-haspopup' in a or 'aria-expanded' in a))
+        if not trigger and tag == 'button' and not self._btn_seen \
+                and not self._trigger_seen:
+            # the bank's open-trigger carries no aria at all
+            # (nav-modal) — the FIRST button in the doc is it
+            trigger = True
+        if tag == 'button':
+            self._btn_seen = True
+        if trigger:
+            self._trigger_seen = True
+            a['data-wf-trigger'] = ''
+            a['aria-expanded'] = 'false'
+            if 'aria-controls' not in a:
+                a['aria-controls'] = 'wf-panel-0'
+            else:
+                self._controls.add(a['aria-controls'])
+        if panel:
+            a['data-wf-panel'] = ''
+            if not a.get('id'):
+                a['id'] = f'wf-panel-{self._panel_n}'
+                self._panel_n += 1
+            if (a.get('role') not in ('dialog', 'menu') and
+                    self._SCRIM_CLS.search(cls) and 'z-' not in cls):
+                a['data-wf-scrim'] = ''
+            elif (a.get('role') not in ('dialog', 'menu') and
+                  'inset-0' in cls and self._SCRIM_CLS.search(cls)):
+                a['data-wf-scrim'] = ''
+        # ---- copy rebind ------------------------------------
+        relabeled = False
+        if tag == 'a':
+            if not self._brand_done and \
+                    ('logo' in cls or 'brand' in cls or
+                     a.get('href', '') in ('#', '#top', '/', '')):
+                self._relabel = (self.brand, False)
+                self._brand_done = True
+            elif 'cta' in cls.lower():
+                self._relabel = (self.cta[1], False)
+                a['href'] = self.cta[0]
+            else:
+                h, l = self.links[self._li % len(self.links)]
+                self._li += 1
+                self._relabel = (l, False)
+                if h:
+                    a['href'] = h
+            relabeled = True
+        elif tag == 'button' and \
+                'close' not in (a.get('aria-label') or '').lower() and \
+                '\u00d7' not in (a.get('aria-label') or ''):
+            if trigger:
+                self._relabel = (
+                    self.groups[self._gi % len(self.groups)], False)
+                self._gi += 1
+            elif 'cta' in cls.lower():
+                self._relabel = (self.cta[1], False)
+            else:
+                h, l = self.links[self._li % len(self.links)]
+                self._li += 1
+                self._relabel = (l, False)
+            relabeled = True
+        elif tag in ('h1', 'h2', 'h3', 'h4') and \
+                '[data-wf-panel]' in self._stack:
+            self._relabel = (
+                self.groups[self._gi % len(self.groups)], False)
+            self._gi += 1
+            relabeled = True
+        elif tag in ('p', 'span', 'strong', 'div') and \
+                '[data-wf-panel]' in self._stack and self._relabel is None:
+            h, l = self.links[self._li % len(self.links)]
+            self._li += 1
+            self._relabel = (l, False)
+            relabeled = True
+        if tag == 'input':
+            if 'placeholder' in a:
+                a['placeholder'] = 'Search'
+            if 'value' in a:
+                a['value'] = ''
+        if relabeled:
+            self._relstk.append(tag)
+        at = ''.join(
+            f' {k}' if v in (None, '') else
+            f' {k}="{html.escape(str(v), quote=True)}"'
+            for k, v in a.items())
+        self.out.append(f'<{tag}{at}{" /" if selfclose else ""}>')
+        if not selfclose and tag not in self.VOID:
+            self._stack.append(
+                tag if not panel else '[data-wf-panel]')
+
+    def handle_starttag(self, tag, attrs):
+        self._emit(tag, attrs)
+
+    def handle_startendtag(self, tag, attrs):
+        self._emit(tag, attrs, selfclose=True)
+
+    def handle_endtag(self, tag):
+        self.out.append(f'</{tag}>')
+        for i in range(len(self._stack) - 1, -1, -1):
+            if self._stack[i] == tag or \
+                    self._stack[i] == '[data-wf-panel]':
+                del self._stack[i:]
+                break
+        if self._relstk and self._relstk[-1] == tag:
+            self._relstk.pop()
+            self._relabel = None
+
+    def handle_data(self, data):
+        if self._relabel is not None:
+            if not self._relabel[1] and data.strip():
+                self.out.append(
+                    html.escape(self._relabel[0], quote=False))
+                self._relabel = (self._relabel[0], True)
+            elif not data.strip():
+                self.out.append(html.escape(data, quote=False))
+            # later text nodes in a relabeled element drop
+            return
+        if not self._brand_done and len(data.strip()) > 2 and \
+                re.search(r'[A-Za-z]', data):
+            # the exemplar's brand is bare text in several topologies
+            # (no logo anchor) — the first word-y text node is it
+            self.out.append(html.escape(self.brand, quote=False))
+            self._brand_done = True
+            return
+        self.out.append(html.escape(data, quote=False))
+
+    def handle_entityref(self, name):
+        self.out.append(f'&{name};')
+
+    def handle_charref(self, name):
+        self.out.append(f'&#{name};')
+
+    def handle_comment(self, data):
+        self.out.append(f'<!--{data}-->')
+
+# the menu driver's contract on a bank doc: triggers are the
+# [data-wf-trigger] elements, the open layers are [data-wf-panel]
+# (scrims [data-wf-scrim] close on click), the open state is one
+# html.wf-menu-open class — ?menu=open enters it through the same
+# toggle a click takes (audit: cards must render the real open
+# state; docs must load closed with correct aria)
+_BANK_MENU_CSS = (
+    'html:not(.wf-menu-open) [data-wf-panel]{display:none !important}'
+    # bank panels hide with inline opacity/transform/visibility —
+    # display:block alone leaves them invisible once open, so the
+    # open state must clear every hiding mechanism the bank ships
+    'html.wf-menu-open [data-wf-panel]{opacity:1 !important;'
+    'visibility:visible !important;'
+    'pointer-events:auto !important;max-height:100vh !important;'
+    'max-width:100vw !important;overflow-y:auto !important}')
+_BANK_MENU_DRV = (
+    '<script>(function(){var d=document,r=d.documentElement;'
+    'function so(o){r.classList.toggle("wf-menu-open",o);'
+    'd.querySelectorAll("[data-wf-trigger]").forEach(function(b){'
+    'b.setAttribute("aria-expanded",o?"true":"false")});'
+    'if(o){d.querySelectorAll("[data-wf-panel]").forEach(function(p){'
+    'var q=p.getBoundingClientRect();'
+    # only panels rendered off-viewport are hidden by a translate —
+    # clearing transform would break translate-based centering, so
+    # clear it just for the off-canvas ones (8px edge tolerance:
+    # a bottom sheet's translateY(100%) lands its top exactly on
+    # the viewport edge)
+    'if(q.right<=8||q.bottom<=8||q.left>=innerWidth-8||'
+    'q.top>=innerHeight-8)p.style.transform="none"})}else{'
+    'd.querySelectorAll("[data-wf-panel]").forEach(function(p){'
+    'p.style.transform=""})}'
+    'if(d.body)d.body.style.overflow=o?"hidden":""}'
+    'd.addEventListener("DOMContentLoaded",function(){'
+    'if(new URLSearchParams(location.search).get("menu")==="open")'
+    'so(true)});'
+    'd.addEventListener("click",function(e){'
+    'var t=e.target&&e.target.closest&&'
+    'e.target.closest("[data-wf-trigger]");'
+    'if(t){so(!r.classList.contains("wf-menu-open"));return}'
+    'if(!r.classList.contains("wf-menu-open"))return;'
+    'var cb=e.target.closest&&e.target.closest("button,a");'
+    'if(cb&&/close|dismiss|\\u00d7/i.test('
+    '(cb.getAttribute("aria-label")||"")+" "+(cb.textContent||"")))'
+    '{so(false);return}'
+    'var inP=e.target.closest&&e.target.closest('
+    '"[role=\\"dialog\\"],[role=\\"menu\\"],'
+    '[data-wf-panel]:not([data-wf-scrim])");'
+    'if(!inP)so(false)});'
+    'd.addEventListener("keydown",function(e){'
+    'if(e.key==="Escape"&&r.classList.contains("wf-menu-open"))'
+    'so(false)})})();</script>')
+
+
+
+def _site_footer(block):
+    """(brand, links, cta, groups, copyright, blurb) bound from the
+    site's own footer comp — the copy every banked footer exemplar
+    rebinds to so no foreign brand renders (audit)."""
+    brand = re.search(
+        r'class="[^"]*\blogo\b[^"]*"[^>]*>\s*([^<]{1,60})', block)
+    links = [(h, re.sub(r'<[^>]+>', '', lbl).strip())
+             for h, lbl in re.findall(
+                 r'<a [^>]*href="([^"]*)"[^>]*>(.*?)</a>',
+                 block, re.S)]
+    groups = re.findall(r'<h[1-4][^>]*>\s*([^<]{2,60}?)\s*</h[1-4]>',
+                        block)
+    if not groups:
+        groups = re.findall(
+            r'<strong[^>]*>\s*([^<]{2,60}?)\s*</strong>', block)
+    texts = [re.sub(r'<[^>]+>', '', p).strip()
+             for p in re.findall(r'<p\b[^>]*>(.*?)</p>', block, re.S)]
+    copy = next((t for t in texts if '©' in t or 'opyright' in t), '')
+    blurb = next((t for t in texts
+                  if len(t) > 30 and '©' not in t), '')
+    return ((re.sub(r'<[^>]+>', '', brand.group(1)).strip()
+             if brand else ''),
+            [(h, l) for h, l in links if l], None,
+            [g.strip() for g in groups], copy, blurb)
+
+
+_CHROME_CACHE = {}
+
+
+def _site_chrome(pd):
+    """(nav_meta, footer_meta) bound once from the emitted page's
+    own chrome blocks — brand, IA links, CTA, drawer heads; footers
+    also carry the site's copyright line + blurb."""
+    dist = os.path.join(pd, 'site', 'dist')
+    doc = ''
+    cands = sorted(os.path.join(dist, d, 'index.html')
+                   for d in os.listdir(dist)
+                   if os.path.isdir(os.path.join(dist, d)))
+    cands.append(os.path.join(dist, 'index.html'))
+    # a rebuild rewrites the docs — the bound brand/links/copy must
+    # follow them, not the first build the process saw
+    sig = max((os.path.getmtime(f) for f in cands
+               if os.path.isfile(f)), default=0)
+    hit = _CHROME_CACHE.get(pd)
+    if hit and hit[0] == sig:
+        return hit[1]
+    hdr = ftr = None
+    for fp in cands:
+        if not os.path.isfile(fp):
+            continue
+        doc = open(fp, encoding='utf-8',
+                   errors='replace').read()
+        hdr = re.search(
+            r'<header\b[^>]*data-sec="nav"[^>]*>.*?</header>',
+            doc, re.S)
+        ftr = re.search(
+            r'<footer\b[^>]*data-sec="footer"[^>]*>.*?</footer>',
+            doc, re.S)
+        if hdr or ftr:
+            break
+    nav_meta = _site_nav(hdr.group(0)) if hdr else ('Site', [], None, [])
+    # the emitted nav numbers its link labels (sup>01</sup> style)
+    # — strip the counters, they aren't copy
+    nav_meta = (nav_meta[0],
+                [(h, re.sub(r'\s*\d{1,2}$', '', l).strip())
+                 for h, l in nav_meta[1]], nav_meta[2], nav_meta[3])
+    foot_meta = (_site_footer(ftr.group(0)) if ftr else
+                 ('Site', [], None, [], '', ''))
+    # a footer without column heads still needs heads for banked
+    # multi-column footers — generic IA names, never foreign brands
+    if not foot_meta[3]:
+        foot_meta = foot_meta[:3] + (
+            ['Services', 'Company', 'Resources', 'Contact'],) + \
+            foot_meta[4:]
+    _CHROME_CACHE[pd] = (sig, (nav_meta, foot_meta))
+    return _CHROME_CACHE[pd][1]
+
+
+def _bank_bind(frag, meta):
+    p = _BankBind(*meta[:4])
+    p.feed(frag)
+    p.close()
+    return ''.join(p.out)
+
+
+def _nav_fix(frag, meta):
+    """nav companion to _footer_fix: exemplar prose blurbs rebind
+    to the site's own (a foreign brand sentence must never
+    render); headings/links were already bound by _BankBind."""
+    brand = meta[0] or 'Site'
+
+    def _p(m):
+        txt = re.sub(r'<[^>]+>', '', m.group(2)).strip()
+        if len(txt) > 40:
+            return (m.group(1) + html.escape(brand + '.',
+                                             quote=False) +
+                    m.group(3))
+        return m.group(0)
+    return re.sub(r'(<p\b[^>]*>)(.*?)(</p>)', _p, frag, flags=re.S)
+
+
+def _footer_fix(frag, meta):
+    """post-bind footer pass: foreign column heads outside panels,
+    foreign copyright lines and long exemplar blurbs all rebind to
+    the site's own footer copy."""
+    brand, _links, _cta, groups, copy, blurb = list(meta)[:6]
+    heads = [g for g in (groups or [brand]) if g]
+    it = [0]
+
+    def _h(m):
+        inner = m.group(2)
+        if not re.search(r'[A-Za-z]', inner):
+            return m.group(0)  # icon-only heads keep their glyph
+        rep = heads[it[0] % len(heads)]
+        it[0] += 1
+        return m.group(1) + html.escape(rep, quote=False) + m.group(3)
+    frag = re.sub(r'(<h[1-4][^>]*>)(.*?)(</h[1-4]>)', _h, frag,
+                  flags=re.S)
+    mine = copy or ('© ' + str(datetime.date.today().year) + ' ' +
+                    (brand or 'Site'))
+    frag = re.sub(r'(?i)(©|&copy;|&#169;)\s*[^<]{0,100}',
+                  lambda m: html.escape(mine, quote=False), frag)
+    frag = re.sub(r'(?i)\bcopyright\b[^<]{0,100}',
+                  lambda m: html.escape(mine, quote=False), frag)
+    mine_blurb = blurb or ((brand + '.') if brand else '')
+    if mine_blurb:
+        def _p(m):
+            txt = re.sub(r'<[^>]+>', '', m.group(2)).strip()
+            if len(txt) > 40 and '©' not in txt and                     'opyright' not in txt:
+                return (m.group(1) +
+                        html.escape(mine_blurb, quote=False) +
+                        m.group(3))
+            return m.group(0)
+        frag = re.sub(r'(<(?:p|li|span)\b[^>]*>)(.*?)(</(?:p|li|span)>)',
+                      _p, frag, flags=re.S)
+    return frag
+
+
+# footer cards must fit the stage at every breakpoint — bank
+# footers carry fixed multi-column grids that reach 1200px; wrap
+# grids/rows/columns below the breakpoints at the translate layer
+_FOOTER_RESP_CSS = (
+    '.wf-stage-in,.wf-stage-in *{max-width:100%;min-width:0;'
+    'box-sizing:border-box}'
+    '.wf-stage-in{overflow-x:clip}'
+    '@media (max-width:820px){'
+    '.wf-stage-in [class*="grid"]{display:flex!important;'
+    'flex-direction:column!important}'
+    '.wf-stage-in [class*="row"]{flex-wrap:wrap!important}'
+    '.wf-stage-in [class*="col"]{flex:1 1 100%!important;'
+    'max-width:100%!important}}'
+    '@media (max-width:480px){'
+    '.wf-stage-in [class*="grid"]{display:flex!important;'
+    'flex-direction:column!important}}')
+
+# nav exemplars spill past the stage edge when their fixed-width
+# content exceeds 96vw — cap the content and hide the doc overflow
+_NAV_FIT_CSS = (
+    'body{overflow-x:hidden}'
+    '.wf-stage-in,.wf-stage-in *{max-width:100%;min-width:0;'
+    'box-sizing:border-box}')
+
 def emit_bank_previews(pd):
     """preview/bank/<cls>/<slug>.html — every genmenu exemplar
     rendered standalone under bank-preview.css: reference fidelity
@@ -3702,6 +4867,12 @@ def emit_bank_previews(pd):
         d for d in os.listdir(_GENMENU)
         if d.startswith(('fx-', 'imgfx-', 'mobfx-', 'mob-')) and
         os.path.isdir(os.path.join(_GENMENU, d))))
+    # per-type header/footer pick boards — every nav-*/footer-* dir
+    # is its own gallery keyed by the dir name (the bank taxonomy)
+    for d in sorted(os.listdir(_GENMENU)):
+        if d.startswith(('nav-', 'footer-')) and os.path.isdir(
+                os.path.join(_GENMENU, d)):
+            _BANK_DIRS.setdefault(d, (d,))
     tags = _genmenu_tags()
     # /built/ URLs are repo-relative; Ctx.dir callers hand in an
     # absolute pipeline dir — normalize for URL building only
@@ -3873,10 +5044,29 @@ def emit_bank_previews(pd):
                     fx = cls.startswith(('fx-', 'imgfx-', 'mobfx-'))
                     if fx:
                         frag = _fx_strip_freeze(frag)
-                    mob = gid == 'menu' or cls.startswith('mob')
+                    # bind every header/footer exemplar to the
+                    # site's own brand, IA links, CTA and footer
+                    # copy — a foreign bank brand must never render
+                    nav_d = cls.startswith('nav-')
+                    foot_d = cls.startswith('footer-')
+                    if nav_d or foot_d:
+                        nmeta, fmeta = _site_chrome(pd)
+                        frag = _bank_bind(
+                            frag, nmeta if nav_d else fmeta)
+                        if foot_d:
+                            frag = _footer_fix(frag, fmeta)
+                        else:
+                            frag = _nav_fix(frag, nmeta)
+                    mob = (gid == 'menu' or
+                           cls.startswith(('mob', 'nav-')))
                     if gid == 'menu':
                         frag = _menu_closed(frag)
-                    page = (not mob) and _bank_scale(frag) == 'page'
+                    # footers stage like navs — a wf-page frame
+                    # lets the bank's fixed-width mega grid spill
+                    # past the stage edge (audit); bound footers
+                    # wrap/stack via _FOOTER_RESP_CSS instead
+                    page = (not mob) and not foot_d and \
+                        _bank_scale(frag) == 'page'
                     if page:
                         stage = ('<div class="wf-page">' + frag +
                                  '</div>')
@@ -3902,7 +5092,10 @@ def emit_bank_previews(pd):
                     css_ = floor_gaps(_BANK_STAGE_CSS + (
                         'body{padding:0}' if page else '') + (
                         'body{background:#0b0e14}'
-                        if row.get('mode') == 'dark' else ''))
+                        if row.get('mode') == 'dark' else '') + (
+                        _BANK_MENU_CSS + _NAV_FIT_CSS
+                        if nav_d else '') + (
+                        _FOOTER_RESP_CSS if foot_d else ''))
                     with open(dst, 'w', encoding='utf-8') as fh:
                         fh.write('<!--wf:bank:v17-->' +
                                  _doc(head, '', stage,
@@ -3910,7 +5103,9 @@ def emit_bank_previews(pd):
                                              if not page else '') +
                                       (_FX_DRIVER if fx else '') +
                                       (_MENU_DRIVER
-                                       if gid == 'menu' else ''),
+                                       if gid == 'menu' else '') +
+                                      (_BANK_MENU_DRV
+                                       if nav_d else ''),
                                       css=css_,
                                       chrome=gid == 'menu' or
                                       cls.startswith('nav-')))
@@ -3930,7 +5125,8 @@ def emit_bank_previews(pd):
                     'tags': ctags, 'emitted': True, 'bank': True,
                     'element': cls, 'variant': slug,
                     'grp': 'bank · ' + cls,
-                    'mobile': gid == 'menu'})
+                    'mobile': (gid == 'menu' or
+                               cls.startswith('nav-'))})
         out[gid] = cards
     # a pick on an fx card signs the SITE-DEFAULT effect; each
     # exemplar advertises which element types it may decorate
@@ -5482,12 +6678,19 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
     LAYOUT_TABS.forEach(function(k){
       if(DATA.boards[k])item('b',DATA.boards[k])});
     h+='<div class="railgrp">3 · Sections · Elements</div>';
-    var banked=[];
+    var banked=[],hf=[];
     Object.keys(DATA.galleries).forEach(function(k){
       if(k==='fx')return;
       var g=DATA.galleries[k];
-      if(/\u00b7\s*bank/.test(g.title||''))banked.push(g);
+      if(g.hf_type)hf.push(g);
+      else if(/\u00b7\s*bank/.test(g.title||''))banked.push(g);
       else item('g',g)});
+    if(hf.length){
+      h+='<details class="railbank" open><summary>'+ICON.burger+
+         'Headers &amp; footers<span class="cnt">'+hf.length+
+         '</span></summary>';
+      hf.forEach(function(g){item('g',g)});
+      h+='</details>'}
     if(banked.length){
       h+='<details class="railbank"><summary>'+ICON.bars+
          'Bank (reference)<span class="cnt">'+banked.length+
@@ -5513,7 +6716,15 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
       b.onclick=function(){gotoBoard(b.dataset.k)}});
   }
 
-  function gotoBoard(k){CUR=k;FILT={};SEL=0;ROW=0;
+  function gotoBoard(k){
+    // the merged chrome gallery is gone — the header/footer chips
+    // land on the first per-type board of their kind instead
+    if(k==='chrome-h'||k==='chrome-f'){
+      var pre=k==='chrome-h'?'nav-':'footer-';
+      k=Object.keys(DATA.galleries||{}).filter(function(g){
+        return g.indexOf(pre)===0&&DATA.galleries[g].hf_type
+      }).sort()[0]||k}
+    CUR=k;FILT={};SEL=0;ROW=0;
     if(innerWidth<=1024){
       document.getElementById('rail').classList.remove('open');
       document.getElementById('scrim').classList.remove('open')}
@@ -5536,8 +6747,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
     {k:'vibe',label:'vibe',board:'vibe'},
     {k:'type',label:'type',board:'typescale'},
     {k:'layout',label:'layout',board:'home'},
-    {k:'header',label:'header',board:'chrome'},
-    {k:'footer',label:'footer',board:'chrome'},
+    {k:'header',label:'header',board:'chrome-h'},
+    {k:'footer',label:'footer',board:'chrome-f'},
     {k:'menu',label:'menu',board:'menu'},
     {k:'fx:default',label:'effect',board:'fx'}];
   function _boardExists(b){
