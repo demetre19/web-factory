@@ -1,0 +1,158 @@
+<!--wf:bank:v19:2f1af71128514d59--><!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><script>(function(){var m=new URLSearchParams(location.search).get("theme")||localStorage.getItem("theme")||"light";document.documentElement.dataset.theme=m;document.documentElement.classList.toggle("dark",m==="dark")})()</script><link rel="stylesheet" href="/built//home/ubuntu/repos/web-factory/INPUTS/whistle-clean-navy/DESIGN-SYSTEM/pages/strata-cleaning-melbourne/site/dist/preview/bank/bank-preview-dark.css"><link rel="stylesheet" href="/built/INPUTS/whistle-clean-navy/DESIGN-SYSTEM/pages/strata-cleaning-melbourne/site/dist/preview/bank/bank-preview.css"><link rel="stylesheet" href="/built/INPUTS/whistle-clean-navy/DESIGN-SYSTEM/pages/strata-cleaning-melbourne/site/dist/preview/bank/bank-preview-extra.css"><style>html,body{min-height:100%}body{display:flex;flex-direction:column;align-items:center;justify-content:center;background:#e8e9ec;margin:0;padding:18px;box-sizing:border-box;gap:max(1rem, 12px)}.wf-stage{position:relative;overflow:auto;transform:translateZ(0);display:flex;justify-content:safe center;align-items:safe center;border-radius:14px;box-shadow:0 10px 34px rgba(15,18,30,.16);width:max-content;min-width:min(100%,420px);max-width:96vw;max-height:78vh;padding:clamp(16px,3vw,32px);box-sizing:border-box}.wf-stage>*{margin:auto;flex:none}.wf-stage-in{position:relative;width:100%;min-height:100%;margin:auto;flex:none}.wf-stage.mob{width:min(360px,96%);height:min(660px,86vh);border-radius:24px}.wf-stage.mob>.wf-stage-in{margin:0 auto}.wf-page{position:relative;width:100%;min-width:0;overflow-x:auto;display:grid;grid-auto-rows:minmax(100vh,auto);align-self:flex-start}body:has(>.wf-page){justify-content:flex-start}body:has(>.wf-page){padding:0;gap:max(1rem, 0);background:#fff}.wf-fx-bar{display:flex;gap:max(1rem, 8px)}.wf-fx-bar button{font:600 12px/1 system-ui,sans-serif;padding:8px 12px;border-radius:8px;border:1px solid #d5d7dc;background:#fff;color:#333;cursor:pointer}.wf-fx-bar button[aria-pressed="true"]{background:#1c1f26;color:#fff;border-color:#1c1f26}.wf-menu-closed{transform:translateX(-105%)}.wf-menu-closed-y{transform:translateY(105%)}.wf-menu-closed-up{transform:translateY(-105%)}body[data-motion="off"] .wf-stage *,body[data-motion="off"] .wf-page *{animation-play-state:paused!important;transition:none!important}[data-theme="dark"] body{background:#14171d}[data-theme="dark"] .wf-stage,[data-theme="dark"] .wf-page{color:#e8eaef}[data-theme="dark"] .wf-stage{box-shadow:0 10px 34px rgba(0,0,0,.5)}[data-theme="dark"] .wf-fx-bar button{background:#23262e;color:#e4e6ea;border-color:#3a3e47}[data-theme="dark"] .wf-fx-bar button[aria-pressed="true"]{background:#e8eaef;color:#1c1f26;border-color:#e8eaef}body.wf-nav-open .wf-menu-closed,body.wf-nav-open .wf-menu-closed-y,body.wf-nav-open .wf-menu-closed-up{transform:none!important}body.wf-nav-open [class*="fixed inset-0"]{opacity:1!important;pointer-events:auto!important}@layer wf-floor{[class*="container"]{display:grid;--_gf0:var(--content-gap,var(--space-m,1.5rem));row-gap:max(1rem, var(--_gf0))}.sec-inner>*+*,[class*="wrapper"]>*+*,[class*="-stack"]>*+*{margin-block-start:var(--content-gap,var(--space-m,1.5rem))}}body{padding:0}</style></head><body><div class="wf-page"><!doctype html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>06 · Atmospheric Blur-Out Reveal — Atelier Reveal</title>
+  
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          }
+        }
+      }
+    };
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root { --ease-blur: cubic-bezier(0.16, 1, 0.3, 1); }
+    .blur-media {
+      transition: filter 520ms var(--ease-blur), transform 560ms var(--ease-blur);
+      will-change: filter, transform;
+    }
+    .blur-card:hover .blur-media,
+    .blur-card:focus-within .blur-media {
+      filter: blur(12px) brightness(0.45) saturate(1.1);
+      transform: scale(1.06);
+    }
+    .crisp-layer {
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 420ms var(--ease-blur) 60ms, transform 460ms var(--ease-blur) 60ms;
+    }
+    .blur-card:hover .crisp-layer,
+    .blur-card:focus-within .crisp-layer {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .photo-lumen {
+      background:
+        radial-gradient(100% 80% at 75% 22%, rgba(230, 238, 245, 0.68) 0%, transparent 58%),
+        linear-gradient(150deg, #161e24 0%, #3d4f5d 44%, #7b8f9f 78%, #d2dce3 100%);
+    }
+    .photo-fjord {
+      background:
+        radial-gradient(95% 75% at 24% 28%, rgba(242, 224, 198, 0.6) 0%, transparent 60%),
+        linear-gradient(152deg, #171a1c 0%, #444d52 46%, #838a8c 78%, #d4d3cf 100%);
+    }
+    .film-grain {
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.52'/%3E%3C/svg%3E");
+      mix-blend-mode: overlay;
+    }
+    
+  </style>
+</head>
+<body class="min-h-screen bg-[#F5F4F1] text-[#151514] dark:bg-[#0D0E10] dark:text-[#F1EFEA] font-sans antialiased transition-colors duration-300">
+  <header class="max-w-5xl mx-auto px-6 py-6 flex items-center justify-between border-b border-black/10 dark:border-white/10">
+    <div class="flex items-baseline gap-4">
+      <span class="font-mono text-xs tracking-wider text-neutral-500 dark:text-neutral-400">06 / 24</span>
+      <h1 class="font-serif text-2xl sm:text-3xl tracking-tight font-medium">Atmospheric Blur-Out Reveal</h1>
+    </div>
+    <button id="themeToggle" type="button" aria-label="Toggle light or dark theme" class="px-3.5 py-1.5 text-xs font-medium border border-black/15 dark:border-white/15 rounded-md hover:bg-black/5 dark:hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#D88A4B] transition-colors">
+      <span id="themeLabel">Light Mode</span>
+    </button>
+  </header>
+
+  <main class="max-w-5xl mx-auto px-6 py-12">
+    <p class="max-w-2xl text-sm text-neutral-600 dark:text-neutral-400 mb-10 leading-relaxed">
+      Hovering or focusing throws the architectural photograph softly out of optical focus and deepens its luminance so crisp studio typography and controls emerge at high contrast.
+    </p>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <article tabindex="0" role="region" aria-label="Lumen Daylight Pavilion" aria-describedby="blur-info-1" class="blur-card relative h-[430px] rounded-xl overflow-hidden border border-black/10 dark:border-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#D88A4B] cursor-pointer">
+        <div class="blur-media absolute inset-0 photo-lumen">
+          <svg viewBox="0 0 500 430" preserveAspectRatio="xMidYMid slice" aria-hidden="true" class="w-full h-full">
+            <polygon points="0,300 500,210 500,430 0,430" fill="#101519" fill-opacity="0.72" />
+            <rect x="85" y="110" width="130" height="220" fill="#eaf1f6" fill-opacity="0.16" />
+            <rect x="245" y="90" width="165" height="240" fill="#eaf1f6" fill-opacity="0.1" />
+          </svg>
+          <div aria-hidden="true" class="film-grain absolute inset-0 opacity-35"></div>
+        </div>
+
+        <div class="absolute top-5 left-5 z-10 text-[11px] font-mono text-white/80 pointer-events-none">
+          <span>COPENHAGEN · 2025</span>
+        </div>
+
+        <div id="blur-info-1" class="crisp-layer relative z-20 h-full p-8 flex flex-col justify-center items-start text-white">
+          <span class="font-mono text-xs text-[#E8A26A] mb-2">Daylight Calibration</span>
+          <h2 class="font-serif text-3xl sm:text-4xl font-medium tracking-tight mb-3">Lumen Pavilion</h2>
+          <p class="text-sm text-white/85 leading-relaxed max-w-sm mb-6">
+            North-facing clerestory baffles bounce Baltic winter sky across acoustic birch ribs with zero direct glare.
+          </p>
+          <a href="#lumen-specs" class="px-4 py-2 text-xs font-semibold bg-white text-[#141413] rounded-md hover:bg-neutral-200 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-white">
+            Download Light Study
+          </a>
+        </div>
+      </article>
+
+      <article tabindex="0" role="region" aria-label="Fjord Concrete Boathouse" aria-describedby="blur-info-2" class="blur-card relative h-[430px] rounded-xl overflow-hidden border border-black/10 dark:border-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#D88A4B] cursor-pointer">
+        <div class="blur-media absolute inset-0 photo-fjord">
+          <svg viewBox="0 0 500 430" preserveAspectRatio="xMidYMid slice" aria-hidden="true" class="w-full h-full">
+            <rect x="0" y="290" width="500" height="140" fill="#121416" fill-opacity="0.74" />
+            <polygon points="110,290 250,145 390,290" fill="#1b1f22" fill-opacity="0.72" />
+            <line x1="0" y1="290" x2="500" y2="290" stroke="#f4e6d2" stroke-opacity="0.28" stroke-width="1" />
+          </svg>
+          <div aria-hidden="true" class="film-grain absolute inset-0 opacity-35"></div>
+        </div>
+
+        <div class="absolute top-5 left-5 z-10 text-[11px] font-mono text-white/80 pointer-events-none">
+          <span>BERGEN · 2026</span>
+        </div>
+
+        <div id="blur-info-2" class="crisp-layer relative z-20 h-full p-8 flex flex-col justify-center items-start text-white">
+          <span class="font-mono text-xs text-[#E8A26A] mb-2">Marine Concrete</span>
+          <h2 class="font-serif text-3xl sm:text-4xl font-medium tracking-tight mb-3">Fjord Boathouse</h2>
+          <p class="text-sm text-white/85 leading-relaxed max-w-sm mb-6">
+            Board-formed tidal retaining walls anchor a cantilevered cedar studio directly above deep-water granite ledges.
+          </p>
+          <a href="#fjord-specs" class="px-4 py-2 text-xs font-semibold bg-white text-[#141413] rounded-md hover:bg-neutral-200 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-white">
+            Inspect Section Drawings
+          </a>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <script>
+    const root = document.documentElement;
+    const toggle = document.getElementById('themeToggle');
+    const label = document.getElementById('themeLabel');
+
+    function applyTheme(mode) {
+      const dark = mode === 'dark';
+      root.classList.toggle('dark', dark);
+      label.textContent = dark ? 'Light Mode' : 'Dark Mode';
+    }
+
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('theme') === 'light') applyTheme('light');
+
+    toggle.addEventListener('click', () => {
+      applyTheme(root.classList.contains('dark') ? 'light' : 'dark');
+    });
+
+    window.addEventListener('message', (e) => {
+      if (e.data && e.data.type === 'set-theme') applyTheme(e.data.theme);
+    });
+  </script>
+</body>
+</html>
+</div><div class="wf-fx-bar"><button class="wf-replay" type="button">Replay</button><button class="wf-motion" type="button" aria-pressed="false">Reduce motion</button></div><script>(function(){var st=document.querySelector(".wf-stage");var pg=document.querySelector(".wf-page");var sc=st||pg;if(!sc)return;function scrollTo_(y){if(st)st.scrollTop=y;else window.scrollTo(0,y)}function scrollMax(){if(st)return st.scrollHeight-st.clientHeight;return Math.max(0,document.documentElement.scrollHeight-window.innerHeight)}function anim(){return document.getAnimations?document.getAnimations():[]}function play(){anim().forEach(function(a){try{a.cancel();a.play()}catch(e){}})}function drive(){var top=scrollMax();if(top>8){var t0=performance.now();(function sweep(t){var k=Math.min(1,(t-t0)/2400);scrollTo_(top*(k<.5?2*k*k:1-Math.pow(-2*k+2,2)/2));if(k<1)requestAnimationFrame(sweep)})(t0);}var hit=[].slice.call(sc.querySelectorAll("button,a,[role=button],summary,input,select,[data-hover],[tabindex]")).filter(function(e){var s=((e.id||"")+" "+(e.className||"")+" "+(e.getAttribute("aria-label")||"")).toLowerCase();return !/theme|dark|light/.test(s)})[0];if(hit){["pointerover","mouseover","pointerdown","pointerup","click","pointerout"].forEach(function(n,i){setTimeout(function(){try{hit.dispatchEvent(new MouseEvent(n,{bubbles:true}))}catch(e){hit.dispatchEvent(new Event(n,{bubbles:true}))}},2600+i*140)})}var r0=sc.getBoundingClientRect();["pointermove","mousemove","pointerenter","mouseover"].forEach(function(n,i){setTimeout(function(){try{sc.dispatchEvent(new MouseEvent(n,{bubbles:true,clientX:r0.left+r0.width*(0.25+0.15*i),clientY:r0.top+r0.height*0.5}))}catch(e){}},400+i*300)})}var loop=setInterval(function(){if(document.body.dataset.motion==="off")return;var a=anim().filter(function(x){return x.playState==="finished"||x.playState==="idle"});var all=anim();if(a.length&&a.length===all.length){play()}},1500);setTimeout(drive,900);var r=document.querySelector(".wf-replay");if(r)r.addEventListener("click",function(){scrollTo_(0);play();if(window.requestAnimationFrame!==raf_){document.body.dataset.motion="on";if(m)m.setAttribute("aria-pressed","false");resume()}drive()});var m=document.querySelector(".wf-motion");var raf_=window.requestAnimationFrame;var pend=[];function resume(){window.requestAnimationFrame=raf_;anim().forEach(function(a){try{a.play()}catch(e){}});pend.splice(0).forEach(function(cb){try{cb(performance.now())}catch(e){}})}if(m)m.addEventListener("click",function(){var off=document.body.dataset.motion==="off";document.body.dataset.motion=off?"on":"off";m.setAttribute("aria-pressed",off?"false":"true");if(off)resume();else{window.requestAnimationFrame=function(cb){pend.push(cb);return -1}}})})();</script><script>document.addEventListener("click",function(e){var a=e.target&&e.target.closest&&e.target.closest("a");if(a&&a.getAttribute("href"))e.preventDefault()},true);document.addEventListener("submit",function(e){e.preventDefault()},true);</script></body></html>

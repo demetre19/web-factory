@@ -1,0 +1,170 @@
+<!--wf:bank:v19:3917ad2142948449--><!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><script>(function(){var m=new URLSearchParams(location.search).get("theme")||localStorage.getItem("theme")||"light";document.documentElement.dataset.theme=m;document.documentElement.classList.toggle("dark",m==="dark")})()</script><link rel="stylesheet" href="/built//home/ubuntu/repos/web-factory/INPUTS/whistle-clean-navy/DESIGN-SYSTEM/pages/strata-cleaning-melbourne/site/dist/preview/bank/bank-preview-dark.css"><link rel="stylesheet" href="/built/INPUTS/whistle-clean-navy/DESIGN-SYSTEM/pages/strata-cleaning-melbourne/site/dist/preview/bank/bank-preview.css"><link rel="stylesheet" href="/built/INPUTS/whistle-clean-navy/DESIGN-SYSTEM/pages/strata-cleaning-melbourne/site/dist/preview/bank/bank-preview-extra.css"><style>html,body{min-height:100%}body{display:flex;flex-direction:column;align-items:center;justify-content:center;background:#e8e9ec;margin:0;padding:18px;box-sizing:border-box;gap:max(1rem, 12px)}.wf-stage{position:relative;overflow:auto;transform:translateZ(0);display:flex;justify-content:safe center;align-items:safe center;border-radius:14px;box-shadow:0 10px 34px rgba(15,18,30,.16);width:max-content;min-width:min(100%,420px);max-width:96vw;max-height:78vh;padding:clamp(16px,3vw,32px);box-sizing:border-box}.wf-stage>*{margin:auto;flex:none}.wf-stage-in{position:relative;width:100%;min-height:100%;margin:auto;flex:none}.wf-stage.mob{width:min(360px,96%);height:min(660px,86vh);border-radius:24px}.wf-stage.mob>.wf-stage-in{margin:0 auto}.wf-page{position:relative;width:100%;min-width:0;overflow-x:auto;display:grid;grid-auto-rows:minmax(100vh,auto);align-self:flex-start}body:has(>.wf-page){justify-content:flex-start}body:has(>.wf-page){padding:0;gap:max(1rem, 0);background:#fff}.wf-fx-bar{display:flex;gap:max(1rem, 8px)}.wf-fx-bar button{font:600 12px/1 system-ui,sans-serif;padding:8px 12px;border-radius:8px;border:1px solid #d5d7dc;background:#fff;color:#333;cursor:pointer}.wf-fx-bar button[aria-pressed="true"]{background:#1c1f26;color:#fff;border-color:#1c1f26}.wf-menu-closed{transform:translateX(-105%)}.wf-menu-closed-y{transform:translateY(105%)}.wf-menu-closed-up{transform:translateY(-105%)}body[data-motion="off"] .wf-stage *,body[data-motion="off"] .wf-page *{animation-play-state:paused!important;transition:none!important}[data-theme="dark"] body{background:#14171d}[data-theme="dark"] .wf-stage,[data-theme="dark"] .wf-page{color:#e8eaef}[data-theme="dark"] .wf-stage{box-shadow:0 10px 34px rgba(0,0,0,.5)}[data-theme="dark"] .wf-fx-bar button{background:#23262e;color:#e4e6ea;border-color:#3a3e47}[data-theme="dark"] .wf-fx-bar button[aria-pressed="true"]{background:#e8eaef;color:#1c1f26;border-color:#e8eaef}body.wf-nav-open .wf-menu-closed,body.wf-nav-open .wf-menu-closed-y,body.wf-nav-open .wf-menu-closed-up{transform:none!important}body.wf-nav-open [class*="fixed inset-0"]{opacity:1!important;pointer-events:auto!important}@layer wf-floor{[class*="container"]{display:grid;--_gf0:var(--content-gap,var(--space-m,1.5rem));row-gap:max(1rem, var(--_gf0))}.sec-inner>*+*,[class*="wrapper"]>*+*,[class*="-stack"]>*+*{margin-block-start:var(--content-gap,var(--space-m,1.5rem))}}body{padding:0}</style></head><body><div class="wf-page"><!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>19 · Day-to-Night Cross-Dissolve Pair — Atelier Reveal</title>
+  
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          }
+        }
+      }
+    };
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root { --ease-dissolve: cubic-bezier(0.16, 1, 0.3, 1); }
+    .plate-b {
+      opacity: 0;
+      transition: opacity 580ms var(--ease-dissolve), transform 620ms var(--ease-dissolve);
+      transform: scale(1.02);
+      will-change: opacity, transform;
+    }
+    .dissolve-card:hover .plate-b,
+    .dissolve-card:focus-within .plate-b {
+      opacity: 1;
+      transform: scale(1);
+    }
+    .state-tag-a, .state-tag-b {
+      transition: opacity 320ms ease;
+    }
+    .dissolve-card:hover .state-tag-a,
+    .dissolve-card:focus-within .state-tag-a { opacity: 0; }
+    .dissolve-card:hover .state-tag-b,
+    .dissolve-card:focus-within .state-tag-b { opacity: 1; }
+    .day-limestone {
+      background:
+        radial-gradient(95% 75% at 72% 24%, rgba(250, 232, 205, 0.76) 0%, transparent 58%),
+        linear-gradient(150deg, #4b433a 0%, #9b8c79 46%, #e7ddd0 100%);
+    }
+    .night-tungsten {
+      background:
+        radial-gradient(85% 65% at 50% 62%, rgba(235, 165, 98, 0.52) 0%, transparent 60%),
+        linear-gradient(160deg, #0b0e14 0%, #192230 50%, #374152 100%);
+    }
+    .color-silk {
+      background:
+        radial-gradient(95% 75% at 32% 26%, rgba(242, 182, 148, 0.72) 0%, transparent 58%),
+        linear-gradient(148deg, #321e1a 0%, #8b4c39 48%, #e2b89b 100%);
+    }
+    .film-grain {
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.52'/%3E%3C/svg%3E");
+      mix-blend-mode: overlay;
+    }
+    
+  </style>
+</head>
+<body class="min-h-screen bg-[#F6F4EF] text-[#151412] dark:bg-[#10100F] dark:text-[#F2EFE8] font-sans antialiased transition-colors duration-300">
+  <header class="max-w-5xl mx-auto px-6 py-6 flex items-center justify-between border-b border-black/10 dark:border-white/10">
+    <div class="flex items-baseline gap-4">
+      <span class="font-mono text-xs tracking-wider text-neutral-500 dark:text-neutral-400">19 / 24</span>
+      <h1 class="font-serif text-2xl sm:text-3xl tracking-tight font-medium">Day-to-Night Cross-Dissolve Pair</h1>
+    </div>
+    <button id="themeToggle" type="button" aria-label="Toggle light or dark theme" class="px-3.5 py-1.5 text-xs font-medium border border-black/15 dark:border-white/15 rounded-md hover:bg-black/5 dark:hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#B65237] transition-colors">
+      <span id="themeLabel">Dark Mode</span>
+    </button>
+  </header>
+
+  <main class="max-w-5xl mx-auto px-6 py-12">
+    <p class="max-w-2xl text-sm text-neutral-600 dark:text-neutral-400 mb-10 leading-relaxed">
+      Hover or focus either architectural plate to cross-dissolve smoothly between complementary exposure pairs: sunlit limestone to nocturnal tungsten, and silver monochrome to warm color.
+    </p>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <!-- Pair 1: Day <-> Night -->
+      <article tabindex="0" role="region" aria-label="Palazzo Chiaro Day and Night Study" aria-describedby="dissolve-desc-1" class="dissolve-card relative h-[430px] rounded-xl overflow-hidden border border-black/10 dark:border-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#B65237] cursor-pointer">
+        <!-- Day State -->
+        <div class="absolute inset-0 day-limestone">
+          <svg viewBox="0 0 500 430" preserveAspectRatio="xMidYMid slice" aria-hidden="true" class="w-full h-full">
+            <rect x="0" y="300" width="500" height="130" fill="#2b241c" fill-opacity="0.52" />
+            <rect x="100" y="110" width="80" height="190" fill="#f7eedf" fill-opacity="0.28" />
+            <rect x="210" y="110" width="80" height="190" fill="#f7eedf" fill-opacity="0.28" />
+            <rect x="320" y="110" width="80" height="190" fill="#f7eedf" fill-opacity="0.28" />
+          </svg>
+        </div>
+
+        <!-- Night State -->
+        <div class="plate-b absolute inset-0 night-tungsten">
+          <svg viewBox="0 0 500 430" preserveAspectRatio="xMidYMid slice" aria-hidden="true" class="w-full h-full">
+            <rect x="0" y="300" width="500" height="130" fill="#090c11" fill-opacity="0.82" />
+            <rect x="100" y="110" width="80" height="190" fill="#f5be7c" fill-opacity="0.38" />
+            <rect x="210" y="110" width="80" height="190" fill="#f5be7c" fill-opacity="0.48" />
+            <rect x="320" y="110" width="80" height="190" fill="#f5be7c" fill-opacity="0.35" />
+          </svg>
+        </div>
+
+        <div aria-hidden="true" class="film-grain absolute inset-0 opacity-35 pointer-events-none"></div>
+        <div aria-hidden="true" class="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-black/20 pointer-events-none"></div>
+
+        <div class="absolute top-6 left-6 right-6 flex justify-between font-mono text-[11px] text-white">
+          <span class="state-tag-a">14:00 · DAYLIGHT LIMESTONE</span>
+          <span class="state-tag-b opacity-0 absolute left-6">21:30 · TUNGSTEN COLONNADE</span>
+          <span>VENICE</span>
+        </div>
+
+        <div id="dissolve-desc-1" class="absolute bottom-6 left-6 right-6 text-white">
+          <h2 class="font-serif text-3xl font-medium">Palazzo Chiaro Study</h2>
+          <p class="text-xs text-white/80 mt-1">Hover or focus to dissolve from afternoon glare to evening interior warmth.</p>
+        </div>
+      </article>
+
+      <!-- Pair 2: Monochrome <-> Color -->
+      <article tabindex="0" role="region" aria-label="Sienna Silk Monochrome and Color Study" aria-describedby="dissolve-desc-2" class="dissolve-card relative h-[430px] rounded-xl overflow-hidden border border-black/10 dark:border-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#B65237] cursor-pointer">
+        <!-- B/W State -->
+        <div class="absolute inset-0 color-silk filter grayscale contrast-125">
+          <svg viewBox="0 0 500 430" preserveAspectRatio="xMidYMid slice" aria-hidden="true" class="w-full h-full">
+            <path d="M135 430 C 165 250, 200 130, 250 100 C 300 130, 335 250, 365 430 Z" fill="#171412" fill-opacity="0.72" />
+          </svg>
+        </div>
+
+        <!-- Full Color State -->
+        <div class="plate-b absolute inset-0 color-silk">
+          <svg viewBox="0 0 500 430" preserveAspectRatio="xMidYMid slice" aria-hidden="true" class="w-full h-full">
+            <path d="M135 430 C 165 250, 200 130, 250 100 C 300 130, 335 250, 365 430 Z" fill="#281611" fill-opacity="0.68" />
+          </svg>
+        </div>
+
+        <div aria-hidden="true" class="film-grain absolute inset-0 opacity-35 pointer-events-none"></div>
+        <div aria-hidden="true" class="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-black/20 pointer-events-none"></div>
+
+        <div class="absolute top-6 left-6 right-6 flex justify-between font-mono text-[11px] text-white">
+          <span class="state-tag-a">SILVER GELATIN · B/W</span>
+          <span class="state-tag-b opacity-0 absolute left-6">EKTACHROME · WARM TERRACOTTA</span>
+          <span>MILAN</span>
+        </div>
+
+        <div id="dissolve-desc-2" class="absolute bottom-6 left-6 right-6 text-white">
+          <h2 class="font-serif text-3xl font-medium">Terracotta Drape Plate</h2>
+          <p class="text-xs text-white/80 mt-1">Hover or focus to dissolve from silver monochrome to color film stock.</p>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <script>
+    const root = document.documentElement;
+    const toggle = document.getElementById('themeToggle');
+    const label = document.getElementById('themeLabel');
+    function applyTheme(mode) {
+      const dark = mode === 'dark';
+      root.classList.toggle('dark', dark);
+      label.textContent = dark ? 'Light Mode' : 'Dark Mode';
+    }
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('theme') === 'dark') applyTheme('dark');
+    toggle.addEventListener('click', () => applyTheme(root.classList.contains('dark') ? 'light' : 'dark'));
+    window.addEventListener('message', (e) => { if (e.data && e.data.type === 'set-theme') applyTheme(e.data.theme); });
+  </script>
+</body>
+</html>
+</div><div class="wf-fx-bar"><button class="wf-replay" type="button">Replay</button><button class="wf-motion" type="button" aria-pressed="false">Reduce motion</button></div><script>(function(){var st=document.querySelector(".wf-stage");var pg=document.querySelector(".wf-page");var sc=st||pg;if(!sc)return;function scrollTo_(y){if(st)st.scrollTop=y;else window.scrollTo(0,y)}function scrollMax(){if(st)return st.scrollHeight-st.clientHeight;return Math.max(0,document.documentElement.scrollHeight-window.innerHeight)}function anim(){return document.getAnimations?document.getAnimations():[]}function play(){anim().forEach(function(a){try{a.cancel();a.play()}catch(e){}})}function drive(){var top=scrollMax();if(top>8){var t0=performance.now();(function sweep(t){var k=Math.min(1,(t-t0)/2400);scrollTo_(top*(k<.5?2*k*k:1-Math.pow(-2*k+2,2)/2));if(k<1)requestAnimationFrame(sweep)})(t0);}var hit=[].slice.call(sc.querySelectorAll("button,a,[role=button],summary,input,select,[data-hover],[tabindex]")).filter(function(e){var s=((e.id||"")+" "+(e.className||"")+" "+(e.getAttribute("aria-label")||"")).toLowerCase();return !/theme|dark|light/.test(s)})[0];if(hit){["pointerover","mouseover","pointerdown","pointerup","click","pointerout"].forEach(function(n,i){setTimeout(function(){try{hit.dispatchEvent(new MouseEvent(n,{bubbles:true}))}catch(e){hit.dispatchEvent(new Event(n,{bubbles:true}))}},2600+i*140)})}var r0=sc.getBoundingClientRect();["pointermove","mousemove","pointerenter","mouseover"].forEach(function(n,i){setTimeout(function(){try{sc.dispatchEvent(new MouseEvent(n,{bubbles:true,clientX:r0.left+r0.width*(0.25+0.15*i),clientY:r0.top+r0.height*0.5}))}catch(e){}},400+i*300)})}var loop=setInterval(function(){if(document.body.dataset.motion==="off")return;var a=anim().filter(function(x){return x.playState==="finished"||x.playState==="idle"});var all=anim();if(a.length&&a.length===all.length){play()}},1500);setTimeout(drive,900);var r=document.querySelector(".wf-replay");if(r)r.addEventListener("click",function(){scrollTo_(0);play();if(window.requestAnimationFrame!==raf_){document.body.dataset.motion="on";if(m)m.setAttribute("aria-pressed","false");resume()}drive()});var m=document.querySelector(".wf-motion");var raf_=window.requestAnimationFrame;var pend=[];function resume(){window.requestAnimationFrame=raf_;anim().forEach(function(a){try{a.play()}catch(e){}});pend.splice(0).forEach(function(cb){try{cb(performance.now())}catch(e){}})}if(m)m.addEventListener("click",function(){var off=document.body.dataset.motion==="off";document.body.dataset.motion=off?"on":"off";m.setAttribute("aria-pressed",off?"false":"true");if(off)resume();else{window.requestAnimationFrame=function(cb){pend.push(cb);return -1}}})})();</script><script>document.addEventListener("click",function(e){var a=e.target&&e.target.closest&&e.target.closest("a");if(a&&a.getAttribute("href"))e.preventDefault()},true);document.addEventListener("submit",function(e){e.preventDefault()},true);</script></body></html>

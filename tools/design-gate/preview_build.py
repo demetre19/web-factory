@@ -994,7 +994,7 @@ _VIBE_SPECS = [
     [('nav-h14', _H, 'base',
       _sp_nav('Atlas Freight', 'Get a quote', 'Lanes', 'Fleet', 'Compliance',
               'Tracking')),
-     ('media-gallery', _B, 'media',
+     ('split-media', _B, 'media',
       _sp_hero('Freight that answers the phone',
                'Regional linehaul with live tracking and a named '
                'dispatcher on every load.', 'ATLAS FREIGHT CO',
