@@ -48,7 +48,11 @@ def _h(b):
 # band differs by <0.12 luminance is unreadable — a FAIL, the same
 # verdict a human gives ('no contrast check')
 _CONTRAST_JS = """(()=>{
-function L(c){var m=/rgba?\\(([^)]+)/.exec(c);if(!m)return 1;
+function L(c){var ok=/oklch\\(\\s*([\\d.]+)/.exec(c);if(ok)return parseFloat(ok[1]);
+ var lb=/lab\\(\\s*([\\d.]+)/.exec(c);if(lb)return parseFloat(lb[1])/100;
+ var sr=/color\\(srgb\\s+([\\d.]+)\\s+([\\d.]+)\\s+([\\d.]+)/.exec(c);
+ if(sr)return 0.2126*parseFloat(sr[1])+0.7152*parseFloat(sr[2])+0.0722*parseFloat(sr[3]);
+ var m=/rgba?\\(([^)]+)/.exec(c);if(!m)return 1;
  var p=m[1].split(',').map(parseFloat);
  return(0.2126*p[0]+0.7152*p[1]+0.0722*p[2])/255}
 var out=[];
@@ -58,10 +62,11 @@ document.querySelectorAll('*').forEach(function(el){
  var s=getComputedStyle(el),n=el,bgl=null;
  while(n&&n!==document.body){
   var b=getComputedStyle(n).backgroundColor;
-  var m=/rgba?\\(([^)]+)/.exec(b);
-  if(m&&!/[,\\s]0(\\)|$)/.test(b)){bgl=L(b);break}
+  var tp=b==='transparent'||/rgba?\\([^)]*,\\s*0\\s*\\)/.test(b)||/\\/\\s*0\\s*\\)/.test(b);
+  if(b&&!tp){bgl=L(b);break}
   n=n.parentElement}
- if(bgl==null)bgl=L(getComputedStyle(document.body).backgroundColor);
+ if(bgl==null){var bb=getComputedStyle(document.body).backgroundColor;
+  bgl=(bb==='transparent'||/rgba?\\([^)]*,\\s*0\\s*\\)/.test(bb)||/\\/\\s*0\\s*\\)/.test(bb))?1:L(bb)}
  if(Math.abs(L(s.color)-bgl)<0.12)
   out.push(el.tagName+':'+el.textContent.trim().slice(0,40));
 });
