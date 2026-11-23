@@ -6410,7 +6410,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
 .tsframe{border:1px solid var(--line);border-radius:10px;
   overflow:hidden;background:#fff;position:relative;min-height:120px}
 .tsframe iframe{border:0;display:block;transform-origin:top left}
-.tslab{font:600 10.5px var(--mono);color:var(--muted);
+.tslab{font:600 11px var(--mono);color:var(--muted);
   text-transform:uppercase;letter-spacing:.06em;margin:12px 0 4px}
 .tslad{max-height:190px;overflow:auto}
 .tsprev .tscol h4{margin:0 0 8px;font:600 11px var(--mono);
@@ -6419,13 +6419,13 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
   padding:2px 0;border-top:1px solid color-mix(in srgb,
   var(--line) 45%,transparent)}
 .tsr:first-of-type{border-top:0}
-.tsrn{flex:0 0 38px;font:600 10.5px var(--mono);color:var(--muted)}
+.tsrn{flex:0 0 38px;font:600 11px var(--mono);color:var(--muted)}
 .tsrx{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;
   white-space:nowrap;color:var(--ink);line-height:1.2}
-.tsrp{flex:0 0 auto;font:10.5px var(--mono);color:var(--muted)}
+.tsrp{flex:0 0 auto;font:11px var(--mono);color:var(--muted)}
 .tsvars{margin:0 0 12px;padding:10px 12px;max-height:150px;
   overflow:auto;background:var(--bg-2);border:1px solid var(--line);
-  border-radius:9px;font:10.5px/1.55 var(--mono);color:var(--ink-dim);
+  border-radius:9px;font:11px/1.55 var(--mono);color:var(--ink-dim);
   white-space:pre-wrap;word-break:break-all}
 .tsc{background:var(--bg-2);color:var(--ink);border:1px solid
   var(--line);border-radius:8px;padding:8px 13px;
@@ -6542,7 +6542,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
 .crow2 .olab{color:var(--muted)}
 .crow2 .o{display:inline-block;margin:1px 3px 1px 0;
   padding:1px 7px;border:1px solid var(--line);border-radius:10px;
-  font:600 10.5px var(--mono)}
+  font:600 11px var(--mono)}
 .crow2 .o.pickd{background:var(--accent);color:var(--accent-ink);
   border-color:var(--accent)}
 .rmgrid{display:flex;flex-direction:column;gap:14px;max-width:920px}
