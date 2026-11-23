@@ -476,22 +476,40 @@ _CLUSTERS_DICT = {c: base for c, _n, base in _CLUSTERS}
 _PALETTE_PREFIXES = ('--action-primary', '--bg-', '--text-',
                      '--border', '--ink', '--font-body')
 
+# vars that never change the RENDERED first screen — radii, shadows,
+# borders, gaps and accents show below the fold (or only in cards
+# off the first viewport): the audit measures visible first-screen
+# Δ, so the signature must not count them (#137 residue)
+_FS_INVISIBLE_PREFIXES = _PALETTE_PREFIXES + (
+    '--radius', '--primitive-radius', '--r-', '--shadow',
+    '--content-gap', '--flow-spacing', '--grid-gap', '--gap',
+    '--action')
+
 
 def _struct_sig(r):
-    """a preset's *structural* signature: face, radius, spacing,
-    measure, shadows, type scale/weight and the shape rules — the
-    traits that make a vibe visibly distinct. Palette vars and the
-    body face are ignored so palette twins fold together."""
+    """a preset's *visible first-screen structural* signature:
+    theme, face, type scale/weight, measure and column layout — the
+    traits a rendered first screen actually shows. Palette vars,
+    radii, shadows, borders, gaps and the shape layer are excluded:
+    their diffs render below the fold, and counting them left
+    rendered-identical pairs (industrial-03/08, luxe-01/08 …) alive
+    as "distinct" vibes."""
     def fil(tok):
         return tuple(sorted(
             (k, v) for k, v in tok.items()
-            if not k.startswith(_PALETTE_PREFIXES)))
-    return (r['theme'], r['shape'],
-            fil(r['tokens']['light']), fil(r['tokens']['dark']))
+            if not k.startswith(_FS_INVISIBLE_PREFIXES)))
+    return (r['theme'], fil(r['tokens']['light']),
+            fil(r['tokens']['dark']))
+
+
+# dropped candidate id → the survivor id it was deduped into;
+# stored picks naming a culled preset still resolve to a real vibe
+# instead of falling back to null
+_PRESET_ALIAS = {}
 
 
 def _build_presets():
-    out, seen, seen_sig = [], set(), set()
+    out, seen, seen_sig = [], set(), {}
     for cluster, n, _base in _CLUSTERS:
         got = 0
         i = 0
@@ -518,15 +536,23 @@ def _build_presets():
                 tries += 1
             seen.add(sig)
             ssig = _struct_sig(r)
+            pid = f'{cluster}-{i:02d}'
             if ssig in seen_sig:
                 # structural twin of an earlier preset — same face /
                 # radius / spacing / shape, differing only in colour;
-                # skip it rather than minting a near-identical card
+                # skip it rather than minting a near-identical card,
+                # but alias the would-be id to the survivor so stored
+                # picks keep resolving
+                _PRESET_ALIAS[pid] = seen_sig[ssig]
                 continue
-            seen_sig.add(ssig)
+            seen_sig[ssig] = pid
             got += 1
-            out.append({'id': f'{cluster}-{got:02d}',
-                        'name': f'{cluster.title()} {got:02d}',
+            # id from the generation index, not the kept count: the
+            # sweep is deterministic on (cluster, i), so structural-
+            # dedupe changes leave gaps instead of silently
+            # renumbering ids that signed picks already reference
+            out.append({'id': pid,
+                        'name': f'{cluster.title()} {i:02d}',
                         'cluster': cluster, 'genes': genes,
                         'theme': r['theme']})
     return out
@@ -534,3 +560,4 @@ def _build_presets():
 
 PRESETS = _build_presets()
 PRESET_BY_ID = {p['id']: p for p in PRESETS}
+PRESET_ALIAS = dict(_PRESET_ALIAS)
