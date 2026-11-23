@@ -21,10 +21,12 @@ import hashlib
 AXES = [
     {'group': 'Type', 'axis': 'display-face',
      'alleles': ['sans', 'serif', 'mono', 'mixed']},
+    {'group': 'Type', 'axis': 'type-scale',
+     'alleles': ['gentle', 'balanced', 'dramatic', 'poster']},
     {'group': 'Type', 'axis': 'type-contrast',
      'alleles': ['low', 'medium', 'high', 'extreme']},
     {'group': 'Type', 'axis': 'heading-form',
-     'alleles': ['claim', 'label', 'query']},
+     'alleles': ['label', 'query', 'underline']},
     {'group': 'Space', 'axis': 'density-tier',
      'alleles': ['compact', 'regular', 'spacious']},
     {'group': 'Space', 'axis': 'whitespace-band',
@@ -43,7 +45,7 @@ AXES = [
     {'group': 'Motion', 'axis': 'motion-tier',
      'alleles': ['static', 'subtle', 'expressive', 'cinematic']},
     {'group': 'Motion', 'axis': 'disclosure-tier',
-     'alleles': ['open', 'folded', 'tabbed', 'carousel']},
+     'alleles': ['open', 'folded', 'carousel']},
     {'group': 'Mood', 'axis': 'mood-energy',
      'alleles': ['still', 'calm', 'balanced', 'lively', 'energetic']},
     {'group': 'Mood', 'axis': 'mood-register',
@@ -52,8 +54,13 @@ AXES = [
     {'group': 'Mood', 'axis': 'trend',
      'alleles': ['none', 'cute-alism', 'dial-up-delight',
                  'resonant-stark', 'frosted-touch',
-                 'light-skeuomorphism', 'ai-personalisation',
+                 'light-skeuomorphism',
                  'snug-simple', 'human-scribble', 'dated']},
+    {'group': 'Mood', 'axis': 'palette',
+     # last — the palette is the cluster's identity; it wins over
+     # register accents so each cluster keeps its own accent colour
+     'alleles': ['porcelain', 'cream', 'ink', 'rose', 'moss', 'solar',
+                 'slate', 'plum', 'sand', 'ocean', 'ember', 'forest']},
 ]
 _AXIS_ORDER = [a['axis'] for a in AXES]
 
@@ -65,6 +72,77 @@ _SANS = 'ui-sans-serif,system-ui,sans-serif'
 _SERIF = 'Georgia,"Times New Roman",serif'
 _MONO = 'ui-monospace,"SF Mono",Menlo,monospace'
 
+# ---------------------------------------------------------------
+# palette axis — the biggest visible difference between vibes is
+# colour, and no allele used to set a light-mode page colour at
+# all (audit: 54 surviving presets shared ONE background). Each
+# palette carries a full light + dark role set; accents run through
+# pair_surface/pair_ink afterwards so C.1 holds either way.
+# ---------------------------------------------------------------
+def _pal(bg, sur, elev, txt, sub, brd, act, hov,
+         dbg, dsur, delev, dtxt, dsub, dbrd, dact, dhov, dink):
+    return ({'L': '--bg-canvas:%s;--bg-surface:%s;--bg-elevated:%s;'
+             '--text-primary:%s;--text-secondary:%s;'
+             '--border-default:%s;--action-primary:%s;'
+             '--action-primary-hover:%s' % (bg, sur, elev, txt, sub,
+                                            brd, act, hov),
+             'D': '--bg-canvas:%s;--bg-surface:%s;--bg-elevated:%s;'
+             '--text-primary:%s;--text-secondary:%s;'
+             '--border-default:%s;--action-primary:%s;'
+             '--action-primary-hover:%s;--action-primary-ink:%s'
+             % (dbg, dsur, delev, dtxt, dsub, dbrd, dact, dhov, dink)},)
+
+_PALETTES = {
+    'porcelain': _pal('#FBFAF8', '#F3F1EC', '#FFFFFF', '#1B1B1F',
+        '#6B6B70', '#E4E1DA', '#4F46E5', '#4338CA',
+        '#141416', '#1C1C20', '#242429', '#EDEDEB', '#A5A5A0',
+        '#333338', '#A5B4FC', '#C7D2FE', '#141B3F'),
+    'cream': _pal('#F7F1E5', '#EFE7D7', '#FDFAF3', '#2B2418',
+        '#7A6F5C', '#E0D4BE', '#2F6B3C', '#245431',
+        '#191712', '#211E17', '#2A2620', '#EDE6D6', '#B3A88F',
+        '#3B3529', '#9CCB8C', '#C0E4B2', '#12200F'),
+    'ink': _pal('#ECEFF1', '#E0E5E8', '#FFFFFF', '#10181C',
+        '#55656D', '#CBD5DA', '#0E7490', '#0B5C72',
+        '#0B1114', '#131B1F', '#1B262C', '#E2EAED', '#94A7AE',
+        '#26343B', '#5AD8E6', '#93E8F2', '#062A31'),
+    'rose': _pal('#FAF1F0', '#F3E4E3', '#FFFFFF', '#35201F',
+        '#8A6360', '#EAD4D2', '#A33348', '#822539',
+        '#1D1214', '#291A1D', '#342024', '#F0DCDC', '#C29B98',
+        '#4A2E33', '#E88FA1', '#F2B4C1', '#38101B'),
+    'moss': _pal('#EFF1E8', '#E3E7D8', '#FBFCF7', '#232A1D',
+        '#66705A', '#D4DAC3', '#4C6B2A', '#3A5420',
+        '#12150F', '#1A1E15', '#23291C', '#E4E9D8', '#A4AE8F',
+        '#323A28', '#B0D18B', '#CCE3AE', '#1B2A0E'),
+    'solar': _pal('#FDF8F0', '#F6EDDC', '#FFFFFF', '#2E2412',
+        '#7D6F52', '#EBDCC2', '#D4421E', '#B03615',
+        '#1A1208', '#251A0D', '#302315', '#F3E8D2', '#C2AE8C',
+        '#46351D', '#FFB45E', '#FFCF8E', '#3A1E04'),
+    'slate': _pal('#EFF1F5', '#E2E5EC', '#FFFFFF', '#1F2430',
+        '#5F6879', '#D3D8E2', '#34559E', '#27417D',
+        '#11141B', '#191D26', '#222733', '#E3E8F0', '#9AA5B8',
+        '#303849', '#8FAFF7', '#B3CBFA', '#0E1E44'),
+    'plum': _pal('#F3EFF7', '#E8E1EF', '#FDFCFE', '#2A1E35',
+        '#6F6079', '#DACFE3', '#7A3FA0', '#603080',
+        '#170F1F', '#211630', '#2C1D3D', '#E9DFEF', '#B6A6C2',
+        '#412C52', '#C79BE7', '#DCBDF0', '#2A1140'),
+    'sand': _pal('#F6EFE4', '#EBDFCC', '#FFFFFF', '#33291A',
+        '#7F7159', '#DECFAB', '#B4582B', '#94461F',
+        '#191510', '#221C13', '#2C2518', '#EBDFC9', '#B8A889',
+        '#403626', '#E8A46E', '#F0C294', '#3A230C'),
+    'ocean': _pal('#EDF4F6', '#DCE9ED', '#FFFFFF', '#0F2630',
+        '#4F6B75', '#C9DCE1', '#0D5C75', '#094A5E',
+        '#0A161B', '#112229', '#183038', '#DCECEF', '#93B0B8',
+        '#24434E', '#6CC6DB', '#9ADBEB', '#04303C'),
+    'ember': _pal('#FBF3EC', '#F3E6D8', '#FFFFFF', '#331D10',
+        '#82624C', '#E8D5C0', '#B23A1D', '#8F2D14',
+        '#150D08', '#20140B', '#2B1C10', '#F0E2D2', '#BFA285',
+        '#432B18', '#F08A55', '#F5AC80', '#3A1604'),
+    'forest': _pal('#EEF3EE', '#E0EAE0', '#FFFFFF', '#17281B',
+        '#4E6852', '#C9DCCB', '#1E5C33', '#154726',
+        '#0C140E', '#132017', '#1B2C20', '#DCEBDD', '#96B39A',
+        '#27402D', '#7FC98F', '#A4DDB0', '#0C2A15'),
+}
+
 
 def _den(var):
     return ('--flow-spacing:var(--space-%s);--grid-gap:var(--space-%s);'
@@ -72,16 +150,41 @@ def _den(var):
 
 
 _ALLELE = {
+    'palette': _PALETTES,
     'display-face': {
+        # real pairings — heading/body families differ per face
         'sans': ({'L': '--font-display:' + _SANS +
-                  ';--primitive-font-display:' + _SANS},),
+                  ';--primitive-font-display:' + _SANS +
+                  ';--font-body:' + _SANS},),
         'serif': ({'L': '--font-display:' + _SERIF +
-                  ';--primitive-font-display:' + _SERIF},),
+                   ';--primitive-font-display:' + _SERIF +
+                   ';--font-body:' + _SERIF},),
         'mono': ({'L': '--font-display:' + _MONO +
                   ';--primitive-font-display:' + _MONO +
                   ';--font-body:' + _MONO},),
         'mixed': ({'L': '--font-display:' + _SERIF +
-                   ';--primitive-font-display:' + _SERIF},),
+                   ';--primitive-font-display:' + _SERIF +
+                   ';--font-body:' + _SANS},),
+    },
+    'type-scale': {
+        # heading ratio actually changes — audit: --fs-* never moved
+        'gentle': ({'L': '--h1:clamp(1.6rem,calc(2.2vw + 1.05rem),'
+                    '2.9rem);--h2:clamp(1.35rem,calc(1.4vw + 1rem),'
+                    '2.15rem);--h3:clamp(1.15rem,calc(0.8vw + 1rem),'
+                    '1.6rem)'},),
+        'balanced': ({'L': '--h1:clamp(1.8rem,calc(3.4vw + 1rem),'
+                      '3.8rem);--h2:clamp(1.45rem,calc(1.8vw + '
+                      '1.05rem),2.5rem);--h3:clamp(1.2rem,calc(0.9vw'
+                      ' + 1rem),1.7rem)'},),
+        'dramatic': ({'L': '--h1:clamp(2.1rem,calc(4.8vw + 1rem),'
+                      '5rem);--h2:clamp(1.6rem,calc(2.6vw + 1rem),'
+                      '3.3rem);--h3:clamp(1.3rem,calc(1.2vw + '
+                      '1.05rem),2rem)'},),
+        'poster': ({'L': '--h1:clamp(2.6rem,calc(6.6vw + 1rem),'
+                    '6.4rem);--h2:clamp(1.9rem,calc(3.6vw + 1rem),'
+                    '4.4rem);--h3:clamp(1.4rem,calc(1.5vw + 1.05rem),'
+                    '2.5rem);--text-l:clamp(1.25rem,calc(0.8vw + '
+                    '1.05rem),1.8rem)'},),
     },
     'type-contrast': {
         'low': ({'S': 'h1,h2,h3,.sec-h{font-weight:400;'
@@ -95,10 +198,12 @@ _ALLELE = {
                      'text-transform:uppercase}'},),
     },
     'heading-form': {
-        'claim': ({},),
         'label': ({'S': '.sec-h h2{text-transform:uppercase;'
                    'letter-spacing:.12em;font-size:.9em}'},),
         'query': ({'S': '.sec-h h2::after{content:"?"}'},),
+        'underline': ({'S': '.sec-h h2{text-decoration:underline;'
+                       'text-decoration-thickness:.07em;'
+                       'text-underline-offset:.14em}'},),
     },
     'density-tier': {
         'compact': ({'L': _den('s')},),
@@ -118,7 +223,8 @@ _ALLELE = {
                'important}'},),
         '2': ({'S': '@media (min-width:560px){.card-grid{'
                'grid-template-columns:repeat(2,1fr)!important}}'},),
-        '3': ({},),
+        '3': ({'S': '@media (min-width:640px){.card-grid{'
+               'grid-template-columns:repeat(3,1fr)!important}}'},),
         '4': ({'S': '@media (min-width:720px){.card-grid{'
                'grid-template-columns:repeat(4,1fr)!important}}'},),
     },
@@ -171,7 +277,8 @@ _ALLELE = {
         'static': ({'S': '*,*::before,*::after{transition:none!'
                     'important;animation:none!important}'
                     'html{scroll-behavior:auto}'},),
-        'subtle': ({},),
+        'subtle': ({'S': 'a,button{transition:color .14s ease,'
+                    'background-color .14s ease}'},),
         'expressive': ({'S': 'a,button{transition:all .18s ease}'
                         '.card{transition:transform .18s ease,'
                         'box-shadow .18s ease}'
@@ -183,10 +290,12 @@ _ALLELE = {
                        'scale(1.01)}html{scroll-behavior:smooth}'},),
     },
     'disclosure-tier': {
-        'open': ({},),
-        'folded': ({'S': 'details>summary{cursor:pointer}'},),
-        'tabbed': ({},),
-        'carousel': ({'S': '.card-grid{overflow-x:auto}'},),
+        'open': ({'S': 'details>summary{font-weight:600}'},),
+        'folded': ({'S': 'details>summary{cursor:pointer}'
+                   'details:not([open])>summary~*{display:none}'},),
+        'carousel': ({'S': '.card-grid{overflow-x:auto;'
+                      'scroll-snap-type:x proximity}'
+                      '.card-grid>*{scroll-snap-align:start}'},),
     },
     'mood-energy': {
         'still': ({'L': '--shadow-card:none;--shadow-pop:none;'
@@ -243,7 +352,6 @@ _ALLELE = {
                            'var(--bg-canvas) 80%,transparent)}'},),
         'light-skeuomorphism': ({'L': '--shadow-card:inset 0 1px 0 '
                                  '#ffffff,0 2px 8px #00000014'},),
-        'ai-personalisation': ({},),
         'snug-simple': ({'L': _den('s')},),
         'human-scribble': ({'S': '.card{border:1.5px dashed '
                             'var(--border-default)}'},),
@@ -407,45 +515,60 @@ def gene_hash(genes):
 # Base genes pin the cluster's identity; the sweep varies the rest.
 # ------------------------------------------------------------------
 _CLUSTERS = [
-    ('noir', 9, {'surface-rhythm': 'dark-dominant',
+    # each cluster pins a palette allele — the colour identity is
+    # part of the vibe, and it travels in the genes so 'use vibe'
+    # carries it anywhere resolve() runs
+    ('noir', 9, {'palette': 'ink',
+                 'surface-rhythm': 'dark-dominant',
                  'radius-personality': 'sharp',
                  'type-contrast': 'high', 'mood-register': 'premium'}),
-    ('paper', 10, {'display-face': 'serif', 'density-tier': 'spacious',
+    ('paper', 10, {'palette': 'cream',
+                   'display-face': 'serif', 'density-tier': 'spacious',
                    'mood-energy': 'calm',
                    'surface-rhythm': 'single-surface'}),
-    ('neon', 8, {'surface-rhythm': 'dark-dominant',
+    ('neon', 8, {'palette': 'plum',
+                 'surface-rhythm': 'dark-dominant',
                  'radius-personality': 'pill',
                  'mood-energy': 'energetic',
                  'motion-tier': 'expressive'}),
-    ('brutal', 10, {'radius-personality': 'sharp',
+    ('brutal', 10, {'palette': 'porcelain',
+                    'radius-personality': 'sharp',
                     'type-contrast': 'extreme',
                     'trend': 'resonant-stark',
                     'mood-energy': 'still'}),
-    ('luxe', 10, {'display-face': 'serif', 'mood-register': 'luxury',
+    ('luxe', 10, {'palette': 'sand',
+                  'display-face': 'serif', 'mood-register': 'luxury',
                   'radius-personality': 'mixed',
                   'whitespace-band': 'airy'}),
-    ('minimal', 10, {'surface-rhythm': 'single-surface',
+    ('minimal', 10, {'palette': 'porcelain',
+                     'surface-rhythm': 'single-surface',
                      'mood-energy': 'still', 'type-contrast': 'low',
                      'image-style': 'minimal'}),
-    ('playful', 10, {'radius-personality': 'pill',
+    ('playful', 10, {'palette': 'rose',
+                     'radius-personality': 'pill',
                      'mood-energy': 'lively',
                      'mood-register': 'everyday',
                      'image-style': 'playful'}),
-    ('editorial', 10, {'display-face': 'mixed',
+    ('editorial', 10, {'palette': 'ocean',
+                       'display-face': 'mixed',
                        'surface-rhythm': 'alternating',
                        'type-contrast': 'high',
                        'image-style': 'editorial'}),
-    ('mono-type', 8, {'display-face': 'mono',
+    ('mono-type', 8, {'palette': 'forest',
+                      'display-face': 'mono',
                       'image-style': 'technical',
                       'radius-personality': 'sharp'}),
-    ('warm', 10, {'mood-register': 'approachable',
+    ('warm', 10, {'palette': 'moss',
+                  'mood-register': 'approachable',
                   'density-tier': 'regular',
                   'radius-personality': 'soft'}),
-    ('industrial', 8, {'density-tier': 'compact',
+    ('industrial', 8, {'palette': 'slate',
+                       'density-tier': 'compact',
                        'image-style': 'technical',
                        'radius-personality': 'sharp',
                        'type-contrast': 'medium'}),
-    ('gallery', 8, {'surface-rhythm': 'media-interleaved',
+    ('gallery', 8, {'palette': 'ember',
+                    'surface-rhythm': 'media-interleaved',
                     'image-style': 'luxury',
                     'whitespace-band': 'airy',
                     'mood-energy': 'calm'}),
@@ -480,10 +603,15 @@ _PALETTE_PREFIXES = ('--action-primary', '--bg-', '--text-',
 # borders, gaps and accents show below the fold (or only in cards
 # off the first viewport): the audit measures visible first-screen
 # Δ, so the signature must not count them (#137 residue)
-_FS_INVISIBLE_PREFIXES = _PALETTE_PREFIXES + (
+# vars that never change the RENDERED first screen: radii, shadows,
+# borders, gaps, hover/ink states. Palette, text, font, type-scale,
+# measure and action colours ARE visible above the fold — they stay
+# in the signature so palette twins no longer read as distinct
+_FS_INVISIBLE_PREFIXES = (
     '--radius', '--primitive-radius', '--r-', '--shadow',
     '--content-gap', '--flow-spacing', '--grid-gap', '--gap',
-    '--action')
+    '--border', '--action-primary-hover', '--action-primary-ink',
+    '--lh-')
 
 
 def _struct_sig(r):
@@ -499,7 +627,7 @@ def _struct_sig(r):
             (k, v) for k, v in tok.items()
             if not k.startswith(_FS_INVISIBLE_PREFIXES)))
     return (r['theme'], fil(r['tokens']['light']),
-            fil(r['tokens']['dark']))
+            fil(r['tokens']['dark']), r['shape'])
 
 
 # dropped candidate id → the survivor id it was deduped into;
