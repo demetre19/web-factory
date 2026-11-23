@@ -830,15 +830,44 @@ def _real_block(copy, rows, role, taken):
     return None, None
 
 
+# layout boards are vibe/shape previews ONLY — the real pipeline copy
+# is what crams keywords into every slot and breaks the layouts the
+# operator is trying to compare. Facts + copy both bind specimen
+# values; real content binds at Sections and the final emit.
+_SPEC_FACTS = {
+    'plan.site.brand': 'Atlas Studio',
+    'plan.topic': 'Cleaning services',
+    'plan.cta': {'label': 'Get a quote', 'href': '#contact'},
+    'plan.phone': {'label': '1300 555 010', 'href': 'tel:1300555010'},
+    'plan.nav.items': [{'term': t, 'href': '#'} for t in
+                       ('Services', 'Locations', 'Pricing', 'About',
+                        'Contact')],
+    'plan.footer.items': [{'term': t, 'href': '#'} for t in
+                          ('Services', 'Locations', 'Pricing', 'About',
+                           'Contact')],
+    'plan.services': [{'term': t, 'href': '#'} for t in
+                      ('Commercial cleaning', 'Office cleaning',
+                       'Deep cleaning', 'Move-out cleaning')],
+    'plan.guides': [{'term': t, 'href': '#'} for t in
+                    ('A cleaning checklist for committees',
+                     'Choosing a cleaning contractor',
+                     'What a cleaning quote should include')],
+    'plan.collections': [{'term': 'Guides', 'href': '#'}],
+    'plan.suburbs': [{'term': t, 'icon': 'map-pin'} for t in
+                     ('Richmond', 'Southbank', 'Docklands',
+                      'Brunswick', 'Carlton', 'Hawthorn')],
+    'brief.media': [],
+    'plan.email': 'hello@example.com',
+    'plan.site.domain': 'example.com',
+}
+
+
 def bind(ctx, board, prog, copy):
     """{role: {'block': copy-block, 'row': row-extras, 'sources':
-    {slot: source}}} — role-bound content, role-shaped placeholder
-    where nothing role-appropriate exists. Real COPY prose only on the real board."""
-    facts = _facts(ctx, copy)
-    # home is the emitted page itself; any other board binds COPY prose
-    # only when the copy's page type is that board's type
-    real = bool(copy) and (board == 'home' or
-                           PC.page_type_of(copy) == BOARD_TYPE[board])
+    {slot: source}}} — role-bound SPECIMEN content (the board previews
+    the layout's shape, never the site's real copy)."""
+    facts = dict(_SPEC_FACTS)
+    real = False
     slug = gate.page_path(ctx)[1]
     rows = [r for _, r in ctx.rows(slug)]
     taken, out = set(), {}
