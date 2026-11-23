@@ -260,6 +260,17 @@ _JS = r"""
   // text hidden at rest: share of own-text chars still opacity~0 /
   // visibility-hidden / display:none after the reveal pass ran
   let hidCh = 0, totCh = 0;
+  // a hidden ancestor buries every descendant — computed style on
+  // the child alone still reports it visible
+  const buried = el => {
+    for (let q = el; q && q !== document.documentElement;
+         q = q.parentElement) {
+      const cs = getComputedStyle(q);
+      if (cs.display === 'none' || cs.visibility === 'hidden'
+          || parseFloat(cs.opacity) < 0.05) return true;
+    }
+    return false;
+  };
   for (const el of document.querySelectorAll('main *')) {
     if (skip(el)) continue;
     let own = '';
@@ -267,9 +278,7 @@ _JS = r"""
       if (n.nodeType === 3) own += n.textContent;
     const t = own.trim(); if (!t) continue;
     totCh += t.length;
-    const cs = getComputedStyle(el);
-    if (cs.display === 'none' || cs.visibility === 'hidden'
-        || parseFloat(cs.opacity) < 0.05) hidCh += t.length;
+    if (buried(el)) hidCh += t.length;
   }
   out.hidden_text = {hidden_chars: hidCh, total_chars: totCh,
       share: totCh ? +(hidCh / totCh).toFixed(3) : 0};
@@ -301,7 +310,10 @@ _JS = r"""
     const tcs = getComputedStyle(top);
     const tb = rgba(tcs.backgroundColor);
     const opaque = parseFloat(tcs.opacity) > 0.9
-        && (!tb || tb.length < 4 || tb[3] > 0.9);
+        && (!tb || tb.length < 4 || tb[3] > 0.9)
+        // fixed/sticky chrome (call bars, nav) passes over content
+        // transiently — scrolling clears it, not occlusion
+        && tcs.position !== 'fixed' && tcs.position !== 'sticky';
     if (opaque) {
       let anc = false;
       for (let q = el.parentElement; q; q = q.parentElement)
@@ -533,7 +545,7 @@ def doc(ctx, pages):
     fixtures so the schema cannot drift between them."""
     return {
         'tool': 'measure.py',
-        'version': 1,
+        'version': 2,
         'dist_sha256': gate._dist_sha(ctx),
         'shots_sha256': _shots_sha(ctx),
         'pages': pages,

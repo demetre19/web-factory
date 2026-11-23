@@ -2192,6 +2192,9 @@ def check_render_integrity(ctx):
         m = json.loads(raw)
     except Exception:
         return []
+    if (m.get('version') or 0) < 2:
+        return ['R.0 MEASURE.json predates the render probes — '
+                're-run measure.py to produce version 2 evidence']
     f = []
     for slug, pg in sorted((m.get('pages') or {}).items()):
         for w, v in sorted((pg.get('viewports') or {}).items()):
@@ -7481,8 +7484,18 @@ SHOT_WIDTHS = (1280, 768, 360)
 
 def _dist_sha(ctx):
     h = hashlib.sha256()
-    for p, _ in ctx.page_htmls():
-        h.update(open(p, 'rb').read())
+    # the whole emitted tree binds evidence: a changed asset (css/img)
+    # with unchanged page HTML still makes old measurements stale
+    for root in (os.path.join(ctx.site, 'dist'),
+                 os.path.join(ctx.dir, 'preview')):
+        if not os.path.isdir(root):
+            continue
+        for dp, _, fns in sorted(os.walk(root)):
+            for fn in sorted(fns):
+                p = os.path.join(dp, fn)
+                h.update(os.path.relpath(p, root).encode())
+                with open(p, 'rb') as fh:
+                    h.update(fh.read())
     return h.hexdigest()[:16]
 
 
