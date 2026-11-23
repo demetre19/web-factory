@@ -25,8 +25,8 @@ per-section topology scrubbing inline on the full page) →
 sections/elements (galleries). Every preview is static HTML —
 variants differ by a CSS-var override bundle, never by a rebuild.
 """
-import datetime, hashlib, html.parser, json, os, re, subprocess, \
-    sys, tempfile, threading, urllib.parse
+import datetime, hashlib, html.parser, json, os, re, shutil, \
+    subprocess, sys, tempfile, threading, urllib.parse
 from pathlib import Path
 
 try:
@@ -564,11 +564,17 @@ def _bank_doc(pd, cls, nav=None):
             '<link rel="stylesheet" href="/built/' +
             urllib.parse.quote(os.path.join(
                 bankdir, 'bank-preview-extra.css')) + '">')
-    stage = ('<div class="wf-stage mob">' + frag + '</div>')
-    return ('<!--wf:bank:v5-->' +
+    # full-bleed — the menu board resizes the doc itself (M/T/D), so
+    # the nav renders at real page width with the flyout open via
+    # ?menu=open; a stage box + mob frame crops the bar and scrolls
+    # the panel (operator: 'this is supposed to be FULL width and
+    # not have scroll bars … it should NOT have a bounding box')
+    stage = ('<div class="wf-page">' + frag + '</div>')
+    return ('<!--wf:bank:v6-->' +
             _doc(head, '', stage,
                  extra=_STAGE_SCROLL_SHIM + _BANK_MENU_DRV,
-                 css=_BANK_STAGE_CSS + _BANK_MENU_CSS, chrome=True))
+                 css=_BANK_STAGE_CSS + _BANK_MENU_CSS +
+                 _BANK_VFLOOR_CSS, chrome=True))
 
 # AND-picker mood facets — operator-facing synonyms over the gene
 # bundles (e.g. light AND professional, light AND playful)
@@ -3862,6 +3868,9 @@ _BANK_STAGE_CSS = (
     # vertically centered — flex centering pushes its top off
     # screen and the heading/controls are unreachable
     'body:has(>.wf-page){justify-content:flex-start}'
+    # full-bleed: no gray mat, no inset — a page surface is
+    # edge-to-edge (operator: 'it should NOT have a bounding box')
+    'body:has(>.wf-page){padding:0;gap:0;background:#fff}'
     '.wf-fx-bar{display:flex;gap:8px}'
     '.wf-fx-bar button{font:600 12px/1 system-ui,sans-serif;'
     'padding:8px 12px;border-radius:8px;'
@@ -3901,6 +3910,18 @@ _BANK_STAGE_CSS = (
     'body.wf-nav-open .wf-menu-closed-up{transform:none!important}'
     'body.wf-nav-open [class*="fixed inset-0"]{opacity:1!important;'
     'pointer-events:auto!important}')
+
+
+# G.floor-vertical for bank docs — the same stacked-sibling law the
+# emitted page's GLOBAL_CSS_TAIL carries, layered so every authored
+# utility/margin still wins (vendored TW is unlayered); tokens carry
+# px fallbacks because a bank doc binds no design-token sheet
+_BANK_VFLOOR_CSS = (
+    '@layer wf-floor{'
+    '[class*="container"]{display:grid;'
+    'row-gap:var(--content-gap,var(--space-m,1.5rem))}'
+    '.sec-inner>*+*,[class*="wrapper"]>*+*,[class*="-stack"]>*+*{'
+    'margin-block-start:var(--content-gap,var(--space-m,1.5rem))}}')
 
 
 # E1 — fragment interactions are authored against a REAL surface:
@@ -5019,6 +5040,13 @@ def emit_bank_previews(pd):
                           ('.jpg', '.jpeg', '.png', '.webp')))
         if real:
             demo_img = real[0]
+    # emitted docs are content-keyed under a per-pipeline cache that
+    # survives `site/dist` wipes — a rebuild re-copies docs instead of
+    # re-running every transform (operator: bank previews are CACHED,
+    # never re-rendered from scratch each build)
+    cache_root = os.path.join(
+        os.path.expanduser('~'), '.cache', 'wf-bank',
+        hashlib.sha256(pd.encode()).hexdigest()[:16])
     out = {}
     for gid, dirs in _BANK_DIRS.items():
         if gid in ('menu', 'footers'):
@@ -5047,16 +5075,39 @@ def emit_bank_previews(pd):
                     continue
                 os.makedirs(os.path.dirname(dst), exist_ok=True)
                 row = tags.get(cls + '/' + slug) or {}
-                stale = (not os.path.isfile(dst)) or \
-                    os.path.getmtime(fp) > os.path.getmtime(dst) or \
-                    (os.path.isfile(css_dst) and
-                     os.path.getmtime(css_dst) >
-                     os.path.getmtime(dst)) or \
-                    '<!--wf:bank:v17-->' not in open(
-                        dst, encoding='utf-8',
-                        errors='replace').read(64)
+                raw = open(fp, 'rb').read()
+                nav_d0 = cls.startswith('nav-')
+                foot_d0 = cls.startswith('footer-')
+                chrome_key = ''
+                if nav_d0 or foot_d0:
+                    _n0, _f0 = _site_chrome(pd)
+                    chrome_key = json.dumps(
+                        _n0 if nav_d0 else _f0,
+                        sort_keys=True, default=str)
+                key = hashlib.sha256(
+                    b'v19\0' + cls.encode() + b'\0' + raw +
+                    pd.encode() + pd_url.encode() +
+                    demo_img.encode() + chrome_key.encode() +
+                    json.dumps(row, sort_keys=True,
+                               default=str).encode()).hexdigest()[:16]
+                mark = '<!--wf:bank:v19:' + key + '-->'
+                cfp = os.path.join(cache_root, cls, slug + '.html')
+
+                def _marked(p_, _m=mark):
+                    try:
+                        with open(p_, encoding='utf-8',
+                                  errors='replace') as fh:
+                            return fh.read(len(_m)) == _m
+                    except OSError:
+                        return False
+
+                stale = not _marked(dst)
+                if stale and _marked(cfp):
+                    # cache hit — restore the doc the last build wiped
+                    shutil.copy2(cfp, dst)
+                    stale = False
                 if stale:
-                    frag = open(fp, encoding='utf-8').read()
+                    frag = raw.decode('utf-8', 'replace')
                     # E4 — banked fragments may keep the source app's
                     # /src/assets/… refs; that tree is never shipped,
                     # so every fx load 404s the image. Bind them to
@@ -5132,7 +5183,8 @@ def emit_bank_previews(pd):
                     # surfaces — the stage underlay binds their
                     # intended surface or light text sits on the
                     # light frame (E1 readability)
-                    css_ = floor_gaps(_BANK_STAGE_CSS + (
+                    css_ = floor_gaps(_BANK_STAGE_CSS +
+                                      _BANK_VFLOOR_CSS + (
                         'body{padding:0}' if page else '') + (
                         'body{background:#0b0e14}'
                         if row.get('mode') == 'dark' else '') + (
@@ -5140,7 +5192,7 @@ def emit_bank_previews(pd):
                         if nav_d else '') + (
                         _FOOTER_RESP_CSS if foot_d else ''))
                     with open(dst, 'w', encoding='utf-8') as fh:
-                        fh.write('<!--wf:bank:v17-->' +
+                        fh.write(mark +
                                  _doc(head, '', stage,
                                       extra=(_STAGE_SCROLL_SHIM
                                              if not page else '') +
@@ -5152,6 +5204,8 @@ def emit_bank_previews(pd):
                                       css=css_,
                                       chrome=gid == 'menu' or
                                       cls.startswith('nav-')))
+                    os.makedirs(os.path.dirname(cfp), exist_ok=True)
+                    shutil.copy2(dst, cfp)
                 row = tags.get(cls + '/' + slug) or {}
                 ctags = [cls, 'bank'] + \
                     list(row.get('style') or []) + \

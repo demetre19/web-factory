@@ -103,7 +103,7 @@
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
-    column-gap: calc(var(--flow-spacing) / 4);
+    column-gap: max(1rem, calc(var(--flow-spacing) / 4));
   }
 
   .wf-header-21 .wf-off-canvas-6__content {
@@ -126,13 +126,13 @@
   }
 
   .wf-header-21 .wf-off-canvas-contact {
-    row-gap: calc(var(--flow-spacing) / 1.8);
+    row-gap: max(1rem, calc(var(--flow-spacing) / 1.8));
   }
 
   .wf-header-21 .wf-off-canvas-contact-item {
     display: flex;
     flex-direction: row;
-    column-gap: calc(var(--flow-spacing) / 2);
+    column-gap: max(1rem, calc(var(--flow-spacing) / 2));
   }
 
   .wf-header-21 .wf-off-canvas-6__socials {

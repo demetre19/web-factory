@@ -259,6 +259,24 @@ input, textarea { border: 1px solid var(--input-border); padding: var(--input-py
   [class*="container"] { display: grid; }
   [class*="container"][class*="container"]:has(> .flow) {
       flex-direction: column; }
+  /* G.floor-vertical — stacked siblings ALWAYS separate (operator
+     law: 'headings or buttons touching other divs' is a defect in
+     every class). A bare container's row-gap defaults to the content
+     rung so a skeleton that never declared a vertical gap still
+     separates its rows; an authored row-gap/gap wins (same layer,
+     later or equal specificity — authored rules on the class beat
+     the attribute selector anyway). Inside the measure box and any
+     stack/wrapper, a sibling after a sibling takes the content rung —
+     media stacked above a content block, a header row over a form,
+     prose over a list: never flush. Elements carrying their own
+     stack/flow margin keep it: an unlayered or same-layer authored
+     margin always beats this floor. */
+  [class*="container"] { row-gap: var(--content-gap); }
+  .sec-inner > * + *, [class*="wrapper"] > * + *,
+  [class*="-stack"] > * + * { margin-block-start: var(--content-gap); }
+  .sec-inner > :is(.mt-stack, .mt-flow) + *,
+  [class*="wrapper"] > :is(.mt-stack, .mt-flow) + * {
+      margin-block-start: var(--space-s); }
   /* chrome is a bar: nav/footer get rhythm, never a section's padding */
   .sec-bar { padding-block: max(1rem, var(--space-xs));
              background: var(--sec-bg, var(--bg-canvas));
