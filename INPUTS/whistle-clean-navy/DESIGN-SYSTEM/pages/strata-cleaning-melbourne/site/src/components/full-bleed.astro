@@ -1,0 +1,28 @@
+---
+/**
+ * full-bleed — gold exemplar (SB.5). Adapt copy, tokens and rhythm to the
+ * contract; keep the skeleton. Renders inside Section.astro: no
+ * <section>, no outer padding/background/max-width (SB.2).
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  body?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string; value?: string;
+             label?: string; href?: string; quote?: string }[];
+  image?: { src: string; alt: string };
+  h1?: boolean;
+}
+const {
+  heading = 'Section heading', fs = '',
+  body = '', cta, items = [], image, h1,
+} = Astro.props;
+---
+
+{image && <div class="media-bg"><img src={image.src} alt={image.alt} /></div>}
+<div class="text-center">
+  {h1 ? <h1 class="text-fluid-4">{heading}</h1> : <h2 class="text-fluid-3">{heading}</h2>}
+  {fs && <p class="mx-auto mt-stack max-w-prose text-fluid-1">{fs}</p>}
+  {cta && <a class="wf-cta-button mt-fluid-l" href={cta.href}>{cta.label}</a>}
+</div>

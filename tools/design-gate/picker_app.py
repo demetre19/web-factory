@@ -1374,26 +1374,64 @@ def _fam_css(f):
             if f.get('css_dark') else '') + (f.get('shape') or '')
 
 
-def emit_vibe_doc(pd, fam, bundle):
-    """one vibe doc for a resolved bundle — emits only when
-    missing (deterministic content); returns dist-relative path."""
-    outdir = os.path.join(pd, 'site', 'dist', 'preview', 'vibes')
-    blocks, _rows = _comp_blocks(pd)
-    if not blocks:
+def _spec_parts(pd, spec_id):
+    """(head, body_attrs, body_inner) of a built vibe specimen page
+    (site/dist/preview/spec-<k>/index.html) — the page the preset
+    preview wraps in its own gene bundle. None when the emit didn't
+    produce it (older pipelines)."""
+    fp = os.path.join(pd, 'site', 'dist', 'preview', spec_id,
+                      'index.html')
+    try:
+        txt = open(fp, encoding='utf-8', errors='replace').read()
+    except OSError:
         return None
-    head, battr = blocks[next(iter(blocks))][1:3]
-    body = ''
-    for comp in _SINK_ORDER:
-        if comp in blocks:
-            body += blocks[comp][0]
+    h = re.search(r'<head[^>]*>(.*)</head>', txt, re.S)
+    b = re.search(r'<body([^>]*)>(.*)</body>', txt, re.S)
+    if not (h and b):
+        return None
+    return h.group(1), b.group(1), b.group(2)
+
+
+def _spec_for(fam):
+    """deterministic preset/family → specimen archetype — each vibe
+    previews a DIFFERENT finished page (its own layout + specimen
+    copy); the site's real copy only arrives at Sections."""
+    try:
+        import preview_build as _pb
+        n = len(_pb._VIBE_SPECS)
+    except Exception:
+        n = 8
+    import zlib
+    return 'spec-' + str(zlib.crc32(fam.encode('utf-8')) % max(1, n))
+
+
+def emit_vibe_doc(pd, fam, bundle, spec=None):
+    """one vibe doc for a resolved bundle — the specimen page bound
+    to `fam` wrapped in its vars; emits only when missing
+    (deterministic content); returns dist-relative path."""
+    outdir = os.path.join(pd, 'site', 'dist', 'preview', 'vibes')
+    parts = _spec_parts(pd, spec or _spec_for(fam))
+    if parts:
+        head, battr, body = parts
+    else:
+        # fallback for pipelines whose build predates emit_vibe_specs
+        blocks, _rows = _comp_blocks(pd)
+        if not blocks:
+            return None
+        head, battr = blocks[next(iter(blocks))][1:3]
+        body = ''
+        for comp in _SINK_ORDER:
+            if comp in blocks:
+                body += blocks[comp][0]
     fp = os.path.join(outdir, fam + '.html')
     # the marker carries a hash of the emitted css — a producer fix
     # (e.g. the C.1 pairing) changes the resolved palette and the
     # cached doc must re-emit, so a version stamp alone is not enough
     css = _fam_css(bundle)
-    # v7: preview docs cancel anchor navigation (_NO_NAV in _doc)
-    mark = 'wf:vibe:v7:' + hashlib.sha256(
-        css.encode()).hexdigest()[:8]
+    # v8: preview docs cancel anchor navigation (_NO_NAV in _doc);
+    # the marker covers css AND body so a specimen change re-emits
+    mark = 'wf:vibe:v8:' + hashlib.sha256(
+        (css + body).encode()).hexdigest()[:8]
     stale = True
     if os.path.isfile(fp):
         try:
@@ -2080,20 +2118,25 @@ def type_candidates(pd):
 
 
 def emit_vibe_previews(pd):
-    """preview/vibes/<fam>.html — the standard row set under each
-    family's var bundle. Returns {fam: relpath}."""
+    """preview/vibes/<fam>.html — each family's specimen page under
+    its var bundle (per-vibe layout + specimen copy, never the
+    site's rows). Returns {fam: relpath}."""
     outdir = os.path.join(pd, 'site', 'dist', 'preview', 'vibes')
-    blocks, _rows = _comp_blocks(pd)
-    if not blocks:
-        return {}
-    head, battr = blocks[next(iter(blocks))][1:3]
-    body = ''
-    for comp in _SINK_ORDER:
-        if comp in blocks:
-            body += blocks[comp][0]
     os.makedirs(outdir, exist_ok=True)
     emitted = {}
     for fam, f in VIBE_FAMILIES.items():
+        parts = _spec_parts(pd, _spec_for(fam))
+        if parts:
+            head, battr, body = parts
+        else:
+            blocks, _rows = _comp_blocks(pd)
+            if not blocks:
+                return emitted
+            head, battr = blocks[next(iter(blocks))][1:3]
+            body = ''
+            for comp in _SINK_ORDER:
+                if comp in blocks:
+                    body += blocks[comp][0]
         css = _fam_css(f)
         theme = ('<script>document.documentElement.dataset.theme='
                  '"dark";document.documentElement.classList.add('
@@ -6954,13 +6997,6 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
        '<button class="xp" id="vXp" title="expand" data-x="'+
        esc(VRES&&VRES.preview||'')+'">⤢</button>'+
        '<button class="pick" id="vBake">Bake</button></div></div>';
-    h+='<div class="vmoods">'+
-       ['happy·playful','professional·editorial','bold·brutal',
-        'calm·paper','playful·neon','luxe·luxe','noir·noir'
-       ].map(function(m){var p=m.split('·');
-         return '<button class="vmood'+(VMOOD===p[1]?' on':'')+
-                '" data-cl="'+p[1]+'">'+p[0]+'</button>'}).join('')+
-                '</div>';
     h+='<div class="filters">'+filters(o.clusters||[])+'</div>';
     h+='<input class="vq" id="vq" placeholder="search presets…" '+
        'value="'+esc(VQ)+'">';
@@ -7073,14 +7109,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
           if(j.ok){BAKED=v;DATA.picked_elements.vibe=v;
             DATA.vibe_genes=Object.assign({},VGENES);
             setTheme((VRES&&VRES.theme)||'light')}})};
-    el.querySelectorAll('.vmood').forEach(function(m){
-      m.onclick=function(){
-        VMOOD=m.dataset.cl;VSRC=m.textContent.trim();
-        var first=(o.cards||[]).filter(function(cc){
-          return cc.grp===m.dataset.cl})[0];
-        VGENES=Object.assign({},first?first.genes||{}:{});
-        vibePane(el,o);
-        resolveVibe(el,o)}});
+    // one filter set only — cluster chips own the quick-pick job
+
     el.querySelectorAll('.vload').forEach(function(b){
       b.onclick=function(){VMOOD='';
         VSRC=cards[+b.dataset.i].name||'';

@@ -1,119 +1,55 @@
 ---
 /**
- * wf-header-21 — TRANSLATED Bricksmaven skeleton.
- * Produced by bricks_translate.py from the ACSS payload
- * beside this file (header-21.json). Bank source, NOT a gold
- * exemplar: the SOP adapts props/copy/rhythm before
- * canonising (SB.5). Unmapped ACSS vars surface as
- * var(--acss-*) and are listed in the translate report.
+ * flyout-nav — gold exemplar (SB.5). A bar, not a band: brand,
+ * desktop link row (.nav-desk), one phone action, burger. The
+ * mobile menu is ALWAYS the flyout sheet (.nav-links.nav-flyout:
+ * scrim, close control, grouped links, the bar CTA docking at the
+ * panel foot — N.flyout), toggled by the BaseLayout contract.
+ * Renders inside Section.astro (mode="bar").
  */
 interface Props {
   brand?: string;
-  heading?: string;
-  fs?: string;
+  logo?: string;
+  items?: { label?: string; href?: string }[];
   cta?: { label: string; href: string };
-  items?: { title?: string; text?: string; term?: string;
-             label?: string; href?: string;
-             icon?: string; items?: any[] }[];
-  image?: { src: string; alt: string };
-  images?: { src: string; alt: string }[];
-  copy?: any;
-  h1?: boolean;
 }
-import { inline } from '../_shared/inline';
-import IconChip from '../_shared/IconChip.astro';
-import { Image } from 'astro:assets';
-const {
-  brand = 'Brand',
-  heading = '',
-  fs = '',
-  cta = { label: '', href: '#' },
-  items = [],
-  image,
-  images = [],
-  copy,
-  h1 = false,
-} = Astro.props;
-// §4.3 — a copy slot binds verbatim article copy onto
-// the skeleton's native props (F.1 — nothing dropped)
-const cp = copy || {};
-const head = cp.heading || heading;
-const sub = cp.answer || cp.text || fs;
-const before = cp.before || [];
-const list = (cp.items && cp.items.length
-  ? cp.items : items) || [];
-// N.select — the desktop bar keeps the leading links whose
-// labels fit its budget; the rest open behind "More"
-const _lbl = (it) => String(it.label || it.term || it.title || it.text || '');
+const { brand = 'Brand', logo, items = [], cta } = Astro.props;
+// N.select — the desktop bar keeps the leading links whose labels
+// fit its budget; the rest open behind "More"
 const navFit = (() => { let w = 0, n = 0;
-  for (const it of list) { w += _lbl(it).length + 2;
+  for (const it of items) { w += String(it.label || '').length + 2;
     if (w > 56) break; n++; }
   return n; })();
-const navOver = list.length > 6 || navFit < list.length;
+const navOver = items.length > 6 || navFit < items.length;
 const navCut = Math.max(1, Math.min(navFit, 4));
-const qas = cp.qa || [];
-const links = cp.links || [];
-const after = cp.after || [];
-const act = cp.cta || cta;
-const phone = cp.phone || '';
-const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
-// V.8/P.12 — rasters resolve through src/assets/media/
-// so <Image> compiles AVIF/WebP srcsets
-const _media = import.meta.glob('../assets/media/*.{jpg,jpeg,png,webp}', { eager: true });
-const _mn = image ? String(image.src).split('/').pop() : null;
-const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : null;
-const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}`]?.default ?? m.src;
+// P.11 — the brand mark renders as inline SVG markup, never an
+// image tag: the emitter mirrors public/<logo>.svg into src/assets/
+// so it compiles in via ?raw glob
+const logos = import.meta.glob('../assets/*.svg', { query: '?raw', import: 'default', eager: true });
+const logoName = logo ? String(logo).split('/').pop() : null;
+const logoSvg = logoName ? logos[`../assets/${logoName}`] : null;
 ---
-
-<div class="wf-header-21">
-  <div class="sec-inner">
-    <div class="wf-header-21__container row between">
-      <span class="logo brand-mark">{brand}</span>
-      <div>
-        {list.length > 0 && <nav class="nav-desk" aria-label="Primary"><ul class="row gap-fluid-m list-plain">{(navOver ? list.slice(0, navCut) : list).map((it) => <li><a class="nav-link" href={it.href}>{it.label || it.term || it.title || it.text}</a></li>)}</ul></nav>}
-        {navOver && <button class="nav-more" type="button" aria-label="More links" aria-expanded="false">More</button>}
-      </div>
-      {image &&       <div>
-        {image && image.src && <figure class="ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
-      </div>
-      }
-      <div class="wf-header-21__cta row between">
-        <div class="row between">
-          {list.length > 0 && <nav class="nav-links nav-flyout" aria-label="Primary">
-            <div class="nav-sheet-head"><span class="logo nav-sheet-brand">{brand}</span><button class="nav-close" type="button" aria-label="Close menu">×</button></div>
-            <div class="wf-off-canvas-6__content">
-              <button class="nav-close" type="button" aria-label="Close menu">×</button>
-              {head && (h1 ? <h1 class="text-fluid-4">{head}</h1> : <h2 class="text-fluid-2">{head}</h2>)}
-              {list.length > 0 && <div class="wf-off-canvas-nav-ul">
-                <div class="nav-group">{(list || []).map((it) => (
-                    <div>
-                      <a class="text-fluid-0" href={it.href}>{it.icon && <IconChip name={it.icon} />} {it.label || it.term || it.anchor || it.text}</a>
-                      {(it.label || it.term || it.anchor) && it.text && <p class="text-fluid-0">{it.text}</p>}
-                    </div>
-                  ))}</div>
-              </div>}
-              <div class="wf-off-canvas-6__contact-footer">
-                {links.length > 0 && <div class="wf-off-canvas-contact">
-                  <div class="nav-group">{(links || []).map((it) => (
-                      <div class="wf-off-canvas-contact-item">
-                        <a class="text-fluid-0" href={it.href}>{it.icon && <IconChip name={it.icon} />} {it.label || it.term || it.anchor || it.text}</a>
-                        {(it.label || it.term || it.anchor) && it.text && <p class="text-fluid-0">{it.text}</p>}
-                      </div>
-                    ))}</div>
-                </div>}
-                {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
-                              </div>
-              {before.length > 0 && <div class="flow mt-stack">
-{before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
-              </div>}
-
-            </div>
-            {act.label && <p class="nav-sheet-cta mt-fluid-m"><a class="wf-cta-button" href={act.href}>{act.label}</a></p>}
-          </nav>}
-          {act.label && <p class="nav-cta"><a class="wf-cta-button" href={act.href}>{act.label}</a></p>}
-        </div>
-      </div>
-              {list.length > 0 && <button class="burger" type="button" aria-label="Menu"><span aria-hidden="true">≡</span></button>}
-</div>
+<div class="row between bar-min">
+  <a class="brand-mark logo" href="/" aria-label={logoSvg ? brand : undefined}>{logoSvg ? <span class="brand-logo" set:html={logoSvg} role="img" aria-label={brand} /> : brand}</a>
+  <nav class="nav-desk" aria-label="Primary">
+    <ul class="row gap-fluid-m list-plain">
+      {items.slice(0, navCut).map((it) => (
+        <li><a class="nav-link" href={it.href || '#'}>{it.label}</a></li>
+      ))}
+    </ul>
+  </nav>
+  {navOver && <button class="nav-more" type="button" aria-label="More links">More</button>}
+  <div class="row">
+    {cta && <div class="nav-cta"><a class="wf-cta-button" href={cta.href}>{cta.label}</a></div>}
+    <button class="theme-toggle" data-theme-toggle type="button" aria-label="Switch between light and dark mode"><svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg><svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg></button>
+    <button class="burger" type="button" aria-label="Menu"><span aria-hidden="true">&equiv;</span></button>
   </div>
+  <nav class="nav-links nav-flyout" aria-label="Menu">
+    <div class="nav-sheet-head"><span class="logo nav-sheet-brand">{brand}</span><button class="nav-close" type="button" aria-label="Close menu">&times;</button></div>
+    <ul class="nav-group list-plain">
+      {items.map((it) => (
+        <li><a class="nav-link" href={it.href || '#'}>{it.label}</a></li>
+      ))}
+    </ul>
+  {cta && <p class="nav-sheet-cta mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label}</a></p>}</nav>
 </div>

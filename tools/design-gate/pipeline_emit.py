@@ -533,12 +533,15 @@ def _instance_body(ctx, contract, row, copy=None):
     if (contract.get('stack') or row.get('stack')) == 'media-first':
         props.append('stack="media-first"')
     # the brand is site chrome: every composition that renders a logo
-    # takes it from the plan's site block, never a default
+    # takes it from the plan's site block, never a default — a row
+    # may declare its own brand (vibe specimens are fictional
+    # products, not this site)
     site = ctx.site_block() or {}
-    if site.get('brand'):
-        props.append('brand=' + json.dumps(str(site['brand']),
+    brand = row.get('brand') or site.get('brand')
+    if brand:
+        props.append('brand=' + json.dumps(str(brand),
                                           ensure_ascii=False))
-    if site.get('logo'):
+    if site.get('logo') and not row.get('brand'):
         props.append('logo=' + json.dumps(str(site['logo']),
                                           ensure_ascii=False))
     _sa = (row.get('speech_act') or [])
@@ -1262,14 +1265,20 @@ def main(argv):
                 # output of THIS plan: re-emit their sources so the
                 # one build below ships the current options, never
                 # the pages an older plan left in src/pages/preview
+                import preview_build
                 if (gate._layout_options(ctx) or {}).get('options'):
-                    import preview_build
                     os.environ['WF_DEFER_BUILD'] = '1'
                     try:
                         preview_build.emit_layouts(ctx)
                     finally:
                         os.environ.pop('WF_DEFER_BUILD', None)
                     print('  layouts: lo-<oid> sources re-emitted')
+                # vibe specimens — every preset previews a different
+                # finished page (own layout + specimen copy), built
+                # in the same astro build below
+                nspec = preview_build.emit_vibe_specs(ctx)
+                print(f'  vibe specs: spec-0..spec-{nspec - 1} '
+                      're-emitted')
                 r = subprocess.run(['npm', 'run', 'build'],
                                    cwd=ctx.site, capture_output=True,
                                    text=True, env=gate.node_env(),

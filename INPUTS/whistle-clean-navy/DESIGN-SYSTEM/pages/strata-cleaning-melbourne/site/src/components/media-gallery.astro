@@ -1,0 +1,38 @@
+---
+/**
+ * media-gallery — gold exemplar (SB.5). Adapt copy, tokens and rhythm to the
+ * contract; keep the skeleton. Renders inside Section.astro: no
+ * <section>, no outer padding/background/max-width (SB.2).
+ *
+ * Each cell needs a real src + alt from the plan (BRIEF media): no
+ * placeholder image, no invented alt text.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  body?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string; value?: string;
+             label?: string; href?: string; quote?: string }[];
+  image?: { src: string; alt: string };
+  h1?: boolean;
+}
+const {
+  heading = 'Section heading', fs = '', body = '', cta, items = [],
+  image, h1,
+} = Astro.props;
+const cells = items.filter((it) => it.href && it.label);
+---
+
+<div>
+  {h1 ? <h1 class="text-fluid-4">{heading}</h1> : <h2 class="text-fluid-3">{heading}</h2>}
+  {fs && <p class="mt-stack max-w-prose text-fluid-0">{fs}</p>}
+  <ul class="mt-stack grid-auto list-plain">
+    {cells.map((it) => (
+      <li class="aspect-square overflow-hidden rounded-card">
+        <picture><img class="h-full w-full object-cover" src={it.href}
+             alt={it.label} width="800" height="800" loading="lazy" /></picture>
+      </li>
+    ))}
+  </ul>
+</div>
