@@ -1232,6 +1232,9 @@ MUT = {
      ('DEL','shots/1280-light-home.png')),
  'check_judged_verdict': mut(
      ('REPL','JUDGE.json','"verdict": "pass"','"verdict": "fail"')),
+ 'check_type_adoption': mut(
+     ('REPL','TOKENS.json','"type.tracking_display": -0.02',
+      '"type.tracking_display": -0.07')),
  'check_tile_page_parity': mut(
      ('REPL','site/dist/home/index.html',
       'class="sec-band surface-base density-spacious"',

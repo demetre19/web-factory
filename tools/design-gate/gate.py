@@ -14579,6 +14579,129 @@ def check_judged_verdict(ctx):
     return f
 
 
+def check_type_adoption(ctx):
+    """Impeccable adoption — typography + spacing floors: T.6 rendered
+    line-length (running text >80 chars/line on ≥2 rendered lines),
+    T.12 heading rhythm (rendered gap above a heading exceeds the gap
+    below), T.13 flat type hierarchy (adjacent dominant rungs ≥1.25×
+    at w4), T.14 tracking/leading bounds, T.15 skipped heading levels
+    in the emitted outline, T.16 oversized h1, S.10 monotonous
+    spacing."""
+    f = []
+    tk = {}
+    try:
+        tk = json.loads(ctx.read('TOKENS.json') or '{}')
+    except Exception:
+        pass
+    knobs = tk.get('knobs') or {}
+    fluid = tk.get('fluid') or {}
+    sizes = tk.get('sizes') or {}
+
+    # T.13 — flat-type-hierarchy: dominant rungs ≥1.25× at w4 (1280)
+    rungs = [(n, (sizes.get(n) or {}).get('px', {}).get('1280'))
+             for n in ('h1', 'h2', 'h3', 'text-m')]
+    rungs = [(n, v) for n, v in rungs if isinstance(v, (int, float))]
+    for (na, a), (nb, b) in zip(rungs, rungs[1:]):
+        if b and a / b < 1.25:
+            f.append(f'T.13 flat type hierarchy: {na} {a:g}px is only '
+                     f'{a / b:.2f}× {nb} {b:g}px at 1280 — dominant '
+                     'steps need ≥1.25×')
+
+    # T.14 — tracking/leading bounds (token layer): display tracking
+    # ≥ −0.04em, body tracking ≤0.05em, body leading ≥1.3
+    tr = knobs.get('type.tracking_display')
+    if tr is not None and float(tr) < -0.04:
+        f.append(f'T.14 display tracking {tr}em < −0.04em floor')
+    trb = knobs.get('type.tracking_body')
+    if trb is not None and float(trb) > 0.05:
+        f.append(f'T.14 body tracking {trb}em > 0.05em ceiling')
+    for _cp, css in dist_csss(ctx):
+        if 'preview' in str(_cp):  # variant docs carry their own vars
+            continue
+        m = re.search(r'--lh-0\s*:\s*([\d.]+)', css)
+        if m and float(m.group(1)) < 1.3:
+            f.append(f'T.14 --lh-0 {m.group(1)} < 1.3 — body leading '
+                     'floor')
+        m = re.search(r'--tracking-display\s*:\s*(-?[\d.]+)em', css)
+        if m and float(m.group(1)) < -0.04:
+            f.append(f'T.14 --tracking-display {m.group(1)}em < '
+                     '−0.04em floor')
+        m = re.search(r'--tracking-body\s*:\s*(-?[\d.]+)em', css)
+        if m and float(m.group(1)) > 0.05:
+            f.append(f'T.14 --tracking-body {m.group(1)}em > 0.05em '
+                     'ceiling')
+
+    # S.10 — monotonous-spacing: ≥2 distinct gap values across
+    # section/group spacing tokens
+    gaps = set()
+    spy = knobs.get('space.section_py')
+    if isinstance(spy, dict):
+        gaps.update(str(v) for v in spy.values())
+    for k in ('grid_gap', 'content_gap', 'elements_gap',
+              'container_gap'):
+        if fluid.get(k) is not None:
+            gaps.add(str(fluid[k]))
+    if gaps and len(gaps) < 2:
+        f.append(f'S.10 monotonous spacing: one gap value {sorted(gaps)}'
+                 ' across section/group spacing — need ≥2 distinct '
+                 'steps')
+
+    # emitted outline: T.15 skipped levels + T.16 oversized h1
+    for p, txt in ctx.page_htmls():
+        name = os.path.basename(p)
+        parsed = parse_html(txt)
+        prev = 0
+        for tag, text, si in parsed.headings:
+            lvl = int(tag[1])
+            if prev and lvl > prev + 1:
+                f.append(f'T.15 {name}: {tag} "{text[:40]}" follows '
+                         f'h{prev} — the outline skips a level')
+            prev = lvl
+        fluid_max = max((int(m.group(1)) for m in re.finditer(
+            r'text-fluid-(\d)', txt)), default=-1)
+        for m in re.finditer(
+                r'<h1[^>]*class="([^"]*)"[^>]*>(.*?)</h1>', txt, re.S):
+            cls, inner = m.group(1), re.sub(r'<[^>]+>', '', m.group(2))
+            words = len(inner.split())
+            hm = re.search(r'text-fluid-(\d)', cls)
+            if words > 6 and hm and int(hm.group(1)) >= fluid_max:
+                f.append(f'T.16 {name}: h1 "{inner.strip()[:40]}" '
+                         f'({words} words) sits at display max '
+                         f'text-fluid-{hm.group(1)} — long titles '
+                         'step down')
+        h1w = (sizes.get('h1') or {}).get('px', {}).get('1280')
+        if isinstance(h1w, (int, float)) and h1w > 96:
+            f.append(f'T.16 {name}: display h1 {h1w:g}px > 96px '
+                     '(6rem) at 1280')
+
+    # measured floors (w7 MEASURE.json): T.6 + T.12
+    raw = ctx.read('MEASURE.json')
+    if raw:
+        try:
+            pages = (json.loads(raw).get('pages') or {})
+            for slug, pg in pages.items():
+                for w, rec in (pg.get('viewports') or {}).items():
+                    bad = [x for x in (rec.get('line_length') or [])
+                           if x.get('cpl', 0) > 80]
+                    if bad:
+                        f.append(f'T.6 {slug}@{w}: {len(bad)} '
+                                 f'text block(s) run >80 chars/line '
+                                 f'(worst {bad[0].get("cpl")} — '
+                                 f'{bad[0].get("context")})')
+                    hrv = rec.get('heading_rhythm_violations') or []
+                    if hrv:
+                        x = hrv[0]
+                        f.append(f'T.12 {slug}@{w}: {len(hrv)} '
+                                 f'heading(s) with gap-above ≤ '
+                                 f'gap-below (e.g. {x.get("tag")} '
+                                 f'"{x.get("text")}" {x.get("above_px")}'
+                                 f'px above vs {x.get("below_px")}px '
+                                 'below)')
+        except Exception:
+            pass
+    return f
+
+
 def check_present_order(ctx):
     """J.2 PRESENT-ORDER — RULES → BUILD → JUDGE → RECHECK → present.
     Every picker option needs BOTH receipts: the compliance receipt
@@ -16110,6 +16233,7 @@ WAVE_CHECKS['w3'].append(check_board_roles)
 WAVE_CHECKS['w3'].append(check_board_pools)
 WAVE_CHECKS['w8'].append(check_measured_evidence)
 WAVE_CHECKS['w8'].append(check_judged_verdict)
+WAVE_CHECKS['w8'].append(check_type_adoption)
 
 # VG.7 — picker UX is structural: tabbed options, render first,
 # machinery collapsed below. Verified wherever a picker exists
