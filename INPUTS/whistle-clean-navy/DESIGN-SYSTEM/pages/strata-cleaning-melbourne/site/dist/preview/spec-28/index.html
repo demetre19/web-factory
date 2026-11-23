@@ -1,0 +1,208 @@
+<!DOCTYPE html><html lang="en" dir="ltr"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Whistle Clean</title><meta name="description" content="Strata Cleaning Melbourne – common-area cleaning for strata buildings – foyers, lifts, carparks and amenities. Eco products, audited visits."><meta property="og:title" content="Whistle Clean"><meta property="og:description" content="Strata Cleaning Melbourne – common-area cleaning for strata buildings – foyers, lifts, carparks and amenities. Eco products, audited visits."><meta property="og:image" content="/og.webp"><link rel="icon" href="/favicon.svg"><script>
+(function () {
+  // U.3 — first paint is BRIEF theme.default (never the OS preference);
+  // a manual toggle persists the choice in localStorage.
+  var s = new URLSearchParams(location.search).get('theme') || localStorage.getItem('theme');
+  var m = s || "light";
+  document.documentElement.dataset.theme = m;
+  document.documentElement.classList.toggle('dark', m === 'dark');
+  window.__wfSetTheme = function (v) {
+    localStorage.setItem('theme', v);
+    document.documentElement.dataset.theme = v;
+    document.documentElement.classList.toggle('dark', v === 'dark');
+  };
+  // the sticky header lifts a shadow once content scrolls under it
+  var markHead = function () {
+    var head = document.querySelector('header[data-sec="nav"], header.site-head');
+    if (head) head.classList.toggle('scrolled', window.scrollY > 4);
+  };
+  window.addEventListener('scroll', markHead, { passive: true });
+  window.addEventListener('DOMContentLoaded', function () {
+    markHead();
+    // nav triggers that arrived without the attribute default to
+    // collapsed — the toggle flips it from there. E-M4: every
+    // trigger names the panel it controls; the first .nav-links on
+    // the page is the sheet it opens.
+    var navPanel = document.querySelector('.nav-links');
+    if (navPanel && !navPanel.id) navPanel.id = 'wf-nav-links';
+    document.querySelectorAll('.burger').forEach(function (b) {
+      if (!b.hasAttribute('aria-expanded')) {
+        b.setAttribute('aria-expanded', 'false');
+      }
+      if (navPanel && !b.hasAttribute('aria-controls')) {
+        b.setAttribute('aria-controls', navPanel.id);
+      }
+    });
+    // crowd check — an inline link row that can't fit collapses to
+    // the burger at any width: the header is marked .nav-crowded and
+    // the nav stamped data-over so it hides/opens as the flyout
+    // (the link-count-derived breakpoint, audit 138). One-way
+    // latch: once crowded it stays crowded — re-measuring a hidden
+    // nav reads 0 width and would thrash on resize.
+    var crowdLatch = false;
+    var crowd = function () {
+      if (crowdLatch) return;
+      var cands = document.querySelectorAll('.nav-links, .nav-desk');
+      for (var i = 0; i < cands.length; i++) {
+        var nav = cands[i];
+        if (nav.hasAttribute('data-over') ||
+            nav.classList.contains('nav-mega')) continue;
+        // the row overflows when the nav itself is clipped OR when
+        // nav + brand + CTA together exceed the bar (header-21's
+        // .nav-desk never clips — the flex row does)
+        var h = nav.closest('header');
+        if (nav.scrollWidth > nav.clientWidth + 1 ||
+            (h && h.scrollWidth > h.clientWidth + 1)) {
+          crowdLatch = true;
+          if (h) h.classList.add('nav-crowded');
+          // stamp every nav layer in the header: a collapsed
+          // .nav-desk pairs with a .nav-links.nav-flyout that the
+          // burger must be able to open at >=60rem (data-over is
+          // what lets setNav open it there)
+          var sibs = document.querySelectorAll(
+            '.nav-links, .nav-desk');
+          for (var j = 0; j < sibs.length; j++) {
+            sibs[j].setAttribute('data-over', '');
+          }
+          break;
+        }
+      }
+    };
+    crowd();
+    window.addEventListener('resize', crowd);
+    window.addEventListener('load', crowd);
+    // webfonts land after DOMContentLoaded and can grow the link
+    // row past the bar — re-check once they settle
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(crowd);
+    }
+    // preview surfaces request the open state through the real
+    // toggle path — the sheet opens exactly as a burger click opens
+    // it (E-M3, no synthetic markup). No open state at/above the
+    // nav breakpoint — the menu-desktop doc must stay a closed bar.
+    if (new URLSearchParams(location.search).get('menu') === 'open' &&
+        window.matchMedia('(max-width: 59.99rem)').matches) {
+      setNav(true);
+    }
+  });
+  markHead();
+  // the togglable nav panel: normally .nav-links; on skeletons
+  // whose inline nav is .nav-desk (header-21), the crowd latch
+  // stamps data-over and the same collapse/flyout contract applies
+  var navEl = function () {
+    return document.querySelector('.nav-links') ||
+           document.querySelector('.nav-desk[data-over]');
+  };
+  var setNav = function (open, opts) {
+    // re-queried each call — this script can run before the nav
+    // markup exists (first paint defers to DOMContentLoaded)
+    var nl = navEl();
+    if (!nl) return;
+    var small = window.matchMedia('(max-width: 59.99rem)').matches;
+    // the sheet only exists under the nav breakpoint — at/above it
+    // the overflow mega panel may still open as a flyout, but it
+    // carries no scrim and no scroll lock
+    if (open && !small && !nl.classList.contains('nav-mega') &&
+        !nl.hasAttribute('data-over')) {
+      return;
+    }
+    nl.classList.toggle('open', open);
+    document.body.style.overflow = open && small ? 'hidden' : '';
+    // the visible trigger owns aria-expanded + Esc focus — on
+    // overflow headers .nav-more precedes .burger in the DOM, so
+    // querySelector alone can bind a hidden control
+    var b = null;
+    var bs = document.querySelectorAll('.burger, .nav-more');
+    for (var i = 0; i < bs.length; i++) {
+      if (bs[i].offsetParent) { b = bs[i]; break; }
+    }
+    if (!b) b = bs[0];
+    if (b) {
+      b.setAttribute('aria-expanded', open ? 'true' : 'false');
+      if (!open && opts && opts.refocus) b.focus();
+    }
+    if (open) {
+      var first = nl.querySelector('a, button, input');
+      if (first) first.focus();
+    }
+  };
+  document.addEventListener('click', function (e) {
+    if (e.target && e.target.closest && e.target.closest('[data-theme-toggle]')) {
+      window.__wfSetTheme(document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark');
+    }
+    var nl = navEl();
+    var burger = e.target && e.target.closest &&
+                 e.target.closest('.burger, .nav-more');
+    if (burger) {
+      if (nl) setNav(!nl.classList.contains('open'));
+    } else if (nl && nl.classList.contains('open')) {
+      // flyout closes on the close control, on a link it navigates
+      // to, or on any click outside the sheet (the scrim)
+      var inside = e.target && e.target.closest &&
+                   e.target.closest('.nav-links, .nav-desk');
+      if (!inside || e.target.closest('.nav-close') ||
+          e.target.closest('.nav-links a, .nav-desk a')) {
+        setNav(false);
+      }
+    }
+    // the generic overlay family (.flyout — modals/popups/dialogs)
+    // rides the same contract: trigger toggles, close control and
+    // scrim clicks dismiss (N.flyout)
+    var fo = document.querySelector('.flyout');
+    if (fo) {
+      var syncFo = function () {
+        var trig = document.querySelectorAll('.flyout-open');
+        for (var i = 0; i < trig.length; i++) {
+          trig[i].setAttribute('aria-expanded',
+            fo.classList.contains('open') ? 'true' : 'false');
+        }
+      };
+      if (e.target && e.target.closest && e.target.closest('.flyout-open')) {
+        fo.classList.toggle('open');
+        syncFo();
+      } else if (fo.classList.contains('open')) {
+        var inFo = e.target && e.target.closest &&
+                   e.target.closest('.flyout');
+        if (!inFo || e.target.closest('.flyout-close')) {
+          fo.classList.remove('open');
+          syncFo();
+        }
+      }
+    }
+  });
+  document.addEventListener('keydown', function (e) {
+    var nl = navEl();
+    if (e.key === 'Escape') {
+      // Esc closes with the same contract as the close control:
+      // .open off, scroll lock lifted, aria-expanded reset, focus
+      // handed back to the trigger (W4.1 flyout spec)
+      if (nl && nl.classList.contains('open')) {
+        setNav(false, { refocus: true });
+      }
+      var fo = document.querySelector('.flyout');
+      if (fo && fo.classList.contains('open')) {
+        fo.classList.remove('open');
+        var trig = document.querySelectorAll('.flyout-open');
+        for (var i = 0; i < trig.length; i++) {
+          trig[i].setAttribute('aria-expanded', 'false');
+        }
+      }
+    }
+    // the open sheet holds focus: Tab cycles inside the panel — a
+    // desktop flyout never traps
+    if (e.key === 'Tab' && nl && nl.classList.contains('open') &&
+        window.matchMedia('(max-width: 59.99rem)').matches) {
+      var f = nl.querySelectorAll('a, button, input, [tabindex]');
+      if (f.length) {
+        var first = f[0], last = f[f.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+          last.focus(); e.preventDefault();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          first.focus(); e.preventDefault();
+        }
+      }
+    }
+  });
+})();
+</script><link rel="stylesheet" href="/_astro/design-system.BGY_gw6X.css">
+<link rel="stylesheet" href="/_astro/lo-d1-blog.eIQL0dA1.css"></head> <body> <a class="skip-link" href="#main">Skip to content</a> <main id="main">  <header class="sec-bar surface-base density-regular" data-sec="nav" data-comp="nav-h22" data-ratio="none" data-disclosure="none" data-surface="base" data-density="regular" data-mode="bar" data-wf-ref="preview/vibe-specs" data-recipe="bricksmaven/headers/header-22"> <div class="sec-inner">   <div class="wf-header-22"> <div class="sec-inner"> <div class="wf-header-22__container row between"> <span class="logo brand-mark">Atlas Freight</span>  <div> <nav class="nav-links" aria-label="Primary"><div class="nav-sheet-head"><span class="logo nav-sheet-brand">Atlas Freight</span><button class="nav-close" type="button" aria-label="Close menu">×</button></div><form class="nav-search" role="search"><input class="nav-search-input" type="search" placeholder="Search" aria-label="Search site"></form><div class="nav-mega-cols"><div class="nav-group"><p class="nav-group-head">#</p><ul class="row gap-fluid-m list-plain"><li><a class="nav-link" href="#"><span>Lanes</span><span class="nav-num" aria-hidden="true">01</span></a></li><li><a class="nav-link" href="#"><span>Fleet</span><span class="nav-num" aria-hidden="true">02</span></a></li><li><a class="nav-link" href="#"><span>Compliance</span><span class="nav-num" aria-hidden="true">03</span></a></li><li><a class="nav-link" href="#"><span>Tracking</span><span class="nav-num" aria-hidden="true">04</span></a></li></ul></div></div><p class="nav-sheet-cta mt-fluid-m"><a class="wf-cta-button" href="#">Get a quote</a></p></nav>   </div> <button class="burger" type="button" aria-label="Menu"><span aria-hidden="true">≡</span></button> </div> </div> </div>  </div> </header> <section class="sec-band surface-media density-regular" data-sec="hero" data-comp="split-media" data-ratio="none" data-disclosure="none" data-surface="media" data-density="regular" data-mode="band" data-wf-ref="preview/vibe-specs" data-recipe="bricksmaven/feature/feature-1"> <div class="sec-inner">   <div class="wf-feature-1"> <div class="split"> <div class="stack"> <div class="sec-inner"> <div> <div class="intro"> <h2 class="text-fluid-2">Freight that answers the phone</h2> <p class="text-fluid-0">Regional linehaul with live tracking and a named dispatcher on every load.</p> </div>  </div>  </div> </div> <div class="media-round" data-ratio="16:9"><img src="/media/vibe/spec-4.webp" srcset="/media/vibe/spec-4.webp 480w, /media/vibe/spec-4.webp 960w, /media/vibe/spec-4.webp 1440w" alt sizes="(min-width: 48rem) 50vw, 100vw" loading="lazy" decoding="async" fetchpriority="auto" width="900" height="600"></div> </div>     </div>  </div> </section> <section class="sec-band surface-base density-regular" data-sec="why" data-comp="timeline-steps" data-ratio="none" data-disclosure="none" data-surface="base" data-density="regular" data-mode="band" data-wf-ref="preview/vibe-specs" data-recipe="bricksmaven/timeline/timeline-1"> <div class="sec-inner">   <div class="wf-timeline-1"> <div class="sec-inner"> <div> <div class="wf-timeline-1__content"> <div class="intro intro--left"> <h2 class="text-fluid-2">Broker vs. Atlas</h2>  </div>  <div class="wf-timeline-1-list"> <div class="grid-auto gap-fluid-m"><div class="wf-timeline-1-card card"> <div class="wf-timeline-1-card__content">  <h3 class="text-fluid-1">Driver</h3> <p class="text-fluid-0">Ours — 140 trucks, one payroll.</p> </div> </div><div class="wf-timeline-1-card card"> <div class="wf-timeline-1-card__content">  <h3 class="text-fluid-1">Updates</h3> <p class="text-fluid-0">Hourly pings, not &quot;still rolling&quot;.</p> </div> </div><div class="wf-timeline-1-card card"> <div class="wf-timeline-1-card__content">  <h3 class="text-fluid-1">Claims</h3> <p class="text-fluid-0">Settled in days, not quarters.</p> </div> </div><div class="wf-timeline-1-card card"> <div class="wf-timeline-1-card__content">  <h3 class="text-fluid-1">Contact</h3> <p class="text-fluid-0">A named dispatcher, not a queue.</p> </div> </div></div> </div> </div> </div> </div>     </div>  </div> </section> <section class="sec-band surface-muted density-regular" data-sec="flow" data-comp="feature-grid" data-ratio="none" data-disclosure="none" data-surface="muted" data-density="regular" data-mode="band" data-wf-ref="preview/vibe-specs" data-recipe="bricksmaven/feature/feature-2"> <div class="sec-inner">   <div class="wf-feature-2"> <div> <div class="stack"> <div class="sec-inner"> <div> <div class="intro"> <h2 class="text-fluid-2">Dock to dock</h2>  </div>  </div> <div> <div class="grid-auto gap-fluid-m"><div class="card"> <div class="wf-feature-2-li__content"> <h3 class="text-fluid-1">Book</h3> <p class="text-fluid-0">Quote confirmed inside the hour.</p> </div> </div><div class="card"> <div class="wf-feature-2-li__content"> <h3 class="text-fluid-1">Load</h3> <p class="text-fluid-0">Photo log at pickup.</p> </div> </div><div class="card"> <div class="wf-feature-2-li__content"> <h3 class="text-fluid-1">Roll</h3> <p class="text-fluid-0">Hourly position pings.</p> </div> </div><div class="card"> <div class="wf-feature-2-li__content"> <h3 class="text-fluid-1">Deliver</h3> <p class="text-fluid-0">POD signed, invoice same day.</p> </div> </div></div> </div> </div> </div>  </div>     </div>  </div> </section> <footer class="sec-bar surface-base density-regular" data-sec="footer" data-comp="footer-7" data-ratio="none" data-disclosure="none" data-surface="base" data-density="regular" data-mode="bar" data-wf-ref="preview/vibe-specs" data-recipe="bricksmaven/footer/footer-7"> <div class="sec-inner">   <div class="wf-footer-7"> <div class="sec-inner"> <div class="wf-footer-7-container row between"> <div> <span class="logo brand-mark">Atlas Freight</span> </div> <div class="footer-nav-wrapper footer-nav-wrapper-7 row between"> <div class="row gap-fluid-m"><div class="footer-nav-column row between">  <h3 class="text-fluid-1"></h3>  </div><div class="footer-nav-column row between">  <h3 class="text-fluid-1"></h3>  </div><div class="footer-nav-column row between">  <h3 class="text-fluid-1"></h3>  </div><div class="footer-nav-column row between">  <h3 class="text-fluid-1"></h3>  </div><div class="footer-nav-column row between">  <h3 class="text-fluid-1"></h3>  </div><div class="footer-nav-column row between">  <h3 class="text-fluid-1"></h3>  </div></div> </div> <div class="wf-footer-7__content row between"> <h2 class="text-fluid-2">Atlas Freight</h2>   <p class="mt-fluid-m"><a class="wf-cta-button" href="#">Say hello</a></p> </div> </div> <div class="wf-footer-7-bottom-container row between"> <div>  <p class="footer-legal-nav text-fluid-0">Copyright 2026 Atlas Freight</p> </div> </div> </div>     </div>  </div> </footer>  </main> <a class="call-bar" href="tel:+61370032223"> <span>Call +61 3 7003 2223</span><span class="sr-only">Call now</span> </a> </body></html>

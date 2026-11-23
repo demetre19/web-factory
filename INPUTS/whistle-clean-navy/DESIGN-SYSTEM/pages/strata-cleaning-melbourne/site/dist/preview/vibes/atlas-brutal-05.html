@@ -1,0 +1,208 @@
+<!--wf:vibe:v8:107e8a26--><!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Whistle Clean</title><meta name="description" content="Strata Cleaning Melbourne – common-area cleaning for strata buildings – foyers, lifts, carparks and amenities. Eco products, audited visits."><meta property="og:title" content="Whistle Clean"><meta property="og:description" content="Strata Cleaning Melbourne – common-area cleaning for strata buildings – foyers, lifts, carparks and amenities. Eco products, audited visits."><meta property="og:image" content="/og.webp"><link rel="icon" href="/favicon.svg"><script>
+(function () {
+  // U.3 — first paint is BRIEF theme.default (never the OS preference);
+  // a manual toggle persists the choice in localStorage.
+  var s = new URLSearchParams(location.search).get('theme') || localStorage.getItem('theme');
+  var m = s || "light";
+  document.documentElement.dataset.theme = m;
+  document.documentElement.classList.toggle('dark', m === 'dark');
+  window.__wfSetTheme = function (v) {
+    localStorage.setItem('theme', v);
+    document.documentElement.dataset.theme = v;
+    document.documentElement.classList.toggle('dark', v === 'dark');
+  };
+  // the sticky header lifts a shadow once content scrolls under it
+  var markHead = function () {
+    var head = document.querySelector('header[data-sec="nav"], header.site-head');
+    if (head) head.classList.toggle('scrolled', window.scrollY > 4);
+  };
+  window.addEventListener('scroll', markHead, { passive: true });
+  window.addEventListener('DOMContentLoaded', function () {
+    markHead();
+    // nav triggers that arrived without the attribute default to
+    // collapsed — the toggle flips it from there. E-M4: every
+    // trigger names the panel it controls; the first .nav-links on
+    // the page is the sheet it opens.
+    var navPanel = document.querySelector('.nav-links');
+    if (navPanel && !navPanel.id) navPanel.id = 'wf-nav-links';
+    document.querySelectorAll('.burger').forEach(function (b) {
+      if (!b.hasAttribute('aria-expanded')) {
+        b.setAttribute('aria-expanded', 'false');
+      }
+      if (navPanel && !b.hasAttribute('aria-controls')) {
+        b.setAttribute('aria-controls', navPanel.id);
+      }
+    });
+    // crowd check — an inline link row that can't fit collapses to
+    // the burger at any width: the header is marked .nav-crowded and
+    // the nav stamped data-over so it hides/opens as the flyout
+    // (the link-count-derived breakpoint, audit 138). One-way
+    // latch: once crowded it stays crowded — re-measuring a hidden
+    // nav reads 0 width and would thrash on resize.
+    var crowdLatch = false;
+    var crowd = function () {
+      if (crowdLatch) return;
+      var cands = document.querySelectorAll('.nav-links, .nav-desk');
+      for (var i = 0; i < cands.length; i++) {
+        var nav = cands[i];
+        if (nav.hasAttribute('data-over') ||
+            nav.classList.contains('nav-mega')) continue;
+        // the row overflows when the nav itself is clipped OR when
+        // nav + brand + CTA together exceed the bar (header-21's
+        // .nav-desk never clips — the flex row does)
+        var h = nav.closest('header');
+        if (nav.scrollWidth > nav.clientWidth + 1 ||
+            (h && h.scrollWidth > h.clientWidth + 1)) {
+          crowdLatch = true;
+          if (h) h.classList.add('nav-crowded');
+          // stamp every nav layer in the header: a collapsed
+          // .nav-desk pairs with a .nav-links.nav-flyout that the
+          // burger must be able to open at >=60rem (data-over is
+          // what lets setNav open it there)
+          var sibs = document.querySelectorAll(
+            '.nav-links, .nav-desk');
+          for (var j = 0; j < sibs.length; j++) {
+            sibs[j].setAttribute('data-over', '');
+          }
+          break;
+        }
+      }
+    };
+    crowd();
+    window.addEventListener('resize', crowd);
+    window.addEventListener('load', crowd);
+    // webfonts land after DOMContentLoaded and can grow the link
+    // row past the bar — re-check once they settle
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(crowd);
+    }
+    // preview surfaces request the open state through the real
+    // toggle path — the sheet opens exactly as a burger click opens
+    // it (E-M3, no synthetic markup). No open state at/above the
+    // nav breakpoint — the menu-desktop doc must stay a closed bar.
+    if (new URLSearchParams(location.search).get('menu') === 'open' &&
+        window.matchMedia('(max-width: 59.99rem)').matches) {
+      setNav(true);
+    }
+  });
+  markHead();
+  // the togglable nav panel: normally .nav-links; on skeletons
+  // whose inline nav is .nav-desk (header-21), the crowd latch
+  // stamps data-over and the same collapse/flyout contract applies
+  var navEl = function () {
+    return document.querySelector('.nav-links') ||
+           document.querySelector('.nav-desk[data-over]');
+  };
+  var setNav = function (open, opts) {
+    // re-queried each call — this script can run before the nav
+    // markup exists (first paint defers to DOMContentLoaded)
+    var nl = navEl();
+    if (!nl) return;
+    var small = window.matchMedia('(max-width: 59.99rem)').matches;
+    // the sheet only exists under the nav breakpoint — at/above it
+    // the overflow mega panel may still open as a flyout, but it
+    // carries no scrim and no scroll lock
+    if (open && !small && !nl.classList.contains('nav-mega') &&
+        !nl.hasAttribute('data-over')) {
+      return;
+    }
+    nl.classList.toggle('open', open);
+    document.body.style.overflow = open && small ? 'hidden' : '';
+    // the visible trigger owns aria-expanded + Esc focus — on
+    // overflow headers .nav-more precedes .burger in the DOM, so
+    // querySelector alone can bind a hidden control
+    var b = null;
+    var bs = document.querySelectorAll('.burger, .nav-more');
+    for (var i = 0; i < bs.length; i++) {
+      if (bs[i].offsetParent) { b = bs[i]; break; }
+    }
+    if (!b) b = bs[0];
+    if (b) {
+      b.setAttribute('aria-expanded', open ? 'true' : 'false');
+      if (!open && opts && opts.refocus) b.focus();
+    }
+    if (open) {
+      var first = nl.querySelector('a, button, input');
+      if (first) first.focus();
+    }
+  };
+  document.addEventListener('click', function (e) {
+    if (e.target && e.target.closest && e.target.closest('[data-theme-toggle]')) {
+      window.__wfSetTheme(document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark');
+    }
+    var nl = navEl();
+    var burger = e.target && e.target.closest &&
+                 e.target.closest('.burger, .nav-more');
+    if (burger) {
+      if (nl) setNav(!nl.classList.contains('open'));
+    } else if (nl && nl.classList.contains('open')) {
+      // flyout closes on the close control, on a link it navigates
+      // to, or on any click outside the sheet (the scrim)
+      var inside = e.target && e.target.closest &&
+                   e.target.closest('.nav-links, .nav-desk');
+      if (!inside || e.target.closest('.nav-close') ||
+          e.target.closest('.nav-links a, .nav-desk a')) {
+        setNav(false);
+      }
+    }
+    // the generic overlay family (.flyout — modals/popups/dialogs)
+    // rides the same contract: trigger toggles, close control and
+    // scrim clicks dismiss (N.flyout)
+    var fo = document.querySelector('.flyout');
+    if (fo) {
+      var syncFo = function () {
+        var trig = document.querySelectorAll('.flyout-open');
+        for (var i = 0; i < trig.length; i++) {
+          trig[i].setAttribute('aria-expanded',
+            fo.classList.contains('open') ? 'true' : 'false');
+        }
+      };
+      if (e.target && e.target.closest && e.target.closest('.flyout-open')) {
+        fo.classList.toggle('open');
+        syncFo();
+      } else if (fo.classList.contains('open')) {
+        var inFo = e.target && e.target.closest &&
+                   e.target.closest('.flyout');
+        if (!inFo || e.target.closest('.flyout-close')) {
+          fo.classList.remove('open');
+          syncFo();
+        }
+      }
+    }
+  });
+  document.addEventListener('keydown', function (e) {
+    var nl = navEl();
+    if (e.key === 'Escape') {
+      // Esc closes with the same contract as the close control:
+      // .open off, scroll lock lifted, aria-expanded reset, focus
+      // handed back to the trigger (W4.1 flyout spec)
+      if (nl && nl.classList.contains('open')) {
+        setNav(false, { refocus: true });
+      }
+      var fo = document.querySelector('.flyout');
+      if (fo && fo.classList.contains('open')) {
+        fo.classList.remove('open');
+        var trig = document.querySelectorAll('.flyout-open');
+        for (var i = 0; i < trig.length; i++) {
+          trig[i].setAttribute('aria-expanded', 'false');
+        }
+      }
+    }
+    // the open sheet holds focus: Tab cycles inside the panel — a
+    // desktop flyout never traps
+    if (e.key === 'Tab' && nl && nl.classList.contains('open') &&
+        window.matchMedia('(max-width: 59.99rem)').matches) {
+      var f = nl.querySelectorAll('a, button, input, [tabindex]');
+      if (f.length) {
+        var first = f[0], last = f[f.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+          last.focus(); e.preventDefault();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          first.focus(); e.preventDefault();
+        }
+      }
+    }
+  });
+})();
+</script><link rel="stylesheet" href="/_astro/design-system.BGY_gw6X.css">
+<link rel="stylesheet" href="/_astro/lo-d1-blog.eIQL0dA1.css"><style>.burger{display:none;align-items:center;justify-content:center;width:44px;height:44px;min-width:44px;min-height:44px;padding:0!important;font-size:0!important;border:1px solid var(--border-subtle,var(--border-default));border-radius:var(--radius,10px);background:transparent;color:var(--text-primary);box-shadow:none!important;cursor:pointer}@media (max-width:59.99rem){.burger{display:inline-flex}}.burger::after{content:"";width:20px;height:14px;background:repeating-linear-gradient(to bottom,currentColor 0 2px,transparent 2px 6px)}@media (min-width:60rem){.nav-crowded .burger{display:inline-flex}.nav-links[data-over],.nav-desk[data-over]{display:none}.nav-links[data-over].open,.nav-desk[data-over].open{display:flex;flex-direction:column;gap:var(--space-m);position:absolute;inset-block-start:100%;inset-inline-end:0;width:min(46rem,94vw);max-height:80vh;overflow-y:auto;background:var(--bg-canvas);padding:var(--space-m);border:1px solid var(--border-default);border-radius:var(--r-card);box-shadow:var(--shadow-pop);z-index:60}}:root{--font-display:ui-sans-serif,system-ui,sans-serif;--primitive-font-display:ui-sans-serif,system-ui,sans-serif;--font-body:ui-sans-serif,system-ui,sans-serif;--h1:clamp(2.1rem,calc(4.8vw + 1rem),5rem);--h2:clamp(1.6rem,calc(2.6vw + 1rem),3.3rem);--h3:clamp(1.3rem,calc(1.2vw + 1.05rem),2rem);--flow-spacing:var(--space-s);--grid-gap:var(--space-s);--content-gap:var(--space-s);--measure:38rem;--section-space-m:var(--section-space-s);--radius:0;--primitive-radius:0;--r-card:0;--shadow-card:none;--shadow-pop:none;--border-default:#E4E1DA;--action-primary:#4F46E5;--action-primary-hover:#4338CA;--bg-canvas:#FBFAF8;--bg-surface:#F3F1EC;--bg-elevated:#FFFFFF;--text-primary:#1B1B1F;--text-secondary:#6B6B70;--action-primary-ink:#FFFFFF}[data-theme="dark"]{--action-primary:#A5B4FC;--action-primary-hover:#C7D2FE;--action-primary-ink:#141B3F;--bg-canvas:#141416;--bg-surface:#1C1C20;--bg-elevated:#242429;--text-primary:#EDEDEB;--text-secondary:#A5A5A0;--border-default:#333338}h1,h2,.sec-h{font-weight:800;letter-spacing:-.03em;text-transform:uppercase}.sec-kicker{letter-spacing:.18em;text-transform:uppercase}.sec-inner h2{text-decoration:underline;text-decoration-thickness:.07em;text-underline-offset:.14em}@media (min-width:720px){.card-grid{grid-template-columns:repeat(4,1fr)!important}}.sec-band:nth-of-type(2n) .media-round{filter:saturate(1.15)}img{filter:saturate(1.08) contrast(1.04)}a,button{transition:color .14s ease,background-color .14s ease}details>summary{font-weight:600}.sec-band{border-bottom:2px solid var(--text-primary)}</style></head><body> <a class="skip-link" href="#main">Skip to content</a> <main id="main">  <header class="sec-bar surface-base density-regular" data-sec="nav" data-comp="nav-mega-1" data-ratio="none" data-disclosure="none" data-surface="base" data-density="regular" data-mode="bar" data-wf-ref="preview/vibe-specs" data-recipe="bricksmaven/megamenu/megamenu-1"> <div class="sec-inner">   <div class="wf-megamenu-1">    <div class="sec-inner"> <div class="wf-header-1__container"> <div> <span class="logo brand-mark">Pulse Athletics</span> </div> <div> <div> <div> <div class="grid-auto gap-fluid-m"> <h3 class="text-fluid-1"><a class="text-fluid-0" href="#"> Training</a></h3>  <h3 class="text-fluid-1"><a class="text-fluid-0" href="#"> Classes</a></h3>  <h3 class="text-fluid-1"><a class="text-fluid-0" href="#"> Coaches</a></h3>  <h3 class="text-fluid-1"><a class="text-fluid-0" href="#"> Membership</a></h3> </div> </div> <button class="flyout-open" type="button" aria-label="Open panel"><span aria-hidden="true">≡</span></button> </div> </div> </div> </div>     </div>  </div> </header> <section class="sec-band surface-media density-regular" data-sec="hero" data-comp="full-bleed" data-ratio="none" data-disclosure="none" data-surface="media" data-density="regular" data-mode="band" data-wf-ref="preview/vibe-specs" data-recipe="bricksmaven/hero/hero-99"> <div class="sec-inner">   <div class="wf-hero-99"> <div class="sec-inner"> <div class="grid-auto gap-fluid-l"> <div class="wf-hero-99__content"> <div class="wf-hero-99__column"> <h2 class="text-fluid-2">Train loud. Recover quiet.</h2> <p class="text-fluid-0">Strength floors, a 25m pool and a recovery suite under one roof.</p>  <div class="cta-combo"> <p class="mt-fluid-m"><a class="wf-cta-button" href="#">Start trial</a></p> </div> </div> </div> <figure class="media-bg" aria-hidden="true"><img src="/media/vibe/spec-3.webp" srcset="/media/vibe/spec-3.webp 960w, /media/vibe/spec-3.webp 1440w, /media/vibe/spec-3.webp 1920w" alt sizes="100vw" loading="eager" fetchpriority="high" decoding="async" width="1600" height="900"></figure> </div> </div>      </div>  </div> </section> <section class="sec-band surface-base density-regular" data-sec="membership" data-comp="pricing-table" data-ratio="none" data-disclosure="none" data-surface="base" data-density="regular" data-mode="band" data-wf-ref="preview/vibe-specs" data-recipe="bricksmaven/pricing/item-bpivlr"> <div class="sec-inner">   <div class="wf-item-bpivlr"> <div class="sec-inner"> <div class="wf-pricing-2-container"> <div class="intro"> <h2 class="text-fluid-2">Pick your lane</h2>  </div>  <div> <div class="grid-auto gap-fluid-m"><div class="wf-li-benefits card">  <div class="stack"> <h3 class="text-fluid-1">Off-peak</h3> <p class="text-fluid-0">9 to 5 access, all classes.</p> </div> </div><div class="wf-li-benefits card">  <div class="stack"> <h3 class="text-fluid-1">All hours</h3> <p class="text-fluid-0">Anytime entry plus pool and sauna.</p> </div> </div><div class="wf-li-benefits card">  <div class="stack"> <h3 class="text-fluid-1">Performance</h3> <p class="text-fluid-0">Coached blocks, testing and recovery.</p> </div> </div></div> </div> <p class="mt-fluid-m"><a class="wf-cta-button" href="#">Compare plans</a></p> </div> </div>     </div>  </div> </section> <section class="sec-band surface-muted density-regular" data-sec="start" data-comp="how-steps" data-ratio="none" data-disclosure="none" data-surface="muted" data-density="regular" data-mode="band" data-wf-ref="preview/vibe-specs" data-recipe="bricksmaven/how-it-works/how-it-works-2"> <div class="sec-inner">   <div class="wf-how-it-works-2"> <h2 class="text-fluid-2">Your first week</h2>   <div class="sec-inner"> <div> <div class="hworks-grid-ul"><div class="hworks-card card"> <div class="hworks-card__content">  <h3 class="text-fluid-1">Assess</h3> <p class="text-fluid-0">Movement screen and a real conversation.</p> </div> </div><div class="hworks-card card"> <div class="hworks-card__content">  <h3 class="text-fluid-1">Plan</h3> <p class="text-fluid-0">A block built around your calendar.</p> </div> </div><div class="hworks-card card"> <div class="hworks-card__content">  <h3 class="text-fluid-1">Train</h3> <p class="text-fluid-0">Coached sessions, logged in the app.</p> </div> </div><div class="hworks-card card"> <div class="hworks-card__content">  <h3 class="text-fluid-1">Review</h3> <p class="text-fluid-0">Retest at week six.</p> </div> </div></div> </div> </div>     </div>  </div> </section> <footer class="sec-bar surface-base density-regular" data-sec="footer" data-comp="footer-7" data-ratio="none" data-disclosure="none" data-surface="base" data-density="regular" data-mode="bar" data-wf-ref="preview/vibe-specs" data-recipe="bricksmaven/footer/footer-7"> <div class="sec-inner">   <div class="wf-footer-7"> <div class="sec-inner"> <div class="wf-footer-7-container row between"> <div> <span class="logo brand-mark">Pulse Athletics</span> </div> <div class="footer-nav-wrapper footer-nav-wrapper-7 row between"> <div class="row gap-fluid-m"><div class="footer-nav-column row between">  <h3 class="text-fluid-1"></h3>  </div><div class="footer-nav-column row between">  <h3 class="text-fluid-1"></h3>  </div><div class="footer-nav-column row between">  <h3 class="text-fluid-1"></h3>  </div><div class="footer-nav-column row between">  <h3 class="text-fluid-1"></h3>  </div><div class="footer-nav-column row between">  <h3 class="text-fluid-1"></h3>  </div><div class="footer-nav-column row between">  <h3 class="text-fluid-1"></h3>  </div></div> </div> <div class="wf-footer-7__content row between"> <h2 class="text-fluid-2">Pulse Athletics</h2>   <p class="mt-fluid-m"><a class="wf-cta-button" href="#">Say hello</a></p> </div> </div> <div class="wf-footer-7-bottom-container row between"> <div>  <p class="footer-legal-nav text-fluid-0">Copyright 2026 Pulse Athletics</p> </div> </div> </div>     </div>  </div> </footer>  </main> <a class="call-bar" href="tel:+61370032223"> <span>Call +61 3 7003 2223</span><span class="sr-only">Call now</span> </a> <script>addEventListener("message",function(e){var d=e.data||{};if(d.wfVars){var r=document.documentElement.style;(window.__wfk||[]).forEach(function(k){r.removeProperty(k)});window.__wfk=[];for(var k in d.wfVars){r.setProperty(k,d.wfVars[k]);window.__wfk.push(k)}}if(d.wfTheme){document.documentElement.dataset.theme=d.wfTheme;document.documentElement.classList.toggle("dark",d.wfTheme==="dark")}})</script><script>document.addEventListener("click",function(e){var a=e.target&&e.target.closest&&e.target.closest("a");if(a&&a.getAttribute("href"))e.preventDefault()},true);document.addEventListener("submit",function(e){e.preventDefault()},true);</script></body></html>
