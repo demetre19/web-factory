@@ -243,7 +243,7 @@
   "table-of-content-2-li__link": {
    "spacing": {
     "_padding": {
-     "right": "25px"
+     "right": "var(--space-m)"
     }
    },
    "layout": {},
@@ -251,8 +251,10 @@
    "typography": {},
    "colour": {},
    "radius": {},
-   "custom_css": ".table-of-content-2-li__link {\n\tgap: 25px;\n}",
-   "tokens": []
+   "custom_css": ".table-of-content-2-li__link {\n\tgap: var(--space-m);\n}",
+   "tokens": [
+    "space-m"
+   ]
   },
   "table-of-content-2-li__link-l2": {
    "spacing": {},
@@ -268,6 +270,7 @@
  "tokens_all": [
   "content-gap",
   "neutral-ultra-light",
+  "space-m",
   "space-s",
   "space-xs"
  ]

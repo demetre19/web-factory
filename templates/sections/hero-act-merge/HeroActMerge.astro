@@ -5,8 +5,11 @@
  * <section>, no outer padding/background/max-width (SB.2).
  *
  * U.4: the act is the plan's cta — a link with the copy's label, never
- * an invented "check availability" form.
+ * an invented "check availability" form. The media band's photo
+ * covers the band under a canvas scrim (.act-merge-media).
  */
+import { Image } from 'astro:assets';
+import { mediaFor } from '../_shared/inline';
 interface Props {
   heading?: string;
   fs?: string;
@@ -21,7 +24,17 @@ const {
   heading = 'Section heading', fs = '', body = '', cta, items = [],
   image, h1,
 } = Astro.props;
+const m = mediaFor(image, heading);
 ---
+{m && (
+  <div class="act-merge-media">
+    {m.mod
+      ? <Image src={m.mod} alt={m.alt} widths={[960, 1440, 1920]}
+               sizes="100vw" loading="eager" />
+      : <img src={m.src} alt={m.alt} width="1920" height="1080"
+             loading="eager" />}
+  </div>
+)}
 
 <div class="grid gap-fluid-l md:grid-cols-2 md:items-center">
   <div class="max-w-prose">

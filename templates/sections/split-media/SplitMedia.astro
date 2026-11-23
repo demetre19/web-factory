@@ -20,12 +20,13 @@ interface Props {
   image?: { src: string; alt: string; ratio?: string; focus?: string };
   attrib?: string;
   h1?: boolean;
+  stack?: string;
   brand?: string;
   copy?: CopySlot;
 }
 const {
   heading = 'Section heading', fs = '', body = '', eyebrow = '',
-  cta, items = [], image, attrib = '', h1, brand, copy,
+  cta, items = [], image, attrib = '', h1, brand, copy, stack,
 } = Astro.props;
 const cp: CopySlot = copy || {};
 const head = cp.heading || heading;
@@ -45,7 +46,8 @@ const mediaSrc = mediaMod?.default ?? null;
 const mediaRatio = image?.ratio || null;
 const mediaFocus = image?.focus || null;   // left|right|top|bottom
 ---
-<div class="split">
+<div class="split"
+     data-media-first={stack === 'media-first' ? '' : undefined}>
   <div class="stack">
     {eyebrow && <p class="eyebrow">{eyebrow}</p>}
     {h1

@@ -428,6 +428,12 @@ def eff_comp(b, comp, allowed_for_b, n_media):
     if comp == 'split-media' and n_media <= 0:
         return next((c for c in allowed_for_b if c != 'split-media'),
                     'editorial')
+    if comp.startswith('cutout-') and not any(
+            isinstance(i, dict) and i.get('image') for i in b['items']):
+        # a cutout grid with no item cutouts renders 'cutout pending'
+        # placeholders — fall to the next non-cutout alternate
+        return next((c for c in allowed_for_b
+                     if not c.startswith('cutout-')), 'editorial')
     if comp in ITEM_COMPS and not (b['items'] or b['links'] or b['qa']) \
             and len(_term_items(b)) < 2:
         return 'editorial'
@@ -540,6 +546,23 @@ def recorded_pick(pdir):
         return None
 
 
+MEDIA_BAND_HEROES = {'hero-act-merge'}
+SPLIT_HEROES = {'split-media', 'cutout-hero-split'}
+
+
+def signed_chrome(pdir):
+    """{'header'|'footer': comp} the operator signed in
+    ELEMENT-PICKS.json — {} when nothing is signed."""
+    try:
+        picks = json.load(open(os.path.join(
+            pdir, 'ELEMENT-PICKS.json'))).get('picks') or []
+    except Exception:
+        return {}
+    return {p['element']: p['variant'] for p in picks
+            if p.get('element') in ('header', 'footer')
+            and p.get('variant')}
+
+
 def build(pdir, option=None):
     site_dir, slug = SF.site_of(pdir)
     _, brief, page = SF.brief(pdir)
@@ -610,22 +633,68 @@ def build(pdir, option=None):
     nav_pool = allowed['nav'] or ['flyout-nav']
     foot_pool = allowed['footer'] or ['footer-bar']
     hero_pool = allowed['hero']
+    # the operator's signed header/footer (ELEMENT-PICKS) is site
+    # chrome — every option wears it; header variety is its own board
+    signed = signed_chrome(pdir)
+    if signed.get('header') in nav_pool:
+        nav_pool = [signed['header']]
+    if signed.get('footer') in foot_pool:
+        foot_pool = [signed['footer']]
+    # every option opens on its own comp of the hero pool, in pool
+    # order — d1 (the plan default) keeps the default hero, so the
+    # table never depends on which option is picked (re-projecting an
+    # approval, or a clean repro rebuild, yields the same table)
+    pick = option or recorded_pick(pdir) or 'd1'
+    # a block whose items carry no cutout image never offers a
+    # cutout comp — dropped BEFORE the rhythm repair, so the repair
+    # sees the comps that will really render (no post-repair swap
+    # rebuilding a run of identical grids)
+    for b in blocks:
+        if not any(isinstance(i, dict) and i.get('image')
+                   for i in b['items']):
+            keep = [c for c in allowed.get(b['id']) or []
+                    if not c.startswith('cutout-')]
+            if keep:
+                allowed[b['id']] = keep
     zone_of = {b['id']: b['zone'] for b in blocks}
     table = []
     row_media = max(0, len(media) - 1)
+    # alternates (never d1, the plan default) vary the first screen
+    # beyond the hero comp: every other split hero puts its media
+    # first (image-left), and every other non-media-band hero sits on
+    # muted — the body's base/muted order flips with it, so the fold
+    # boundary and the S-M-L surface steps hold by construction
+    n_split = n_muted = 0
     for oi, (oid, label, v) in enumerate(opts):
-        seq = repair_rhythm([(b['id'], v[b['id']]) for b in blocks],
-                            allowed, zone_of)
+        seq = repair_rhythm(
+            [(b['id'], v[b['id']] if v[b['id']] in allowed[b['id']]
+              else eff_comp(by[b['id']], v[b['id']], allowed[b['id']],
+                            row_media)) for b in blocks],
+            allowed, zone_of)
         seq = [(bid, eff_comp(by[bid], c, allowed[bid], row_media))
                for bid, c in seq]
         s, inputs = score(seq, by)
+        # a hero that shares the first body row's comp steps density
+        # (compact) — adjacent rows never share comp AND density
+        hc = hero_pool[oi % len(hero_pool)]
+        vary = {}
+        if oi and hc in SPLIT_HEROES:
+            if n_split % 2 == 0:
+                vary['stacks'] = {'hero': 'media-first'}
+            n_split += 1
+        if oi and hc not in MEDIA_BAND_HEROES:
+            if n_muted % 2 == 0:
+                vary['surfaces'] = {'hero': 'muted'}
+            n_muted += 1
         table.append({'id': oid, 'label': label,
                       'compositions': {bid: c for bid, c in seq},
                       'chrome': {'nav': nav_pool[oi % len(nav_pool)],
-                                 'hero': hero_pool[oi % len(hero_pool)],
+                                 'hero': hc,
                                  'footer': foot_pool[oi % len(foot_pool)]},
+                      **({'densities': {'hero': 'compact'}}
+                         if seq and seq[0][1] == hc else {}),
+                      **vary,
                       'score': s, 'score_inputs': inputs})
-    pick = option or recorded_pick(pdir) or 'd1'
     chosen = next((o for o in table if o['id'] == pick), None)
     if chosen is None:
         raise SystemExit(f'{TOOL}: option {pick!r} not among '
@@ -662,6 +731,8 @@ def build(pdir, option=None):
             continue
         nav_items.append({'label': l['anchor'], 'href': l['href']})
     hero_cta = (copy.get('closing') or {}).get('cta')
+    hero_surface = ('muted' if (chosen.get('surfaces') or {}).get('hero')
+                    == 'muted' else 'base')
     rows.append(base_row(
         'nav', nav_comp, label='Header', speech_act=['chrome'],
         category='headers',
@@ -676,16 +747,22 @@ def build(pdir, option=None):
     rows.append(base_row(
         'hero', hero_comp, label='Hero', speech_act=['promise'],
         category='hero',
-        surface='media' if hero_comp == 'hero-act-merge' else 'base',
-        density='regular', emphasis='headline',
-        align='center-axis', stack='text-first', collapse='stacked',
+        surface=('media' if hero_comp in MEDIA_BAND_HEROES
+                 else hero_surface),
+        density=(chosen.get('densities') or {}).get('hero') or 'regular',
+        emphasis='headline',
+        align='center-axis',
+        stack=(chosen.get('stacks') or {}).get('hero') or 'text-first',
+        collapse='stacked',
         media_ratio='none', disclosure='open', intent='hero',
         content_ids=['c-h1'], copy_ref='lede',
         vector=[{'heading': copy['h1'], 'fs': strip_md(copy['lede'])}],
         **({'cta': hero_cta} if hero_cta else {})))
     comps = chosen['compositions']
     seq = [(b['id'], comps[b['id']]) for b in blocks]
-    surfaces = ['muted', 'base']
+    # the body opens on the surface the hero doesn't wear
+    surfaces = (['base', 'muted'] if hero_surface == 'muted'
+                else ['muted', 'base'])
     media_left = list(media)
     # V.1 — a real service's promise row carries the first-party
     # photo; the hero spends the media budget before any detail row

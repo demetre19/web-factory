@@ -123,9 +123,17 @@ input, textarea { border: 1px solid var(--input-border); padding: var(--input-py
      intro column or a paragraph) separates at the content rung —
      without it the lead-in line sits flush against the first card
      row ('text touching divs'). Elements that already carry their
-     own stack/flow margin keep it. */
-  :is(.intro, p) + :not(p, .mt-stack, .mt-flow) {
+     own stack/flow margin keep it, and so does a bank container's
+     child — its row-gap already spaces it (no gap + margin stack). */
+  :is(.intro, p) + :not(p, .mt-stack, .mt-flow,
+      :is([class$="-container"], [class*="-container "]) > *) {
       margin-block-start: var(--content-gap); }
+  /* a stack/flow margin on a bank container's direct child rides on
+     top of that container's row-gap — cap it at the small rung so
+     gap + margin never reaches a band's padding (feature-26: 67px
+     gap + 30px mt-stack = 97px), floor still holds without a gap */
+  :is([class$="-container"], [class*="-container "]) > :is(.mt-stack,
+      .mt-flow) { margin-block-start: var(--space-s); }
   .mt-fluid-s { margin-block-start: var(--space-s); }
   .mt-fluid-m { margin-block-start: var(--space-m); }
   .mt-fluid-l { margin-block-start: var(--space-l); }
@@ -350,6 +358,10 @@ input, textarea { border: 1px solid var(--input-border); padding: var(--input-py
                    min-height: var(--tap);
                    transition: background-color .15s ease,
                        box-shadow .15s ease; }
+  /* inside a section band the CTA wraps rather than overflowing a
+     narrow grid track (hero-43's 1fr footer column at 768px held a
+     277px nowrap label); bar chrome keeps its one-line buttons */
+  .sec-band .wf-cta-button { white-space: normal; max-width: 100%; }
   .wf-cta-button:hover {
                    background: var(--action-primary-hover,
                        var(--action-primary)); }
@@ -389,6 +401,14 @@ input, textarea { border: 1px solid var(--input-border); padding: var(--input-py
   /* the open mobile menu is a flyout sheet, not a dropdown: a
      right-side panel over a scrim, a close control, vertical links,
      and the header CTA docked at the panel's foot (N.flyout) */
+  /* the whole open-sheet contract exists only under the nav
+     breakpoint — at ≥60rem .nav-links flows inline and a stray
+     .open (a ?menu=open URL loaded wide, say) must not pin a fixed
+     panel or lock scroll (audit: menu-desktop doc at 1280) */
+  .nav-close { display: none; }
+  .nav-sheet-head { display: none; }
+  .nav-sheet-cta { display: none; }
+  @media (max-width: 59.99rem) {
   .nav-links.open { display: flex; flex-direction: column;
             gap: var(--space-l);
             position: fixed; inset-block: 0; inset-inline-end: 0;
@@ -406,13 +426,6 @@ input, textarea { border: 1px solid var(--input-border); padding: var(--input-py
                without declaring a height (A.1) */
             padding-block: var(--space-s);
             white-space: normal; }
-  /* under 30rem the sheet is the whole viewport — a docked rail
-     leaves no room for a strip of page behind it */
-  @media (max-width: 30rem) {
-    .nav-links.open { width: 100vw; inset-inline: 0;
-            border-inline-start: 0; }
-  }
-  .nav-close { display: none; }
   .nav-links.open .nav-close { display: inline-flex;
             align-self: flex-end; min-height: var(--tap);
             min-width: var(--tap); align-items: center;
@@ -420,9 +433,6 @@ input, textarea { border: 1px solid var(--input-border); padding: var(--input-py
             border: 0 !important;
             color: var(--text-secondary); font-size: var(--fs-2);
             line-height: 1; cursor: pointer; }
-  /* the sheet's top row: brand left, ghost close right — one row,
-     never a floating X (N.flyout) */
-  .nav-sheet-head { display: none; }
   .nav-links.open .nav-sheet-head { display: flex;
             align-items: center; justify-content: space-between;
             gap: var(--space-m);
@@ -453,24 +463,51 @@ input, textarea { border: 1px solid var(--input-border); padding: var(--input-py
      hidden under the breakpoint, so .nav-sheet-cta — a child of the
      sheet, docked at its foot — shows the plan action instead
      (N.flyout). Full width within the sheet's own padding. */
-  .nav-sheet-cta { display: none; }
   .nav-links.open .nav-sheet-cta { display: block;
             margin-block-start: auto; margin-inline: 0;
             padding-block-start: var(--space-m); width: 100%; }
   .nav-links.open .nav-sheet-cta > .wf-cta-button,
   .nav-links.open .nav-sheet-cta a {
             display: flex; justify-content: center; width: 100%; }
+  }
+  /* under 30rem the sheet is the whole viewport — a docked rail
+     leaves no room for a strip of page behind it */
+  @media (max-width: 30rem) {
+    .nav-links.open { width: 100vw; inset-inline: 0;
+            border-inline-start: 0; }
+  }
   /* header CTA: below the nav breakpoint it rides inside the flyout;
      burger, links and CTA share one breakpoint (60rem — the
      .nav-links one below) or a dead zone opens where the header
      shows brand alone */
   .nav-cta { display: none; }
-  @media (max-width: 60rem) {
+  /* the header CTA is a compact pill — 40–44px tall (never the
+     --tap-sized hero button). F113-1/audit: ≥15px label, ≤44px.
+     padding-block:0 + inline-flex centring keeps the computed
+     height at the 2.5rem floor whatever --fs-0 resolves to */
+  .nav-cta .wf-cta-button, .nav-cta > a {
+            display: inline-flex; align-items: center;
+            justify-content: center;
+            min-height: 2.5rem; max-height: 2.75rem;
+            padding-block: 0; padding-inline: .75em;
+            font-size: var(--fs-0); }
+  /* 59.99 not 60 — at exactly 60rem both media queries matched and
+     the burger showed beside the inline links (audit) */
+  @media (max-width: 59.99rem) {
     /* an empty CTA lane beside the burger must not hold flex space —
        hide a wrapper whose only element is the hidden .nav-cta, so
-       the burger pins to the row's far end (N.flyout) */
-    header[data-sec="nav"] div:has(> .nav-cta:only-child) {
-            display: none; }
+       the burger pins to the row's far end (N.flyout). Unscoped:
+       specimen/spec docs carry the same empty lane */
+    div:has(> .nav-cta:only-child) { display: none; }
+    /* E-M2 — the trigger docks to the row's far inline end at every
+       width under the breakpoint, whatever lanes precede it */
+    .burger { margin-inline-start: auto; }
+    /* the bar row is only as far in from the edge as the page
+       gutter — the fluid gutter grows to ~59px at 959px, dragging
+       the burger's right edge off the corner. Cap the header's
+       gutter under the breakpoint so the trigger stays ≤24px from
+       the edge (audit: 35–59px at 600–959) */
+    header > .sec-inner { padding-inline: min(var(--gutter), 1rem); }
   }
   @media (min-width: 60rem) {
     /* a stray CTA class on the trigger must not resurrect it: the
@@ -585,8 +622,18 @@ input, textarea { border: 1px solid var(--input-border); padding: var(--input-py
            grid-template-columns: 1fr; align-items: center; }
   @media (min-width: 48rem) {
     .split { grid-template-columns: 1.05fr 1fr; }
-    .split.media-first { grid-template-columns: 1fr 1.05fr; }
+    .split.media-first, .split[data-media-first] {
+      grid-template-columns: 1fr 1.05fr; }
+    .split[data-media-first] > .stack { order: 2; }
   }
+  /* a media-band hero (hero-act-merge) covers its band with the photo
+     under a canvas scrim — the band ink stays legible in both modes */
+  .surface-media:has(> .sec-inner > .act-merge-media) {
+    position: relative; isolation: isolate; overflow: hidden; }
+  .act-merge-media { position: absolute; inset: 0; z-index: -1; }
+  .act-merge-media img { width: 100%; height: 100%; object-fit: cover; }
+  .act-merge-media::after { content: ""; position: absolute; inset: 0;
+    background: color-mix(in oklab, var(--bg-canvas) 65%, transparent); }
   .cta-row { display: flex; flex-wrap: wrap; gap: var(--space-s);
              align-items: center; }
   .link-quiet { color: var(--text-secondary); text-decoration: none;
@@ -748,11 +795,71 @@ input, textarea { border: 1px solid var(--input-border); padding: var(--input-py
     :has(> .nav-desk + .nav-more), :has(> .nav-priority + .nav-more) {
               display: flex; align-items: center; gap: var(--space-s); }
     /* a mega nav never unrolls inline — the priority row + More own
-       the desktop bar; the panel still opens as a flyout */
-    .nav-links.nav-links.nav-mega:not(.open),
-    .nav-links.nav-links[data-over]:not(.open) { display: none; }
-    .nav-links.nav-mega.open, .nav-links[data-over].open {
-              display: flex; }
+       the desktop bar; the panel still opens as a flyout. No
+       :not(.open) selector here: Tailwind's content scan reads the
+       !open operator in the layout script as a candidate and emits
+       .\!open important variants, whose :not(.\!open) form would hide
+       the OPEN panel — a plain class list keeps those variants inert */
+    .nav-links.nav-links.nav-mega,
+    .nav-links.nav-links[data-over],
+    .nav-desk.nav-desk[data-over] { display: none; }
+    /* a plain link row that can't fit collapses to the burger —
+       the layout script marks its header .nav-crowded and stamps
+       data-over on the nav, so the links hide and the burger
+       reappears (the derived breakpoint, audit 138) */
+    .nav-crowded .burger, .nav-crowded .burger.wf-cta-button {
+              display: inline-flex; }
+    /* the open overflow panel is a dropdown under the bar, not the
+       mobile sheet — the sheet's fixed/scrim/scroll-lock rules live
+       under 60rem, so the desktop flyout carries its own box */
+    .nav-links.nav-mega.open, .nav-links[data-over].open,
+    .nav-desk[data-over].open {
+              display: flex; flex-direction: column;
+              gap: var(--space-m);
+              position: absolute; inset-block-start: 100%;
+              inset-inline-end: 0;
+              width: min(46rem, 94vw); max-height: 80vh;
+              overflow-y: auto;
+              background: var(--bg-canvas);
+              padding: var(--space-m);
+              border: 1px solid var(--border-default);
+              border-radius: var(--r-card);
+              box-shadow: var(--shadow-pop);
+              z-index: calc(var(--primitive-z-sticky) + 1); }
+    .nav-links.nav-mega.open .nav-close,
+    .nav-links[data-over].open .nav-close,
+    .nav-desk[data-over].open .nav-close {
+              display: inline-flex; align-self: flex-end;
+              min-height: var(--tap); min-width: var(--tap);
+              align-items: center; justify-content: center;
+              background: none; border: 0;
+              color: var(--text-secondary); font-size: var(--fs-2);
+              line-height: 1; cursor: pointer; }
+    /* a sheet-head in the flyout keeps its brand + close row
+       (the head is desktop-hidden until the panel opens) */
+    .nav-links.nav-mega.open .nav-sheet-head,
+    .nav-links[data-over].open .nav-sheet-head,
+    .nav-desk[data-over].open .nav-sheet-head {
+              display: flex; align-items: center;
+              justify-content: space-between; gap: var(--space-m);
+              padding-block-end: var(--space-s);
+              border-block-end: 1px solid
+                  var(--border-subtle, var(--border-default)); }
+    .nav-links.nav-mega.open .nav-sheet-head .nav-sheet-brand,
+    .nav-links[data-over].open .nav-sheet-head .nav-sheet-brand,
+    .nav-desk[data-over].open .nav-sheet-head .nav-sheet-brand {
+              font-weight: 700; }
+    .nav-links.nav-mega.open .nav-sheet-head .nav-close,
+    .nav-links[data-over].open .nav-sheet-head .nav-close,
+    .nav-desk[data-over].open .nav-sheet-head .nav-close {
+              align-self: center; margin-inline-start: auto; }
+    .nav-links.nav-mega.open:has(.nav-sheet-head)
+        .nav-close:not(.nav-sheet-head .nav-close),
+    .nav-links[data-over].open:has(.nav-sheet-head)
+        .nav-close:not(.nav-sheet-head .nav-close) {
+              display: none; }
+    /* the flyout anchors to the bar it drops from — the sticky
+       header is already a positioned ancestor */
   }
   /* the generic overlay family — modals, popups, form dialogs
      (N.flyout): a centred .flyout panel over the same scrim, a
@@ -827,9 +934,18 @@ input, textarea { border: 1px solid var(--input-border); padding: var(--input-py
   .nav-link[aria-current], .nav-link.active {
               color: var(--action-primary); }
   /* the header CTA fits the bar — compact padding and nav font,
-     never the hero-sized call */
-  .nav-cta .wf-cta-button { padding: .5em .75em;
-              font-size: var(--fs--1); min-height: 0; }
+     never the hero-sized call — but still tap-sized and legible
+     (≥15px label, ≥40px tall) */
+  .nav-cta .wf-cta-button { padding: 0 .75em;
+              font-size: var(--fs-0); min-height: 2.5rem;
+              max-height: 2.75rem;
+              display: inline-flex; align-items: center;
+              justify-content: center;
+              /* E-M6 — a nowrap phone label overflowed the bar at
+                 1024; the compact pill wraps instead of pushing the
+                 header past the viewport */
+              white-space: normal; text-align: center;
+              min-width: 0; }
   .brand-mark { font-weight: 650; letter-spacing: -.02em;
                 font-size: var(--fs-1); color: var(--text-primary);
                 text-decoration: none; }
@@ -1025,9 +1141,11 @@ def _ds_specs(tokens):
         '  .ds-shadow-card { box-shadow: var(--shadow-card); }',
         '  .ds-shadow-pop { box-shadow: var(--shadow-pop); }',
         '  .ds-label { font-size: var(--fs--1);',
-        '      color: var(--text-secondary); }',
+        '      color: color-mix(in oklch, var(--sec-fg) 92%,',
+        '          var(--sec-bg)); }',
         '  .ds-value { font-size: var(--fs--1);',
-        '      color: var(--text-muted); }']
+        '      color: color-mix(in oklch, var(--sec-fg) 75%,',
+        '          var(--sec-bg)); }']
     for name in sorted(clamp.sizes(fl)):
         if name.startswith(('text-', 'h')):
             out.append(f'  .ds-tx-{name} {{ font-size: var(--{name}); }}')
@@ -1180,10 +1298,20 @@ def tailwind_config(tokens):
     # (trailing comma) and keeps sucrase from reading the next
     # key as an expression continuation.
     colour_lines = colour_lines.rstrip() + '\n   '
+    # the density-* classes reach the markup through Section.astro's
+    # density-${density} expression — invisible to the content scan —
+    # while the L.14/L.7 gate reads them off the built tag, so they
+    # must be safelisted to keep their @layer rules in dist css.
+    dens = sorted((tokens.get('knobs') or {})
+                  .get('space.section_py') or {})
+    if not dens:
+        dens = ['compact', 'regular', 'spacious']
+    safe = ', '.join(f"'density-{d}'" for d in dens)
     return f'''/** generated from TOKENS.json — emit_global.tailwind_config */
 export default {{
   darkMode: 'class',
   content: ['./src/**/*.{{astro,html}}'],
+  safelist: [{safe}],
   theme: {{ extend: {{
     colors: {{{colour_lines}}},
     fontSize: {{

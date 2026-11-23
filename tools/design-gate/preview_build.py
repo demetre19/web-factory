@@ -620,6 +620,13 @@ def emit_layouts(ctx):
         for sec, comp in (o.get('chrome') or {}).items():
             if comp:
                 override[sec] = comp
+        for sec, dens in (o.get('densities') or {}).items():
+            if dens in ('compact', 'regular', 'spacious'):
+                override[f'{sec}@density'] = dens
+        for sec, st in (o.get('stacks') or {}).items():
+            override[f'{sec}@stack'] = st
+        for sec, sf in (o.get('surfaces') or {}).items():
+            override[f'{sec}@surface'] = sf
         options.append((str(o.get('id')), o.get('label') or
                         o.get('id'), float(o.get('score') or 0),
                         override))
@@ -629,7 +636,7 @@ def emit_layouts(ctx):
     # union of compositions across every option + the plan defaults —
     # components emit once (bank recipes stay recipe-bound)
     extra = {comp for _, _, _, ov in options
-             for comp in ov.values()}
+             for sec, comp in ov.items() if '@' not in sec}
     bank_css, emitted = _emit_components(ctx, contracts_rows, extra)
     _ensure_shell(ctx)
     _ensure_assets(ctx)
@@ -688,12 +695,16 @@ def emit_layouts(ctx):
             # a hero chrome override that turns the hero media-led
             # spends the brief's FIRST asset — the same intake the
             # real projection gives the hero row (V.1)
+            # (a hero row that already carries the asset still takes
+            # the media comp's ratio and band — hero-act-merge is a
+            # media-surface band, never a plain base one)
             if (ov and c['section'] == 'hero'
-                    and not r2.get('image')):
+                    and (not r2.get('image') or ov in _MEDIA_HERO_COMPS)):
                 if ov in _MEDIA_HERO_COMPS and brief_media:
                     hm = brief_media[0]
-                    r2['image'] = {'src': hm.get('src') or hm.get('file'),
-                                   'alt': hm.get('alt', '')}
+                    r2['image'] = r2.get('image') or {
+                        'src': hm.get('src') or hm.get('file'),
+                        'alt': hm.get('alt', '')}
                     r2['media_ratio'] = (
                         'none' if ov == 'hero-act-merge'
                         else _asset_ratio(
@@ -715,6 +726,27 @@ def emit_layouts(ctx):
                 if r2.pop('image', None) is not None:
                     r2['media_ratio'] = 'none'
                     cc['media_ratio'] = 'none'
+            dens = override.get(f"{c['section']}@density")
+            if dens:
+                cc['density'] = r2['density'] = dens
+            # a non-media-band hero over a media-band plan default
+            # drops the media band (the projection binds base)
+            if (c['section'] == 'hero' and cc.get('surface') == 'media'
+                    and cc.get('composition') not in PC.MEDIA_BAND_HEROES):
+                cc['surface'] = r2['surface'] = 'base'
+            st = override.get(f"{c['section']}@stack")
+            if st:
+                cc['stack'] = r2['stack'] = st
+            # a muted hero flips the body's base/muted order — the
+            # same surfaces the projection binds for this option
+            if override.get('hero@surface') == 'muted':
+                sf = cc.get('surface')
+                if c['section'] == 'hero' and sf == 'base':
+                    cc['surface'] = r2['surface'] = 'muted'
+                elif (c['section'] not in ('nav', 'footer', 'hero')
+                        and sf in ('base', 'muted')):
+                    cc['surface'] = r2['surface'] = (
+                        'muted' if sf == 'base' else 'base')
             ov_rows.append((cc, r2))
         # and after the split-media rows, the same media-pane rows
         # the plan's post-pass fills — the card locks the ratios the

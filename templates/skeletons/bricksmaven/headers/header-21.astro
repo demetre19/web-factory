@@ -71,7 +71,7 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
       <span class="logo brand-mark">{brand}</span>
       <div>
         {list.length > 0 && <nav class="nav-desk" aria-label="Primary"><ul class="row gap-fluid-m list-plain">{(navOver ? list.slice(0, navCut) : list).map((it) => <li><a class="nav-link" href={it.href}>{it.label || it.term || it.title || it.text}</a></li>)}</ul></nav>}
-        {navOver && <button class="nav-more" type="button" aria-label="More links">More</button>}
+        {navOver && <button class="nav-more" type="button" aria-label="More links" aria-expanded="false">More</button>}
       </div>
       {image &&       <div>
         {image && image.src && <figure class="ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
@@ -79,7 +79,6 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
       }
       <div class="wf-header-21__cta row between">
         <div class="row between">
-          {list.length > 0 && <button class="burger" type="button" aria-label="Menu"><span aria-hidden="true">≡</span></button>}
           {list.length > 0 && <nav class="nav-links nav-flyout" aria-label="Primary">
             <div class="nav-sheet-head"><span class="logo nav-sheet-brand">{brand}</span><button class="nav-close" type="button" aria-label="Close menu">×</button></div>
             <div class="wf-off-canvas-6__content">
@@ -114,6 +113,7 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
           {act.label && <p class="nav-cta"><a class="wf-cta-button" href={act.href}>{act.label}</a></p>}
         </div>
       </div>
-    </div>
+              {list.length > 0 && <button class="burger" type="button" aria-label="Menu"><span aria-hidden="true">≡</span></button>}
+</div>
   </div>
 </div>

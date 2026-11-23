@@ -112,17 +112,30 @@ def _read_cache(pd):
         return None
 
 
-def _warm_thread(pd):
+def _warm_thread(pd, tag):
     import picker_app
-    try:
-        data, _err = picker_app.app_data(pd)
-    except Exception:
-        data = None
-    with _WARM_LOCK:
-        st = _WARM.get(pd) or {}
-        st['data'] = data if data is not None else st.get('data')
-        st['busy'] = False
-        _WARM[pd] = st
+    while True:
+        try:
+            data, _err = picker_app.app_data(pd)
+        except Exception:
+            data = None
+        with _WARM_LOCK:
+            st = _WARM.get(pd) or {}
+            if st.get('tag') is not tag:
+                # a newer warm owns pd — this emitter is orphaned
+                return
+            if st.get('dirty') and data is not None:
+                # a pick/sign landed mid-emit: this payload was built
+                # from pre-pick state — discard it and re-emit under
+                # the same ownership (busy stays True, so no second
+                # emitter can start while the rebuild runs)
+                st['dirty'] = False
+                _WARM[pd] = st
+                continue
+            st['data'] = data if data is not None else st.get('data')
+            st['busy'] = False
+            _WARM[pd] = st
+            break
     if data:
         try:
             os.makedirs(_CACHE_DIR, exist_ok=True)
@@ -140,9 +153,37 @@ def _start_warm(pd):
         st = _WARM.get(pd)
         if st and st['busy']:
             return
-        _WARM[pd] = {'data': (st or {}).get('data'), 'busy': True}
-    threading.Thread(target=_warm_thread, args=(pd,),
+        tag = object()
+        _WARM[pd] = {'data': (st or {}).get('data'), 'busy': True,
+                     'tag': tag,
+                     # a pick while idle is WHY this emit starts —
+                     # clear the flag so the fresh payload commits
+                     # instead of discarding itself
+                     'dirty': False}
+    threading.Thread(target=_warm_thread, args=(pd, tag),
                      daemon=True).start()
+
+
+def _invalidate_warm(pd):
+    """A pick/sign mutates what app_data emits — drop the live and
+    disk-cached payload so the next /app-data re-emits instead of
+    replaying the pre-pick snapshot (audit: picks showed null until
+    a manual re-warm). busy is NOT touched: while an emit is in
+    flight the pick only flags the state dirty, and the running
+    emitter re-emits itself — marking idle would start a second
+    emitter over a pipeline mid-rebuild (review finding: the emit
+    can delete sources an active Astro build still needs)."""
+    if not pd:
+        return
+    with _WARM_LOCK:
+        st = _WARM.setdefault(
+            pd, {'data': None, 'busy': False, 'tag': None})
+        st['data'] = None
+        st['dirty'] = True
+    try:
+        os.remove(_cache_path(pd))
+    except OSError:
+        pass
 
 
 def _app_data_response(pd):
@@ -168,6 +209,23 @@ def _app_data_response(pd):
     return 503, {'warming': True,
                  'error': 'emitting previews — warming'}, \
         {'Retry-After': '3'}
+
+
+_NO_NAV_MARK = 'e.preventDefault()},true);'
+
+
+def _with_no_nav(txt):
+    """Preview docs in picker iframes must never navigate — emitted
+    _doc pages carry picker_app._NO_NAV; built Astro boards served
+    through /built/ and any stale docs do not. Inject when missing
+    (idempotent — the marker is the injected script's own tail)."""
+    if _NO_NAV_MARK in txt:
+        return txt
+    import picker_app
+    if '</body>' in txt:
+        return txt.replace('</body>', picker_app._NO_NAV + '</body>',
+                           1)
+    return txt + picker_app._NO_NAV
 
 
 def _rewrite_assets(fp, txt):
@@ -949,7 +1007,8 @@ def _handler():
                     '</head>',
                     '<style>' + css + '</style></head>', 1)
                 txt = _rewrite_assets(fp, txt)
-                self._send_html(200, txt.encode('utf-8'))
+                self._send_html(200, _with_no_nav(txt).encode(
+                    'utf-8'))
                 return
             if q.path.startswith('/built/'):
                 # serve the pipeline's built pages + assets to the
@@ -967,8 +1026,12 @@ def _handler():
                 if fp.lower().endswith(('.html', '.htm')):
                     txt = open(fp, encoding='utf-8',
                                errors='replace').read()
-                    self._send_html(200, _rewrite_assets(
-                        fp, txt).encode('utf-8'))
+                    txt = _rewrite_assets(fp, txt)
+                    # built Astro boards lack _doc's _NO_NAV — link
+                    # clicks in the expanded overlay must not
+                    # navigate the iframe away (audit F-1)
+                    self._send_html(200, _with_no_nav(
+                        txt).encode('utf-8'))
                     return
                 ext = os.path.splitext(fp)[1].lower()
                 mime = {'.html': 'text/html; charset=utf-8',
@@ -1041,6 +1104,7 @@ def _handler():
                     body.get('wave', ''), body.get('pipeline', ''),
                     nonce=body.get('nonce'), design=body.get('design'),
                     chat=body.get('chat'))
+                _invalidate_warm(body.get('pipeline'))
                 # refusals are UX, not faults — 200 keeps them off
                 # the console error channel
                 self._send(200, {'ok': code == 0, 'message': txt})
@@ -1050,6 +1114,7 @@ def _handler():
                     body.get('pipeline', ''), body.get('element', ''),
                     body.get('variant', ''), body.get('bundle'),
                     spec=body.get('spec'))
+                _invalidate_warm(body.get('pipeline'))
                 self._send(200, {'ok': code == 0, 'message': txt})
             elif self.path == '/type-ladder':
                 import picker_app
@@ -1066,6 +1131,7 @@ def _handler():
                 code, txt, rec = picker_app.save_system(
                     body.get('pipeline', ''), body.get('name', ''),
                     body.get('mode'))
+                _invalidate_warm(body.get('pipeline'))
                 self._send(200 if code == 0 else 400,
                            {'ok': code == 0, 'message': txt,
                             'system': rec if code == 0 else None})
@@ -1073,6 +1139,7 @@ def _handler():
                 import picker_app
                 code, txt = picker_app.delete_system(
                     body.get('pipeline', ''), body.get('slug', ''))
+                _invalidate_warm(body.get('pipeline'))
                 self._send(200 if code == 0 else 400,
                            {'ok': code == 0, 'message': txt})
             elif self.path == '/ingest':
