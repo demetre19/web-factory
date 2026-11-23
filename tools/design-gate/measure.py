@@ -197,6 +197,52 @@ _JS = r"""
     });
   }
   out.hierarchy_violations = viol;
+  // ---- rendered line length: running-text elements whose lines
+  // run >80 chars. Lines counted from height/line-height; an
+  // element only counts once it wraps (≥2 rendered lines).
+  const ll = [];
+  for (const el of document.querySelectorAll(
+        'main p, main blockquote, main li')) {
+    const r = vis(el); if (!r) continue;
+    const lh = parseFloat(getComputedStyle(el).lineHeight);
+    if (!isFinite(lh) || lh <= 0) continue;
+    const lines = Math.round(r.height / lh);
+    if (lines < 2) continue;
+    const cpl = el.textContent.trim().length / lines;
+    ll.push({cpl: +cpl.toFixed(1), lines,
+             context: `${el.tagName.toLowerCase()} "${
+               el.textContent.trim().slice(0, 50)}"`});
+  }
+  ll.sort((a, b) => b.cpl - a.cpl);
+  out.line_length = ll.slice(0, 8);
+  // ---- heading rhythm: the rendered gap above a heading must
+  // exceed the gap below — measured off box edges inside each
+  // [data-sec] block, so margin AND parent gap both count.
+  const hrv = [];
+  for (const b of scope) {
+    const boxes = [...b.querySelectorAll(
+        'h1,h2,h3,h4,h5,h6,p,li,blockquote,figure,img,table,ul,ol,'
+        + 'dl,pre,form,a[href],button,[data-comp] > div')]
+      .map(e => ({e, r: vis(e)})).filter(x => x.r);
+    for (const {e: h, r: hr} of boxes) {
+      if (!/^H[1-6]$/.test(h.tagName)) continue;
+      let top = -1, bot = Infinity;
+      for (const {e, r: er} of boxes) {
+        if (e === h || e.contains(h) || h.contains(e)) continue;
+        if (er.bottom <= hr.top + 1 && er.bottom > top)
+          top = er.bottom;
+        if (er.top >= hr.bottom - 1 && er.top < bot)
+          bot = er.top;
+      }
+      if (top < 0 || bot === Infinity) continue;
+      const a = hr.top - top, bb = bot - hr.bottom;
+      if (a + 0.5 <= bb)
+        hrv.push({tag: h.tagName,
+                  text: h.textContent.trim().slice(0, 50),
+                  above_px: +a.toFixed(1), below_px: +bb.toFixed(1)});
+    }
+  }
+  out.heading_rhythm_violations = hrv;
   return out;
 }
 """
