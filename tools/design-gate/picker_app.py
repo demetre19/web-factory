@@ -1544,7 +1544,7 @@ _FRAG_CTA_CSS = (
 
 
 def _frag_file(kind, seed, mode, salt, tags, prefer=None,
-               want_media=None):
+               want_media=None, media_pool=None):
     """one bank fragment for `kind` — dir and file seeded so every
     vibe composes a different page; prefers fragments tagged for the
     resolved theme's mode. `prefer` names a dir the genes ranked
@@ -1588,8 +1588,16 @@ def _frag_file(kind, seed, mode, salt, tags, prefer=None,
         pool = [f for f in fns if _sc(f) == best]
         fp = os.path.join(cdir, pool[(seed + salt) % len(pool)])
         frag = open(fp, encoding='utf-8', errors='replace').read()
-        frag = re.sub(r"/src/assets/[^\s\"'()]+",
-                      '/media/placeholder.svg', frag)
+        # bank image refs point at the exporter's asset tree — bind
+        # them to the pipeline's own media (seeded rotation) so media
+        # heroes render real photography, not the flat placeholder
+        _n = [0]
+        def _img(_m):
+            _n[0] += 1
+            if media_pool:
+                return media_pool[(seed + _n[0]) % len(media_pool)]
+            return '/media/placeholder.svg'
+        frag = re.sub(r"/src/assets/[^\s\"'()]+", _img, frag)
         return frag, d + '/' + pool[(seed + salt) % len(pool)][:-5]
     return '', ''
 
@@ -1637,6 +1645,14 @@ def _frag_doc_parts(pd, fam, bundle):
     seed = zlib.crc32(fam.encode('utf-8'))
     mode = (bundle or {}).get('theme') or 'light'
     tags = _genmenu_tags()
+    # the pipeline's real photography — fragment /src/assets refs
+    # rotate through it; /built/-quoted like the css links
+    media_pool = []
+    mdir = os.path.join(pd, 'site', 'dist', 'media')
+    if os.path.isdir(mdir):
+        media_pool = ['/built/' + urllib.parse.quote(
+            os.path.join(mdir, f)) for f in sorted(os.listdir(mdir))
+            if f.lower().endswith(('.jpg', '.jpeg', '.png', '.webp'))]
     # hero is gene-ranked: the preset's genes ask for a topology
     # (retrieval.vibe_topology) and the matching bank dir wins, so
     # noir/playful/luxe render different hero shapes, not the same
@@ -1645,10 +1661,14 @@ def _frag_doc_parts(pd, fam, bundle):
         _frag_file('nav', seed, mode, 0, tags),
         _frag_file('hero', seed, mode, 3, tags,
                    prefer=_gene_hero_dir(bundle) or None,
-                   want_media=_gene_hero_media(bundle)),
-        _frag_file('band', seed, mode, 7, tags),
-        _frag_file('band', seed, mode, 13, tags),
-        _frag_file('footer', seed, mode, 29, tags),
+                   want_media=_gene_hero_media(bundle),
+                   media_pool=media_pool),
+        _frag_file('band', seed, mode, 7, tags,
+                   media_pool=media_pool),
+        _frag_file('band', seed, mode, 13, tags,
+                   media_pool=media_pool),
+        _frag_file('footer', seed, mode, 29, tags,
+                   media_pool=media_pool),
     ]
     body = ''.join('<!--frag:' + ref + '-->' + f
                    for f, ref in picks if f)
