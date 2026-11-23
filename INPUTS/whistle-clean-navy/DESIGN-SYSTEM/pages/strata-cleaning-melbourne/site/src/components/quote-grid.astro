@@ -1,0 +1,100 @@
+---
+/**
+ * quote-grid — gold exemplar (SB.5). Testimonial cards: a star row
+ * when the item rates it, the quote verbatim, a portrait avatar and
+ * the reviewer's name and source. Every field is a prop from the
+ * plan row (F.2) — an item without a rating or portrait renders
+ * without one.
+ *
+ * Full-copy slots (§4.3): heading → answer → before → quote cards →
+ * links → after in article order (F.1). A block with no quote items
+ * still renders its full copy — the grid appears only when voices
+ * exist.
+ */
+import { Image } from 'astro:assets';
+import { iconFor, mediaFor, inline } from '../_shared/inline';
+import type { CopySlot, MediaInput } from '../_shared/inline';
+interface Props {
+  heading?: string;
+  fs?: string;
+  body?: string;
+  eyebrow?: string;
+  cta?: { label: string; href: string };
+  items?: { term?: string; title?: string; text?: string; quote?: string;
+             who?: string; source?: string; rating?: number | string;
+             image?: MediaInput; avatar?: MediaInput }[];
+  image?: { src: string; alt: string };
+  h1?: boolean;
+  brand?: string;
+  copy?: CopySlot;
+}
+const {
+  heading = 'Section heading', fs = '', body = '', eyebrow = '',
+  cta, items = [], h1, brand, copy,
+} = Astro.props;
+const cp: CopySlot = copy || {};
+const head = cp.heading || heading;
+const sub = cp.answer || fs || body;
+const before = cp.before || [];
+const links = (cp.links && cp.links.length)
+  ? cp.links.map((l) => l.text || `[${l.anchor}](${l.href})`)
+  : [];
+const list = (cp.items && cp.items.length) ? cp.items : items;
+const after = cp.after || [];
+const Star = iconFor('star');
+const full = (r: number | string | undefined) =>
+  Math.max(0, Math.min(5, Math.round(Number(r) || 0)));
+---
+<div>
+  <div class="sec-head">
+    {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+    {h1 ? <h1 class="text-fluid-4">{head}</h1> : <h2 class="text-fluid-3">{head}</h2>}
+    {sub && <p class="lede" set:html={inline(sub)} />}
+  </div>
+  {before.map((p) => (
+    <p class="mt-stack max-w-prose text-fluid-0" set:html={inline(p)} />
+  ))}
+  {list.length > 0 && (
+  <ul class="mt-sec grid-auto list-plain">
+    {list.map((it) => {
+      const av = mediaFor(it.avatar || it.image, it.who || '');
+      const n = full(it.rating);
+      return (
+      <li class="card">
+        {n > 0 && <span class="stars" role="img"
+                        aria-label={`${n} out of 5`}>
+          {Array.from({ length: 5 }, (_, i) => (
+            <Star size={14} fill={i < n ? 'currentColor' : 'none'}
+                  class={i < n ? '' : 'star-off'} aria-hidden="true" />
+          ))}
+        </span>}
+        <p class="t0 quote" set:html={inline(`“${it.quote || it.text}”`)} />
+        <div class="quote-foot">
+          {av && (av.mod
+            ? <Image class="avatar" src={av.mod}
+                     alt={av.alt || it.who || ''} width={88}
+                     height={88} loading="lazy" />
+            : <img class="avatar" src={av.src}
+                   alt={av.alt || it.who || ''} width={44} height={44}
+                   loading="lazy" />)}
+          <span>
+            {(it.who || it.title || it.term) &&
+              <span class="t0 attrib">{it.who || it.title || it.term}</span>}
+            {it.source &&
+              <span class="t0 attrib"> — {it.source}</span>}
+          </span>
+        </div>
+      </li>
+      );
+    })}
+  </ul>
+  )}
+  {links.length > 0 && (
+    <ul class="mt-stack grid-auto list-plain text-fluid-0">
+      {links.map((t) => <li set:html={inline(t)} />)}
+    </ul>
+  )}
+  {after.map((p) => (
+    <p class="mt-stack max-w-prose text-fluid-0" set:html={inline(p)} />
+  ))}
+</div>
