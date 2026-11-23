@@ -1213,7 +1213,21 @@ MUT = {
      ('APPEND','site/dist/home/index.html',
       '<style>p{text-align:justify}.x{transition-duration:600ms}'
       'h2{text-transform:uppercase}</style><h2>A BOLD ALL CAPS TITLE '
-      'HEADING</h2>')),
+      'HEADING</h2><div class="card"><div class="card">x</div>'
+      '</div>')),
+ 'check_slop_palette': mut(
+     ('REPL','TOKENS.json','"accent": "#4C93D6"','"accent": "#00F0FF"'),
+     ('REPL','TOKENS.json','"bg": "#FDFCFA"','"bg": "#FFF3DC"')),
+ 'check_gray_on_color': mut(
+     ('REPL','TOKENS.json','"surface": "#1C2224"','"surface": "#1D4A6E"')),
+ 'check_font_slop': mut(
+     ('REPL','DNA.json','"fonts": {\n   "tag": "extracted"',
+      '"fonts": {\n   "tag": "defaulted"')),
+ 'check_slop_classes': mut(
+     ('APPEND','site/dist/home/index.html',
+      '<div class="border-l-4 border-accent rounded-xl">t</div>'
+      '<p class="bg-clip-text text-transparent">g</p>'
+      '<div class="border shadow-2xl">c</div>')),
  'check_measured_evidence': mut(
      ('DEL','shots/1280-light-home.png')),
  'check_judged_verdict': mut(

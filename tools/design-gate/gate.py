@@ -1950,6 +1950,165 @@ def check_measurable(ctx):
                              f'radius {c_r}px >= parent {p_r}px — a '
                              'child radius is parent minus the '
                              'padding step')
+    # S.10 — no card inside a card in emitted markup: a card-level
+    # container (class token `card` or `*-card`) may never contain
+    # another one. Card parts (`card-media`, `card__x`) and ds-*
+    # swatch plumbing are not cards.
+    _card = r'(?:^|\s)(?!ds-)(?:card|[a-z0-9_-]+-card)(?=[\s"])'
+    for p_, t in list(srcs) + list(ctx.page_htmls()):
+        name = os.path.basename(p_)
+        if not p_.endswith(('.html', '.astro')):
+            continue
+        for m in re.finditer(
+                r'<(?:div|article|section|figure|aside|li)[^>]*'
+                r'class="[^"]*' + _card + r'[^"]*"[^>]*>(.*?)</(?:div|'
+                r'article|section|figure|aside|li)>', t, re.S):
+            if re.search(r'class="[^"]*' + _card, m.group(2)):
+                f.append(f'S.10 {name}: card inside a card — '
+                         'flatten to one card-level container')
+                break
+    return f
+
+def check_slop_palette(ctx):
+    """SL.1–SL.4 — palette/glow bounds at look/DNA generation (w4).
+
+    SL.1 no purple/violet gradients; SL.2 no neon-cyan accent on dark;
+    SL.3 no cream page bg by default; SL.4 no zero-offset chromatic
+    glow shadow tokens (dark-glow / radial-halo /
+    radial-spotlight-glow). Reads the look artifacts (TOKENS.json,
+    FINE-VARIANTS.json, VARIANT-GATES.json), not page output."""
+    f = []
+    canvas = str((_theme(ctx).get('canvas') or '')).upper()
+    for mode, roles in _modes(ctx).items():
+        bg, acc = roles.get('bg'), roles.get('accent')
+        bl = _oklch_lch(bg) if bg else None
+        if (bl and mode != 'dark' and bl[0] > 0.90 and
+                40 <= bl[2] <= 110 and bl[1] > 0.03 and
+                str(bg).upper() not in ('#FFF', '#FFFFFF', canvas)):
+            f.append(f'SL.3 [{mode}] page bg {bg} is cream — a '
+                     'neutral canvas unless the operator picked it')
+        al = _oklch_lch(acc) if acc else None
+        if mode == 'dark' and al and al[1] > 0.08 and 170 <= al[2] <= 205:
+            f.append(f'SL.2 [{mode}] neon cyan accent {acc} on dark — '
+                     'banned')
+    for fn in ('TOKENS.json', 'FINE-VARIANTS.json',
+               'VARIANT-GATES.json'):
+        txt = ctx.read(fn) or ''
+        for m in re.finditer(
+                r'(?:linear|radial|conic)-gradient\(([^;"]*)\)', txt):
+            for s_ in re.findall(
+                    r'#[0-9a-fA-F]{3,8}|oklch\([^)]*\)', m.group(1)):
+                lch = _oklch_lch(s_)
+                if lch and lch[1] > 0.04 and 255 <= lch[2] <= 300:
+                    f.append(f'SL.1 {fn}: purple/violet gradient stop '
+                             f'{s_} — banned')
+                    break
+        for m in re.finditer(
+                r'dark-glow|radial-halo|radial-spotlight-glow', txt):
+            f.append(f'SL.4 {fn}: chromatic glow token {m.group(0)} — '
+                     'zero-offset glow shadows are banned')
+        for m in re.finditer(
+                r'box-shadow["\']?\s*[:=]?\s*["\']?\s*0\s+0\s+[\d.]+'
+                r'(?:px|rem|em)\s+(#[0-9a-fA-F]{3,8}|oklch\([^)]*\))',
+                txt):
+            lch = _oklch_lch(m.group(1))
+            if lch and lch[1] > 0.05:
+                f.append(f'SL.4 {fn}: zero-offset chromatic glow '
+                         f'shadow {m.group(1)} — banned')
+    return f
+
+def check_gray_on_color(ctx):
+    """C.9 — muted text on a chromatic surface takes the surface hue.
+
+    A colored surface (OKLCH C > 0.03) may not carry dead-grey
+    secondary text (OKLCH C < 0.015); ink_muted must be tinted from
+    the surface's hue. C.1 contrast math handles the floor; this is
+    the hue rule for the pair."""
+    f = []
+    for mode, roles in _modes(ctx).items():
+        im = roles.get('ink_muted')
+        if not im:
+            continue
+        il = _oklch_lch(im)
+        for sname in ('surface', 'surface_elevated'):
+            s_ = roles.get(sname)
+            sl = _oklch_lch(s_) if s_ else None
+            if il and sl and sl[1] > 0.03 and il[1] < 0.015:
+                f.append(f'C.9 [{mode}] ink_muted {im} is neutral '
+                         f'grey on chromatic {sname} {s_} — tint '
+                         'it from the surface hue')
+    return f
+
+def check_font_slop(ctx):
+    """Advisory — default-stack faces are low-distinctiveness.
+
+    Inter/Roboto/Geist/Plus Jakarta Sans/Space Grotesk/Fraunces read
+    as the un-picked default; a chosen design should carry a
+    distinctive face unless the operator picked one of these."""
+    out = []
+    fonts = (_system(ctx).get('type') or {}).get('fonts') or {}
+    prov = {}
+    for fn in ('DNA.json', 'TOKENS.json'):
+        raw = ctx.read(fn)
+        if raw:
+            try:
+                prov = ((json.loads(raw).get('provenance') or {})
+                        .get('fonts') or {})
+            except Exception:
+                prov = {}
+        if prov:
+            break
+    picked = prov.get('tag') in ('extracted', 'snapped', 'briefed',
+                                 'operator')
+    if picked:
+        return out
+    for slot, stack in fonts.items():
+        first = str(stack).split(',')[0].strip().strip('"\'').lower()
+        if first in {'inter', 'roboto', 'geist', 'plus jakarta sans',
+                     'space grotesk', 'fraunces'}:
+            out.append(f'font "{first}" in slot {slot} is a '
+                       'default-stack face — pick a distinctive face '
+                       'unless the operator picked it')
+    return out
+
+def check_slop_classes(ctx):
+    """SB.3 — emitted-markup slop patterns, on .astro sources and
+    emitted html. Same pattern-lint style as check_section_allowed:
+    class strings carry the vocabulary, not computed intent."""
+    f = []
+
+    def _lint(txt, name):
+        for m in re.finditer(r'class="([^"]*)"', txt):
+            c = m.group(1)
+            if re.search(r'\bborder-[ltrb]-', c) and 'rounded' in c:
+                f.append(f'SB.3 {name}: side-tab — one-sided '
+                         'border-* on a rounded box')
+            if re.search(r'\b(?:border-(?:accent|primary)|'
+                         r'border-[ltrb]?-[3-9]\d*)\b', c) \
+                    and 'rounded' in c:
+                f.append(f'SB.3 {name}: border-accent-on-rounded — '
+                         'thick accent border on a rounded card')
+            if re.search(r'\bborder\b', c) and re.search(
+                    r'\bshadow-(?:lg|xl|2xl)\b', c):
+                f.append(f'SB.3 {name}: gpt-thin-border-wide-shadow '
+                         '— hairline border + wide diffuse shadow')
+        if re.search(r'bg-clip-text|-webkit-text-fill-color|'
+                     r'text-fill-color', txt):
+            f.append(f'SB.3 {name}: gradient-text — bg-clip-text / '
+                     'text-fill-color')
+        n_tiles = len(re.findall(
+            r'class="[^"]*\b(?:w-(?:8|9|1[0-2])\s+h-(?:8|9|1[0-2])|'
+            r'icon-(?:tile|box|badge))[^"]*\brounded[^"]*"[^>]*>.*?'
+            r'<h[1-4]\b', txt, re.S))
+        if n_tiles >= 2:
+            f.append(f'SB.3 {name}: icon-tile-stack — small '
+                     'rounded-square icon above every heading')
+
+    for _fn, p_ in _section_files(ctx):
+        with open(p_, errors='replace') as _fh:
+            _lint(_fh.read(), _fn)
+    for p_, t in ctx.page_htmls():
+        _lint(t, os.path.basename(p_))
     return f
 
 def check_speed_budget(ctx):
@@ -15858,11 +16017,12 @@ WAVE_CHECKS = {
            check_intent_deviation, check_wildcard_random,
            check_light_canvas, check_operator_approvals,
            check_acss_tokens, check_fluid_sizes, check_round_gated_look,
-           check_fine_round],
+           check_fine_round, check_slop_palette],
     'w5': [check_system_enums, check_spacing_scale, check_breakpoints,
            check_content_width, check_contrast, check_type_system,
            check_tailwind_derivation, check_tile_is_system,
            check_no_emoji, check_neutral_tint, check_proximity,
+           check_gray_on_color,
            check_border_widths, check_reduced_motion, check_dark_mode,
            check_dark_toggle, check_canon_trace, check_trend_vocab,
            check_style_licence, check_token_layer,
@@ -15873,6 +16033,7 @@ WAVE_CHECKS = {
            check_acss_conventions,
            check_content_width,
            check_section_allowed, check_section_gates, check_exemplars,
+           check_slop_classes,
            check_astro_build, check_token_layer, check_design_system],
     'w7': [check_section_program, check_hero_composition,
            check_assembly, check_spec_verbatim, check_page_data_attrs,
@@ -15918,7 +16079,8 @@ for _wv, _lst in WAVE_CHECKS.items():
     _lst.append(check_context_budget)
 
 # per-wave advisory checks — emitted as warnings, never blocking
-WARN_CHECKS = {'w7': [check_serial_build_warn]}
+WARN_CHECKS = {'w7': [check_serial_build_warn],
+               'w5': [check_font_slop]}
 
 WAVE_CHECKS['w7'].append(check_parallel_build)
 WAVE_CHECKS['w8'].append(check_bounded_review)
