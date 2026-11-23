@@ -2122,6 +2122,105 @@ def check_slop_classes(ctx):
         _lint(t, os.path.basename(p_))
     return f
 
+def check_easing_bound(ctx):
+    """M.ease — emitted motion/easing tokens never carry overshoot
+    unless the brief picked it: a cubic-bezier whose Y control
+    points leave [0,1], or a spring/elastic/back/bounce named
+    easing, fails unless TOKENS.json knobs['motion.level'] is
+    `playful` — M.1's only overshoot personality. Tokens live as
+    --motion-*/--ease* vars in the emitted stylesheets and in
+    TOKENS.json."""
+    try:
+        if (json.loads(ctx.read('TOKENS.json') or '{}')
+                .get('knobs', {}).get('motion.level') == 'playful'):
+            return []
+    except Exception:
+        pass
+    f = []
+
+    def _scan(t, name):
+        for m in re.finditer(
+                r'--(?:motion|ease)[\w-]*\s*:\s*([^;}]+)', t):
+            val = m.group(1)
+            for cb in re.finditer(
+                    r'cubic-bezier\(\s*([-\d.]+)\s*,\s*([-\d.]+)\s*,'
+                    r'\s*([-\d.]+)\s*,\s*([-\d.]+)\s*\)', val):
+                y1, y2 = float(cb.group(2)), float(cb.group(4))
+                if y1 < 0 or y1 > 1 or y2 < 0 or y2 > 1:
+                    f.append(f'M.ease {name}: overshoot bezier '
+                             f'{cb.group(0)} — easings never bounce')
+            if re.search(r'spring|elastic|bounce|back', val, re.I):
+                f.append(f'M.ease {name}: overshoot easing '
+                         f'{val.strip()[:40]} — easings never '
+                         'bounce')
+    for p_, t in dist_csss(ctx):
+        _scan(t, os.path.basename(p_))
+    sd = os.path.join(ctx.site, 'src', 'styles')
+    if os.path.isdir(sd):
+        for fn in sorted(os.listdir(sd)):
+            if fn.endswith('.css'):
+                with open(os.path.join(sd, fn),
+                          errors='replace') as fh:
+                    _scan(fh.read(), fn)
+    raw = ctx.read('TOKENS.json') or ''
+    for m in re.finditer(
+            r'"(?:[^"]*(?:ease|motion)[^"]*)"\s*:\s*"([^"]+)"', raw):
+        val = m.group(1)
+        for cb in re.finditer(
+                r'cubic-bezier\(\s*([-\d.]+)\s*,\s*([-\d.]+)\s*,'
+                r'\s*([-\d.]+)\s*,\s*([-\d.]+)\s*\)', val):
+            y1, y2 = float(cb.group(2)), float(cb.group(4))
+            if y1 < 0 or y1 > 1 or y2 < 0 or y2 > 1:
+                f.append(f'M.ease TOKENS.json: overshoot bezier '
+                         f'{cb.group(0)} — easings never bounce')
+        if re.search(r'spring|elastic|bounce|back', val, re.I):
+            f.append(f'M.ease TOKENS.json: overshoot easing '
+                     f'{val.strip()[:40]} — easings never bounce')
+    return f
+
+def check_render_integrity(ctx):
+    """R.1–R.7 — rendered integrity read off MEASURE.json (measure.py
+    probes at mobile/tablet/desktop): script errors on load, failed
+    asset requests, broken images, text still hidden after the reveal
+    pass, clipped/occluded text, body text at the viewport edge, and
+    cramped padding. A missing/unbound MEASURE.json is J.11's fail,
+    not repeated here."""
+    raw = ctx.read('MEASURE.json')
+    if raw is None:
+        return []
+    try:
+        m = json.loads(raw)
+    except Exception:
+        return []
+    f = []
+    for slug, pg in sorted((m.get('pages') or {}).items()):
+        for w, v in sorted((pg.get('viewports') or {}).items()):
+            ld = v.get('load') or {}
+            for e in ld.get('script_errors') or []:
+                f.append(f'R.1 {slug}@{w}: script error on load: '
+                         f'{e[:90]}')
+            for u in ld.get('failed_requests') or []:
+                f.append(f'R.2 {slug}@{w}: request failed: {u}')
+            for u in v.get('broken_images') or []:
+                f.append(f'R.2 {slug}@{w}: broken image: {u}')
+            ht = v.get('hidden_text') or {}
+            if (ht.get('share') or 0) > 0.30 and \
+                    (ht.get('hidden_chars') or 0) > 400:
+                f.append(f"R.3 {slug}@{w}: {int(ht['share'] * 100)}% "
+                         'of page text still hidden at rest')
+            for c in v.get('text_overflow') or []:
+                f.append(f'R.4 {slug}@{w}: text clipped by its box: '
+                         f'{c}')
+            for c in v.get('text_occlusion') or []:
+                f.append(f'R.5 {slug}@{w}: text under an opaque '
+                         f'element: {c}')
+            for c in v.get('edge_text') or []:
+                f.append(f'R.6 {slug}@{w}: body text <16px from '
+                         f'viewport edge: {c}')
+            for c in v.get('cramped_padding') or []:
+                f.append(f'R.7 {slug}@{w}: cramped padding: {c}')
+    return f
+
 def check_speed_budget(ctx):
     f = []
     dist = os.path.join(ctx.site, 'dist')
@@ -16166,7 +16265,7 @@ WAVE_CHECKS = {
            check_content_width, check_contrast, check_type_system,
            check_tailwind_derivation, check_tile_is_system,
            check_no_emoji, check_neutral_tint, check_proximity,
-           check_gray_on_color,
+           check_gray_on_color, check_easing_bound,
            check_border_widths, check_reduced_motion, check_dark_mode,
            check_dark_toggle, check_canon_trace, check_trend_vocab,
            check_style_licence, check_token_layer,
@@ -16215,6 +16314,7 @@ WAVE_CHECKS = {
     'w8': [check_review_completeness, check_scorecard,
            check_style_review, check_novelty, check_review_modes,
            check_variants, check_vlm_evidence,
+           check_render_integrity,
            check_operator_approvals],
 }
 
