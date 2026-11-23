@@ -1551,11 +1551,82 @@ _GENE_HERO_DIR = {
 }
 
 
-_MEDIA_RX = re.compile(r'<(?:img|picture|video|figure|svg)\b')
+# real imagery only — decorative <svg> icons (arrows, hamburgers)
+# must not let a gradient-only hero win a media ask
+_MEDIA_RX = re.compile(r'<(?:img|picture|video)\b|url\(')
+
+
+# the buttons primitive for bank fragments: their CTAs carry baked
+# tailwind fills/sizes, so rebind every filled control to the
+# resolved --action-primary pair (ink chosen per family for the
+# 4.5:1 label contrast) and size the header/hero CTAs off the token
+# layer; radius comes from the radius-personality gene's
+# --primitive-radius/--radius. The nav fragment is always the first
+# child of .wf-page, the hero the second.
+_FRAG_CTA_CSS = (
+    # a CTA is a filled control, not a menu row: tint-filled nav and
+    # settings items are w-full/text-left/justify-between or carry a
+    # menu role — exclude those shapes or whole menus go accent
+    '.wf-page :is(a,button)[class*="bg-"]'
+    ':not([class*="bg-transparent"]):not([class*="bg-none"])'
+    ':not([class*="w-full"]):not([class*="text-left"])'
+    ':not([class*="justify-between"])'
+    ':not([role="menuitem"]):not([role="menuitemradio"])'
+    '{background-color:var(--action-primary,#2563eb)!important;'
+    'background-image:none;'
+    'color:var(--action-primary-ink,#fff);'
+    'border-color:transparent;'
+    'border-radius:var(--primitive-radius,var(--radius,.5rem));'
+    'min-height:2.75rem;padding:.625rem var(--space-l,1.5rem);'
+    'font-size:var(--fs-0,.9375rem);font-weight:600;'
+    'align-items:center;gap:.5rem;'
+    'line-height:1.2;text-decoration:none;box-shadow:none}'
+    # display:flex only where the fragment doesn't gate visibility
+    # by breakpoint — overriding `hidden sm:inline-flex` or
+    # `md:hidden` shows mobile CTAs on desktop and the burger on
+    # desktop
+    '.wf-page :is(a,button)[class*="bg-"]'
+    ':not([class*="bg-transparent"]):not([class*="bg-none"])'
+    ':not([class*="w-full"]):not([class*="text-left"])'
+    ':not([class*="justify-between"])'
+    ':not([role="menuitem"]):not([role="menuitemradio"])'
+    ':not([class*="hidden"]):not([class*="sm:"])'
+    ':not([class*="md:"]):not([class*="lg:"])'
+    ':not([class*="xl:"]):not([class*="2xl:"])'
+    '{display:inline-flex}'
+    '.wf-page>:first-child :is(a,button)[class*="bg-"]'
+    ':not([class*="bg-transparent"]):not([class*="bg-none"])'
+    ':not([class*="w-full"]):not([class*="text-left"])'
+    ':not([class*="justify-between"])'
+    ':not([role="menuitem"]):not([role="menuitemradio"])'
+    '{min-height:2.5rem;max-height:2.75rem;'
+    'padding:0 var(--space-m,1rem);font-size:var(--fs-0,.9375rem)}'
+    '.wf-page :is(a,button)[class*="bg-"]:hover'
+    ':not([class*="w-full"]):not([class*="text-left"])'
+    ':not([class*="justify-between"])'
+    '{background-color:var(--action-primary-hover,'
+    'var(--action-primary,#1d4ed8))!important;'
+    'color:var(--action-primary-ink,#fff)}'
+    # ghosts keep the fragment's own text colour — it was authored
+    # for the surface the fragment sits on; --text-primary on a dark
+    # hero reads ~1.2:1
+    '.wf-page :is(a,button)[class*="border"]:not([class*="bg-"])'
+    ':not([class*="w-full"]):not([class*="text-left"])'
+    ':not([class*="justify-between"])'
+    ':not([role="menuitem"]):not([role="menuitemradio"])'
+    '{background:transparent;'
+    'border-color:var(--border-default,#d4d4d8);'
+    'border-radius:var(--primitive-radius,var(--radius,.5rem));'
+    'min-height:2.5rem;padding:0 var(--space-m,1rem);'
+    'align-items:center;gap:.5rem;'
+    'font-size:var(--fs-0,.9375rem);font-weight:500}'
+    '.wf-page :is(a,button):focus-visible'
+    '{outline:2px solid var(--action-primary,#2563eb);'
+    'outline-offset:2px}')
 
 
 def _frag_file(kind, seed, mode, salt, tags, prefer=None,
-               want_media=None):
+               want_media=None, media_pool=None):
     """one bank fragment for `kind` — dir and file seeded so every
     vibe composes a different page; prefers fragments tagged for the
     resolved theme's mode. `prefer` names a dir the genes ranked
@@ -1575,18 +1646,25 @@ def _frag_file(kind, seed, mode, salt, tags, prefer=None,
         fns = sorted(f for f in os.listdir(cdir) if f.endswith('.html'))
         if not fns:
             continue
+        _media = {}
+        if want_media is not None:
+            for fn in fns:
+                try:
+                    _media[fn] = bool(_MEDIA_RX.search(open(
+                        os.path.join(cdir, fn), encoding='utf-8',
+                        errors='replace').read()))
+                except OSError:
+                    _media[fn] = False
+        if want_media is True and not any(_media.values()):
+            # a media ask must land media — no file in this dir
+            # carries any (hero-split is text+stats), fall through
+            continue
         def _sc(fn):
             r = tags.get(d + '/' + fn[:-5]) or {}
             sc = (2 if r.get('mode') == mode else 0) + \
                 len(r.get('style') or [])
             if want_media is not None:
-                try:
-                    has = bool(_MEDIA_RX.search(open(
-                        os.path.join(cdir, fn), encoding='utf-8',
-                        errors='replace').read()))
-                except OSError:
-                    has = False
-                sc += 4 if has == want_media else 0
+                sc += 4 if _media.get(fn) == want_media else 0
             return sc
         best = max(_sc(f) for f in fns)
         pool = [f for f in fns if _sc(f) == best]
@@ -1602,8 +1680,24 @@ def _frag_file(kind, seed, mode, salt, tags, prefer=None,
                 # menus and context-menu demos render as junk over a
                 # composed page
                 continue
-            frag = re.sub(r"/src/assets/[^\s\"'()]+",
-                          '/media/placeholder.svg', frag)
+            # bank image refs point at the exporter's asset tree — bind
+            # them to the pipeline's own media (seeded rotation) so media
+            # heroes render real photography, not the flat placeholder
+            # map by the source path, not the occurrence — a hero's
+            # preload and <img> reference the same asset and must land
+            # the same photo or the preload fetches the wrong one
+            _n = [0]
+            _seen = {}
+            def _img(m):
+                if media_pool:
+                    src = m.group(0)
+                    if src not in _seen:
+                        _n[0] += 1
+                        _seen[src] = media_pool[
+                            (seed + salt + _n[0]) % len(media_pool)]
+                    return _seen[src]
+                return '/media/placeholder.svg'
+            frag = re.sub(r"/src/assets/[^\s\"'()]+", _img, frag)
             return frag, d + '/' + fn[:-5]
     return '', ''
 
@@ -1656,6 +1750,14 @@ def _frag_doc_parts(pd, fam, bundle):
         (int(_ord.group(1)) if _ord else 0)
     mode = (bundle or {}).get('theme') or 'light'
     tags = _genmenu_tags()
+    # the pipeline's real photography — fragment /src/assets refs
+    # rotate through it; /built/-quoted like the css links
+    media_pool = []
+    mdir = os.path.join(pd, 'site', 'dist', 'media')
+    if os.path.isdir(mdir):
+        media_pool = ['/built/' + urllib.parse.quote(
+            os.path.join(mdir, f)) for f in sorted(os.listdir(mdir))
+            if f.lower().endswith(('.jpg', '.jpeg', '.png', '.webp'))]
     # hero is gene-ranked: the preset's genes ask for a topology
     # (retrieval.vibe_topology) and the matching bank dir wins, so
     # noir/playful/luxe render different hero shapes, not the same
@@ -1664,10 +1766,14 @@ def _frag_doc_parts(pd, fam, bundle):
         _frag_file('nav', seed, mode, 0, tags),
         _frag_file('hero', seed, mode, 3, tags,
                    prefer=_gene_hero_dir(bundle) or None,
-                   want_media=_gene_hero_media(bundle)),
-        _frag_file('band', seed, mode, 7, tags),
-        _frag_file('band', seed, mode, 13, tags),
-        _frag_file('footer', seed, mode, 29, tags),
+                   want_media=_gene_hero_media(bundle),
+                   media_pool=media_pool),
+        _frag_file('band', seed, mode, 7, tags,
+                   media_pool=media_pool),
+        _frag_file('band', seed, mode, 13, tags,
+                   media_pool=media_pool),
+        _frag_file('footer', seed, mode, 29, tags,
+                   media_pool=media_pool),
     ]
     body = ''.join('<!--frag:' + ref + '-->' + f
                    for f, ref in picks if f)
@@ -1699,7 +1805,8 @@ def _frag_doc_parts(pd, fam, bundle):
             '<link rel="stylesheet" href="/built/' +
             urllib.parse.quote(extra_dst) + '">' +
             '<style>' + _BANK_MENU_CSS + '</style>')
-    return head, '', '<div class="wf-page">' + body + '</div>'
+    return head, '', ('<div class="wf-page"><style>' +
+                      _FRAG_CTA_CSS + '</style>' + body + '</div>')
 
 
 def emit_vibe_doc(pd, fam, bundle, spec=None):
