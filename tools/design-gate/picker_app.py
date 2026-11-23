@@ -1364,11 +1364,28 @@ _NO_NAV = ('<script>document.addEventListener("click",function(e){'
            '</script>')
 
 
+# live-var hook: iframed previews accept {wfVars:{--v:val}} and
+# {wfTheme:'light'|'dark'} postMessages — the vibe stage broadcasts
+# the resolved preset's tokens so every card repaints with the pick
+_WFVARS_HOOK = ('<script>addEventListener("message",function(e){'
+                'var d=e.data||{};if(d.wfVars){var r=document.'
+                'documentElement.style;(window.__wfk||[]).forEach('
+                'function(k){r.removeProperty(k)});window.__wfk=[];'
+                'for(var k in d.wfVars){r.setProperty(k,d.wfVars[k]);'
+                'window.__wfk.push(k)}}if(d.wfTheme){document.'
+                'documentElement.dataset.theme=d.wfTheme;document.'
+                'documentElement.classList.toggle("dark",'
+                'd.wfTheme==="dark")}})</script>')
+
+
 def _doc(head, battr, inner, extra='', css='', chrome=True):
     style = ('<style>' + (_CHROME_CSS if chrome else '') +
              (css or '') + '</style>')
+    tail = extra or ''
+    if 'wfVars' not in tail:
+        tail += _WFVARS_HOOK
     return ('<!doctype html><html lang="en"><head>' + head + style +
-            '</head><body' + (battr or '') + '>' + inner + extra +
+            '</head><body' + (battr or '') + '>' + inner + tail +
             _NO_NAV + '</body></html>')
 
 
@@ -1462,19 +1479,10 @@ def emit_vibe_doc(pd, fam, bundle, spec=None):
                  '"dark";document.documentElement.classList.add('
                  '"dark")</script>'
                  if bundle.get('theme') == 'dark' else '')
-        # the type board's in-situ specimen iframes this doc and
-        # posts live ladder-var overrides (and a theme flip) — the
-        # hook tracks which vars it set so the next message clears
-        # instead of stacking, and 'vibe default' restores the doc
-        hook = ('<script>addEventListener("message",function(e){'
-                'var d=e.data||{};if(d.wfVars){var r=document.'
-                'documentElement.style;(window.__wfk||[]).forEach('
-                'function(k){r.removeProperty(k)});window.__wfk=[];'
-                'for(var k in d.wfVars){r.setProperty(k,d.wfVars[k]);'
-                'window.__wfk.push(k)}}if(d.wfTheme){document.'
-                'documentElement.dataset.theme=d.wfTheme;document.'
-                'documentElement.classList.toggle("dark",'
-                'd.wfTheme==="dark")}})</script>')
+        # same live-var hook every preview doc carries (the type
+        # board posts ladder-var overrides, the vibe stage posts the
+        # resolved preset's tokens)
+        hook = _WFVARS_HOOK
         with open(fp, 'w', encoding='utf-8') as fh:
             fh.write('<!--' + mark + '-->' + _doc(head, battr, body,
                                                  theme + hook, css))
@@ -6729,6 +6737,22 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
     document.querySelectorAll('.card iframe[data-src],.srow iframe').forEach(
       function(f){var u=(f.dataset.src||f.src).split('?')[0];
         f.src=u+'?theme='+m});
+    pushVibeFrames();
+  }
+  // repaint every card iframe with the resolved vibe's tokens —
+  // picks are live, not preset (docs answer {wfVars,wfTheme})
+  function pushVibeFrames(){
+    if(!VRES||!VRES.tokens)return;
+    var th=document.documentElement.dataset.theme==='dark'?'dark':'light',
+        tv=VRES.tokens[th]||VRES.tokens.light||{};
+    document.querySelectorAll('.card iframe,.srow iframe,.sgcb iframe'
+      ).forEach(function(f){
+      var push=function(){try{f.contentWindow.postMessage(
+        {wfVars:tv,wfTheme:th},'*')}catch(e){}};
+      f.addEventListener('load',push,{once:true});
+      try{if(f.contentDocument&&f.contentDocument.readyState==='complete'
+        )push()}catch(e){push()}
+    });
   }
   function setTheme(m){var was=document.documentElement.dataset.theme;
     applyTheme(m);
@@ -7238,6 +7262,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
     api('/vibe-resolve',{pipeline:PIPELINE,genes:VGENES}).then(
       function(j){
         if(j.preview){VRES=j;
+          pushVibeFrames();
           var vx=document.getElementById('vXp');
           if(vx)vx.dataset.x=j.preview;
           var cb=document.getElementById('vprevCb');
