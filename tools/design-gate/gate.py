@@ -14709,15 +14709,21 @@ def check_type_adoption(ctx):
     fluid = tk.get('fluid') or {}
     sizes = tk.get('sizes') or {}
 
-    # T.13 — flat-type-hierarchy: dominant rungs ≥1.25× at w4 (1280)
-    rungs = [(n, (sizes.get(n) or {}).get('px', {}).get('1280'))
+    # T.13 — flat-type-hierarchy: dominant rungs ≥1.25× at w4 (the
+    # widest sampled stop when 1280 isn't in the imported scale)
+    def _desk(entry):
+        px = (entry or {}).get('px') or {}
+        if not px:
+            return None
+        return px[max(px, key=lambda k: float(k))]
+    rungs = [(n, _desk(sizes.get(n)))
              for n in ('h1', 'h2', 'h3', 'text-m')]
     rungs = [(n, v) for n, v in rungs if isinstance(v, (int, float))]
     for (na, a), (nb, b) in zip(rungs, rungs[1:]):
         if b and a / b < 1.25:
             f.append(f'T.13 flat type hierarchy: {na} {a:g}px is only '
-                     f'{a / b:.2f}× {nb} {b:g}px at 1280 — dominant '
-                     'steps need ≥1.25×')
+                     f'{a / b:.2f}× {nb} {b:g}px at the widest stop — '
+                     'dominant steps need ≥1.25×')
 
     # T.14 — tracking/leading bounds (token layer): display tracking
     # ≥ −0.04em, body tracking ≤0.05em, body leading ≥1.3
@@ -14781,10 +14787,10 @@ def check_type_adoption(ctx):
                          f'({words} words) sits at display max '
                          f'text-fluid-{hm.group(1)} — long titles '
                          'step down')
-        h1w = (sizes.get('h1') or {}).get('px', {}).get('1280')
+        h1w = _desk(sizes.get('h1'))
         if isinstance(h1w, (int, float)) and h1w > 96:
             f.append(f'T.16 {name}: display h1 {h1w:g}px > 96px '
-                     '(6rem) at 1280')
+                     '(6rem) at the widest stop')
 
     # measured floors (w7 MEASURE.json): T.6 + T.12
     raw = ctx.read('MEASURE.json')

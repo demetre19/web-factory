@@ -197,21 +197,61 @@ _JS = r"""
     });
   }
   out.hierarchy_violations = viol;
-  // ---- rendered line length: running-text elements whose lines
-  // run >80 chars. Lines counted from height/line-height; an
-  // element only counts once it wraps (≥2 rendered lines).
+  // ---- rendered line length: running-text elements where ≥2
+  // rendered lines run >80 chars. Fragment rects are merged into
+  // visual lines (a <strong>/link inside a line is still one line);
+  // chars are counted per line by walking each text node — no width
+  // estimation, so proportional fonts can't over- or under-count.
+  const _rng = document.createRange();
+  const _lineBands = el => {
+    _rng.selectNodeContents(el);
+    const rs = [..._rng.getClientRects()]
+      .filter(x => x.width > 0 && x.height > 0);
+    rs.sort((a, b) => a.top - b.top || a.left - b.left);
+    const bands = [];
+    for (const r of rs) {
+      const L = bands[bands.length - 1];
+      // same rendered line: fragments share a vertical interval;
+      // the next line's rect starts below it and never merges
+      if (L && r.top < L.bottom && r.bottom > L.top) {
+        L.top = Math.min(L.top, r.top);
+        L.bottom = Math.max(L.bottom, r.bottom);
+      } else bands.push({top: r.top, bottom: r.bottom});
+    }
+    return bands;
+  };
+  const _lineChars = (el, bands) => {
+    const counts = bands.map(() => 0);
+    const t = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+    let node;
+    while ((node = t.nextNode())) {
+      const s = node.textContent;
+      let li = 0;
+      for (let i = 0; i < s.length; i++) {
+        _rng.setStart(node, i); _rng.setEnd(node, i + 1);
+        const rc = _rng.getBoundingClientRect();
+        if (!rc.width) continue;   // collapsed whitespace
+        while (li < bands.length - 1 &&
+               rc.top >= bands[li].top +
+                   (bands[li].bottom - bands[li].top) * 0.5)
+          li++;
+        counts[li]++;
+      }
+    }
+    return counts;
+  };
   const ll = [];
   for (const el of document.querySelectorAll(
         'main p, main blockquote, main li')) {
     const r = vis(el); if (!r) continue;
-    const lh = parseFloat(getComputedStyle(el).lineHeight);
-    if (!isFinite(lh) || lh <= 0) continue;
-    const lines = Math.round(r.height / lh);
-    if (lines < 2) continue;
-    const cpl = el.textContent.trim().length / lines;
-    ll.push({cpl: +cpl.toFixed(1), lines,
-             context: `${el.tagName.toLowerCase()} "${
-               el.textContent.trim().slice(0, 50)}"`});
+    const bands = _lineBands(el);
+    if (bands.length < 2) continue;
+    const counts = _lineChars(el, bands);
+    const over = counts.filter(c => c > 80).length;
+    if (over >= 2)
+      ll.push({cpl: Math.max(...counts), lines: bands.length, over,
+               context: `${el.tagName.toLowerCase()} "${
+                 el.textContent.trim().slice(0, 50)}"`});
   }
   ll.sort((a, b) => b.cpl - a.cpl);
   out.line_length = ll.slice(0, 8);
@@ -229,6 +269,10 @@ _JS = r"""
       let top = -1, bot = Infinity;
       for (const {e, r: er} of boxes) {
         if (e === h || e.contains(h) || h.contains(e)) continue;
+        // only boxes sharing the heading's column — a box in a
+        // neighbouring column isn't the element above or below it
+        if (er.right <= hr.left + 1 || er.left >= hr.right - 1)
+          continue;
         if (er.bottom <= hr.top + 1 && er.bottom > top)
           top = er.bottom;
         if (er.top >= hr.bottom - 1 && er.top < bot)
