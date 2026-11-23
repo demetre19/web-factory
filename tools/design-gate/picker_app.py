@@ -41,6 +41,7 @@ except ImportError:
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 import gate as G
+import emit_global
 from emit_global import floor_gaps  # G.floor — ≥1rem sibling gaps
 
 # ------------------------------------------------------------------
@@ -1407,6 +1408,16 @@ def _spec_for(fam):
         n = len(_pb._VIBE_SPECS)
     except Exception:
         n = 8
+    # a core preset owns the archetype at its own index — crc
+    # collides 5 of the 8 cores onto 3 specimens, which is exactly
+    # the 'all vibes look the same' defect the specimens exist to
+    # kill
+    try:
+        i = list(VIBE_FAMILIES).index(fam)
+        if i < n:
+            return 'spec-' + str(i)
+    except ValueError:
+        pass
     import zlib
     return 'spec-' + str(zlib.crc32(fam.encode('utf-8')) % max(1, n))
 
@@ -3146,6 +3157,11 @@ def emit_section_fragments(pd):
     os.makedirs(outdir, exist_ok=True)
     spec, depth, seen = [], [], set()
     dist = os.path.join(pd, 'site', 'dist')
+    # signed decorations — fx:sec:<sec> per row, fx:default site-wide
+    _fxp = emit_global.fx_picks(pd)
+
+    def _fx_layers_of(slug):
+        return emit_global.fx_fragment_layers(_GENMENU, slug)
     for sec, bid, comp, block, head, battr in rows:
         if sec in seen or not sec or sec in ('nav', 'foot'):
             continue
@@ -3197,6 +3213,19 @@ def emit_section_fragments(pd):
                 css = _LOREM_CSS + _SEQ_CSS
             emitted.append(c)
             fp = os.path.join(sdir, c + '.html')
+            # a signed fx:sec:<sec> (or the site fx:default) decorates
+            # this section's docs — the exemplar's decorative layer
+            # behind the row's own content (emit_global.fx_decorate)
+            if _fxp:
+                _mk = dict(_fxp)
+                if '*' in _mk and sec not in _mk:
+                    _mk[sec] = _mk.pop('*')
+                else:
+                    _mk.pop('*', None)
+                if sec in _mk:
+                    markup, _fxcss = emit_global.fx_decorate(
+                        markup, _fx_layers_of, {sec: _mk[sec]})
+                    css += _fxcss
             with open(fp, 'w', encoding='utf-8') as fh:
                 fh.write(_doc(bhead, battr, markup, css=css))
             rel = os.path.relpath(fp, dist)
@@ -3986,14 +4015,11 @@ _FX_DRIVER = (
     'setTimeout(drive,900);'
     'var r=document.querySelector(".wf-replay");'
     'if(r)r.addEventListener("click",function(){'
-    'scrollTo_(0);play();'
-    # Replay is explicit user intent to see the effect — if motion
-    # was suspended, re-arm the rAF scheduler and flush the queue
-    # so rAF-driven fx restart instead of staying dead
-    'if(window.requestAnimationFrame!==raf_){'
-    'document.body.dataset.motion="on";'
-    'if(m)m.setAttribute("aria-pressed","false");resume()}'
-    'drive()});'
+    # Replay must restart EVERY kind of demo — rAF/canvas goo and
+    # click-to-play scenes ignore cancel()/play() (operator: replay
+    # does NOT work). A reload re-runs the fragment's own init AND
+    # re-arms this driver's auto-sweep — an honest replay.
+    'location.reload()});'
     'var m=document.querySelector(".wf-motion");'
     'var raf_=window.requestAnimationFrame;'
     'var pend=[];'
@@ -4900,25 +4926,26 @@ def _footer_fix(frag, meta):
 # footers carry fixed multi-column grids that reach 1200px; wrap
 # grids/rows/columns below the breakpoints at the translate layer
 _FOOTER_RESP_CSS = (
-    '.wf-stage-in,.wf-stage-in *{max-width:100%;min-width:0;'
-    'box-sizing:border-box}'
-    '.wf-stage-in{overflow-x:clip}'
+    '.wf-page,.wf-page *,.wf-stage-in,.wf-stage-in *'
+    '{max-width:100%;min-width:0;box-sizing:border-box}'
+    '.wf-page,.wf-stage-in{overflow-x:clip}'
     '@media (max-width:820px){'
-    '.wf-stage-in [class*="grid"]{display:flex!important;'
-    'flex-direction:column!important}'
-    '.wf-stage-in [class*="row"]{flex-wrap:wrap!important}'
-    '.wf-stage-in [class*="col"]{flex:1 1 100%!important;'
-    'max-width:100%!important}}'
+    '.wf-page [class*="grid"],.wf-stage-in [class*="grid"]'
+    '{display:flex!important;flex-direction:column!important}'
+    '.wf-page [class*="row"],.wf-stage-in [class*="row"]'
+    '{flex-wrap:wrap!important}'
+    '.wf-page [class*="col"],.wf-stage-in [class*="col"]'
+    '{flex:1 1 100%!important;max-width:100%!important}}'
     '@media (max-width:480px){'
-    '.wf-stage-in [class*="grid"]{display:flex!important;'
-    'flex-direction:column!important}}')
+    '.wf-page [class*="grid"],.wf-stage-in [class*="grid"]'
+    '{display:flex!important;flex-direction:column!important}}')
 
 # nav exemplars spill past the stage edge when their fixed-width
-# content exceeds 96vw — cap the content and hide the doc overflow
+# content exceeds the viewport — cap the content and hide overflow
 _NAV_FIT_CSS = (
     'body{overflow-x:hidden}'
-    '.wf-stage-in,.wf-stage-in *{max-width:100%;min-width:0;'
-    'box-sizing:border-box}')
+    '.wf-page,.wf-page *,.wf-stage-in,.wf-stage-in *'
+    '{max-width:100%;min-width:0;box-sizing:border-box}')
 
 def emit_bank_previews(pd):
     """preview/bank/<cls>/<slug>.html — every genmenu exemplar
@@ -5085,12 +5112,12 @@ def emit_bank_previews(pd):
                         _n0 if nav_d0 else _f0,
                         sort_keys=True, default=str)
                 key = hashlib.sha256(
-                    b'v19\0' + cls.encode() + b'\0' + raw +
+                    b'v20\0' + cls.encode() + b'\0' + raw +
                     pd.encode() + pd_url.encode() +
                     demo_img.encode() + chrome_key.encode() +
                     json.dumps(row, sort_keys=True,
                                default=str).encode()).hexdigest()[:16]
-                mark = '<!--wf:bank:v19:' + key + '-->'
+                mark = '<!--wf:bank:v20:' + key + '-->'
                 cfp = os.path.join(cache_root, cls, slug + '.html')
 
                 def _marked(p_, _m=mark):
@@ -5151,16 +5178,19 @@ def emit_bank_previews(pd):
                             frag = _footer_fix(frag, fmeta)
                         else:
                             frag = _nav_fix(frag, nmeta)
-                    mob = (gid == 'menu' or
-                           cls.startswith(('mob', 'nav-')))
+                    mob = (gid == 'menu' or cls.startswith('mob'))
                     if gid == 'menu':
                         frag = _menu_closed(frag)
-                    # footers stage like navs — a wf-page frame
-                    # lets the bank's fixed-width mega grid spill
-                    # past the stage edge (audit); bound footers
-                    # wrap/stack via _FOOTER_RESP_CSS instead
-                    page = (not mob) and not foot_d and \
-                        _bank_scale(frag) == 'page'
+                    # nav + footer exemplars are chrome strips —
+                    # they render edge-to-edge (.wf-page) like the
+                    # real bar/footer, never inside the compact
+                    # stage or a phone frame (operator: nav menus
+                    # and footers are FULL width on desktop, no
+                    # bounding box). _NAV_FIT_CSS / _FOOTER_RESP_CSS
+                    # cap + wrap their fixed-width mega grids.
+                    page = (nav_d or foot_d or
+                            ((not mob) and
+                             _bank_scale(frag) == 'page'))
                     if page:
                         stage = ('<div class="wf-page">' + frag +
                                  '</div>')
@@ -6178,6 +6208,11 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
 @container board (min-width:1100px){
   .grid{grid-template-columns:1fr 1fr}}
 .card.fxw{grid-column:1/-1}
+/* fx are small demos — pack them 2-3 per row; the fxw full-width
+   span only applies outside the fx grid (operator: effects are
+   small things, show them in a grid) */
+.fxgrid{grid-template-columns:repeat(auto-fill,minmax(320px,1fr))}
+.fxgrid .card.fxw{grid-column:auto}
 .card.mini .cb{min-height:0}
 .card.mini .cb.done,.card.mini .cb.err{height:auto}
 /* scrub PREVIEWS modal */

@@ -83,17 +83,14 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
 
       </div>
     </div>
-    {images[0] &&     <div>
-      {images[0] &&       <div>
-        {images[0] &&         <div class="wf-logo-12-list">
-          {images[0] &&           <div>
-            {images[0] && images[0].src && <figure class="ratio-portrait"><div class="media-round" data-ratio={(image && image.ratio) || null}><Image src={mediaOf(images[0])} alt={images[0].alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
-          </div>
-          }
-        </div>
-        }
+    {images.length > 0 &&     <div class="mt-stack">
+      {/* source row was a logo carousel — a compact strip of small
+          marks, not a second full-width photo */}
+      <div class="wf-logo-12-list flex flex-wrap items-center gap-6">
+        {images.map((m) => m && m.src && (
+          <figure class="h-10 w-auto shrink-0"><img src={(mediaOf(m) && mediaOf(m).src) || m.src} alt={m.alt || ''} class="h-full w-auto object-contain" loading="lazy" /></figure>
+        ))}
       </div>
-      }
     </div>
     }
   </div>

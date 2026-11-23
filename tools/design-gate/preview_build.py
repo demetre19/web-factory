@@ -1118,7 +1118,12 @@ def emit_vibe_specs(ctx):
                                 'alt': ''}
                 row.setdefault('images', [row['image']])
             cr.append(({'section': row['name'],
-                        'composition': comp, 'recipe': None,
+                        'composition': comp,
+                        # the recipe the real contract would carry —
+                        # the specimen IS the final artifact's
+                        # skeleton, not a parallel comp (preview ==
+                        # final, operator law)
+                        'recipe': gate.RECIPE_FOR_COMP.get(comp),
                         'category': cat, 'surface': surface,
                         'density': 'regular',
                         'wf_ref': 'preview/vibe-specs',
@@ -1137,13 +1142,26 @@ def emit_vibe_specs(ctx):
                 os.makedirs(dst, exist_ok=True)
                 _shv.copyfile(os.path.join(vimg, fn),
                               os.path.join(dst, fn))
-    _emit_components(ctx, [], sorted(comps))
+    # specimen comps emit through the SAME chain as the real
+    # contracts — _bank_copy skeleton + its layout sheet hoisted into
+    # preview-bank.css — so a vibe preview is styled by the css the
+    # shipped page carries, never a comp copy with no css (the
+    # preview == final law). The contract+option union keeps
+    # preview-bank.css a superset of what emit_layouts wrote, so
+    # lo-* pages still resolve their banked skeletons.
+    spec_rows = [t for cr in specs for t in cr]
+    bank_css, _emitted = _emit_components(
+        ctx, _contracts(ctx) + spec_rows,
+        sorted(comps | set(_option_comps(ctx))))
+    if bank_css:
+        PE._w(os.path.join(ctx.site, 'src', 'styles',
+                           'preview-bank.css'), bank_css)
     _ensure_shell(ctx)
     _ensure_assets(ctx)
     for k, cr in enumerate(specs):
         PE._w(os.path.join(ctx.site, 'src', 'pages', 'preview',
                            f'spec-{k}.astro'),
-              _page_astro(ctx, cr, {}, ''))
+              _page_astro(ctx, cr, {}, bank_css))
     return len(specs)
 
 
