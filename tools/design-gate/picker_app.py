@@ -1469,7 +1469,9 @@ _GENE_HERO_DIR = {
 }
 
 
-_MEDIA_RX = re.compile(r'<(?:img|picture|video|figure|svg)\b')
+# real imagery only — decorative <svg> icons (arrows, hamburgers)
+# must not let a gradient-only hero win a media ask
+_MEDIA_RX = re.compile(r'<(?:img|picture|video)\b|url\(')
 
 
 # the buttons primitive for bank fragments: their CTAs carry baked
@@ -1495,8 +1497,21 @@ _FRAG_CTA_CSS = (
     'border-radius:var(--primitive-radius,var(--radius,.5rem));'
     'min-height:2.75rem;padding:.625rem var(--space-l,1.5rem);'
     'font-size:var(--fs-0,.9375rem);font-weight:600;'
-    'display:inline-flex;align-items:center;gap:.5rem;'
+    'align-items:center;gap:.5rem;'
     'line-height:1.2;text-decoration:none;box-shadow:none}'
+    # display:flex only where the fragment doesn't gate visibility
+    # by breakpoint — overriding `hidden sm:inline-flex` or
+    # `md:hidden` shows mobile CTAs on desktop and the burger on
+    # desktop
+    '.wf-page :is(a,button)[class*="bg-"]'
+    ':not([class*="bg-transparent"]):not([class*="bg-none"])'
+    ':not([class*="w-full"]):not([class*="text-left"])'
+    ':not([class*="justify-between"])'
+    ':not([role="menuitem"]):not([role="menuitemradio"])'
+    ':not([class*="hidden"]):not([class*="sm:"])'
+    ':not([class*="md:"]):not([class*="lg:"])'
+    ':not([class*="xl:"]):not([class*="2xl:"])'
+    '{display:inline-flex}'
     '.wf-page>:first-child :is(a,button)[class*="bg-"]'
     ':not([class*="bg-transparent"]):not([class*="bg-none"])'
     ':not([class*="w-full"]):not([class*="text-left"])'
@@ -1510,15 +1525,18 @@ _FRAG_CTA_CSS = (
     '{background-color:var(--action-primary-hover,'
     'var(--action-primary,#1d4ed8))!important;'
     'color:var(--action-primary-ink,#fff)}'
+    # ghosts keep the fragment's own text colour — it was authored
+    # for the surface the fragment sits on; --text-primary on a dark
+    # hero reads ~1.2:1
     '.wf-page :is(a,button)[class*="border"]:not([class*="bg-"])'
     ':not([class*="w-full"]):not([class*="text-left"])'
     ':not([class*="justify-between"])'
     ':not([role="menuitem"]):not([role="menuitemradio"])'
-    '{background:transparent;color:var(--text-primary,#18181b);'
-    'border:1px solid var(--border-default,#d4d4d8);'
+    '{background:transparent;'
+    'border-color:var(--border-default,#d4d4d8);'
     'border-radius:var(--primitive-radius,var(--radius,.5rem));'
     'min-height:2.5rem;padding:0 var(--space-m,1rem);'
-    'display:inline-flex;align-items:center;gap:.5rem;'
+    'align-items:center;gap:.5rem;'
     'font-size:var(--fs-0,.9375rem);font-weight:500}'
     '.wf-page :is(a,button):focus-visible'
     '{outline:2px solid var(--action-primary,#2563eb);'
@@ -1546,18 +1564,25 @@ def _frag_file(kind, seed, mode, salt, tags, prefer=None,
         fns = sorted(f for f in os.listdir(cdir) if f.endswith('.html'))
         if not fns:
             continue
+        _media = {}
+        if want_media is not None:
+            for fn in fns:
+                try:
+                    _media[fn] = bool(_MEDIA_RX.search(open(
+                        os.path.join(cdir, fn), encoding='utf-8',
+                        errors='replace').read()))
+                except OSError:
+                    _media[fn] = False
+        if want_media is True and not any(_media.values()):
+            # a media ask must land media — no file in this dir
+            # carries any (hero-split is text+stats), fall through
+            continue
         def _sc(fn):
             r = tags.get(d + '/' + fn[:-5]) or {}
             sc = (2 if r.get('mode') == mode else 0) + \
                 len(r.get('style') or [])
             if want_media is not None:
-                try:
-                    has = bool(_MEDIA_RX.search(open(
-                        os.path.join(cdir, fn), encoding='utf-8',
-                        errors='replace').read()))
-                except OSError:
-                    has = False
-                sc += 4 if has == want_media else 0
+                sc += 4 if _media.get(fn) == want_media else 0
             return sc
         best = max(_sc(f) for f in fns)
         pool = [f for f in fns if _sc(f) == best]
