@@ -219,6 +219,7 @@ NEW_AXES = {
  'fx-classes-present': ['*multi'],
  'hover-behavior': ['none', 'subtle', 'lift', 'scale', 'color'],
  'transition-tempo': ['instant', 'fast', 'eased', 'slow'],
+ 'easing': ['none', 'standard', 'overshoot'],
  'vibe-primary': ['professional', 'playful', 'premium', 'bold',
                   'technical', 'warm', 'editorial', 'minimal'],
  'brand-weight': ['generic', 'moderate', 'strong'],

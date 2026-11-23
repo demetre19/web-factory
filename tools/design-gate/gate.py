@@ -2122,6 +2122,108 @@ def check_slop_classes(ctx):
         _lint(t, os.path.basename(p_))
     return f
 
+def check_easing_bound(ctx):
+    """M.ease — emitted motion/easing tokens never carry overshoot
+    unless the brief picked it: a cubic-bezier whose Y control
+    points leave [0,1], or a spring/elastic/back/bounce named
+    easing, fails unless TOKENS.json knobs['motion.level'] is
+    `playful` — M.1's only overshoot personality. Tokens live as
+    --motion-*/--ease* vars in the emitted stylesheets and in
+    TOKENS.json."""
+    try:
+        if (json.loads(ctx.read('TOKENS.json') or '{}')
+                .get('knobs', {}).get('motion.level') == 'playful'):
+            return []
+    except Exception:
+        pass
+    f = []
+
+    def _scan(t, name):
+        for m in re.finditer(
+                r'--(?:motion|ease)[\w-]*\s*:\s*([^;}]+)', t):
+            val = m.group(1)
+            for cb in re.finditer(
+                    r'cubic-bezier\(\s*([-\d.]+)\s*,\s*([-\d.]+)\s*,'
+                    r'\s*([-\d.]+)\s*,\s*([-\d.]+)\s*\)', val):
+                y1, y2 = float(cb.group(2)), float(cb.group(4))
+                if y1 < 0 or y1 > 1 or y2 < 0 or y2 > 1:
+                    f.append(f'M.ease {name}: overshoot bezier '
+                             f'{cb.group(0)} — easings never bounce')
+            if re.search(r'spring|elastic|bounce|back', val, re.I):
+                f.append(f'M.ease {name}: overshoot easing '
+                         f'{val.strip()[:40]} — easings never '
+                         'bounce')
+    for p_, t in dist_csss(ctx):
+        _scan(t, os.path.basename(p_))
+    sd = os.path.join(ctx.site, 'src', 'styles')
+    if os.path.isdir(sd):
+        for fn in sorted(os.listdir(sd)):
+            if fn.endswith('.css'):
+                with open(os.path.join(sd, fn),
+                          errors='replace') as fh:
+                    _scan(fh.read(), fn)
+    raw = ctx.read('TOKENS.json') or ''
+    for m in re.finditer(
+            r'"(?:[^"]*(?:ease|motion)[^"]*)"\s*:\s*"([^"]+)"', raw):
+        val = m.group(1)
+        for cb in re.finditer(
+                r'cubic-bezier\(\s*([-\d.]+)\s*,\s*([-\d.]+)\s*,'
+                r'\s*([-\d.]+)\s*,\s*([-\d.]+)\s*\)', val):
+            y1, y2 = float(cb.group(2)), float(cb.group(4))
+            if y1 < 0 or y1 > 1 or y2 < 0 or y2 > 1:
+                f.append(f'M.ease TOKENS.json: overshoot bezier '
+                         f'{cb.group(0)} — easings never bounce')
+        if re.search(r'spring|elastic|bounce|back', val, re.I):
+            f.append(f'M.ease TOKENS.json: overshoot easing '
+                     f'{val.strip()[:40]} — easings never bounce')
+    return f
+
+def check_render_integrity(ctx):
+    """R.1–R.7 — rendered integrity read off MEASURE.json (measure.py
+    probes at mobile/tablet/desktop): script errors on load, failed
+    asset requests, broken images, text still hidden after the reveal
+    pass, clipped/occluded text, body text at the viewport edge, and
+    cramped padding. A missing/unbound MEASURE.json is J.11's fail,
+    not repeated here."""
+    raw = ctx.read('MEASURE.json')
+    if raw is None:
+        return []
+    try:
+        m = json.loads(raw)
+    except Exception:
+        return []
+    if (m.get('version') or 0) < 2:
+        return ['R.0 MEASURE.json predates the render probes — '
+                're-run measure.py to produce version 2 evidence']
+    f = []
+    for slug, pg in sorted((m.get('pages') or {}).items()):
+        for w, v in sorted((pg.get('viewports') or {}).items()):
+            ld = v.get('load') or {}
+            for e in ld.get('script_errors') or []:
+                f.append(f'R.1 {slug}@{w}: script error on load: '
+                         f'{e[:90]}')
+            for u in ld.get('failed_requests') or []:
+                f.append(f'R.2 {slug}@{w}: request failed: {u}')
+            for u in v.get('broken_images') or []:
+                f.append(f'R.2 {slug}@{w}: broken image: {u}')
+            ht = v.get('hidden_text') or {}
+            if (ht.get('share') or 0) > 0.30 and \
+                    (ht.get('hidden_chars') or 0) > 400:
+                f.append(f"R.3 {slug}@{w}: {int(ht['share'] * 100)}% "
+                         'of page text still hidden at rest')
+            for c in v.get('text_overflow') or []:
+                f.append(f'R.4 {slug}@{w}: text clipped by its box: '
+                         f'{c}')
+            for c in v.get('text_occlusion') or []:
+                f.append(f'R.5 {slug}@{w}: text under an opaque '
+                         f'element: {c}')
+            for c in v.get('edge_text') or []:
+                f.append(f'R.6 {slug}@{w}: body text <16px from '
+                         f'viewport edge: {c}')
+            for c in v.get('cramped_padding') or []:
+                f.append(f'R.7 {slug}@{w}: cramped padding: {c}')
+    return f
+
 def check_speed_budget(ctx):
     f = []
     dist = os.path.join(ctx.site, 'dist')
@@ -7382,8 +7484,18 @@ SHOT_WIDTHS = (1280, 768, 360)
 
 def _dist_sha(ctx):
     h = hashlib.sha256()
-    for p, _ in ctx.page_htmls():
-        h.update(open(p, 'rb').read())
+    # the whole emitted tree binds evidence: a changed asset (css/img)
+    # with unchanged page HTML still makes old measurements stale
+    for root in (os.path.join(ctx.site, 'dist'),
+                 os.path.join(ctx.dir, 'preview')):
+        if not os.path.isdir(root):
+            continue
+        for dp, _, fns in sorted(os.walk(root)):
+            for fn in sorted(fns):
+                p = os.path.join(dp, fn)
+                h.update(os.path.relpath(p, root).encode())
+                with open(p, 'rb') as fh:
+                    h.update(fh.read())
     return h.hexdigest()[:16]
 
 
@@ -14597,15 +14709,21 @@ def check_type_adoption(ctx):
     fluid = tk.get('fluid') or {}
     sizes = tk.get('sizes') or {}
 
-    # T.13 — flat-type-hierarchy: dominant rungs ≥1.25× at w4 (1280)
-    rungs = [(n, (sizes.get(n) or {}).get('px', {}).get('1280'))
+    # T.13 — flat-type-hierarchy: dominant rungs ≥1.25× at w4 (the
+    # widest sampled stop when 1280 isn't in the imported scale)
+    def _desk(entry):
+        px = (entry or {}).get('px') or {}
+        if not px:
+            return None
+        return px[max(px, key=lambda k: float(k))]
+    rungs = [(n, _desk(sizes.get(n)))
              for n in ('h1', 'h2', 'h3', 'text-m')]
     rungs = [(n, v) for n, v in rungs if isinstance(v, (int, float))]
     for (na, a), (nb, b) in zip(rungs, rungs[1:]):
         if b and a / b < 1.25:
             f.append(f'T.13 flat type hierarchy: {na} {a:g}px is only '
-                     f'{a / b:.2f}× {nb} {b:g}px at 1280 — dominant '
-                     'steps need ≥1.25×')
+                     f'{a / b:.2f}× {nb} {b:g}px at the widest stop — '
+                     'dominant steps need ≥1.25×')
 
     # T.14 — tracking/leading bounds (token layer): display tracking
     # ≥ −0.04em, body tracking ≤0.05em, body leading ≥1.3
@@ -14669,10 +14787,10 @@ def check_type_adoption(ctx):
                          f'({words} words) sits at display max '
                          f'text-fluid-{hm.group(1)} — long titles '
                          'step down')
-        h1w = (sizes.get('h1') or {}).get('px', {}).get('1280')
+        h1w = _desk(sizes.get('h1'))
         if isinstance(h1w, (int, float)) and h1w > 96:
             f.append(f'T.16 {name}: display h1 {h1w:g}px > 96px '
-                     '(6rem) at 1280')
+                     '(6rem) at the widest stop')
 
     # measured floors (w7 MEASURE.json): T.6 + T.12
     raw = ctx.read('MEASURE.json')
@@ -16166,7 +16284,7 @@ WAVE_CHECKS = {
            check_content_width, check_contrast, check_type_system,
            check_tailwind_derivation, check_tile_is_system,
            check_no_emoji, check_neutral_tint, check_proximity,
-           check_gray_on_color,
+           check_gray_on_color, check_easing_bound,
            check_border_widths, check_reduced_motion, check_dark_mode,
            check_dark_toggle, check_canon_trace, check_trend_vocab,
            check_style_licence, check_token_layer,
@@ -16215,6 +16333,7 @@ WAVE_CHECKS = {
     'w8': [check_review_completeness, check_scorecard,
            check_style_review, check_novelty, check_review_modes,
            check_variants, check_vlm_evidence,
+           check_render_integrity,
            check_operator_approvals],
 }
 
