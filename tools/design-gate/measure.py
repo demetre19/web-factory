@@ -243,6 +243,129 @@ _JS = r"""
     }
   }
   out.heading_rhythm_violations = hrv;
+  // ---- load-verify + rendered-only slop checks (R.*) — measured
+  // AFTER the scroll pass that runs reveal handlers.
+  // non-content nodes (assistive-only text, aria-hidden decor) never
+  // count as page copy in any probe below
+  const skip = el => el.closest(
+      '[aria-hidden="true"],.sr-only,[hidden]');
+  // broken images: empty/missing src or failed decode
+  const badImgs = [];
+  for (const el of document.querySelectorAll('img')) {
+    const src = el.getAttribute('src');
+    if (!src || !src.trim() || (el.complete && el.naturalWidth === 0))
+      badImgs.push((src || '(empty src)').slice(0, 80));
+  }
+  out.broken_images = badImgs;
+  // text hidden at rest: share of own-text chars still opacity~0 /
+  // visibility-hidden / display:none after the reveal pass ran
+  let hidCh = 0, totCh = 0;
+  // a hidden ancestor buries every descendant — computed style on
+  // the child alone still reports it visible. Visibility resolves
+  // per-element (a child can override `visible` inside a hidden
+  // parent); display:none flattens the whole subtree (no painted
+  // rect); only opacity needs the ancestor walk — it cannot be
+  // overridden downward.
+  const buried = el => {
+    if (getComputedStyle(el).visibility === 'hidden') return true;
+    if (!el.getClientRects().length) return true;
+    for (let q = el; q && q !== document.documentElement;
+         q = q.parentElement) {
+      if (parseFloat(getComputedStyle(q).opacity) < 0.05) return true;
+    }
+    return false;
+  };
+  for (const el of document.querySelectorAll('main *')) {
+    if (skip(el)) continue;
+    let own = '';
+    for (const n of el.childNodes)
+      if (n.nodeType === 3) own += n.textContent;
+    const t = own.trim(); if (!t) continue;
+    totCh += t.length;
+    if (buried(el)) hidCh += t.length;
+  }
+  out.hidden_text = {hidden_chars: hidCh, total_chars: totCh,
+      share: totCh ? +(hidCh / totCh).toFixed(3) : 0};
+  // text-overflow: visible text clipped by its own box
+  const tov = [];
+  for (const el of document.querySelectorAll(
+        'h1,h2,h3,h4,h5,h6,p,li,a,span,button,td,th,label,summary')) {
+    const r = vis(el);
+    if (!r || skip(el) || !el.textContent.trim()) continue;
+    if (el.scrollWidth - el.clientWidth > 2
+        && getComputedStyle(el).overflowX !== 'visible')
+      tov.push(`${el.tagName.toLowerCase()} "${el.textContent.trim()
+        .slice(0, 50)}" +${el.scrollWidth - el.clientWidth}px`);
+  }
+  out.text_overflow = tov.slice(0, 10);
+  // text-occlusion: a visible text element's centre is covered by a
+  // later, non-ancestor element with opaque paint
+  const occ = [];
+  for (const el of document.querySelectorAll(
+        'main h1,main h2,main h3,main p,main a,main li')) {
+    const r = vis(el);
+    if (!r || skip(el) || !el.textContent.trim()) continue;
+    if (r.top < 0 || r.top > vh) continue;
+    const cx = Math.min(Math.max(r.left + r.width / 2, 0), dw - 1);
+    const cy = Math.min(Math.max(r.top + r.height / 2, 0), vh - 1);
+    const top = document.elementFromPoint(cx, cy);
+    if (!top || top === el || el.contains(top) || top.contains(el))
+      continue;
+    const tcs = getComputedStyle(top);
+    const tb = rgba(tcs.backgroundColor);
+    const opaque = parseFloat(tcs.opacity) > 0.9
+        && (!tb || tb.length < 4 || tb[3] > 0.9)
+        // fixed/sticky chrome (call bars, nav) passes over content
+        // transiently — scrolling clears it, not occlusion
+        && tcs.position !== 'fixed' && tcs.position !== 'sticky';
+    if (opaque) {
+      let anc = false;
+      for (let q = el.parentElement; q; q = q.parentElement)
+        if (q === top) { anc = true; break; }
+      if (!anc) occ.push(`${el.tagName.toLowerCase()} "${
+        el.textContent.trim().slice(0, 40)}" under ${
+        top.tagName.toLowerCase()}.${top.className ?
+          String(top.className).split(' ')[0] : ''}`);
+    }
+  }
+  out.text_occlusion = occ.slice(0, 10);
+  // body text at the viewport edge: paragraphs/list items with an
+  // edge inside 16px of the viewport
+  const edge = [];
+  for (const el of document.querySelectorAll(
+        'main p, main li, main blockquote, main figcaption')) {
+    const r = vis(el);
+    if (!r || skip(el) || !el.textContent.trim()) continue;
+    if (r.left < 16 || r.right > dw - 16)
+      edge.push(`${el.tagName.toLowerCase()} "${el.textContent.trim()
+        .slice(0, 40)}" edge ${Math.min(r.left,
+          dw - r.right).toFixed(0)}px`);
+  }
+  out.edge_text = edge.slice(0, 10);
+  // cramped padding: block text whose own box hugs the nearest
+  // painted ancestor's edge (< 2px breathing room)
+  const cram = [];
+  for (const el of document.querySelectorAll(
+        'main p, main h1,main h2,main h3,main li')) {
+    const r = vis(el);
+    if (!r || skip(el) || !el.textContent.trim()) continue;
+    for (let q = el.parentElement; q; q = q.parentElement) {
+      const qcs = getComputedStyle(q);
+      const qb = rgba(qcs.backgroundColor);
+      const bw = parseFloat(qcs.borderLeftWidth) || 0;
+      const painted = (qb && qb.length >= 4 && qb[3] > 0.05) || bw > 0;
+      if (!painted) continue;
+      const qr = q.getBoundingClientRect();
+      const gap = Math.min(r.left - qr.left, qr.right - r.right);
+      if (gap < 2) {
+        cram.push(`${el.tagName.toLowerCase()} "${
+          el.textContent.trim().slice(0, 40)}" gap ${
+          gap.toFixed(1)}px`);
+      }
+      break;
+    }
+  }
+  out.cramped_padding = cram.slice(0, 10);
   return out;
 }
 """
@@ -340,9 +463,33 @@ with sync_playwright() as p:
         page = {{"viewports": {{}}}}
         for w in widths:
             pg = b.new_page(viewport={{"width": w, "height": 1100}})
+            errs, failed = [], []
+            pg.on("pageerror", lambda e, l=errs:
+                  l.append(str(e)[:200]))
+            pg.on("requestfailed", lambda rq, l=failed:
+                  l.append(rq.url[:160]))
+            def _resp(r, l=failed):
+                if r.status >= 400 and r.request.resource_type in (
+                        "image", "stylesheet", "script", "font"):
+                    l.append("%d %s" % (r.status, r.url[:150]))
+            pg.on("response", _resp)
             pg.goto(url, wait_until="networkidle")
+            # run reveal handlers before measuring: scroll the full
+            # page, then return to rest
+            pg.evaluate("""async () => {{
+                const vh = innerHeight;
+                const h = document.documentElement.scrollHeight;
+                for (let y = 0; y < h; y += vh) {{
+                    scrollTo(0, y);
+                    await new Promise(r => setTimeout(r, 110));
+                }}
+                scrollTo(0, 0);
+            }}""")
             pg.wait_for_timeout(250)
-            page["viewports"][str(w)] = pg.evaluate(METRICS_JS)
+            rec = pg.evaluate(METRICS_JS)
+            rec["load"] = {{"script_errors": errs,
+                            "failed_requests": failed}}
+            page["viewports"][str(w)] = rec
             pg.close()
         # dark-mode contrast floor at the primary width
         pg = b.new_page(viewport={{"width": widths[0], "height": 1100}})
@@ -402,7 +549,7 @@ def doc(ctx, pages):
     fixtures so the schema cannot drift between them."""
     return {
         'tool': 'measure.py',
-        'version': 1,
+        'version': 2,
         'dist_sha256': gate._dist_sha(ctx),
         'shots_sha256': _shots_sha(ctx),
         'pages': pages,

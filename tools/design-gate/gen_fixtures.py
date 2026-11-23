@@ -1146,6 +1146,18 @@ def mut(*ops):
         return files
     return f
 
+def _render_break(files):
+    m = json.loads(files['MEASURE.json'])
+    pg = next(iter(m['pages'].values()))
+    vp = next(iter(pg['viewports'].values()))
+    vp['load'] = {'script_errors': ['ReferenceError: x is not '
+                                   'defined'],
+                  'failed_requests': ['404 /assets/missing.png']}
+    vp['broken_images'] = ['missing.png']
+    files['MEASURE.json'] = json.dumps(m, indent=1, sort_keys=True)
+    return files['MEASURE.json']
+
+
 def _clone_card(files, oid):
     """Rewrite option <oid>'s BUILT page (site/dist/preview/lo-<oid>/
     index.html) so its section comps equal option d1's — two
@@ -1228,6 +1240,13 @@ MUT = {
       '<div class="border-l-4 border-accent rounded-xl">t</div>'
       '<p class="bg-clip-text text-transparent">g</p>'
       '<div class="border shadow-2xl">c</div>')),
+ 'check_easing_bound': (lambda files: files.update({
+     k: files[k] + '\n:root{--ease-pop:cubic-bezier(.3,1.6,.4,1)}'
+     for k in list(files)
+     if k == 'site/src/styles/global.css' or
+     k.startswith('site/dist/_astro/') and k.endswith('.css')})),
+ 'check_render_integrity': (lambda files: files.update({
+     'MEASURE.json': _render_break(files)})),
  'check_measured_evidence': mut(
      ('DEL','shots/1280-light-home.png')),
  'check_judged_verdict': mut(
