@@ -197,26 +197,55 @@ _JS = r"""
     });
   }
   out.hierarchy_violations = viol;
-  // ---- rendered line length: running-text elements where ≥2 real
-  // line boxes run >80 chars. Range.getClientRects gives one rect
-  // per rendered line; chars are apportioned by each line's width so
-  // a short ragged last line can't hide overlong lines above it.
+  // ---- rendered line length: running-text elements where ≥2
+  // rendered lines run >80 chars. Fragment rects are merged into
+  // visual lines (a <strong>/link inside a line is still one line);
+  // chars are counted per line by walking each text node — no width
+  // estimation, so proportional fonts can't over- or under-count.
+  const _rng = document.createRange();
+  const _lineBands = el => {
+    _rng.selectNodeContents(el);
+    const rs = [..._rng.getClientRects()]
+      .filter(x => x.width > 0 && x.height > 0);
+    rs.sort((a, b) => a.top - b.top || a.left - b.left);
+    const bands = [];
+    for (const r of rs) {
+      const L = bands[bands.length - 1];
+      if (L && r.top < L.top + L.h * 0.5) {
+        L.h = Math.max(L.h, r.bottom - L.top);
+      } else bands.push({top: r.top, h: r.height});
+    }
+    return bands;
+  };
+  const _lineChars = (el, bands) => {
+    const counts = bands.map(() => 0);
+    const t = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+    let node;
+    while ((node = t.nextNode())) {
+      const s = node.textContent;
+      let li = 0;
+      for (let i = 0; i < s.length; i++) {
+        _rng.setStart(node, i); _rng.setEnd(node, i + 1);
+        const rc = _rng.getBoundingClientRect();
+        if (!rc.width) continue;   // collapsed whitespace
+        while (li < bands.length - 1 &&
+               rc.top >= bands[li].top + bands[li].h * 0.5)
+          li++;
+        counts[li]++;
+      }
+    }
+    return counts;
+  };
   const ll = [];
-  const _range = document.createRange();
   for (const el of document.querySelectorAll(
         'main p, main blockquote, main li')) {
     const r = vis(el); if (!r) continue;
-    _range.selectNodeContents(el);
-    const rects = [..._range.getClientRects()]
-      .filter(x => x.width > 0 && x.height > 0);
-    if (rects.length < 2) continue;
-    const len = el.textContent.trim().length;
-    const wsum = rects.reduce((a, x) => a + x.width, 0) || 1;
-    const est = rects.map(x => len * x.width / wsum);
-    const over = est.filter(c => c > 80).length;
+    const bands = _lineBands(el);
+    if (bands.length < 2) continue;
+    const counts = _lineChars(el, bands);
+    const over = counts.filter(c => c > 80).length;
     if (over >= 2)
-      ll.push({cpl: +Math.max(...est).toFixed(1), lines: rects.length,
-               over,
+      ll.push({cpl: Math.max(...counts), lines: bands.length, over,
                context: `${el.tagName.toLowerCase()} "${
                  el.textContent.trim().slice(0, 50)}"`});
   }
