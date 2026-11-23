@@ -197,21 +197,28 @@ _JS = r"""
     });
   }
   out.hierarchy_violations = viol;
-  // ---- rendered line length: running-text elements whose lines
-  // run >80 chars. Lines counted from height/line-height; an
-  // element only counts once it wraps (≥2 rendered lines).
+  // ---- rendered line length: running-text elements where ≥2 real
+  // line boxes run >80 chars. Range.getClientRects gives one rect
+  // per rendered line; chars are apportioned by each line's width so
+  // a short ragged last line can't hide overlong lines above it.
   const ll = [];
+  const _range = document.createRange();
   for (const el of document.querySelectorAll(
         'main p, main blockquote, main li')) {
     const r = vis(el); if (!r) continue;
-    const lh = parseFloat(getComputedStyle(el).lineHeight);
-    if (!isFinite(lh) || lh <= 0) continue;
-    const lines = Math.round(r.height / lh);
-    if (lines < 2) continue;
-    const cpl = el.textContent.trim().length / lines;
-    ll.push({cpl: +cpl.toFixed(1), lines,
-             context: `${el.tagName.toLowerCase()} "${
-               el.textContent.trim().slice(0, 50)}"`});
+    _range.selectNodeContents(el);
+    const rects = [..._range.getClientRects()]
+      .filter(x => x.width > 0 && x.height > 0);
+    if (rects.length < 2) continue;
+    const len = el.textContent.trim().length;
+    const wsum = rects.reduce((a, x) => a + x.width, 0) || 1;
+    const est = rects.map(x => len * x.width / wsum);
+    const over = est.filter(c => c > 80).length;
+    if (over >= 2)
+      ll.push({cpl: +Math.max(...est).toFixed(1), lines: rects.length,
+               over,
+               context: `${el.tagName.toLowerCase()} "${
+                 el.textContent.trim().slice(0, 50)}"`});
   }
   ll.sort((a, b) => b.cpl - a.cpl);
   out.line_length = ll.slice(0, 8);
@@ -229,6 +236,10 @@ _JS = r"""
       let top = -1, bot = Infinity;
       for (const {e, r: er} of boxes) {
         if (e === h || e.contains(h) || h.contains(e)) continue;
+        // only boxes sharing the heading's column — a box in a
+        // neighbouring column isn't the element above or below it
+        if (er.right <= hr.left + 1 || er.left >= hr.right - 1)
+          continue;
         if (er.bottom <= hr.top + 1 && er.bottom > top)
           top = er.bottom;
         if (er.top >= hr.bottom - 1 && er.top < bot)
