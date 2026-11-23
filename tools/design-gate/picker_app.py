@@ -1591,11 +1591,19 @@ def _frag_file(kind, seed, mode, salt, tags, prefer=None,
         # bank image refs point at the exporter's asset tree — bind
         # them to the pipeline's own media (seeded rotation) so media
         # heroes render real photography, not the flat placeholder
+        # map by the source path, not the occurrence — a hero's
+        # preload and <img> reference the same asset and must land
+        # the same photo or the preload fetches the wrong one
         _n = [0]
-        def _img(_m):
-            _n[0] += 1
+        _seen = {}
+        def _img(m):
             if media_pool:
-                return media_pool[(seed + _n[0]) % len(media_pool)]
+                src = m.group(0)
+                if src not in _seen:
+                    _n[0] += 1
+                    _seen[src] = media_pool[
+                        (seed + _n[0]) % len(media_pool)]
+                return _seen[src]
             return '/media/placeholder.svg'
         frag = re.sub(r"/src/assets/[^\s\"'()]+", _img, frag)
         return frag, d + '/' + pool[(seed + salt) % len(pool)][:-5]
