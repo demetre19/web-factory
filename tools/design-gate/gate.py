@@ -6726,10 +6726,16 @@ def check_components_exist(ctx):
     return f
 
 def _layer_classes(ctx):
-    g = ctx.read('site/src/styles/global.css') or ''
-    m = re.search(r'@layer\s+components\s*\{(.*)\}', g, re.S)
-    body = m.group(1) if m else g
-    return set(re.findall(r'\.([A-Za-z][\w-]*)', body))
+    # SB.2 — the shared layer spans global.css (token-bound rules in
+    # @layer components) and bank.css (plain skeleton layout rules —
+    # `@layer` there would need a matching @tailwind directive).
+    classes = set()
+    for sheet in ('site/src/styles/global.css', 'site/src/styles/bank.css'):
+        g = ctx.read(sheet) or ''
+        m = re.search(r'@layer\s+components\s*\{(.*)\}', g, re.S)
+        body = m.group(1) if m else g
+        classes |= set(re.findall(r'\.([A-Za-z][\w-]*)', body))
+    return classes
 
 TAIL_UTIL = re.compile(
     r'^(sr-only|not-sr-only|container|block|inline-block|inline|flex|'

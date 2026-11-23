@@ -266,6 +266,7 @@ def _steps(pdir, wave, build, site_dir):
              ['TOKENS.json', 'site/package.json',
               'site/astro.config.mjs', 'site/tailwind.config.js',
               'site/src/styles/global.css',
+              'site/src/styles/bank.css',
               'site/src/_shared/inline.ts',
               'site/src/_shared/IconChip.astro'])]
     if wave == 'w1':
