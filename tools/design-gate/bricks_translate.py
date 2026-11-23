@@ -799,10 +799,12 @@ def translate(payload, stem):
             if cat == 'header':
                 return (f'{pad}{{list.length > 0 && '
                         f'<button class="burger" type="button" '
-                        f'aria-label="Menu"><span aria-hidden="true">'
-                        f'≡</span></button>}}\n')
+                        f'aria-label="Menu" aria-expanded="false" '
+                        f'aria-controls="wf-nav-links"><span '
+                        f'aria-hidden="true">≡</span></button>}}\n')
             return (f'{pad}<button class="flyout-open" type="button" '
-                    f'aria-label="Open panel"><span '
+                    f'aria-label="Open panel" aria-expanded="false" '
+                    f'aria-controls="wf-flyout"><span '
                     f'aria-hidden="true">≡</span></button>\n')
         if name == 'offcanvas':
             _ot = set()
@@ -851,7 +853,8 @@ def translate(payload, stem):
                      f'{pad}  <button class="flyout-close" '
                      'type="button" aria-label="Close">'
                      '×</button>\n')
-            return (f'{pad}<div class="flyout" role="dialog" '
+            return (f'{pad}<div class="flyout" id="wf-flyout" '
+                    f'role="dialog" '
                     f'aria-modal="true">\n{close}{inner}'
                     f'{pad}</div>\n')
         if name == 'nav-menu':
@@ -886,12 +889,14 @@ def translate(payload, stem):
                 # N.select — links past the bar's budget open from
                 # "More" (the offcanvas holds the full list)
                 out += (f'{pad}{{navOver && <button class="nav-more" '
-                        f'type="button" aria-label="More links">More'
+                        f'type="button" aria-label="More links" aria-expanded="false" '
+                        f'aria-controls="wf-nav-links">More'
                         f'</button>}}\n')
                 if not has_toggle:
                     out += (f'{pad}{{list.length > 0 && '
                             f'<button class="burger" type="button" '
-                            f'aria-label="Menu"><span aria-hidden='
+                            f'aria-label="Menu" aria-expanded="false" '
+                            f'aria-controls="wf-nav-links"><span aria-hidden='
                             f'"true">≡</span></button>}}\n')
                 return out
             ncls = (c + ' nav-links') if c else 'nav-links'
@@ -911,8 +916,8 @@ def translate(payload, stem):
                       f'<span>{{it.label || it.term || it.title || '
                       f'it.text}}</span>'
                       f'<span class="nav-num" aria-hidden="true">'
-                      f'{{String((gi > 0 ? Math.ceil(list.length / 2) '
-                      f': 0) + i + 1).padStart(2, \'0\')}}</span>'
+                      f'{{String(list.indexOf(it) + 1)'
+                      f'.padStart(2, \'0\')}}</span>'
                       f'</a></li>)}}')
             _search = (f'<form class="nav-search" role="search">'
                        f'<input class="nav-search-input" type="search" '
@@ -927,43 +932,50 @@ def translate(payload, stem):
             _cta = (f'{{act.label && <p class="nav-sheet-cta mt-fluid-m">'
                     f'<a class="wf-cta-button" href={{act.href}}>'
                     f'{{act.label}}</a></p>}}')
+            # group heads come from the IA itself: links bucket by
+            # their top-level path segment and the head is that
+            # segment titled — never a "Menu n" placeholder (E-B1)
+            _groups = (f'{{Object.entries(list.reduce((g, it) => '
+                       f'{{const s = (it.href || "")'
+                       f'.replace(/^\\/+|\\/+$/g, "").split("/")[0]'
+                       f' || "pages"; (g[s] = g[s] || []).push(it);'
+                       f' return g;}}, {{}})).map(([seg, grp]) => ('
+                       f'<div class="nav-group">'
+                       f'<p class="nav-group-head">'
+                       f'{{seg.replace(/-/g, " ")'
+                       f'.replace(/\\b\\w/g, (c) => c.toUpperCase())}}'
+                       f'</p>'
+                       f'<ul class="row gap-fluid-m list-plain">'
+                       + _links
+                       + f'</ul></div>))}}')
             return (f'{pad}{{list.length > 0 && !navOver && '
                     f'<nav class="{ncls}" '
                     f'aria-label="Primary">{_head}{_search}'
                     f'<div class="nav-mega-cols">'
-                    f'<div class="nav-group">'
-                    f'<p class="nav-group-head">Menu</p>'
-                    f'<ul class="row gap-fluid-m list-plain">'
-                    + _links.replace('{grp.map', '{list.map')
-                    .replace('gi > 0 ? Math.ceil(list.length / 2) : 0',
-                             '0')
-                    + f'</ul></div></div>{_cta}</nav>}}\n'
+                    + _groups
+                    + f'</div>{_cta}</nav>}}\n'
                     f'{pad}{{navOver && <nav '
                     f'class="{ncls} nav-mega" '
                     f'aria-label="Primary">{_head}{_search}'
                     f'<div class="nav-mega-cols">'
-                    f'{{[list.slice(0, Math.ceil(list.length / 2)), '
-                    f'list.slice(Math.ceil(list.length / 2))]'
-                    f'.map((grp, gi) => ('
-                    f'<div class="nav-group">'
-                    f'<p class="nav-group-head">'
-                    f'{{\'Menu \' + (gi + 1)}}</p>'
-                    f'<ul class="row gap-fluid-m list-plain">'
-                    + _links
-                    + f'</ul></div>))}}'
-                    f'</div>{_cta}</nav>}}\n'
+                    + _groups
+                    + f'</div>{_cta}</nav>}}\n'
                     f'{pad}{{navOver && <Fragment><nav '
-                    f'class="nav-priority" aria-label="Primary">'
+                    f'class="nav-priority nav-desk" '
+                    f'aria-label="Primary">'
                     f'<ul class="row gap-fluid-m list-plain">'
                     f'{{list.slice(0, navCut).map((it) => <li>'
                     f'<a class="nav-link" href={{it.href}}>'
                     f'{{it.label || it.term || it.title || it.text}}'
                     f'</a></li>)}}</ul></nav>'
                     f'<button class="nav-more" type="button" '
-                    f'aria-label="More links">More</button>'
+                    f'aria-label="More links" aria-expanded="false" '
+                    f'aria-controls="wf-nav-links">More</button>'
                     f'</Fragment>}}\n'
                     f'{pad}{{list.length > 0 && <button class="burger" '
-                    f'type="button" aria-label="Menu">'
+                    f'type="button" aria-label="Menu" '
+                    f'aria-expanded="false" '
+                    f'aria-controls="wf-nav-links">'
                     f'<span aria-hidden="true">≡</span>'
                     f'</button>}}\n')
         if name == 'text-link' and not ivar:
@@ -1342,6 +1354,33 @@ def translate(payload, stem):
                             '<p class="nav-cta">').replace(
             '<p class="mt-fluid-m"><a class="wf-cta-button"',
             '<p class="nav-cta"><a class="wf-cta-button"')
+        # the burger is the LAST child of the bar row (E-M2): when a
+        # CTA lane precedes it the trigger sat mid-row at tablet
+        # widths. Moving the emit, not just the CSS, keeps the
+        # pin under every flex order the bank ships.
+        _bg = re.search(
+            r'[ \t]*(?:\{list\.length > 0 && )?<button class="burger"'
+            r'.*?</button>\}?\}?\n?', body, re.S)
+        _bar = re.search(
+            r'^( *)<div class="[^"]*\brow between\b[^"]*">\n', body, re.M)
+        if _bg and _bar:
+            btxt = _bg.group(0)
+            body = body[:_bg.start()] + body[_bg.end():]
+            # re-find the bar opener on the shrunken body — a burger
+            # that preceded it shifted its offsets (header-8)
+            _bar = re.search(
+                r'^( *)<div class="[^"]*\brow between\b[^"]*">\n',
+                body, re.M)
+            # find the bar container's matching close: depth walk from
+            # the opener so the trigger lands inside, not after it
+            depth, pos = 0, _bar.end()
+            for m in re.finditer(r'<div\b|</div>', body[pos:]):
+                depth += 1 if m.group(0) == '<div' else -1
+                if depth < 0:
+                    close_at = pos + m.start()
+                    body = (body[:close_at] + btxt.rstrip('\n')
+                            + '\n' + body[close_at:])
+                    break
     # §4.3 heading fallback — a pure-collection skeleton (grid of
     # cards, list of links) has no section-heading slot; the block's
     # h2 is still copy that must render (F.1, PS.8). Chrome rows

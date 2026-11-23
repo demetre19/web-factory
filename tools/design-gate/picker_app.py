@@ -68,10 +68,12 @@ ELEMENT_GALLERIES = [
      'groups': [
          {'label': None, 'element': 'modals',
           'comps': ['modal-form', 'form-panel'], 'suffix': '-open'}]},
-    {'id': 'footers', 'title': 'Footers · bank', 'icon': 'bars',
-     'desc': 'Reference footer designs — shown exactly as stored '
-             'in the bank, not recoloured to the vibe.',
-     'groups': []},
+    {'id': 'footers', 'title': 'Footers', 'icon': 'bars',
+     'desc': 'The emitted footer at every size — real pipeline '
+             'render, same chrome as the built page.',
+     'groups': [
+         {'label': None, 'element': 'footer',
+          'comps': ['footer-bar']}]},
     {'id': 'pricing', 'title': 'Pricing · bank', 'icon': 'doc',
      'desc': 'Reference pricing topologies — tiers, single, table.',
      'groups': []},
@@ -175,23 +177,368 @@ PAGE_BOARDS = [
 # galleries whose cards pick an element (element → comp ids)
 _NAV_COMPS = ('nav-bar', 'flyout-nav')
 
-# menu-flyout geometry topos — CSS-geometry alternates of the open
-# .nav-links panel (docked panel / full overlay / bottom sheet);
-# every variant stays inside the baked family's token space
-_MENU_TOPOS = {
-    '': '',                       # as-built: docked right
-    'dock-left':
-        '.nav-links.open{inset-inline-end:auto;inset-inline-start:0;'
-        'border-inline-start:0;border-inline-end:1px solid '
-        'var(--border-default)}',
-    'full-screen':
-        '.nav-links.open{width:auto;inset-inline:0;'
-        'border-inline-start:0}',
-    'sheet-bottom':
-        '.nav-links.open{inset-block:auto 0;inset-inline:0;width:auto;'
-        'max-height:72vh;border-inline-start:0;border-block-start:'
-        '1px solid var(--border-default)}',
+# menu-variant suffix → the genmenu bank topology whose real render
+# the variant doc carries (E-M1). Distinct exemplar markup + css
+# per variant — docked drawer, top sheet, bottom sheet, full-screen
+# overlay, mega panel — never position overrides of one header.
+_MENU_BANK_TOPOS = {
+    '': 'nav-dropdown-menu',
+    'dock-left': 'nav-dock-left-drawer',
+    'top': 'nav-top-sheet',
+    'sheet-bottom': 'nav-bottom-sheet',
+    'full-screen': 'nav-modal',
+    'mega': 'nav-mega-panel',
 }
+
+
+def _site_nav(block):
+    """(brand, links, cta, groups) bound from the page's own nav
+    comp — what every bank-topology menu doc rebinds over the
+    exemplar's copy so no foreign brand ever renders (audit).
+    links/cta are (href, label); groups are the drawer's IA heads."""
+    brand = re.search(
+        r'class="[^"]*\blogo\b[^"]*"[^>]*>\s*([^<]{1,60})', block)
+    region = block
+    m = re.search(r'class="[^"]*nav-links[^"]*"', block)
+    if m:
+        end = block.find('</nav>', m.start())
+        region = block[m.start():end if end > 0 else len(block)]
+    links = [(h, re.sub(r'<[^>]+>', '', lbl).strip())
+             for h, lbl in re.findall(
+                 r'<a [^>]*href="([^"]*)"[^>]*>(.*?)</a>',
+                 region, re.S)]
+    cm = re.search(r'class="[^"]*nav-cta[^"]*".*?</p>|'
+                   r'class="[^"]*nav-cta[^"]*".*?</div>', block, re.S)
+    cta = None
+    if cm:
+        am = re.search(r'<a [^>]*href="([^"]*)"[^>]*>(.*?)</a>',
+                       cm.group(0), re.S)
+        if am:
+            cta = (am.group(1),
+                   re.sub(r'<[^>]+>', '', am.group(2)).strip())
+    groups = re.findall(r'class="nav-group-head"[^>]*>\s*([^<]+)',
+                        block)
+    return ((re.sub(r'<[^>]+>', '', brand.group(1)).strip()
+             if brand else ''),
+            [(h, l) for h, l in links if l],
+            cta,
+            [g.strip() for g in groups])
+
+
+class _BankBind(html.parser.HTMLParser):
+    """Rewrite a genmenu exemplar for the element-preview stage:
+    bind the site's brand/links/CTA over the exemplar copy, load
+    every menu layer CLOSED (aria-expanded=false + data-wf-panel on
+    the overlay/dropdown elements the driver hides), and mark the
+    triggers the driver toggles. Structure is the exemplar's own —
+    only copy, aria and state markers change."""
+
+    VOID = {'br', 'hr', 'img', 'input', 'meta', 'link', 'source',
+            'wbr', 'area', 'base', 'col', 'embed', 'track', 'param'}
+    _PANEL_CLS = re.compile(r'\binset-0\b|\btop-full\b')
+    _SCRIM_CLS = re.compile(r'\bbg-\w|\bbackdrop|opacity')
+
+    def __init__(self, brand, links, cta, groups):
+        super().__init__(convert_charrefs=False)
+        self.brand = brand or 'Site'
+        self.links = links or [('#', 'Menu')]
+        self.cta = cta or ('#contact', 'Contact')
+        self.groups = groups or [self.brand]
+        self.out = []
+        self._stack = []
+        self._brand_done = False
+        self._li = 0          # nav-link cycle
+        self._gi = 0          # group-head cycle
+        self._panel_n = 0
+        self._controls = set()
+        self._trigger_seen = False
+        self._btn_seen = False
+        self._relabel = None   # (text, seen_first) inside relabel el
+        self._pi = 0           # prose-copy cycle index (stray nodes)
+        self._relstk = []      # outer relabels restored on endtag
+
+    @staticmethod
+    def _aria(v):
+        """Strip brand words from accessible names — the exemplar's
+        aria-labels name the bank's brand; reduce them to the
+        generic role the control plays (audit: no foreign copy)."""
+        low = v.lower()
+        if 'close' in low or 'dismiss' in low:
+            return 'Close menu'
+        if 'search' in low or 'filter' in low:
+            return 'Search'
+        if 'menu' in low or 'navigat' in low:
+            return 'Menu'
+        if 'dialog' in low or 'sheet' in low or 'drawer' in low:
+            return 'Menu'
+        return 'Menu'
+
+    def _emit(self, tag, attrs, selfclose=False):
+        a = dict(attrs)
+        cls = a.get('class', '')
+        if 'aria-label' in a:
+            a['aria-label'] = self._aria(a['aria-label'])
+        if 'alt' in a:
+            a['alt'] = self.brand
+        if 'title' in a:
+            a['title'] = self.brand
+        panel = False
+        if (a.get('role') in ('dialog', 'menu') or
+                self._PANEL_CLS.search(cls) or
+                (a.get('id') and a['id'] in self._controls)):
+            panel = True
+        trigger = (tag in ('button', 'a') and
+                   ('aria-haspopup' in a or 'aria-expanded' in a))
+        if not trigger and tag == 'button' and not self._btn_seen \
+                and not self._trigger_seen:
+            # the bank's open-trigger carries no aria at all
+            # (nav-modal) — the FIRST button in the doc is it
+            trigger = True
+        if tag == 'button':
+            self._btn_seen = True
+        if trigger:
+            self._trigger_seen = True
+            a['data-wf-trigger'] = ''
+            a['aria-expanded'] = 'false'
+            if 'aria-controls' not in a:
+                a['aria-controls'] = 'wf-panel-0'
+            else:
+                self._controls.add(a['aria-controls'])
+        if panel:
+            a['data-wf-panel'] = ''
+            if not a.get('id'):
+                a['id'] = f'wf-panel-{self._panel_n}'
+                self._panel_n += 1
+            if (a.get('role') not in ('dialog', 'menu') and
+                    self._SCRIM_CLS.search(cls) and 'z-' not in cls):
+                a['data-wf-scrim'] = ''
+            elif (a.get('role') not in ('dialog', 'menu') and
+                  'inset-0' in cls and self._SCRIM_CLS.search(cls)):
+                a['data-wf-scrim'] = ''
+        # ---- copy rebind ------------------------------------
+        relabeled = False
+        if tag == 'a':
+            if not self._brand_done and \
+                    ('logo' in cls or 'brand' in cls or
+                     a.get('href', '') in ('#', '#top', '/', '')):
+                self._relabel = (self.brand, False)
+                self._brand_done = True
+            elif 'cta' in cls.lower():
+                self._relabel = (self.cta[1], False)
+                a['href'] = self.cta[0]
+            else:
+                h, l = self.links[self._li % len(self.links)]
+                self._li += 1
+                self._relabel = (l, False)
+                if h:
+                    a['href'] = h
+            relabeled = True
+        elif tag == 'button' and \
+                'close' not in (a.get('aria-label') or '').lower() and \
+                '\u00d7' not in (a.get('aria-label') or ''):
+            if trigger:
+                self._relabel = (
+                    self.groups[self._gi % len(self.groups)], False)
+                self._gi += 1
+            elif 'cta' in cls.lower():
+                self._relabel = (self.cta[1], False)
+            else:
+                h, l = self.links[self._li % len(self.links)]
+                self._li += 1
+                self._relabel = (l, False)
+            relabeled = True
+        elif tag in ('h1', 'h2', 'h3', 'h4') and \
+                '[data-wf-panel]' in self._stack:
+            self._relabel = (
+                self.groups[self._gi % len(self.groups)], False)
+            self._gi += 1
+            relabeled = True
+        elif tag in ('p', 'span', 'strong', 'div') and \
+                '[data-wf-panel]' in self._stack and self._relabel is None:
+            h, l = self.links[self._li % len(self.links)]
+            self._li += 1
+            self._relabel = (l, False)
+            relabeled = True
+        if tag == 'input':
+            if 'placeholder' in a:
+                a['placeholder'] = 'Search'
+            if 'value' in a:
+                a['value'] = ''
+        if relabeled:
+            self._relstk.append(tag)
+        at = ''.join(
+            f' {k}' if v in (None, '') else
+            f' {k}="{html.escape(str(v), quote=True)}"'
+            for k, v in a.items())
+        self.out.append(f'<{tag}{at}{" /" if selfclose else ""}>')
+        if not selfclose and tag not in self.VOID:
+            self._stack.append(
+                tag if not panel else '[data-wf-panel]')
+
+    def handle_starttag(self, tag, attrs):
+        self._emit(tag, attrs)
+
+    def handle_startendtag(self, tag, attrs):
+        self._emit(tag, attrs, selfclose=True)
+
+    def handle_endtag(self, tag):
+        self.out.append(f'</{tag}>')
+        for i in range(len(self._stack) - 1, -1, -1):
+            if self._stack[i] == tag or \
+                    self._stack[i] == '[data-wf-panel]':
+                del self._stack[i:]
+                break
+        if self._relstk and self._relstk[-1] == tag:
+            self._relstk.pop()
+            self._relabel = None
+
+    _PROSE_TAGS = {'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p',
+                   'figcaption'}
+    _STRAY_TAGS = {'span', 'div', 'li', 'td', 'dd', 'dt', 'summary'}
+
+    def _next_prose(self):
+        labels = [l for _h, l in self.links] or [self.brand]
+        l = labels[self._pi % len(labels)]
+        self._pi += 1
+        return l
+
+    def handle_data(self, data):
+        if self._relabel is not None:
+            if not self._relabel[1] and data.strip():
+                self.out.append(
+                    html.escape(self._relabel[0], quote=False))
+                self._relabel = (self._relabel[0], True)
+            elif not data.strip():
+                self.out.append(html.escape(data, quote=False))
+            # later text nodes in a relabeled element drop
+            return
+        if not self._brand_done and len(data.strip()) > 2 and \
+                re.search(r'[A-Za-z]', data):
+            # the exemplar's brand is bare text in several topologies
+            # (no logo anchor) — the first word-y text node is it
+            self.out.append(html.escape(self.brand, quote=False))
+            self._brand_done = True
+            return
+        if data.strip():
+            # foreign app copy that isn't a link/button/brand — an
+            # exemplar's backdrop headings, paragraphs and meta
+            # spans ("Gallery · Explore") — rebinds to the site's
+            # own link labels rather than leaking (audit 138)
+            parent = ''
+            for t in reversed(self._stack):
+                if t != '[data-wf-panel]':
+                    parent = t
+                    break
+            filler = ('\u00b7' in data or '\u2014' in data or
+                      '\u2013' in data or len(data.split()) >= 4)
+            if parent in self._PROSE_TAGS or \
+                    (parent in self._STRAY_TAGS and filler):
+                self._relabel = (self._next_prose(), False)
+                self._relstk.append(parent)
+                self.handle_data(data)
+                return
+        self.out.append(html.escape(data, quote=False))
+
+    def handle_entityref(self, name):
+        self.out.append(f'&{name};')
+
+    def handle_charref(self, name):
+        self.out.append(f'&#{name};')
+
+    def handle_comment(self, data):
+        self.out.append(f'<!--{data}-->')
+
+
+# the menu driver's contract on a bank doc: triggers are the
+# [data-wf-trigger] elements, the open layers are [data-wf-panel]
+# (scrims [data-wf-scrim] close on click), the open state is one
+# html.wf-menu-open class — ?menu=open enters it through the same
+# toggle a click takes (audit: cards must render the real open
+# state; docs must load closed with correct aria)
+_BANK_MENU_CSS = (
+    'html:not(.wf-menu-open) [data-wf-panel]{display:none !important}')
+_BANK_MENU_DRV = (
+    '<script>(function(){var d=document,r=d.documentElement;'
+    'function so(o){r.classList.toggle("wf-menu-open",o);'
+    'd.querySelectorAll("[data-wf-trigger]").forEach(function(b){'
+    'b.setAttribute("aria-expanded",o?"true":"false")});'
+    'if(d.body)d.body.style.overflow=o?"hidden":""}'
+    'd.addEventListener("DOMContentLoaded",function(){'
+    'if(new URLSearchParams(location.search).get("menu")==="open")'
+    'so(true)});'
+    'd.addEventListener("click",function(e){'
+    'var t=e.target&&e.target.closest&&'
+    'e.target.closest("[data-wf-trigger]");'
+    'if(t){so(!r.classList.contains("wf-menu-open"));return}'
+    'if(!r.classList.contains("wf-menu-open"))return;'
+    'var cb=e.target.closest&&e.target.closest("button,a");'
+    'if(cb&&/close|dismiss|\\u00d7/i.test('
+    '(cb.getAttribute("aria-label")||"")+" "+(cb.textContent||"")))'
+    '{so(false);return}'
+    'var inP=e.target.closest&&e.target.closest('
+    '"[role=\\"dialog\\"],[role=\\"menu\\"],'
+    '[data-wf-panel]:not([data-wf-scrim])");'
+    'if(!inP)so(false)});'
+    'd.addEventListener("keydown",function(e){'
+    'if(e.key==="Escape"&&r.classList.contains("wf-menu-open"))'
+    'so(false)})})();</script>')
+
+
+def _bank_doc(pd, cls, nav=None):
+    """Render the first exemplar of a banked menu topology through
+    _BankBind — the exemplar's own markup + bank-preview.css on the
+    wf-stage, with the site's brand / IA links / CTA rebound (never
+    the bank's copy), panels loading closed behind [data-wf-panel]
+    and the menu driver honouring ?menu=open through the real
+    toggle path. Requires emit_bank_previews to have run first (it
+    ships the css)."""
+    cdir = os.path.join(_GENMENU, cls)
+    if not os.path.isdir(cdir):
+        return None
+    fns = sorted(f for f in os.listdir(cdir) if f.endswith('.html'))
+    if not fns:
+        return None
+    frag = open(os.path.join(cdir, fns[0]), encoding='utf-8').read()
+    frag = re.sub(r'/src/assets/[^\s"\'()]+',
+                  '/media/placeholder.svg', frag)
+    if nav:
+        bnd = _BankBind(*nav)
+        bnd.feed(frag)
+        frag = ''.join(bnd.out)
+    bankdir = os.path.join(pd, 'site', 'dist', 'preview', 'bank')
+    # the exemplar's utilities live in bank-preview.css — a doc that
+    # links it before emit_bank_previews ran renders unstyled, so
+    # materialise the vendored sheet + generated fallbacks here
+    os.makedirs(bankdir, exist_ok=True)
+    css_src = os.path.join(_GENMENU, 'bank-preview.css')
+    css_dst = os.path.join(bankdir, 'bank-preview.css')
+    if os.path.isfile(css_src) and (
+            not os.path.isfile(css_dst) or
+            os.path.getmtime(css_src) > os.path.getmtime(css_dst)):
+        with open(css_src, 'rb') as fi:
+            blob = fi.read()
+        with open(css_dst, 'wb') as fo:
+            fo.write(blob)
+    extra_dst = os.path.join(bankdir, 'bank-preview-extra.css')
+    if not os.path.isfile(extra_dst):
+        with open(extra_dst, 'w') as fh:
+            fh.write('/* generated fallback utilities — vendored '
+                     'tailwind v3 dialect gaps */\n' +
+                     _bank_fallback_css())
+    head = ('<meta charset="utf-8"><meta name="viewport" '
+            'content="width=device-width,initial-scale=1">'
+            '<link rel="stylesheet" href="/built/' +
+            urllib.parse.quote(os.path.join(
+                pd, 'site', 'dist', 'preview', 'bank',
+                'bank-preview.css')) + '">'
+            '<link rel="stylesheet" href="/built/' +
+            urllib.parse.quote(os.path.join(
+                bankdir, 'bank-preview-extra.css')) + '">')
+    stage = ('<div class="wf-stage mob">' + frag + '</div>')
+    return ('<!--wf:bank:v5-->' +
+            _doc(head, '', stage,
+                 extra=_STAGE_SCROLL_SHIM + _BANK_MENU_DRV,
+                 css=_BANK_STAGE_CSS + _BANK_MENU_CSS, chrome=True))
 
 # AND-picker mood facets — operator-facing synonyms over the gene
 # bundles (e.g. light AND professional, light AND playful)
@@ -587,24 +934,19 @@ def emit_element_previews(pd):
             fh.write(_doc(head, battr, block))
         emitted[comp] = f'preview/elements/{comp}.html'
         if comp in _NAV_COMPS:
-            # the collapsed-nav surface, forced open — menu board.
-            # Geometry topos of the same open flyout: the .nav-links
-            # .open surface is a fixed docked panel — docking side,
-            # width and orientation are CSS-geometry choices, all
-            # inside the family's token space.
-            open_js = ('<script>(function(){var n='
-                       'document.querySelector('
-                       '".nav-links");if(n)'
-                       'n.classList.add("open");})()</script>')
             # desktop surface — the nav as a bar, drawer never forced
-            # open: burger hidden, links inline (menu board at D)
+            # open: burger hidden, links inline (menu board at D).
             # the desktop-menu state only exists at/above the bar
             # breakpoint — below it the fragment must show the real
             # mobile chrome (burger + closed drawer), not a forced
             # desktop row (r6 @390)
             _MENU_DESK = ('@media (min-width:60rem){'
-                          '.burger,.nav-close{display:none !important}'
-                          '.nav-links{position:static !important;'
+                          '.nav-close{display:none !important}'
+                          '.burger{display:none !important}'
+                          '.nav-crowded .burger{'
+                          'display:inline-flex !important}'
+                          '.nav-links:not([data-over]){'
+                          'position:static !important;'
                           'display:flex !important;transform:none '
                           '!important;visibility:visible !important;'
                           'opacity:1 !important;width:auto '
@@ -618,15 +960,22 @@ def emit_element_previews(pd):
                 fh.write(_doc(head, battr, block, '', _MENU_DESK))
             emitted[comp + '-menu-desktop'] = \
                 f'preview/elements/{comp}-menu-desktop.html'
-            for topo, gcss in _MENU_TOPOS.items():
-                fp = os.path.join(
-                    outdir, comp + '-menu' + ('-' + topo if topo else '')
-                    + '.html')
-                with open(fp, 'w', encoding='utf-8') as fh:
-                    fh.write(_doc(head, battr, block, open_js, gcss))
-                emitted[comp + '-menu' + ('-' + topo if topo else '')] = \
-                    f'preview/elements/{comp}-menu' + \
-                    ('-' + topo if topo else '') + '.html'
+            # E-M1 — each menu variant is its own banked menu
+            # topology's real render (the exemplar's markup + css
+            # verbatim from the genmenu bank), never a position
+            # override of this comp's header. The comp's own open
+            # state is one ?menu=open away on its doc (E-M3).
+            for suffix, cls in _MENU_BANK_TOPOS.items():
+                src = _bank_doc(pd, cls, _site_nav(block))
+                name = comp + '-menu' + ('-' + suffix if suffix else '')
+                fp = os.path.join(outdir, name + '.html')
+                if src:
+                    with open(fp, 'w', encoding='utf-8') as fh:
+                        fh.write(src)
+                    emitted[name] = \
+                        f'preview/elements/{name}.html'
+                elif os.path.isfile(fp):
+                    os.remove(fp)
         if comp == 'modal-form' or '.flyout' in block:
             fp = os.path.join(outdir, comp + '-open.html')
             with open(fp, 'w', encoding='utf-8') as fh:
@@ -664,10 +1013,27 @@ _CHROME_CSS = (
     'border-radius:var(--radius,10px);background:transparent;'
     'color:var(--text-primary);box-shadow:none!important;'
     'cursor:pointer}'
-    '@media (max-width:60rem){.burger{display:inline-flex}}'
+    # 59.99 not 60 — at exactly 960px this and the global
+    # min-width:60rem burger-hide both match and order wins
+    '@media (max-width:59.99rem){.burger{display:inline-flex}}'
     '.burger::after{content:"";width:20px;height:14px;'
     'background:repeating-linear-gradient(to bottom,'
-    'currentColor 0 2px,transparent 2px 6px)}')
+    'currentColor 0 2px,transparent 2px 6px)}'
+    # the collapse→flyout contract on picker docs: the layout script
+    # stamps .nav-crowded + data-over when the link row can't fit —
+    # same contract as emit_global's, needed here because menu docs
+    # don't carry the compiled page css
+    '@media (min-width:60rem){'
+    '.nav-crowded .burger{display:inline-flex}'
+    '.nav-links[data-over],.nav-desk[data-over]{display:none}'
+    '.nav-links[data-over].open,.nav-desk[data-over].open{'
+    'display:flex;flex-direction:column;gap:var(--space-m);'
+    'position:absolute;inset-block-start:100%;inset-inline-end:0;'
+    'width:min(46rem,94vw);max-height:80vh;overflow-y:auto;'
+    'background:var(--bg-canvas);padding:var(--space-m);'
+    'border:1px solid var(--border-default);'
+    'border-radius:var(--r-card);box-shadow:var(--shadow-pop);'
+    'z-index:60}}')
 
 
 # live preview docs are inspect-only: in-card iframes are interactive
@@ -2005,6 +2371,12 @@ def emit_section_fragments(pd):
                 # a re-rendered skeleton when an artifact exists
                 markup, bhead, battr, css = src[0], src[1], src[2], ''
             else:
+                if c in _NAV_COMPS or c == 'footer-bar':
+                    # chrome never fabricates: a header/footer
+                    # candidate without the pipeline's own emitted
+                    # fragment is missing, not a _slot_frag mock
+                    missing.append(c)
+                    continue
                 inner, unmap = _slot_frag(c, _copy_slot(pd, bid))
                 if inner is None:
                     missing.append(c)
@@ -2289,6 +2661,9 @@ def app_data(pipeline):
     pd = ctx.dir
     if not os.path.isdir(pd):
         return None, f'pipeline {pipeline} not found'
+    # bank docs first — emit_element_previews copies the real
+    # nav-* menu-topology renders into elements/<comp>-menu*.html
+    bank_cards, fxmap = emit_bank_previews(pd)
     emitted = emit_element_previews(pd)
     vibes_emitted = emit_vibe_previews(pd)
     contrast = contrast_audit(pd)
@@ -2315,7 +2690,6 @@ def app_data(pipeline):
 
     # element galleries — emitted preview cards (+ derived geometry
     # topos on menus) + bank options the build didn't emit
-    bank_cards, fxmap = emit_bank_previews(pd)
     lo = _json_at(pd, 'LAYOUT-OPTIONS.json') or {}
     lo_allowed = {k: list(dict.fromkeys(v or []))
                   for k, v in (lo.get('allowed') or {}).items()}
@@ -2346,10 +2720,18 @@ def app_data(pipeline):
                     derived = key not in (comp, comp + sfx)
                     if rel and os.path.isfile(os.path.join(
                             pd, 'site', 'dist', rel)):
+                        # menu cards render the OPEN state through the
+                        # real toggle driver (?menu=open) — the closed
+                        # desktop bar is the -menu-desktop reference
+                        q = ('?menu=open'
+                             if g['id'] == 'menu' and
+                             not key.endswith('-menu-desktop')
+                             else '')
                         gcards.append({
                             'id': key, 'name': key,
                             'preview': '/built/' + urllib.parse.quote(
-                                os.path.join(pd, 'site', 'dist', rel)),
+                                os.path.join(pd, 'site', 'dist', rel)) +
+                                q,
                             'tags': [comp] + ([grp['label'].lower()]
                                 if grp.get('label') else []) +
                                 ([t for t in ('flyout', 'overlay',
@@ -3286,6 +3668,12 @@ def emit_bank_previews(pd):
             urllib.parse.quote(extra_dst) + '">')
     out = {}
     for gid, dirs in _BANK_DIRS.items():
+        if gid in ('menu', 'footers'):
+            # chrome surfaces are real-render only: a menu or footer
+            # preview must be the pipeline's own emitted doc, never a
+            # bank exemplar re-rendered under bank-preview.css. The
+            # per-type boards emit these via real chrome.
+            continue
         cards = []
         for cls in dirs:
             cdir = os.path.join(_GENMENU, cls)
@@ -6055,7 +6443,6 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
 
   // viewport fit — desktop (vw=100%) renders iframes at 1280px and
   // scales them into the card; M/T keep the real small widths.
-  // Menu cards swap to the -menu-desktop fragment at desktop.
   function fitIframes(){
     var vw=document.documentElement.style.getPropertyValue('--vw')
         ||'100%';
@@ -6065,13 +6452,13 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
       // back from it, never from a previously-swapped one
       var orig=f.dataset.orig||(f.dataset.src||f.src.split('?')[0]);
       if(!f.dataset.orig)f.dataset.orig=orig;
-      var u=(vw==='100%'&&/-menu(-[a-z-]+)?\.html/.test(orig))
-        ?orig.replace(/-menu(-[a-z-]+)?\.html/,'-menu-desktop.html')
-        :orig;
+      var u=orig;
+      // compare query-free — a card variant's ?menu=open is its own
+      // src, not a reason to keep reloading it
       var cur=(f.dataset.src||'').split('?')[0];
-      if(u!==cur){f.dataset.src=u;
+      if(u.split('?')[0]!==cur){f.dataset.src=u;
         f.src=u+(document.documentElement.dataset.theme==='dark'
-          ?'?theme=dark':'')}
+          ?(u.indexOf('?')<0?'?':'&')+'theme=dark':'')}
       var cb=f.parentElement,
           fixedBox=!!cb.closest('.vprev')||
             cb.classList.contains('rmprev'),
