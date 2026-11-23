@@ -1472,6 +1472,59 @@ _GENE_HERO_DIR = {
 _MEDIA_RX = re.compile(r'<(?:img|picture|video|figure|svg)\b')
 
 
+# the buttons primitive for bank fragments: their CTAs carry baked
+# tailwind fills/sizes, so rebind every filled control to the
+# resolved --action-primary pair (ink chosen per family for the
+# 4.5:1 label contrast) and size the header/hero CTAs off the token
+# layer; radius comes from the radius-personality gene's
+# --primitive-radius/--radius. The nav fragment is always the first
+# child of .wf-page, the hero the second.
+_FRAG_CTA_CSS = (
+    # a CTA is a filled control, not a menu row: tint-filled nav and
+    # settings items are w-full/text-left/justify-between or carry a
+    # menu role — exclude those shapes or whole menus go accent
+    '.wf-page :is(a,button)[class*="bg-"]'
+    ':not([class*="bg-transparent"]):not([class*="bg-none"])'
+    ':not([class*="w-full"]):not([class*="text-left"])'
+    ':not([class*="justify-between"])'
+    ':not([role="menuitem"]):not([role="menuitemradio"])'
+    '{background-color:var(--action-primary,#2563eb)!important;'
+    'background-image:none;'
+    'color:var(--action-primary-ink,#fff);'
+    'border-color:transparent;'
+    'border-radius:var(--primitive-radius,var(--radius,.5rem));'
+    'min-height:2.75rem;padding:.625rem var(--space-l,1.5rem);'
+    'font-size:var(--fs-0,.9375rem);font-weight:600;'
+    'display:inline-flex;align-items:center;gap:.5rem;'
+    'line-height:1.2;text-decoration:none;box-shadow:none}'
+    '.wf-page>:first-child :is(a,button)[class*="bg-"]'
+    ':not([class*="bg-transparent"]):not([class*="bg-none"])'
+    ':not([class*="w-full"]):not([class*="text-left"])'
+    ':not([class*="justify-between"])'
+    ':not([role="menuitem"]):not([role="menuitemradio"])'
+    '{min-height:2.5rem;max-height:2.75rem;'
+    'padding:0 var(--space-m,1rem);font-size:var(--fs-0,.9375rem)}'
+    '.wf-page :is(a,button)[class*="bg-"]:hover'
+    ':not([class*="w-full"]):not([class*="text-left"])'
+    ':not([class*="justify-between"])'
+    '{background-color:var(--action-primary-hover,'
+    'var(--action-primary,#1d4ed8))!important;'
+    'color:var(--action-primary-ink,#fff)}'
+    '.wf-page :is(a,button)[class*="border"]:not([class*="bg-"])'
+    ':not([class*="w-full"]):not([class*="text-left"])'
+    ':not([class*="justify-between"])'
+    ':not([role="menuitem"]):not([role="menuitemradio"])'
+    '{background:transparent;color:var(--text-primary,#18181b);'
+    'border:1px solid var(--border-default,#d4d4d8);'
+    'border-radius:var(--primitive-radius,var(--radius,.5rem));'
+    'min-height:2.5rem;padding:0 var(--space-m,1rem);'
+    'display:inline-flex;align-items:center;gap:.5rem;'
+    'font-size:var(--fs-0,.9375rem);font-weight:500}'
+    '.wf-page :is(a,button):focus-visible'
+    '{outline:2px solid var(--action-primary,#2563eb);'
+    'outline-offset:2px}')
+
+
 def _frag_file(kind, seed, mode, salt, tags, prefer=None,
                want_media=None):
     """one bank fragment for `kind` — dir and file seeded so every
@@ -1601,7 +1654,8 @@ def _frag_doc_parts(pd, fam, bundle):
             urllib.parse.quote(css_dst) + '">'
             '<link rel="stylesheet" href="/built/' +
             urllib.parse.quote(extra_dst) + '">')
-    return head, '', '<div class="wf-page">' + body + '</div>'
+    return head, '', ('<div class="wf-page"><style>' +
+                      _FRAG_CTA_CSS + '</style>' + body + '</div>')
 
 
 def emit_vibe_doc(pd, fam, bundle, spec=None):
