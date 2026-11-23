@@ -1602,7 +1602,7 @@ def _frag_file(kind, seed, mode, salt, tags, prefer=None,
                 if src not in _seen:
                     _n[0] += 1
                     _seen[src] = media_pool[
-                        (seed + _n[0]) % len(media_pool)]
+                        (seed + salt + _n[0]) % len(media_pool)]
                 return _seen[src]
             return '/media/placeholder.svg'
         frag = re.sub(r"/src/assets/[^\s\"'()]+", _img, frag)
