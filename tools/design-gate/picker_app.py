@@ -6836,8 +6836,10 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
     if(!VRES||!VRES.tokens)return;
     var th=document.documentElement.dataset.theme==='dark'?'dark':'light',
         tv=VRES.tokens[th]||VRES.tokens.light||{};
-    document.querySelectorAll('.card iframe,.srow iframe,.sgcb iframe'
-      ).forEach(function(f){
+    // vibe preset cards own their palette — they must keep showing
+    // their preset's look, not repaint to the mixer's resolve
+    document.querySelectorAll('.card iframe:not([data-vibeself]),'
+      +'.srow iframe,.sgcb iframe').forEach(function(f){
       var push=function(){try{f.contentWindow.postMessage(
         {wfVars:tv,wfTheme:th},'*')}catch(e){}};
       f.addEventListener('load',push,{once:true});
@@ -7222,7 +7224,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
           esc(sw[2])+'"></i>':'')+(sw[0]?'<i style="background:'+
           esc(sw[0])+'"></i>':'')+'</span></div>'+
          '<div class="cb">'+(c.preview?
-          '<iframe src="'+esc(c.preview)+'" loading="lazy"></iframe>':
+          '<iframe src="'+esc(c.preview)+'" loading="lazy" '+
+          'data-vibeself="1"></iframe>':
           '<div class="noprev">no emit</div>')+
          '<div class="desc">'+esc(c.desc||'')+'</div></div>'+
          '<div class="cf">'+
