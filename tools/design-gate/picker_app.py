@@ -511,33 +511,6 @@ class _BankBind(html.parser.HTMLParser):
 # html.wf-menu-open class — ?menu=open enters it through the same
 # toggle a click takes (audit: cards must render the real open
 # state; docs must load closed with correct aria)
-_BANK_MENU_CSS = (
-    'html:not(.wf-menu-open) [data-wf-panel]{display:none !important}')
-_BANK_MENU_DRV = (
-    '<script>(function(){var d=document,r=d.documentElement;'
-    'function so(o){r.classList.toggle("wf-menu-open",o);'
-    'd.querySelectorAll("[data-wf-trigger]").forEach(function(b){'
-    'b.setAttribute("aria-expanded",o?"true":"false")});'
-    'if(d.body)d.body.style.overflow=o?"hidden":""}'
-    'd.addEventListener("DOMContentLoaded",function(){'
-    'if(new URLSearchParams(location.search).get("menu")==="open")'
-    'so(true)});'
-    'd.addEventListener("click",function(e){'
-    'var t=e.target&&e.target.closest&&'
-    'e.target.closest("[data-wf-trigger]");'
-    'if(t){so(!r.classList.contains("wf-menu-open"));return}'
-    'if(!r.classList.contains("wf-menu-open"))return;'
-    'var cb=e.target.closest&&e.target.closest("button,a");'
-    'if(cb&&/close|dismiss|\\u00d7/i.test('
-    '(cb.getAttribute("aria-label")||"")+" "+(cb.textContent||"")))'
-    '{so(false);return}'
-    'var inP=e.target.closest&&e.target.closest('
-    '"[role=\\"dialog\\"],[role=\\"menu\\"],'
-    '[data-wf-panel]:not([data-wf-scrim])");'
-    'if(!inP)so(false)});'
-    'd.addEventListener("keydown",function(e){'
-    'if(e.key==="Escape"&&r.classList.contains("wf-menu-open"))'
-    'so(false)})})();</script>')
 
 
 def _bank_doc(pd, cls, nav=None):
