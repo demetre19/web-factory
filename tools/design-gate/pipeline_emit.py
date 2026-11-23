@@ -184,7 +184,7 @@ def _scaffold(ctx, comps):
     fill = roles.get('surface_elevated') or roles.get('surface') \
         or '#E7E0D6'
     _w(os.path.join(site, 'public', 'media', 'placeholder.svg'),
-       '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1200" '
+       '<svg xmlns="http://www.w3.org/2000/svg" width="900" height="1200" viewBox="0 0 900 1200" '
        'preserveAspectRatio="xMidYMid slice">'
        f'<rect width="900" height="1200" fill="{fill}"/>'
        '<path d="M0 1200 L900 0" stroke="#00000010" stroke-width="2"/>'
@@ -376,6 +376,49 @@ _IMG_PROP_COMPS = {'split-media', 'stacked-hero', 'full-bleed',
                    'portfolio-grid'}
 
 
+def _emit_routes(ctx):
+    """Every route this emit produces — '/' (the S0 redirect) +
+    each plan page + the fixed system/design-system routes. Internal
+    links outside the set 404 on the shipped site."""
+    routes = {'/', '/system/', '/design-system/'}
+    for slug in ctx.pages() or {}:
+        routes.add('/' + slug + '/')
+    return routes
+
+
+def _dead_href(href, routes):
+    """an internal route this emit never builds — '#/…' anchors,
+    tel:/mailto:/http and assets (paths with a file extension) are
+    not routes."""
+    if not isinstance(href, str) or not href.startswith('/') or             href.startswith('//'):
+        return False
+    path = href.split('#', 1)[0].split('?', 1)[0]
+    if not path:
+        path = '/'
+    if '.' in path.rsplit('/', 1)[-1]:
+        return False
+    return path.rstrip('/') + '/' not in routes
+
+
+def _san_links(v, routes):
+    """walk an emitted prop value; drop {href} items whose route is
+    not emitted and re-point markdown links to '#' — the nav/footer/
+    copy a page ships must never route to a 404."""
+    if isinstance(v, list):
+        return [_san_links(it, routes) for it in v]
+    if isinstance(v, dict):
+        if _dead_href(v.get('href'), routes):
+            v = dict(v)
+            v['href'] = '#'
+        return {k: _san_links(x, routes) for k, x in v.items()}
+    if isinstance(v, str):
+        return re.sub(r'\]\((/[^)\s]*)\)',
+                      lambda m: '](#)' if _dead_href(
+                          m.group(1), routes) else m.group(0), v)
+    return v
+
+
+
 def _instance_body(ctx, contract, row, copy=None):
     """The <Comp props/> render call + its import — the ONE instance
     serializer (P.6/W6). Returns (import_line, render_line); the
@@ -413,6 +456,30 @@ def _instance_body(ctx, contract, row, copy=None):
                               str(img.get('src') or '').lstrip('/'))
         img['ratio'] = emit_global.media_ratio_for(
             _asset, contract.get('media_ratio'))
+        # a referenced raster that was never materialized 404s on
+        # the built page (mediaOf falls back to the raw src) — bind
+        # the same deterministic placeholder path the empty-slot
+        # branch uses instead of shipping a dead file
+        _adir = os.path.join(ctx.site, 'src', 'assets', 'media')
+        _name = os.path.basename(_asset)
+        # remote srcs aren't files on this filesystem — skip the
+        # existence check and let the comp render the URL as-is
+        _remote = str(img.get('src') or '').startswith(
+            ('http://', 'https://', '//'))
+        if _name and not _remote and not os.path.isfile(_asset) and                 not os.path.isfile(os.path.join(_adir, _name)):
+            gen = recraft.fill(
+                comp + '-' + str(row.get('name') or row.get('id') or
+                                 ''),
+                'cutout' if comp.startswith('cutout-') else
+                'default',
+                os.path.join(ctx.site, 'public', 'media'))
+            if gen:
+                os.makedirs(_adir, exist_ok=True)
+                shutil.copyfile(gen, os.path.join(
+                    _adir, os.path.basename(gen)))
+                img['src'] = '/media/' + os.path.basename(gen)
+            else:
+                img['src'] = '/media/placeholder.svg'
     if img is None and comp in _IMG_PROP_COMPS:
         # F — an empty media slot gets a generated placeholder
         # (recraft): deterministic per comp+row (row.name is the
@@ -433,6 +500,7 @@ def _instance_body(ctx, contract, row, copy=None):
                 _mdir, os.path.basename(gen)))
             img = {'src': '/media/' + os.path.basename(gen),
                    'alt': str(row.get('heading') or comp)}
+    routes = _emit_routes(ctx)
     for k, src in (('cta', c.get('cta') or row.get('cta')),
                    ('eyebrow', row.get('eyebrow')),
                    ('items', row.get('items')),
@@ -441,10 +509,10 @@ def _instance_body(ctx, contract, row, copy=None):
                    ('images', row.get('images')),
                    ('attrib', row.get('attrib'))):
         if src:
-            props.append(f'{k}={{({json.dumps(src)})}}')
+            props.append(f'{k}={{({json.dumps(_san_links(src, routes))})}}')
     if slot:
-        props.append('copy={(' + json.dumps(slot, ensure_ascii=False)
-                     + ')}')
+        props.append('copy={(' + json.dumps(
+            _san_links(slot, routes), ensure_ascii=False) + ')}')
     if h1_text:
         props.append('h1={true}')
     if (contract.get('stack') or row.get('stack')) == 'media-first':
