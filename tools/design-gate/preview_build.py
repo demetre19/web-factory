@@ -820,6 +820,333 @@ def emit_layouts(ctx):
         switch_kind='layout')
 
 
+# ------------------------------------------------------------------
+# vibe specimens — the vibe stage previews a DIFFERENT finished page
+# per preset (its own layout, its own specimen copy), never the
+# site's real rows: the vibe sells look & feel; the site's copy
+# arrives at the Sections stage. spec-<k> pages build inside the
+# same astro build as the page itself; picker_app wraps each built
+# specimen with a preset's resolved vars.
+# ------------------------------------------------------------------
+
+def _sp_links(*ls):
+    return [{'label': l, 'href': '#'} for l in ls]
+
+
+def _sp_nav(brand, cta, *links):
+    return {'name': 'nav', 'brand': brand,
+            'items': _sp_links(*links),
+            'cta': {'label': cta, 'href': '#'},
+            'speech_act': ['chrome']}
+
+
+def _sp_hero(heading, fs, eyebrow='', cta='Get started'):
+    return {'name': 'hero',
+            'vector': [{'heading': heading}],
+            'fs': fs, 'eyebrow': eyebrow,
+            'cta': {'label': cta, 'href': '#'},
+            'speech_act': ['claim']}
+
+
+def _sp_band(name, heading, items, fs='', cta=None):
+    r = {'name': name, 'vector': [{'heading': heading}],
+         'items': items}
+    if fs:
+        r['fs'] = fs
+    if cta:
+        r['cta'] = {'label': cta, 'href': '#'}
+    return r
+
+
+def _sp_items(*pairs):
+    return [{'title': t, 'text': x, 'term': t, 'label': t, 'href': '#'}
+            for t, x in pairs]
+
+
+def _sp_stats(*triples):
+    return [{'title': v, 'value': v, 'label': l, 'text': x,
+             'term': v}
+            for v, l, x in triples]
+
+
+def _sp_footer(brand, cta='Say hello'):
+    return {'name': 'footer', 'brand': brand,
+            'vector': [{'heading': brand}],
+            'items': _sp_links('About', 'Services', 'Work', 'Journal',
+                               'Contact', 'Privacy'),
+            'cta': {'label': cta, 'href': '#'},
+            'speech_act': ['chrome']}
+
+
+_H = 'headers'
+_F = 'footer'
+_B = 'sections'
+
+_VIBE_SPECS = [
+    # 0 — premium clinical
+    [('nav-bar', _H, 'base',
+      _sp_nav('Meridian Dental', 'Book a visit', 'Treatments', 'Team', 'Fees', 'Contact')),
+     ('hero-act-merge', _B, 'media',
+      _sp_hero('Dentistry without the dread',
+               'Calm, modern care that explains every step before it '
+               'happens.', 'MERIDIAN DENTAL STUDIO', 'Book a visit')),
+     ('feature-grid', _B, 'base',
+      _sp_band('care', 'Everything under one roof',
+               _sp_items(('Check-ups', 'Twice-yearly exams with a '
+                          'plain-English report.'),
+                         ('Whitening', 'In-chair whitening in a '
+                          'single visit.'),
+                         ('Implants', 'Permanent replacements, '
+                          'planned in 3D.'),
+                         ('Kids', 'Gentle first visits that make '
+                          'dentists boring.')))),
+     ('quote-grid', _B, 'muted',
+      _sp_band('proof', 'What patients say',
+               _sp_items(('Sarah M.', 'First dentist that ever '
+                          'explained the bill before the work.'),
+                         ('Tom R.', 'In and out in 40 minutes, '
+                          'zero pain.'),
+                         ('Priya K.', 'My kids actually ask to come '
+                          'back.')))),
+     ('footer-3', _F, 'base', _sp_footer('Meridian Dental'))],
+    # 1 — warm craft
+    [('flyout-nav', _H, 'base',
+      _sp_nav('Fieldstone Roasters', 'Shop beans', 'Beans', 'Brew guides', 'Wholesale',
+              'Find us')),
+     ('stacked-hero', _B, 'base',
+      _sp_hero('Roasted Thursday. Gone by Sunday.',
+               'Small-batch single origins, roasted weekly and '
+               'shipped the same day.', 'FIELDSTONE ROASTERS',
+               'Shop beans')),
+     ('stat-band', _B, 'muted',
+      _sp_band('numbers', 'Small by choice',
+               _sp_stats(('12', 'farms', 'direct-trade partners we '
+                          'visit yearly'),
+                         ('48h', 'roast to ship', 'never on the '
+                          'shelf longer'),
+                         ('2016', 'est.', 'one garage roaster, '
+                          'same obsession')))),
+     ('cards-n', _B, 'base',
+      _sp_band('beans', 'This week\'s roasts',
+               _sp_items(('Yirgacheffe', 'Apricot, jasmine, a long '
+                          'sweet finish.'),
+                         ('Huila', 'Cocoa and red plum, built for '
+                          'milk.'),
+                         ('Gesha Lot 4', 'The competition lot. '
+                          'Limited bags.')),
+               cta='All coffees')),
+     ('footer-9', _F, 'base', _sp_footer('Fieldstone Roasters'))],
+    # 2 — editorial serif
+    [('nav-h8', _H, 'base',
+      _sp_nav('Hale & Mercer', 'Arrange a consult', 'Practice', 'People', 'Insights',
+              'Careers')),
+     ('editorial', _B, 'base',
+      _sp_hero('Counsel for decisions that cannot be unmade',
+               'A boutique practice for founders, funds and the '
+               'families behind them.', 'HALE & MERCER LLP',
+               'Arrange a consult')),
+     ('text-index', _B, 'muted',
+      _sp_band('practice', 'Where we spend our days',
+               _sp_items(('M&A', 'Deals from term sheet to '
+                          'signing.'),
+                         ('Governance', 'Boards, charters, '
+                          'succession.'),
+                         ('Disputes', 'Commercial litigation and '
+                          'arbitration.'),
+                         ('Estates', 'Structures that outlive the '
+                          'maker.')))),
+     ('faq', _B, 'base',
+      _sp_band('questions', 'Before you ask',
+               _sp_items(('Do you take small matters?', 'Yes — '
+                          'complexity, not size, is our filter.'),
+                         ('How do fees work?', 'Fixed where '
+                          'possible, hourly where honest.'),
+                         ('Who leads my file?', 'A partner, always. '
+                          'No hand-offs.')))),
+     ('footer-15', _F, 'base', _sp_footer('Hale & Mercer'))],
+    # 3 — bold energy
+    [('nav-mega-1', _H, 'base',
+      _sp_nav('Pulse Athletics', 'Start trial', 'Training', 'Classes', 'Coaches',
+              'Membership')),
+     ('full-bleed', _B, 'media',
+      _sp_hero('Train loud. Recover quiet.',
+               'Strength floors, a 25m pool and a recovery suite '
+               'under one roof.', 'PULSE ATHLETICS', 'Start trial')),
+     ('pricing-table', _B, 'base',
+      _sp_band('membership', 'Pick your lane',
+               _sp_items(('Off-peak', '9 to 5 access, all classes.'),
+                         ('All hours', 'Anytime entry plus pool '
+                          'and sauna.'),
+                         ('Performance', 'Coached blocks, testing '
+                          'and recovery.')),
+               cta='Compare plans')),
+     ('how-steps', _B, 'muted',
+      _sp_band('start', 'Your first week',
+               _sp_items(('Assess', 'Movement screen and a real '
+                          'conversation.'),
+                         ('Plan', 'A block built around your '
+                          'calendar.'),
+                         ('Train', 'Coached sessions, logged in '
+                          'the app.'),
+                         ('Review', 'Retest at week six.')))),
+     ('footer-7', _F, 'base', _sp_footer('Pulse Athletics'))],
+    # 4 — technical industrial
+    [('nav-h14', _H, 'base',
+      _sp_nav('Atlas Freight', 'Get a quote', 'Lanes', 'Fleet', 'Compliance',
+              'Tracking')),
+     ('split-media', _B, 'media',
+      _sp_hero('Freight that answers the phone',
+               'Regional linehaul with live tracking and a named '
+               'dispatcher on every load.', 'ATLAS FREIGHT CO',
+               'Get a quote')),
+     ('comparison', _B, 'base',
+      _sp_band('why', 'Broker vs. Atlas',
+               _sp_items(('Driver', 'Ours — 140 trucks, one '
+                          'payroll.'),
+                         ('Updates', 'Hourly pings, not "still '
+                          'rolling".'),
+                         ('Claims', 'Settled in days, not '
+                          'quarters.'),
+                         ('Contact', 'A named dispatcher, not a '
+                          'queue.')))),
+     ('timeline-steps', _B, 'muted',
+      _sp_band('flow', 'Dock to dock',
+               _sp_items(('Book', 'Quote confirmed inside the '
+                          'hour.'),
+                         ('Load', 'Photo log at pickup.'),
+                         ('Roll', 'Hourly position pings.'),
+                         ('Deliver', 'POD signed, invoice same '
+                          'day.')))),
+     ('footer-19', _F, 'base', _sp_footer('Atlas Freight'))],
+    # 5 — playful studio
+    [('nav-offcanvas', _H, 'base',
+      _sp_nav('Bloom Workshop', 'Start a project', 'Work', 'Studio', 'Process',
+              'Journal')),
+     ('cutout-hero-split', _B, 'media',
+      _sp_hero('Brands people remember twice',
+               'Identity, packaging and campaigns for companies '
+               'with a point of view.', 'BLOOM WORKSHOP',
+               'Start a project')),
+     ('portfolio-grid', _B, 'base',
+      _sp_band('work', 'Recent work',
+               _sp_items(('Fern & Fauna', 'Rebrand and packaging '
+                          'for a plant-care line.'),
+                         ('Orbit Toys', 'A toy company that '
+                          'doesn\'t shout.'),
+                         ('Loop', 'Identity for a refill '
+                          'startup.'),
+                         ('Kiln House', 'Signage, menus and a '
+                          'very loud truck.')))),
+     ('teams-grid', _B, 'muted',
+      _sp_band('team', 'The workshop',
+               _sp_items(('Maya', 'Creative direction.'),
+                         ('Jules', 'Strategy and words.'),
+                         ('Ren', 'Design systems.'),
+                         ('Ada', 'Production.')))),
+     ('footer-11', _F, 'base', _sp_footer('Bloom Workshop'))],
+    # 6 — product saas
+    [('nav-h20', _H, 'base',
+      _sp_nav('Northline', 'Try free', 'Product', 'Customers', 'Docs',
+              'Pricing')),
+     ('split-media', _B, 'base',
+      _sp_hero('Reports your CFO actually opens',
+               'Revenue analytics wired straight into your ledger '
+               '— no exports, no spreadsheets.', 'NORTHLINE',
+               'Try free')),
+     ('proof-band', _B, 'muted',
+      _sp_band('proof', 'Numbers that hold up',
+               _sp_stats(('1,900+', 'teams', 'close their books '
+                          'on Northline'),
+                         ('4 hrs', 'saved weekly', 'per finance '
+                          'operator'),
+                         ('99.98%', 'uptime', 'across the last '
+                          '12 months')))),
+     ('capture-form', _B, 'base',
+      _sp_band('cta', 'See it on your own data',
+               [], fs='Fifteen minutes, your books connected.',
+               cta='Book a demo')),
+     ('footer-5', _F, 'base', _sp_footer('Northline'))],
+    # 7 — quiet luxury
+    [('nav-h22', _H, 'base',
+      _sp_nav('Casa Verde', 'Reserve', 'Villas', 'Dining', 'Experiences',
+              'Offers')),
+     ('banner-cta', _B, 'media',
+      _sp_hero('Where the valley goes quiet',
+               'Twelve villas above the vines — a table, a pool '
+               'and nothing on the schedule.', 'CASA VERDE',
+               'Reserve')),
+     ('gallery-grid', _B, 'base',
+      _sp_band('stay', 'The estate',
+               _sp_items(('Villa Rosa', 'Two bedrooms, private '
+                          'plunge pool.'),
+                         ('The Long Table', 'Dinner under the '
+                          'olive trees.'),
+                         ('The Cellar', 'Our own vintages, '
+                          'poured by the maker.'),
+                         ('The Pool', 'Heated, edged in '
+                          'travertine.')))),
+     ('newsletter-band', _B, 'muted',
+      _sp_band('letters', 'Letters from the valley',
+               [], fs='Seasonal openings, harvest dinners and '
+                      'last-minute cancellations.',
+               cta='Subscribe')),
+     ('footer-17', _F, 'base', _sp_footer('Casa Verde'))],
+]
+
+
+def emit_vibe_specs(ctx):
+    """preview/spec-<k>.astro — one page per _VIBE_SPECS archetype,
+    each a different comp arrangement with its own specimen copy.
+    Emitted inside the page's own build so the picker iframes REAL
+    built pages, then wrapped per-preset by picker_app."""
+    specs, comps = [], set()
+    # archetype photography generated once by vibe_images.py and
+    # shipped under assets/vibe/ — each specimen hero renders real
+    # imagery that matches its brand, so the board reads as eight
+    # different finished products instead of text-only comps
+    vimg = os.path.join(os.path.dirname(os.path.dirname(
+        os.path.dirname(os.path.abspath(__file__)))),
+        'assets', 'vibe')
+    for k, rows_spec in enumerate(_VIBE_SPECS):
+        cr = []
+        for comp, cat, surface, row in rows_spec:
+            comps.add(comp)
+            src = os.path.join(vimg, f'spec-{k}.webp')
+            if (row.get('name') == 'hero' and not row.get('image')
+                    and os.path.isfile(src)):
+                row['image'] = {'src': f'/media/vibe/spec-{k}.webp',
+                                'alt': ''}
+                row.setdefault('images', [row['image']])
+            cr.append(({'section': row['name'],
+                        'composition': comp, 'recipe': None,
+                        'category': cat, 'surface': surface,
+                        'density': 'regular',
+                        'wf_ref': 'preview/vibe-specs',
+                        'media_ratio': 'none', 'disclosure': 'none',
+                        'intent': None, 'content_ids': [],
+                        'cols': None, 'seam': 'none-set',
+                        'seam_shape_top': None,
+                        'seam_shape_bottom': None,
+                        'skeleton': None, 'content': {}}, row))
+        specs.append(cr)
+    if os.path.isdir(vimg):
+        import shutil as _shv
+        dst = os.path.join(ctx.site, 'public', 'media', 'vibe')
+        for fn in os.listdir(vimg):
+            if fn.endswith('.webp'):
+                os.makedirs(dst, exist_ok=True)
+                _shv.copyfile(os.path.join(vimg, fn),
+                              os.path.join(dst, fn))
+    _emit_components(ctx, [], sorted(comps))
+    _ensure_shell(ctx)
+    _ensure_assets(ctx)
+    for k, cr in enumerate(specs):
+        PE._w(os.path.join(ctx.site, 'src', 'pages', 'preview',
+                           f'spec-{k}.astro'),
+              _page_astro(ctx, cr, {}, ''))
+    return len(specs)
+
+
 def emit_variants(ctx, entries=None, fname='variants.html',
                   marker='--variants'):
     """w4 — one real page per look variant: same sections, variant

@@ -1,91 +1,70 @@
 ---
 /**
- * wf-counter-1 — TRANSLATED Bricksmaven skeleton.
- * Produced by bricks_translate.py from the ACSS payload
- * beside this file (counter-1.json). Bank source, NOT a gold
- * exemplar: the SOP adapts props/copy/rhythm before
- * canonising (SB.5). Unmapped ACSS vars surface as
- * var(--acss-*) and are listed in the translate report.
+ * stat-band — gold exemplar (SB.5). A row of headline figures: icon
+ * chip when the item names one, the value at display size, the label
+ * small. Renders inside Section.astro (SB.2).
+ *
+ * Full-copy slots (§4.3): heading → answer → before → stat row →
+ * links → after in article order (F.1). A block with no stat items
+ * still renders its full copy — the band appears only when figures
+ * exist (F.2: no invented numbers).
  */
+import { iconFor, inline } from '../_shared/inline';
+import type { CopySlot } from '../_shared/inline';
 interface Props {
-  brand?: string;
   heading?: string;
   fs?: string;
+  body?: string;
   cta?: { label: string; href: string };
-  items?: { title?: string; text?: string; term?: string;
-             label?: string; href?: string;
-             icon?: string; items?: any[] }[];
+  items?: { term?: string; title?: string; text?: string; value?: string;
+             label?: string; href?: string; quote?: string;
+             icon?: string }[];
   image?: { src: string; alt: string };
-  images?: { src: string; alt: string }[];
-  copy?: any;
   h1?: boolean;
+  copy?: CopySlot;
 }
-import { inline } from '../_shared/inline';
 const {
-  brand = 'Brand',
-  heading = '',
-  fs = '',
-  cta = { label: '', href: '#' },
-  items = [],
-  image,
-  images = [],
-  copy,
-  h1 = false,
+  heading = 'Section heading', fs = '',
+  body = '', cta, items = [], image, h1, copy,
 } = Astro.props;
-// §4.3 — a copy slot binds verbatim article copy onto
-// the skeleton's native props (F.1 — nothing dropped)
-const cp = copy || {};
+const cp: CopySlot = copy || {};
 const head = cp.heading || heading;
-const sub = cp.answer || cp.text || fs;
+const sub = cp.answer || fs || body;
 const before = cp.before || [];
-const list = (cp.items && cp.items.length
-  ? cp.items : items) || [];
-// N.select — the desktop bar keeps the leading links whose
-// labels fit its budget; the rest open behind "More"
-const _lbl = (it) => String(it.label || it.term || it.title || it.text || '');
-const navFit = (() => { let w = 0, n = 0;
-  for (const it of list) { w += _lbl(it).length + 2;
-    if (w > 56) break; n++; }
-  return n; })();
-const navOver = list.length > 6 || navFit < list.length;
-const navCut = Math.max(1, Math.min(navFit, 4));
-const qas = cp.qa || [];
-const links = cp.links || [];
+const links = (cp.links && cp.links.length)
+  ? cp.links.map((l) => l.text || `[${l.anchor}](${l.href})`)
+  : [];
+const list = (cp.items && cp.items.length) ? cp.items : items;
+const stats = list.filter((it) => it.value);
 const after = cp.after || [];
-const act = cp.cta || cta;
-const phone = cp.phone || '';
-const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
 ---
 
-<div class="wf-counter-1">
-  <div class="sec-inner">
-    <div class="wf-counter-1-container">
-      <div class="intro">
-        {head && (h1 ? <h1 class="text-fluid-4">{head}</h1> : <h2 class="text-fluid-2">{head}</h2>)}
-        {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
-              </div>
-      {before.length > 0 && <div class="flow mt-stack">
-{before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
-      </div>}
-
-      <div class="wf-counter-1-content">
-        {act.label &&         <div class="wf-counter-1-box">
-          {act.label && <p class="mt-fluid-m"><a class="wf-cta-button" href={act.href}>{act.label}</a></p>}
+<div>
+  {h1 ? <h1 class="text-fluid-3">{head}</h1> : <h2 class="text-fluid-3">{head}</h2>}
+  {sub && <p class="mt-stack max-w-prose text-fluid-0" set:html={inline(sub)} />}
+  {before.map((p) => (
+    <p class="mt-stack max-w-prose text-fluid-0" set:html={inline(p)} />
+  ))}
+  {stats.length > 0 && (
+    <dl class="mt-stack grid-auto gap-stack">
+      {stats.map((it) => {
+        const Icon = iconFor(it.icon);
+        return (
+        <div>
+          {Icon && <span class="icon-chip"><Icon size={22} aria-hidden="true" /></span>}
+          <dd class="text-fluid-4 font-bold">{it.value}</dd>
+          <dt class="mt-fluid-s text-fluid--1" set:html={inline(it.label)} />
         </div>
-        }
-        {list.length > 0 && <div class="wf-counter-1-grid-ul">{(list || []).map((it) => (
-              <div class="wf-counter-1-card card">
-                <div class="wf-counter-1-card__intro">
-                  <h3>{it.stat || it.term || it.title}</h3>
-                </div>
-                <p class="text-fluid-0">{it.text}</p>
-              </div>
-            ))}</div>}
-      </div>
-    </div>
-  </div>
-  {qas.length > 0 && <dl class="mt-stack">{qas.map((qa) => <><dt class="text-fluid-0" set:html={inline(qa.q)} /><dd class="text-fluid-0" set:html={inline(qa.a)} /></>)}</dl>}
-  {links.length > 0 && <div class="flow mt-stack">{links.map((l) => <p class="text-fluid-0" set:html={inline(l.text || `[${l.anchor}](${l.href})`)} />)}</div>}
-  {after.length > 0 && <div class="flow mt-stack">{after.map((p) => <p class="text-fluid-0" set:html={inline(p)} />)}</div>}
-  {tel && <p class="mt-stack"><a class="link-quiet" href={tel}>{phone}</a></p>}
+        );
+      })}
+    </dl>
+  )}
+  {links.length > 0 && (
+    <ul class="mt-stack grid-auto list-plain text-fluid-0">
+      {links.map((t) => <li set:html={inline(t)} />)}
+    </ul>
+  )}
+  {after.map((p) => (
+    <p class="mt-stack max-w-prose text-fluid-0" set:html={inline(p)} />
+  ))}
 </div>

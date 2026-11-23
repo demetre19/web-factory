@@ -1,91 +1,63 @@
 ---
 /**
- * wf-content-1 — TRANSLATED Bricksmaven skeleton.
- * Produced by bricks_translate.py from the ACSS payload
- * beside this file (content-1.json). Bank source, NOT a gold
- * exemplar: the SOP adapts props/copy/rhythm before
- * canonising (SB.5). Unmapped ACSS vars surface as
- * var(--acss-*) and are listed in the translate report.
+ * editorial — gold exemplar (SB.5). Adapt copy, tokens and rhythm to the
+ * contract; keep the skeleton. Renders inside Section.astro: no
+ * <section>, no outer padding/background/max-width (SB.2).
+ *
+ * Full-copy slots (§4.3): the `copy` prop carries the COPY.json block
+ * verbatim — heading → answer → before → items → links → after in
+ * article order. No paragraph of the article is dropped (F.1).
  */
+import { inline } from '../_shared/inline';
+import type { CopySlot } from '../_shared/inline';
 interface Props {
-  brand?: string;
   heading?: string;
   fs?: string;
+  body?: string;
   cta?: { label: string; href: string };
-  items?: { title?: string; text?: string; term?: string;
-             label?: string; href?: string;
-             icon?: string; items?: any[] }[];
+  items?: { term?: string; title?: string; text?: string; value?: string;
+             label?: string; href?: string; quote?: string }[];
   image?: { src: string; alt: string };
-  images?: { src: string; alt: string }[];
-  copy?: any;
   h1?: boolean;
+  copy?: CopySlot;
 }
-import { inline } from '../_shared/inline';
-import IconChip from '../_shared/IconChip.astro';
-import { Image } from 'astro:assets';
 const {
-  brand = 'Brand',
-  heading = '',
-  fs = '',
-  cta = { label: '', href: '#' },
-  items = [],
-  image,
-  images = [],
-  copy,
-  h1 = false,
+  heading = 'Section heading', fs = '',
+  body = '', cta, items = [], image, h1, copy,
 } = Astro.props;
-// §4.3 — a copy slot binds verbatim article copy onto
-// the skeleton's native props (F.1 — nothing dropped)
-const cp = copy || {};
+const cp: CopySlot = copy || {};
 const head = cp.heading || heading;
-const sub = cp.answer || cp.text || fs;
+const answer = cp.answer || '';
+const sub = answer || fs || body;
+const subCls = 'mt-stack ' + (answer ? 'lede' : 'text-fluid-0');
 const before = cp.before || [];
-const list = (cp.items && cp.items.length
-  ? cp.items : items) || [];
-// N.select — the desktop bar keeps the leading links whose
-// labels fit its budget; the rest open behind "More"
-const _lbl = (it) => String(it.label || it.term || it.title || it.text || '');
-const navFit = (() => { let w = 0, n = 0;
-  for (const it of list) { w += _lbl(it).length + 2;
-    if (w > 56) break; n++; }
-  return n; })();
-const navOver = list.length > 6 || navFit < list.length;
-const navCut = Math.max(1, Math.min(navFit, 4));
-const qas = cp.qa || [];
+const list = (cp.items && cp.items.length ? cp.items : items) || [];
 const links = cp.links || [];
 const after = cp.after || [];
-const act = cp.cta || cta;
-const phone = cp.phone || '';
-const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
-// V.8/P.12 — rasters resolve through src/assets/media/
-// so <Image> compiles AVIF/WebP srcsets
-const _media = import.meta.glob('../assets/media/*.{jpg,jpeg,png,webp}', { eager: true });
-const _mn = image ? String(image.src).split('/').pop() : null;
-const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : null;
-const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}`]?.default ?? m.src;
+const ordered = !!cp.list_ordered;
+const ListTag = ordered ? 'ol' : 'ul';
 ---
 
-<div class="wf-content-1">
-  <div class="sec-inner">
-    <div class="wf-content-1-container">
-      <div class="wf-content-1__box">
-        {head && (h1 ? <h1 class="text-fluid-4">{head}</h1> : <h2 class="text-fluid-2">{head}</h2>)}
-        {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
-        {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
-        {act.label &&         <div class="cta-combo">
-          {act.label && <p class="mt-fluid-m"><a class="wf-cta-button" href={act.href}>{act.label}</a></p>}
-        </div>
-        }
-      </div>
-      {image &&       <div>
-        {image && image.src && <figure class="ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
-      </div>
-      }
-    </div>
+<div>
+  <div class="max-w-prose">
+    {h1 ? <h1 class="text-fluid-4">{head}</h1> : <h2 class="text-fluid-3">{head}</h2>}
+    {sub && <p class={subCls} set:html={inline(sub)} />}
+    {before.map((p) => (
+      <p class="mt-stack text-fluid-0" set:html={inline(p)} />
+    ))}
+    {list.length > 0 && (
+      <ListTag class="mt-stack list-items text-fluid-0">
+        {list.map((it) => (
+          <li><strong set:html={inline(it.term || it.title)} />{' – '}<span set:html={inline(it.text)} /></li>
+        ))}
+      </ListTag>
+    )}
+    {links.map((l) => (
+      <p class="mt-stack text-fluid-0" set:html={inline(l.text || '')} />
+    ))}
+    {after.map((p) => (
+      <p class="mt-stack text-fluid-0" set:html={inline(p)} />
+    ))}
+    {cta && <a class="wf-cta-button mt-stack" href={cta.href}>{cta.label}</a>}
   </div>
-  {list.length > 0 && <dl class="mt-stack list-plain flow-list">{list.map((it) => <div class="flow-row">{it.icon && <IconChip name={it.icon} />}<dt class="text-fluid-0" set:html={inline(it.term || it.title || it.label || '')} />{it.text && <dd class="text-fluid-0" set:html={inline(it.text)} />}</div>)}</dl>}
-  {qas.length > 0 && <dl class="mt-stack">{qas.map((qa) => <><dt class="text-fluid-0" set:html={inline(qa.q)} /><dd class="text-fluid-0" set:html={inline(qa.a)} /></>)}</dl>}
-  {links.length > 0 && <div class="flow mt-stack">{links.map((l) => <p class="text-fluid-0" set:html={inline(l.text || `[${l.anchor}](${l.href})`)} />)}</div>}
-  {after.length > 0 && <div class="flow mt-stack">{after.map((p) => <p class="text-fluid-0" set:html={inline(p)} />)}</div>}
-  {tel && <p class="mt-stack"><a class="link-quiet" href={tel}>{phone}</a></p>}
 </div>

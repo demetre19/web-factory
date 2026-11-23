@@ -1012,10 +1012,18 @@ def _handler():
                 return
             if q.path.startswith('/built/'):
                 # serve the pipeline's built pages + assets to the
-                # picker's iframes — path is the quoted absolute file
-                # under the served pipeline's site tree
+                # picker's iframes — path is the quoted file under the
+                # served pipeline's site tree: absolute, or repo-
+                # relative (bank cards emit the relative form)
                 fp = urllib.parse.unquote(q.path[len('/built/'):])
                 fp = os.path.normpath('/' + fp.lstrip('/'))
+                if not os.path.isfile(fp):
+                    _alt = os.path.normpath(os.path.join(
+                        os.path.dirname(os.path.dirname(os.path.dirname(
+                            os.path.abspath(__file__)))),
+                        fp.lstrip('/')))
+                    if os.path.isfile(_alt):
+                        fp = _alt
                 if re.search(r'/site/', fp) and \
                         not os.path.isfile(fp):
                     _ensure_preview(fp)
