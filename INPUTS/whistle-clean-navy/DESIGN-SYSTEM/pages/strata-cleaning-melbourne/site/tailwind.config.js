@@ -2,6 +2,7 @@
 export default {
   darkMode: 'class',
   content: ['./src/**/*.{astro,html}'],
+  safelist: ['density-compact', 'density-regular', 'density-spacious'],
   theme: { extend: {
     colors: {
       paper: '#ffffff', surface: '#f0f3f6', elev: '#e9ebee', border: '#d6d9db', ink: '#2f3644', muted: '#5f687b',

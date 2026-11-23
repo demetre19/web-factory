@@ -68,11 +68,11 @@
   --section-space-xl: clamp(7.996rem, calc(14.7983vw + 5.0363rem), 16.875rem);
   --section-space-xxl: clamp(10.6587rem, calc(24.4231vw + 5.7741rem), 25.3125rem);
   --gutter: clamp(1rem, calc(6.6667vw - 0.3333rem), 5rem);
-  --grid-gap: var(--space-m);
-  --content-gap: var(--space-m);
-  --elements-gap: var(--space-m);
-  --container-gap: var(--space-xl);
-  --list-item-spacing: var(--space-s);
+  --grid-gap: max(1rem, var(--space-m));
+  --content-gap: max(1rem, var(--space-m));
+  --elements-gap: max(1rem, var(--space-m));
+  --container-gap: max(1rem, var(--space-xl));
+  --list-item-spacing: max(1rem, var(--space-s));
   --measure: 64ch;
   --btn-padding-block: 0.75em;
   --btn-padding-inline: 1.5em;
@@ -328,17 +328,22 @@ input, textarea { border: 1px solid var(--input-border); padding: var(--input-py
   .pb-fluid-s { padding-block-end: var(--space-s); }
   .p-fluid-s { padding: var(--space-s); }
   .p-fluid-m { padding: var(--space-m); }
-  .gap-stack { gap: var(--grid-gap); }
-  .gap-fluid-s { gap: var(--space-s); }
-  .gap-fluid-m { gap: var(--space-m); }
-  .gap-fluid-l { gap: var(--space-l); }
-  .sec-band { padding-block: var(--sec-pad, var(--section-space-m));
+  .gap-stack { gap:max(1rem, var(--grid-gap)); }
+  .gap-fluid-s { gap:max(1rem, var(--space-s)); }
+  .gap-fluid-m { gap:max(1rem, var(--space-m)); }
+  .gap-fluid-l { gap:max(1rem, var(--space-l)); }
+  /* P.floor — EVERY section carries some padding at every viewport
+     (operator rule, brutalist included): the vibe may tighten the
+     rung but never below 1rem block or inline. max() floors, not
+     replaces, so a roomier token still wins. */
+  .sec-band { --_pad-f: var(--sec-pad, var(--section-space-m));
+              padding-block: max(1rem, var(--_pad-f));
               background: var(--sec-bg, var(--bg-canvas));
               color: var(--sec-fg, var(--text-primary)); }
   /* the measure box owns the page gutter: without it a 390px phone
      renders text flush to the bezel */
   .sec-inner { max-width: var(--content-width); margin-inline: auto;
-               padding-inline: var(--gutter); }
+               padding-inline: max(1rem, var(--gutter)); }
   /* a bank skeleton that ships its own measure box must not double
      the gutter inside the shell's .sec-inner — the shell owns it
      (SB.2). One measure, one gutter, every section. */
@@ -362,19 +367,20 @@ input, textarea { border: 1px solid var(--input-border); padding: var(--input-py
   [class*="container"][class*="container"]:has(> .flow) {
       flex-direction: column; }
   /* chrome is a bar: nav/footer get rhythm, never a section's padding */
-  .sec-bar { padding-block: var(--space-xs);
+  .sec-bar { padding-block: max(1rem, var(--space-xs));
              background: var(--sec-bg, var(--bg-canvas));
              color: var(--sec-fg, var(--text-primary)); }
   /* a footer bar holds columns + a legal rule: it needs air above the
      last band and below the legal line, not the nav's slim strip */
-  footer.sec-bar { padding-block: var(--space-xl) var(--space-l); }
+  footer.sec-bar { padding-block: max(1rem, var(--space-xl))
+                   max(1rem, var(--space-l)); }
   /* G.5 canon — every collection grid is auto-fit on the rung-bound
      card floor, never a fixed repeat(N). G.8 — a declared columns
      allele (data-cols=N) is a CAP: the track floor rises to an N-th
      of the row, so wide rows hold exactly N and narrow rows still
      collapse on the readable floor. */
   .grid-auto { display: grid; grid-auto-rows: 1fr;
-      gap: var(--grid-gap);
+      gap:max(1rem, var(--grid-gap));
       --grid-floor: var(--grid-min); --grid-cap: 99;
       grid-template-columns: repeat(auto-fit, minmax(min(max(
         var(--grid-floor),
@@ -402,7 +408,7 @@ input, textarea { border: 1px solid var(--input-border); padding: var(--input-py
      emitting spacing — the floor only catches silence, which today
      renders as cards touching. */
   [class*="-grid-ul"], [class*="-grid"], ul[class*="grid"] {
-      gap: var(--grid-gap); }
+      gap:max(1rem, var(--grid-gap)); }
   /* wrapped-sibling floor (smart spacing): a container of wrapped
      elements — cards/panels/tiles/collection items — always resolves
      a nonzero --elements-gap. Prose is exempt by selector scope:
@@ -410,11 +416,11 @@ input, textarea { border: 1px solid var(--input-border); padding: var(--input-py
      margins only, never a sibling gap. */
   [class*="-cards"], [class*="-tiles"], [class*="-panels"],
   .card-grid, ul.list-plain,
-  [class*="-items"]:not(.list-items) { gap: var(--elements-gap); }
+  [class*="-items"]:not(.list-items) { gap:max(1rem, var(--elements-gap)); }
   /* logo-wall: a row of marks at one optical height — client artwork
      keeps its colours, the row sets scale and rhythm */
   .logo-row { display: flex; flex-wrap: wrap; align-items: center;
-              justify-content: flex-start; gap: var(--space-l); }
+              justify-content: flex-start; gap:max(1rem, var(--space-l)); }
   /* client artwork is drawn for a light ground: each mark sits on a
      plate — elevated paper in light, the light ink tone in dark — so
      a navy or red mark never sinks into a dark band */
@@ -428,9 +434,9 @@ input, textarea { border: 1px solid var(--input-border); padding: var(--input-py
   /* layout primitives — ACSS's row/stack/card vocabulary, bound to
      the rungs so every composition spaces from the same scale */
   .row { display: flex; flex-wrap: wrap; align-items: center;
-         gap: var(--space-m); }
+         gap:max(1rem, var(--space-m)); }
   .between { justify-content: space-between; }
-  .stack { display: flex; flex-direction: column; gap: var(--space-s); }
+  .stack { display: flex; flex-direction: column; gap:max(1rem, var(--space-s)); }
   .card { background: var(--bg-surface);
           border: 1px solid var(--border-default);
           border-radius: var(--r-card); padding: var(--space-m);
@@ -525,7 +531,7 @@ input, textarea { border: 1px solid var(--input-border); padding: var(--input-py
   .btn-primary { min-height: var(--tap); }
   .inverse { background: var(--c-ink); color: var(--c-paper); }
   .fold-row { border-top: 1px solid var(--c-line); }
-  .card-grid { display: grid; gap: var(--grid-gap); }
+  .card-grid { display: grid; gap:max(1rem, var(--grid-gap)); }
   .btn-primary:hover { filter: brightness(1.08); }
   .btn-primary:focus-visible { outline: 2px solid var(--c-ink); outline-offset: 2px; }
   .btn-primary:disabled { opacity: .5; }
@@ -588,8 +594,16 @@ input, textarea { border: 1px solid var(--input-border); padding: var(--input-py
   /* the open mobile menu is a flyout sheet, not a dropdown: a
      right-side panel over a scrim, a close control, vertical links,
      and the header CTA docked at the panel's foot (N.flyout) */
+  /* the whole open-sheet contract exists only under the nav
+     breakpoint — at ≥60rem .nav-links flows inline and a stray
+     .open (a ?menu=open URL loaded wide, say) must not pin a fixed
+     panel or lock scroll (audit: menu-desktop doc at 1280) */
+  .nav-close { display: none; }
+  .nav-sheet-head { display: none; }
+  .nav-sheet-cta { display: none; }
+  @media (max-width: 59.99rem) {
   .nav-links.open { display: flex; flex-direction: column;
-            gap: var(--space-l);
+            gap:max(1rem, var(--space-l));
             position: fixed; inset-block: 0; inset-inline-end: 0;
             width: min(20rem, 85vw);
             z-index: calc(var(--primitive-z-sticky) + 1);
@@ -598,20 +612,13 @@ input, textarea { border: 1px solid var(--input-border); padding: var(--input-py
             border-inline-start: 1px solid var(--border-default);
             box-shadow: var(--shadow-pop); overflow-y: auto; }
   .nav-links.open ul { flex-direction: column; flex-wrap: nowrap;
-            align-items: stretch; gap: var(--space-xs); width: 100%; }
+            align-items: stretch; gap:max(1rem, var(--space-xs)); width: 100%; }
   .nav-links.open .nav-link { font-size: var(--fs-1);
             display: flex; align-items: center;
             /* ~3rem rows: fs-1 line + space-s padding, tap-sized
                without declaring a height (A.1) */
             padding-block: var(--space-s);
             white-space: normal; }
-  /* under 30rem the sheet is the whole viewport — a docked rail
-     leaves no room for a strip of page behind it */
-  @media (max-width: 30rem) {
-    .nav-links.open { width: 100vw; inset-inline: 0;
-            border-inline-start: 0; }
-  }
-  .nav-close { display: none; }
   .nav-links.open .nav-close { display: inline-flex;
             align-self: flex-end; min-height: var(--tap);
             min-width: var(--tap); align-items: center;
@@ -619,12 +626,9 @@ input, textarea { border: 1px solid var(--input-border); padding: var(--input-py
             border: 0 !important;
             color: var(--text-secondary); font-size: var(--fs-2);
             line-height: 1; cursor: pointer; }
-  /* the sheet's top row: brand left, ghost close right — one row,
-     never a floating X (N.flyout) */
-  .nav-sheet-head { display: none; }
   .nav-links.open .nav-sheet-head { display: flex;
             align-items: center; justify-content: space-between;
-            gap: var(--space-m);
+            gap:max(1rem, var(--space-m));
             padding-block-end: var(--space-s);
             border-block-end: 1px solid
                 var(--border-subtle, var(--border-default)); }
@@ -652,24 +656,51 @@ input, textarea { border: 1px solid var(--input-border); padding: var(--input-py
      hidden under the breakpoint, so .nav-sheet-cta — a child of the
      sheet, docked at its foot — shows the plan action instead
      (N.flyout). Full width within the sheet's own padding. */
-  .nav-sheet-cta { display: none; }
   .nav-links.open .nav-sheet-cta { display: block;
             margin-block-start: auto; margin-inline: 0;
             padding-block-start: var(--space-m); width: 100%; }
   .nav-links.open .nav-sheet-cta > .wf-cta-button,
   .nav-links.open .nav-sheet-cta a {
             display: flex; justify-content: center; width: 100%; }
+  }
+  /* under 30rem the sheet is the whole viewport — a docked rail
+     leaves no room for a strip of page behind it */
+  @media (max-width: 30rem) {
+    .nav-links.open { width: 100vw; inset-inline: 0;
+            border-inline-start: 0; }
+  }
   /* header CTA: below the nav breakpoint it rides inside the flyout;
      burger, links and CTA share one breakpoint (60rem — the
      .nav-links one below) or a dead zone opens where the header
      shows brand alone */
   .nav-cta { display: none; }
-  @media (max-width: 60rem) {
+  /* the header CTA is a compact pill — 40–44px tall (never the
+     --tap-sized hero button). F113-1/audit: ≥15px label, ≤44px.
+     padding-block:0 + inline-flex centring keeps the computed
+     height at the 2.5rem floor whatever --fs-0 resolves to */
+  .nav-cta .wf-cta-button, .nav-cta > a {
+            display: inline-flex; align-items: center;
+            justify-content: center;
+            min-height: 2.5rem; max-height: 2.75rem;
+            padding-block: 0; padding-inline: .75em;
+            font-size: var(--fs-0); }
+  /* 59.99 not 60 — at exactly 60rem both media queries matched and
+     the burger showed beside the inline links (audit) */
+  @media (max-width: 59.99rem) {
     /* an empty CTA lane beside the burger must not hold flex space —
        hide a wrapper whose only element is the hidden .nav-cta, so
-       the burger pins to the row's far end (N.flyout) */
-    header[data-sec="nav"] div:has(> .nav-cta:only-child) {
-            display: none; }
+       the burger pins to the row's far end (N.flyout). Unscoped:
+       specimen/spec docs carry the same empty lane */
+    div:has(> .nav-cta:only-child) { display: none; }
+    /* E-M2 — the trigger docks to the row's far inline end at every
+       width under the breakpoint, whatever lanes precede it */
+    .burger { margin-inline-start: auto; }
+    /* the bar row is only as far in from the edge as the page
+       gutter — the fluid gutter grows to ~59px at 959px, dragging
+       the burger's right edge off the corner. Cap the header's
+       gutter under the breakpoint so the trigger stays ≤24px from
+       the edge (audit: 35–59px at 600–959) */
+    header > .sec-inner { padding-inline: min(var(--gutter), 1rem); }
   }
   @media (min-width: 60rem) {
     /* a stray CTA class on the trigger must not resurrect it: the
@@ -684,7 +715,7 @@ input, textarea { border: 1px solid var(--input-border); padding: var(--input-py
   .num-prom { font-size: var(--fs-1); }
   /* the section head: eyebrow, claim, lede - one measure, one gap */
   .sec-head { display: flex; flex-direction: column;
-              gap: var(--space-s); max-width: 46rem; }
+              gap:max(1rem, var(--space-s)); max-width: 46rem; }
   .sec-head.center { align-items: center; text-align: center;
                      margin-inline: auto; }
   .eyebrow { font-size: var(--fs--1); font-weight: 600;
@@ -693,7 +724,7 @@ input, textarea { border: 1px solid var(--input-border); padding: var(--input-py
   .lede { font-size: var(--fs-1); line-height: 1.5;
           color: var(--text-secondary); max-width: var(--measure); }
   .card { display: flex; flex-direction: column;
-          gap: var(--space-s); }
+          gap:max(1rem, var(--space-s)); }
   /* the chip opens a card — a bank DOM that lists it last still
      renders icon-above-title, the global card order */
   .card > .icon-chip { order: -1; }
@@ -737,11 +768,11 @@ input, textarea { border: 1px solid var(--input-border); padding: var(--input-py
       color: var(--sec-fg); }
   /* ratings + attributions: a star row binds the accent, the name row
      carries a small avatar and a source line */
-  .stars { display: inline-flex; gap: calc(var(--space-xs) / 8);
+  .stars { display: inline-flex; gap:max(1rem, calc(var(--space-xs) / 8));
       color: var(--action-primary); }
   .stars svg { width: 1em; height: 1em; }
   .star-off { opacity: 0.35; }
-  .quote-foot { display: flex; gap: var(--space-s); align-items: center;
+  .quote-foot { display: flex; gap:max(1rem, var(--space-s)); align-items: center;
       margin-block-start: var(--space-s); }
   .avatar { width: var(--tap); height: var(--tap); border-radius: 999px;
       object-fit: cover; }
@@ -770,9 +801,9 @@ input, textarea { border: 1px solid var(--input-border); padding: var(--input-py
   .rule { height: 1px; background: var(--border-default);
           border: 0; margin: 0; }
   .flow-list { display: flex; flex-direction: column;
-               gap: var(--space-xs); }
+               gap:max(1rem, var(--space-xs)); }
   .flow-row { display: grid; grid-template-columns: 4rem 1fr;
-              gap: var(--space-m); padding-block: var(--space-m);
+              gap:max(1rem, var(--space-m)); padding-block: var(--space-m);
               border-top: 1px solid var(--border-default);
               align-items: start; }
   .flow-row > dt, .flow-row > dd { grid-column: 2; }
@@ -780,13 +811,23 @@ input, textarea { border: 1px solid var(--input-border); padding: var(--input-py
   .flow-row:not(:has(> .icon-chip)) > dd { grid-column: 1 / -1; }
   .flow-row:last-child { border-bottom: 1px solid
                          var(--border-default); }
-  .split { display: grid; gap: var(--space-l);
+  .split { display: grid; gap:max(1rem, var(--space-l));
            grid-template-columns: 1fr; align-items: center; }
   @media (min-width: 48rem) {
     .split { grid-template-columns: 1.05fr 1fr; }
-    .split.media-first { grid-template-columns: 1fr 1.05fr; }
+    .split.media-first, .split[data-media-first] {
+      grid-template-columns: 1fr 1.05fr; }
+    .split[data-media-first] > .stack { order: 2; }
   }
-  .cta-row { display: flex; flex-wrap: wrap; gap: var(--space-s);
+  /* a media-band hero (hero-act-merge) covers its band with the photo
+     under a canvas scrim — the band ink stays legible in both modes */
+  .surface-media:has(> .sec-inner > .act-merge-media) {
+    position: relative; isolation: isolate; overflow: hidden; }
+  .act-merge-media { position: absolute; inset: 0; z-index: -1; }
+  .act-merge-media img { width: 100%; height: 100%; object-fit: cover; }
+  .act-merge-media::after { content: ""; position: absolute; inset: 0;
+    background: color-mix(in oklab, var(--bg-canvas) 65%, transparent); }
+  .cta-row { display: flex; flex-wrap: wrap; gap:max(1rem, var(--space-s));
              align-items: center; }
   .link-quiet { color: var(--text-secondary); text-decoration: none;
                 font-size: var(--fs-0); }
@@ -798,9 +839,9 @@ input, textarea { border: 1px solid var(--input-border); padding: var(--input-py
               border-block-end: 1px solid var(--border-subtle,
                   var(--border-default)); }
   header[data-sec="nav"].scrolled { box-shadow: var(--shadow-card); }
-  .nav-links { display: none; gap: var(--space-m);
+  .nav-links { display: none; gap:max(1rem, var(--space-m));
                align-items: center; flex: 0 1 auto; min-width: 0; }
-  .nav-links ul { flex-wrap: nowrap; gap: var(--space-m);
+  .nav-links ul { flex-wrap: nowrap; gap:max(1rem, var(--space-m));
               align-items: center; }
   /* the desktop bar shows the group's links inline — the wrapper
      only materialises as a titled stack inside the open drawer */
@@ -818,10 +859,10 @@ input, textarea { border: 1px solid var(--input-border); padding: var(--input-py
   /* the lanes keep a gap and only the link lane gives — the brand
      and CTA lanes never shrink under the links (H.1 overlap) */
   .row.between:has(.burger), .row.between:has(.nav-desk),
-  .row.between:has(.nav-links) { gap: var(--space-s); }
+  .row.between:has(.nav-links) { gap:max(1rem, var(--space-s)); }
   .row:has(> .nav-cta), .row:has(> .theme-toggle),
   .row.between > .row:has(.wf-cta-button) { flex-wrap: nowrap;
-              gap: var(--space-xs); }
+              gap:max(1rem, var(--space-xs)); }
   @media (min-width: 60rem) {
     .row.between:has(.burger) > :first-child,
     .row.between:has(.nav-desk) > :first-child,
@@ -845,7 +886,7 @@ input, textarea { border: 1px solid var(--input-border); padding: var(--input-py
     .sec-inner:has(> :first-child > :is(.nav-links,
         .nav-priority)):has(> :first-child + .row .brand-mark) {
         display: flex; align-items: center;
-        justify-content: space-between; gap: var(--space-s); }
+        justify-content: space-between; gap:max(1rem, var(--space-s)); }
     .sec-inner:has(> :first-child > :is(.nav-links,
         .nav-priority)) > :first-child + .row { display: contents; }
     .sec-inner:has(> :first-child > :is(.nav-links,
@@ -875,9 +916,9 @@ input, textarea { border: 1px solid var(--input-border); padding: var(--input-py
      .nav-flyout panel is the ONLY nav-links — hidden at every width
      until .open, so it never doubles as a second desktop row
      (N.flyout) */
-  .nav-desk { display: none; gap: var(--space-m);
+  .nav-desk { display: none; gap:max(1rem, var(--space-m));
               align-items: center; flex: 0 1 auto; min-width: 0; }
-  .nav-desk ul { flex-wrap: nowrap; gap: var(--space-m);
+  .nav-desk ul { flex-wrap: nowrap; gap:max(1rem, var(--space-m));
               align-items: center; }
   .nav-links.nav-flyout { display: none; }
   .nav-links.open.nav-flyout { display: flex; }
@@ -886,7 +927,7 @@ input, textarea { border: 1px solid var(--input-border); padding: var(--input-py
      rows separated by hairlines, reading as sections not a bare
      list (N.flyout) */
   .nav-links.open .nav-group { display: flex; flex-direction: column;
-              align-items: stretch; gap: var(--space-xs);
+              align-items: stretch; gap:max(1rem, var(--space-xs));
               width: 100%; }
   .nav-links.open .nav-group ul { width: 100%; }
   .nav-links.open .nav-group + .nav-group,
@@ -895,7 +936,7 @@ input, textarea { border: 1px solid var(--input-border); padding: var(--input-py
   .nav-links.open .nav-group a { font-size: var(--fs-1);
               white-space: normal; color: var(--text-primary);
               text-decoration: none; display: inline-flex;
-              align-items: center; gap: var(--space-s);
+              align-items: center; gap:max(1rem, var(--space-s));
               padding-block: var(--space-s); }
   /* drawer furniture — search, group heads, row numerals — exists
      only inside the open flyout; the desktop bar stays brand + links
@@ -918,7 +959,7 @@ input, textarea { border: 1px solid var(--input-border); padding: var(--input-py
               color: var(--text-secondary); font-variant-numeric:
               tabular-nums; }
   .nav-links.open .nav-link { display: flex; width: 100%;
-              align-items: center; gap: var(--space-s);
+              align-items: center; gap:max(1rem, var(--space-s));
               padding-block: var(--space-s);
               border-block-end: 1px solid var(--border-default); }
   /* nav selection (N.select): >6 links switch to the hybrid —
@@ -930,7 +971,7 @@ input, textarea { border: 1px solid var(--input-border); padding: var(--input-py
   .nav-links.open .nav-mega-cols { display: grid;
               grid-template-columns: repeat(auto-fit,
                   minmax(13rem, 1fr));
-              gap: var(--space-m) var(--space-l); width: 100%; }
+              gap:max(1rem, var(--space-m)) max(1rem, var(--space-l)); width: 100%; }
   .nav-links.open.nav-mega { width: min(46rem, 94vw); }
   .nav-priority { display: none; }
   .nav-more { display: none; align-items: center;
@@ -939,26 +980,86 @@ input, textarea { border: 1px solid var(--input-border); padding: var(--input-py
               color: var(--text-secondary); cursor: pointer; }
   .nav-more:hover { color: var(--text-primary); }
   @media (min-width: 60rem) {
-    .nav-priority { display: flex; gap: var(--space-s);
+    .nav-priority { display: flex; gap:max(1rem, var(--space-s));
               align-items: center; flex: 0 1 auto; min-width: 0; }
-    .nav-priority ul { flex-wrap: nowrap; gap: var(--space-s); }
+    .nav-priority ul { flex-wrap: nowrap; gap:max(1rem, var(--space-s)); }
     .nav-more { display: inline-flex; }
     /* the bar's link lane and its "More" sit on one line */
     :has(> .nav-desk + .nav-more), :has(> .nav-priority + .nav-more) {
-              display: flex; align-items: center; gap: var(--space-s); }
+              display: flex; align-items: center; gap:max(1rem, var(--space-s)); }
     /* a mega nav never unrolls inline — the priority row + More own
-       the desktop bar; the panel still opens as a flyout */
-    .nav-links.nav-links.nav-mega:not(.open),
-    .nav-links.nav-links[data-over]:not(.open) { display: none; }
-    .nav-links.nav-mega.open, .nav-links[data-over].open {
-              display: flex; }
+       the desktop bar; the panel still opens as a flyout. No
+       :not(.open) selector here: Tailwind's content scan reads the
+       !open operator in the layout script as a candidate and emits
+       .\!open important variants, whose :not(.\!open) form would hide
+       the OPEN panel — a plain class list keeps those variants inert */
+    .nav-links.nav-links.nav-mega,
+    .nav-links.nav-links[data-over],
+    .nav-desk.nav-desk[data-over] { display: none; }
+    /* a plain link row that can't fit collapses to the burger —
+       the layout script marks its header .nav-crowded and stamps
+       data-over on the nav, so the links hide and the burger
+       reappears (the derived breakpoint, audit 138) */
+    .nav-crowded .burger, .nav-crowded .burger.wf-cta-button {
+              display: inline-flex; }
+    /* the open overflow panel is a dropdown under the bar, not the
+       mobile sheet — the sheet's fixed/scrim/scroll-lock rules live
+       under 60rem, so the desktop flyout carries its own box */
+    .nav-links.nav-mega.open, .nav-links[data-over].open,
+    .nav-desk[data-over].open {
+              display: flex; flex-direction: column;
+              gap:max(1rem, var(--space-m));
+              position: absolute; inset-block-start: 100%;
+              inset-inline-end: 0;
+              width: min(46rem, 94vw); max-height: 80vh;
+              overflow-y: auto;
+              background: var(--bg-canvas);
+              padding: var(--space-m);
+              border: 1px solid var(--border-default);
+              border-radius: var(--r-card);
+              box-shadow: var(--shadow-pop);
+              z-index: calc(var(--primitive-z-sticky) + 1); }
+    .nav-links.nav-mega.open .nav-close,
+    .nav-links[data-over].open .nav-close,
+    .nav-desk[data-over].open .nav-close {
+              display: inline-flex; align-self: flex-end;
+              min-height: var(--tap); min-width: var(--tap);
+              align-items: center; justify-content: center;
+              background: none; border: 0;
+              color: var(--text-secondary); font-size: var(--fs-2);
+              line-height: 1; cursor: pointer; }
+    /* a sheet-head in the flyout keeps its brand + close row
+       (the head is desktop-hidden until the panel opens) */
+    .nav-links.nav-mega.open .nav-sheet-head,
+    .nav-links[data-over].open .nav-sheet-head,
+    .nav-desk[data-over].open .nav-sheet-head {
+              display: flex; align-items: center;
+              justify-content: space-between; gap:max(1rem, var(--space-m));
+              padding-block-end: var(--space-s);
+              border-block-end: 1px solid
+                  var(--border-subtle, var(--border-default)); }
+    .nav-links.nav-mega.open .nav-sheet-head .nav-sheet-brand,
+    .nav-links[data-over].open .nav-sheet-head .nav-sheet-brand,
+    .nav-desk[data-over].open .nav-sheet-head .nav-sheet-brand {
+              font-weight: 700; }
+    .nav-links.nav-mega.open .nav-sheet-head .nav-close,
+    .nav-links[data-over].open .nav-sheet-head .nav-close,
+    .nav-desk[data-over].open .nav-sheet-head .nav-close {
+              align-self: center; margin-inline-start: auto; }
+    .nav-links.nav-mega.open:has(.nav-sheet-head)
+        .nav-close:not(.nav-sheet-head .nav-close),
+    .nav-links[data-over].open:has(.nav-sheet-head)
+        .nav-close:not(.nav-sheet-head .nav-close) {
+              display: none; }
+    /* the flyout anchors to the bar it drops from — the sticky
+       header is already a positioned ancestor */
   }
   /* the generic overlay family — modals, popups, form dialogs
      (N.flyout): a centred .flyout panel over the same scrim, a
      .flyout-open trigger in flow, a .flyout-close affordance */
   .flyout { display: none; }
   .flyout.open { display: flex; flex-direction: column;
-              gap: var(--space-m); position: fixed;
+              gap:max(1rem, var(--space-m)); position: fixed;
               inset-block-start: 50%; inset-inline-start: 50%;
               transform: translate(-50%, -50%);
               width: min(28rem, calc(100vw - 2 * var(--gutter)));
@@ -993,7 +1094,7 @@ input, textarea { border: 1px solid var(--input-border); padding: var(--input-py
   /* the mobile call action is a compact floating button, not a bar
      that slices across mid-scroll content: a brand pill bottom-right
      with the elevation pop (R.fab) */
-  .call-bar { display: flex; gap: var(--space-s); align-items: center;
+  .call-bar { display: flex; gap:max(1rem, var(--space-s)); align-items: center;
       justify-content: center;
       position: fixed; inset-block-end: var(--space-s);
       inset-inline: auto var(--space-s);
@@ -1026,9 +1127,18 @@ input, textarea { border: 1px solid var(--input-border); padding: var(--input-py
   .nav-link[aria-current], .nav-link.active {
               color: var(--action-primary); }
   /* the header CTA fits the bar — compact padding and nav font,
-     never the hero-sized call */
-  .nav-cta .wf-cta-button { padding: .5em .75em;
-              font-size: var(--fs--1); min-height: 0; }
+     never the hero-sized call — but still tap-sized and legible
+     (≥15px label, ≥40px tall) */
+  .nav-cta .wf-cta-button { padding: 0 .75em;
+              font-size: var(--fs-0); min-height: 2.5rem;
+              max-height: 2.75rem;
+              display: inline-flex; align-items: center;
+              justify-content: center;
+              /* E-M6 — a nowrap phone label overflowed the bar at
+                 1024; the compact pill wraps instead of pushing the
+                 header past the viewport */
+              white-space: normal; text-align: center;
+              min-width: 0; }
   .brand-mark { font-weight: 650; letter-spacing: -.02em;
                 font-size: var(--fs-1); color: var(--text-primary);
                 text-decoration: none; }
@@ -1036,7 +1146,7 @@ input, textarea { border: 1px solid var(--input-border); padding: var(--input-py
   .faq-item:last-child { border-bottom: 1px solid
                          var(--border-default); }
   .faq-q { display: flex; justify-content: space-between;
-           align-items: center; gap: var(--space-m);
+           align-items: center; gap:max(1rem, var(--space-m));
            padding-block: var(--space-m); cursor: pointer;
            font-size: var(--fs-1); font-weight: 600;
            list-style: none; }
@@ -1057,11 +1167,11 @@ input, textarea { border: 1px solid var(--input-border); padding: var(--input-py
     .footer-menu { justify-content: flex-start; }
     .wf-footer-1 .footer-1-container { justify-items: start; }
   }
-  .form-grid { display: grid; gap: var(--space-s);
+  .form-grid { display: grid; gap:max(1rem, var(--space-s));
                grid-template-columns: 1fr; }
   @media (min-width: 30rem) { .form-grid { grid-template-columns:
                                            1fr 1fr; } }
-  .field { display: flex; flex-direction: column; gap: var(--space-xs); }
+  .field { display: flex; flex-direction: column; gap:max(1rem, var(--space-xs)); }
   .field > span { font-size: var(--fs--1); font-weight: 600;
                   letter-spacing: .06em; text-transform: uppercase;
                   color: var(--text-secondary); }
@@ -1073,17 +1183,17 @@ input, textarea { border: 1px solid var(--input-border); padding: var(--input-py
   .field input:focus, .field select:focus {
       outline: 2px solid var(--action-primary);
       outline-offset: 1px; border-color: transparent; }
-  .foot-cols { display: grid; gap: var(--space-l);
+  .foot-cols { display: grid; gap:max(1rem, var(--space-l));
                grid-template-columns: 1fr; }
   @media (min-width: 48rem) { .foot-cols {
       grid-template-columns: 2fr 1fr 1fr; } }
   .foot-col { display: flex; flex-direction: column;
-              gap: var(--space-s); }
+              gap:max(1rem, var(--space-s)); }
   .foot-head { font-size: var(--fs--1); font-weight: 600;
                letter-spacing: .1em; text-transform: uppercase;
                color: var(--text-secondary); }
   .legal { font-size: var(--fs--1); color: var(--text-secondary);
-           display: flex; flex-wrap: wrap; gap: var(--space-m);
+           display: flex; flex-wrap: wrap; gap:max(1rem, var(--space-m));
            justify-content: space-between;
            padding-block-start: var(--space-m);
            border-top: 1px solid var(--border-default); }
@@ -1095,7 +1205,7 @@ input, textarea { border: 1px solid var(--input-border); padding: var(--input-py
   .list-plain { list-style: none; padding: 0; }
   .mt-sec { margin-block-start: var(--space-l); }
   .mt-act { margin-block-start: var(--space-s); }
-  .gap-form { gap: var(--space-m); }
+  .gap-form { gap:max(1rem, var(--space-m)); }
   /* a stack stretches its children; the large CTA keeps its own width */
   .cta-large { font-size: var(--fs-1);
                padding: var(--btn-padding-block) var(--btn-padding-inline);
@@ -1196,7 +1306,7 @@ input, textarea { border: 1px solid var(--input-border); padding: var(--input-py
       clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
   /* design-system sheet — one class per rung, each a var() binding on the shared token layer */
   .ds-spec { display: flex; flex-direction: column;
-      gap: var(--space-xs); }
+      gap:max(1rem, var(--space-xs)); }
   .ds-swatch { display: block; block-size: var(--space-xl);
       border-radius: var(--r-card);
       border: 1px solid var(--border-default); }
@@ -1211,9 +1321,11 @@ input, textarea { border: 1px solid var(--input-border); padding: var(--input-py
   .ds-shadow-card { box-shadow: var(--shadow-card); }
   .ds-shadow-pop { box-shadow: var(--shadow-pop); }
   .ds-label { font-size: var(--fs--1);
-      color: var(--text-secondary); }
+      color: color-mix(in oklch, var(--sec-fg) 92%,
+          var(--sec-bg)); }
   .ds-value { font-size: var(--fs--1);
-      color: var(--text-muted); }
+      color: color-mix(in oklch, var(--sec-fg) 75%,
+          var(--sec-bg)); }
   .ds-sp-gutter { block-size: var(--gutter); }
   .ds-tx-h1 { font-size: var(--h1); }
   .ds-tx-h2 { font-size: var(--h2); }
@@ -1246,3 +1358,451 @@ input, textarea { border: 1px solid var(--input-border); padding: var(--input-py
   .ds-tx-text-xxl { font-size: var(--text-xxl); }
 }
 [data-theme=dark] img { filter: brightness(.85) contrast(.92); }
+
+@layer components {
+/* bricksmaven/grids-and-cards/grid-1 */
+  .wf-grid-1 .wf-gridcard-1-grid-ul {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap:max(1rem, var(--grid-gap));
+  }
+
+  .wf-grid-1 .wf-gridcard-1-card {
+    display: flex;
+    flex-direction: column;
+    row-gap:max(1rem, var(--space-xs));
+  }
+
+  @media (max-width: 44rem) {
+    .wf-grid-1 .wf-gridcard-1-grid-ul { grid-template-columns: 1fr; }
+  }
+  .wf-grid-1 .wf-gridcard-1-grid-ul > :only-child { grid-column: 1 / -1; }
+
+/* bricksmaven/comparison/comparison-1 */
+  .wf-comparison-1 .wf-conparison-1__container {
+    row-gap:max(1rem, var(--space-s));
+  }
+
+  .wf-comparison-1 .intro {
+    flex-direction: column;
+    display: flex;
+    row-gap:max(1rem, var(--flow-spacing));
+  }
+
+  .wf-comparison-1 .wf-conparison-1-list {
+    display: grid;
+    gap:max(1rem, var(--space-m));
+    grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
+  }
+
+  .wf-comparison-1 .wf-conparison-1-card {
+    row-gap:max(1rem, var(--flow-spacing));
+  }
+
+  .wf-comparison-1 .wf-conparison-status {
+    display: flex;
+    gap:max(1rem, var(--space-s));
+  }
+
+  .wf-comparison-1 .wf-list {
+    display: flex;
+    flex-direction: column;
+    row-gap:max(1rem, var(--flow-spacing));
+  }
+
+  .wf-comparison-1 .wf-list-item {
+    flex-direction: row;
+    display: flex;
+    column-gap:max(1rem, var(--flow-spacing));
+  }
+
+  .wf-comparison-1 .wf-conparison-1__footer {
+    row-gap:max(1rem, var(--flow-spacing));
+  }
+
+  .wf-comparison-1 .cta-combo {
+    display: flex;
+    column-gap:max(1rem, var(--flow-spacing));
+  }
+
+  @media (max-width: 44rem) {
+    .wf-comparison-1 .wf-conparison-status { flex-direction: column; }
+    .wf-comparison-1 .wf-list-item { flex-direction: column; }
+    .wf-comparison-1 .cta-combo { flex-direction: column; }
+  }
+
+/* bricksmaven/content/content-1 */
+  .wf-content-1 .wf-content-1-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
+    gap:max(1rem, var(--space-xl));
+  }
+
+  .wf-content-1 .wf-content-1__box {
+    display: flex;
+    flex-direction: column;
+    row-gap:max(1rem, var(--space-m));
+  }
+
+  .wf-content-1 .cta-combo {
+    display: flex;
+    column-gap:max(1rem, var(--space-xs));
+  }
+
+  @media (max-width: 44rem) {
+    .wf-content-1 .cta-combo { flex-direction: column; }
+  }
+
+/* bricksmaven/headers/header-21 */
+  .wf-header-21 .wf-header-21__container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap:max(1rem, var(--space-s));
+  }
+
+  .wf-header-21 .wf-header-21__cta {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    column-gap:max(1rem, calc(var(--flow-spacing) / 4));
+  }
+
+  .wf-header-21 .wf-off-canvas-6__content {
+    display: flex;
+    flex-direction: column;
+    row-gap:max(1rem, var(--space-s));
+  }
+
+  .wf-header-21 .wf-off-canvas-nav-ul {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    row-gap:max(1rem, calc(var(--flow-spacing) * 2));
+  }
+
+  .wf-header-21 .wf-off-canvas-6__contact-footer {
+    display: flex;
+    flex-direction: column;
+    row-gap:max(1rem, var(--flow-spacing));
+  }
+
+  .wf-header-21 .wf-off-canvas-contact {
+    row-gap:max(1rem, calc(var(--flow-spacing) / 1.8));
+  }
+
+  .wf-header-21 .wf-off-canvas-contact-item {
+    display: flex;
+    flex-direction: row;
+    column-gap:max(1rem, calc(var(--flow-spacing) / 2));
+  }
+
+  .wf-header-21 .wf-off-canvas-6__socials {
+    row-gap:max(1rem, var(--flow-spacing));
+  }
+
+  .wf-header-21 .wf-social-share {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    column-gap:max(1rem, var(--flow-spacing));
+  }
+
+  .wf-header-21 .wf-social-share--column {
+    flex-direction: column;
+    row-gap:max(1rem, var(--flow-spacing));
+  }
+
+/* bricksmaven/footer/footer-1 */
+  .wf-footer-1 .footer-1 {
+    row-gap:max(1rem, var(--space-s));
+  }
+
+  .wf-footer-1 .wf-footer-1-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
+    gap:max(1rem, var(--space-m));
+  }
+
+  .wf-footer-1 .footer-column-left {
+    display: flex;
+    row-gap:max(1rem, var(--flow-spacing));
+    flex-direction: column;
+  }
+
+  .wf-footer-1 .footer-column-mid {
+    display: flex;
+    flex-direction: column;
+    row-gap:max(1rem, var(--flow-spacing));
+  }
+
+  .wf-footer-1 .footer-menu {
+    display: flex;
+    flex-direction: column;
+    row-gap:max(1rem, var(--flow-spacing));
+  }
+
+  .wf-footer-1 .footer-column-right {
+    display: flex;
+    flex-direction: column;
+    row-gap:max(1rem, var(--flow-spacing));
+  }
+
+  .wf-footer-1 .wf-footer-1-bottom {
+    display: grid;
+    grid-template-columns: minmax(0, 3fr) minmax(0, 1fr);
+    gap:max(1rem, var(--grid-gap));
+  }
+
+  .wf-footer-1 .wf-footer-1-bottom__left {
+    display: flex;
+    column-gap:max(1rem, var(--space-s));
+  }
+
+  .wf-footer-1 .footer-legal-nav {
+    flex-direction: row;
+    column-gap:max(1rem, var(--flow-spacing));
+  }
+
+  .wf-footer-1 .wf-footer-1-bottom__right {
+    display: flex;
+    flex-direction: column;
+    gap:max(1rem, var(--space-s));
+  }
+
+  @media (max-width: 44rem) {
+    .wf-footer-1 .wf-footer-1-bottom { grid-template-columns: 1fr; }
+    .wf-footer-1 .wf-footer-1-bottom__left { flex-direction: column; }
+    .wf-footer-1 .footer-legal-nav { flex-direction: column; }
+  }
+  .wf-footer-1 .wf-footer-1-bottom > :only-child { grid-column: 1 / -1; }
+
+/* bricksmaven/call-to-action/call-to-action-10 */
+  .wf-call-to-action-10 .wf-cta-10-container {
+    display: grid;
+    gap:max(1rem, var(--space-m));
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .wf-call-to-action-10 .wf-cta-10-content {
+    display: flex;
+    row-gap:max(1rem, var(--space-m));
+    flex-direction: column;
+  }
+
+  .wf-call-to-action-10 .wf-cta-10-heading {
+    display: flex;
+    flex-direction: column;
+    gap:max(1rem, var(--space-s));
+  }
+
+  .wf-call-to-action-10 .wf-hero-1__cta {
+    display: flex;
+    column-gap:max(1rem, var(--space-xs));
+  }
+
+  @media (max-width: 44rem) {
+    .wf-call-to-action-10 .wf-cta-10-container { grid-template-columns: 1fr; }
+    .wf-call-to-action-10 .wf-hero-1__cta { flex-direction: column; }
+  }
+  .wf-call-to-action-10 .wf-cta-10-container > :only-child { grid-column: 1 / -1; }
+
+/* bricksmaven/grids-and-cards/grid-2 */
+  .wf-grid-2 .wf-gridcard-2-grid-ul {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
+    gap:max(1rem, var(--grid-gap));
+  }
+
+  .wf-grid-2 .wf-gridcard-2-card {
+    display: flex;
+    flex-direction: column;
+    row-gap:max(1rem, var(--space-xs));
+  }
+
+/* bricksmaven/testimonials/testimonial-1 */
+  .wf-testimonial-1 .wf-testimonial-1-content {
+    display: flex;
+    gap:max(1rem, var(--space-s));
+  }
+
+  .wf-testimonial-1 .wf-testimonial-1-slides-item {
+    display: flex;
+    flex-direction: column;
+    row-gap:max(1rem, var(--space-m));
+  }
+
+  @media (max-width: 44rem) {
+    .wf-testimonial-1 .wf-testimonial-1-content { flex-direction: column; }
+  }
+
+/* bricksmaven/how-it-works/how-it-works-1 */
+  .wf-how-it-works-1 .wf-hworks-1-container {
+    grid-template-columns: 1fr 3fr;
+    display: grid;
+    gap:max(1rem, var(--space-s));
+  }
+
+  .wf-how-it-works-1 .wf-hworks-1-intro {
+    display: flex;
+    flex-direction: column;
+    row-gap:max(1rem, var(--space-s));
+  }
+
+  .wf-how-it-works-1 .hworks-grid-ul {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
+    gap:max(1rem, var(--space-s));
+  }
+
+  .wf-how-it-works-1 .hworks-card {
+    display: flex;
+    flex-direction: row;
+    column-gap:max(1rem, var(--space-s));
+  }
+
+  .wf-how-it-works-1 .hworks-card__content {
+    display: flex;
+    flex-direction: column;
+    row-gap:max(1rem, var(--space-s));
+  }
+
+  @media (max-width: 44rem) {
+    .wf-how-it-works-1 .wf-hworks-1-container { grid-template-columns: 1fr; }
+    .wf-how-it-works-1 .hworks-card { flex-direction: column; }
+  }
+  .wf-how-it-works-1 .wf-hworks-1-container > :only-child { grid-column: 1 / -1; }
+
+/* bricksmaven/feature/feature-1 */
+  .wf-feature-1 .feature-1 {
+    row-gap:max(1rem, var(--space-xl));
+  }
+
+  .wf-feature-1 .intro {
+    flex-direction: column;
+    display: flex;
+    row-gap:max(1rem, var(--space-s));
+  }
+
+  .wf-feature-1 .wf-feature-1-ul {
+    row-gap:max(1rem, var(--space-xl));
+  }
+
+  .wf-feature-1 .wf-feature-1-li {
+    grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
+    display: grid;
+    gap:max(1rem, var(--space-m));
+  }
+
+  .wf-feature-1 .wf-feature-1-li__content {
+    display: flex;
+    flex-direction: column;
+    row-gap:max(1rem, var(--space-xs));
+  }
+
+  .wf-feature-1 .wf-list {
+    display: flex;
+    flex-direction: column;
+    gap:max(1rem, var(--space-s));
+  }
+
+  .wf-feature-1 .wf-list__item {
+    flex-direction: row;
+    display: flex;
+    column-gap:max(1rem, var(--flow-spacing));
+  }
+
+  @media (max-width: 44rem) {
+    .wf-feature-1 .wf-list__item { flex-direction: column; }
+  }
+
+/* bricksmaven/hero/hero-1 */
+  .wf-hero-1 .hero-1 {
+    display: flex;
+    gap:max(1rem, var(--space-s));
+  }
+
+  .wf-hero-1 .wf-hero-1-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
+    gap:max(1rem, var(--space-m));
+  }
+
+  .wf-hero-1 .wf-hero-1__content {
+    display: flex;
+    flex-direction: column;
+    row-gap:max(1rem, var(--space-m));
+  }
+
+  .wf-hero-1 .wf-hero-1__cta {
+    display: flex;
+    column-gap:max(1rem, var(--space-xs));
+  }
+
+  .wf-hero-1 .wf-hero-1__content-trust {
+    display: flex;
+    flex-direction: column;
+    row-gap:max(1rem, var(--space-s));
+  }
+
+  .wf-hero-1 .wf-hero-1-logo-ul {
+    display: flex;
+    flex-direction: row;
+    column-gap:max(1rem, var(--space-m));
+  }
+
+  @media (max-width: 44rem) {
+    .wf-hero-1 .hero-1 { flex-direction: column; }
+    .wf-hero-1 .wf-hero-1__cta { flex-direction: column; }
+    .wf-hero-1 .wf-hero-1-logo-ul { flex-direction: column; }
+  }
+
+/* bricksmaven/counter/counter-1 */
+  .wf-counter-1 .wf-counter-1-container {
+    display: flex;
+    row-gap:max(1rem, var(--space-s));
+  }
+
+  .wf-counter-1 .intro {
+    flex-direction: column;
+    display: flex;
+    row-gap:max(1rem, var(--space-s));
+  }
+
+  .wf-counter-1 .wf-counter-1-content {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+    gap:max(1rem, var(--space-m));
+  }
+
+  .wf-counter-1 .wf-counter-1-box {
+    display: flex;
+    flex-direction: column;
+    row-gap:max(1rem, var(--flow-spacing));
+  }
+
+  .wf-counter-1 .wf-counter-1-grid-ul {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
+    gap:max(1rem, var(--space-m));
+  }
+
+  .wf-counter-1 .wf-counter-1-card {
+    display: flex;
+    flex-direction: column;
+    row-gap:max(1rem, var(--flow-spacing));
+  }
+
+  .wf-counter-1 .wf-counter-1-card__intro {
+    display: flex;
+    flex-direction: column;
+    row-gap:max(1rem, calc(var(--flow-spacing) / 2));
+  }
+
+  @media (max-width: 44rem) {
+    .wf-counter-1 .wf-counter-1-content { grid-template-columns: 1fr; }
+    .wf-counter-1 .wf-counter-1-container { flex-direction: column; }
+  }
+  .wf-counter-1 .wf-counter-1-content > :only-child { grid-column: 1 / -1; }
+
+}

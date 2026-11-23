@@ -1,0 +1,45 @@
+---
+/**
+ * hero-act-merge — gold exemplar (SB.5). Adapt copy, tokens and rhythm to the
+ * contract; keep the skeleton. Renders inside Section.astro: no
+ * <section>, no outer padding/background/max-width (SB.2).
+ *
+ * U.4: the act is the plan's cta — a link with the copy's label, never
+ * an invented "check availability" form. The media band's photo
+ * covers the band under a canvas scrim (.act-merge-media).
+ */
+import { Image } from 'astro:assets';
+import { mediaFor } from '../_shared/inline';
+interface Props {
+  heading?: string;
+  fs?: string;
+  body?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string; value?: string;
+             label?: string; href?: string; quote?: string }[];
+  image?: { src: string; alt: string };
+  h1?: boolean;
+}
+const {
+  heading = 'Section heading', fs = '', body = '', cta, items = [],
+  image, h1,
+} = Astro.props;
+const m = mediaFor(image, heading);
+---
+{m && (
+  <div class="act-merge-media">
+    {m.mod
+      ? <Image src={m.mod} alt={m.alt} widths={[960, 1440, 1920]}
+               sizes="100vw" loading="eager" />
+      : <img src={m.src} alt={m.alt} width="1920" height="1080"
+             loading="eager" />}
+  </div>
+)}
+
+<div class="grid gap-fluid-l md:grid-cols-2 md:items-center">
+  <div class="max-w-prose">
+    {h1 ? <h1 class="text-fluid-4">{heading}</h1> : <h2 class="text-fluid-3">{heading}</h2>}
+    {fs && <p class="mt-stack text-fluid-1">{fs}</p>}
+  </div>
+  {cta && <a class="wf-cta-button" href={cta.href}>{cta.label}</a>}
+</div>
