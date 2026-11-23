@@ -358,6 +358,10 @@ input, textarea { border: 1px solid var(--input-border); padding: var(--input-py
                    min-height: var(--tap);
                    transition: background-color .15s ease,
                        box-shadow .15s ease; }
+  /* inside a section band the CTA wraps rather than overflowing a
+     narrow grid track (hero-43's 1fr footer column at 768px held a
+     277px nowrap label); bar chrome keeps its one-line buttons */
+  .sec-band .wf-cta-button { white-space: normal; max-width: 100%; }
   .wf-cta-button:hover {
                    background: var(--action-primary-hover,
                        var(--action-primary)); }
