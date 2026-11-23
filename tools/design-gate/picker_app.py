@@ -1455,13 +1455,30 @@ _FRAG_KIND_DIRS = {
 }
 
 
-def _frag_file(kind, seed, mode, salt, tags):
+# the hero topology a gene bundle asks for (retrieval.vibe_topology,
+# the section-bank vocabulary) → the genmenu hero dir that renders it
+_GENE_HERO_DIR = {
+    'hero-media-bg': 'hero-media-bg',
+    'hero-media-left': 'hero-split',
+    'hero-media-right': 'hero-split',
+    'split-50-50': 'hero-split',
+    'hero-no-media': 'hero-centered',
+    'hero-media-top': 'hero-centered',
+}
+
+
+def _frag_file(kind, seed, mode, salt, tags, prefer=None):
     """one bank fragment for `kind` — dir and file seeded so every
     vibe composes a different page; prefers fragments tagged for the
-    resolved theme's mode."""
-    dirs = _FRAG_KIND_DIRS[kind]
+    resolved theme's mode. `prefer` names a dir the genes ranked
+    first; when it has fragments it wins, otherwise the seeded walk
+    falls through the rest. Returns (fragment html, 'dir/file')."""
+    dirs = list(_FRAG_KIND_DIRS[kind])
+    if prefer in dirs:
+        dirs = [prefer] + [d for d in dirs if d != prefer]
     for off in range(len(dirs)):
-        d = dirs[(seed + salt + off) % len(dirs)]
+        d = dirs[(seed + salt + off) % len(dirs)] \
+            if prefer is None else dirs[off]
         cdir = os.path.join(_GENMENU, d)
         if not os.path.isdir(cdir):
             continue
@@ -1476,9 +1493,25 @@ def _frag_file(kind, seed, mode, salt, tags):
         pool = [f for f in fns if _sc(f) == best]
         fp = os.path.join(cdir, pool[(seed + salt) % len(pool)])
         frag = open(fp, encoding='utf-8', errors='replace').read()
-        return re.sub(r"/src/assets/[^\s\"'()]+",
+        frag = re.sub(r"/src/assets/[^\s\"'()]+",
                       '/media/placeholder.svg', frag)
-    return ''
+        return frag, d + '/' + pool[(seed + salt) % len(pool)][:-5]
+    return '', ''
+
+
+def _gene_hero_dir(bundle):
+    """the genmenu hero dir the bundle's genes rank — retrieval's
+    section-bank topology ask mapped onto the dirs the vendored bank
+    ships; '' when genes are absent or unmapped."""
+    genes = (bundle or {}).get('gene_map')
+    if not genes:
+        return ''
+    try:
+        import retrieval
+        return _GENE_HERO_DIR.get(
+            retrieval.vibe_topology(genes, 'hero') or '', '')
+    except Exception:
+        return ''
 
 
 def _frag_doc_parts(pd, fam, bundle):
@@ -1490,14 +1523,20 @@ def _frag_doc_parts(pd, fam, bundle):
     seed = zlib.crc32(fam.encode('utf-8'))
     mode = (bundle or {}).get('theme') or 'light'
     tags = _genmenu_tags()
-    frags = [
+    # hero is gene-ranked: the preset's genes ask for a topology
+    # (retrieval.vibe_topology) and the matching bank dir wins, so
+    # noir/playful/luxe render different hero shapes, not the same
+    # seeded pick. Bands stay seeded for page-to-page variety.
+    picks = [
         _frag_file('nav', seed, mode, 0, tags),
-        _frag_file('hero', seed, mode, 3, tags),
+        _frag_file('hero', seed, mode, 3, tags,
+                   prefer=_gene_hero_dir(bundle) or None),
         _frag_file('band', seed, mode, 7, tags),
         _frag_file('band', seed, mode, 13, tags),
         _frag_file('footer', seed, mode, 29, tags),
     ]
-    body = ''.join(f for f in frags if f)
+    body = ''.join('<!--frag:' + ref + '-->' + f
+                   for f, ref in picks if f)
     if not body:
         return None
     # the fragments' utilities live in the same sheets _bank_doc
