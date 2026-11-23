@@ -7,7 +7,8 @@
  * The shell owns head/meta (P.16, R.1), the light/dark toggle +
  * paint-first theme script (C.5), skip-link and the page landmarks
  * (PS.9). It ships no style blocks, no inline styles, no colour
- * literals: classes bind the shared layer in global.css only.
+ * literals: classes bind the shared layer (global.css + bank.css —
+ * the skeleton layout sheet pipeline_emit writes beside global.css).
  */
 interface Props {
   title: string;
@@ -26,6 +27,7 @@ const {
 // F3 fix — applyBaseStyles:false means nothing styles the page unless
 // the layout imports the shared layer itself (the starter does).
 import '../styles/global.css';
+import '../styles/bank.css';
 
 ---
 <!doctype html>

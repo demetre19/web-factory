@@ -249,6 +249,17 @@ def _bank_copy(ctx, comp, recipe):
     return _read(css) if os.path.isfile(css) else ''
 
 
+def _bank_css(recipe):
+    """The skeleton's layout sheet — the css half of _bank_copy, no
+    .astro copy: bank.css is written before contracts exist (w0
+    scaffold reads recipes straight off the plan rows)."""
+    parts = recipe.split('/')
+    if len(parts) != 3 or parts[0] != 'bricksmaven':
+        return ''
+    css = os.path.join(BANK, parts[1], parts[2] + '.css')
+    return _read(css) if os.path.isfile(css) else ''
+
+
 COPY_BLOCK_KEYS = ('answer', 'before', 'items', 'list_ordered', 'qa',
                    'links', 'after')
 
@@ -530,6 +541,7 @@ def _system(ctx, comps, contracts=None, copy=None, by_name=None):
     _w(os.path.join(ctx.site, 'src', 'pages', 'system.astro'),
        '---\n'
        "import '../styles/global.css';\n"
+       "import '../styles/bank.css';\n"
        + imps + '\n---\n'
        '<button data-theme-toggle aria-label="Light or dark">'
        'Light/Dark</button>\n' + tags + '\n')
@@ -975,6 +987,29 @@ def main(argv):
           + (f' ({len((fonts or {}).get("faces") or [])} @font-face)'
              if fonts else ''))
 
+    # P3b — bank skeleton layout rules in their OWN sheet, imported by
+    # BaseLayout. global.css is rewritten by every emit (--scaffold
+    # included); an append there is stripped by any partial re-run
+    # while the built page still references the classes — the exact
+    # "no gap between button and image" defect. Plain rules like
+    # preview-bank.css: Tailwind rejects `@layer` in a file that
+    # declares no matching `@tailwind` directive. Plan rows carry the
+    # recipe before contracts exist, so w0 scaffolds write it too.
+    row_bank = {str(r.get('composition')): str(r.get('recipe'))
+                for _, r in rows
+                if str(r.get('recipe') or '').startswith('bricksmaven/')}
+    bcss = []
+    for comp in comps:
+        rec = row_bank.get(comp)
+        if not rec:
+            continue
+        css = _bank_css(rec)
+        if css:
+            bcss.append('/* ' + rec + ' */\n' + css)
+    _w(os.path.join(ctx.site, 'src', 'styles', 'bank.css'),
+       '\n'.join(bcss) + '\n')
+    print(f'  src/styles/bank.css ({len(bcss)} skeleton(s))')
+
     # S2/S4 — shell + document layout (template files, verbatim)
     _w(os.path.join(ctx.site, 'src', 'components', 'Section.astro'),
        _read(os.path.join(TEMPLATES, 'sections', 'Section.astro')))
@@ -1074,16 +1109,10 @@ def main(argv):
     for fn in sorted(os.listdir(cdir)) if os.path.isdir(cdir) else []:
         if fn.endswith('.astro') and fn not in ckeep:
             os.remove(os.path.join(cdir, fn))
-    if bank_css:
-        # SB.2 — bank rules live in the shared layer, never in a
-        # component. Selectors arrive `.wf-<stem>`-scoped from
-        # bricks_translate.py, so hoisting into @layer components
-        # cannot leak bespoke names site-wide (M2).
-        with open(os.path.join(ctx.site, 'src', 'styles',
-                               'global.css'), 'a') as fh:
-            fh.write('\n@layer components {\n'
-                     + '\n'.join(bank_css) + '\n}\n')
-        print(f'  bank css: {len(bank_css)} skeleton(s) → global.css')
+    # SB.2 — bank rules live in bank.css (written at P3b above),
+    # never in a component. Selectors arrive `.wf-<stem>`-scoped from
+    # bricks_translate.py, so they cannot leak bespoke names
+    # site-wide (M2).
     # a section that left the plan leaves no component behind: a stale
     # instance still imports a composition the page no longer renders,
     # and the next SB.3/SB.5 pass reads the orphan, not the page.
