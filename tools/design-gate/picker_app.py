@@ -1407,6 +1407,16 @@ def _spec_for(fam):
         n = len(_pb._VIBE_SPECS)
     except Exception:
         n = 8
+    # a core preset owns the archetype at its own index — crc
+    # collides 5 of the 8 cores onto 3 specimens, which is exactly
+    # the 'all vibes look the same' defect the specimens exist to
+    # kill
+    try:
+        i = list(VIBE_FAMILIES).index(fam)
+        if i < n:
+            return 'spec-' + str(i)
+    except ValueError:
+        pass
     import zlib
     return 'spec-' + str(zlib.crc32(fam.encode('utf-8')) % max(1, n))
 

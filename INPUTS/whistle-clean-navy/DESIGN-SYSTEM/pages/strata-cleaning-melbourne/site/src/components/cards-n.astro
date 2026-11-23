@@ -1,85 +1,80 @@
 ---
 /**
- * cards-n — gold exemplar (SB.5). One claim, then the same card
- * repeated with a numeral, a title and one sentence. The numeral is
- * the motif: it recurs, so it reads as a system.
- *
- * Full-copy slots (§4.3): `copy` carries the COPY.json block —
- * heading → answer → before → item cards → after in article order
- * (F.1). `columns` on the plan row sets the grid track count via
- * data-cols on the Section shell; the template only repeats.
+ * wf-grid-1 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (grid-1.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
  */
-import { Image } from 'astro:assets';
-import { inline, iconFor, mediaFor } from '../_shared/inline';
-import type { CopySlot, MediaInput } from '../_shared/inline';
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
-  body?: string;
-  eyebrow?: string;
   cta?: { label: string; href: string };
-  items?: { term?: string; title?: string; text?: string; value?: string;
-             label?: string; href?: string; quote?: string;
-             icon?: string; image?: MediaInput }[];
+  items?: { title?: string; text?: string; term?: string;
+             label?: string; href?: string;
+             icon?: string; items?: any[] }[];
   image?: { src: string; alt: string };
+  images?: { src: string; alt: string }[];
+  copy?: any;
   h1?: boolean;
-  brand?: string;
-  copy?: CopySlot;
 }
+import { inline } from '../_shared/inline';
 const {
-  heading = 'Section heading', fs = '', body = '', eyebrow = '',
-  cta, items = [], image, h1, brand, copy,
+  brand = 'Brand',
+  heading = '',
+  fs = '',
+  cta = { label: '', href: '#' },
+  items = [],
+  image,
+  images = [],
+  copy,
+  h1 = false,
 } = Astro.props;
-const cp: CopySlot = copy || {};
+// §4.3 — a copy slot binds verbatim article copy onto
+// the skeleton's native props (F.1 — nothing dropped)
+const cp = copy || {};
 const head = cp.heading || heading;
-const answer = cp.answer || '';
-const sub = answer || fs || body;
+const sub = cp.answer || cp.text || fs;
 const before = cp.before || [];
-const list = (cp.items && cp.items.length ? cp.items : items) || [];
+const list = (cp.items && cp.items.length
+  ? cp.items : items) || [];
+// N.select — the desktop bar keeps the leading links whose
+// labels fit its budget; the rest open behind "More"
+const _lbl = (it) => String(it.label || it.term || it.title || it.text || '');
+const navFit = (() => { let w = 0, n = 0;
+  for (const it of list) { w += _lbl(it).length + 2;
+    if (w > 56) break; n++; }
+  return n; })();
+const navOver = list.length > 6 || navFit < list.length;
+const navCut = Math.max(1, Math.min(navFit, 4));
+const qas = cp.qa || [];
 const links = cp.links || [];
 const after = cp.after || [];
+const act = cp.cta || cta;
+const phone = cp.phone || '';
+const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
 ---
-<div>
-  <div class="sec-head">
-    {eyebrow && <p class="eyebrow">{eyebrow}</p>}
-    {h1 ? <h1 class="text-fluid-3">{head}</h1> : <h2 class="text-fluid-3">{head}</h2>}
-    {sub && <p class="lede" set:html={inline(sub)} />}
-    {before.map((p) => (
-      <p class="t0 sub-p" set:html={inline(p)} />
-    ))}
+
+<div class="wf-grid-1">
+  {head && (h1 ? <h1 class="text-fluid-4">{head}</h1> : <h2 class="text-fluid-2">{head}</h2>)}
+  {sub && <p class="mt-stack lede" set:html={inline(sub)} />}
+  {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
+  {list.length > 0 &&   <div class="sec-inner">
+    {list.length > 0 &&     <div>
+      {list.length > 0 && <div class="wf-gridcard-1-grid-ul">{(list || []).map((it) => (
+            <div class="wf-gridcard-1-card card">
+              <h3 class="text-fluid-1">{it.term || it.title}</h3>
+              <p class="text-fluid-0">{it.text}</p>
+            </div>
+          ))}</div>}
+    </div>
+    }
   </div>
-  {list.length > 0 && (
-    <ul class="mt-sec grid-auto list-plain">
-      {list.map((it, i) => {
-        const m = mediaFor(it.image);
-        const Icon = iconFor(it.icon);
-        return (
-        <li class="card">
-          {m && <figure class="card-media">
-            {m.mod
-              ? <Image src={m.mod} alt={m.alt || it.title || it.term || ''}
-                       widths={[480, 960]} sizes="(min-width: 48rem) 33vw, 100vw"
-                       loading="lazy" />
-              : <img src={m.src} alt={m.alt || it.title || it.term || ''}
-                     width="960" height="640" loading="lazy" />}
-          </figure>}
-          {Icon
-            ? <span class="icon-chip"><Icon size={22} aria-hidden="true" /></span>
-            : <span class="num">{String(i + 1).padStart(2, '0')}</span>}
-          <h3 class="t0 sub-h" set:html={inline(it.term || it.title)} />
-          <p class="t0 sub-p" set:html={inline(it.text)} />
-        </li>
-        );
-      })}
-    </ul>
-  )}
-  {links.map((l) => (
-    <p class="t0 sub-p" set:html={inline(l.text || '')} />
-  ))}
-  {after.map((p) => (
-    <p class="t0 sub-p" set:html={inline(p)} />
-  ))}
-  {cta && <div class="cta-row mt-sec">
-    <a class="wf-cta-button" href={cta.href}>{cta.label}</a>
-  </div>}
+  }
+  {qas.length > 0 && <dl class="mt-stack">{qas.map((qa) => <><dt class="text-fluid-0" set:html={inline(qa.q)} /><dd class="text-fluid-0" set:html={inline(qa.a)} /></>)}</dl>}
+  {links.length > 0 && <div class="flow mt-stack">{links.map((l) => <p class="text-fluid-0" set:html={inline(l.text || `[${l.anchor}](${l.href})`)} />)}</div>}
+  {after.length > 0 && <div class="flow mt-stack">{after.map((p) => <p class="text-fluid-0" set:html={inline(p)} />)}</div>}
+  {tel && <p class="mt-stack"><a class="link-quiet" href={tel}>{phone}</a></p>}
 </div>
