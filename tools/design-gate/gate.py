@@ -5359,7 +5359,9 @@ def check_icon_ring(ctx):
 
 def check_gap_floor(ctx):
     """D.4 — every grid/flex container of siblings resolves a gap ≥
-    8px; a zero-gap sibling group abuts."""
+    16px; a zero-gap sibling group abuts (operator rule: EVERY layout
+    carries ≥1rem gap at every viewport — 0 only where there is a
+    single child)."""
     if not _wave_ge(ctx, 'w7'):
         return []
     f = []
@@ -5383,13 +5385,18 @@ def check_gap_floor(ctx):
         for vm in re.finditer(r'(--[\w-]+)\s*:\s*([^;}]+)', css):
             tokens[vm.group(1)] = vm.group(2).strip()
     def resolve(v):
+        # substitute each var() in place — replacing the whole string
+        # with the token value would strip a surrounding max()/clamp()
+        # wrapper and make a floored gap read as its raw token
         seen = set()
-        while v and 'var(' in str(v):
-            mm = re.search(r'var\((--[\w-]+)[^)]*\)', str(v))
+        v = str(v)
+        while v and 'var(' in v:
+            mm = re.search(r'var\((--[\w-]+)[^)]*\)', v)
             if not mm or mm.group(1) in seen:
                 break
             seen.add(mm.group(1))
-            v = tokens.get(mm.group(1))
+            v = v.replace(mm.group(0),
+                          str(tokens.get(mm.group(1), '')))
         return v
     # first pass — class patterns whose rulesets already give an
     # element a resolved gap ≥8px (exact class, [class*=x] substring,
@@ -5399,7 +5406,7 @@ def check_gap_floor(ctx):
         for rm in re.finditer(
                 r'([^{}]+)\{([^}]*)\bgap\s*:\s*([^;}]+)', css):
             n = px(resolve(rm.group(3).strip()) or '')
-            if n is None or n < 8:
+            if n is None or n < 16:
                 continue
             sel = rm.group(1)
             pats = set(re.findall(r'\.(-?[_a-zA-Z][\w-]*)', sel))
@@ -5441,9 +5448,9 @@ def check_gap_floor(ctx):
                          'container has no gap — siblings abut')
                 continue
             n = px(resolve(gm.group(1).strip()) or '')
-            if n is not None and n < 8:
+            if n is not None and n < 16:
                 f.append(f'Q.4 {name} "{sel[:50]}": gap {n:.0f}px '
-                         '< 8px floor')
+                         '< 16px floor')
     # inert-gap scan: row-gap is law only where it can apply. It does
     # nothing on display:block and nothing on a non-wrapping flex row —
     # a *-container or *-grid* ruleset declaring it without an
@@ -5472,6 +5479,68 @@ def check_gap_floor(ctx):
                 continue
             f.append(f'Q.4 {name} "{sel[:50]}": row-gap on '
                      f'{disp} is inert — children abut')
+    return f
+
+
+def check_section_pad(ctx):
+    """P.floor — every section band/bar resolves padding-block AND
+    the measure resolves padding-inline ≥16px at every viewport
+    (operator rule: ALL sections ALWAYS carry SOME padding — a vibe
+    may tighten the rung, never zero it)."""
+    if not _wave_ge(ctx, 'w7'):
+        return []
+    f = []
+    tokens = {}
+    for p, css in dist_csss(ctx):
+        for vm in re.finditer(r'(--[\w-]+)\s*:\s*([^;}]+)', css):
+            tokens[vm.group(1)] = vm.group(2).strip()
+
+    def resolve(v):
+        seen = set()
+        v = str(v)
+        while v and 'var(' in v:
+            mm = re.search(r'var\((--[\w-]+)[^)]*\)', v)
+            if not mm or mm.group(1) in seen:
+                break
+            seen.add(mm.group(1))
+            v = v.replace(mm.group(0),
+                          str(tokens.get(mm.group(1), '')))
+        return v
+
+    def px(v):
+        v = str(v)
+        m = re.match(r'([\d.]+)(?:px|rem)?', v)
+        if not m:
+            m = re.search(r'([\d.]+)\s*(px|rem)', v)
+        if not m:
+            return None
+        n = float(m.group(1))
+        return n * 16 if 'rem' in v[:m.end()] else n
+
+    for p, css in dist_csss(ctx):
+        name = os.path.basename(p)
+        for rm in re.finditer(r'([^{}]+)\{([^}]*)\}', css):
+            sel, decl = rm.group(1).strip(), rm.group(2)
+            if not re.search(
+                    r'\.sec-band|\.sec-bar|\.sec-inner|'
+                    r'section\b[^.]', sel):
+                continue
+            # the nested-measure dedup (.sec-inner .sec-inner
+            # padding-inline:0) is SB.2 law, not a missing pad
+            if sel.count('.sec-inner') > 1 or \
+                    'sec-inner>.sec-inner' in sel.replace(' ', ''):
+                continue
+            for pm in re.finditer(
+                    r'\b(padding-block|padding-inline|padding)\s*:\s*'
+                    r'([^;}]+)', decl):
+                for part in pm.group(2).strip().split():
+                    n = px(resolve(part) or '')
+                    if n is not None and n < 16:
+                        f.append(f'P.floor {name} "{sel[:40]}": '
+                                 f'{pm.group(1)} {n:.0f}px < 16px '
+                                 'floor — a section always carries '
+                                 'padding')
+                        break
     return f
 
 
@@ -15828,7 +15897,8 @@ WAVE_CHECKS = {
            check_light_paint, check_acss_tokens, check_fluid_sizes,
            check_design_system,
            check_faq_collapsed, check_card_hierarchy, check_icon_ring,
-           check_gap_floor, check_type_scale_min, check_contrast_pairs,
+           check_gap_floor, check_section_pad, check_type_scale_min,
+           check_contrast_pairs,
            check_seal] \
            + SEGMENT_ALL,
     'w8': [check_review_completeness, check_scorecard,

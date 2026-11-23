@@ -26,6 +26,7 @@ module-private _global_css).
 """
 import json
 import os
+import re
 import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -33,6 +34,85 @@ sys.path.insert(0, HERE)
 
 import emit_tokens  # noqa: E402
 import clamp  # noqa: E402
+
+# G.floor — no emitted sibling gap resolves under 1rem at ANY
+# viewport (operator rule: EVERY layout needs ≥1rem gap, "or whatever
+# the clamp equivalent is"). Two emit layers carry it: gap-bound
+# tokens are floored at the alias in clamp.aliases, and every
+# authored `gap`/`row-gap`/`column-gap`/`grid-gap` declaration in
+# css that passes through the emit layer is wrapped in
+# `max(1rem, <authored>)` — a vibe or skeleton can tighten its own
+# rhythm but never below the floor. Keyword values (normal, initial,
+# unset…) can't sit inside max(); for flex/grid they resolve to 0,
+# so they floor to 1rem outright.
+_GAP_DECL = re.compile(
+    r'\b(grid-column-gap|grid-row-gap|grid-gap|row-gap|column-gap|'
+    r'gap)\s*:\s*([^;}]+)')
+_GAP_KEYWORD = re.compile(
+    r'(?i)(?:normal|initial|inherit|unset|revert|auto)')
+
+
+def _top_split(v):
+    """split a css value on whitespace outside parens —
+    `gap: 8px calc(100% - 4px)` must floor both members, not
+    mangle the calc."""
+    out, depth, cur = [], 0, ''
+    for ch in v:
+        if ch == '(':
+            depth += 1
+        elif ch == ')':
+            depth -= 1
+        if depth == 0 and ch in ' \t':
+            if cur:
+                out.append(cur)
+                cur = ''
+        else:
+            cur += ch
+    if cur:
+        out.append(cur)
+    return out
+
+
+# G.floor catch-all — a flex/grid container with ≥2 children and NO
+# declared gap still sits at 1rem. It lives in the earliest layer so
+# every declared gap (utility, skeleton, vibe, inline style) wins;
+# it only ever fires where nothing declared a gap.
+GAP_FLOOR_LAYER = (
+    '@layer wf_floor {\n'
+    '  .sec-band :where(:has(> :nth-child(2))),\n'
+    '  .sec-bar :where(:has(> :nth-child(2))),\n'
+    '  .sec-inner :where(:has(> :nth-child(2))) { gap: 1rem; }\n'
+    '}\n')
+
+
+def floor_gaps(css):
+    """wrap every gap-family declaration in css with the 1rem floor."""
+    n = [0]
+
+    def rep(m):
+        prop, val = m.group(1), m.group(2).strip()
+        if val.lower().startswith('max(1rem'):
+            return m.group(0)
+        parts = _top_split(val)
+        decls, out = [], []
+        for p in parts:
+            if _GAP_KEYWORD.fullmatch(p):
+                out.append('1rem')
+            elif p.lower().startswith('max(1rem'):
+                out.append(p)
+            elif re.search(r'var\([^)]*\(', p):
+                # a nested var() fallback can't sit inside max() in the
+                # emitted css (FL.1 scans the property value) — hoist
+                # the value into a private token and floor that
+                name = f'--_gf{n[0]}'
+                n[0] += 1
+                decls.append(f'{name}:{p}')
+                out.append(f'max(1rem, var({name}))')
+            else:
+                out.append(f'max(1rem, {p})')
+        return ';'.join(decls + [prop + ':' + ' '.join(out)])
+    return _GAP_DECL.sub(rep, css)
+
 
 # The component layer appended below the emit_tokens five TK layers.
 # Historically gen_fixtures.GLOBAL_CSS_TAIL — moved here so it is real
@@ -145,13 +225,18 @@ input, textarea { border: 1px solid var(--input-border); padding: var(--input-py
   .gap-fluid-s { gap: var(--space-s); }
   .gap-fluid-m { gap: var(--space-m); }
   .gap-fluid-l { gap: var(--space-l); }
-  .sec-band { padding-block: var(--sec-pad, var(--section-space-m));
+  /* P.floor — EVERY section carries some padding at every viewport
+     (operator rule, brutalist included): the vibe may tighten the
+     rung but never below 1rem block or inline. max() floors, not
+     replaces, so a roomier token still wins. */
+  .sec-band { --_pad-f: var(--sec-pad, var(--section-space-m));
+              padding-block: max(1rem, var(--_pad-f));
               background: var(--sec-bg, var(--bg-canvas));
               color: var(--sec-fg, var(--text-primary)); }
   /* the measure box owns the page gutter: without it a 390px phone
      renders text flush to the bezel */
   .sec-inner { max-width: var(--content-width); margin-inline: auto;
-               padding-inline: var(--gutter); }
+               padding-inline: max(1rem, var(--gutter)); }
   /* a bank skeleton that ships its own measure box must not double
      the gutter inside the shell's .sec-inner — the shell owns it
      (SB.2). One measure, one gutter, every section. */
@@ -175,12 +260,13 @@ input, textarea { border: 1px solid var(--input-border); padding: var(--input-py
   [class*="container"][class*="container"]:has(> .flow) {
       flex-direction: column; }
   /* chrome is a bar: nav/footer get rhythm, never a section's padding */
-  .sec-bar { padding-block: var(--space-xs);
+  .sec-bar { padding-block: max(1rem, var(--space-xs));
              background: var(--sec-bg, var(--bg-canvas));
              color: var(--sec-fg, var(--text-primary)); }
   /* a footer bar holds columns + a legal rule: it needs air above the
      last band and below the legal line, not the nav's slim strip */
-  footer.sec-bar { padding-block: var(--space-xl) var(--space-l); }
+  footer.sec-bar { padding-block: max(1rem, var(--space-xl))
+                   max(1rem, var(--space-l)); }
   /* G.5 canon — every collection grid is auto-fit on the rung-bound
      card floor, never a fixed repeat(N). G.8 — a declared columns
      allele (data-cols=N) is a CAP: the track floor rises to an N-th
@@ -1487,8 +1573,8 @@ def global_css(tokens, fonts=None):
     tail = GLOBAL_CSS_TAIL.lstrip('\n').replace(
         '  /* DENSITY-RUNGS */', _density_css(tokens)).replace(
         '@@DS_SPECS@@\n', _ds_specs(tokens) + '\n')
-    return (head + '\n' + font_faces_css(fonts) + body + '\n'
-            + _base_css(tokens) + '\n' + tail)
+    return floor_gaps(head + '\n' + font_faces_css(fonts) + body + '\n'
+                      + _base_css(tokens) + '\n' + tail)
 
 
 RATIO_SET = ('21:9', '16:9', '3:2', '4:3', '1:1', '3:4', '2:3', '9:16')
@@ -1619,5 +1705,5 @@ def preview_css(tokens, fonts=None):
     tail = GLOBAL_CSS_TAIL.lstrip('\n').replace(
         '  /* DENSITY-RUNGS */', _density_css(tokens)).replace(
         '@@DS_SPECS@@\n', _ds_specs(tokens) + '\n')
-    return (font_faces_css(fonts) + body + '\n' + _base_css(tokens)
-            + '\n' + tail)
+    return floor_gaps(GAP_FLOOR_LAYER + font_faces_css(fonts)
+                      + body + '\n' + _base_css(tokens) + '\n' + tail)
