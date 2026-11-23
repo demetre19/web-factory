@@ -1439,12 +1439,103 @@ def _spec_for(fam):
     return 'spec-' + str(zlib.crc32(fam.encode('utf-8')) % max(1, n))
 
 
+# fragment-first vibe previews — each preset doc composes REAL bank
+# fragments (the same styled exemplars the bank cards render) seeded
+# by the preset name, so presets differ in structure AND look the way
+# the pricing bank cards differ, not just in vars
+_FRAG_KIND_DIRS = {
+    'nav': ('nav-menu', 'nav-dropdown-menu', 'nav-mega-panel',
+            'nav-micro', 'nav-tabs'),
+    'hero': ('hero-media-bg', 'hero-centered', 'hero-split'),
+    'band': ('pricing-tiers', 'card-block', 'proof-testimonial',
+             'proof-rating', 'proof-quote', 'data-display',
+             'comparison-table', 'form-block', 'media-figure',
+             'checkout', 'product-grid', 'data-stepper'),
+    'footer': ('footer-mega', 'footer-columns', 'footer-minimal'),
+}
+
+
+def _frag_file(kind, seed, mode, salt, tags):
+    """one bank fragment for `kind` — dir and file seeded so every
+    vibe composes a different page; prefers fragments tagged for the
+    resolved theme's mode."""
+    dirs = _FRAG_KIND_DIRS[kind]
+    for off in range(len(dirs)):
+        d = dirs[(seed + salt + off) % len(dirs)]
+        cdir = os.path.join(_GENMENU, d)
+        if not os.path.isdir(cdir):
+            continue
+        fns = sorted(f for f in os.listdir(cdir) if f.endswith('.html'))
+        if not fns:
+            continue
+        def _sc(fn):
+            r = tags.get(d + '/' + fn[:-5]) or {}
+            return (2 if r.get('mode') == mode else 0) + \
+                len(r.get('style') or [])
+        best = max(_sc(f) for f in fns)
+        pool = [f for f in fns if _sc(f) == best]
+        fp = os.path.join(cdir, pool[(seed + salt) % len(pool)])
+        frag = open(fp, encoding='utf-8', errors='replace').read()
+        return re.sub(r"/src/assets/[^\s\"'()]+",
+                      '/media/placeholder.svg', frag)
+    return ''
+
+
+def _frag_doc_parts(pd, fam, bundle):
+    """(head,battr,body) for a vibe doc composed of real bank
+    fragments — None when the genmenu bank isn't vendored."""
+    if not os.path.isdir(_GENMENU):
+        return None
+    import zlib
+    seed = zlib.crc32(fam.encode('utf-8'))
+    mode = (bundle or {}).get('theme') or 'light'
+    tags = _genmenu_tags()
+    frags = [
+        _frag_file('nav', seed, mode, 0, tags),
+        _frag_file('hero', seed, mode, 3, tags),
+        _frag_file('band', seed, mode, 7, tags),
+        _frag_file('band', seed, mode, 13, tags),
+        _frag_file('footer', seed, mode, 29, tags),
+    ]
+    body = ''.join(f for f in frags if f)
+    if not body:
+        return None
+    # the fragments' utilities live in the same sheets _bank_doc
+    # ships — materialise them next to the bank previews
+    bankdir = os.path.join(pd, 'site', 'dist', 'preview', 'bank')
+    os.makedirs(bankdir, exist_ok=True)
+    css_src = os.path.join(_GENMENU, 'bank-preview.css')
+    css_dst = os.path.join(bankdir, 'bank-preview.css')
+    if os.path.isfile(css_src) and (
+            not os.path.isfile(css_dst) or
+            os.path.getmtime(css_src) > os.path.getmtime(css_dst)):
+        with open(css_src, 'rb') as fi:
+            blob = fi.read()
+        with open(css_dst, 'wb') as fo:
+            fo.write(blob)
+    extra_dst = os.path.join(bankdir, 'bank-preview-extra.css')
+    if not os.path.isfile(extra_dst):
+        with open(extra_dst, 'w') as fh:
+            fh.write('/* generated fallback utilities — vendored '
+                     'tailwind v3 dialect gaps */\n' +
+                     _bank_fallback_css())
+    head = ('<meta charset="utf-8"><meta name="viewport" '
+            'content="width=device-width,initial-scale=1">'
+            '<link rel="stylesheet" href="/built/' +
+            urllib.parse.quote(css_dst) + '">'
+            '<link rel="stylesheet" href="/built/' +
+            urllib.parse.quote(extra_dst) + '">')
+    return head, '', '<div class="wf-page">' + body + '</div>'
+
+
 def emit_vibe_doc(pd, fam, bundle, spec=None):
-    """one vibe doc for a resolved bundle — the specimen page bound
-    to `fam` wrapped in its vars; emits only when missing
-    (deterministic content); returns dist-relative path."""
+    """one vibe doc for a resolved bundle — real bank fragments
+    composed per preset (styled like the bank cards), wrapped in its
+    vars; emits only when missing (deterministic content); returns
+    dist-relative path."""
     outdir = os.path.join(pd, 'site', 'dist', 'preview', 'vibes')
-    parts = _spec_parts(pd, spec or _spec_for(fam))
+    parts = _frag_doc_parts(pd, fam, bundle) or \
+        _spec_parts(pd, spec or _spec_for(fam))
     if parts:
         head, battr, body = parts
     else:
