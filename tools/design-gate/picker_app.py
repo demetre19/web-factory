@@ -7208,6 +7208,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
         vibePane(el,o);
         var vp=el.querySelector('.vprev');
         if(vp)vp.scrollIntoView({block:'nearest'});
+        toast('vibe loaded into the mixer — Bake to sign it');
         resolveVibe(el,o)}});
     el.querySelectorAll('.cf .pick:not(#vBake)').forEach(function(b){
       b.onclick=function(){
@@ -7218,6 +7219,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
           toast(j.message||(j.ok?'baked':'refused'));
           if(j.ok){BAKED=v;DATA.picked_elements.vibe=v;
             DATA.vibe_genes=Object.assign({},c.genes||{});
+            var card=b.closest('.card');
+            if(card)card.classList.add('picked');
             setTheme((c.tags||[]).indexOf('dark')>=0
               ?'dark':'light')}})}});
     wireXp(el);
