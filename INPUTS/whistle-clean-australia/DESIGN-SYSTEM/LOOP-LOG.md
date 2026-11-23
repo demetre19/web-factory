@@ -5188,3 +5188,45 @@ w1 CLEAR
 w2 CLEAR
 === PIPELINE COMPLETE — all waves CLEAR ===
 ```
+
+## iteration 4 — 2026-11-23 04:50:46
+- scratch: `/tmp/wf-loop-lZk78u/site` (operator+research files only; all generated files wiped)
+- command: `pipeline.py /tmp/wf-loop-lZk78u/site/pages/strata-cleaning-melbourne --to w2` → exit 0
+- verdict: **CLEAN — s0:yes w0/w1/w2 PASS, run COMPLETE through w2**
+```
+  end-act          form-panel    brand  spacious 
+  footer           footer-bar    base   compact  
+emit → /tmp/wf-loop-lZk78u/site/pages/strata-cleaning-melbourne
+  TOKENS.json kept (18 knobs)
+  scaffold: package.json, astro.config.mjs, favicon, index, _shared/inline.ts, _shared/IconChip.astro
+  public/: 7 site asset(s) (fonts/satoshi-400.woff2, fonts/satoshi-700.woff2, media/gallery-vacuum.jpg, media/office-clean.jpg, media/team-foyer.jpg, media/team.jpg, logo.svg)
+  tailwind.config.js
+  src/styles/global.css (2 @font-face)
+  src/styles/bank.css (12 skeleton(s))
+  Section.astro + BaseLayout.astro
+  scaffold-only emit done (w0)
+checklist → /tmp/wf-loop-lZk78u/site/pages/strata-cleaning-melbourne/CHECKLIST/w0.md
+w0 PASS — /tmp/wf-loop-lZk78u/site/pages/strata-cleaning-melbourne
+candidates_emit.py: 60/3414 pending candidates (+0 decided) → /tmp/wf-loop-lZk78u/site/pages/strata-cleaning-melbourne/CANDIDATES.json
+candidates_emit.py: picker → /tmp/wf-loop-lZk78u/site/pages/strata-cleaning-melbourne/preview/candidates.html (a84cdee5fb0a)
+bake_systems: 119 systems → /tmp/wf-loop-lZk78u/site/pages/strata-cleaning-melbourne/SAVED-SYSTEMS
+checklist → /tmp/wf-loop-lZk78u/site/pages/strata-cleaning-melbourne/CHECKLIST/w1.md
+w1 PASS — /tmp/wf-loop-lZk78u/site/pages/strata-cleaning-melbourne
+assembled layout picker → preview/layouts.html (marker 69ec1b9e512b)
+checklist → /tmp/wf-loop-lZk78u/site/pages/strata-cleaning-melbourne/CHECKLIST/w2.md
+w2 PASS — /tmp/wf-loop-lZk78u/site/pages/strata-cleaning-melbourne
+=== s0 ===
+s0 CLEAR
+=== w0 ===
+w0 CLEAR
+=== w1 ===
+w1 CLEAR
+=== w2 ===
+w2 CLEAR
+=== PIPELINE COMPLETE — all waves CLEAR ===
+```
+
+## result — 2026-11-23 04:50:46
+- iterations: 4 (max 10), consecutive clean: 2 (need 2)
+- **LOOP CLEAN** — from-scratch runs reached PIPELINE COMPLETE (s0→w2) twice with all mechanical checks green.
+- known external blocker: Mobbin P.14 (research service unreachable to the agent); w3/w4 picks are operator-only by design.
