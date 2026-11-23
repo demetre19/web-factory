@@ -211,9 +211,12 @@ _JS = r"""
     const bands = [];
     for (const r of rs) {
       const L = bands[bands.length - 1];
-      if (L && r.top < L.top + L.h * 0.5) {
-        L.h = Math.max(L.h, r.bottom - L.top);
-      } else bands.push({top: r.top, h: r.height});
+      // same rendered line: fragments share a vertical interval;
+      // the next line's rect starts below it and never merges
+      if (L && r.top < L.bottom && r.bottom > L.top) {
+        L.top = Math.min(L.top, r.top);
+        L.bottom = Math.max(L.bottom, r.bottom);
+      } else bands.push({top: r.top, bottom: r.bottom});
     }
     return bands;
   };
@@ -229,7 +232,8 @@ _JS = r"""
         const rc = _rng.getBoundingClientRect();
         if (!rc.width) continue;   // collapsed whitespace
         while (li < bands.length - 1 &&
-               rc.top >= bands[li].top + bands[li].h * 0.5)
+               rc.top >= bands[li].top +
+                   (bands[li].bottom - bands[li].top) * 0.5)
           li++;
         counts[li]++;
       }
