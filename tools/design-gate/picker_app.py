@@ -2901,6 +2901,18 @@ def app_data(pipeline):
             'saved_systems': list_systems(pd),
             'remix_sources': dna_sources(pd),
             'remix_groups': REMIX_GROUPS,
+            # the real emitted page — dist/index.html is only the
+            # canonical redirect stub; the page lives under its slug
+            'site_index': next(
+                ('/built/' + urllib.parse.quote(p)
+                 for p in (
+                     *[os.path.join(pd, 'site', 'dist', s, 'index.html')
+                       for s in (ctx.pages() or {})],
+                     os.path.join(pd, 'site', 'dist', 'index.html'))
+                 if os.path.isfile(p)
+                 and 'http-equiv="refresh"' not in open(
+                     p, encoding='utf-8', errors='replace').read(400)),
+                None),
             'contrast': contrast,
             'design': {
                 'site': dna.get('site') or pd.rsplit('/', 3)[-3],
@@ -5209,6 +5221,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
   var BAKED = '';          // the picked vibe family id ('' = baseline)
   var SEL = 0;             // selected card index (keyboard scrub)
   var ROW = 0;             // selected section row on the scrub board
+  var RMSLOTS = null, RMOVER = null;  // the remix mix survives warm swaps
 
   function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,
     function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
@@ -6166,15 +6179,23 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
   function remixPane(el){
     var SRC=DATA.remix_sources||[{id:'design',label:'this design'}];
     var GRP=DATA.remix_groups||{};
-    var page=null;
-    [DATA.boards,DATA.galleries].forEach(function(B){
-      Object.keys(B||{}).forEach(function(k){
-        (B[k].cards||[]).forEach(function(c){
-          if(!page&&c.preview)page=c.preview})})});
-    var slots=[{id:'design',sh:60},
+    // the preview is the emitted site page re-rendered under the
+    // remix bundle — falling back to the first board card only when
+    // the page was never emitted
+    var page=DATA.site_index||null;
+    if(!page)
+      [DATA.boards,DATA.galleries].forEach(function(B){
+        Object.keys(B||{}).forEach(function(k){
+          (B[k].cards||[]).forEach(function(c){
+            if(!page&&c.preview)page=c.preview})})});
+    // slots/over are hoisted (RMSLOTS/RMOVER) so a warm swap re-renders
+    // the pane with the mix the user was shaping, not the defaults
+    if(!RMSLOTS)
+      RMSLOTS=[{id:'design',sh:60},
                {id:(SRC[1]||{}).id||null,sh:40},
                {id:null,sh:0}];
-    var over={};   // group -> 'mix' | slot index
+    if(!RMOVER)RMOVER={};
+    var slots=RMSLOTS, over=RMOVER;   // group -> 'mix' | slot index
     var t=null;
     var FAV=new Set((function(){try{
       return JSON.parse(localStorage.getItem('wf-rmfav')||'[]')}
@@ -6251,12 +6272,18 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
          '</div>'});
     h+='</div><div class="rmgroups">';
     Object.keys(GRP).forEach(function(g){
+      // over[] persists across warm swaps — the radios must show the
+      // pinned slot, not always 'mix', or spec() saves a different
+      // mix than the controls display
+      var ov=over[g];
       h+='<div class="rmrow" data-g="'+esc(g)+'"><span>'+esc(GRP[g])+
          '</span><label><input type="radio" name="rg-'+esc(g)+
-         '" value="mix" checked>mix</label>';
+         '" value="mix"'+(ov==null||ov==='mix'?' checked':'')+
+         '>mix</label>';
       ['A','B','C'].forEach(function(L,i){
         h+='<label><input type="radio" name="rg-'+esc(g)+
-           '" value="'+i+'"'+(i>0&&!slots[i].id?' disabled':'')+
+           '" value="'+i+'"'+(ov===i?' checked':'')+
+           (i>0&&!slots[i].id?' disabled':'')+
            '>'+L+'</label>'});
       h+='</div>'});
     h+='</div><div class="rmsave"><input id="rmName" placeholder='+
